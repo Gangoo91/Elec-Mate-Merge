@@ -315,6 +315,15 @@ export const ReportPdfViewer = ({ reportId, open, onOpenChange }: ReportPdfViewe
     setSizeWarning(null);
 
     try {
+      // Per-company "QS approval required before issue" gate
+      const { checkQsIssueGate, qsGateMessage } = await import('@/utils/qsGate');
+      const gate = await checkQsIssueGate(reportData.report_id);
+      if (gate.blocked) {
+        setGenerationError(qsGateMessage(gate.companyName));
+        setIsGenerating(false);
+        return;
+      }
+
       const reportType = reportData.report_type.toLowerCase();
       let edgeFunctionName = '';
 

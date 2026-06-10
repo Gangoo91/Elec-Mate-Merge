@@ -401,6 +401,19 @@ function transformFormDataForTemplate(formData: any): MinorWorksPayload {
       };
     })(),
 
+    // Qualifying Supervisor countersignature (injected by the client only
+    // when the latest QS review is approved and content-hash valid)
+    ...(formData.qsName && formData.qsSignature
+      ? {
+          qs_review: {
+            name: formData.qsName || '',
+            signature: formData.qsSignature || '',
+            position: formData.qsPosition || 'Qualifying Supervisor',
+            date: formData.qsDate || '',
+          },
+        }
+      : {}),
+
     // Generation metadata
     _generated_at: new Date().toISOString(),
     _cache_bust: Date.now(),

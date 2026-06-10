@@ -59,6 +59,12 @@ import {
   DropdownMenuSeparator,
 } from '@/components/ui/dropdown-menu';
 import { Sheet, SheetContent, SheetHeader, SheetTitle } from '@/components/ui/sheet';
+import {
+  useQsTeamContext,
+  useQsReviewStatuses,
+  QS_REVIEWABLE_TYPES,
+  type QsReviewableType,
+} from '@/hooks/useQsReview';
 import { motion, AnimatePresence } from 'framer-motion';
 import {
   AlertDialog,
@@ -352,10 +358,20 @@ const MyReports: React.FC<MyReportsProps> = ({ onBack, onNavigate, onEditReport 
     }
   }, [filteredReports, sortBy]);
 
+  // QS review badges — only fetched when the user is on a company team
+  const { data: qsTeamContext } = useQsTeamContext();
+  const { data: qsReviewMap } = useQsReviewStatuses(
+    reports
+      .filter((r) => QS_REVIEWABLE_TYPES.includes(r.report_type as QsReviewableType))
+      .map((r) => r.report_id),
+    !!qsTeamContext?.is_team_member
+  );
+
   // Convert CloudReport to CertificateData for the card
   const toCertificateData = (report: CloudReport): CertificateData => ({
     id: report.report_id,
     reportType: report.report_type,
+    qsReviewStatus: qsReviewMap?.[report.report_id]?.status,
     clientName: report.client_name || undefined,
     installationAddress: report.installation_address || undefined,
     inspectionDate: report.data?.inspectionDate || report.data?.dateOfInspection || undefined,

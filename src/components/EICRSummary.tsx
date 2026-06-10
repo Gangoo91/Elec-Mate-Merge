@@ -74,6 +74,7 @@ import AIEstimatorSheet from '@/components/inspection/eicr/AIEstimatorSheet';
 import { openOrDownloadPdf } from '@/utils/pdf-download';
 import { storageSetJSONSync } from '@/utils/storage';
 import { copyToClipboard } from '@/utils/clipboard';
+import QsReviewPanel from '@/components/inspection/shared/QsReviewPanel';
 
 interface EICRSummaryProps {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -227,6 +228,18 @@ const EICRSummary = ({ formData: propFormData, onUpdate: propOnUpdate }: EICRSum
   const handleGenerateCertificate = async () => {
     console.log('[PDF Generation] Starting process...');
     console.log('[PDF Generation] effectiveReportId:', effectiveReportId);
+
+    // Per-company "QS approval required before issue" gate
+    const { checkQsIssueGate, qsGateMessage } = await import('@/utils/qsGate');
+    const gate = await checkQsIssueGate(effectiveReportId);
+    if (gate.blocked) {
+      toast({
+        title: 'QS approval required',
+        description: qsGateMessage(gate.companyName),
+        variant: 'destructive',
+      });
+      return;
+    }
 
     setIsGenerating(true);
     setShowDialog(true);
@@ -1406,6 +1419,17 @@ const EICRSummary = ({ formData: propFormData, onUpdate: propOnUpdate }: EICRSum
             </div>
           </CollapsibleContent>
         </Collapsible>
+      </div>
+
+      {/* Qualifying Supervisor review (team members only) */}
+      <div className="px-4">
+        <QsReviewPanel
+          reportId={effectiveReportId}
+          reportType="eicr"
+          onBeforeSubmit={async () => {
+            await syncNow?.();
+          }}
+        />
       </div>
 
       {/* Generate Certificate - Fixed Bottom Bar on Mobile */}

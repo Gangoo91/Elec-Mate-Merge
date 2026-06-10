@@ -788,5 +788,21 @@ export async function formatEicJson(
     fillBlanks(json);
   }
 
+  // Qualifying Supervisor countersignature — when the latest QS review for
+  // this report is approved, the QS signs the "report authorised for issue
+  // by" block (overrides any manual entry: the QS signature is the verified
+  // one, with an audit trail in report_qs_reviews).
+  const { getLatestApprovedQsReview, formatQsReviewDate } = await import('@/utils/qsReviewPdf');
+  const qsReview = await getLatestApprovedQsReview(reportId);
+  if (qsReview && json.declarations) {
+    json.declarations.report_authorised_by = {
+      ...json.declarations.report_authorised_by,
+      name: qsReview.reviewer_name,
+      date: formatQsReviewDate(qsReview.reviewed_at),
+      signature: qsReview.qs_signature,
+      position: qsReview.qs_position,
+    };
+  }
+
   return json;
 }

@@ -23,7 +23,18 @@ export interface Employee {
 }
 
 export const getEmployees = async (): Promise<Employee[]> => {
-  const { data, error } = await supabase.from('employer_employees').select('*').order('name');
+  const {
+    data: { user },
+  } = await supabase.auth.getUser();
+  if (!user) throw new Error('Not authenticated');
+
+  // Scope to this employer's roster — the table also holds self-created
+  // Elec-ID profiles (employer_id null) and other companies' rosters.
+  const { data, error } = await supabase
+    .from('employer_employees')
+    .select('*')
+    .eq('employer_id', user.id)
+    .order('name');
 
   if (error) {
     console.error('Error fetching employees:', error);
@@ -51,9 +62,20 @@ export const getEmployeeById = async (id: string): Promise<Employee | null> => {
 export const createEmployee = async (
   employee: Omit<Employee, 'id' | 'created_at' | 'updated_at'>
 ): Promise<Employee> => {
+  const {
+    data: { user },
+  } = await supabase.auth.getUser();
+  if (!user) throw new Error('Not authenticated');
+
+  // employer_id links the roster row to this company; the lowercased email
+  // is what lets the team member's own account claim the row on sign-in.
   const { data, error } = await supabase
     .from('employer_employees')
-    .insert(employee)
+    .insert({
+      ...employee,
+      email: employee.email?.toLowerCase() ?? null,
+      employer_id: user.id,
+    })
     .select()
     .single();
 
@@ -96,9 +118,15 @@ export const deleteEmployee = async (id: string): Promise<boolean> => {
 };
 
 export const getActiveEmployees = async (): Promise<Employee[]> => {
+  const {
+    data: { user },
+  } = await supabase.auth.getUser();
+  if (!user) throw new Error('Not authenticated');
+
   const { data, error } = await supabase
     .from('employer_employees')
     .select('*')
+    .eq('employer_id', user.id)
     .eq('status', 'Active')
     .order('name');
 

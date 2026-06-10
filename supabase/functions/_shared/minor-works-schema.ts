@@ -253,6 +253,17 @@ export const minorWorksSchema = z.object({
       additional_notes: z.string().default(''),
     })
     .default({}),
+
+  // Qualifying Supervisor countersignature (present only when the latest QS
+  // review is approved — rendered by the template when a block exists)
+  qs_review: z
+    .object({
+      name: z.string().default(''),
+      signature: z.string().default(''),
+      position: z.string().default('Qualifying Supervisor'),
+      date: z.string().default(''),
+    })
+    .optional(),
 }).passthrough();
 
 export type MinorWorksPayload = z.infer<typeof minorWorksSchema>;

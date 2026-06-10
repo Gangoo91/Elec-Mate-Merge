@@ -95,6 +95,17 @@ export function useCertLock({
       });
       return;
     }
+    // Per-company "QS approval required before issue" gate
+    const { checkQsIssueGate, qsGateMessage } = await import('@/utils/qsGate');
+    const gate = await checkQsIssueGate(reportId);
+    if (gate.blocked) {
+      toast({
+        title: 'QS approval required',
+        description: qsGateMessage(gate.companyName),
+        variant: 'destructive',
+      });
+      return;
+    }
     // Flush pending edits BEFORE locking so nothing is lost.
     try {
       await flush?.();

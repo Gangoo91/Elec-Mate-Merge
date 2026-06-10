@@ -3,6 +3,7 @@ import { useJobs } from '@/hooks/useJobs';
 import { useJobPacks } from '@/hooks/useJobPacks';
 import { useJobIssueStats } from '@/hooks/useJobIssues';
 import { useFleetStats } from '@/hooks/useFleet';
+import { useQsPendingCount } from '@/hooks/useQsReviewQueue';
 import {
   HubLanding,
   SectionHeader,
@@ -36,6 +37,7 @@ export function JobsHub({ onNavigate }: JobsHubProps) {
   const activeJobPacks = jobPacks.filter((jp) => jp.status === 'In Progress').length;
   const openIssues = issueStats?.open ?? 0;
   const motDueCount = fleetStats?.motDue ?? 0;
+  const qsPendingCount = useQsPendingCount();
 
   const onOpenJobs = () => onNavigate('jobs');
   const onOpenJobBoard = () => onNavigate('jobboard');
@@ -162,6 +164,16 @@ export function JobsHub({ onNavigate }: JobsHubProps) {
           />
           <HubCard
             number="10"
+            eyebrow="Compliance"
+            title="QS Reviews"
+            description="Qualifying Supervisor sign-off on EICR, EIC and Minor Works certs."
+            tone="yellow"
+            meta={qsPendingCount > 0 ? `${qsPendingCount} awaiting sign-off` : 'Nothing waiting'}
+            cta="Open"
+            onClick={() => onNavigate('qsreviews')}
+          />
+          <HubCard
+            number="11"
             eyebrow="Customer"
             title="Client Portal"
             description="What your clients see — progress, invoices and certs."
@@ -171,7 +183,7 @@ export function JobsHub({ onNavigate }: JobsHubProps) {
             onClick={onOpenClientPortal}
           />
           <HubCard
-            number="11"
+            number="12"
             eyebrow="Vehicles"
             title="Fleet"
             description="Vans, MOTs, services and vehicle-to-job assignments."
@@ -181,7 +193,7 @@ export function JobsHub({ onNavigate }: JobsHubProps) {
             onClick={onOpenFleet}
           />
           <HubCard
-            number="12"
+            number="13"
             eyebrow="Evidence"
             title="Photo Gallery"
             description="Every photo captured on every job, organised by project."

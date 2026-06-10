@@ -38,6 +38,7 @@ import { useIsMobile } from '@/hooks/use-mobile';
 import { cn } from '@/lib/utils';
 import { openExternalUrl } from '@/utils/open-external-url';
 import { Capacitor } from '@capacitor/core';
+import QsReviewPanel from '@/components/inspection/shared/QsReviewPanel';
 import { sharePdfBytesFromUrlToWhatsAppWeb } from '@/utils/share-pdf-to-whatsapp-web';
 
 // Feature flag: set to true to use Gotenberg (v2), false to revert to PDF Monkey (v1)
@@ -225,6 +226,18 @@ const MinorWorksPdfGenerator: React.FC<MinorWorksPdfGeneratorProps> = ({
       });
     }
 
+    // Per-company "QS approval required before issue" gate
+    const { checkQsIssueGate, qsGateMessage } = await import('@/utils/qsGate');
+    const gate = await checkQsIssueGate(reportId);
+    if (gate.blocked) {
+      toast({
+        title: 'QS approval required',
+        description: qsGateMessage(gate.companyName),
+        variant: 'destructive',
+      });
+      return;
+    }
+
     setIsExporting(true);
     setExportStatus('preparing');
     setExportProgress(0);
@@ -332,6 +345,20 @@ const MinorWorksPdfGenerator: React.FC<MinorWorksPdfGeneratorProps> = ({
           formattedFormData[key] = formatFieldForPdf(key, formattedFormData[key]);
         }
       });
+
+      // Qualifying Supervisor countersignature — included in the payload when
+      // the latest QS review is approved (rendered once the template has a QS
+      // block; unknown keys are ignored by PDFMonkey until then).
+      const { getLatestApprovedQsReview, formatQsReviewDate } = await import(
+        '@/utils/qsReviewPdf'
+      );
+      const qsReview = savedReportId ? await getLatestApprovedQsReview(savedReportId) : null;
+      if (qsReview) {
+        formattedFormData.qsName = qsReview.reviewer_name;
+        formattedFormData.qsSignature = qsReview.qs_signature;
+        formattedFormData.qsPosition = qsReview.qs_position;
+        formattedFormData.qsDate = formatQsReviewDate(qsReview.reviewed_at);
+      }
 
       // Save formatted payload for email/reports page reuse
       if (savedReportId) {
@@ -713,6 +740,9 @@ const MinorWorksPdfGenerator: React.FC<MinorWorksPdfGeneratorProps> = ({
             Invoice
           </button>
         </div>
+
+        {/* Qualifying Supervisor review (team members only) */}
+        <QsReviewPanel reportId={reportId} reportType="minor-works" onBeforeSubmit={onSaveDraft} />
 
         {/* Duplicate for next circuit */}
         {onDuplicateForNextCircuit && (

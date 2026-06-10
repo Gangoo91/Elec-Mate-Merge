@@ -15,7 +15,15 @@ export interface CertificateData {
   customerId?: string;
   canExportToEICR?: boolean;
   canExportToEIC?: boolean;
+  /** Latest Qualifying Supervisor review state, when the user is on a company team. */
+  qsReviewStatus?: 'pending' | 'approved' | 'returned' | 'cancelled';
 }
+
+const QS_CHIP: Record<string, { label: string; className: string }> = {
+  pending: { label: 'QS review', className: 'border-amber-400/40 text-amber-300' },
+  returned: { label: 'Returned', className: 'border-red-400/40 text-red-300' },
+  approved: { label: 'QS approved', className: 'border-emerald-400/40 text-emerald-300' },
+};
 
 interface CertificateCardProps {
   certificate: CertificateData;
@@ -159,8 +167,20 @@ export const CertificateCard: React.FC<CertificateCardProps> = ({
             aria-hidden
           />
         )}
-        <span className="text-[9px] font-semibold uppercase tracking-[0.14em] text-white/50 border border-white/[0.12] rounded px-1.5 py-0.5 shrink-0">
-          {typeLabel}
+        <span className="flex items-center gap-1.5 shrink-0">
+          {certificate.qsReviewStatus && QS_CHIP[certificate.qsReviewStatus] && (
+            <span
+              className={cn(
+                'text-[9px] font-semibold uppercase tracking-[0.14em] border rounded px-1.5 py-0.5',
+                QS_CHIP[certificate.qsReviewStatus].className
+              )}
+            >
+              {QS_CHIP[certificate.qsReviewStatus].label}
+            </span>
+          )}
+          <span className="text-[9px] font-semibold uppercase tracking-[0.14em] text-white/50 border border-white/[0.12] rounded px-1.5 py-0.5">
+            {typeLabel}
+          </span>
         </span>
       </div>
 

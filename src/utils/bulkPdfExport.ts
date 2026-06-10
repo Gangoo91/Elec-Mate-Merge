@@ -261,6 +261,13 @@ export const generateBulkPDFs = async (
         throw new Error(`Report not found: ${reportId}`);
       }
 
+      // Per-company "QS approval required before issue" gate
+      const { checkQsIssueGate, qsGateMessage } = await import('@/utils/qsGate');
+      const gate = await checkQsIssueGate(reportId);
+      if (gate.blocked) {
+        throw new Error(qsGateMessage(gate.companyName));
+      }
+
       // Validate and enrich data with required fields
       const validation = validateAndEnrichReportData(report);
       if (!validation.isValid) {

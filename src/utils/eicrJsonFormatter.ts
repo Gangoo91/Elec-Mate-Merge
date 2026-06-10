@@ -925,7 +925,14 @@ export const formatEICRJson = async (formData: any, reportId: string): Promise<E
   );
   const resolvedCompanyLogo = await resolveCompanyLogo(get('companyLogo'));
 
-  return {
+  // Qualifying Supervisor countersignature — when the latest QS review for
+  // this report is approved, the QS signs the "report authorised for issue
+  // by" block (overrides any manual entry: the QS signature is the verified
+  // one, with an audit trail in report_qs_reviews).
+  const { getLatestApprovedQsReview, formatQsReviewDate } = await import('@/utils/qsReviewPdf');
+  const qsReview = await getLatestApprovedQsReview(reportId);
+
+  const payload: EICRPayload = {
     // Spread flat keys at the TOP of the object
     ...flatKeys,
 
@@ -1674,4 +1681,24 @@ export const formatEICRJson = async (formData: any, reportId: string): Promise<E
     })(),
     has_limitations: !!(get('limitations') || '').trim(),
   };
+
+  if (qsReview) {
+    const qsDate = formatQsReviewDate(qsReview.reviewed_at);
+    payload.declarations.report_authorised_by = {
+      ...payload.declarations.report_authorised_by,
+      name: qsReview.reviewer_name,
+      date: qsDate,
+      signature: qsReview.qs_signature,
+      position: qsReview.qs_position,
+    };
+    // Flat copies the template reads at root level
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    const flat = payload as any;
+    flat.report_authorised_by_name = qsReview.reviewer_name;
+    flat.report_authorised_by_date = qsDate;
+    flat.report_authorised_by_signature = qsReview.qs_signature;
+    flat.report_authorised_by_position = qsReview.qs_position;
+  }
+
+  return payload;
 };

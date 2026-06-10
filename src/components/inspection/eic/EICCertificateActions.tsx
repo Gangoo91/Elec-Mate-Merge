@@ -42,6 +42,7 @@ import {
   createQuoteFromCertificate,
   createInvoiceFromCertificate,
 } from '@/utils/certificateToQuote';
+import QsReviewPanel from '@/components/inspection/shared/QsReviewPanel';
 
 interface EICCertificateActionsProps {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -165,6 +166,18 @@ const EICCertificateActions: React.FC<EICCertificateActionsProps> = ({
       toast({
         title: 'Cannot Generate Certificate',
         description: 'Please complete all required sections before generating the EIC.',
+        variant: 'destructive',
+      });
+      return;
+    }
+
+    // Per-company "QS approval required before issue" gate
+    const { checkQsIssueGate, qsGateMessage } = await import('@/utils/qsGate');
+    const gate = await checkQsIssueGate(reportId);
+    if (gate.blocked) {
+      toast({
+        title: 'QS approval required',
+        description: qsGateMessage(gate.companyName),
         variant: 'destructive',
       });
       return;
@@ -646,6 +659,9 @@ const EICCertificateActions: React.FC<EICCertificateActionsProps> = ({
               Invoice
             </Button>
           </div>
+
+          {/* Qualifying Supervisor review (team members only) */}
+          <QsReviewPanel reportId={reportId} reportType="eic" onBeforeSubmit={onSaveDraft} />
 
           {/* JSON Test Data */}
           <div className="pt-4 border-t space-y-3">

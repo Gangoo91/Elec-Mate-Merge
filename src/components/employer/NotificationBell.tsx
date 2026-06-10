@@ -19,9 +19,11 @@ import {
   AlertTriangle,
   MessageSquare,
   Clock,
+  ShieldCheck,
 } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { formatDistanceToNow } from 'date-fns';
+import { useNavigate } from 'react-router-dom';
 
 const getNotificationIcon = (type: string) => {
   switch (type) {
@@ -33,13 +35,26 @@ const getNotificationIcon = (type: string) => {
       return <AlertTriangle className="h-4 w-4 text-destructive" />;
     case 'message':
       return <MessageSquare className="h-4 w-4 text-info" />;
+    case 'qs_review_submitted':
+      return <ShieldCheck className="h-4 w-4 text-elec-yellow" />;
     default:
       return <Bell className="h-4 w-4 text-white" />;
   }
 };
 
+// Where tapping a notification should take the user
+const getNotificationRoute = (type: string): string | null => {
+  switch (type) {
+    case 'qs_review_submitted':
+      return '/employer?section=qsreviews';
+    default:
+      return null;
+  }
+};
+
 export function NotificationBell() {
   const [open, setOpen] = useState(false);
+  const navigate = useNavigate();
   const { data: unreadCount = 0 } = useUnreadCount();
   const { data: notifications = [], isLoading } = useNotifications();
   const markAsRead = useMarkAsRead();
@@ -107,6 +122,11 @@ export function NotificationBell() {
                   onClick={() => {
                     if (!notification.read_at) {
                       handleMarkAsRead(notification.id);
+                    }
+                    const route = getNotificationRoute(notification.type);
+                    if (route) {
+                      setOpen(false);
+                      navigate(route);
                     }
                   }}
                 >

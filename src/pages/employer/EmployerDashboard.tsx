@@ -104,6 +104,11 @@ const QualitySection = lazy(() =>
     default: m.QualitySection,
   }))
 );
+const QSReviewsSection = lazy(() =>
+  import('@/components/employer/sections/QSReviewsSection').then((m) => ({
+    default: m.QSReviewsSection,
+  }))
+);
 const JobBoardSection = lazy(() =>
   import('@/components/employer/sections/JobBoardSection').then((m) => ({
     default: m.JobBoardSection,
@@ -323,7 +328,8 @@ export type Section =
   | 'airams'
   | 'aimethodstatement'
   | 'aibriefingpack'
-  | 'aiquote';
+  | 'aiquote'
+  | 'qsreviews';
 
 const getParentSection = (section: Section): Section => {
   const hierarchy: Record<Section, Section> = {
@@ -350,6 +356,7 @@ const getParentSection = (section: Section): Section => {
     issues: 'jobshub',
     testing: 'jobshub',
     quality: 'jobshub',
+    qsreviews: 'jobshub',
     clientportal: 'jobshub',
     fleet: 'jobshub',
     photogallery: 'jobshub',
@@ -448,6 +455,7 @@ const sectionMetadata: Record<Section, SectionMeta> = {
   issues: { eyebrow: 'Jobs', title: 'Job Issues', queryKeys: ['jobIssues'] },
   testing: { eyebrow: 'Jobs', title: 'Testing Workflow', queryKeys: ['testingWorkflow'] },
   quality: { eyebrow: 'Jobs', title: 'Quality & Snags', queryKeys: ['quality', 'snags'] },
+  qsreviews: { eyebrow: 'Jobs', title: 'QS Reviews', queryKeys: ['qsReviews'] },
   clientportal: { eyebrow: 'Jobs', title: 'Client Portal' },
   fleet: { eyebrow: 'Jobs', title: 'Fleet', queryKeys: ['fleet', 'vehicles'] },
   photogallery: { eyebrow: 'Jobs', title: 'Photo Gallery', queryKeys: ['photos'] },
@@ -686,6 +694,11 @@ const EmployerDashboard = () => {
       quality: 'quality',
       snags: 'quality',
       defects: 'quality',
+      'qs-reviews': 'qsreviews',
+      qsreviews: 'qsreviews',
+      'qs reviews': 'qsreviews',
+      'qs review': 'qsreviews',
+      'qualifying supervisor': 'qsreviews',
       'client-portal': 'clientportal',
       clientportal: 'clientportal',
       'client portal': 'clientportal',
@@ -805,6 +818,8 @@ const EmployerDashboard = () => {
         return <CommunicationsSection />;
       case 'quality':
         return <QualitySection />;
+      case 'qsreviews':
+        return <QSReviewsSection />;
       case 'safety':
         return <SafetyHRSection />;
       case 'quotes':

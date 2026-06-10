@@ -33,6 +33,7 @@ import {
 } from '@/components/ui/select';
 import { toast } from '@/hooks/use-toast';
 import { useIsMobile } from '@/hooks/use-mobile';
+import { supabase } from '@/integrations/supabase/client';
 import { permissionsList, rolePermissions, type TeamRole } from '@/data/employerMockData';
 import { StripeConnectCard } from '../StripeConnectCard';
 import VoiceSettingsPanel from '../VoiceSettingsPanel';
@@ -106,6 +107,66 @@ export function SettingsSection() {
   const resendInvitation = useResendInvitation();
 
   const [dirty, setDirty] = useState(false);
+
+  // QS sign-off gate — "QS approval required before issue" (company_profiles)
+  const [qsApprovalRequired, setQsApprovalRequired] = useState(false);
+  const [qsToggleSaving, setQsToggleSaving] = useState(false);
+
+  useEffect(() => {
+    (async () => {
+      const {
+        data: { user },
+      } = await supabase.auth.getUser();
+      if (!user) return;
+      const { data } = await supabase
+        .from('company_profiles')
+        .select('qs_approval_required')
+        .eq('user_id', user.id)
+        .maybeSingle();
+      setQsApprovalRequired(!!data?.qs_approval_required);
+    })();
+  }, []);
+
+  const handleToggleQsApproval = async (checked: boolean) => {
+    const previous = qsApprovalRequired;
+    setQsApprovalRequired(checked);
+    setQsToggleSaving(true);
+    try {
+      const {
+        data: { user },
+      } = await supabase.auth.getUser();
+      if (!user) throw new Error('Not authenticated');
+
+      const { data: updated, error } = await supabase
+        .from('company_profiles')
+        .update({ qs_approval_required: checked })
+        .eq('user_id', user.id)
+        .select('id');
+      if (error) throw error;
+
+      // No company profile row yet — create one carrying just the setting
+      // (company_name is NOT NULL; the employer fills it in properly later)
+      if (!updated || updated.length === 0) {
+        const { error: insertError } = await supabase
+          .from('company_profiles')
+          .insert({ user_id: user.id, company_name: '', qs_approval_required: checked });
+        if (insertError) throw insertError;
+      }
+
+      toast({
+        title: checked ? 'QS approval now required' : 'QS approval optional',
+        description: checked
+          ? 'Team certificates must be countersigned by a QS before they can be issued.'
+          : 'Team members can issue certificates without QS sign-off.',
+      });
+    } catch (err) {
+      console.error('[Settings] QS gate toggle failed:', err);
+      setQsApprovalRequired(previous);
+      toast({ title: 'Could not save setting', variant: 'destructive' });
+    } finally {
+      setQsToggleSaving(false);
+    }
+  };
 
   useEffect(() => {
     getSetting('business_notification_email').then((value) => {
@@ -869,6 +930,28 @@ export function SettingsSection() {
                 subtitle={perm.description}
               />
             ))}
+          </ListBody>
+        </ListCard>
+
+        {/* Team — QS sign-off */}
+        <ListCard>
+          <ListCardHeader
+            tone="yellow"
+            title="QS sign-off"
+            meta={<Pill tone="yellow">{qsApprovalRequired ? 'Required' : 'Optional'}</Pill>}
+          />
+          <ListBody>
+            <ListRow
+              title="Require QS approval before issue"
+              subtitle="Team EICR, EIC and Minor Works certificates must be countersigned by a Qualifying Supervisor before the PDF can be issued."
+              trailing={
+                <Switch
+                  checked={qsApprovalRequired}
+                  onCheckedChange={handleToggleQsApproval}
+                  disabled={qsToggleSaving}
+                />
+              }
+            />
           </ListBody>
         </ListCard>
 

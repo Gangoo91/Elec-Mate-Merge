@@ -29,9 +29,141 @@ export type Database = {
         }
         Relationships: []
       }
+      ac_evidence_rules: {
+        Row: {
+          ac_code: string
+          authored_by: string | null
+          authored_by_name: string | null
+          created_at: string
+          example_description: string | null
+          guidance: string | null
+          id: string
+          is_mandatory: boolean
+          qualification_code: string
+          quantity_required: number
+          required_codes: string[]
+          source: string
+          unit_code: string
+          updated_at: string
+        }
+        Insert: {
+          ac_code: string
+          authored_by?: string | null
+          authored_by_name?: string | null
+          created_at?: string
+          example_description?: string | null
+          guidance?: string | null
+          id?: string
+          is_mandatory?: boolean
+          qualification_code: string
+          quantity_required?: number
+          required_codes?: string[]
+          source?: string
+          unit_code: string
+          updated_at?: string
+        }
+        Update: {
+          ac_code?: string
+          authored_by?: string | null
+          authored_by_name?: string | null
+          created_at?: string
+          example_description?: string | null
+          guidance?: string | null
+          id?: string
+          is_mandatory?: boolean
+          qualification_code?: string
+          quantity_required?: number
+          required_codes?: string[]
+          source?: string
+          unit_code?: string
+          updated_at?: string
+        }
+        Relationships: []
+      }
+      ac_signoffs: {
+        Row: {
+          ac_code: string
+          assessor_name_snapshot: string | null
+          assessor_narrative: string | null
+          assessor_signed_at: string | null
+          assessor_signed_by: string | null
+          assessor_verdict: string | null
+          created_at: string
+          id: string
+          iqa_feedback: string | null
+          iqa_name_snapshot: string | null
+          iqa_sampled_at: string | null
+          iqa_sampled_by: string | null
+          iqa_verdict: string | null
+          qualification_code: string
+          student_id: string
+          unit_code: string
+          updated_at: string
+        }
+        Insert: {
+          ac_code: string
+          assessor_name_snapshot?: string | null
+          assessor_narrative?: string | null
+          assessor_signed_at?: string | null
+          assessor_signed_by?: string | null
+          assessor_verdict?: string | null
+          created_at?: string
+          id?: string
+          iqa_feedback?: string | null
+          iqa_name_snapshot?: string | null
+          iqa_sampled_at?: string | null
+          iqa_sampled_by?: string | null
+          iqa_verdict?: string | null
+          qualification_code: string
+          student_id: string
+          unit_code: string
+          updated_at?: string
+        }
+        Update: {
+          ac_code?: string
+          assessor_name_snapshot?: string | null
+          assessor_narrative?: string | null
+          assessor_signed_at?: string | null
+          assessor_signed_by?: string | null
+          assessor_verdict?: string | null
+          created_at?: string
+          id?: string
+          iqa_feedback?: string | null
+          iqa_name_snapshot?: string | null
+          iqa_sampled_at?: string | null
+          iqa_sampled_by?: string | null
+          iqa_verdict?: string | null
+          qualification_code?: string
+          student_id?: string
+          unit_code?: string
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "ac_signoffs_student_id_fkey"
+            columns: ["student_id"]
+            isOneToOne: false
+            referencedRelation: "college_fs_gateway_status"
+            referencedColumns: ["student_id"]
+          },
+          {
+            foreignKeyName: "ac_signoffs_student_id_fkey"
+            columns: ["student_id"]
+            isOneToOne: false
+            referencedRelation: "college_iqa_otj_audit_queue"
+            referencedColumns: ["college_student_row_id"]
+          },
+          {
+            foreignKeyName: "ac_signoffs_student_id_fkey"
+            columns: ["student_id"]
+            isOneToOne: false
+            referencedRelation: "college_students"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       accident_records: {
         Row: {
-          job_id: string | null
           activity_at_time: string | null
           additional_notes: string | null
           archived_at: string | null
@@ -63,6 +195,7 @@ export type Database = {
           investigation_status: string | null
           is_archived: boolean | null
           is_riddor_reportable: boolean | null
+          job_id: string | null
           location: string
           location_detail: string | null
           pdf_url: string | null
@@ -87,7 +220,6 @@ export type Database = {
           witnesses: string | null
         }
         Insert: {
-          job_id?: string | null
           activity_at_time?: string | null
           additional_notes?: string | null
           archived_at?: string | null
@@ -119,6 +251,7 @@ export type Database = {
           investigation_status?: string | null
           is_archived?: boolean | null
           is_riddor_reportable?: boolean | null
+          job_id?: string | null
           location: string
           location_detail?: string | null
           pdf_url?: string | null
@@ -143,7 +276,6 @@ export type Database = {
           witnesses?: string | null
         }
         Update: {
-          job_id?: string | null
           activity_at_time?: string | null
           additional_notes?: string | null
           archived_at?: string | null
@@ -175,6 +307,7 @@ export type Database = {
           investigation_status?: string | null
           is_archived?: boolean | null
           is_riddor_reportable?: boolean | null
+          job_id?: string | null
           location?: string
           location_detail?: string | null
           pdf_url?: string | null
@@ -198,7 +331,15 @@ export type Database = {
           user_id?: string
           witnesses?: string | null
         }
-        Relationships: []
+        Relationships: [
+          {
+            foreignKeyName: "accident_records_job_id_fkey"
+            columns: ["job_id"]
+            isOneToOne: false
+            referencedRelation: "spark_projects"
+            referencedColumns: ["id"]
+          },
+        ]
       }
       accounting_expense_syncs: {
         Row: {
@@ -408,13 +549,21 @@ export type Database = {
       }
       admin_announcements: {
         Row: {
+          channel: string
           created_at: string | null
           created_by: string | null
           ends_at: string | null
           id: string
+          image_url: string | null
           is_active: boolean | null
           is_dismissible: boolean | null
+          link_url: string | null
           message: string
+          push_delivered_count: number
+          push_recipient_count: number
+          push_sent_at: string | null
+          push_tapped_count: number
+          send_push: boolean
           starts_at: string | null
           target_roles: string[] | null
           title: string
@@ -422,13 +571,21 @@ export type Database = {
           updated_at: string | null
         }
         Insert: {
+          channel?: string
           created_at?: string | null
           created_by?: string | null
           ends_at?: string | null
           id?: string
+          image_url?: string | null
           is_active?: boolean | null
           is_dismissible?: boolean | null
+          link_url?: string | null
           message: string
+          push_delivered_count?: number
+          push_recipient_count?: number
+          push_sent_at?: string | null
+          push_tapped_count?: number
+          send_push?: boolean
           starts_at?: string | null
           target_roles?: string[] | null
           title: string
@@ -436,13 +593,21 @@ export type Database = {
           updated_at?: string | null
         }
         Update: {
+          channel?: string
           created_at?: string | null
           created_by?: string | null
           ends_at?: string | null
           id?: string
+          image_url?: string | null
           is_active?: boolean | null
           is_dismissible?: boolean | null
+          link_url?: string | null
           message?: string
+          push_delivered_count?: number
+          push_recipient_count?: number
+          push_sent_at?: string | null
+          push_tapped_count?: number
+          send_push?: boolean
           starts_at?: string | null
           target_roles?: string[] | null
           title?: string
@@ -1106,6 +1271,7 @@ export type Database = {
       }
       ai_chat_history: {
         Row: {
+          agent: string
           archived_at: string | null
           created_at: string | null
           id: string
@@ -1117,6 +1283,7 @@ export type Database = {
           user_id: string
         }
         Insert: {
+          agent?: string
           archived_at?: string | null
           created_at?: string | null
           id?: string
@@ -1128,6 +1295,7 @@ export type Database = {
           user_id: string
         }
         Update: {
+          agent?: string
           archived_at?: string | null
           created_at?: string | null
           id?: string
@@ -1299,6 +1467,95 @@ export type Database = {
         }
         Relationships: []
       }
+      am2_reg_attempts: {
+        Row: {
+          attempt_count: number
+          correct_streak: number
+          created_at: string
+          ease_factor: number
+          id: string
+          incorrect_streak: number
+          interval_days: number
+          last_asked_at: string
+          last_confidence: string | null
+          last_correct: boolean
+          next_review_at: string
+          reg_number: string
+          regulation_id: string
+          updated_at: string
+          user_id: string
+        }
+        Insert: {
+          attempt_count?: number
+          correct_streak?: number
+          created_at?: string
+          ease_factor?: number
+          id?: string
+          incorrect_streak?: number
+          interval_days?: number
+          last_asked_at?: string
+          last_confidence?: string | null
+          last_correct: boolean
+          next_review_at?: string
+          reg_number: string
+          regulation_id: string
+          updated_at?: string
+          user_id: string
+        }
+        Update: {
+          attempt_count?: number
+          correct_streak?: number
+          created_at?: string
+          ease_factor?: number
+          id?: string
+          incorrect_streak?: number
+          interval_days?: number
+          last_asked_at?: string
+          last_confidence?: string | null
+          last_correct?: boolean
+          next_review_at?: string
+          reg_number?: string
+          regulation_id?: string
+          updated_at?: string
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "am2_reg_attempts_regulation_id_fkey"
+            columns: ["regulation_id"]
+            isOneToOne: false
+            referencedRelation: "bs7671_regulations"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      am2_scores: {
+        Row: {
+          attempts: number
+          component_key: string
+          created_at: string
+          score: number
+          updated_at: string
+          user_id: string
+        }
+        Insert: {
+          attempts?: number
+          component_key: string
+          created_at?: string
+          score?: number
+          updated_at?: string
+          user_id: string
+        }
+        Update: {
+          attempts?: number
+          component_key?: string
+          created_at?: string
+          score?: number
+          updated_at?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
       announcement_dismissals: {
         Row: {
           announcement_id: string
@@ -1339,6 +1596,50 @@ export type Database = {
             isOneToOne: false
             referencedRelation: "v_assessor_workload"
             referencedColumns: ["assessor_id"]
+          },
+        ]
+      }
+      announcement_push_recipients: {
+        Row: {
+          announcement_id: string
+          created_at: string
+          error: string | null
+          id: string
+          is_test: boolean
+          opened_at: string | null
+          status: string
+          tapped_at: string | null
+          user_id: string
+        }
+        Insert: {
+          announcement_id: string
+          created_at?: string
+          error?: string | null
+          id?: string
+          is_test?: boolean
+          opened_at?: string | null
+          status?: string
+          tapped_at?: string | null
+          user_id: string
+        }
+        Update: {
+          announcement_id?: string
+          created_at?: string
+          error?: string | null
+          id?: string
+          is_test?: boolean
+          opened_at?: string | null
+          status?: string
+          tapped_at?: string | null
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "announcement_push_recipients_announcement_id_fkey"
+            columns: ["announcement_id"]
+            isOneToOne: false
+            referencedRelation: "admin_announcements"
+            referencedColumns: ["id"]
           },
         ]
       }
@@ -1429,6 +1730,42 @@ export type Database = {
         }
         Relationships: []
       }
+      apprentice_daily_briefs: {
+        Row: {
+          bullets: Json
+          encouragement: string | null
+          generated_at: string | null
+          greeting: string | null
+          headline: string | null
+          id: string
+          iso_date: string
+          source_signals: Json | null
+          user_id: string
+        }
+        Insert: {
+          bullets?: Json
+          encouragement?: string | null
+          generated_at?: string | null
+          greeting?: string | null
+          headline?: string | null
+          id?: string
+          iso_date: string
+          source_signals?: Json | null
+          user_id: string
+        }
+        Update: {
+          bullets?: Json
+          encouragement?: string | null
+          generated_at?: string | null
+          greeting?: string | null
+          headline?: string | null
+          id?: string
+          iso_date?: string
+          source_signals?: Json | null
+          user_id?: string
+        }
+        Relationships: []
+      }
       apprentice_rights: {
         Row: {
           content: string | null
@@ -1450,6 +1787,39 @@ export type Database = {
           id?: string
           source_url?: string | null
           topic?: string
+        }
+        Relationships: []
+      }
+      apprentice_weekly_briefs: {
+        Row: {
+          bullets: Json
+          encouragement: string
+          generated_at: string
+          greeting: string
+          headline: string
+          id: string
+          iso_week: string
+          user_id: string
+        }
+        Insert: {
+          bullets?: Json
+          encouragement?: string
+          generated_at?: string
+          greeting: string
+          headline: string
+          id?: string
+          iso_week: string
+          user_id: string
+        }
+        Update: {
+          bullets?: Json
+          encouragement?: string
+          generated_at?: string
+          greeting?: string
+          headline?: string
+          id?: string
+          iso_week?: string
+          user_id?: string
         }
         Relationships: []
       }
@@ -1708,6 +2078,74 @@ export type Database = {
             isOneToOne: false
             referencedRelation: "v_assessor_workload"
             referencedColumns: ["assessor_id"]
+          },
+        ]
+      }
+      assistant_conversations: {
+        Row: {
+          created_at: string
+          id: string
+          last_message_at: string
+          title: string | null
+          user_id: string
+        }
+        Insert: {
+          created_at?: string
+          id?: string
+          last_message_at?: string
+          title?: string | null
+          user_id: string
+        }
+        Update: {
+          created_at?: string
+          id?: string
+          last_message_at?: string
+          title?: string | null
+          user_id?: string
+        }
+        Relationships: []
+      }
+      assistant_messages: {
+        Row: {
+          actions: Json | null
+          citations: Json | null
+          clarification: Json | null
+          content: string
+          conversation_id: string
+          created_at: string
+          id: string
+          role: string
+          user_id: string
+        }
+        Insert: {
+          actions?: Json | null
+          citations?: Json | null
+          clarification?: Json | null
+          content?: string
+          conversation_id: string
+          created_at?: string
+          id?: string
+          role: string
+          user_id: string
+        }
+        Update: {
+          actions?: Json | null
+          citations?: Json | null
+          clarification?: Json | null
+          content?: string
+          conversation_id?: string
+          created_at?: string
+          id?: string
+          role?: string
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "assistant_messages_conversation_id_fkey"
+            columns: ["conversation_id"]
+            isOneToOne: false
+            referencedRelation: "assistant_conversations"
+            referencedColumns: ["id"]
           },
         ]
       }
@@ -3603,6 +4041,104 @@ export type Database = {
         }
         Relationships: []
       }
+      calendar_slot_holds: {
+        Row: {
+          confirmed_at: string | null
+          created_at: string
+          expires_at: string
+          id: string
+          quote_id: string
+          released_at: string | null
+          slot_end: string
+          slot_start: string
+          user_id: string
+        }
+        Insert: {
+          confirmed_at?: string | null
+          created_at?: string
+          expires_at?: string
+          id?: string
+          quote_id: string
+          released_at?: string | null
+          slot_end: string
+          slot_start: string
+          user_id: string
+        }
+        Update: {
+          confirmed_at?: string | null
+          created_at?: string
+          expires_at?: string
+          id?: string
+          quote_id?: string
+          released_at?: string | null
+          slot_end?: string
+          slot_start?: string
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "calendar_slot_holds_quote_id_fkey"
+            columns: ["quote_id"]
+            isOneToOne: false
+            referencedRelation: "quotes"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      cancel_survey_responses: {
+        Row: {
+          created_at: string
+          id: string
+          offered_intervention: string | null
+          outcome: string
+          outcome_at: string | null
+          reason: string
+          reason_detail: string | null
+          subscription_id: string | null
+          subscription_tier: string | null
+          user_id: string
+        }
+        Insert: {
+          created_at?: string
+          id?: string
+          offered_intervention?: string | null
+          outcome?: string
+          outcome_at?: string | null
+          reason: string
+          reason_detail?: string | null
+          subscription_id?: string | null
+          subscription_tier?: string | null
+          user_id: string
+        }
+        Update: {
+          created_at?: string
+          id?: string
+          offered_intervention?: string | null
+          outcome?: string
+          outcome_at?: string | null
+          reason?: string
+          reason_detail?: string | null
+          subscription_id?: string | null
+          subscription_tier?: string | null
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "cancel_survey_responses_user_id_fkey"
+            columns: ["user_id"]
+            isOneToOne: false
+            referencedRelation: "profiles"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "cancel_survey_responses_user_id_fkey"
+            columns: ["user_id"]
+            isOneToOne: false
+            referencedRelation: "v_assessor_workload"
+            referencedColumns: ["assessor_id"]
+          },
+        ]
+      }
       career_bookmarks: {
         Row: {
           career_path_id: string
@@ -3999,6 +4535,35 @@ export type Database = {
             columns: ["project_id"]
             isOneToOne: false
             referencedRelation: "spark_projects"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      circuit_design_partials: {
+        Row: {
+          circuit_data: Json
+          circuit_index: number
+          created_at: string
+          job_id: string
+        }
+        Insert: {
+          circuit_data: Json
+          circuit_index: number
+          created_at?: string
+          job_id: string
+        }
+        Update: {
+          circuit_data?: Json
+          circuit_index?: number
+          created_at?: string
+          job_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "circuit_design_partials_job_id_fkey"
+            columns: ["job_id"]
+            isOneToOne: false
+            referencedRelation: "circuit_design_jobs"
             referencedColumns: ["id"]
           },
         ]
@@ -4406,6 +4971,106 @@ export type Database = {
           },
         ]
       }
+      college_ac_signoff_proposals: {
+        Row: {
+          ac_code: string | null
+          ac_id: string
+          ac_title: string | null
+          college_id: string
+          created_at: string | null
+          decided_at: string | null
+          decided_by: string | null
+          decision_notes: string | null
+          evidence_id: string | null
+          evidence_kind: string
+          id: string
+          score_pct: number | null
+          status: string
+          student_id: string
+          threshold_pct: number | null
+          updated_at: string | null
+        }
+        Insert: {
+          ac_code?: string | null
+          ac_id: string
+          ac_title?: string | null
+          college_id: string
+          created_at?: string | null
+          decided_at?: string | null
+          decided_by?: string | null
+          decision_notes?: string | null
+          evidence_id?: string | null
+          evidence_kind: string
+          id?: string
+          score_pct?: number | null
+          status?: string
+          student_id: string
+          threshold_pct?: number | null
+          updated_at?: string | null
+        }
+        Update: {
+          ac_code?: string | null
+          ac_id?: string
+          ac_title?: string | null
+          college_id?: string
+          created_at?: string | null
+          decided_at?: string | null
+          decided_by?: string | null
+          decision_notes?: string | null
+          evidence_id?: string | null
+          evidence_kind?: string
+          id?: string
+          score_pct?: number | null
+          status?: string
+          student_id?: string
+          threshold_pct?: number | null
+          updated_at?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "college_ac_signoff_proposals_college_id_fkey"
+            columns: ["college_id"]
+            isOneToOne: false
+            referencedRelation: "colleges"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "college_ac_signoff_proposals_college_id_fkey"
+            columns: ["college_id"]
+            isOneToOne: false
+            referencedRelation: "v_iqa_sampling_status"
+            referencedColumns: ["college_id"]
+          },
+          {
+            foreignKeyName: "college_ac_signoff_proposals_college_id_fkey"
+            columns: ["college_id"]
+            isOneToOne: false
+            referencedRelation: "v_portfolio_stats_by_college"
+            referencedColumns: ["college_id"]
+          },
+          {
+            foreignKeyName: "college_ac_signoff_proposals_student_id_fkey"
+            columns: ["student_id"]
+            isOneToOne: false
+            referencedRelation: "college_fs_gateway_status"
+            referencedColumns: ["student_id"]
+          },
+          {
+            foreignKeyName: "college_ac_signoff_proposals_student_id_fkey"
+            columns: ["student_id"]
+            isOneToOne: false
+            referencedRelation: "college_iqa_otj_audit_queue"
+            referencedColumns: ["college_student_row_id"]
+          },
+          {
+            foreignKeyName: "college_ac_signoff_proposals_student_id_fkey"
+            columns: ["student_id"]
+            isOneToOne: false
+            referencedRelation: "college_students"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       college_activity: {
         Row: {
           action: string
@@ -4461,6 +5126,164 @@ export type Database = {
           },
         ]
       }
+      college_apprentice_survey_responses: {
+        Row: {
+          answers: Json
+          cohort_band: string | null
+          college_id: string
+          created_at: string | null
+          id: string
+          response_token: string
+          sentiment_label: string | null
+          sentiment_score: number | null
+          survey_id: string
+          themes: string[] | null
+        }
+        Insert: {
+          answers?: Json
+          cohort_band?: string | null
+          college_id: string
+          created_at?: string | null
+          id?: string
+          response_token: string
+          sentiment_label?: string | null
+          sentiment_score?: number | null
+          survey_id: string
+          themes?: string[] | null
+        }
+        Update: {
+          answers?: Json
+          cohort_band?: string | null
+          college_id?: string
+          created_at?: string | null
+          id?: string
+          response_token?: string
+          sentiment_label?: string | null
+          sentiment_score?: number | null
+          survey_id?: string
+          themes?: string[] | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "college_apprentice_survey_responses_college_id_fkey"
+            columns: ["college_id"]
+            isOneToOne: false
+            referencedRelation: "colleges"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "college_apprentice_survey_responses_college_id_fkey"
+            columns: ["college_id"]
+            isOneToOne: false
+            referencedRelation: "v_iqa_sampling_status"
+            referencedColumns: ["college_id"]
+          },
+          {
+            foreignKeyName: "college_apprentice_survey_responses_college_id_fkey"
+            columns: ["college_id"]
+            isOneToOne: false
+            referencedRelation: "v_portfolio_stats_by_college"
+            referencedColumns: ["college_id"]
+          },
+          {
+            foreignKeyName: "college_apprentice_survey_responses_survey_id_fkey"
+            columns: ["survey_id"]
+            isOneToOne: false
+            referencedRelation: "college_apprentice_surveys"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      college_apprentice_survey_submissions: {
+        Row: {
+          submitted_at: string | null
+          survey_id: string
+          user_id: string
+        }
+        Insert: {
+          submitted_at?: string | null
+          survey_id: string
+          user_id: string
+        }
+        Update: {
+          submitted_at?: string | null
+          survey_id?: string
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "college_apprentice_survey_submissions_survey_id_fkey"
+            columns: ["survey_id"]
+            isOneToOne: false
+            referencedRelation: "college_apprentice_surveys"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      college_apprentice_surveys: {
+        Row: {
+          close_at: string
+          cohort_filter: string[] | null
+          college_id: string
+          created_at: string | null
+          id: string
+          is_active: boolean
+          iso_month: string
+          open_at: string
+          questions: Json
+          title: string
+          updated_at: string | null
+        }
+        Insert: {
+          close_at?: string
+          cohort_filter?: string[] | null
+          college_id: string
+          created_at?: string | null
+          id?: string
+          is_active?: boolean
+          iso_month: string
+          open_at?: string
+          questions?: Json
+          title?: string
+          updated_at?: string | null
+        }
+        Update: {
+          close_at?: string
+          cohort_filter?: string[] | null
+          college_id?: string
+          created_at?: string | null
+          id?: string
+          is_active?: boolean
+          iso_month?: string
+          open_at?: string
+          questions?: Json
+          title?: string
+          updated_at?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "college_apprentice_surveys_college_id_fkey"
+            columns: ["college_id"]
+            isOneToOne: false
+            referencedRelation: "colleges"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "college_apprentice_surveys_college_id_fkey"
+            columns: ["college_id"]
+            isOneToOne: false
+            referencedRelation: "v_iqa_sampling_status"
+            referencedColumns: ["college_id"]
+          },
+          {
+            foreignKeyName: "college_apprentice_surveys_college_id_fkey"
+            columns: ["college_id"]
+            isOneToOne: false
+            referencedRelation: "v_portfolio_stats_by_college"
+            referencedColumns: ["college_id"]
+          },
+        ]
+      }
       college_attendance: {
         Row: {
           cohort_id: string | null
@@ -4504,8 +5327,280 @@ export type Database = {
             foreignKeyName: "college_attendance_student_id_fkey"
             columns: ["student_id"]
             isOneToOne: false
+            referencedRelation: "college_fs_gateway_status"
+            referencedColumns: ["student_id"]
+          },
+          {
+            foreignKeyName: "college_attendance_student_id_fkey"
+            columns: ["student_id"]
+            isOneToOne: false
+            referencedRelation: "college_iqa_otj_audit_queue"
+            referencedColumns: ["college_student_row_id"]
+          },
+          {
+            foreignKeyName: "college_attendance_student_id_fkey"
+            columns: ["student_id"]
+            isOneToOne: false
             referencedRelation: "college_students"
             referencedColumns: ["id"]
+          },
+        ]
+      }
+      college_benchmark_comparison_cache: {
+        Row: {
+          college_id: string
+          iso_month: string
+          national_median: Json
+          rank_within_sector_pct: number | null
+          this_college: Json
+          updated_at: string | null
+        }
+        Insert: {
+          college_id: string
+          iso_month: string
+          national_median: Json
+          rank_within_sector_pct?: number | null
+          this_college: Json
+          updated_at?: string | null
+        }
+        Update: {
+          college_id?: string
+          iso_month?: string
+          national_median?: Json
+          rank_within_sector_pct?: number | null
+          this_college?: Json
+          updated_at?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "college_benchmark_comparison_cache_college_id_fkey"
+            columns: ["college_id"]
+            isOneToOne: true
+            referencedRelation: "colleges"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "college_benchmark_comparison_cache_college_id_fkey"
+            columns: ["college_id"]
+            isOneToOne: true
+            referencedRelation: "v_iqa_sampling_status"
+            referencedColumns: ["college_id"]
+          },
+          {
+            foreignKeyName: "college_benchmark_comparison_cache_college_id_fkey"
+            columns: ["college_id"]
+            isOneToOne: true
+            referencedRelation: "v_portfolio_stats_by_college"
+            referencedColumns: ["college_id"]
+          },
+        ]
+      }
+      college_benchmark_opt_in: {
+        Row: {
+          agreement_version: string | null
+          college_id: string
+          created_at: string | null
+          opted_in_at: string | null
+          opted_out_at: string | null
+          share_achievement: boolean
+          share_attendance: boolean
+          share_epa: boolean
+          share_fs_gateway: boolean
+          share_otj: boolean
+          share_retention: boolean
+          updated_at: string | null
+        }
+        Insert: {
+          agreement_version?: string | null
+          college_id: string
+          created_at?: string | null
+          opted_in_at?: string | null
+          opted_out_at?: string | null
+          share_achievement?: boolean
+          share_attendance?: boolean
+          share_epa?: boolean
+          share_fs_gateway?: boolean
+          share_otj?: boolean
+          share_retention?: boolean
+          updated_at?: string | null
+        }
+        Update: {
+          agreement_version?: string | null
+          college_id?: string
+          created_at?: string | null
+          opted_in_at?: string | null
+          opted_out_at?: string | null
+          share_achievement?: boolean
+          share_attendance?: boolean
+          share_epa?: boolean
+          share_fs_gateway?: boolean
+          share_otj?: boolean
+          share_retention?: boolean
+          updated_at?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "college_benchmark_opt_in_college_id_fkey"
+            columns: ["college_id"]
+            isOneToOne: true
+            referencedRelation: "colleges"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "college_benchmark_opt_in_college_id_fkey"
+            columns: ["college_id"]
+            isOneToOne: true
+            referencedRelation: "v_iqa_sampling_status"
+            referencedColumns: ["college_id"]
+          },
+          {
+            foreignKeyName: "college_benchmark_opt_in_college_id_fkey"
+            columns: ["college_id"]
+            isOneToOne: true
+            referencedRelation: "v_portfolio_stats_by_college"
+            referencedColumns: ["college_id"]
+          },
+        ]
+      }
+      college_benchmark_tokens: {
+        Row: {
+          college_id: string
+          created_at: string | null
+          current_token: string
+          rotates_at: string
+        }
+        Insert: {
+          college_id: string
+          created_at?: string | null
+          current_token: string
+          rotates_at: string
+        }
+        Update: {
+          college_id?: string
+          created_at?: string | null
+          current_token?: string
+          rotates_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "college_benchmark_tokens_college_id_fkey"
+            columns: ["college_id"]
+            isOneToOne: true
+            referencedRelation: "colleges"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "college_benchmark_tokens_college_id_fkey"
+            columns: ["college_id"]
+            isOneToOne: true
+            referencedRelation: "v_iqa_sampling_status"
+            referencedColumns: ["college_id"]
+          },
+          {
+            foreignKeyName: "college_benchmark_tokens_college_id_fkey"
+            columns: ["college_id"]
+            isOneToOne: true
+            referencedRelation: "v_portfolio_stats_by_college"
+            referencedColumns: ["college_id"]
+          },
+        ]
+      }
+      college_calibration_responses: {
+        Row: {
+          id: string
+          predicted_grade: string
+          predicted_score: number | null
+          rationale: string | null
+          session_id: string
+          submitted_at: string
+          tutor_id: string
+        }
+        Insert: {
+          id?: string
+          predicted_grade: string
+          predicted_score?: number | null
+          rationale?: string | null
+          session_id: string
+          submitted_at?: string
+          tutor_id: string
+        }
+        Update: {
+          id?: string
+          predicted_grade?: string
+          predicted_score?: number | null
+          rationale?: string | null
+          session_id?: string
+          submitted_at?: string
+          tutor_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "college_calibration_responses_session_id_fkey"
+            columns: ["session_id"]
+            isOneToOne: false
+            referencedRelation: "college_calibration_sessions"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      college_calibration_sessions: {
+        Row: {
+          anonymised_brief: string
+          closed_at: string | null
+          college_id: string
+          created_at: string
+          created_by: string
+          id: string
+          reference_grade: string | null
+          sample_kind: string
+          status: string
+          title: string
+        }
+        Insert: {
+          anonymised_brief: string
+          closed_at?: string | null
+          college_id: string
+          created_at?: string
+          created_by: string
+          id?: string
+          reference_grade?: string | null
+          sample_kind?: string
+          status?: string
+          title: string
+        }
+        Update: {
+          anonymised_brief?: string
+          closed_at?: string | null
+          college_id?: string
+          created_at?: string
+          created_by?: string
+          id?: string
+          reference_grade?: string | null
+          sample_kind?: string
+          status?: string
+          title?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "college_calibration_sessions_college_id_fkey"
+            columns: ["college_id"]
+            isOneToOne: false
+            referencedRelation: "colleges"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "college_calibration_sessions_college_id_fkey"
+            columns: ["college_id"]
+            isOneToOne: false
+            referencedRelation: "v_iqa_sampling_status"
+            referencedColumns: ["college_id"]
+          },
+          {
+            foreignKeyName: "college_calibration_sessions_college_id_fkey"
+            columns: ["college_id"]
+            isOneToOne: false
+            referencedRelation: "v_portfolio_stats_by_college"
+            referencedColumns: ["college_id"]
           },
         ]
       }
@@ -4582,6 +5677,96 @@ export type Database = {
             referencedRelation: "college_staff"
             referencedColumns: ["id"]
           },
+          {
+            foreignKeyName: "college_cohorts_tutor_id_fkey"
+            columns: ["tutor_id"]
+            isOneToOne: false
+            referencedRelation: "v_single_central_record"
+            referencedColumns: ["college_staff_id"]
+          },
+          {
+            foreignKeyName: "college_cohorts_tutor_id_fkey"
+            columns: ["tutor_id"]
+            isOneToOne: false
+            referencedRelation: "v_staff_cpd_progress"
+            referencedColumns: ["college_staff_id"]
+          },
+        ]
+      }
+      college_conversations: {
+        Row: {
+          conversation_type: string
+          created_at: string
+          id: string
+          institution_id: string
+          last_message_at: string | null
+          last_message_preview: string | null
+          participant_1_id: string
+          participant_1_type: string
+          participant_2_id: string
+          participant_2_type: string
+          status: string
+          student_id: string | null
+          unread_1: number
+          unread_2: number
+          updated_at: string
+        }
+        Insert: {
+          conversation_type: string
+          created_at?: string
+          id?: string
+          institution_id: string
+          last_message_at?: string | null
+          last_message_preview?: string | null
+          participant_1_id: string
+          participant_1_type: string
+          participant_2_id: string
+          participant_2_type: string
+          status?: string
+          student_id?: string | null
+          unread_1?: number
+          unread_2?: number
+          updated_at?: string
+        }
+        Update: {
+          conversation_type?: string
+          created_at?: string
+          id?: string
+          institution_id?: string
+          last_message_at?: string | null
+          last_message_preview?: string | null
+          participant_1_id?: string
+          participant_1_type?: string
+          participant_2_id?: string
+          participant_2_type?: string
+          status?: string
+          student_id?: string | null
+          unread_1?: number
+          unread_2?: number
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "college_conversations_student_id_fkey"
+            columns: ["student_id"]
+            isOneToOne: false
+            referencedRelation: "college_fs_gateway_status"
+            referencedColumns: ["student_id"]
+          },
+          {
+            foreignKeyName: "college_conversations_student_id_fkey"
+            columns: ["student_id"]
+            isOneToOne: false
+            referencedRelation: "college_iqa_otj_audit_queue"
+            referencedColumns: ["college_student_row_id"]
+          },
+          {
+            foreignKeyName: "college_conversations_student_id_fkey"
+            columns: ["student_id"]
+            isOneToOne: false
+            referencedRelation: "college_students"
+            referencedColumns: ["id"]
+          },
         ]
       }
       college_courses: {
@@ -4642,6 +5827,172 @@ export type Database = {
           },
         ]
       }
+      college_curriculum_settings: {
+        Row: {
+          additional_frameworks: string | null
+          college_id: string
+          created_at: string
+          dsl_name: string | null
+          include_british_values: boolean
+          include_inclusive_practice: boolean
+          include_stretch_challenge: boolean
+          prevent_lead_name: string | null
+          safeguarding_notes: string | null
+          updated_at: string
+        }
+        Insert: {
+          additional_frameworks?: string | null
+          college_id: string
+          created_at?: string
+          dsl_name?: string | null
+          include_british_values?: boolean
+          include_inclusive_practice?: boolean
+          include_stretch_challenge?: boolean
+          prevent_lead_name?: string | null
+          safeguarding_notes?: string | null
+          updated_at?: string
+        }
+        Update: {
+          additional_frameworks?: string | null
+          college_id?: string
+          created_at?: string
+          dsl_name?: string | null
+          include_british_values?: boolean
+          include_inclusive_practice?: boolean
+          include_stretch_challenge?: boolean
+          prevent_lead_name?: string | null
+          safeguarding_notes?: string | null
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "college_curriculum_settings_college_id_fkey"
+            columns: ["college_id"]
+            isOneToOne: true
+            referencedRelation: "colleges"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "college_curriculum_settings_college_id_fkey"
+            columns: ["college_id"]
+            isOneToOne: true
+            referencedRelation: "v_iqa_sampling_status"
+            referencedColumns: ["college_id"]
+          },
+          {
+            foreignKeyName: "college_curriculum_settings_college_id_fkey"
+            columns: ["college_id"]
+            isOneToOne: true
+            referencedRelation: "v_portfolio_stats_by_college"
+            referencedColumns: ["college_id"]
+          },
+        ]
+      }
+      college_employer_tokens: {
+        Row: {
+          created_at: string
+          created_by: string | null
+          employer_id: string
+          expires_at: string
+          id: string
+          last_used_at: string | null
+          purpose: string
+          revoked_at: string | null
+          token: string
+          use_count: number
+        }
+        Insert: {
+          created_at?: string
+          created_by?: string | null
+          employer_id: string
+          expires_at: string
+          id?: string
+          last_used_at?: string | null
+          purpose?: string
+          revoked_at?: string | null
+          token: string
+          use_count?: number
+        }
+        Update: {
+          created_at?: string
+          created_by?: string | null
+          employer_id?: string
+          expires_at?: string
+          id?: string
+          last_used_at?: string | null
+          purpose?: string
+          revoked_at?: string | null
+          token?: string
+          use_count?: number
+        }
+        Relationships: [
+          {
+            foreignKeyName: "college_employer_tokens_employer_id_fkey"
+            columns: ["employer_id"]
+            isOneToOne: false
+            referencedRelation: "college_employers"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      college_employers: {
+        Row: {
+          college_id: string
+          company_name: string
+          contact_email: string | null
+          contact_name: string | null
+          contact_phone: string | null
+          created_at: string
+          id: string
+          notes: string | null
+          updated_at: string
+        }
+        Insert: {
+          college_id: string
+          company_name: string
+          contact_email?: string | null
+          contact_name?: string | null
+          contact_phone?: string | null
+          created_at?: string
+          id?: string
+          notes?: string | null
+          updated_at?: string
+        }
+        Update: {
+          college_id?: string
+          company_name?: string
+          contact_email?: string | null
+          contact_name?: string | null
+          contact_phone?: string | null
+          created_at?: string
+          id?: string
+          notes?: string | null
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "college_employers_college_id_fkey"
+            columns: ["college_id"]
+            isOneToOne: false
+            referencedRelation: "colleges"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "college_employers_college_id_fkey"
+            columns: ["college_id"]
+            isOneToOne: false
+            referencedRelation: "v_iqa_sampling_status"
+            referencedColumns: ["college_id"]
+          },
+          {
+            foreignKeyName: "college_employers_college_id_fkey"
+            columns: ["college_id"]
+            isOneToOne: false
+            referencedRelation: "v_portfolio_stats_by_college"
+            referencedColumns: ["college_id"]
+          },
+        ]
+      }
       college_epa: {
         Row: {
           created_at: string | null
@@ -4682,6 +6033,298 @@ export type Database = {
         Relationships: [
           {
             foreignKeyName: "college_epa_student_id_fkey"
+            columns: ["student_id"]
+            isOneToOne: false
+            referencedRelation: "college_fs_gateway_status"
+            referencedColumns: ["student_id"]
+          },
+          {
+            foreignKeyName: "college_epa_student_id_fkey"
+            columns: ["student_id"]
+            isOneToOne: false
+            referencedRelation: "college_iqa_otj_audit_queue"
+            referencedColumns: ["college_student_row_id"]
+          },
+          {
+            foreignKeyName: "college_epa_student_id_fkey"
+            columns: ["student_id"]
+            isOneToOne: false
+            referencedRelation: "college_students"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      college_epa_briefs: {
+        Row: {
+          brief: Json
+          college_id: string
+          college_student_id: string
+          created_at: string
+          facets_used: number
+          generated_by: string | null
+          generated_for: string
+          id: string
+          signals_used: Json
+        }
+        Insert: {
+          brief: Json
+          college_id: string
+          college_student_id: string
+          created_at?: string
+          facets_used?: number
+          generated_by?: string | null
+          generated_for: string
+          id?: string
+          signals_used?: Json
+        }
+        Update: {
+          brief?: Json
+          college_id?: string
+          college_student_id?: string
+          created_at?: string
+          facets_used?: number
+          generated_by?: string | null
+          generated_for?: string
+          id?: string
+          signals_used?: Json
+        }
+        Relationships: [
+          {
+            foreignKeyName: "college_epa_briefs_college_student_id_fkey"
+            columns: ["college_student_id"]
+            isOneToOne: false
+            referencedRelation: "college_fs_gateway_status"
+            referencedColumns: ["student_id"]
+          },
+          {
+            foreignKeyName: "college_epa_briefs_college_student_id_fkey"
+            columns: ["college_student_id"]
+            isOneToOne: false
+            referencedRelation: "college_iqa_otj_audit_queue"
+            referencedColumns: ["college_student_row_id"]
+          },
+          {
+            foreignKeyName: "college_epa_briefs_college_student_id_fkey"
+            columns: ["college_student_id"]
+            isOneToOne: false
+            referencedRelation: "college_students"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      college_epa_judgements: {
+        Row: {
+          actual_outcome: string | null
+          actual_recorded_at: string | null
+          actual_recorded_by: string | null
+          blockers: string[] | null
+          citations: Json | null
+          college_id: string
+          college_student_id: string
+          confidence: number | null
+          cosign_kind: string | null
+          cosign_rationale: string | null
+          created_at: string
+          id: string
+          is_current: boolean
+          parent_judgement_id: string | null
+          predicted_grade: string | null
+          rationale: string | null
+          recommended_actions: Json | null
+          signals_used: Json | null
+          source: string
+          source_name_snapshot: string | null
+          source_user_id: string | null
+          strengths: string[] | null
+          superseded_by: string | null
+          updated_at: string
+          verdict: string
+          what_if: Json | null
+        }
+        Insert: {
+          actual_outcome?: string | null
+          actual_recorded_at?: string | null
+          actual_recorded_by?: string | null
+          blockers?: string[] | null
+          citations?: Json | null
+          college_id: string
+          college_student_id: string
+          confidence?: number | null
+          cosign_kind?: string | null
+          cosign_rationale?: string | null
+          created_at?: string
+          id?: string
+          is_current?: boolean
+          parent_judgement_id?: string | null
+          predicted_grade?: string | null
+          rationale?: string | null
+          recommended_actions?: Json | null
+          signals_used?: Json | null
+          source: string
+          source_name_snapshot?: string | null
+          source_user_id?: string | null
+          strengths?: string[] | null
+          superseded_by?: string | null
+          updated_at?: string
+          verdict: string
+          what_if?: Json | null
+        }
+        Update: {
+          actual_outcome?: string | null
+          actual_recorded_at?: string | null
+          actual_recorded_by?: string | null
+          blockers?: string[] | null
+          citations?: Json | null
+          college_id?: string
+          college_student_id?: string
+          confidence?: number | null
+          cosign_kind?: string | null
+          cosign_rationale?: string | null
+          created_at?: string
+          id?: string
+          is_current?: boolean
+          parent_judgement_id?: string | null
+          predicted_grade?: string | null
+          rationale?: string | null
+          recommended_actions?: Json | null
+          signals_used?: Json | null
+          source?: string
+          source_name_snapshot?: string | null
+          source_user_id?: string | null
+          strengths?: string[] | null
+          superseded_by?: string | null
+          updated_at?: string
+          verdict?: string
+          what_if?: Json | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "college_epa_judgements_college_student_id_fkey"
+            columns: ["college_student_id"]
+            isOneToOne: false
+            referencedRelation: "college_fs_gateway_status"
+            referencedColumns: ["student_id"]
+          },
+          {
+            foreignKeyName: "college_epa_judgements_college_student_id_fkey"
+            columns: ["college_student_id"]
+            isOneToOne: false
+            referencedRelation: "college_iqa_otj_audit_queue"
+            referencedColumns: ["college_student_row_id"]
+          },
+          {
+            foreignKeyName: "college_epa_judgements_college_student_id_fkey"
+            columns: ["college_student_id"]
+            isOneToOne: false
+            referencedRelation: "college_students"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "college_epa_judgements_parent_judgement_id_fkey"
+            columns: ["parent_judgement_id"]
+            isOneToOne: false
+            referencedRelation: "college_epa_judgements"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "college_epa_judgements_superseded_by_fkey"
+            columns: ["superseded_by"]
+            isOneToOne: false
+            referencedRelation: "college_epa_judgements"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      college_functional_skills: {
+        Row: {
+          awarding_body: string | null
+          certificate_url: string | null
+          college_id: string
+          created_at: string | null
+          exam_date: string | null
+          exemption_reason: string | null
+          id: string
+          level: string | null
+          notes: string | null
+          result_date: string | null
+          result_score: number | null
+          status: string
+          student_id: string
+          subject: string
+          updated_at: string | null
+        }
+        Insert: {
+          awarding_body?: string | null
+          certificate_url?: string | null
+          college_id: string
+          created_at?: string | null
+          exam_date?: string | null
+          exemption_reason?: string | null
+          id?: string
+          level?: string | null
+          notes?: string | null
+          result_date?: string | null
+          result_score?: number | null
+          status?: string
+          student_id: string
+          subject: string
+          updated_at?: string | null
+        }
+        Update: {
+          awarding_body?: string | null
+          certificate_url?: string | null
+          college_id?: string
+          created_at?: string | null
+          exam_date?: string | null
+          exemption_reason?: string | null
+          id?: string
+          level?: string | null
+          notes?: string | null
+          result_date?: string | null
+          result_score?: number | null
+          status?: string
+          student_id?: string
+          subject?: string
+          updated_at?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "college_functional_skills_college_id_fkey"
+            columns: ["college_id"]
+            isOneToOne: false
+            referencedRelation: "colleges"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "college_functional_skills_college_id_fkey"
+            columns: ["college_id"]
+            isOneToOne: false
+            referencedRelation: "v_iqa_sampling_status"
+            referencedColumns: ["college_id"]
+          },
+          {
+            foreignKeyName: "college_functional_skills_college_id_fkey"
+            columns: ["college_id"]
+            isOneToOne: false
+            referencedRelation: "v_portfolio_stats_by_college"
+            referencedColumns: ["college_id"]
+          },
+          {
+            foreignKeyName: "college_functional_skills_student_id_fkey"
+            columns: ["student_id"]
+            isOneToOne: false
+            referencedRelation: "college_fs_gateway_status"
+            referencedColumns: ["student_id"]
+          },
+          {
+            foreignKeyName: "college_functional_skills_student_id_fkey"
+            columns: ["student_id"]
+            isOneToOne: false
+            referencedRelation: "college_iqa_otj_audit_queue"
+            referencedColumns: ["college_student_row_id"]
+          },
+          {
+            foreignKeyName: "college_functional_skills_student_id_fkey"
             columns: ["student_id"]
             isOneToOne: false
             referencedRelation: "college_students"
@@ -4744,6 +6387,158 @@ export type Database = {
             foreignKeyName: "college_grades_student_id_fkey"
             columns: ["student_id"]
             isOneToOne: false
+            referencedRelation: "college_fs_gateway_status"
+            referencedColumns: ["student_id"]
+          },
+          {
+            foreignKeyName: "college_grades_student_id_fkey"
+            columns: ["student_id"]
+            isOneToOne: false
+            referencedRelation: "college_iqa_otj_audit_queue"
+            referencedColumns: ["college_student_row_id"]
+          },
+          {
+            foreignKeyName: "college_grades_student_id_fkey"
+            columns: ["student_id"]
+            isOneToOne: false
+            referencedRelation: "college_students"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      college_ilp_goals: {
+        Row: {
+          acceptance_criteria: string | null
+          category: string
+          college_id: string | null
+          completed_at: string | null
+          completed_by: string | null
+          created_at: string
+          created_by: string | null
+          description: string | null
+          id: string
+          ilp_id: string
+          position: number
+          priority: string
+          source: string
+          status: string
+          student_acknowledged: boolean
+          student_acknowledged_at: string | null
+          student_comment: string | null
+          student_comment_at: string | null
+          student_id: string
+          target_date: string | null
+          title: string
+          tutor_comment: string | null
+          tutor_comment_at: string | null
+          updated_at: string
+        }
+        Insert: {
+          acceptance_criteria?: string | null
+          category?: string
+          college_id?: string | null
+          completed_at?: string | null
+          completed_by?: string | null
+          created_at?: string
+          created_by?: string | null
+          description?: string | null
+          id?: string
+          ilp_id: string
+          position?: number
+          priority?: string
+          source?: string
+          status?: string
+          student_acknowledged?: boolean
+          student_acknowledged_at?: string | null
+          student_comment?: string | null
+          student_comment_at?: string | null
+          student_id: string
+          target_date?: string | null
+          title: string
+          tutor_comment?: string | null
+          tutor_comment_at?: string | null
+          updated_at?: string
+        }
+        Update: {
+          acceptance_criteria?: string | null
+          category?: string
+          college_id?: string | null
+          completed_at?: string | null
+          completed_by?: string | null
+          created_at?: string
+          created_by?: string | null
+          description?: string | null
+          id?: string
+          ilp_id?: string
+          position?: number
+          priority?: string
+          source?: string
+          status?: string
+          student_acknowledged?: boolean
+          student_acknowledged_at?: string | null
+          student_comment?: string | null
+          student_comment_at?: string | null
+          student_id?: string
+          target_date?: string | null
+          title?: string
+          tutor_comment?: string | null
+          tutor_comment_at?: string | null
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "college_ilp_goals_completed_by_fkey"
+            columns: ["completed_by"]
+            isOneToOne: false
+            referencedRelation: "profiles"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "college_ilp_goals_completed_by_fkey"
+            columns: ["completed_by"]
+            isOneToOne: false
+            referencedRelation: "v_assessor_workload"
+            referencedColumns: ["assessor_id"]
+          },
+          {
+            foreignKeyName: "college_ilp_goals_created_by_fkey"
+            columns: ["created_by"]
+            isOneToOne: false
+            referencedRelation: "profiles"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "college_ilp_goals_created_by_fkey"
+            columns: ["created_by"]
+            isOneToOne: false
+            referencedRelation: "v_assessor_workload"
+            referencedColumns: ["assessor_id"]
+          },
+          {
+            foreignKeyName: "college_ilp_goals_ilp_id_fkey"
+            columns: ["ilp_id"]
+            isOneToOne: false
+            referencedRelation: "college_ilps"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "college_ilp_goals_student_id_fkey"
+            columns: ["student_id"]
+            isOneToOne: false
+            referencedRelation: "college_fs_gateway_status"
+            referencedColumns: ["student_id"]
+          },
+          {
+            foreignKeyName: "college_ilp_goals_student_id_fkey"
+            columns: ["student_id"]
+            isOneToOne: false
+            referencedRelation: "college_iqa_otj_audit_queue"
+            referencedColumns: ["college_student_row_id"]
+          },
+          {
+            foreignKeyName: "college_ilp_goals_student_id_fkey"
+            columns: ["student_id"]
+            isOneToOne: false
             referencedRelation: "college_students"
             referencedColumns: ["id"]
           },
@@ -4751,45 +6546,254 @@ export type Database = {
       }
       college_ilps: {
         Row: {
+          accessibility_adjustments: string | null
+          college_id: string | null
           created_at: string | null
+          created_by: string | null
+          headline_areas: string | null
+          headline_focus: string | null
+          headline_strengths: string | null
           id: string
+          is_current: boolean
           last_reviewed: string | null
+          published_at: string | null
+          qualification_id: string | null
           review_date: string | null
           reviewed_by: string | null
           status: string | null
           student_id: string | null
           support_needs: string | null
+          support_strategies: string | null
+          target_completion_date: string | null
           targets: Json | null
+          tutor_id: string | null
+          tutor_name_snapshot: string | null
+          updated_at: string | null
+          version: number
         }
         Insert: {
+          accessibility_adjustments?: string | null
+          college_id?: string | null
           created_at?: string | null
+          created_by?: string | null
+          headline_areas?: string | null
+          headline_focus?: string | null
+          headline_strengths?: string | null
           id?: string
+          is_current?: boolean
           last_reviewed?: string | null
+          published_at?: string | null
+          qualification_id?: string | null
           review_date?: string | null
           reviewed_by?: string | null
           status?: string | null
           student_id?: string | null
           support_needs?: string | null
+          support_strategies?: string | null
+          target_completion_date?: string | null
           targets?: Json | null
+          tutor_id?: string | null
+          tutor_name_snapshot?: string | null
+          updated_at?: string | null
+          version?: number
         }
         Update: {
+          accessibility_adjustments?: string | null
+          college_id?: string | null
           created_at?: string | null
+          created_by?: string | null
+          headline_areas?: string | null
+          headline_focus?: string | null
+          headline_strengths?: string | null
           id?: string
+          is_current?: boolean
           last_reviewed?: string | null
+          published_at?: string | null
+          qualification_id?: string | null
           review_date?: string | null
           reviewed_by?: string | null
           status?: string | null
           student_id?: string | null
           support_needs?: string | null
+          support_strategies?: string | null
+          target_completion_date?: string | null
           targets?: Json | null
+          tutor_id?: string | null
+          tutor_name_snapshot?: string | null
+          updated_at?: string | null
+          version?: number
         }
         Relationships: [
+          {
+            foreignKeyName: "college_ilps_created_by_fkey"
+            columns: ["created_by"]
+            isOneToOne: false
+            referencedRelation: "profiles"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "college_ilps_created_by_fkey"
+            columns: ["created_by"]
+            isOneToOne: false
+            referencedRelation: "v_assessor_workload"
+            referencedColumns: ["assessor_id"]
+          },
+          {
+            foreignKeyName: "college_ilps_student_id_fkey"
+            columns: ["student_id"]
+            isOneToOne: false
+            referencedRelation: "college_fs_gateway_status"
+            referencedColumns: ["student_id"]
+          },
+          {
+            foreignKeyName: "college_ilps_student_id_fkey"
+            columns: ["student_id"]
+            isOneToOne: false
+            referencedRelation: "college_iqa_otj_audit_queue"
+            referencedColumns: ["college_student_row_id"]
+          },
           {
             foreignKeyName: "college_ilps_student_id_fkey"
             columns: ["student_id"]
             isOneToOne: false
             referencedRelation: "college_students"
             referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "college_ilps_tutor_id_fkey"
+            columns: ["tutor_id"]
+            isOneToOne: false
+            referencedRelation: "profiles"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "college_ilps_tutor_id_fkey"
+            columns: ["tutor_id"]
+            isOneToOne: false
+            referencedRelation: "v_assessor_workload"
+            referencedColumns: ["assessor_id"]
+          },
+        ]
+      }
+      college_inbox_read_states: {
+        Row: {
+          created_at: string
+          dismissed_at: string | null
+          read_at: string | null
+          source: string
+          source_id: string
+          staff_id: string
+          updated_at: string
+        }
+        Insert: {
+          created_at?: string
+          dismissed_at?: string | null
+          read_at?: string | null
+          source: string
+          source_id: string
+          staff_id: string
+          updated_at?: string
+        }
+        Update: {
+          created_at?: string
+          dismissed_at?: string | null
+          read_at?: string | null
+          source?: string
+          source_id?: string
+          staff_id?: string
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "college_inbox_read_states_staff_id_fkey"
+            columns: ["staff_id"]
+            isOneToOne: false
+            referencedRelation: "college_staff"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "college_inbox_read_states_staff_id_fkey"
+            columns: ["staff_id"]
+            isOneToOne: false
+            referencedRelation: "v_single_central_record"
+            referencedColumns: ["college_staff_id"]
+          },
+          {
+            foreignKeyName: "college_inbox_read_states_staff_id_fkey"
+            columns: ["staff_id"]
+            isOneToOne: false
+            referencedRelation: "v_staff_cpd_progress"
+            referencedColumns: ["college_staff_id"]
+          },
+        ]
+      }
+      college_inspection_rehearsals: {
+        Row: {
+          college_id: string
+          created_at: string | null
+          id: string
+          overall_verdict: string | null
+          scenario: string
+          source_signals: Json | null
+          status: string
+          strengths: string[] | null
+          turns: Json
+          updated_at: string | null
+          user_id: string
+          verdict_summary: string | null
+          weaknesses: string[] | null
+        }
+        Insert: {
+          college_id: string
+          created_at?: string | null
+          id?: string
+          overall_verdict?: string | null
+          scenario?: string
+          source_signals?: Json | null
+          status?: string
+          strengths?: string[] | null
+          turns?: Json
+          updated_at?: string | null
+          user_id: string
+          verdict_summary?: string | null
+          weaknesses?: string[] | null
+        }
+        Update: {
+          college_id?: string
+          created_at?: string | null
+          id?: string
+          overall_verdict?: string | null
+          scenario?: string
+          source_signals?: Json | null
+          status?: string
+          strengths?: string[] | null
+          turns?: Json
+          updated_at?: string | null
+          user_id?: string
+          verdict_summary?: string | null
+          weaknesses?: string[] | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "college_inspection_rehearsals_college_id_fkey"
+            columns: ["college_id"]
+            isOneToOne: false
+            referencedRelation: "colleges"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "college_inspection_rehearsals_college_id_fkey"
+            columns: ["college_id"]
+            isOneToOne: false
+            referencedRelation: "v_iqa_sampling_status"
+            referencedColumns: ["college_id"]
+          },
+          {
+            foreignKeyName: "college_inspection_rehearsals_college_id_fkey"
+            columns: ["college_id"]
+            isOneToOne: false
+            referencedRelation: "v_portfolio_stats_by_college"
+            referencedColumns: ["college_id"]
           },
         ]
       }
@@ -4804,6 +6808,7 @@ export type Database = {
           invite_type: string
           is_active: boolean | null
           max_uses: number | null
+          qualification_id: string | null
           role_to_assign: string | null
           use_count: number | null
         }
@@ -4817,6 +6822,7 @@ export type Database = {
           invite_type: string
           is_active?: boolean | null
           max_uses?: number | null
+          qualification_id?: string | null
           role_to_assign?: string | null
           use_count?: number | null
         }
@@ -4830,6 +6836,7 @@ export type Database = {
           invite_type?: string
           is_active?: boolean | null
           max_uses?: number | null
+          qualification_id?: string | null
           role_to_assign?: string | null
           use_count?: number | null
         }
@@ -4855,45 +6862,159 @@ export type Database = {
             referencedRelation: "v_portfolio_stats_by_college"
             referencedColumns: ["college_id"]
           },
+          {
+            foreignKeyName: "college_invites_qualification_id_fkey"
+            columns: ["qualification_id"]
+            isOneToOne: false
+            referencedRelation: "qualifications"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "college_invites_qualification_id_fkey"
+            columns: ["qualification_id"]
+            isOneToOne: false
+            referencedRelation: "v_iqa_sampling_status"
+            referencedColumns: ["qualification_id"]
+          },
+        ]
+      }
+      college_iqa_eqa_checklist_items: {
+        Row: {
+          college_id: string
+          completed_at: string | null
+          completed_by: string | null
+          created_at: string
+          created_by: string | null
+          eqa_cycle: string
+          evidence_url: string | null
+          id: string
+          item_label: string
+          notes: string | null
+          sort_order: number
+          status: string
+          updated_at: string
+        }
+        Insert: {
+          college_id: string
+          completed_at?: string | null
+          completed_by?: string | null
+          created_at?: string
+          created_by?: string | null
+          eqa_cycle?: string
+          evidence_url?: string | null
+          id?: string
+          item_label: string
+          notes?: string | null
+          sort_order?: number
+          status?: string
+          updated_at?: string
+        }
+        Update: {
+          college_id?: string
+          completed_at?: string | null
+          completed_by?: string | null
+          created_at?: string
+          created_by?: string | null
+          eqa_cycle?: string
+          evidence_url?: string | null
+          id?: string
+          item_label?: string
+          notes?: string | null
+          sort_order?: number
+          status?: string
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "college_iqa_eqa_checklist_items_college_id_fkey"
+            columns: ["college_id"]
+            isOneToOne: false
+            referencedRelation: "colleges"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "college_iqa_eqa_checklist_items_college_id_fkey"
+            columns: ["college_id"]
+            isOneToOne: false
+            referencedRelation: "v_iqa_sampling_status"
+            referencedColumns: ["college_id"]
+          },
+          {
+            foreignKeyName: "college_iqa_eqa_checklist_items_college_id_fkey"
+            columns: ["college_id"]
+            isOneToOne: false
+            referencedRelation: "v_portfolio_stats_by_college"
+            referencedColumns: ["college_id"]
+          },
         ]
       }
       college_iqa_findings: {
         Row: {
           action_plan: string | null
+          area: string | null
           assessor_id: string | null
           assessor_name: string
           closed_at: string | null
           college_id: string | null
           created_at: string | null
+          created_by: string | null
           description: string
+          due_date: string | null
           finding_type: string
           id: string
+          iqa_id: string | null
+          iqa_name_snapshot: string | null
+          observation_id: string | null
+          owner_staff_id: string | null
+          resolution_notes: string | null
+          sample_id: string | null
+          severity: string | null
           status: string
           updated_at: string | null
         }
         Insert: {
           action_plan?: string | null
+          area?: string | null
           assessor_id?: string | null
           assessor_name: string
           closed_at?: string | null
           college_id?: string | null
           created_at?: string | null
+          created_by?: string | null
           description: string
+          due_date?: string | null
           finding_type: string
           id?: string
+          iqa_id?: string | null
+          iqa_name_snapshot?: string | null
+          observation_id?: string | null
+          owner_staff_id?: string | null
+          resolution_notes?: string | null
+          sample_id?: string | null
+          severity?: string | null
           status?: string
           updated_at?: string | null
         }
         Update: {
           action_plan?: string | null
+          area?: string | null
           assessor_id?: string | null
           assessor_name?: string
           closed_at?: string | null
           college_id?: string | null
           created_at?: string | null
+          created_by?: string | null
           description?: string
+          due_date?: string | null
           finding_type?: string
           id?: string
+          iqa_id?: string | null
+          iqa_name_snapshot?: string | null
+          observation_id?: string | null
+          owner_staff_id?: string | null
+          resolution_notes?: string | null
+          sample_id?: string | null
+          severity?: string | null
           status?: string
           updated_at?: string | null
         }
@@ -4906,6 +7027,20 @@ export type Database = {
             referencedColumns: ["id"]
           },
           {
+            foreignKeyName: "college_iqa_findings_assessor_id_fkey"
+            columns: ["assessor_id"]
+            isOneToOne: false
+            referencedRelation: "v_single_central_record"
+            referencedColumns: ["college_staff_id"]
+          },
+          {
+            foreignKeyName: "college_iqa_findings_assessor_id_fkey"
+            columns: ["assessor_id"]
+            isOneToOne: false
+            referencedRelation: "v_staff_cpd_progress"
+            referencedColumns: ["college_staff_id"]
+          },
+          {
             foreignKeyName: "college_iqa_findings_college_id_fkey"
             columns: ["college_id"]
             isOneToOne: false
@@ -4926,6 +7061,166 @@ export type Database = {
             referencedRelation: "v_portfolio_stats_by_college"
             referencedColumns: ["college_id"]
           },
+          {
+            foreignKeyName: "college_iqa_findings_iqa_id_fkey"
+            columns: ["iqa_id"]
+            isOneToOne: false
+            referencedRelation: "college_staff"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "college_iqa_findings_iqa_id_fkey"
+            columns: ["iqa_id"]
+            isOneToOne: false
+            referencedRelation: "v_single_central_record"
+            referencedColumns: ["college_staff_id"]
+          },
+          {
+            foreignKeyName: "college_iqa_findings_iqa_id_fkey"
+            columns: ["iqa_id"]
+            isOneToOne: false
+            referencedRelation: "v_staff_cpd_progress"
+            referencedColumns: ["college_staff_id"]
+          },
+          {
+            foreignKeyName: "college_iqa_findings_observation_id_fkey"
+            columns: ["observation_id"]
+            isOneToOne: false
+            referencedRelation: "college_observations"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "college_iqa_findings_owner_staff_id_fkey"
+            columns: ["owner_staff_id"]
+            isOneToOne: false
+            referencedRelation: "college_staff"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "college_iqa_findings_owner_staff_id_fkey"
+            columns: ["owner_staff_id"]
+            isOneToOne: false
+            referencedRelation: "v_single_central_record"
+            referencedColumns: ["college_staff_id"]
+          },
+          {
+            foreignKeyName: "college_iqa_findings_owner_staff_id_fkey"
+            columns: ["owner_staff_id"]
+            isOneToOne: false
+            referencedRelation: "v_staff_cpd_progress"
+            referencedColumns: ["college_staff_id"]
+          },
+          {
+            foreignKeyName: "college_iqa_findings_sample_id_fkey"
+            columns: ["sample_id"]
+            isOneToOne: false
+            referencedRelation: "college_iqa_samples"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      college_iqa_samples: {
+        Row: {
+          comments: string | null
+          created_at: string
+          id: string
+          iqa_id: string | null
+          iqa_name_snapshot: string | null
+          observation_date_snapshot: string | null
+          observation_id: string | null
+          observation_title_snapshot: string | null
+          otj_date_snapshot: string | null
+          otj_id: string | null
+          otj_title_snapshot: string | null
+          sampled_at: string
+          sampling_plan_id: string
+          updated_at: string
+          verdict: string
+        }
+        Insert: {
+          comments?: string | null
+          created_at?: string
+          id?: string
+          iqa_id?: string | null
+          iqa_name_snapshot?: string | null
+          observation_date_snapshot?: string | null
+          observation_id?: string | null
+          observation_title_snapshot?: string | null
+          otj_date_snapshot?: string | null
+          otj_id?: string | null
+          otj_title_snapshot?: string | null
+          sampled_at?: string
+          sampling_plan_id: string
+          updated_at?: string
+          verdict?: string
+        }
+        Update: {
+          comments?: string | null
+          created_at?: string
+          id?: string
+          iqa_id?: string | null
+          iqa_name_snapshot?: string | null
+          observation_date_snapshot?: string | null
+          observation_id?: string | null
+          observation_title_snapshot?: string | null
+          otj_date_snapshot?: string | null
+          otj_id?: string | null
+          otj_title_snapshot?: string | null
+          sampled_at?: string
+          sampling_plan_id?: string
+          updated_at?: string
+          verdict?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "college_iqa_samples_iqa_id_fkey"
+            columns: ["iqa_id"]
+            isOneToOne: false
+            referencedRelation: "college_staff"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "college_iqa_samples_iqa_id_fkey"
+            columns: ["iqa_id"]
+            isOneToOne: false
+            referencedRelation: "v_single_central_record"
+            referencedColumns: ["college_staff_id"]
+          },
+          {
+            foreignKeyName: "college_iqa_samples_iqa_id_fkey"
+            columns: ["iqa_id"]
+            isOneToOne: false
+            referencedRelation: "v_staff_cpd_progress"
+            referencedColumns: ["college_staff_id"]
+          },
+          {
+            foreignKeyName: "college_iqa_samples_observation_id_fkey"
+            columns: ["observation_id"]
+            isOneToOne: false
+            referencedRelation: "college_observations"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "college_iqa_samples_otj_id_fkey"
+            columns: ["otj_id"]
+            isOneToOne: false
+            referencedRelation: "college_iqa_otj_audit_queue"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "college_iqa_samples_otj_id_fkey"
+            columns: ["otj_id"]
+            isOneToOne: false
+            referencedRelation: "college_otj_entries"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "college_iqa_samples_sampling_plan_id_fkey"
+            columns: ["sampling_plan_id"]
+            isOneToOne: false
+            referencedRelation: "college_iqa_sampling"
+            referencedColumns: ["id"]
+          },
         ]
       }
       college_iqa_sampling: {
@@ -4934,11 +7229,16 @@ export type Database = {
           college_id: string | null
           created_at: string | null
           id: string
+          iqa_id: string | null
+          iqa_name_snapshot: string | null
+          notes: string | null
           period_end: string
           period_start: string
+          qualification_code: string | null
           sampled_count: number | null
           target_sample_percent: number | null
           total_assessments: number | null
+          unit_code: string | null
           updated_at: string | null
         }
         Insert: {
@@ -4946,11 +7246,16 @@ export type Database = {
           college_id?: string | null
           created_at?: string | null
           id?: string
+          iqa_id?: string | null
+          iqa_name_snapshot?: string | null
+          notes?: string | null
           period_end: string
           period_start: string
+          qualification_code?: string | null
           sampled_count?: number | null
           target_sample_percent?: number | null
           total_assessments?: number | null
+          unit_code?: string | null
           updated_at?: string | null
         }
         Update: {
@@ -4958,11 +7263,16 @@ export type Database = {
           college_id?: string | null
           created_at?: string | null
           id?: string
+          iqa_id?: string | null
+          iqa_name_snapshot?: string | null
+          notes?: string | null
           period_end?: string
           period_start?: string
+          qualification_code?: string | null
           sampled_count?: number | null
           target_sample_percent?: number | null
           total_assessments?: number | null
+          unit_code?: string | null
           updated_at?: string | null
         }
         Relationships: [
@@ -4974,6 +7284,20 @@ export type Database = {
             referencedColumns: ["id"]
           },
           {
+            foreignKeyName: "college_iqa_sampling_assessor_id_fkey"
+            columns: ["assessor_id"]
+            isOneToOne: false
+            referencedRelation: "v_single_central_record"
+            referencedColumns: ["college_staff_id"]
+          },
+          {
+            foreignKeyName: "college_iqa_sampling_assessor_id_fkey"
+            columns: ["assessor_id"]
+            isOneToOne: false
+            referencedRelation: "v_staff_cpd_progress"
+            referencedColumns: ["college_staff_id"]
+          },
+          {
             foreignKeyName: "college_iqa_sampling_college_id_fkey"
             columns: ["college_id"]
             isOneToOne: false
@@ -4993,6 +7317,27 @@ export type Database = {
             isOneToOne: false
             referencedRelation: "v_portfolio_stats_by_college"
             referencedColumns: ["college_id"]
+          },
+          {
+            foreignKeyName: "college_iqa_sampling_iqa_id_fkey"
+            columns: ["iqa_id"]
+            isOneToOne: false
+            referencedRelation: "college_staff"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "college_iqa_sampling_iqa_id_fkey"
+            columns: ["iqa_id"]
+            isOneToOne: false
+            referencedRelation: "v_single_central_record"
+            referencedColumns: ["college_staff_id"]
+          },
+          {
+            foreignKeyName: "college_iqa_sampling_iqa_id_fkey"
+            columns: ["iqa_id"]
+            isOneToOne: false
+            referencedRelation: "v_staff_cpd_progress"
+            referencedColumns: ["college_staff_id"]
           },
         ]
       }
@@ -5007,7 +7352,11 @@ export type Database = {
           objectives: string | null
           resources: string[] | null
           scheduled_date: string | null
-          status: string | null
+          scheduled_room: string | null
+          scheduled_start_time: string | null
+          slide_deck_generated_at: string | null
+          slide_deck_json: Json | null
+          status: string
           title: string
           tutor_id: string | null
         }
@@ -5021,7 +7370,11 @@ export type Database = {
           objectives?: string | null
           resources?: string[] | null
           scheduled_date?: string | null
-          status?: string | null
+          scheduled_room?: string | null
+          scheduled_start_time?: string | null
+          slide_deck_generated_at?: string | null
+          slide_deck_json?: Json | null
+          status?: string
           title: string
           tutor_id?: string | null
         }
@@ -5035,7 +7388,11 @@ export type Database = {
           objectives?: string | null
           resources?: string[] | null
           scheduled_date?: string | null
-          status?: string | null
+          scheduled_room?: string | null
+          scheduled_start_time?: string | null
+          slide_deck_generated_at?: string | null
+          slide_deck_json?: Json | null
+          status?: string
           title?: string
           tutor_id?: string | null
         }
@@ -5075,19 +7432,571 @@ export type Database = {
             referencedRelation: "college_staff"
             referencedColumns: ["id"]
           },
+          {
+            foreignKeyName: "college_lesson_plans_tutor_id_fkey"
+            columns: ["tutor_id"]
+            isOneToOne: false
+            referencedRelation: "v_single_central_record"
+            referencedColumns: ["college_staff_id"]
+          },
+          {
+            foreignKeyName: "college_lesson_plans_tutor_id_fkey"
+            columns: ["tutor_id"]
+            isOneToOne: false
+            referencedRelation: "v_staff_cpd_progress"
+            referencedColumns: ["college_staff_id"]
+          },
+        ]
+      }
+      college_messages: {
+        Row: {
+          content: string
+          conversation_id: string
+          created_at: string
+          id: string
+          is_confidential: boolean
+          message_type: string
+          metadata: Json
+          read_at: string | null
+          sender_id: string
+          sent_at: string
+          visible_to_student: boolean
+        }
+        Insert: {
+          content: string
+          conversation_id: string
+          created_at?: string
+          id?: string
+          is_confidential?: boolean
+          message_type?: string
+          metadata?: Json
+          read_at?: string | null
+          sender_id: string
+          sent_at?: string
+          visible_to_student?: boolean
+        }
+        Update: {
+          content?: string
+          conversation_id?: string
+          created_at?: string
+          id?: string
+          is_confidential?: boolean
+          message_type?: string
+          metadata?: Json
+          read_at?: string | null
+          sender_id?: string
+          sent_at?: string
+          visible_to_student?: boolean
+        }
+        Relationships: [
+          {
+            foreignKeyName: "college_messages_conversation_id_fkey"
+            columns: ["conversation_id"]
+            isOneToOne: false
+            referencedRelation: "college_conversations"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      college_observations: {
+        Row: {
+          acs_evidenced: string[]
+          action_points: string[]
+          activity_summary: string | null
+          activity_title: string
+          assessor_name_snapshot: string | null
+          assessor_signed: boolean
+          assessor_signed_at: string | null
+          college_id: string
+          college_staff_id: string | null
+          college_student_id: string | null
+          created_at: string
+          created_by: string | null
+          duration_minutes: number | null
+          evidence_path: string | null
+          feedback_areas: string | null
+          feedback_strengths: string | null
+          follow_up_date: string | null
+          follow_up_required: boolean
+          grade: string | null
+          id: string
+          ksbs_observed: string[]
+          learner_acknowledged: boolean
+          learner_acknowledged_at: string | null
+          location: string | null
+          location_type: string | null
+          observed_at: string
+          observed_time: string | null
+          outcome: string
+          qualification_code: string | null
+          student_name_snapshot: string | null
+          unit_code: string | null
+          updated_at: string
+        }
+        Insert: {
+          acs_evidenced?: string[]
+          action_points?: string[]
+          activity_summary?: string | null
+          activity_title: string
+          assessor_name_snapshot?: string | null
+          assessor_signed?: boolean
+          assessor_signed_at?: string | null
+          college_id: string
+          college_staff_id?: string | null
+          college_student_id?: string | null
+          created_at?: string
+          created_by?: string | null
+          duration_minutes?: number | null
+          evidence_path?: string | null
+          feedback_areas?: string | null
+          feedback_strengths?: string | null
+          follow_up_date?: string | null
+          follow_up_required?: boolean
+          grade?: string | null
+          id?: string
+          ksbs_observed?: string[]
+          learner_acknowledged?: boolean
+          learner_acknowledged_at?: string | null
+          location?: string | null
+          location_type?: string | null
+          observed_at?: string
+          observed_time?: string | null
+          outcome?: string
+          qualification_code?: string | null
+          student_name_snapshot?: string | null
+          unit_code?: string | null
+          updated_at?: string
+        }
+        Update: {
+          acs_evidenced?: string[]
+          action_points?: string[]
+          activity_summary?: string | null
+          activity_title?: string
+          assessor_name_snapshot?: string | null
+          assessor_signed?: boolean
+          assessor_signed_at?: string | null
+          college_id?: string
+          college_staff_id?: string | null
+          college_student_id?: string | null
+          created_at?: string
+          created_by?: string | null
+          duration_minutes?: number | null
+          evidence_path?: string | null
+          feedback_areas?: string | null
+          feedback_strengths?: string | null
+          follow_up_date?: string | null
+          follow_up_required?: boolean
+          grade?: string | null
+          id?: string
+          ksbs_observed?: string[]
+          learner_acknowledged?: boolean
+          learner_acknowledged_at?: string | null
+          location?: string | null
+          location_type?: string | null
+          observed_at?: string
+          observed_time?: string | null
+          outcome?: string
+          qualification_code?: string | null
+          student_name_snapshot?: string | null
+          unit_code?: string | null
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "college_observations_college_staff_id_fkey"
+            columns: ["college_staff_id"]
+            isOneToOne: false
+            referencedRelation: "college_staff"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "college_observations_college_staff_id_fkey"
+            columns: ["college_staff_id"]
+            isOneToOne: false
+            referencedRelation: "v_single_central_record"
+            referencedColumns: ["college_staff_id"]
+          },
+          {
+            foreignKeyName: "college_observations_college_staff_id_fkey"
+            columns: ["college_staff_id"]
+            isOneToOne: false
+            referencedRelation: "v_staff_cpd_progress"
+            referencedColumns: ["college_staff_id"]
+          },
+          {
+            foreignKeyName: "college_observations_college_student_id_fkey"
+            columns: ["college_student_id"]
+            isOneToOne: false
+            referencedRelation: "college_fs_gateway_status"
+            referencedColumns: ["student_id"]
+          },
+          {
+            foreignKeyName: "college_observations_college_student_id_fkey"
+            columns: ["college_student_id"]
+            isOneToOne: false
+            referencedRelation: "college_iqa_otj_audit_queue"
+            referencedColumns: ["college_student_row_id"]
+          },
+          {
+            foreignKeyName: "college_observations_college_student_id_fkey"
+            columns: ["college_student_id"]
+            isOneToOne: false
+            referencedRelation: "college_students"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      college_otj_entries: {
+        Row: {
+          activity_date: string
+          activity_type: string
+          attestation_comment: string | null
+          attestation_email: string | null
+          attested_by_name: string | null
+          college_id: string | null
+          created_at: string | null
+          description: string | null
+          duration_minutes: number
+          evidence_url: string | null
+          evidence_urls: string[] | null
+          id: string
+          iqa_feedback: string | null
+          iqa_followup_required: boolean
+          iqa_sampled_at: string | null
+          iqa_sampled_by: string | null
+          iqa_verdict: string | null
+          qualification_id: string | null
+          recorded_by: string | null
+          recorded_by_name_snapshot: string | null
+          source: string
+          source_kind: string
+          student_id: string
+          title: string
+          unit_codes: string[] | null
+          updated_at: string | null
+          verification_rationale: string | null
+          verification_status: string
+          verified_at: string | null
+          verified_by: string | null
+        }
+        Insert: {
+          activity_date?: string
+          activity_type: string
+          attestation_comment?: string | null
+          attestation_email?: string | null
+          attested_by_name?: string | null
+          college_id?: string | null
+          created_at?: string | null
+          description?: string | null
+          duration_minutes: number
+          evidence_url?: string | null
+          evidence_urls?: string[] | null
+          id?: string
+          iqa_feedback?: string | null
+          iqa_followup_required?: boolean
+          iqa_sampled_at?: string | null
+          iqa_sampled_by?: string | null
+          iqa_verdict?: string | null
+          qualification_id?: string | null
+          recorded_by?: string | null
+          recorded_by_name_snapshot?: string | null
+          source?: string
+          source_kind?: string
+          student_id: string
+          title: string
+          unit_codes?: string[] | null
+          updated_at?: string | null
+          verification_rationale?: string | null
+          verification_status?: string
+          verified_at?: string | null
+          verified_by?: string | null
+        }
+        Update: {
+          activity_date?: string
+          activity_type?: string
+          attestation_comment?: string | null
+          attestation_email?: string | null
+          attested_by_name?: string | null
+          college_id?: string | null
+          created_at?: string | null
+          description?: string | null
+          duration_minutes?: number
+          evidence_url?: string | null
+          evidence_urls?: string[] | null
+          id?: string
+          iqa_feedback?: string | null
+          iqa_followup_required?: boolean
+          iqa_sampled_at?: string | null
+          iqa_sampled_by?: string | null
+          iqa_verdict?: string | null
+          qualification_id?: string | null
+          recorded_by?: string | null
+          recorded_by_name_snapshot?: string | null
+          source?: string
+          source_kind?: string
+          student_id?: string
+          title?: string
+          unit_codes?: string[] | null
+          updated_at?: string | null
+          verification_rationale?: string | null
+          verification_status?: string
+          verified_at?: string | null
+          verified_by?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "college_otj_entries_recorded_by_fkey"
+            columns: ["recorded_by"]
+            isOneToOne: false
+            referencedRelation: "profiles"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "college_otj_entries_recorded_by_fkey"
+            columns: ["recorded_by"]
+            isOneToOne: false
+            referencedRelation: "v_assessor_workload"
+            referencedColumns: ["assessor_id"]
+          },
+          {
+            foreignKeyName: "college_otj_entries_student_id_fkey"
+            columns: ["student_id"]
+            isOneToOne: false
+            referencedRelation: "profiles"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "college_otj_entries_student_id_fkey"
+            columns: ["student_id"]
+            isOneToOne: false
+            referencedRelation: "v_assessor_workload"
+            referencedColumns: ["assessor_id"]
+          },
+          {
+            foreignKeyName: "college_otj_entries_verified_by_fkey"
+            columns: ["verified_by"]
+            isOneToOne: false
+            referencedRelation: "profiles"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "college_otj_entries_verified_by_fkey"
+            columns: ["verified_by"]
+            isOneToOne: false
+            referencedRelation: "v_assessor_workload"
+            referencedColumns: ["assessor_id"]
+          },
+        ]
+      }
+      college_parent_contacts: {
+        Row: {
+          college_id: string
+          created_at: string | null
+          digest_frequency: string
+          digest_last_sent_at: string | null
+          email: string
+          id: string
+          name: string
+          opt_in_method: string | null
+          opted_in_at: string | null
+          opted_out_at: string | null
+          phone: string | null
+          relationship: string | null
+          student_id: string
+          updated_at: string | null
+        }
+        Insert: {
+          college_id: string
+          created_at?: string | null
+          digest_frequency?: string
+          digest_last_sent_at?: string | null
+          email: string
+          id?: string
+          name: string
+          opt_in_method?: string | null
+          opted_in_at?: string | null
+          opted_out_at?: string | null
+          phone?: string | null
+          relationship?: string | null
+          student_id: string
+          updated_at?: string | null
+        }
+        Update: {
+          college_id?: string
+          created_at?: string | null
+          digest_frequency?: string
+          digest_last_sent_at?: string | null
+          email?: string
+          id?: string
+          name?: string
+          opt_in_method?: string | null
+          opted_in_at?: string | null
+          opted_out_at?: string | null
+          phone?: string | null
+          relationship?: string | null
+          student_id?: string
+          updated_at?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "college_parent_contacts_college_id_fkey"
+            columns: ["college_id"]
+            isOneToOne: false
+            referencedRelation: "colleges"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "college_parent_contacts_college_id_fkey"
+            columns: ["college_id"]
+            isOneToOne: false
+            referencedRelation: "v_iqa_sampling_status"
+            referencedColumns: ["college_id"]
+          },
+          {
+            foreignKeyName: "college_parent_contacts_college_id_fkey"
+            columns: ["college_id"]
+            isOneToOne: false
+            referencedRelation: "v_portfolio_stats_by_college"
+            referencedColumns: ["college_id"]
+          },
+          {
+            foreignKeyName: "college_parent_contacts_student_id_fkey"
+            columns: ["student_id"]
+            isOneToOne: false
+            referencedRelation: "college_fs_gateway_status"
+            referencedColumns: ["student_id"]
+          },
+          {
+            foreignKeyName: "college_parent_contacts_student_id_fkey"
+            columns: ["student_id"]
+            isOneToOne: false
+            referencedRelation: "college_iqa_otj_audit_queue"
+            referencedColumns: ["college_student_row_id"]
+          },
+          {
+            foreignKeyName: "college_parent_contacts_student_id_fkey"
+            columns: ["student_id"]
+            isOneToOne: false
+            referencedRelation: "college_students"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      college_parent_digest_log: {
+        Row: {
+          brevo_message_id: string | null
+          id: string
+          iso_week: string
+          parent_contact_id: string
+          payload: Json
+          sent_at: string | null
+          status: string
+          student_id: string
+        }
+        Insert: {
+          brevo_message_id?: string | null
+          id?: string
+          iso_week: string
+          parent_contact_id: string
+          payload: Json
+          sent_at?: string | null
+          status?: string
+          student_id: string
+        }
+        Update: {
+          brevo_message_id?: string | null
+          id?: string
+          iso_week?: string
+          parent_contact_id?: string
+          payload?: Json
+          sent_at?: string | null
+          status?: string
+          student_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "college_parent_digest_log_parent_contact_id_fkey"
+            columns: ["parent_contact_id"]
+            isOneToOne: false
+            referencedRelation: "college_parent_contacts"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "college_parent_digest_log_student_id_fkey"
+            columns: ["student_id"]
+            isOneToOne: false
+            referencedRelation: "college_fs_gateway_status"
+            referencedColumns: ["student_id"]
+          },
+          {
+            foreignKeyName: "college_parent_digest_log_student_id_fkey"
+            columns: ["student_id"]
+            isOneToOne: false
+            referencedRelation: "college_iqa_otj_audit_queue"
+            referencedColumns: ["college_student_row_id"]
+          },
+          {
+            foreignKeyName: "college_parent_digest_log_student_id_fkey"
+            columns: ["student_id"]
+            isOneToOne: false
+            referencedRelation: "college_students"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      college_parent_tokens: {
+        Row: {
+          created_at: string | null
+          expires_at: string
+          id: string
+          parent_contact_id: string
+          purpose: string
+          token: string
+          used_at: string | null
+        }
+        Insert: {
+          created_at?: string | null
+          expires_at: string
+          id?: string
+          parent_contact_id: string
+          purpose?: string
+          token: string
+          used_at?: string | null
+        }
+        Update: {
+          created_at?: string | null
+          expires_at?: string
+          id?: string
+          parent_contact_id?: string
+          purpose?: string
+          token?: string
+          used_at?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "college_parent_tokens_parent_contact_id_fkey"
+            columns: ["parent_contact_id"]
+            isOneToOne: false
+            referencedRelation: "college_parent_contacts"
+            referencedColumns: ["id"]
+          },
         ]
       }
       college_policies: {
         Row: {
           approved_at: string | null
           approved_by: string | null
+          attachment_path: string | null
           category: string
+          code: string | null
           college_id: string
           content_md: string | null
           created_at: string
           created_by: string | null
           effective_from: string | null
           id: string
+          owner_role: string | null
+          requires_acknowledgement: boolean
           review_due_at: string | null
           status: string
           superseded_by: string | null
@@ -5098,13 +8007,17 @@ export type Database = {
         Insert: {
           approved_at?: string | null
           approved_by?: string | null
+          attachment_path?: string | null
           category: string
+          code?: string | null
           college_id: string
           content_md?: string | null
           created_at?: string
           created_by?: string | null
           effective_from?: string | null
           id?: string
+          owner_role?: string | null
+          requires_acknowledgement?: boolean
           review_due_at?: string | null
           status?: string
           superseded_by?: string | null
@@ -5115,13 +8028,17 @@ export type Database = {
         Update: {
           approved_at?: string | null
           approved_by?: string | null
+          attachment_path?: string | null
           category?: string
+          code?: string | null
           college_id?: string
           content_md?: string | null
           created_at?: string
           created_by?: string | null
           effective_from?: string | null
           id?: string
+          owner_role?: string | null
+          requires_acknowledgement?: boolean
           review_due_at?: string | null
           status?: string
           superseded_by?: string | null
@@ -5157,6 +8074,421 @@ export type Database = {
             isOneToOne: false
             referencedRelation: "college_policies"
             referencedColumns: ["id"]
+          },
+        ]
+      }
+      college_policy_versions: {
+        Row: {
+          change_summary: string | null
+          content_md: string
+          id: string
+          policy_id: string
+          published_at: string
+          published_by: string | null
+          version: number
+        }
+        Insert: {
+          change_summary?: string | null
+          content_md: string
+          id?: string
+          policy_id: string
+          published_at?: string
+          published_by?: string | null
+          version: number
+        }
+        Update: {
+          change_summary?: string | null
+          content_md?: string
+          id?: string
+          policy_id?: string
+          published_at?: string
+          published_by?: string | null
+          version?: number
+        }
+        Relationships: [
+          {
+            foreignKeyName: "college_policy_versions_policy_id_fkey"
+            columns: ["policy_id"]
+            isOneToOne: false
+            referencedRelation: "college_policies"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      college_qip_actions: {
+        Row: {
+          college_id: string
+          completed_at: string | null
+          created_at: string | null
+          created_by: string | null
+          description: string | null
+          evidence_links: string[] | null
+          id: string
+          judgement_key: string
+          outcome_notes: string | null
+          owner_staff_id: string | null
+          priority: string
+          progress_percent: number
+          rationale: string | null
+          sar_draft_id: string | null
+          status: string
+          target_date: string | null
+          title: string
+          updated_at: string | null
+        }
+        Insert: {
+          college_id: string
+          completed_at?: string | null
+          created_at?: string | null
+          created_by?: string | null
+          description?: string | null
+          evidence_links?: string[] | null
+          id?: string
+          judgement_key: string
+          outcome_notes?: string | null
+          owner_staff_id?: string | null
+          priority?: string
+          progress_percent?: number
+          rationale?: string | null
+          sar_draft_id?: string | null
+          status?: string
+          target_date?: string | null
+          title: string
+          updated_at?: string | null
+        }
+        Update: {
+          college_id?: string
+          completed_at?: string | null
+          created_at?: string | null
+          created_by?: string | null
+          description?: string | null
+          evidence_links?: string[] | null
+          id?: string
+          judgement_key?: string
+          outcome_notes?: string | null
+          owner_staff_id?: string | null
+          priority?: string
+          progress_percent?: number
+          rationale?: string | null
+          sar_draft_id?: string | null
+          status?: string
+          target_date?: string | null
+          title?: string
+          updated_at?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "college_qip_actions_college_id_fkey"
+            columns: ["college_id"]
+            isOneToOne: false
+            referencedRelation: "colleges"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "college_qip_actions_college_id_fkey"
+            columns: ["college_id"]
+            isOneToOne: false
+            referencedRelation: "v_iqa_sampling_status"
+            referencedColumns: ["college_id"]
+          },
+          {
+            foreignKeyName: "college_qip_actions_college_id_fkey"
+            columns: ["college_id"]
+            isOneToOne: false
+            referencedRelation: "v_portfolio_stats_by_college"
+            referencedColumns: ["college_id"]
+          },
+          {
+            foreignKeyName: "college_qip_actions_owner_staff_id_fkey"
+            columns: ["owner_staff_id"]
+            isOneToOne: false
+            referencedRelation: "college_staff"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "college_qip_actions_owner_staff_id_fkey"
+            columns: ["owner_staff_id"]
+            isOneToOne: false
+            referencedRelation: "v_single_central_record"
+            referencedColumns: ["college_staff_id"]
+          },
+          {
+            foreignKeyName: "college_qip_actions_owner_staff_id_fkey"
+            columns: ["owner_staff_id"]
+            isOneToOne: false
+            referencedRelation: "v_staff_cpd_progress"
+            referencedColumns: ["college_staff_id"]
+          },
+          {
+            foreignKeyName: "college_qip_actions_sar_draft_id_fkey"
+            columns: ["sar_draft_id"]
+            isOneToOne: false
+            referencedRelation: "college_sar_drafts"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      college_resource_views: {
+        Row: {
+          ac_id: string | null
+          college_id: string
+          context: string | null
+          created_at: string | null
+          duration_seconds: number | null
+          event_kind: string
+          id: string
+          resource_id: string
+          user_id: string | null
+          user_role: string | null
+        }
+        Insert: {
+          ac_id?: string | null
+          college_id: string
+          context?: string | null
+          created_at?: string | null
+          duration_seconds?: number | null
+          event_kind: string
+          id?: string
+          resource_id: string
+          user_id?: string | null
+          user_role?: string | null
+        }
+        Update: {
+          ac_id?: string | null
+          college_id?: string
+          context?: string | null
+          created_at?: string | null
+          duration_seconds?: number | null
+          event_kind?: string
+          id?: string
+          resource_id?: string
+          user_id?: string | null
+          user_role?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "college_resource_views_college_id_fkey"
+            columns: ["college_id"]
+            isOneToOne: false
+            referencedRelation: "colleges"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "college_resource_views_college_id_fkey"
+            columns: ["college_id"]
+            isOneToOne: false
+            referencedRelation: "v_iqa_sampling_status"
+            referencedColumns: ["college_id"]
+          },
+          {
+            foreignKeyName: "college_resource_views_college_id_fkey"
+            columns: ["college_id"]
+            isOneToOne: false
+            referencedRelation: "v_portfolio_stats_by_college"
+            referencedColumns: ["college_id"]
+          },
+        ]
+      }
+      college_resources: {
+        Row: {
+          college_id: string
+          created_at: string
+          description: string | null
+          downloads_count: number
+          duration_seconds: number | null
+          external_url: string | null
+          file_path: string | null
+          gold_standard: boolean
+          gold_standard_set_at: string | null
+          gold_standard_set_by: string | null
+          id: string
+          kind: string
+          mime_type: string | null
+          size_bytes: number | null
+          tags: string[]
+          thumbnail_path: string | null
+          title: string
+          updated_at: string
+          uploader_id: string | null
+          views_count: number
+          visibility: string
+        }
+        Insert: {
+          college_id: string
+          created_at?: string
+          description?: string | null
+          downloads_count?: number
+          duration_seconds?: number | null
+          external_url?: string | null
+          file_path?: string | null
+          gold_standard?: boolean
+          gold_standard_set_at?: string | null
+          gold_standard_set_by?: string | null
+          id?: string
+          kind: string
+          mime_type?: string | null
+          size_bytes?: number | null
+          tags?: string[]
+          thumbnail_path?: string | null
+          title: string
+          updated_at?: string
+          uploader_id?: string | null
+          views_count?: number
+          visibility?: string
+        }
+        Update: {
+          college_id?: string
+          created_at?: string
+          description?: string | null
+          downloads_count?: number
+          duration_seconds?: number | null
+          external_url?: string | null
+          file_path?: string | null
+          gold_standard?: boolean
+          gold_standard_set_at?: string | null
+          gold_standard_set_by?: string | null
+          id?: string
+          kind?: string
+          mime_type?: string | null
+          size_bytes?: number | null
+          tags?: string[]
+          thumbnail_path?: string | null
+          title?: string
+          updated_at?: string
+          uploader_id?: string | null
+          views_count?: number
+          visibility?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "college_resources_college_id_fkey"
+            columns: ["college_id"]
+            isOneToOne: false
+            referencedRelation: "colleges"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "college_resources_college_id_fkey"
+            columns: ["college_id"]
+            isOneToOne: false
+            referencedRelation: "v_iqa_sampling_status"
+            referencedColumns: ["college_id"]
+          },
+          {
+            foreignKeyName: "college_resources_college_id_fkey"
+            columns: ["college_id"]
+            isOneToOne: false
+            referencedRelation: "v_portfolio_stats_by_college"
+            referencedColumns: ["college_id"]
+          },
+          {
+            foreignKeyName: "college_resources_uploader_id_fkey"
+            columns: ["uploader_id"]
+            isOneToOne: false
+            referencedRelation: "college_staff"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "college_resources_uploader_id_fkey"
+            columns: ["uploader_id"]
+            isOneToOne: false
+            referencedRelation: "v_single_central_record"
+            referencedColumns: ["college_staff_id"]
+          },
+          {
+            foreignKeyName: "college_resources_uploader_id_fkey"
+            columns: ["uploader_id"]
+            isOneToOne: false
+            referencedRelation: "v_staff_cpd_progress"
+            referencedColumns: ["college_staff_id"]
+          },
+        ]
+      }
+      college_sar_drafts: {
+        Row: {
+          academic_year: string
+          approved_at: string | null
+          approved_by: string | null
+          areas_for_improvement: string[] | null
+          college_id: string
+          created_at: string | null
+          generated_by: string | null
+          id: string
+          judgement_apprenticeships: Json | null
+          judgement_behaviour_attitudes: Json | null
+          judgement_leadership_management: Json | null
+          judgement_personal_development: Json | null
+          judgement_quality_of_education: Json | null
+          overall_summary: string | null
+          source_signals: Json | null
+          status: string
+          strengths: string[] | null
+          title: string | null
+          updated_at: string | null
+        }
+        Insert: {
+          academic_year: string
+          approved_at?: string | null
+          approved_by?: string | null
+          areas_for_improvement?: string[] | null
+          college_id: string
+          created_at?: string | null
+          generated_by?: string | null
+          id?: string
+          judgement_apprenticeships?: Json | null
+          judgement_behaviour_attitudes?: Json | null
+          judgement_leadership_management?: Json | null
+          judgement_personal_development?: Json | null
+          judgement_quality_of_education?: Json | null
+          overall_summary?: string | null
+          source_signals?: Json | null
+          status?: string
+          strengths?: string[] | null
+          title?: string | null
+          updated_at?: string | null
+        }
+        Update: {
+          academic_year?: string
+          approved_at?: string | null
+          approved_by?: string | null
+          areas_for_improvement?: string[] | null
+          college_id?: string
+          created_at?: string | null
+          generated_by?: string | null
+          id?: string
+          judgement_apprenticeships?: Json | null
+          judgement_behaviour_attitudes?: Json | null
+          judgement_leadership_management?: Json | null
+          judgement_personal_development?: Json | null
+          judgement_quality_of_education?: Json | null
+          overall_summary?: string | null
+          source_signals?: Json | null
+          status?: string
+          strengths?: string[] | null
+          title?: string | null
+          updated_at?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "college_sar_drafts_college_id_fkey"
+            columns: ["college_id"]
+            isOneToOne: false
+            referencedRelation: "colleges"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "college_sar_drafts_college_id_fkey"
+            columns: ["college_id"]
+            isOneToOne: false
+            referencedRelation: "v_iqa_sampling_status"
+            referencedColumns: ["college_id"]
+          },
+          {
+            foreignKeyName: "college_sar_drafts_college_id_fkey"
+            columns: ["college_id"]
+            isOneToOne: false
+            referencedRelation: "v_portfolio_stats_by_college"
+            referencedColumns: ["college_id"]
           },
         ]
       }
@@ -5215,6 +8547,20 @@ export type Database = {
             referencedColumns: ["id"]
           },
           {
+            foreignKeyName: "college_scheduled_assessments_assessor_id_fkey"
+            columns: ["assessor_id"]
+            isOneToOne: false
+            referencedRelation: "v_single_central_record"
+            referencedColumns: ["college_staff_id"]
+          },
+          {
+            foreignKeyName: "college_scheduled_assessments_assessor_id_fkey"
+            columns: ["assessor_id"]
+            isOneToOne: false
+            referencedRelation: "v_staff_cpd_progress"
+            referencedColumns: ["college_staff_id"]
+          },
+          {
             foreignKeyName: "college_scheduled_assessments_college_id_fkey"
             columns: ["college_id"]
             isOneToOne: false
@@ -5239,6 +8585,172 @@ export type Database = {
             foreignKeyName: "college_scheduled_assessments_student_id_fkey"
             columns: ["student_id"]
             isOneToOne: false
+            referencedRelation: "college_fs_gateway_status"
+            referencedColumns: ["student_id"]
+          },
+          {
+            foreignKeyName: "college_scheduled_assessments_student_id_fkey"
+            columns: ["student_id"]
+            isOneToOne: false
+            referencedRelation: "college_iqa_otj_audit_queue"
+            referencedColumns: ["college_student_row_id"]
+          },
+          {
+            foreignKeyName: "college_scheduled_assessments_student_id_fkey"
+            columns: ["student_id"]
+            isOneToOne: false
+            referencedRelation: "college_students"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      college_settings: {
+        Row: {
+          audit_window_days: number
+          college_id: string
+          created_at: string
+          epa_verdict_bands: Json
+          high_attendance_threshold_percent: number
+          iqa_sampling_target_percent: number
+          low_attendance_threshold_percent: number
+          mastery_auto_approve: boolean
+          mastery_threshold_pct: number
+          updated_at: string
+        }
+        Insert: {
+          audit_window_days?: number
+          college_id: string
+          created_at?: string
+          epa_verdict_bands?: Json
+          high_attendance_threshold_percent?: number
+          iqa_sampling_target_percent?: number
+          low_attendance_threshold_percent?: number
+          mastery_auto_approve?: boolean
+          mastery_threshold_pct?: number
+          updated_at?: string
+        }
+        Update: {
+          audit_window_days?: number
+          college_id?: string
+          created_at?: string
+          epa_verdict_bands?: Json
+          high_attendance_threshold_percent?: number
+          iqa_sampling_target_percent?: number
+          low_attendance_threshold_percent?: number
+          mastery_auto_approve?: boolean
+          mastery_threshold_pct?: number
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "college_settings_college_id_fkey"
+            columns: ["college_id"]
+            isOneToOne: true
+            referencedRelation: "colleges"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "college_settings_college_id_fkey"
+            columns: ["college_id"]
+            isOneToOne: true
+            referencedRelation: "v_iqa_sampling_status"
+            referencedColumns: ["college_id"]
+          },
+          {
+            foreignKeyName: "college_settings_college_id_fkey"
+            columns: ["college_id"]
+            isOneToOne: true
+            referencedRelation: "v_portfolio_stats_by_college"
+            referencedColumns: ["college_id"]
+          },
+        ]
+      }
+      college_spag_checks: {
+        Row: {
+          college_id: string
+          created_at: string | null
+          id: string
+          issue_count: number
+          issues: Json
+          level_descriptor: string | null
+          overall_feedback: string | null
+          source_id: string | null
+          source_kind: string
+          source_text: string
+          spag_score: number
+          student_id: string | null
+          user_id: string | null
+        }
+        Insert: {
+          college_id: string
+          created_at?: string | null
+          id?: string
+          issue_count?: number
+          issues?: Json
+          level_descriptor?: string | null
+          overall_feedback?: string | null
+          source_id?: string | null
+          source_kind: string
+          source_text: string
+          spag_score: number
+          student_id?: string | null
+          user_id?: string | null
+        }
+        Update: {
+          college_id?: string
+          created_at?: string | null
+          id?: string
+          issue_count?: number
+          issues?: Json
+          level_descriptor?: string | null
+          overall_feedback?: string | null
+          source_id?: string | null
+          source_kind?: string
+          source_text?: string
+          spag_score?: number
+          student_id?: string | null
+          user_id?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "college_spag_checks_college_id_fkey"
+            columns: ["college_id"]
+            isOneToOne: false
+            referencedRelation: "colleges"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "college_spag_checks_college_id_fkey"
+            columns: ["college_id"]
+            isOneToOne: false
+            referencedRelation: "v_iqa_sampling_status"
+            referencedColumns: ["college_id"]
+          },
+          {
+            foreignKeyName: "college_spag_checks_college_id_fkey"
+            columns: ["college_id"]
+            isOneToOne: false
+            referencedRelation: "v_portfolio_stats_by_college"
+            referencedColumns: ["college_id"]
+          },
+          {
+            foreignKeyName: "college_spag_checks_student_id_fkey"
+            columns: ["student_id"]
+            isOneToOne: false
+            referencedRelation: "college_fs_gateway_status"
+            referencedColumns: ["student_id"]
+          },
+          {
+            foreignKeyName: "college_spag_checks_student_id_fkey"
+            columns: ["student_id"]
+            isOneToOne: false
+            referencedRelation: "college_iqa_otj_audit_queue"
+            referencedColumns: ["college_student_row_id"]
+          },
+          {
+            foreignKeyName: "college_spag_checks_student_id_fkey"
+            columns: ["student_id"]
+            isOneToOne: false
             referencedRelation: "college_students"
             referencedColumns: ["id"]
           },
@@ -5246,6 +8758,9 @@ export type Database = {
       }
       college_staff: {
         Row: {
+          archived_at: string | null
+          archived_by: string | null
+          archived_reason: string | null
           assessor_qual: string | null
           college_id: string | null
           created_at: string | null
@@ -5253,6 +8768,12 @@ export type Database = {
           email: string
           id: string
           iqa_qual: string | null
+          is_deputy_dsl: boolean
+          is_dsl: boolean
+          is_h_and_s_lead: boolean
+          is_mental_health_lead: boolean
+          is_prevent_lead: boolean
+          is_quality_nominee: boolean
           max_teaching_hours: number | null
           name: string
           phone: string | null
@@ -5265,6 +8786,9 @@ export type Database = {
           user_id: string | null
         }
         Insert: {
+          archived_at?: string | null
+          archived_by?: string | null
+          archived_reason?: string | null
           assessor_qual?: string | null
           college_id?: string | null
           created_at?: string | null
@@ -5272,6 +8796,12 @@ export type Database = {
           email: string
           id?: string
           iqa_qual?: string | null
+          is_deputy_dsl?: boolean
+          is_dsl?: boolean
+          is_h_and_s_lead?: boolean
+          is_mental_health_lead?: boolean
+          is_prevent_lead?: boolean
+          is_quality_nominee?: boolean
           max_teaching_hours?: number | null
           name: string
           phone?: string | null
@@ -5284,6 +8814,9 @@ export type Database = {
           user_id?: string | null
         }
         Update: {
+          archived_at?: string | null
+          archived_by?: string | null
+          archived_reason?: string | null
           assessor_qual?: string | null
           college_id?: string | null
           created_at?: string | null
@@ -5291,6 +8824,12 @@ export type Database = {
           email?: string
           id?: string
           iqa_qual?: string | null
+          is_deputy_dsl?: boolean
+          is_dsl?: boolean
+          is_h_and_s_lead?: boolean
+          is_mental_health_lead?: boolean
+          is_prevent_lead?: boolean
+          is_quality_nominee?: boolean
           max_teaching_hours?: number | null
           name?: string
           phone?: string | null
@@ -5328,36 +8867,90 @@ export type Database = {
       }
       college_standardisation_meetings: {
         Row: {
+          action_items: string[]
+          agenda: string | null
+          attendee_ids: string[]
           attendees_count: number | null
+          chair_id: string | null
           college_id: string | null
           created_at: string | null
+          created_by: string | null
           date: string
+          decisions: string | null
+          duration_min: number | null
           id: string
+          minutes: string | null
           minutes_url: string | null
           outcome: string | null
+          scheduled_at: string | null
+          status: string
           topic: string
+          updated_at: string
         }
         Insert: {
+          action_items?: string[]
+          agenda?: string | null
+          attendee_ids?: string[]
           attendees_count?: number | null
+          chair_id?: string | null
           college_id?: string | null
           created_at?: string | null
+          created_by?: string | null
           date: string
+          decisions?: string | null
+          duration_min?: number | null
           id?: string
+          minutes?: string | null
           minutes_url?: string | null
           outcome?: string | null
+          scheduled_at?: string | null
+          status?: string
           topic: string
+          updated_at?: string
         }
         Update: {
+          action_items?: string[]
+          agenda?: string | null
+          attendee_ids?: string[]
           attendees_count?: number | null
+          chair_id?: string | null
           college_id?: string | null
           created_at?: string | null
+          created_by?: string | null
           date?: string
+          decisions?: string | null
+          duration_min?: number | null
           id?: string
+          minutes?: string | null
           minutes_url?: string | null
           outcome?: string | null
+          scheduled_at?: string | null
+          status?: string
           topic?: string
+          updated_at?: string
         }
         Relationships: [
+          {
+            foreignKeyName: "college_standardisation_meetings_chair_id_fkey"
+            columns: ["chair_id"]
+            isOneToOne: false
+            referencedRelation: "college_staff"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "college_standardisation_meetings_chair_id_fkey"
+            columns: ["chair_id"]
+            isOneToOne: false
+            referencedRelation: "v_single_central_record"
+            referencedColumns: ["college_staff_id"]
+          },
+          {
+            foreignKeyName: "college_standardisation_meetings_chair_id_fkey"
+            columns: ["chair_id"]
+            isOneToOne: false
+            referencedRelation: "v_staff_cpd_progress"
+            referencedColumns: ["college_staff_id"]
+          },
           {
             foreignKeyName: "college_standardisation_meetings_college_id_fkey"
             columns: ["college_id"]
@@ -5552,19 +9145,26 @@ export type Database = {
       }
       college_students: {
         Row: {
+          accessibility_notes: string | null
           cohort_id: string | null
           college_id: string | null
           course_id: string | null
           created_at: string | null
+          eal: boolean
+          ehcp_ref: string | null
           email: string
           employer_id: string | null
           expected_end_date: string | null
+          first_language: string | null
           id: string
           name: string
+          otj_required_hours: number | null
           phone: string | null
           photo_url: string | null
           progress_percent: number | null
+          pronouns: string | null
           risk_level: string | null
+          send_flags: string[]
           start_date: string | null
           status: string | null
           uln: string | null
@@ -5572,19 +9172,26 @@ export type Database = {
           user_id: string | null
         }
         Insert: {
+          accessibility_notes?: string | null
           cohort_id?: string | null
           college_id?: string | null
           course_id?: string | null
           created_at?: string | null
+          eal?: boolean
+          ehcp_ref?: string | null
           email: string
           employer_id?: string | null
           expected_end_date?: string | null
+          first_language?: string | null
           id?: string
           name: string
+          otj_required_hours?: number | null
           phone?: string | null
           photo_url?: string | null
           progress_percent?: number | null
+          pronouns?: string | null
           risk_level?: string | null
+          send_flags?: string[]
           start_date?: string | null
           status?: string | null
           uln?: string | null
@@ -5592,19 +9199,26 @@ export type Database = {
           user_id?: string | null
         }
         Update: {
+          accessibility_notes?: string | null
           cohort_id?: string | null
           college_id?: string | null
           course_id?: string | null
           created_at?: string | null
+          eal?: boolean
+          ehcp_ref?: string | null
           email?: string
           employer_id?: string | null
           expected_end_date?: string | null
+          first_language?: string | null
           id?: string
           name?: string
+          otj_required_hours?: number | null
           phone?: string | null
           photo_url?: string | null
           progress_percent?: number | null
+          pronouns?: string | null
           risk_level?: string | null
+          send_flags?: string[]
           start_date?: string | null
           status?: string | null
           uln?: string | null
@@ -5646,6 +9260,383 @@ export type Database = {
             isOneToOne: false
             referencedRelation: "college_courses"
             referencedColumns: ["id"]
+          },
+        ]
+      }
+      college_tripartite_reviews: {
+        Row: {
+          agenda: Json
+          cancelled_reason: string | null
+          college_id: string
+          completed_at: string | null
+          created_at: string | null
+          created_by: string | null
+          duration_minutes: number | null
+          employer_contact_email: string | null
+          employer_contact_name: string | null
+          employer_contact_phone: string | null
+          id: string
+          location: string | null
+          meeting_url: string | null
+          outcomes: Json
+          scheduled_at: string | null
+          signatures: Json
+          status: string
+          student_id: string
+          tutor_staff_id: string | null
+          updated_at: string | null
+        }
+        Insert: {
+          agenda?: Json
+          cancelled_reason?: string | null
+          college_id: string
+          completed_at?: string | null
+          created_at?: string | null
+          created_by?: string | null
+          duration_minutes?: number | null
+          employer_contact_email?: string | null
+          employer_contact_name?: string | null
+          employer_contact_phone?: string | null
+          id?: string
+          location?: string | null
+          meeting_url?: string | null
+          outcomes?: Json
+          scheduled_at?: string | null
+          signatures?: Json
+          status?: string
+          student_id: string
+          tutor_staff_id?: string | null
+          updated_at?: string | null
+        }
+        Update: {
+          agenda?: Json
+          cancelled_reason?: string | null
+          college_id?: string
+          completed_at?: string | null
+          created_at?: string | null
+          created_by?: string | null
+          duration_minutes?: number | null
+          employer_contact_email?: string | null
+          employer_contact_name?: string | null
+          employer_contact_phone?: string | null
+          id?: string
+          location?: string | null
+          meeting_url?: string | null
+          outcomes?: Json
+          scheduled_at?: string | null
+          signatures?: Json
+          status?: string
+          student_id?: string
+          tutor_staff_id?: string | null
+          updated_at?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "college_tripartite_reviews_college_id_fkey"
+            columns: ["college_id"]
+            isOneToOne: false
+            referencedRelation: "colleges"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "college_tripartite_reviews_college_id_fkey"
+            columns: ["college_id"]
+            isOneToOne: false
+            referencedRelation: "v_iqa_sampling_status"
+            referencedColumns: ["college_id"]
+          },
+          {
+            foreignKeyName: "college_tripartite_reviews_college_id_fkey"
+            columns: ["college_id"]
+            isOneToOne: false
+            referencedRelation: "v_portfolio_stats_by_college"
+            referencedColumns: ["college_id"]
+          },
+          {
+            foreignKeyName: "college_tripartite_reviews_student_id_fkey"
+            columns: ["student_id"]
+            isOneToOne: false
+            referencedRelation: "college_fs_gateway_status"
+            referencedColumns: ["student_id"]
+          },
+          {
+            foreignKeyName: "college_tripartite_reviews_student_id_fkey"
+            columns: ["student_id"]
+            isOneToOne: false
+            referencedRelation: "college_iqa_otj_audit_queue"
+            referencedColumns: ["college_student_row_id"]
+          },
+          {
+            foreignKeyName: "college_tripartite_reviews_student_id_fkey"
+            columns: ["student_id"]
+            isOneToOne: false
+            referencedRelation: "college_students"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "college_tripartite_reviews_tutor_staff_id_fkey"
+            columns: ["tutor_staff_id"]
+            isOneToOne: false
+            referencedRelation: "college_staff"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "college_tripartite_reviews_tutor_staff_id_fkey"
+            columns: ["tutor_staff_id"]
+            isOneToOne: false
+            referencedRelation: "v_single_central_record"
+            referencedColumns: ["college_staff_id"]
+          },
+          {
+            foreignKeyName: "college_tripartite_reviews_tutor_staff_id_fkey"
+            columns: ["tutor_staff_id"]
+            isOneToOne: false
+            referencedRelation: "v_staff_cpd_progress"
+            referencedColumns: ["college_staff_id"]
+          },
+        ]
+      }
+      college_tutor_observations: {
+        Row: {
+          agreed_actions: Json | null
+          areas_for_development: string | null
+          cohort_id: string | null
+          college_id: string
+          created_at: string | null
+          created_by: string | null
+          duration_minutes: number | null
+          evidence_url: string | null
+          focus_area: string | null
+          grade: string | null
+          id: string
+          lesson_plan_id: string | null
+          location: string | null
+          observation_kind: string
+          observed_at: string
+          observed_time: string | null
+          observer_name_snapshot: string | null
+          observer_role: string | null
+          observer_staff_id: string | null
+          strengths: string | null
+          tutor_acknowledged: boolean
+          tutor_acknowledged_at: string | null
+          tutor_name_snapshot: string | null
+          tutor_response: string | null
+          tutor_staff_id: string
+          updated_at: string | null
+        }
+        Insert: {
+          agreed_actions?: Json | null
+          areas_for_development?: string | null
+          cohort_id?: string | null
+          college_id: string
+          created_at?: string | null
+          created_by?: string | null
+          duration_minutes?: number | null
+          evidence_url?: string | null
+          focus_area?: string | null
+          grade?: string | null
+          id?: string
+          lesson_plan_id?: string | null
+          location?: string | null
+          observation_kind?: string
+          observed_at: string
+          observed_time?: string | null
+          observer_name_snapshot?: string | null
+          observer_role?: string | null
+          observer_staff_id?: string | null
+          strengths?: string | null
+          tutor_acknowledged?: boolean
+          tutor_acknowledged_at?: string | null
+          tutor_name_snapshot?: string | null
+          tutor_response?: string | null
+          tutor_staff_id: string
+          updated_at?: string | null
+        }
+        Update: {
+          agreed_actions?: Json | null
+          areas_for_development?: string | null
+          cohort_id?: string | null
+          college_id?: string
+          created_at?: string | null
+          created_by?: string | null
+          duration_minutes?: number | null
+          evidence_url?: string | null
+          focus_area?: string | null
+          grade?: string | null
+          id?: string
+          lesson_plan_id?: string | null
+          location?: string | null
+          observation_kind?: string
+          observed_at?: string
+          observed_time?: string | null
+          observer_name_snapshot?: string | null
+          observer_role?: string | null
+          observer_staff_id?: string | null
+          strengths?: string | null
+          tutor_acknowledged?: boolean
+          tutor_acknowledged_at?: string | null
+          tutor_name_snapshot?: string | null
+          tutor_response?: string | null
+          tutor_staff_id?: string
+          updated_at?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "college_tutor_observations_cohort_id_fkey"
+            columns: ["cohort_id"]
+            isOneToOne: false
+            referencedRelation: "college_cohorts"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "college_tutor_observations_college_id_fkey"
+            columns: ["college_id"]
+            isOneToOne: false
+            referencedRelation: "colleges"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "college_tutor_observations_college_id_fkey"
+            columns: ["college_id"]
+            isOneToOne: false
+            referencedRelation: "v_iqa_sampling_status"
+            referencedColumns: ["college_id"]
+          },
+          {
+            foreignKeyName: "college_tutor_observations_college_id_fkey"
+            columns: ["college_id"]
+            isOneToOne: false
+            referencedRelation: "v_portfolio_stats_by_college"
+            referencedColumns: ["college_id"]
+          },
+          {
+            foreignKeyName: "college_tutor_observations_lesson_plan_id_fkey"
+            columns: ["lesson_plan_id"]
+            isOneToOne: false
+            referencedRelation: "college_lesson_plans"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "college_tutor_observations_observer_staff_id_fkey"
+            columns: ["observer_staff_id"]
+            isOneToOne: false
+            referencedRelation: "college_staff"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "college_tutor_observations_observer_staff_id_fkey"
+            columns: ["observer_staff_id"]
+            isOneToOne: false
+            referencedRelation: "v_single_central_record"
+            referencedColumns: ["college_staff_id"]
+          },
+          {
+            foreignKeyName: "college_tutor_observations_observer_staff_id_fkey"
+            columns: ["observer_staff_id"]
+            isOneToOne: false
+            referencedRelation: "v_staff_cpd_progress"
+            referencedColumns: ["college_staff_id"]
+          },
+          {
+            foreignKeyName: "college_tutor_observations_tutor_staff_id_fkey"
+            columns: ["tutor_staff_id"]
+            isOneToOne: false
+            referencedRelation: "college_staff"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "college_tutor_observations_tutor_staff_id_fkey"
+            columns: ["tutor_staff_id"]
+            isOneToOne: false
+            referencedRelation: "v_single_central_record"
+            referencedColumns: ["college_staff_id"]
+          },
+          {
+            foreignKeyName: "college_tutor_observations_tutor_staff_id_fkey"
+            columns: ["tutor_staff_id"]
+            isOneToOne: false
+            referencedRelation: "v_staff_cpd_progress"
+            referencedColumns: ["college_staff_id"]
+          },
+        ]
+      }
+      college_work_queue_state: {
+        Row: {
+          college_id: string
+          created_at: string
+          id: string
+          notes: string | null
+          source_id: string
+          source_type: string
+          staff_id: string
+          status: string
+          updated_at: string
+        }
+        Insert: {
+          college_id: string
+          created_at?: string
+          id?: string
+          notes?: string | null
+          source_id: string
+          source_type: string
+          staff_id: string
+          status: string
+          updated_at?: string
+        }
+        Update: {
+          college_id?: string
+          created_at?: string
+          id?: string
+          notes?: string | null
+          source_id?: string
+          source_type?: string
+          staff_id?: string
+          status?: string
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "college_work_queue_state_college_id_fkey"
+            columns: ["college_id"]
+            isOneToOne: false
+            referencedRelation: "colleges"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "college_work_queue_state_college_id_fkey"
+            columns: ["college_id"]
+            isOneToOne: false
+            referencedRelation: "v_iqa_sampling_status"
+            referencedColumns: ["college_id"]
+          },
+          {
+            foreignKeyName: "college_work_queue_state_college_id_fkey"
+            columns: ["college_id"]
+            isOneToOne: false
+            referencedRelation: "v_portfolio_stats_by_college"
+            referencedColumns: ["college_id"]
+          },
+          {
+            foreignKeyName: "college_work_queue_state_staff_id_fkey"
+            columns: ["staff_id"]
+            isOneToOne: false
+            referencedRelation: "college_staff"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "college_work_queue_state_staff_id_fkey"
+            columns: ["staff_id"]
+            isOneToOne: false
+            referencedRelation: "v_single_central_record"
+            referencedColumns: ["college_staff_id"]
+          },
+          {
+            foreignKeyName: "college_work_queue_state_staff_id_fkey"
+            columns: ["staff_id"]
+            isOneToOne: false
+            referencedRelation: "v_staff_cpd_progress"
+            referencedColumns: ["college_staff_id"]
           },
         ]
       }
@@ -5718,6 +9709,20 @@ export type Database = {
             foreignKeyName: "college_workplace_visits_student_id_fkey"
             columns: ["student_id"]
             isOneToOne: false
+            referencedRelation: "college_fs_gateway_status"
+            referencedColumns: ["student_id"]
+          },
+          {
+            foreignKeyName: "college_workplace_visits_student_id_fkey"
+            columns: ["student_id"]
+            isOneToOne: false
+            referencedRelation: "college_iqa_otj_audit_queue"
+            referencedColumns: ["college_student_row_id"]
+          },
+          {
+            foreignKeyName: "college_workplace_visits_student_id_fkey"
+            columns: ["student_id"]
+            isOneToOne: false
             referencedRelation: "college_students"
             referencedColumns: ["id"]
           },
@@ -5727,6 +9732,20 @@ export type Database = {
             isOneToOne: false
             referencedRelation: "college_staff"
             referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "college_workplace_visits_visitor_id_fkey"
+            columns: ["visitor_id"]
+            isOneToOne: false
+            referencedRelation: "v_single_central_record"
+            referencedColumns: ["college_staff_id"]
+          },
+          {
+            foreignKeyName: "college_workplace_visits_visitor_id_fkey"
+            columns: ["visitor_id"]
+            isOneToOne: false
+            referencedRelation: "v_staff_cpd_progress"
+            referencedColumns: ["college_staff_id"]
           },
         ]
       }
@@ -6008,6 +10027,7 @@ export type Database = {
           company_website: string | null
           created_at: string
           currency: string | null
+          day_rate: number | null
           deposit_percentage: number | null
           hourly_rate: number | null
           id: string
@@ -6030,12 +10050,16 @@ export type Database = {
           preferred_payment_method: string | null
           primary_color: string | null
           profit_margin: number | null
+          qs_approval_required: boolean
           quote_terms: string | null
           quote_validity_days: number | null
           registration_expiry: string | null
           registration_number: string | null
           registration_scheme: string | null
           registration_scheme_logo: string | null
+          review_links: Json
+          review_request_enabled: boolean
+          review_request_message: string | null
           scheme_logo_data_url: string | null
           secondary_color: string | null
           signature_data: string | null
@@ -6061,6 +10085,7 @@ export type Database = {
           company_website?: string | null
           created_at?: string
           currency?: string | null
+          day_rate?: number | null
           deposit_percentage?: number | null
           hourly_rate?: number | null
           id?: string
@@ -6083,12 +10108,16 @@ export type Database = {
           preferred_payment_method?: string | null
           primary_color?: string | null
           profit_margin?: number | null
+          qs_approval_required?: boolean
           quote_terms?: string | null
           quote_validity_days?: number | null
           registration_expiry?: string | null
           registration_number?: string | null
           registration_scheme?: string | null
           registration_scheme_logo?: string | null
+          review_links?: Json
+          review_request_enabled?: boolean
+          review_request_message?: string | null
           scheme_logo_data_url?: string | null
           secondary_color?: string | null
           signature_data?: string | null
@@ -6114,6 +10143,7 @@ export type Database = {
           company_website?: string | null
           created_at?: string
           currency?: string | null
+          day_rate?: number | null
           deposit_percentage?: number | null
           hourly_rate?: number | null
           id?: string
@@ -6136,12 +10166,16 @@ export type Database = {
           preferred_payment_method?: string | null
           primary_color?: string | null
           profit_margin?: number | null
+          qs_approval_required?: boolean
           quote_terms?: string | null
           quote_validity_days?: number | null
           registration_expiry?: string | null
           registration_number?: string | null
           registration_scheme?: string | null
           registration_scheme_logo?: string | null
+          review_links?: Json
+          review_request_enabled?: boolean
+          review_request_message?: string | null
           scheme_logo_data_url?: string | null
           secondary_color?: string | null
           signature_data?: string | null
@@ -6262,6 +10296,42 @@ export type Database = {
             referencedColumns: ["id"]
           },
         ]
+      }
+      compliance_audit_events: {
+        Row: {
+          action: string
+          actor_id: string | null
+          after: Json | null
+          at: string
+          before: Json | null
+          college_id: string | null
+          id: string
+          record_id: string
+          table_name: string
+        }
+        Insert: {
+          action: string
+          actor_id?: string | null
+          after?: Json | null
+          at?: string
+          before?: Json | null
+          college_id?: string | null
+          id?: string
+          record_id: string
+          table_name: string
+        }
+        Update: {
+          action?: string
+          actor_id?: string | null
+          after?: Json | null
+          at?: string
+          before?: Json | null
+          college_id?: string | null
+          id?: string
+          record_id?: string
+          table_name?: string
+        }
+        Relationships: []
       }
       compliance_documents: {
         Row: {
@@ -6392,6 +10462,48 @@ export type Database = {
           target_hours?: number | null
           updated_at?: string
           user_id?: string
+        }
+        Relationships: []
+      }
+      compliance_requirement_types: {
+        Row: {
+          applies_to_role: string
+          category: string
+          code: string
+          created_at: string
+          default_alert_thresholds_days: number[]
+          default_validity_months: number | null
+          description: string | null
+          is_active: boolean
+          is_scr_required: boolean
+          label: string
+          sort_order: number
+        }
+        Insert: {
+          applies_to_role?: string
+          category: string
+          code: string
+          created_at?: string
+          default_alert_thresholds_days?: number[]
+          default_validity_months?: number | null
+          description?: string | null
+          is_active?: boolean
+          is_scr_required?: boolean
+          label: string
+          sort_order?: number
+        }
+        Update: {
+          applies_to_role?: string
+          category?: string
+          code?: string
+          created_at?: string
+          default_alert_thresholds_days?: number[]
+          default_validity_months?: number | null
+          description?: string | null
+          is_active?: boolean
+          is_scr_required?: boolean
+          label?: string
+          sort_order?: number
         }
         Relationships: []
       }
@@ -6592,7 +10704,6 @@ export type Database = {
       }
       coshh_assessments: {
         Row: {
-          job_id: string | null
           assessed_by: string
           assessment_date: string
           assessor_signature: string | null
@@ -6606,6 +10717,7 @@ export type Database = {
           ghs_hazards: string[] | null
           health_effects: string | null
           id: string
+          job_id: string | null
           location_of_use: string | null
           manufacturer: string | null
           measured_exposure: string | null
@@ -6632,7 +10744,6 @@ export type Database = {
           wel_oel_limit: string | null
         }
         Insert: {
-          job_id?: string | null
           assessed_by: string
           assessment_date?: string
           assessor_signature?: string | null
@@ -6646,6 +10757,7 @@ export type Database = {
           ghs_hazards?: string[] | null
           health_effects?: string | null
           id?: string
+          job_id?: string | null
           location_of_use?: string | null
           manufacturer?: string | null
           measured_exposure?: string | null
@@ -6672,7 +10784,6 @@ export type Database = {
           wel_oel_limit?: string | null
         }
         Update: {
-          job_id?: string | null
           assessed_by?: string
           assessment_date?: string
           assessor_signature?: string | null
@@ -6686,6 +10797,7 @@ export type Database = {
           ghs_hazards?: string[] | null
           health_effects?: string | null
           id?: string
+          job_id?: string | null
           location_of_use?: string | null
           manufacturer?: string | null
           measured_exposure?: string | null
@@ -6711,7 +10823,15 @@ export type Database = {
           user_id?: string
           wel_oel_limit?: string | null
         }
-        Relationships: []
+        Relationships: [
+          {
+            foreignKeyName: "coshh_assessments_job_id_fkey"
+            columns: ["job_id"]
+            isOneToOne: false
+            referencedRelation: "spark_projects"
+            referencedColumns: ["id"]
+          },
+        ]
       }
       cost_engineer_jobs: {
         Row: {
@@ -6727,7 +10847,12 @@ export type Database = {
           project_context: Json | null
           project_id: string | null
           query: string
+          quote_outcome: string | null
+          quote_outcome_at: string | null
+          quote_outcome_note: string | null
           raw_response: Json | null
+          refine_mode: string | null
+          refine_of: string | null
           region: string | null
           started_at: string | null
           status: string
@@ -6747,7 +10872,12 @@ export type Database = {
           project_context?: Json | null
           project_id?: string | null
           query: string
+          quote_outcome?: string | null
+          quote_outcome_at?: string | null
+          quote_outcome_note?: string | null
           raw_response?: Json | null
+          refine_mode?: string | null
+          refine_of?: string | null
           region?: string | null
           started_at?: string | null
           status?: string
@@ -6767,7 +10897,12 @@ export type Database = {
           project_context?: Json | null
           project_id?: string | null
           query?: string
+          quote_outcome?: string | null
+          quote_outcome_at?: string | null
+          quote_outcome_note?: string | null
           raw_response?: Json | null
+          refine_mode?: string | null
+          refine_of?: string | null
           region?: string | null
           started_at?: string | null
           status?: string
@@ -6787,6 +10922,86 @@ export type Database = {
             columns: ["project_id"]
             isOneToOne: false
             referencedRelation: "spark_projects"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "cost_engineer_jobs_refine_of_fkey"
+            columns: ["refine_of"]
+            isOneToOne: false
+            referencedRelation: "cost_engineer_jobs"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      cost_engineer_partials: {
+        Row: {
+          created_at: string
+          job_id: string
+          payload: Json
+          stage: string
+        }
+        Insert: {
+          created_at?: string
+          job_id: string
+          payload: Json
+          stage: string
+        }
+        Update: {
+          created_at?: string
+          job_id?: string
+          payload?: Json
+          stage?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "cost_engineer_partials_job_id_fkey"
+            columns: ["job_id"]
+            isOneToOne: false
+            referencedRelation: "cost_engineer_jobs"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      cost_engineer_templates: {
+        Row: {
+          created_at: string
+          id: string
+          inputs: Json
+          last_used_at: string | null
+          name: string
+          source_job_id: string | null
+          updated_at: string
+          use_count: number
+          user_id: string
+        }
+        Insert: {
+          created_at?: string
+          id?: string
+          inputs: Json
+          last_used_at?: string | null
+          name: string
+          source_job_id?: string | null
+          updated_at?: string
+          use_count?: number
+          user_id: string
+        }
+        Update: {
+          created_at?: string
+          id?: string
+          inputs?: Json
+          last_used_at?: string | null
+          name?: string
+          source_job_id?: string | null
+          updated_at?: string
+          use_count?: number
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "cost_engineer_templates_source_job_id_fkey"
+            columns: ["source_job_id"]
+            isOneToOne: false
+            referencedRelation: "cost_engineer_jobs"
             referencedColumns: ["id"]
           },
         ]
@@ -7225,6 +11440,56 @@ export type Database = {
           },
         ]
       }
+      customer_contacts: {
+        Row: {
+          created_at: string
+          customer_id: string
+          email: string | null
+          id: string
+          is_primary: boolean
+          name: string
+          notes: string | null
+          phone: string | null
+          role: string | null
+          updated_at: string
+          user_id: string
+        }
+        Insert: {
+          created_at?: string
+          customer_id: string
+          email?: string | null
+          id?: string
+          is_primary?: boolean
+          name: string
+          notes?: string | null
+          phone?: string | null
+          role?: string | null
+          updated_at?: string
+          user_id: string
+        }
+        Update: {
+          created_at?: string
+          customer_id?: string
+          email?: string | null
+          id?: string
+          is_primary?: boolean
+          name?: string
+          notes?: string | null
+          phone?: string | null
+          role?: string | null
+          updated_at?: string
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "customer_contacts_customer_id_fkey"
+            columns: ["customer_id"]
+            isOneToOne: false
+            referencedRelation: "customers"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       customer_properties: {
         Row: {
           address: string
@@ -7269,6 +11534,50 @@ export type Database = {
           },
         ]
       }
+      customer_reminders: {
+        Row: {
+          completed_at: string | null
+          created_at: string
+          customer_id: string
+          due_at: string
+          id: string
+          notes: string | null
+          title: string
+          updated_at: string
+          user_id: string
+        }
+        Insert: {
+          completed_at?: string | null
+          created_at?: string
+          customer_id: string
+          due_at: string
+          id?: string
+          notes?: string | null
+          title: string
+          updated_at?: string
+          user_id: string
+        }
+        Update: {
+          completed_at?: string | null
+          created_at?: string
+          customer_id?: string
+          due_at?: string
+          id?: string
+          notes?: string | null
+          title?: string
+          updated_at?: string
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "customer_reminders_customer_id_fkey"
+            columns: ["customer_id"]
+            isOneToOne: false
+            referencedRelation: "customers"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       customers: {
         Row: {
           address: string | null
@@ -7282,6 +11591,7 @@ export type Database = {
           notes: string | null
           phone: string | null
           property_count: number | null
+          tags: string[]
           updated_at: string
           user_id: string
         }
@@ -7297,6 +11607,7 @@ export type Database = {
           notes?: string | null
           phone?: string | null
           property_count?: number | null
+          tags?: string[]
           updated_at?: string
           user_id: string
         }
@@ -7312,6 +11623,7 @@ export type Database = {
           notes?: string | null
           phone?: string | null
           property_count?: number | null
+          tags?: string[]
           updated_at?: string
           user_id?: string
         }
@@ -8532,6 +12844,51 @@ export type Database = {
             referencedColumns: ["assessor_id"]
           },
         ]
+      }
+      email_opens: {
+        Row: {
+          created_at: string
+          entity_id: string
+          entity_type: string
+          first_opened_at: string
+          id: string
+          last_ip: string | null
+          last_opened_at: string
+          last_user_agent: string | null
+          open_count: number
+          owner_user_id: string
+          recipient_email: string | null
+          updated_at: string
+        }
+        Insert: {
+          created_at?: string
+          entity_id: string
+          entity_type: string
+          first_opened_at?: string
+          id?: string
+          last_ip?: string | null
+          last_opened_at?: string
+          last_user_agent?: string | null
+          open_count?: number
+          owner_user_id: string
+          recipient_email?: string | null
+          updated_at?: string
+        }
+        Update: {
+          created_at?: string
+          entity_id?: string
+          entity_type?: string
+          first_opened_at?: string
+          id?: string
+          last_ip?: string | null
+          last_opened_at?: string
+          last_user_agent?: string | null
+          open_count?: number
+          owner_user_id?: string
+          recipient_email?: string | null
+          updated_at?: string
+        }
+        Relationships: []
       }
       email_suppressions: {
         Row: {
@@ -10707,35 +15064,41 @@ export type Database = {
         Row: {
           action_url: string | null
           created_at: string
-          employee_id: string
+          employee_id: string | null
           id: string
           job_id: string | null
           message: string
+          metadata: Json | null
           read_at: string | null
           title: string
           type: string
+          user_id: string | null
         }
         Insert: {
           action_url?: string | null
           created_at?: string
-          employee_id: string
+          employee_id?: string | null
           id?: string
           job_id?: string | null
           message: string
+          metadata?: Json | null
           read_at?: string | null
           title: string
           type?: string
+          user_id?: string | null
         }
         Update: {
           action_url?: string | null
           created_at?: string
-          employee_id?: string
+          employee_id?: string | null
           id?: string
           job_id?: string | null
           message?: string
+          metadata?: Json | null
           read_at?: string | null
           title?: string
           type?: string
+          user_id?: string | null
         }
         Relationships: [
           {
@@ -12055,10 +16418,13 @@ export type Database = {
           questions: Json | null
           quiz_answers: Json | null
           quiz_questions: Json | null
+          recorded_by_tutor_id: string | null
           responses: Json | null
           session_type: string
           started_at: string | null
           status: string
+          submitted_judgement_id: string | null
+          submitted_to_tutor_at: string | null
           time_spent_seconds: number | null
           user_id: string
         }
@@ -12075,10 +16441,13 @@ export type Database = {
           questions?: Json | null
           quiz_answers?: Json | null
           quiz_questions?: Json | null
+          recorded_by_tutor_id?: string | null
           responses?: Json | null
           session_type: string
           started_at?: string | null
           status?: string
+          submitted_judgement_id?: string | null
+          submitted_to_tutor_at?: string | null
           time_spent_seconds?: number | null
           user_id: string
         }
@@ -12095,14 +16464,25 @@ export type Database = {
           questions?: Json | null
           quiz_answers?: Json | null
           quiz_questions?: Json | null
+          recorded_by_tutor_id?: string | null
           responses?: Json | null
           session_type?: string
           started_at?: string | null
           status?: string
+          submitted_judgement_id?: string | null
+          submitted_to_tutor_at?: string | null
           time_spent_seconds?: number | null
           user_id?: string
         }
-        Relationships: []
+        Relationships: [
+          {
+            foreignKeyName: "epa_mock_sessions_submitted_judgement_id_fkey"
+            columns: ["submitted_judgement_id"]
+            isOneToOne: false
+            referencedRelation: "college_epa_judgements"
+            referencedColumns: ["id"]
+          },
+        ]
       }
       epa_readiness_snapshots: {
         Row: {
@@ -12539,7 +16919,6 @@ export type Database = {
       }
       fire_watch_records: {
         Row: {
-          job_id: string | null
           check_in_interval_minutes: number | null
           check_ins: Json | null
           checklist: Json | null
@@ -12553,6 +16932,7 @@ export type Database = {
           gps_latitude: number | null
           gps_longitude: number | null
           id: string
+          job_id: string | null
           location: string | null
           permit_id: string | null
           photos: Json | null
@@ -12563,7 +16943,6 @@ export type Database = {
           wind_conditions: string | null
         }
         Insert: {
-          job_id?: string | null
           check_in_interval_minutes?: number | null
           check_ins?: Json | null
           checklist?: Json | null
@@ -12577,6 +16956,7 @@ export type Database = {
           gps_latitude?: number | null
           gps_longitude?: number | null
           id?: string
+          job_id?: string | null
           location?: string | null
           permit_id?: string | null
           photos?: Json | null
@@ -12587,7 +16967,6 @@ export type Database = {
           wind_conditions?: string | null
         }
         Update: {
-          job_id?: string | null
           check_in_interval_minutes?: number | null
           check_ins?: Json | null
           checklist?: Json | null
@@ -12601,6 +16980,7 @@ export type Database = {
           gps_latitude?: number | null
           gps_longitude?: number | null
           id?: string
+          job_id?: string | null
           location?: string | null
           permit_id?: string | null
           photos?: Json | null
@@ -12610,7 +16990,15 @@ export type Database = {
           user_id?: string
           wind_conditions?: string | null
         }
-        Relationships: []
+        Relationships: [
+          {
+            foreignKeyName: "fire_watch_records_job_id_fkey"
+            columns: ["job_id"]
+            isOneToOne: false
+            referencedRelation: "spark_projects"
+            referencedColumns: ["id"]
+          },
+        ]
       }
       flashcards: {
         Row: {
@@ -13278,6 +17666,7 @@ export type Database = {
       }
       health_safety_jobs: {
         Row: {
+          attachments: Json | null
           completed_at: string | null
           created_at: string | null
           current_step: string | null
@@ -13290,6 +17679,7 @@ export type Database = {
           project_info: Json | null
           query: string
           raw_response: Json | null
+          refine_of: string | null
           started_at: string | null
           status: string | null
           updated_at: string | null
@@ -13297,6 +17687,7 @@ export type Database = {
           work_type: string | null
         }
         Insert: {
+          attachments?: Json | null
           completed_at?: string | null
           created_at?: string | null
           current_step?: string | null
@@ -13309,6 +17700,7 @@ export type Database = {
           project_info?: Json | null
           query: string
           raw_response?: Json | null
+          refine_of?: string | null
           started_at?: string | null
           status?: string | null
           updated_at?: string | null
@@ -13316,6 +17708,7 @@ export type Database = {
           work_type?: string | null
         }
         Update: {
+          attachments?: Json | null
           completed_at?: string | null
           created_at?: string | null
           current_step?: string | null
@@ -13328,6 +17721,7 @@ export type Database = {
           project_info?: Json | null
           query?: string
           raw_response?: Json | null
+          refine_of?: string | null
           started_at?: string | null
           status?: string | null
           updated_at?: string | null
@@ -13349,6 +17743,13 @@ export type Database = {
             referencedRelation: "spark_projects"
             referencedColumns: ["id"]
           },
+          {
+            foreignKeyName: "health_safety_jobs_refine_of_fkey"
+            columns: ["refine_of"]
+            isOneToOne: false
+            referencedRelation: "health_safety_jobs"
+            referencedColumns: ["id"]
+          },
         ]
       }
       health_safety_knowledge: {
@@ -13358,6 +17759,7 @@ export type Database = {
           embedding: string | null
           id: string
           metadata: Json | null
+          migrated_to_facets: boolean | null
           source: string
           topic: string
         }
@@ -13367,6 +17769,7 @@ export type Database = {
           embedding?: string | null
           id?: string
           metadata?: Json | null
+          migrated_to_facets?: boolean | null
           source: string
           topic: string
         }
@@ -13376,10 +17779,43 @@ export type Database = {
           embedding?: string | null
           id?: string
           metadata?: Json | null
+          migrated_to_facets?: boolean | null
           source?: string
           topic?: string
         }
         Relationships: []
+      }
+      health_safety_partials: {
+        Row: {
+          created_at: string
+          id: string
+          job_id: string
+          payload: Json
+          stage: string
+        }
+        Insert: {
+          created_at?: string
+          id?: string
+          job_id: string
+          payload: Json
+          stage: string
+        }
+        Update: {
+          created_at?: string
+          id?: string
+          job_id?: string
+          payload?: Json
+          stage?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "health_safety_partials_job_id_fkey"
+            columns: ["job_id"]
+            isOneToOne: false
+            referencedRelation: "health_safety_jobs"
+            referencedColumns: ["id"]
+          },
+        ]
       }
       historical_prices: {
         Row: {
@@ -13726,7 +18162,6 @@ export type Database = {
       }
       inspection_records: {
         Row: {
-          job_id: string | null
           additional_notes: string | null
           created_at: string
           custom_template_id: string | null
@@ -13736,6 +18171,7 @@ export type Database = {
           inspector_name: string
           inspector_signature: string | null
           inspector_signature_name: string | null
+          job_id: string | null
           location: string | null
           na_count: number
           overall_result: string
@@ -13753,7 +18189,6 @@ export type Database = {
           user_id: string
         }
         Insert: {
-          job_id?: string | null
           additional_notes?: string | null
           created_at?: string
           custom_template_id?: string | null
@@ -13763,6 +18198,7 @@ export type Database = {
           inspector_name: string
           inspector_signature?: string | null
           inspector_signature_name?: string | null
+          job_id?: string | null
           location?: string | null
           na_count?: number
           overall_result: string
@@ -13780,7 +18216,6 @@ export type Database = {
           user_id: string
         }
         Update: {
-          job_id?: string | null
           additional_notes?: string | null
           created_at?: string
           custom_template_id?: string | null
@@ -13790,6 +18225,7 @@ export type Database = {
           inspector_name?: string
           inspector_signature?: string | null
           inspector_signature_name?: string | null
+          job_id?: string | null
           location?: string | null
           na_count?: number
           overall_result?: string
@@ -13812,6 +18248,13 @@ export type Database = {
             columns: ["custom_template_id"]
             isOneToOne: false
             referencedRelation: "custom_inspection_templates"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "inspection_records_job_id_fkey"
+            columns: ["job_id"]
+            isOneToOne: false
+            referencedRelation: "spark_projects"
             referencedColumns: ["id"]
           },
         ]
@@ -14046,6 +18489,7 @@ export type Database = {
       }
       installation_method_jobs: {
         Row: {
+          attachments: Json | null
           completed_at: string | null
           created_at: string
           current_step: string | null
@@ -14060,12 +18504,14 @@ export type Database = {
           project_id: string | null
           quality_metrics: Json | null
           query: string
+          refine_of: string | null
           started_at: string | null
           status: string
           updated_at: string
           user_id: string
         }
         Insert: {
+          attachments?: Json | null
           completed_at?: string | null
           created_at?: string
           current_step?: string | null
@@ -14080,12 +18526,14 @@ export type Database = {
           project_id?: string | null
           quality_metrics?: Json | null
           query: string
+          refine_of?: string | null
           started_at?: string | null
           status?: string
           updated_at?: string
           user_id: string
         }
         Update: {
+          attachments?: Json | null
           completed_at?: string | null
           created_at?: string
           current_step?: string | null
@@ -14100,6 +18548,7 @@ export type Database = {
           project_id?: string | null
           quality_metrics?: Json | null
           query?: string
+          refine_of?: string | null
           started_at?: string | null
           status?: string
           updated_at?: string
@@ -14118,6 +18567,45 @@ export type Database = {
             columns: ["project_id"]
             isOneToOne: false
             referencedRelation: "spark_projects"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "installation_method_jobs_refine_of_fkey"
+            columns: ["refine_of"]
+            isOneToOne: false
+            referencedRelation: "installation_method_jobs"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      installation_method_partials: {
+        Row: {
+          created_at: string
+          id: string
+          job_id: string
+          payload: Json
+          stage: string
+        }
+        Insert: {
+          created_at?: string
+          id?: string
+          job_id: string
+          payload: Json
+          stage: string
+        }
+        Update: {
+          created_at?: string
+          id?: string
+          job_id?: string
+          payload?: Json
+          stage?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "installation_method_partials_job_id_fkey"
+            columns: ["job_id"]
+            isOneToOne: false
+            referencedRelation: "installation_method_jobs"
             referencedColumns: ["id"]
           },
         ]
@@ -14222,6 +18710,97 @@ export type Database = {
             columns: ["source_id"]
             isOneToOne: false
             referencedRelation: "installation_knowledge"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      inventory_movements: {
+        Row: {
+          created_at: string
+          direction: string
+          id: string
+          inventory_item_id: string
+          note: string | null
+          quantity: number
+          quote_id: string | null
+          reason: string
+          user_id: string
+        }
+        Insert: {
+          created_at?: string
+          direction: string
+          id?: string
+          inventory_item_id: string
+          note?: string | null
+          quantity: number
+          quote_id?: string | null
+          reason: string
+          user_id: string
+        }
+        Update: {
+          created_at?: string
+          direction?: string
+          id?: string
+          inventory_item_id?: string
+          note?: string | null
+          quantity?: number
+          quote_id?: string | null
+          reason?: string
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "inventory_movements_inventory_item_id_fkey"
+            columns: ["inventory_item_id"]
+            isOneToOne: false
+            referencedRelation: "personal_inventory"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      invoice_action_tokens: {
+        Row: {
+          action: string
+          consumed_at: string | null
+          consumed_by_ip: string | null
+          consumed_by_ua: string | null
+          created_at: string
+          expires_at: string
+          id: string
+          invoice_id: string
+          public_token: string
+          user_id: string
+        }
+        Insert: {
+          action: string
+          consumed_at?: string | null
+          consumed_by_ip?: string | null
+          consumed_by_ua?: string | null
+          created_at?: string
+          expires_at?: string
+          id?: string
+          invoice_id: string
+          public_token: string
+          user_id: string
+        }
+        Update: {
+          action?: string
+          consumed_at?: string | null
+          consumed_by_ip?: string | null
+          consumed_by_ua?: string | null
+          created_at?: string
+          expires_at?: string
+          id?: string
+          invoice_id?: string
+          public_token?: string
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "invoice_action_tokens_invoice_id_fkey"
+            columns: ["invoice_id"]
+            isOneToOne: false
+            referencedRelation: "quotes"
             referencedColumns: ["id"]
           },
         ]
@@ -14345,6 +18924,7 @@ export type Database = {
           client_data: Json
           created_at: string
           deleted_at: string | null
+          deposit_for_quote: boolean | null
           due_date: string | null
           external_invoice_id: string | null
           external_invoice_provider: string | null
@@ -14363,6 +18943,7 @@ export type Database = {
           notes: string | null
           overhead: number
           paid_at: string | null
+          parent_quote_id: string | null
           partial_payments: Json | null
           payment_method: string | null
           payment_proof_urls: string[] | null
@@ -14395,6 +18976,7 @@ export type Database = {
           client_data?: Json
           created_at?: string
           deleted_at?: string | null
+          deposit_for_quote?: boolean | null
           due_date?: string | null
           external_invoice_id?: string | null
           external_invoice_provider?: string | null
@@ -14413,6 +18995,7 @@ export type Database = {
           notes?: string | null
           overhead?: number
           paid_at?: string | null
+          parent_quote_id?: string | null
           partial_payments?: Json | null
           payment_method?: string | null
           payment_proof_urls?: string[] | null
@@ -14445,6 +19028,7 @@ export type Database = {
           client_data?: Json
           created_at?: string
           deleted_at?: string | null
+          deposit_for_quote?: boolean | null
           due_date?: string | null
           external_invoice_id?: string | null
           external_invoice_provider?: string | null
@@ -14463,6 +19047,7 @@ export type Database = {
           notes?: string | null
           overhead?: number
           paid_at?: string | null
+          parent_quote_id?: string | null
           partial_payments?: Json | null
           payment_method?: string | null
           payment_proof_urls?: string[] | null
@@ -14491,6 +19076,13 @@ export type Database = {
           work_completion_date?: string | null
         }
         Relationships: [
+          {
+            foreignKeyName: "invoices_parent_quote_id_fkey"
+            columns: ["parent_quote_id"]
+            isOneToOne: false
+            referencedRelation: "quotes"
+            referencedColumns: ["id"]
+          },
           {
             foreignKeyName: "invoices_project_id_fkey"
             columns: ["project_id"]
@@ -14593,6 +19185,20 @@ export type Database = {
             isOneToOne: false
             referencedRelation: "v_portfolio_stats_by_college"
             referencedColumns: ["college_id"]
+          },
+          {
+            foreignKeyName: "iqa_samples_student_id_fkey"
+            columns: ["student_id"]
+            isOneToOne: false
+            referencedRelation: "college_fs_gateway_status"
+            referencedColumns: ["student_id"]
+          },
+          {
+            foreignKeyName: "iqa_samples_student_id_fkey"
+            columns: ["student_id"]
+            isOneToOne: false
+            referencedRelation: "college_iqa_otj_audit_queue"
+            referencedColumns: ["college_student_row_id"]
           },
           {
             foreignKeyName: "iqa_samples_student_id_fkey"
@@ -16675,47 +21281,9 @@ export type Database = {
         }
         Relationships: []
       }
-      maintenance_knowledge_backup: {
-        Row: {
-          content: string | null
-          created_at: string | null
-          embedding: string | null
-          equipment_type: string | null
-          id: string | null
-          maintenance_type: string | null
-          metadata: Json | null
-          search_vector: unknown
-          source: string | null
-          topic: string | null
-        }
-        Insert: {
-          content?: string | null
-          created_at?: string | null
-          embedding?: string | null
-          equipment_type?: string | null
-          id?: string | null
-          maintenance_type?: string | null
-          metadata?: Json | null
-          search_vector?: unknown
-          source?: string | null
-          topic?: string | null
-        }
-        Update: {
-          content?: string | null
-          created_at?: string | null
-          embedding?: string | null
-          equipment_type?: string | null
-          id?: string | null
-          maintenance_type?: string | null
-          metadata?: Json | null
-          search_vector?: unknown
-          source?: string | null
-          topic?: string | null
-        }
-        Relationships: []
-      }
       maintenance_method_jobs: {
         Row: {
+          attachments: Json | null
           completed_at: string | null
           created_at: string | null
           current_step: string | null
@@ -16728,12 +21296,14 @@ export type Database = {
           project_id: string | null
           quality_metrics: Json | null
           query: string
+          refine_of: string | null
           started_at: string | null
           status: string | null
           updated_at: string | null
           user_id: string
         }
         Insert: {
+          attachments?: Json | null
           completed_at?: string | null
           created_at?: string | null
           current_step?: string | null
@@ -16746,12 +21316,14 @@ export type Database = {
           project_id?: string | null
           quality_metrics?: Json | null
           query: string
+          refine_of?: string | null
           started_at?: string | null
           status?: string | null
           updated_at?: string | null
           user_id: string
         }
         Update: {
+          attachments?: Json | null
           completed_at?: string | null
           created_at?: string | null
           current_step?: string | null
@@ -16764,6 +21336,7 @@ export type Database = {
           project_id?: string | null
           quality_metrics?: Json | null
           query?: string
+          refine_of?: string | null
           started_at?: string | null
           status?: string | null
           updated_at?: string | null
@@ -16775,6 +21348,45 @@ export type Database = {
             columns: ["project_id"]
             isOneToOne: false
             referencedRelation: "spark_projects"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "maintenance_method_jobs_refine_of_fkey"
+            columns: ["refine_of"]
+            isOneToOne: false
+            referencedRelation: "maintenance_method_jobs"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      maintenance_method_partials: {
+        Row: {
+          created_at: string
+          id: string
+          job_id: string
+          payload: Json
+          stage: string
+        }
+        Insert: {
+          created_at?: string
+          id?: string
+          job_id: string
+          payload: Json
+          stage: string
+        }
+        Update: {
+          created_at?: string
+          id?: string
+          job_id?: string
+          payload?: Json
+          stage?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "maintenance_method_partials_job_id_fkey"
+            columns: ["job_id"]
+            isOneToOne: false
+            referencedRelation: "maintenance_method_jobs"
             referencedColumns: ["id"]
           },
         ]
@@ -17377,6 +21989,42 @@ export type Database = {
           slug?: string
           updated_at?: string | null
           website_url?: string | null
+        }
+        Relationships: []
+      }
+      mate_cost_daily: {
+        Row: {
+          cache_read_tokens: number
+          cache_write_tokens: number
+          cost_usd: number
+          day: string
+          input_tokens: number
+          model: string
+          output_tokens: number
+          updated_at: string
+          user_id: string
+        }
+        Insert: {
+          cache_read_tokens?: number
+          cache_write_tokens?: number
+          cost_usd?: number
+          day: string
+          input_tokens?: number
+          model: string
+          output_tokens?: number
+          updated_at?: string
+          user_id: string
+        }
+        Update: {
+          cache_read_tokens?: number
+          cache_write_tokens?: number
+          cost_usd?: number
+          day?: string
+          input_tokens?: number
+          model?: string
+          output_tokens?: number
+          updated_at?: string
+          user_id?: string
         }
         Relationships: []
       }
@@ -18076,9 +22724,59 @@ export type Database = {
         }
         Relationships: []
       }
+      national_benchmark_snapshots: {
+        Row: {
+          achievement_pct: number | null
+          anonymous_token: string
+          attendance_pct: number | null
+          created_at: string | null
+          epa_distinction_pct: number | null
+          epa_pass_pct: number | null
+          fs_gateway_clear_pct: number | null
+          id: string
+          iso_month: string
+          learner_count: number | null
+          otj_on_track_pct: number | null
+          region_band: string | null
+          retention_pct: number | null
+          sector_band: string | null
+        }
+        Insert: {
+          achievement_pct?: number | null
+          anonymous_token: string
+          attendance_pct?: number | null
+          created_at?: string | null
+          epa_distinction_pct?: number | null
+          epa_pass_pct?: number | null
+          fs_gateway_clear_pct?: number | null
+          id?: string
+          iso_month: string
+          learner_count?: number | null
+          otj_on_track_pct?: number | null
+          region_band?: string | null
+          retention_pct?: number | null
+          sector_band?: string | null
+        }
+        Update: {
+          achievement_pct?: number | null
+          anonymous_token?: string
+          attendance_pct?: number | null
+          created_at?: string | null
+          epa_distinction_pct?: number | null
+          epa_pass_pct?: number | null
+          fs_gateway_clear_pct?: number | null
+          id?: string
+          iso_month?: string
+          learner_count?: number | null
+          otj_on_track_pct?: number | null
+          region_band?: string | null
+          retention_pct?: number | null
+          sector_band?: string | null
+        }
+        Relationships: []
+      }
       near_miss_reports: {
         Row: {
-          job_id: string | null
           assigned_to: string | null
           briefed_to_team: boolean | null
           briefing_created_at: string | null
@@ -18102,6 +22800,7 @@ export type Database = {
           incident_date: string
           incident_number: string | null
           incident_time: string
+          job_id: string | null
           lighting_conditions: string | null
           location: string
           photos: Json | null
@@ -18126,7 +22825,6 @@ export type Database = {
           witnesses: Json | null
         }
         Insert: {
-          job_id?: string | null
           assigned_to?: string | null
           briefed_to_team?: boolean | null
           briefing_created_at?: string | null
@@ -18150,6 +22848,7 @@ export type Database = {
           incident_date: string
           incident_number?: string | null
           incident_time: string
+          job_id?: string | null
           lighting_conditions?: string | null
           location: string
           photos?: Json | null
@@ -18174,7 +22873,6 @@ export type Database = {
           witnesses?: Json | null
         }
         Update: {
-          job_id?: string | null
           assigned_to?: string | null
           briefed_to_team?: boolean | null
           briefing_created_at?: string | null
@@ -18198,6 +22896,7 @@ export type Database = {
           incident_date?: string
           incident_number?: string | null
           incident_time?: string
+          job_id?: string | null
           lighting_conditions?: string | null
           location?: string
           photos?: Json | null
@@ -18227,6 +22926,115 @@ export type Database = {
             columns: ["briefing_id"]
             isOneToOne: false
             referencedRelation: "team_briefings"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "near_miss_reports_job_id_fkey"
+            columns: ["job_id"]
+            isOneToOne: false
+            referencedRelation: "spark_projects"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      notebook_conversations: {
+        Row: {
+          created_at: string
+          id: string
+          last_message_at: string | null
+          message_count: number
+          owner_uid: string
+          persona: string
+          pinned: boolean
+          subject_student_id: string | null
+          title: string | null
+          updated_at: string
+        }
+        Insert: {
+          created_at?: string
+          id?: string
+          last_message_at?: string | null
+          message_count?: number
+          owner_uid: string
+          persona: string
+          pinned?: boolean
+          subject_student_id?: string | null
+          title?: string | null
+          updated_at?: string
+        }
+        Update: {
+          created_at?: string
+          id?: string
+          last_message_at?: string | null
+          message_count?: number
+          owner_uid?: string
+          persona?: string
+          pinned?: boolean
+          subject_student_id?: string | null
+          title?: string | null
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "notebook_conversations_subject_student_id_fkey"
+            columns: ["subject_student_id"]
+            isOneToOne: false
+            referencedRelation: "college_fs_gateway_status"
+            referencedColumns: ["student_id"]
+          },
+          {
+            foreignKeyName: "notebook_conversations_subject_student_id_fkey"
+            columns: ["subject_student_id"]
+            isOneToOne: false
+            referencedRelation: "college_iqa_otj_audit_queue"
+            referencedColumns: ["college_student_row_id"]
+          },
+          {
+            foreignKeyName: "notebook_conversations_subject_student_id_fkey"
+            columns: ["subject_student_id"]
+            isOneToOne: false
+            referencedRelation: "college_students"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      notebook_messages: {
+        Row: {
+          citations: Json | null
+          content: string
+          conversation_id: string
+          created_at: string
+          id: string
+          proposals: Json | null
+          role: string
+          suggested_actions: Json | null
+        }
+        Insert: {
+          citations?: Json | null
+          content: string
+          conversation_id: string
+          created_at?: string
+          id?: string
+          proposals?: Json | null
+          role: string
+          suggested_actions?: Json | null
+        }
+        Update: {
+          citations?: Json | null
+          content?: string
+          conversation_id?: string
+          created_at?: string
+          id?: string
+          proposals?: Json | null
+          role?: string
+          suggested_actions?: Json | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "notebook_messages_conversation_id_fkey"
+            columns: ["conversation_id"]
+            isOneToOne: false
+            referencedRelation: "notebook_conversations"
             referencedColumns: ["id"]
           },
         ]
@@ -19137,6 +23945,128 @@ export type Database = {
         }
         Relationships: []
       }
+      pastoral_notes: {
+        Row: {
+          action_by_date: string | null
+          action_completed_at: string | null
+          action_required: string | null
+          author_id: string | null
+          body: string
+          college_id: string
+          created_at: string
+          id: string
+          kind: string
+          related_lesson_plan_id: string | null
+          student_id: string
+          title: string | null
+          updated_at: string
+          visibility: string
+        }
+        Insert: {
+          action_by_date?: string | null
+          action_completed_at?: string | null
+          action_required?: string | null
+          author_id?: string | null
+          body: string
+          college_id: string
+          created_at?: string
+          id?: string
+          kind?: string
+          related_lesson_plan_id?: string | null
+          student_id: string
+          title?: string | null
+          updated_at?: string
+          visibility?: string
+        }
+        Update: {
+          action_by_date?: string | null
+          action_completed_at?: string | null
+          action_required?: string | null
+          author_id?: string | null
+          body?: string
+          college_id?: string
+          created_at?: string
+          id?: string
+          kind?: string
+          related_lesson_plan_id?: string | null
+          student_id?: string
+          title?: string | null
+          updated_at?: string
+          visibility?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "pastoral_notes_author_id_fkey"
+            columns: ["author_id"]
+            isOneToOne: false
+            referencedRelation: "college_staff"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "pastoral_notes_author_id_fkey"
+            columns: ["author_id"]
+            isOneToOne: false
+            referencedRelation: "v_single_central_record"
+            referencedColumns: ["college_staff_id"]
+          },
+          {
+            foreignKeyName: "pastoral_notes_author_id_fkey"
+            columns: ["author_id"]
+            isOneToOne: false
+            referencedRelation: "v_staff_cpd_progress"
+            referencedColumns: ["college_staff_id"]
+          },
+          {
+            foreignKeyName: "pastoral_notes_college_id_fkey"
+            columns: ["college_id"]
+            isOneToOne: false
+            referencedRelation: "colleges"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "pastoral_notes_college_id_fkey"
+            columns: ["college_id"]
+            isOneToOne: false
+            referencedRelation: "v_iqa_sampling_status"
+            referencedColumns: ["college_id"]
+          },
+          {
+            foreignKeyName: "pastoral_notes_college_id_fkey"
+            columns: ["college_id"]
+            isOneToOne: false
+            referencedRelation: "v_portfolio_stats_by_college"
+            referencedColumns: ["college_id"]
+          },
+          {
+            foreignKeyName: "pastoral_notes_related_lesson_plan_id_fkey"
+            columns: ["related_lesson_plan_id"]
+            isOneToOne: false
+            referencedRelation: "college_lesson_plans"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "pastoral_notes_student_id_fkey"
+            columns: ["student_id"]
+            isOneToOne: false
+            referencedRelation: "college_fs_gateway_status"
+            referencedColumns: ["student_id"]
+          },
+          {
+            foreignKeyName: "pastoral_notes_student_id_fkey"
+            columns: ["student_id"]
+            isOneToOne: false
+            referencedRelation: "college_iqa_otj_audit_queue"
+            referencedColumns: ["college_student_row_id"]
+          },
+          {
+            foreignKeyName: "pastoral_notes_student_id_fkey"
+            columns: ["student_id"]
+            isOneToOne: false
+            referencedRelation: "college_students"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       pdf_generation_queue: {
         Row: {
           attempts: number | null
@@ -19281,8 +24211,85 @@ export type Database = {
         }
         Relationships: []
       }
+      permit_revisions: {
+        Row: {
+          change_reason: string | null
+          changed_by: string | null
+          created_at: string
+          id: string
+          permit_id: string
+          snapshot: Json
+          user_id: string
+          version: number
+        }
+        Insert: {
+          change_reason?: string | null
+          changed_by?: string | null
+          created_at?: string
+          id?: string
+          permit_id: string
+          snapshot: Json
+          user_id: string
+          version: number
+        }
+        Update: {
+          change_reason?: string | null
+          changed_by?: string | null
+          created_at?: string
+          id?: string
+          permit_id?: string
+          snapshot?: Json
+          user_id?: string
+          version?: number
+        }
+        Relationships: [
+          {
+            foreignKeyName: "permit_revisions_permit_id_fkey"
+            columns: ["permit_id"]
+            isOneToOne: false
+            referencedRelation: "permits_to_work"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      permit_signing_tokens: {
+        Row: {
+          created_at: string
+          expires_at: string
+          id: string
+          permit_id: string
+          public_token: string
+          user_id: string
+        }
+        Insert: {
+          created_at?: string
+          expires_at?: string
+          id?: string
+          permit_id: string
+          public_token: string
+          user_id: string
+        }
+        Update: {
+          created_at?: string
+          expires_at?: string
+          id?: string
+          permit_id?: string
+          public_token?: string
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "permit_signing_tokens_permit_id_fkey"
+            columns: ["permit_id"]
+            isOneToOne: false
+            referencedRelation: "permits_to_work"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       permits_to_work: {
         Row: {
+          acceptance_status: string
           additional_notes: string | null
           approval_comments: string | null
           approval_signature: string | null
@@ -19313,6 +24320,7 @@ export type Database = {
           precautions: string[] | null
           receiver_name: string
           receiver_signature: string | null
+          receiver_signed_at: string | null
           requires_approval: boolean
           start_time: string
           status: string
@@ -19323,6 +24331,7 @@ export type Database = {
           version: number
         }
         Insert: {
+          acceptance_status?: string
           additional_notes?: string | null
           approval_comments?: string | null
           approval_signature?: string | null
@@ -19353,6 +24362,7 @@ export type Database = {
           precautions?: string[] | null
           receiver_name: string
           receiver_signature?: string | null
+          receiver_signed_at?: string | null
           requires_approval?: boolean
           start_time: string
           status?: string
@@ -19363,6 +24373,7 @@ export type Database = {
           version?: number
         }
         Update: {
+          acceptance_status?: string
           additional_notes?: string | null
           approval_comments?: string | null
           approval_signature?: string | null
@@ -19393,6 +24404,7 @@ export type Database = {
           precautions?: string[] | null
           receiver_name?: string
           receiver_signature?: string | null
+          receiver_signed_at?: string | null
           requires_approval?: boolean
           start_time?: string
           status?: string
@@ -19400,8 +24412,24 @@ export type Database = {
           type?: string
           updated_at?: string
           user_id?: string
+          version?: number
         }
-        Relationships: []
+        Relationships: [
+          {
+            foreignKeyName: "permits_to_work_job_id_fkey"
+            columns: ["job_id"]
+            isOneToOne: false
+            referencedRelation: "spark_projects"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "permits_to_work_linked_rams_id_fkey"
+            columns: ["linked_rams_id"]
+            isOneToOne: false
+            referencedRelation: "rams_documents"
+            referencedColumns: ["id"]
+          },
+        ]
       }
       personal_inventory: {
         Row: {
@@ -19567,6 +24595,7 @@ export type Database = {
           max_attempts: number | null
           phone_number: string
           user_id: string
+          verification_method: string
           verified_at: string | null
         }
         Insert: {
@@ -19578,6 +24607,7 @@ export type Database = {
           max_attempts?: number | null
           phone_number: string
           user_id: string
+          verification_method?: string
           verified_at?: string | null
         }
         Update: {
@@ -19589,6 +24619,7 @@ export type Database = {
           max_attempts?: number | null
           phone_number?: string
           user_id?: string
+          verification_method?: string
           verified_at?: string | null
         }
         Relationships: [
@@ -19849,22 +24880,28 @@ export type Database = {
         Row: {
           acknowledged_at: string
           id: string
+          ip_addr: unknown
           policy_id: string
           policy_version: number
+          user_agent: string | null
           user_id: string
         }
         Insert: {
           acknowledged_at?: string
           id?: string
+          ip_addr?: unknown
           policy_id: string
           policy_version: number
+          user_agent?: string | null
           user_id: string
         }
         Update: {
           acknowledged_at?: string
           id?: string
+          ip_addr?: unknown
           policy_id?: string
           policy_version?: number
+          user_agent?: string | null
           user_id?: string
         }
         Relationships: [
@@ -19876,6 +24913,57 @@ export type Database = {
             referencedColumns: ["id"]
           },
         ]
+      }
+      policy_templates: {
+        Row: {
+          category: string
+          content_md: string
+          created_at: string
+          framework_citations: string[] | null
+          id: string
+          lookup_key: string
+          ofsted_areas: string[] | null
+          requires_acknowledgement: boolean
+          sort_rank: number
+          status: string
+          suggested_owner_role: string | null
+          summary: string
+          title: string
+          updated_at: string
+        }
+        Insert: {
+          category: string
+          content_md: string
+          created_at?: string
+          framework_citations?: string[] | null
+          id?: string
+          lookup_key: string
+          ofsted_areas?: string[] | null
+          requires_acknowledgement?: boolean
+          sort_rank?: number
+          status?: string
+          suggested_owner_role?: string | null
+          summary: string
+          title: string
+          updated_at?: string
+        }
+        Update: {
+          category?: string
+          content_md?: string
+          created_at?: string
+          framework_citations?: string[] | null
+          id?: string
+          lookup_key?: string
+          ofsted_areas?: string[] | null
+          requires_acknowledgement?: boolean
+          sort_rank?: number
+          status?: string
+          suggested_owner_role?: string | null
+          summary?: string
+          title?: string
+          updated_at?: string
+        }
+        Relationships: []
       }
       portfolio_audit_log: {
         Row: {
@@ -20030,7 +25118,7 @@ export type Database = {
           id: string
           is_supervisor_verified: boolean | null
           learning_outcomes_met: string[] | null
-          metadata: Json | null
+          metadata: Json
           qualification_category_id: string | null
           reflection_notes: string | null
           self_assessment: number | null
@@ -20058,7 +25146,7 @@ export type Database = {
           id?: string
           is_supervisor_verified?: boolean | null
           learning_outcomes_met?: string[] | null
-          metadata?: Json | null
+          metadata?: Json
           qualification_category_id?: string | null
           reflection_notes?: string | null
           self_assessment?: number | null
@@ -20086,7 +25174,7 @@ export type Database = {
           id?: string
           is_supervisor_verified?: boolean | null
           learning_outcomes_met?: string[] | null
-          metadata?: Json | null
+          metadata?: Json
           qualification_category_id?: string | null
           reflection_notes?: string | null
           self_assessment?: number | null
@@ -20624,6 +25712,10 @@ export type Database = {
           created_at: string | null
           diagnostic_tests: string[] | null
           eicr_observation_codes: string[] | null
+          embedding: unknown
+          embedding_attempted_at: string | null
+          embedding_error: string | null
+          embedding_status: string | null
           equipment_category: string | null
           equipment_subcategory: string | null
           facet_hash: string | null
@@ -20654,6 +25746,7 @@ export type Database = {
           test_procedures: Json[] | null
           tools_required: string[] | null
           troubleshooting_steps: string[] | null
+          tsv: unknown
           typical_duration_minutes: number | null
           updated_at: string | null
           visual_inspection_points: string[] | null
@@ -20676,6 +25769,10 @@ export type Database = {
           created_at?: string | null
           diagnostic_tests?: string[] | null
           eicr_observation_codes?: string[] | null
+          embedding?: unknown
+          embedding_attempted_at?: string | null
+          embedding_error?: string | null
+          embedding_status?: string | null
           equipment_category?: string | null
           equipment_subcategory?: string | null
           facet_hash?: string | null
@@ -20706,6 +25803,7 @@ export type Database = {
           test_procedures?: Json[] | null
           tools_required?: string[] | null
           troubleshooting_steps?: string[] | null
+          tsv?: unknown
           typical_duration_minutes?: number | null
           updated_at?: string | null
           visual_inspection_points?: string[] | null
@@ -20728,6 +25826,10 @@ export type Database = {
           created_at?: string | null
           diagnostic_tests?: string[] | null
           eicr_observation_codes?: string[] | null
+          embedding?: unknown
+          embedding_attempted_at?: string | null
+          embedding_error?: string | null
+          embedding_status?: string | null
           equipment_category?: string | null
           equipment_subcategory?: string | null
           facet_hash?: string | null
@@ -20758,6 +25860,7 @@ export type Database = {
           test_procedures?: Json[] | null
           tools_required?: string[] | null
           troubleshooting_steps?: string[] | null
+          tsv?: unknown
           typical_duration_minutes?: number | null
           updated_at?: string | null
           visual_inspection_points?: string[] | null
@@ -20898,7 +26001,6 @@ export type Database = {
       }
       pre_use_checks: {
         Row: {
-          job_id: string | null
           actions_required: string | null
           approval_comments: string | null
           approval_signature: string | null
@@ -20913,6 +26015,7 @@ export type Database = {
           equipment_type: string
           id: string
           items: Json | null
+          job_id: string | null
           overall_result: string | null
           photos: Json | null
           requires_approval: boolean
@@ -20921,7 +26024,6 @@ export type Database = {
           user_id: string
         }
         Insert: {
-          job_id?: string | null
           actions_required?: string | null
           approval_comments?: string | null
           approval_signature?: string | null
@@ -20936,6 +26038,7 @@ export type Database = {
           equipment_type: string
           id?: string
           items?: Json | null
+          job_id?: string | null
           overall_result?: string | null
           photos?: Json | null
           requires_approval?: boolean
@@ -20944,7 +26047,6 @@ export type Database = {
           user_id: string
         }
         Update: {
-          job_id?: string | null
           actions_required?: string | null
           approval_comments?: string | null
           approval_signature?: string | null
@@ -20959,6 +26061,7 @@ export type Database = {
           equipment_type?: string
           id?: string
           items?: Json | null
+          job_id?: string | null
           overall_result?: string | null
           photos?: Json | null
           requires_approval?: boolean
@@ -20966,7 +26069,15 @@ export type Database = {
           site_address?: string | null
           user_id?: string
         }
-        Relationships: []
+        Relationships: [
+          {
+            foreignKeyName: "pre_use_checks_job_id_fkey"
+            columns: ["job_id"]
+            isOneToOne: false
+            referencedRelation: "spark_projects"
+            referencedColumns: ["id"]
+          },
+        ]
       }
       price_history: {
         Row: {
@@ -21361,6 +26472,8 @@ export type Database = {
           agent_workspace_version: string | null
           apprentice_campaign_sent_at: string | null
           apprentice_campaign_type: string | null
+          apprentice_college: string | null
+          apprentice_course: string | null
           apprentice_level: string | null
           apprentice_year: number | null
           assessor_qualifications: string[] | null
@@ -21378,6 +26491,7 @@ export type Database = {
           elec_id_number: string | null
           fbclid: string | null
           first_touch_at: string | null
+          founder_at: string | null
           free_access_expires_at: string | null
           free_access_granted: boolean | null
           free_access_granted_by: string | null
@@ -21392,6 +26506,7 @@ export type Database = {
           incomplete_signup_v3_sent_at: string | null
           iqa_qualifications: string[] | null
           is_assessor: boolean | null
+          is_founder: boolean
           is_iqa: boolean | null
           is_trial: boolean | null
           is_trial_cancelled: boolean | null
@@ -21405,12 +26520,21 @@ export type Database = {
           onboarding_completed: boolean | null
           phone_agent_enabled: boolean | null
           phone_agent_updated_at: string | null
+          portfolio_statement: string | null
           primary_cv_id: string | null
+          reengage_email_2_sent_at: string | null
+          reengage_email_3_sent_at: string | null
+          reengage_email_sent_at: string | null
           referral_code: string | null
           referral_credits_pence: number
           referred_by: string | null
           referrer_url: string | null
           role: string | null
+          scheduling_blackout_dates: Json | null
+          scheduling_buffer_minutes: number | null
+          scheduling_max_bookings_per_day: number | null
+          scheduling_min_notice_hours: number | null
+          scheduling_working_hours: Json | null
           setup_banner_dismissed: boolean | null
           specialisation: string | null
           stripe_customer_id: string | null
@@ -21449,6 +26573,8 @@ export type Database = {
           agent_workspace_version?: string | null
           apprentice_campaign_sent_at?: string | null
           apprentice_campaign_type?: string | null
+          apprentice_college?: string | null
+          apprentice_course?: string | null
           apprentice_level?: string | null
           apprentice_year?: number | null
           assessor_qualifications?: string[] | null
@@ -21466,6 +26592,7 @@ export type Database = {
           elec_id_number?: string | null
           fbclid?: string | null
           first_touch_at?: string | null
+          founder_at?: string | null
           free_access_expires_at?: string | null
           free_access_granted?: boolean | null
           free_access_granted_by?: string | null
@@ -21480,6 +26607,7 @@ export type Database = {
           incomplete_signup_v3_sent_at?: string | null
           iqa_qualifications?: string[] | null
           is_assessor?: boolean | null
+          is_founder?: boolean
           is_iqa?: boolean | null
           is_trial?: boolean | null
           is_trial_cancelled?: boolean | null
@@ -21493,12 +26621,21 @@ export type Database = {
           onboarding_completed?: boolean | null
           phone_agent_enabled?: boolean | null
           phone_agent_updated_at?: string | null
+          portfolio_statement?: string | null
           primary_cv_id?: string | null
+          reengage_email_2_sent_at?: string | null
+          reengage_email_3_sent_at?: string | null
+          reengage_email_sent_at?: string | null
           referral_code?: string | null
           referral_credits_pence?: number
           referred_by?: string | null
           referrer_url?: string | null
           role?: string | null
+          scheduling_blackout_dates?: Json | null
+          scheduling_buffer_minutes?: number | null
+          scheduling_max_bookings_per_day?: number | null
+          scheduling_min_notice_hours?: number | null
+          scheduling_working_hours?: Json | null
           setup_banner_dismissed?: boolean | null
           specialisation?: string | null
           stripe_customer_id?: string | null
@@ -21537,6 +26674,8 @@ export type Database = {
           agent_workspace_version?: string | null
           apprentice_campaign_sent_at?: string | null
           apprentice_campaign_type?: string | null
+          apprentice_college?: string | null
+          apprentice_course?: string | null
           apprentice_level?: string | null
           apprentice_year?: number | null
           assessor_qualifications?: string[] | null
@@ -21554,6 +26693,7 @@ export type Database = {
           elec_id_number?: string | null
           fbclid?: string | null
           first_touch_at?: string | null
+          founder_at?: string | null
           free_access_expires_at?: string | null
           free_access_granted?: boolean | null
           free_access_granted_by?: string | null
@@ -21568,6 +26708,7 @@ export type Database = {
           incomplete_signup_v3_sent_at?: string | null
           iqa_qualifications?: string[] | null
           is_assessor?: boolean | null
+          is_founder?: boolean
           is_iqa?: boolean | null
           is_trial?: boolean | null
           is_trial_cancelled?: boolean | null
@@ -21581,12 +26722,21 @@ export type Database = {
           onboarding_completed?: boolean | null
           phone_agent_enabled?: boolean | null
           phone_agent_updated_at?: string | null
+          portfolio_statement?: string | null
           primary_cv_id?: string | null
+          reengage_email_2_sent_at?: string | null
+          reengage_email_3_sent_at?: string | null
+          reengage_email_sent_at?: string | null
           referral_code?: string | null
           referral_credits_pence?: number
           referred_by?: string | null
           referrer_url?: string | null
           role?: string | null
+          scheduling_blackout_dates?: Json | null
+          scheduling_buffer_minutes?: number | null
+          scheduling_max_bookings_per_day?: number | null
+          scheduling_min_notice_hours?: number | null
+          scheduling_working_hours?: Json | null
           setup_banner_dismissed?: boolean | null
           specialisation?: string | null
           stripe_customer_id?: string | null
@@ -22253,7 +27403,10 @@ export type Database = {
         Row: {
           ac_code: string
           ac_text: string
+          canonical_ac_id: string | null
           created_at: string | null
+          embedded_at: string | null
+          embedding: string | null
           id: string
           lo_number: number
           lo_text: string
@@ -22264,7 +27417,10 @@ export type Database = {
         Insert: {
           ac_code: string
           ac_text: string
+          canonical_ac_id?: string | null
           created_at?: string | null
+          embedded_at?: string | null
+          embedding?: string | null
           id?: string
           lo_number: number
           lo_text: string
@@ -22275,7 +27431,10 @@ export type Database = {
         Update: {
           ac_code?: string
           ac_text?: string
+          canonical_ac_id?: string | null
           created_at?: string | null
+          embedded_at?: string | null
+          embedding?: string | null
           id?: string
           lo_number?: number
           lo_text?: string
@@ -22283,7 +27442,15 @@ export type Database = {
           unit_code?: string
           unit_title?: string
         }
-        Relationships: []
+        Relationships: [
+          {
+            foreignKeyName: "qualification_requirements_canonical_ac_id_fkey"
+            columns: ["canonical_ac_id"]
+            isOneToOne: false
+            referencedRelation: "qualification_requirements"
+            referencedColumns: ["id"]
+          },
+        ]
       }
       qualification_templates: {
         Row: {
@@ -22328,33 +27495,39 @@ export type Database = {
       }
       qualifications: {
         Row: {
+          ac_count: number
           awarding_body: string
           code: string
           created_at: string
           description: string | null
           id: string
+          is_curriculum_seeded: boolean
           level: string
           requires_portfolio: boolean | null
           title: string
           updated_at: string
         }
         Insert: {
+          ac_count?: number
           awarding_body: string
           code: string
           created_at?: string
           description?: string | null
           id?: string
+          is_curriculum_seeded?: boolean
           level: string
           requires_portfolio?: boolean | null
           title: string
           updated_at?: string
         }
         Update: {
+          ac_count?: number
           awarding_body?: string
           code?: string
           created_at?: string
           description?: string | null
           id?: string
+          is_curriculum_seeded?: boolean
           level?: string
           requires_portfolio?: boolean | null
           title?: string
@@ -22627,10 +27800,17 @@ export type Database = {
           accepted_user_agent: string | null
           additional_invoice_items: Json | null
           auto_followup_enabled: boolean | null
+          booked_slot_end: string | null
+          booked_slot_start: string | null
+          booking_calendar_event_id: string | null
           client_data: Json
           created_at: string
           customer_id: string | null
           deleted_at: string | null
+          deposit_amount_pennies: number | null
+          deposit_invoice_id: string | null
+          deposit_paid_at: string | null
+          deposit_required: boolean | null
           docusign_envelope_id: string | null
           docusign_status: string | null
           expiry_date: string
@@ -22651,8 +27831,10 @@ export type Database = {
           invoice_raised: boolean | null
           invoice_sent_at: string | null
           invoice_status: string | null
+          is_active_version: boolean | null
           items: Json
           job_details: Json | null
+          last_payment_prompt_pushed_at: string | null
           last_reminder_sent_at: string | null
           linked_certificate_id: string | null
           linked_certificate_pdf_url: string | null
@@ -22660,8 +27842,10 @@ export type Database = {
           linked_certificate_type: string | null
           notes: string | null
           overhead: number
+          parent_quote_id: string | null
           partial_payments: Json | null
           payment_proof_urls: string[] | null
+          payment_thankyou_sent_at: string | null
           pdf_document_id: string | null
           pdf_generated_at: string | null
           pdf_url: string | null
@@ -22678,12 +27862,16 @@ export type Database = {
           stripe_payment_intent_id: string | null
           stripe_payment_link_url: string | null
           subtotal: number
+          supersedes_id: string | null
           tags: string[] | null
           total: number
           total_paid: number | null
           updated_at: string
           user_id: string
+          variation_reason: string | null
+          variation_type: string | null
           vat_amount: number
+          version_number: number
           work_completion_date: string | null
         }
         Insert: {
@@ -22696,10 +27884,17 @@ export type Database = {
           accepted_user_agent?: string | null
           additional_invoice_items?: Json | null
           auto_followup_enabled?: boolean | null
+          booked_slot_end?: string | null
+          booked_slot_start?: string | null
+          booking_calendar_event_id?: string | null
           client_data: Json
           created_at?: string
           customer_id?: string | null
           deleted_at?: string | null
+          deposit_amount_pennies?: number | null
+          deposit_invoice_id?: string | null
+          deposit_paid_at?: string | null
+          deposit_required?: boolean | null
           docusign_envelope_id?: string | null
           docusign_status?: string | null
           expiry_date: string
@@ -22720,8 +27915,10 @@ export type Database = {
           invoice_raised?: boolean | null
           invoice_sent_at?: string | null
           invoice_status?: string | null
+          is_active_version?: boolean | null
           items?: Json
           job_details?: Json | null
+          last_payment_prompt_pushed_at?: string | null
           last_reminder_sent_at?: string | null
           linked_certificate_id?: string | null
           linked_certificate_pdf_url?: string | null
@@ -22729,8 +27926,10 @@ export type Database = {
           linked_certificate_type?: string | null
           notes?: string | null
           overhead?: number
+          parent_quote_id?: string | null
           partial_payments?: Json | null
           payment_proof_urls?: string[] | null
+          payment_thankyou_sent_at?: string | null
           pdf_document_id?: string | null
           pdf_generated_at?: string | null
           pdf_url?: string | null
@@ -22747,12 +27946,16 @@ export type Database = {
           stripe_payment_intent_id?: string | null
           stripe_payment_link_url?: string | null
           subtotal?: number
+          supersedes_id?: string | null
           tags?: string[] | null
           total?: number
           total_paid?: number | null
           updated_at?: string
           user_id: string
+          variation_reason?: string | null
+          variation_type?: string | null
           vat_amount?: number
+          version_number?: number
           work_completion_date?: string | null
         }
         Update: {
@@ -22765,10 +27968,17 @@ export type Database = {
           accepted_user_agent?: string | null
           additional_invoice_items?: Json | null
           auto_followup_enabled?: boolean | null
+          booked_slot_end?: string | null
+          booked_slot_start?: string | null
+          booking_calendar_event_id?: string | null
           client_data?: Json
           created_at?: string
           customer_id?: string | null
           deleted_at?: string | null
+          deposit_amount_pennies?: number | null
+          deposit_invoice_id?: string | null
+          deposit_paid_at?: string | null
+          deposit_required?: boolean | null
           docusign_envelope_id?: string | null
           docusign_status?: string | null
           expiry_date?: string
@@ -22789,8 +27999,10 @@ export type Database = {
           invoice_raised?: boolean | null
           invoice_sent_at?: string | null
           invoice_status?: string | null
+          is_active_version?: boolean | null
           items?: Json
           job_details?: Json | null
+          last_payment_prompt_pushed_at?: string | null
           last_reminder_sent_at?: string | null
           linked_certificate_id?: string | null
           linked_certificate_pdf_url?: string | null
@@ -22798,8 +28010,10 @@ export type Database = {
           linked_certificate_type?: string | null
           notes?: string | null
           overhead?: number
+          parent_quote_id?: string | null
           partial_payments?: Json | null
           payment_proof_urls?: string[] | null
+          payment_thankyou_sent_at?: string | null
           pdf_document_id?: string | null
           pdf_generated_at?: string | null
           pdf_url?: string | null
@@ -22816,12 +28030,16 @@ export type Database = {
           stripe_payment_intent_id?: string | null
           stripe_payment_link_url?: string | null
           subtotal?: number
+          supersedes_id?: string | null
           tags?: string[] | null
           total?: number
           total_paid?: number | null
           updated_at?: string
           user_id?: string
+          variation_reason?: string | null
+          variation_type?: string | null
           vat_amount?: number
+          version_number?: number
           work_completion_date?: string | null
         }
         Relationships: [
@@ -22833,10 +28051,31 @@ export type Database = {
             referencedColumns: ["id"]
           },
           {
+            foreignKeyName: "quotes_deposit_invoice_id_fkey"
+            columns: ["deposit_invoice_id"]
+            isOneToOne: false
+            referencedRelation: "invoices"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "quotes_parent_quote_id_fkey"
+            columns: ["parent_quote_id"]
+            isOneToOne: false
+            referencedRelation: "quotes"
+            referencedColumns: ["id"]
+          },
+          {
             foreignKeyName: "quotes_project_id_fkey"
             columns: ["project_id"]
             isOneToOne: false
             referencedRelation: "spark_projects"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "quotes_supersedes_id_fkey"
+            columns: ["supersedes_id"]
+            isOneToOne: false
+            referencedRelation: "quotes"
             referencedColumns: ["id"]
           },
         ]
@@ -22954,6 +28193,7 @@ export type Database = {
       }
       rams_generation_jobs: {
         Row: {
+          attachments: Json | null
           cache_hit: boolean | null
           completed_at: string | null
           created_at: string
@@ -22977,9 +28217,12 @@ export type Database = {
           retry_count: number | null
           started_at: string | null
           status: string
+          updated_at: string
           user_id: string
+          vision_context: string | null
         }
         Insert: {
+          attachments?: Json | null
           cache_hit?: boolean | null
           completed_at?: string | null
           created_at?: string
@@ -23003,9 +28246,12 @@ export type Database = {
           retry_count?: number | null
           started_at?: string | null
           status?: string
+          updated_at?: string
           user_id: string
+          vision_context?: string | null
         }
         Update: {
+          attachments?: Json | null
           cache_hit?: boolean | null
           completed_at?: string | null
           created_at?: string
@@ -23029,7 +28275,9 @@ export type Database = {
           retry_count?: number | null
           started_at?: string | null
           status?: string
+          updated_at?: string
           user_id?: string
+          vision_context?: string | null
         }
         Relationships: [
           {
@@ -23112,6 +28360,35 @@ export type Database = {
           work_type?: string
         }
         Relationships: []
+      }
+      rams_partials: {
+        Row: {
+          created_at: string
+          job_id: string
+          payload: Json
+          stage: string
+        }
+        Insert: {
+          created_at?: string
+          job_id: string
+          payload: Json
+          stage: string
+        }
+        Update: {
+          created_at?: string
+          job_id?: string
+          payload?: Json
+          stage?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "rams_partials_job_id_fkey"
+            columns: ["job_id"]
+            isOneToOne: false
+            referencedRelation: "rams_generation_jobs"
+            referencedColumns: ["id"]
+          },
+        ]
       }
       rams_rag_cache: {
         Row: {
@@ -23415,6 +28692,42 @@ export type Database = {
         }
         Relationships: []
       }
+      regional_pricing: {
+        Row: {
+          created_at: string
+          empirical_sample_size: number | null
+          label: string
+          last_recalculated_at: string | null
+          multiplier: number
+          postcode_pattern: string | null
+          region_key: string
+          source: string
+          updated_at: string
+        }
+        Insert: {
+          created_at?: string
+          empirical_sample_size?: number | null
+          label: string
+          last_recalculated_at?: string | null
+          multiplier: number
+          postcode_pattern?: string | null
+          region_key: string
+          source?: string
+          updated_at?: string
+        }
+        Update: {
+          created_at?: string
+          empirical_sample_size?: number | null
+          label?: string
+          last_recalculated_at?: string | null
+          multiplier?: number
+          postcode_pattern?: string | null
+          region_key?: string
+          source?: string
+          updated_at?: string
+        }
+        Relationships: []
+      }
       regulation_hazards_extracted: {
         Row: {
           applies_to_equipment: string[] | null
@@ -23647,6 +28960,90 @@ export type Database = {
         }
         Relationships: []
       }
+      report_qs_reviews: {
+        Row: {
+          created_at: string
+          electrician_id: string
+          employer_id: string
+          id: string
+          qs_position: string
+          qs_signature: string | null
+          report_data_hash: string | null
+          report_id: string
+          report_type: string
+          report_updated_at_snapshot: string | null
+          report_uuid: string
+          review_comments: string | null
+          reviewed_at: string | null
+          reviewed_by: string | null
+          reviewer_employee_id: string | null
+          reviewer_name: string | null
+          status: string
+          submitted_at: string
+          submitted_note: string | null
+          updated_at: string
+        }
+        Insert: {
+          created_at?: string
+          electrician_id: string
+          employer_id: string
+          id?: string
+          qs_position?: string
+          qs_signature?: string | null
+          report_data_hash?: string | null
+          report_id: string
+          report_type: string
+          report_updated_at_snapshot?: string | null
+          report_uuid: string
+          review_comments?: string | null
+          reviewed_at?: string | null
+          reviewed_by?: string | null
+          reviewer_employee_id?: string | null
+          reviewer_name?: string | null
+          status?: string
+          submitted_at?: string
+          submitted_note?: string | null
+          updated_at?: string
+        }
+        Update: {
+          created_at?: string
+          electrician_id?: string
+          employer_id?: string
+          id?: string
+          qs_position?: string
+          qs_signature?: string | null
+          report_data_hash?: string | null
+          report_id?: string
+          report_type?: string
+          report_updated_at_snapshot?: string | null
+          report_uuid?: string
+          review_comments?: string | null
+          reviewed_at?: string | null
+          reviewed_by?: string | null
+          reviewer_employee_id?: string | null
+          reviewer_name?: string | null
+          status?: string
+          submitted_at?: string
+          submitted_note?: string | null
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "report_qs_reviews_report_uuid_fkey"
+            columns: ["report_uuid"]
+            isOneToOne: false
+            referencedRelation: "reports"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "report_qs_reviews_reviewer_employee_id_fkey"
+            columns: ["reviewer_employee_id"]
+            isOneToOne: false
+            referencedRelation: "employer_employees"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       reports: {
         Row: {
           certificate_number: string
@@ -23663,7 +29060,9 @@ export type Database = {
           inspector_name: string | null
           installation_address: string | null
           last_synced_at: string
+          locked_at: string | null
           next_inspection_due: string | null
+          parent_report_id: string | null
           pdf_document_id: string | null
           pdf_expires_at: string | null
           pdf_generated_at: string | null
@@ -23676,6 +29075,7 @@ export type Database = {
           report_type: string
           status: string
           storage_path: string | null
+          superseded_by: string | null
           updated_at: string
           user_id: string
         }
@@ -23694,7 +29094,9 @@ export type Database = {
           inspector_name?: string | null
           installation_address?: string | null
           last_synced_at?: string
+          locked_at?: string | null
           next_inspection_due?: string | null
+          parent_report_id?: string | null
           pdf_document_id?: string | null
           pdf_expires_at?: string | null
           pdf_generated_at?: string | null
@@ -23707,6 +29109,7 @@ export type Database = {
           report_type: string
           status?: string
           storage_path?: string | null
+          superseded_by?: string | null
           updated_at?: string
           user_id: string
         }
@@ -23725,7 +29128,9 @@ export type Database = {
           inspector_name?: string | null
           installation_address?: string | null
           last_synced_at?: string
+          locked_at?: string | null
           next_inspection_due?: string | null
+          parent_report_id?: string | null
           pdf_document_id?: string | null
           pdf_expires_at?: string | null
           pdf_generated_at?: string | null
@@ -23738,10 +29143,18 @@ export type Database = {
           report_type?: string
           status?: string
           storage_path?: string | null
+          superseded_by?: string | null
           updated_at?: string
           user_id?: string
         }
         Relationships: [
+          {
+            foreignKeyName: "reports_parent_report_id_fkey"
+            columns: ["parent_report_id"]
+            isOneToOne: false
+            referencedRelation: "reports"
+            referencedColumns: ["id"]
+          },
           {
             foreignKeyName: "reports_project_id_fkey"
             columns: ["project_id"]
@@ -23756,103 +29169,55 @@ export type Database = {
             referencedRelation: "customer_properties"
             referencedColumns: ["id"]
           },
+          {
+            foreignKeyName: "reports_superseded_by_fkey"
+            columns: ["superseded_by"]
+            isOneToOne: false
+            referencedRelation: "reports"
+            referencedColumns: ["id"]
+          },
         ]
       }
-      reports_nathan_empty_backup_20260417: {
+      resource_ac_links: {
         Row: {
-          certificate_number: string | null
-          client_name: string | null
-          created_at: string | null
-          customer_id: string | null
-          data: Json | null
-          deleted_at: string | null
-          edit_version: number | null
-          expiry_date: string | null
-          expiry_reminder_sent: boolean | null
-          id: string | null
-          inspection_date: string | null
-          inspector_name: string | null
-          installation_address: string | null
-          last_synced_at: string | null
-          next_inspection_due: string | null
-          pdf_document_id: string | null
-          pdf_expires_at: string | null
-          pdf_generated_at: string | null
-          pdf_payload: Json | null
-          pdf_url: string | null
-          project_id: string | null
-          property_id: string | null
-          property_type: string | null
-          report_id: string | null
-          report_type: string | null
-          status: string | null
-          storage_path: string | null
-          updated_at: string | null
-          user_id: string | null
+          ac_code: string
+          confidence: number | null
+          created_at: string
+          id: string
+          mapping_source: string
+          qualification_code: string
+          resource_id: string
+          unit_code: string
         }
         Insert: {
-          certificate_number?: string | null
-          client_name?: string | null
-          created_at?: string | null
-          customer_id?: string | null
-          data?: Json | null
-          deleted_at?: string | null
-          edit_version?: number | null
-          expiry_date?: string | null
-          expiry_reminder_sent?: boolean | null
-          id?: string | null
-          inspection_date?: string | null
-          inspector_name?: string | null
-          installation_address?: string | null
-          last_synced_at?: string | null
-          next_inspection_due?: string | null
-          pdf_document_id?: string | null
-          pdf_expires_at?: string | null
-          pdf_generated_at?: string | null
-          pdf_payload?: Json | null
-          pdf_url?: string | null
-          project_id?: string | null
-          property_id?: string | null
-          property_type?: string | null
-          report_id?: string | null
-          report_type?: string | null
-          status?: string | null
-          storage_path?: string | null
-          updated_at?: string | null
-          user_id?: string | null
+          ac_code: string
+          confidence?: number | null
+          created_at?: string
+          id?: string
+          mapping_source?: string
+          qualification_code: string
+          resource_id: string
+          unit_code: string
         }
         Update: {
-          certificate_number?: string | null
-          client_name?: string | null
-          created_at?: string | null
-          customer_id?: string | null
-          data?: Json | null
-          deleted_at?: string | null
-          edit_version?: number | null
-          expiry_date?: string | null
-          expiry_reminder_sent?: boolean | null
-          id?: string | null
-          inspection_date?: string | null
-          inspector_name?: string | null
-          installation_address?: string | null
-          last_synced_at?: string | null
-          next_inspection_due?: string | null
-          pdf_document_id?: string | null
-          pdf_expires_at?: string | null
-          pdf_generated_at?: string | null
-          pdf_payload?: Json | null
-          pdf_url?: string | null
-          project_id?: string | null
-          property_id?: string | null
-          property_type?: string | null
-          report_id?: string | null
-          report_type?: string | null
-          status?: string | null
-          storage_path?: string | null
-          updated_at?: string | null
-          user_id?: string | null
+          ac_code?: string
+          confidence?: number | null
+          created_at?: string
+          id?: string
+          mapping_source?: string
+          qualification_code?: string
+          resource_id?: string
+          unit_code?: string
         }
-        Relationships: []
+        Relationships: [
+          {
+            foreignKeyName: "resource_ac_links_resource_id_fkey"
+            columns: ["resource_id"]
+            isOneToOne: false
+            referencedRelation: "college_resources"
+            referencedColumns: ["id"]
+          },
+        ]
       }
       resource_ac_mapping: {
         Row: {
@@ -23891,6 +29256,66 @@ export type Database = {
             columns: ["resource_id"]
             isOneToOne: false
             referencedRelation: "teaching_resources"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      resource_lesson_links: {
+        Row: {
+          added_by: string | null
+          created_at: string
+          id: string
+          lesson_plan_id: string
+          resource_id: string
+        }
+        Insert: {
+          added_by?: string | null
+          created_at?: string
+          id?: string
+          lesson_plan_id: string
+          resource_id: string
+        }
+        Update: {
+          added_by?: string | null
+          created_at?: string
+          id?: string
+          lesson_plan_id?: string
+          resource_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "resource_lesson_links_added_by_fkey"
+            columns: ["added_by"]
+            isOneToOne: false
+            referencedRelation: "college_staff"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "resource_lesson_links_added_by_fkey"
+            columns: ["added_by"]
+            isOneToOne: false
+            referencedRelation: "v_single_central_record"
+            referencedColumns: ["college_staff_id"]
+          },
+          {
+            foreignKeyName: "resource_lesson_links_added_by_fkey"
+            columns: ["added_by"]
+            isOneToOne: false
+            referencedRelation: "v_staff_cpd_progress"
+            referencedColumns: ["college_staff_id"]
+          },
+          {
+            foreignKeyName: "resource_lesson_links_lesson_plan_id_fkey"
+            columns: ["lesson_plan_id"]
+            isOneToOne: false
+            referencedRelation: "college_lesson_plans"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "resource_lesson_links_resource_id_fkey"
+            columns: ["resource_id"]
+            isOneToOne: false
+            referencedRelation: "college_resources"
             referencedColumns: ["id"]
           },
         ]
@@ -23942,7 +29367,6 @@ export type Database = {
       }
       safe_isolation_records: {
         Row: {
-          job_id: string | null
           additional_circuits: Json | null
           approval_comments: string | null
           approval_signature: string | null
@@ -23958,6 +29382,7 @@ export type Database = {
           isolation_method: string | null
           isolator_name: string | null
           isolator_signature: string | null
+          job_id: string | null
           lock_off_number: string | null
           lock_off_qr_code: string | null
           permit_id: string | null
@@ -23978,7 +29403,6 @@ export type Database = {
           voltage_detector_serial: string | null
         }
         Insert: {
-          job_id?: string | null
           additional_circuits?: Json | null
           approval_comments?: string | null
           approval_signature?: string | null
@@ -23994,6 +29418,7 @@ export type Database = {
           isolation_method?: string | null
           isolator_name?: string | null
           isolator_signature?: string | null
+          job_id?: string | null
           lock_off_number?: string | null
           lock_off_qr_code?: string | null
           permit_id?: string | null
@@ -24014,7 +29439,6 @@ export type Database = {
           voltage_detector_serial?: string | null
         }
         Update: {
-          job_id?: string | null
           additional_circuits?: Json | null
           approval_comments?: string | null
           approval_signature?: string | null
@@ -24030,6 +29454,7 @@ export type Database = {
           isolation_method?: string | null
           isolator_name?: string | null
           isolator_signature?: string | null
+          job_id?: string | null
           lock_off_number?: string | null
           lock_off_qr_code?: string | null
           permit_id?: string | null
@@ -24049,7 +29474,15 @@ export type Database = {
           voltage_detector_calibration_date?: string | null
           voltage_detector_serial?: string | null
         }
-        Relationships: []
+        Relationships: [
+          {
+            foreignKeyName: "safe_isolation_records_job_id_fkey"
+            columns: ["job_id"]
+            isOneToOne: false
+            referencedRelation: "spark_projects"
+            referencedColumns: ["id"]
+          },
+        ]
       }
       safety_achievements: {
         Row: {
@@ -24351,12 +29784,15 @@ export type Database = {
           is_active: boolean | null
           name: string
           placeholders: string[] | null
+          regenerated_at: string | null
           regulatory_references: string[] | null
           sort_order: number | null
           structured_content: Json | null
+          structured_content_v2: Json | null
           subcategory: string | null
           summary: string | null
           version: number | null
+          work_type: string | null
         }
         Insert: {
           category: string
@@ -24366,12 +29802,15 @@ export type Database = {
           is_active?: boolean | null
           name: string
           placeholders?: string[] | null
+          regenerated_at?: string | null
           regulatory_references?: string[] | null
           sort_order?: number | null
           structured_content?: Json | null
+          structured_content_v2?: Json | null
           subcategory?: string | null
           summary?: string | null
           version?: number | null
+          work_type?: string | null
         }
         Update: {
           category?: string
@@ -24381,12 +29820,15 @@ export type Database = {
           is_active?: boolean | null
           name?: string
           placeholders?: string[] | null
+          regenerated_at?: string | null
           regulatory_references?: string[] | null
           sort_order?: number | null
           structured_content?: Json | null
+          structured_content_v2?: Json | null
           subcategory?: string | null
           summary?: string | null
           version?: number | null
+          work_type?: string | null
         }
         Relationships: []
       }
@@ -24471,6 +29913,185 @@ export type Database = {
           warranty_claim_contact?: string | null
           warranty_expiry?: string | null
           warranty_provider?: string | null
+        }
+        Relationships: []
+      }
+      safety_facets: {
+        Row: {
+          applies_to: string[] | null
+          content: string
+          control_type: string | null
+          created_at: string
+          document_code: string | null
+          document_type: string
+          embedding: unknown
+          embedding_error: string | null
+          embedding_status: string | null
+          hazard_category: string | null
+          id: string
+          industries: string[] | null
+          metadata: Json | null
+          page_number: number | null
+          paragraph: string | null
+          primary_topic: string
+          reg_number: string | null
+          section: string | null
+          severity_indicator: string | null
+          source_id: string | null
+          source_url: string | null
+          tsv: unknown
+          updated_at: string
+        }
+        Insert: {
+          applies_to?: string[] | null
+          content: string
+          control_type?: string | null
+          created_at?: string
+          document_code?: string | null
+          document_type: string
+          embedding?: unknown
+          embedding_error?: string | null
+          embedding_status?: string | null
+          hazard_category?: string | null
+          id?: string
+          industries?: string[] | null
+          metadata?: Json | null
+          page_number?: number | null
+          paragraph?: string | null
+          primary_topic: string
+          reg_number?: string | null
+          section?: string | null
+          severity_indicator?: string | null
+          source_id?: string | null
+          source_url?: string | null
+          tsv?: unknown
+          updated_at?: string
+        }
+        Update: {
+          applies_to?: string[] | null
+          content?: string
+          control_type?: string | null
+          created_at?: string
+          document_code?: string | null
+          document_type?: string
+          embedding?: unknown
+          embedding_error?: string | null
+          embedding_status?: string | null
+          hazard_category?: string | null
+          id?: string
+          industries?: string[] | null
+          metadata?: Json | null
+          page_number?: number | null
+          paragraph?: string | null
+          primary_topic?: string
+          reg_number?: string | null
+          section?: string | null
+          severity_indicator?: string | null
+          source_id?: string | null
+          source_url?: string | null
+          tsv?: unknown
+          updated_at?: string
+        }
+        Relationships: []
+      }
+      safety_facets_chunks: {
+        Row: {
+          chunk_index: number
+          content: string
+          created_at: string
+          error_message: string | null
+          facet_id: string | null
+          id: string
+          processed_at: string | null
+          queue_id: string
+          section_path: string | null
+          status: string
+        }
+        Insert: {
+          chunk_index: number
+          content: string
+          created_at?: string
+          error_message?: string | null
+          facet_id?: string | null
+          id?: string
+          processed_at?: string | null
+          queue_id: string
+          section_path?: string | null
+          status?: string
+        }
+        Update: {
+          chunk_index?: number
+          content?: string
+          created_at?: string
+          error_message?: string | null
+          facet_id?: string | null
+          id?: string
+          processed_at?: string | null
+          queue_id?: string
+          section_path?: string | null
+          status?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "safety_facets_chunks_queue_id_fkey"
+            columns: ["queue_id"]
+            isOneToOne: false
+            referencedRelation: "safety_facets_ingest_queue"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      safety_facets_ingest_queue: {
+        Row: {
+          bytes_downloaded: number | null
+          completed_at: string | null
+          created_at: string
+          document_code: string
+          document_title: string
+          document_type: string
+          error_message: string | null
+          http_status: number | null
+          id: string
+          pdf_text_chars: number | null
+          processed_chunks: number | null
+          source_url: string
+          started_at: string | null
+          status: string
+          total_chunks: number | null
+        }
+        Insert: {
+          bytes_downloaded?: number | null
+          completed_at?: string | null
+          created_at?: string
+          document_code: string
+          document_title: string
+          document_type: string
+          error_message?: string | null
+          http_status?: number | null
+          id?: string
+          pdf_text_chars?: number | null
+          processed_chunks?: number | null
+          source_url: string
+          started_at?: string | null
+          status?: string
+          total_chunks?: number | null
+        }
+        Update: {
+          bytes_downloaded?: number | null
+          completed_at?: string | null
+          created_at?: string
+          document_code?: string
+          document_title?: string
+          document_type?: string
+          error_message?: string | null
+          http_status?: number | null
+          id?: string
+          pdf_text_chars?: number | null
+          processed_chunks?: number | null
+          source_url?: string
+          started_at?: string | null
+          status?: string
+          total_chunks?: number | null
         }
         Relationships: []
       }
@@ -24565,13 +30186,13 @@ export type Database = {
       }
       safety_observations: {
         Row: {
-          job_id: string | null
           campaign_id: string | null
           category: string
           created_at: string | null
           description: string
           id: string
           is_anonymous: boolean | null
+          job_id: string | null
           location: string | null
           observation_type: string | null
           observer_name: string | null
@@ -24583,13 +30204,13 @@ export type Database = {
           user_id: string
         }
         Insert: {
-          job_id?: string | null
           campaign_id?: string | null
           category: string
           created_at?: string | null
           description: string
           id?: string
           is_anonymous?: boolean | null
+          job_id?: string | null
           location?: string | null
           observation_type?: string | null
           observer_name?: string | null
@@ -24601,13 +30222,13 @@ export type Database = {
           user_id: string
         }
         Update: {
-          job_id?: string | null
           campaign_id?: string | null
           category?: string
           created_at?: string | null
           description?: string
           id?: string
           is_anonymous?: boolean | null
+          job_id?: string | null
           location?: string | null
           observation_type?: string | null
           observer_name?: string | null
@@ -24624,6 +30245,13 @@ export type Database = {
             columns: ["campaign_id"]
             isOneToOne: false
             referencedRelation: "safety_observation_campaigns"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "safety_observations_job_id_fkey"
+            columns: ["job_id"]
+            isOneToOne: false
+            referencedRelation: "spark_projects"
             referencedColumns: ["id"]
           },
         ]
@@ -24795,6 +30423,51 @@ export type Database = {
           scenario_data?: Json | null
           title?: string
           topic?: string | null
+        }
+        Relationships: []
+      }
+      safety_signing_tokens: {
+        Row: {
+          created_at: string
+          document_type: string
+          expires_at: string
+          id: string
+          public_token: string
+          record_id: string
+          role: string
+          signed_at: string | null
+          signed_name: string | null
+          signed_signature: string | null
+          summary: Json
+          user_id: string
+        }
+        Insert: {
+          created_at?: string
+          document_type: string
+          expires_at?: string
+          id?: string
+          public_token: string
+          record_id: string
+          role?: string
+          signed_at?: string | null
+          signed_name?: string | null
+          signed_signature?: string | null
+          summary?: Json
+          user_id: string
+        }
+        Update: {
+          created_at?: string
+          document_type?: string
+          expires_at?: string
+          id?: string
+          public_token?: string
+          record_id?: string
+          role?: string
+          signed_at?: string | null
+          signed_name?: string | null
+          signed_signature?: string | null
+          summary?: Json
+          user_id?: string
         }
         Relationships: []
       }
@@ -25338,6 +31011,276 @@ export type Database = {
         }
         Relationships: []
       }
+      seo_audit_run: {
+        Row: {
+          completed_at: string | null
+          id: string
+          notes: string | null
+          pages_amber: number
+          pages_green: number
+          pages_red: number
+          pages_scored: number
+          pages_total: number | null
+          rubric_version: string
+          started_at: string
+        }
+        Insert: {
+          completed_at?: string | null
+          id?: string
+          notes?: string | null
+          pages_amber?: number
+          pages_green?: number
+          pages_red?: number
+          pages_scored?: number
+          pages_total?: number | null
+          rubric_version: string
+          started_at?: string
+        }
+        Update: {
+          completed_at?: string | null
+          id?: string
+          notes?: string | null
+          pages_amber?: number
+          pages_green?: number
+          pages_red?: number
+          pages_scored?: number
+          pages_total?: number | null
+          rubric_version?: string
+          started_at?: string
+        }
+        Relationships: []
+      }
+      seo_cannibalisation_cluster: {
+        Row: {
+          canonical_slug: string
+          cluster_topic: string
+          decided_at: string
+          decided_reason: string
+          id: string
+          intent_class: string
+          member_slugs: string[]
+        }
+        Insert: {
+          canonical_slug: string
+          cluster_topic: string
+          decided_at?: string
+          decided_reason: string
+          id?: string
+          intent_class: string
+          member_slugs: string[]
+        }
+        Update: {
+          canonical_slug?: string
+          cluster_topic?: string
+          decided_at?: string
+          decided_reason?: string
+          id?: string
+          intent_class?: string
+          member_slugs?: string[]
+        }
+        Relationships: []
+      }
+      seo_gsc_daily: {
+        Row: {
+          clicks: number
+          ctr: number
+          impressions: number
+          position: number
+          pull_date: string
+          pulled_at: string
+          slug: string
+          top_query: string | null
+          top_query_impressions: number | null
+        }
+        Insert: {
+          clicks?: number
+          ctr?: number
+          impressions?: number
+          position?: number
+          pull_date: string
+          pulled_at?: string
+          slug: string
+          top_query?: string | null
+          top_query_impressions?: number | null
+        }
+        Update: {
+          clicks?: number
+          ctr?: number
+          impressions?: number
+          position?: number
+          pull_date?: string
+          pulled_at?: string
+          slug?: string
+          top_query?: string | null
+          top_query_impressions?: number | null
+        }
+        Relationships: []
+      }
+      seo_mock_attempts: {
+        Row: {
+          created_at: string
+          exam_slug: string
+          id: string
+          passed: boolean
+          percentage: number
+          referrer: string | null
+          score: number
+          time_taken_seconds: number
+          topic_slug: string | null
+          total_questions: number
+          user_agent_hint: string | null
+        }
+        Insert: {
+          created_at?: string
+          exam_slug: string
+          id?: string
+          passed: boolean
+          percentage: number
+          referrer?: string | null
+          score: number
+          time_taken_seconds: number
+          topic_slug?: string | null
+          total_questions: number
+          user_agent_hint?: string | null
+        }
+        Update: {
+          created_at?: string
+          exam_slug?: string
+          id?: string
+          passed?: boolean
+          percentage?: number
+          referrer?: string | null
+          score?: number
+          time_taken_seconds?: number
+          topic_slug?: string | null
+          total_questions?: number
+          user_agent_hint?: string | null
+        }
+        Relationships: []
+      }
+      seo_page_audit: {
+        Row: {
+          audience: string[]
+          audit_run_id: string
+          bs7671_cites: string[]
+          bs7671_cites_drift: string[]
+          bs7671_cites_unresolved: string[]
+          cannibalisation_cluster_id: string | null
+          cannibalisation_role: string | null
+          created_at: string
+          criteria_breakdown: Json
+          id: string
+          internal_links_broken: string[]
+          internal_links_count: number
+          last_audited_at: string
+          page_type: string
+          practical_claims_unsupported: Json
+          rebuild_patch: Json | null
+          rebuild_patch_reviewed_at: string | null
+          rebuild_patch_reviewed_by: string | null
+          rebuild_patch_status: string
+          redirect_target: string | null
+          rubric_version: string
+          schema_validation_errors: string[]
+          score: number
+          slug: string
+          source_file: string
+          status: string
+          suggested_action: string
+          suggested_redirect_to: string | null
+          template_overlap_pct: number | null
+          tool_component_authgated: boolean
+          tool_component_present: boolean
+          updated_at: string
+          word_count: number
+        }
+        Insert: {
+          audience?: string[]
+          audit_run_id: string
+          bs7671_cites?: string[]
+          bs7671_cites_drift?: string[]
+          bs7671_cites_unresolved?: string[]
+          cannibalisation_cluster_id?: string | null
+          cannibalisation_role?: string | null
+          created_at?: string
+          criteria_breakdown?: Json
+          id?: string
+          internal_links_broken?: string[]
+          internal_links_count?: number
+          last_audited_at?: string
+          page_type: string
+          practical_claims_unsupported?: Json
+          rebuild_patch?: Json | null
+          rebuild_patch_reviewed_at?: string | null
+          rebuild_patch_reviewed_by?: string | null
+          rebuild_patch_status?: string
+          redirect_target?: string | null
+          rubric_version: string
+          schema_validation_errors?: string[]
+          score?: number
+          slug: string
+          source_file: string
+          status?: string
+          suggested_action: string
+          suggested_redirect_to?: string | null
+          template_overlap_pct?: number | null
+          tool_component_authgated?: boolean
+          tool_component_present?: boolean
+          updated_at?: string
+          word_count?: number
+        }
+        Update: {
+          audience?: string[]
+          audit_run_id?: string
+          bs7671_cites?: string[]
+          bs7671_cites_drift?: string[]
+          bs7671_cites_unresolved?: string[]
+          cannibalisation_cluster_id?: string | null
+          cannibalisation_role?: string | null
+          created_at?: string
+          criteria_breakdown?: Json
+          id?: string
+          internal_links_broken?: string[]
+          internal_links_count?: number
+          last_audited_at?: string
+          page_type?: string
+          practical_claims_unsupported?: Json
+          rebuild_patch?: Json | null
+          rebuild_patch_reviewed_at?: string | null
+          rebuild_patch_reviewed_by?: string | null
+          rebuild_patch_status?: string
+          redirect_target?: string | null
+          rubric_version?: string
+          schema_validation_errors?: string[]
+          score?: number
+          slug?: string
+          source_file?: string
+          status?: string
+          suggested_action?: string
+          suggested_redirect_to?: string | null
+          template_overlap_pct?: number | null
+          tool_component_authgated?: boolean
+          tool_component_present?: boolean
+          updated_at?: string
+          word_count?: number
+        }
+        Relationships: [
+          {
+            foreignKeyName: "seo_page_audit_audit_run_id_fkey"
+            columns: ["audit_run_id"]
+            isOneToOne: false
+            referencedRelation: "seo_audit_run"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "seo_page_audit_cannibalisation_cluster_id_fkey"
+            columns: ["cannibalisation_cluster_id"]
+            isOneToOne: false
+            referencedRelation: "seo_cannibalisation_cluster"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       signature_requests: {
         Row: {
           access_token: string | null
@@ -25414,11 +31357,11 @@ export type Database = {
       }
       site_diary_entries: {
         Row: {
-          job_id: string | null
           created_at: string
           date: string
           id: string
           issues_or_questions: string | null
+          job_id: string | null
           linked_portfolio_id: string | null
           mood_rating: number | null
           permit_ids: string[] | null
@@ -25433,11 +31376,11 @@ export type Database = {
           what_i_learned: string | null
         }
         Insert: {
-          job_id?: string | null
           created_at?: string
           date: string
           id?: string
           issues_or_questions?: string | null
+          job_id?: string | null
           linked_portfolio_id?: string | null
           mood_rating?: number | null
           permit_ids?: string[] | null
@@ -25452,11 +31395,11 @@ export type Database = {
           what_i_learned?: string | null
         }
         Update: {
-          job_id?: string | null
           created_at?: string
           date?: string
           id?: string
           issues_or_questions?: string | null
+          job_id?: string | null
           linked_portfolio_id?: string | null
           mood_rating?: number | null
           permit_ids?: string[] | null
@@ -25470,7 +31413,15 @@ export type Database = {
           user_id?: string
           what_i_learned?: string | null
         }
-        Relationships: []
+        Relationships: [
+          {
+            foreignKeyName: "site_diary_entries_job_id_fkey"
+            columns: ["job_id"]
+            isOneToOne: false
+            referencedRelation: "spark_projects"
+            referencedColumns: ["id"]
+          },
+        ]
       }
       site_survey_analysis_jobs: {
         Row: {
@@ -25872,6 +31823,7 @@ export type Database = {
       }
       spark_projects: {
         Row: {
+          ai_notes: Json
           completed_at: string | null
           created_at: string
           customer_id: string | null
@@ -25891,6 +31843,7 @@ export type Database = {
           user_id: string
         }
         Insert: {
+          ai_notes?: Json
           completed_at?: string | null
           created_at?: string
           customer_id?: string | null
@@ -25910,6 +31863,7 @@ export type Database = {
           user_id: string
         }
         Update: {
+          ai_notes?: Json
           completed_at?: string | null
           created_at?: string
           customer_id?: string | null
@@ -26038,6 +31992,459 @@ export type Database = {
             columns: ["project_id"]
             isOneToOne: false
             referencedRelation: "spark_projects"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      staff_compliance_records: {
+        Row: {
+          college_id_snapshot: string | null
+          college_staff_id: string | null
+          created_at: string
+          created_by: string | null
+          evidence_path: string | null
+          expires_at: string | null
+          id: string
+          issued_at: string | null
+          notes: string | null
+          reference_no: string | null
+          requirement_code: string
+          staff_name_snapshot: string | null
+          status: string
+          updated_at: string
+          verified_at: string | null
+          verified_by: string | null
+        }
+        Insert: {
+          college_id_snapshot?: string | null
+          college_staff_id?: string | null
+          created_at?: string
+          created_by?: string | null
+          evidence_path?: string | null
+          expires_at?: string | null
+          id?: string
+          issued_at?: string | null
+          notes?: string | null
+          reference_no?: string | null
+          requirement_code: string
+          staff_name_snapshot?: string | null
+          status?: string
+          updated_at?: string
+          verified_at?: string | null
+          verified_by?: string | null
+        }
+        Update: {
+          college_id_snapshot?: string | null
+          college_staff_id?: string | null
+          created_at?: string
+          created_by?: string | null
+          evidence_path?: string | null
+          expires_at?: string | null
+          id?: string
+          issued_at?: string | null
+          notes?: string | null
+          reference_no?: string | null
+          requirement_code?: string
+          staff_name_snapshot?: string | null
+          status?: string
+          updated_at?: string
+          verified_at?: string | null
+          verified_by?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "staff_compliance_records_college_staff_id_fkey"
+            columns: ["college_staff_id"]
+            isOneToOne: false
+            referencedRelation: "college_staff"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "staff_compliance_records_college_staff_id_fkey"
+            columns: ["college_staff_id"]
+            isOneToOne: false
+            referencedRelation: "v_single_central_record"
+            referencedColumns: ["college_staff_id"]
+          },
+          {
+            foreignKeyName: "staff_compliance_records_college_staff_id_fkey"
+            columns: ["college_staff_id"]
+            isOneToOne: false
+            referencedRelation: "v_staff_cpd_progress"
+            referencedColumns: ["college_staff_id"]
+          },
+          {
+            foreignKeyName: "staff_compliance_records_requirement_code_fkey"
+            columns: ["requirement_code"]
+            isOneToOne: false
+            referencedRelation: "compliance_requirement_types"
+            referencedColumns: ["code"]
+          },
+          {
+            foreignKeyName: "staff_compliance_records_requirement_code_fkey"
+            columns: ["requirement_code"]
+            isOneToOne: false
+            referencedRelation: "v_single_central_record"
+            referencedColumns: ["requirement_code"]
+          },
+        ]
+      }
+      staff_cpd_entries: {
+        Row: {
+          activity_date: string
+          activity_type: string
+          college_id_snapshot: string
+          college_staff_id: string | null
+          created_at: string
+          created_by: string | null
+          evidence_path: string | null
+          hours: number
+          id: string
+          reflection: string | null
+          staff_name_snapshot: string | null
+          title: string
+          updated_at: string
+          year_covered: number
+        }
+        Insert: {
+          activity_date: string
+          activity_type: string
+          college_id_snapshot: string
+          college_staff_id?: string | null
+          created_at?: string
+          created_by?: string | null
+          evidence_path?: string | null
+          hours: number
+          id?: string
+          reflection?: string | null
+          staff_name_snapshot?: string | null
+          title: string
+          updated_at?: string
+          year_covered: number
+        }
+        Update: {
+          activity_date?: string
+          activity_type?: string
+          college_id_snapshot?: string
+          college_staff_id?: string | null
+          created_at?: string
+          created_by?: string | null
+          evidence_path?: string | null
+          hours?: number
+          id?: string
+          reflection?: string | null
+          staff_name_snapshot?: string | null
+          title?: string
+          updated_at?: string
+          year_covered?: number
+        }
+        Relationships: [
+          {
+            foreignKeyName: "staff_cpd_entries_college_staff_id_fkey"
+            columns: ["college_staff_id"]
+            isOneToOne: false
+            referencedRelation: "college_staff"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "staff_cpd_entries_college_staff_id_fkey"
+            columns: ["college_staff_id"]
+            isOneToOne: false
+            referencedRelation: "v_single_central_record"
+            referencedColumns: ["college_staff_id"]
+          },
+          {
+            foreignKeyName: "staff_cpd_entries_college_staff_id_fkey"
+            columns: ["college_staff_id"]
+            isOneToOne: false
+            referencedRelation: "v_staff_cpd_progress"
+            referencedColumns: ["college_staff_id"]
+          },
+        ]
+      }
+      student_ac_coverage: {
+        Row: {
+          ac_code: string
+          assessor_id: string | null
+          created_at: string
+          evidence_count: number
+          id: string
+          last_assessed_at: string | null
+          last_evidence_at: string | null
+          notes: string | null
+          qualification_code: string
+          status: string
+          student_id: string
+          unit_code: string
+          updated_at: string
+        }
+        Insert: {
+          ac_code: string
+          assessor_id?: string | null
+          created_at?: string
+          evidence_count?: number
+          id?: string
+          last_assessed_at?: string | null
+          last_evidence_at?: string | null
+          notes?: string | null
+          qualification_code: string
+          status?: string
+          student_id: string
+          unit_code: string
+          updated_at?: string
+        }
+        Update: {
+          ac_code?: string
+          assessor_id?: string | null
+          created_at?: string
+          evidence_count?: number
+          id?: string
+          last_assessed_at?: string | null
+          last_evidence_at?: string | null
+          notes?: string | null
+          qualification_code?: string
+          status?: string
+          student_id?: string
+          unit_code?: string
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "student_ac_coverage_assessor_id_fkey"
+            columns: ["assessor_id"]
+            isOneToOne: false
+            referencedRelation: "college_staff"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "student_ac_coverage_assessor_id_fkey"
+            columns: ["assessor_id"]
+            isOneToOne: false
+            referencedRelation: "v_single_central_record"
+            referencedColumns: ["college_staff_id"]
+          },
+          {
+            foreignKeyName: "student_ac_coverage_assessor_id_fkey"
+            columns: ["assessor_id"]
+            isOneToOne: false
+            referencedRelation: "v_staff_cpd_progress"
+            referencedColumns: ["college_staff_id"]
+          },
+          {
+            foreignKeyName: "student_ac_coverage_student_id_fkey"
+            columns: ["student_id"]
+            isOneToOne: false
+            referencedRelation: "college_fs_gateway_status"
+            referencedColumns: ["student_id"]
+          },
+          {
+            foreignKeyName: "student_ac_coverage_student_id_fkey"
+            columns: ["student_id"]
+            isOneToOne: false
+            referencedRelation: "college_iqa_otj_audit_queue"
+            referencedColumns: ["college_student_row_id"]
+          },
+          {
+            foreignKeyName: "student_ac_coverage_student_id_fkey"
+            columns: ["student_id"]
+            isOneToOne: false
+            referencedRelation: "college_students"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      student_message_threads: {
+        Row: {
+          college_id: string
+          created_at: string
+          created_by: string | null
+          id: string
+          last_message_at: string
+          student_id: string
+          subject: string | null
+          unread_count_student: number
+          unread_count_tutor: number
+        }
+        Insert: {
+          college_id: string
+          created_at?: string
+          created_by?: string | null
+          id?: string
+          last_message_at?: string
+          student_id: string
+          subject?: string | null
+          unread_count_student?: number
+          unread_count_tutor?: number
+        }
+        Update: {
+          college_id?: string
+          created_at?: string
+          created_by?: string | null
+          id?: string
+          last_message_at?: string
+          student_id?: string
+          subject?: string | null
+          unread_count_student?: number
+          unread_count_tutor?: number
+        }
+        Relationships: [
+          {
+            foreignKeyName: "student_message_threads_college_id_fkey"
+            columns: ["college_id"]
+            isOneToOne: false
+            referencedRelation: "colleges"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "student_message_threads_college_id_fkey"
+            columns: ["college_id"]
+            isOneToOne: false
+            referencedRelation: "v_iqa_sampling_status"
+            referencedColumns: ["college_id"]
+          },
+          {
+            foreignKeyName: "student_message_threads_college_id_fkey"
+            columns: ["college_id"]
+            isOneToOne: false
+            referencedRelation: "v_portfolio_stats_by_college"
+            referencedColumns: ["college_id"]
+          },
+          {
+            foreignKeyName: "student_message_threads_created_by_fkey"
+            columns: ["created_by"]
+            isOneToOne: false
+            referencedRelation: "college_staff"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "student_message_threads_created_by_fkey"
+            columns: ["created_by"]
+            isOneToOne: false
+            referencedRelation: "v_single_central_record"
+            referencedColumns: ["college_staff_id"]
+          },
+          {
+            foreignKeyName: "student_message_threads_created_by_fkey"
+            columns: ["created_by"]
+            isOneToOne: false
+            referencedRelation: "v_staff_cpd_progress"
+            referencedColumns: ["college_staff_id"]
+          },
+          {
+            foreignKeyName: "student_message_threads_student_id_fkey"
+            columns: ["student_id"]
+            isOneToOne: false
+            referencedRelation: "college_fs_gateway_status"
+            referencedColumns: ["student_id"]
+          },
+          {
+            foreignKeyName: "student_message_threads_student_id_fkey"
+            columns: ["student_id"]
+            isOneToOne: false
+            referencedRelation: "college_iqa_otj_audit_queue"
+            referencedColumns: ["college_student_row_id"]
+          },
+          {
+            foreignKeyName: "student_message_threads_student_id_fkey"
+            columns: ["student_id"]
+            isOneToOne: false
+            referencedRelation: "college_students"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      student_messages: {
+        Row: {
+          attachments: Json
+          body: string
+          created_at: string
+          id: string
+          read_at: string | null
+          sender_id: string | null
+          sender_kind: string
+          thread_id: string
+        }
+        Insert: {
+          attachments?: Json
+          body: string
+          created_at?: string
+          id?: string
+          read_at?: string | null
+          sender_id?: string | null
+          sender_kind: string
+          thread_id: string
+        }
+        Update: {
+          attachments?: Json
+          body?: string
+          created_at?: string
+          id?: string
+          read_at?: string | null
+          sender_id?: string | null
+          sender_kind?: string
+          thread_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "student_messages_thread_id_fkey"
+            columns: ["thread_id"]
+            isOneToOne: false
+            referencedRelation: "student_message_threads"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      student_risk_scores: {
+        Row: {
+          computed_at: string
+          factors: Json
+          id: string
+          is_current: boolean
+          level: string
+          score: number
+          signals: Json
+          student_id: string
+        }
+        Insert: {
+          computed_at?: string
+          factors?: Json
+          id?: string
+          is_current?: boolean
+          level: string
+          score: number
+          signals?: Json
+          student_id: string
+        }
+        Update: {
+          computed_at?: string
+          factors?: Json
+          id?: string
+          is_current?: boolean
+          level?: string
+          score?: number
+          signals?: Json
+          student_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "student_risk_scores_student_id_fkey"
+            columns: ["student_id"]
+            isOneToOne: false
+            referencedRelation: "college_fs_gateway_status"
+            referencedColumns: ["student_id"]
+          },
+          {
+            foreignKeyName: "student_risk_scores_student_id_fkey"
+            columns: ["student_id"]
+            isOneToOne: false
+            referencedRelation: "college_iqa_otj_audit_queue"
+            referencedColumns: ["college_student_row_id"]
+          },
+          {
+            foreignKeyName: "student_risk_scores_student_id_fkey"
+            columns: ["student_id"]
+            isOneToOne: false
+            referencedRelation: "college_students"
             referencedColumns: ["id"]
           },
         ]
@@ -27545,6 +33952,7 @@ export type Database = {
           invoiced_at: string | null
           label: string | null
           notes: string | null
+          project_id: string | null
           started_at: string
           updated_at: string | null
           user_id: string
@@ -27559,6 +33967,7 @@ export type Database = {
           invoiced_at?: string | null
           label?: string | null
           notes?: string | null
+          project_id?: string | null
           started_at: string
           updated_at?: string | null
           user_id: string
@@ -27573,11 +33982,20 @@ export type Database = {
           invoiced_at?: string | null
           label?: string | null
           notes?: string | null
+          project_id?: string | null
           started_at?: string
           updated_at?: string | null
           user_id?: string
         }
-        Relationships: []
+        Relationships: [
+          {
+            foreignKeyName: "time_sessions_project_id_fkey"
+            columns: ["project_id"]
+            isOneToOne: false
+            referencedRelation: "spark_projects"
+            referencedColumns: ["id"]
+          },
+        ]
       }
       time_tracking_sessions: {
         Row: {
@@ -28223,6 +34641,66 @@ export type Database = {
         }
         Relationships: []
       }
+      tutor_assessment_documents: {
+        Row: {
+          college_id: string
+          created_at: string
+          description: string | null
+          file_name: string
+          file_size_bytes: number | null
+          id: string
+          mime_type: string | null
+          parse_error: string | null
+          parsed_at: string | null
+          parsed_text: string | null
+          qualification_code: string | null
+          source_kind: string
+          status: string
+          storage_path: string
+          title: string
+          updated_at: string
+          uploader_id: string
+        }
+        Insert: {
+          college_id: string
+          created_at?: string
+          description?: string | null
+          file_name: string
+          file_size_bytes?: number | null
+          id?: string
+          mime_type?: string | null
+          parse_error?: string | null
+          parsed_at?: string | null
+          parsed_text?: string | null
+          qualification_code?: string | null
+          source_kind?: string
+          status?: string
+          storage_path: string
+          title: string
+          updated_at?: string
+          uploader_id: string
+        }
+        Update: {
+          college_id?: string
+          created_at?: string
+          description?: string | null
+          file_name?: string
+          file_size_bytes?: number | null
+          id?: string
+          mime_type?: string | null
+          parse_error?: string | null
+          parsed_at?: string | null
+          parsed_text?: string | null
+          qualification_code?: string | null
+          source_kind?: string
+          status?: string
+          storage_path?: string
+          title?: string
+          updated_at?: string
+          uploader_id?: string
+        }
+        Relationships: []
+      }
       tutor_knowledge: {
         Row: {
           content: string
@@ -28327,6 +34805,69 @@ export type Database = {
           },
         ]
       }
+      tutor_quiz_answer_grades: {
+        Row: {
+          ai_areas: string[] | null
+          ai_rationale: string | null
+          ai_score: number | null
+          ai_strengths: string[] | null
+          attempt_id: string
+          created_at: string
+          id: string
+          learner_answer: Json
+          question_id: string
+          tutor_override_at: string | null
+          tutor_override_by: string | null
+          tutor_override_rationale: string | null
+          tutor_override_score: number | null
+        }
+        Insert: {
+          ai_areas?: string[] | null
+          ai_rationale?: string | null
+          ai_score?: number | null
+          ai_strengths?: string[] | null
+          attempt_id: string
+          created_at?: string
+          id?: string
+          learner_answer: Json
+          question_id: string
+          tutor_override_at?: string | null
+          tutor_override_by?: string | null
+          tutor_override_rationale?: string | null
+          tutor_override_score?: number | null
+        }
+        Update: {
+          ai_areas?: string[] | null
+          ai_rationale?: string | null
+          ai_score?: number | null
+          ai_strengths?: string[] | null
+          attempt_id?: string
+          created_at?: string
+          id?: string
+          learner_answer?: Json
+          question_id?: string
+          tutor_override_at?: string | null
+          tutor_override_by?: string | null
+          tutor_override_rationale?: string | null
+          tutor_override_score?: number | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "tutor_quiz_answer_grades_attempt_id_fkey"
+            columns: ["attempt_id"]
+            isOneToOne: false
+            referencedRelation: "tutor_quiz_attempts"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "tutor_quiz_answer_grades_question_id_fkey"
+            columns: ["question_id"]
+            isOneToOne: false
+            referencedRelation: "tutor_quiz_questions"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       tutor_quiz_attempts: {
         Row: {
           answers: Json
@@ -28377,42 +34918,57 @@ export type Database = {
       tutor_quiz_questions: {
         Row: {
           ac_ref: string | null
+          bs7671_citations: Json | null
           category: string | null
           correct_answer_index: number
           created_at: string | null
           difficulty: string | null
+          expected_answer: Json | null
           explanation: string | null
           id: string
+          ksb_refs: string[] | null
+          marking_guidance: string | null
           options: Json
           points: number | null
+          question_kind: string
           question_text: string
           quiz_id: string
           sort_order: number | null
         }
         Insert: {
           ac_ref?: string | null
+          bs7671_citations?: Json | null
           category?: string | null
           correct_answer_index: number
           created_at?: string | null
           difficulty?: string | null
+          expected_answer?: Json | null
           explanation?: string | null
           id?: string
+          ksb_refs?: string[] | null
+          marking_guidance?: string | null
           options: Json
           points?: number | null
+          question_kind?: string
           question_text: string
           quiz_id: string
           sort_order?: number | null
         }
         Update: {
           ac_ref?: string | null
+          bs7671_citations?: Json | null
           category?: string | null
           correct_answer_index?: number
           created_at?: string | null
           difficulty?: string | null
+          expected_answer?: Json | null
           explanation?: string | null
           id?: string
+          ksb_refs?: string[] | null
+          marking_guidance?: string | null
           options?: Json
           points?: number | null
+          question_kind?: string
           question_text?: string
           quiz_id?: string
           sort_order?: number | null
@@ -28429,46 +34985,130 @@ export type Database = {
       }
       tutor_quizzes: {
         Row: {
+          ai_signals_used: Json | null
+          assigned_student_ids: string[] | null
           cohort_id: string | null
           created_at: string | null
           creator_id: string
           description: string | null
           difficulty: string | null
+          due_date: string | null
           id: string
+          instructions: string | null
+          is_homework: boolean
           is_published: boolean | null
+          kind: string
+          lesson_plan_id: string | null
           pass_mark: number | null
+          published_at: string | null
+          qualification_code: string | null
+          rubric: Json | null
+          source: string
+          source_document_id: string | null
           time_limit_minutes: number | null
           title: string
           topic: string | null
           updated_at: string | null
         }
         Insert: {
+          ai_signals_used?: Json | null
+          assigned_student_ids?: string[] | null
           cohort_id?: string | null
           created_at?: string | null
           creator_id: string
           description?: string | null
           difficulty?: string | null
+          due_date?: string | null
           id?: string
+          instructions?: string | null
+          is_homework?: boolean
           is_published?: boolean | null
+          kind?: string
+          lesson_plan_id?: string | null
           pass_mark?: number | null
+          published_at?: string | null
+          qualification_code?: string | null
+          rubric?: Json | null
+          source?: string
+          source_document_id?: string | null
           time_limit_minutes?: number | null
           title: string
           topic?: string | null
           updated_at?: string | null
         }
         Update: {
+          ai_signals_used?: Json | null
+          assigned_student_ids?: string[] | null
           cohort_id?: string | null
           created_at?: string | null
           creator_id?: string
           description?: string | null
           difficulty?: string | null
+          due_date?: string | null
           id?: string
+          instructions?: string | null
+          is_homework?: boolean
           is_published?: boolean | null
+          kind?: string
+          lesson_plan_id?: string | null
           pass_mark?: number | null
+          published_at?: string | null
+          qualification_code?: string | null
+          rubric?: Json | null
+          source?: string
+          source_document_id?: string | null
           time_limit_minutes?: number | null
           title?: string
           topic?: string | null
           updated_at?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "tutor_quizzes_lesson_plan_id_fkey"
+            columns: ["lesson_plan_id"]
+            isOneToOne: false
+            referencedRelation: "college_lesson_plans"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "tutor_quizzes_source_document_id_fkey"
+            columns: ["source_document_id"]
+            isOneToOne: false
+            referencedRelation: "tutor_assessment_documents"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      tutor_weekly_briefs: {
+        Row: {
+          bullets: Json
+          encouragement: string
+          generated_at: string
+          greeting: string
+          headline: string
+          id: string
+          iso_week: string
+          user_id: string
+        }
+        Insert: {
+          bullets?: Json
+          encouragement?: string
+          generated_at?: string
+          greeting: string
+          headline: string
+          id?: string
+          iso_week: string
+          user_id: string
+        }
+        Update: {
+          bullets?: Json
+          encouragement?: string
+          generated_at?: string
+          greeting?: string
+          headline?: string
+          id?: string
+          iso_week?: string
+          user_id?: string
         }
         Relationships: []
       }
@@ -28870,6 +35510,60 @@ export type Database = {
           score?: number
           time_taken_seconds?: number | null
           user_id?: string
+        }
+        Relationships: []
+      }
+      user_business_settings: {
+        Row: {
+          created_at: string
+          default_payment_terms: string
+          default_supplier_preference: string
+          extra: Json
+          labour_rate_apprentice: number
+          labour_rate_electrician: number
+          materials_markup_percent: number
+          max_margin_percent: number
+          min_margin_percent: number
+          monthly_overheads_total: number
+          per_job_overhead: number
+          target_margin_percent: number
+          updated_at: string
+          user_id: string
+          vat_registered: boolean
+        }
+        Insert: {
+          created_at?: string
+          default_payment_terms?: string
+          default_supplier_preference?: string
+          extra?: Json
+          labour_rate_apprentice?: number
+          labour_rate_electrician?: number
+          materials_markup_percent?: number
+          max_margin_percent?: number
+          min_margin_percent?: number
+          monthly_overheads_total?: number
+          per_job_overhead?: number
+          target_margin_percent?: number
+          updated_at?: string
+          user_id: string
+          vat_registered?: boolean
+        }
+        Update: {
+          created_at?: string
+          default_payment_terms?: string
+          default_supplier_preference?: string
+          extra?: Json
+          labour_rate_apprentice?: number
+          labour_rate_electrician?: number
+          materials_markup_percent?: number
+          max_margin_percent?: number
+          min_margin_percent?: number
+          monthly_overheads_total?: number
+          per_job_overhead?: number
+          target_margin_percent?: number
+          updated_at?: string
+          user_id?: string
+          vat_registered?: boolean
         }
         Relationships: []
       }
@@ -29407,9 +36101,11 @@ export type Database = {
           site_address: string | null
           status: string | null
           structured_content: Json | null
+          structured_content_v2: Json | null
           template_id: string | null
           updated_at: string | null
           user_id: string
+          version: number
         }
         Insert: {
           adopted_at?: string | null
@@ -29424,9 +36120,11 @@ export type Database = {
           site_address?: string | null
           status?: string | null
           structured_content?: Json | null
+          structured_content_v2?: Json | null
           template_id?: string | null
           updated_at?: string | null
           user_id: string
+          version?: number
         }
         Update: {
           adopted_at?: string | null
@@ -29441,9 +36139,11 @@ export type Database = {
           site_address?: string | null
           status?: string | null
           structured_content?: Json | null
+          structured_content_v2?: Json | null
           template_id?: string | null
           updated_at?: string | null
           user_id?: string
+          version?: number
         }
         Relationships: [
           {
@@ -30218,6 +36918,78 @@ export type Database = {
         }
         Relationships: []
       }
+      winback_queue: {
+        Row: {
+          cancelled_at: string
+          created_at: string
+          email: string
+          email_provider_id: string | null
+          error_message: string | null
+          full_name: string | null
+          id: string
+          scheduled_for: string
+          sent_at: string | null
+          skip_reason: string | null
+          status: string
+          stripe_customer_id: string | null
+          tier: string
+          touch_number: number
+          user_id: string
+          was_trial: boolean
+        }
+        Insert: {
+          cancelled_at: string
+          created_at?: string
+          email: string
+          email_provider_id?: string | null
+          error_message?: string | null
+          full_name?: string | null
+          id?: string
+          scheduled_for: string
+          sent_at?: string | null
+          skip_reason?: string | null
+          status?: string
+          stripe_customer_id?: string | null
+          tier: string
+          touch_number?: number
+          user_id: string
+          was_trial?: boolean
+        }
+        Update: {
+          cancelled_at?: string
+          created_at?: string
+          email?: string
+          email_provider_id?: string | null
+          error_message?: string | null
+          full_name?: string | null
+          id?: string
+          scheduled_for?: string
+          sent_at?: string | null
+          skip_reason?: string | null
+          status?: string
+          stripe_customer_id?: string | null
+          tier?: string
+          touch_number?: number
+          user_id?: string
+          was_trial?: boolean
+        }
+        Relationships: [
+          {
+            foreignKeyName: "winback_queue_user_id_fkey"
+            columns: ["user_id"]
+            isOneToOne: false
+            referencedRelation: "profiles"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "winback_queue_user_id_fkey"
+            columns: ["user_id"]
+            isOneToOne: false
+            referencedRelation: "v_assessor_workload"
+            referencedColumns: ["assessor_id"]
+          },
+        ]
+      }
       witness_testimonies: {
         Row: {
           activity_date: string | null
@@ -30405,6 +37177,28 @@ export type Database = {
       }
     }
     Views: {
+      agent_tool_error_summary: {
+        Row: {
+          error_count: number | null
+          error_message: string | null
+          first_seen: string | null
+          last_seen: string | null
+          tool_name: string | null
+          users_affected: number | null
+        }
+        Relationships: []
+      }
+      agent_tool_error_summary_7d: {
+        Row: {
+          error_count: number | null
+          error_message: string | null
+          first_seen: string | null
+          last_seen: string | null
+          tool_name: string | null
+          users_affected: number | null
+        }
+        Relationships: []
+      }
       ai_usage_stats: {
         Row: {
           completed_count: number | null
@@ -30446,6 +37240,276 @@ export type Database = {
             isOneToOne: false
             referencedRelation: "v_iqa_sampling_status"
             referencedColumns: ["qualification_id"]
+          },
+        ]
+      }
+      college_fs_gateway_status: {
+        Row: {
+          college_id: string | null
+          english_level: string | null
+          english_status: string | null
+          fs_gateway_clear: boolean | null
+          latest_exam_date: string | null
+          maths_level: string | null
+          maths_status: string | null
+          name: string | null
+          student_id: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "college_students_college_id_fkey"
+            columns: ["college_id"]
+            isOneToOne: false
+            referencedRelation: "colleges"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "college_students_college_id_fkey"
+            columns: ["college_id"]
+            isOneToOne: false
+            referencedRelation: "v_iqa_sampling_status"
+            referencedColumns: ["college_id"]
+          },
+          {
+            foreignKeyName: "college_students_college_id_fkey"
+            columns: ["college_id"]
+            isOneToOne: false
+            referencedRelation: "v_portfolio_stats_by_college"
+            referencedColumns: ["college_id"]
+          },
+        ]
+      }
+      college_iqa_otj_assessor_rollup: {
+        Row: {
+          agree_count: number | null
+          agree_pct: number | null
+          assessor_user_id: string | null
+          college_id: string | null
+          disagree_count: number | null
+          escalate_count: number | null
+          partial_count: number | null
+          sampled_count: number | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "college_otj_entries_verified_by_fkey"
+            columns: ["assessor_user_id"]
+            isOneToOne: false
+            referencedRelation: "profiles"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "college_otj_entries_verified_by_fkey"
+            columns: ["assessor_user_id"]
+            isOneToOne: false
+            referencedRelation: "v_assessor_workload"
+            referencedColumns: ["assessor_id"]
+          },
+        ]
+      }
+      college_iqa_otj_audit_queue: {
+        Row: {
+          activity_date: string | null
+          college_id: string | null
+          college_student_row_id: string | null
+          days_since_verified: number | null
+          description: string | null
+          duration_minutes: number | null
+          id: string | null
+          student_id: string | null
+          student_name: string | null
+          title: string | null
+          unit_codes: string[] | null
+          verification_rationale: string | null
+          verified_at: string | null
+          verified_by: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "college_otj_entries_student_id_fkey"
+            columns: ["student_id"]
+            isOneToOne: false
+            referencedRelation: "profiles"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "college_otj_entries_student_id_fkey"
+            columns: ["student_id"]
+            isOneToOne: false
+            referencedRelation: "v_assessor_workload"
+            referencedColumns: ["assessor_id"]
+          },
+          {
+            foreignKeyName: "college_otj_entries_verified_by_fkey"
+            columns: ["verified_by"]
+            isOneToOne: false
+            referencedRelation: "profiles"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "college_otj_entries_verified_by_fkey"
+            columns: ["verified_by"]
+            isOneToOne: false
+            referencedRelation: "v_assessor_workload"
+            referencedColumns: ["assessor_id"]
+          },
+        ]
+      }
+      college_student_spag_rollup: {
+        Row: {
+          avg_score_30d: number | null
+          check_count: number | null
+          college_id: string | null
+          developing_count: number | null
+          distinction_count: number | null
+          last_check_at: string | null
+          merit_count: number | null
+          pass_count: number | null
+          student_id: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "college_spag_checks_college_id_fkey"
+            columns: ["college_id"]
+            isOneToOne: false
+            referencedRelation: "colleges"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "college_spag_checks_college_id_fkey"
+            columns: ["college_id"]
+            isOneToOne: false
+            referencedRelation: "v_iqa_sampling_status"
+            referencedColumns: ["college_id"]
+          },
+          {
+            foreignKeyName: "college_spag_checks_college_id_fkey"
+            columns: ["college_id"]
+            isOneToOne: false
+            referencedRelation: "v_portfolio_stats_by_college"
+            referencedColumns: ["college_id"]
+          },
+          {
+            foreignKeyName: "college_spag_checks_student_id_fkey"
+            columns: ["student_id"]
+            isOneToOne: false
+            referencedRelation: "college_fs_gateway_status"
+            referencedColumns: ["student_id"]
+          },
+          {
+            foreignKeyName: "college_spag_checks_student_id_fkey"
+            columns: ["student_id"]
+            isOneToOne: false
+            referencedRelation: "college_iqa_otj_audit_queue"
+            referencedColumns: ["college_student_row_id"]
+          },
+          {
+            foreignKeyName: "college_spag_checks_student_id_fkey"
+            columns: ["student_id"]
+            isOneToOne: false
+            referencedRelation: "college_students"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      college_tutor_obs_rollup: {
+        Row: {
+          college_id: string | null
+          hod_count: number | null
+          iqa_count: number | null
+          last_observed_at: string | null
+          latest_grade: string | null
+          peer_count: number | null
+          standardisation_count: number | null
+          total_obs_12m: number | null
+          tutor_name: string | null
+          tutor_staff_id: string | null
+          walk_count: number | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "college_tutor_observations_college_id_fkey"
+            columns: ["college_id"]
+            isOneToOne: false
+            referencedRelation: "colleges"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "college_tutor_observations_college_id_fkey"
+            columns: ["college_id"]
+            isOneToOne: false
+            referencedRelation: "v_iqa_sampling_status"
+            referencedColumns: ["college_id"]
+          },
+          {
+            foreignKeyName: "college_tutor_observations_college_id_fkey"
+            columns: ["college_id"]
+            isOneToOne: false
+            referencedRelation: "v_portfolio_stats_by_college"
+            referencedColumns: ["college_id"]
+          },
+          {
+            foreignKeyName: "college_tutor_observations_tutor_staff_id_fkey"
+            columns: ["tutor_staff_id"]
+            isOneToOne: false
+            referencedRelation: "college_staff"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "college_tutor_observations_tutor_staff_id_fkey"
+            columns: ["tutor_staff_id"]
+            isOneToOne: false
+            referencedRelation: "v_single_central_record"
+            referencedColumns: ["college_staff_id"]
+          },
+          {
+            foreignKeyName: "college_tutor_observations_tutor_staff_id_fkey"
+            columns: ["tutor_staff_id"]
+            isOneToOne: false
+            referencedRelation: "v_staff_cpd_progress"
+            referencedColumns: ["college_staff_id"]
+          },
+        ]
+      }
+      college_voice_rollup: {
+        Row: {
+          avg_sentiment: number | null
+          college_id: string | null
+          mixed_count: number | null
+          negative_count: number | null
+          neutral_count: number | null
+          positive_count: number | null
+          response_count: number | null
+          survey_id: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "college_apprentice_survey_responses_college_id_fkey"
+            columns: ["college_id"]
+            isOneToOne: false
+            referencedRelation: "colleges"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "college_apprentice_survey_responses_college_id_fkey"
+            columns: ["college_id"]
+            isOneToOne: false
+            referencedRelation: "v_iqa_sampling_status"
+            referencedColumns: ["college_id"]
+          },
+          {
+            foreignKeyName: "college_apprentice_survey_responses_college_id_fkey"
+            columns: ["college_id"]
+            isOneToOne: false
+            referencedRelation: "v_portfolio_stats_by_college"
+            referencedColumns: ["college_id"]
+          },
+          {
+            foreignKeyName: "college_apprentice_survey_responses_survey_id_fkey"
+            columns: ["survey_id"]
+            isOneToOne: false
+            referencedRelation: "college_apprentice_surveys"
+            referencedColumns: ["id"]
           },
         ]
       }
@@ -30497,6 +37561,24 @@ export type Database = {
             referencedColumns: ["id"]
           },
         ]
+      }
+      national_benchmark_medians: {
+        Row: {
+          achievement_p50: number | null
+          attendance_p25: number | null
+          attendance_p50: number | null
+          attendance_p75: number | null
+          epa_distinction_p50: number | null
+          epa_pass_p50: number | null
+          fs_gateway_clear_p50: number | null
+          iso_month: string | null
+          otj_on_track_p50: number | null
+          participants: number | null
+          region_band: string | null
+          retention_p50: number | null
+          sector_band: string | null
+        }
+        Relationships: []
       }
       outreach_leads_overview: {
         Row: {
@@ -30667,6 +37749,19 @@ export type Database = {
           runs_24h: number | null
           scraper_name: string | null
           success_24h: number | null
+        }
+        Relationships: []
+      }
+      seo_gsc_latest: {
+        Row: {
+          clicks: number | null
+          ctr: number | null
+          impressions: number | null
+          position: number | null
+          pull_date: string | null
+          slug: string | null
+          tier: string | null
+          top_query: string | null
         }
         Relationships: []
       }
@@ -30906,6 +38001,59 @@ export type Database = {
         }
         Relationships: []
       }
+      v_single_central_record: {
+        Row: {
+          archived_at: string | null
+          category: string | null
+          college_id: string | null
+          college_staff_id: string | null
+          computed_status: string | null
+          days_to_expiry: number | null
+          department: string | null
+          expires_at: string | null
+          is_deputy_dsl: boolean | null
+          is_dsl: boolean | null
+          is_h_and_s_lead: boolean | null
+          is_mental_health_lead: boolean | null
+          is_prevent_lead: boolean | null
+          is_quality_nominee: boolean | null
+          is_scr_required: boolean | null
+          issued_at: string | null
+          name: string | null
+          record_id: string | null
+          reference_no: string | null
+          requirement: string | null
+          requirement_code: string | null
+          role: string | null
+          staff_created_at: string | null
+          status: string | null
+          verified_at: string | null
+          verified_by: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "college_staff_college_id_fkey"
+            columns: ["college_id"]
+            isOneToOne: false
+            referencedRelation: "colleges"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "college_staff_college_id_fkey"
+            columns: ["college_id"]
+            isOneToOne: false
+            referencedRelation: "v_iqa_sampling_status"
+            referencedColumns: ["college_id"]
+          },
+          {
+            foreignKeyName: "college_staff_college_id_fkey"
+            columns: ["college_id"]
+            isOneToOne: false
+            referencedRelation: "v_portfolio_stats_by_college"
+            referencedColumns: ["college_id"]
+          },
+        ]
+      }
       v_sow_ac_coverage: {
         Row: {
           ac_code: string | null
@@ -30924,6 +38072,42 @@ export type Database = {
             isOneToOne: false
             referencedRelation: "college_cohorts"
             referencedColumns: ["id"]
+          },
+        ]
+      }
+      v_staff_cpd_progress: {
+        Row: {
+          college_id: string | null
+          college_staff_id: string | null
+          current_year: number | null
+          entries_this_year: number | null
+          hours_this_year: number | null
+          name: string | null
+          percent_to_target: number | null
+          role: string | null
+          target_hours: number | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "college_staff_college_id_fkey"
+            columns: ["college_id"]
+            isOneToOne: false
+            referencedRelation: "colleges"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "college_staff_college_id_fkey"
+            columns: ["college_id"]
+            isOneToOne: false
+            referencedRelation: "v_iqa_sampling_status"
+            referencedColumns: ["college_id"]
+          },
+          {
+            foreignKeyName: "college_staff_college_id_fkey"
+            columns: ["college_id"]
+            isOneToOne: false
+            referencedRelation: "v_portfolio_stats_by_college"
+            referencedColumns: ["college_id"]
           },
         ]
       }
@@ -30969,6 +38153,19 @@ export type Database = {
         Args: { target_user_id: string }
         Returns: Json
       }
+      apply_invoice_stock_decrement: {
+        Args: { p_lines: Json; p_quote_id: string; p_user_id?: string }
+        Returns: undefined
+      }
+      approve_qs_review: {
+        Args: {
+          p_comments?: string
+          p_review_id: string
+          p_reviewer_name: string
+          p_signature: string
+        }
+        Returns: Json
+      }
       archive_old_accident_records: {
         Args: { target_user_id?: string }
         Returns: number
@@ -30993,10 +38190,16 @@ export type Database = {
         Args: { q_id: string; token: string }
         Returns: boolean
       }
+      can_write_college_iqa: {
+        Args: { target_college: string }
+        Returns: boolean
+      }
+      cancel_qs_review: { Args: { p_review_id: string }; Returns: Json }
       check_ai_rate_limit: {
         Args: { max_concurrent?: number; p_user_id: string }
         Returns: boolean
       }
+      claim_employee_records: { Args: never; Returns: number }
       cleanup_ai_cache: { Args: never; Returns: undefined }
       cleanup_ai_queue: { Args: never; Returns: number }
       cleanup_cost_query_cache: { Args: never; Returns: undefined }
@@ -31039,13 +38242,46 @@ export type Database = {
         Args: { job_id: string; pdf_url: string; pdfmonkey_id?: string }
         Returns: undefined
       }
+      cost_engineer_match_product: {
+        Args: {
+          category_filter?: string
+          match_count?: number
+          product_type_filter?: string
+          query_text: string
+        }
+        Returns: {
+          brand: string
+          category: string
+          current_price: number
+          discount_percentage: number
+          id: string
+          image_url: string
+          is_on_sale: boolean
+          match_mode: string
+          name: string
+          product_url: string
+          rank: number
+          regular_price: number
+          scraped_at: string
+          stock_status: string
+          subcategory: string
+          supplier_name: string
+          supplier_slug: string
+        }[]
+      }
       count_fully_enriched_design_sources: {
         Args: { max_facets?: number; min_facets?: number }
         Returns: number
       }
+      current_user_is_eqa: { Args: never; Returns: boolean }
+      decide_ac_signoff: {
+        Args: { p_notes?: string; p_proposal_id: string; p_status: string }
+        Returns: undefined
+      }
       disable_failed_payments_cron: { Args: never; Returns: Json }
       disable_quote_followup_cron: { Args: never; Returns: Json }
       disable_task_cron_jobs: { Args: never; Returns: Json }
+      disable_xero_autosync_cron: { Args: never; Returns: Json }
       earth: { Args: never; Returns: number }
       enqueue_ai_request: {
         Args: {
@@ -31161,6 +38397,26 @@ export type Database = {
           upvotes: number
         }[]
       }
+      get_company_brand_by_quote_token: {
+        Args: { token_param: string }
+        Returns: {
+          bank_details: Json
+          company_address: string
+          company_email: string
+          company_name: string
+          company_phone: string
+          company_registration: string
+          company_website: string
+          deposit_percentage: number
+          logo_data_url: string
+          logo_url: string
+          primary_color: string
+          sparky_avatar_url: string
+          sparky_full_name: string
+          stripe_account_status: string
+          vat_number: string
+        }[]
+      }
       get_current_user_role: { Args: never; Returns: string }
       get_customer_quote_stats: {
         Args: { p_customer_ids: string[] }
@@ -31172,6 +38428,18 @@ export type Database = {
           quote_count: number
           total_invoiced: number
           total_quoted: number
+        }[]
+      }
+      get_deposit_invoice_by_quote_token: {
+        Args: { token_param: string }
+        Returns: {
+          due_date: string
+          invoice_id: string
+          invoice_number: string
+          paid_at: string
+          status: string
+          stripe_payment_link_url: string
+          total: number
         }[]
       }
       get_facet_distribution_stats: {
@@ -31215,6 +38483,7 @@ export type Database = {
           company_website: string | null
           created_at: string
           currency: string | null
+          day_rate: number | null
           deposit_percentage: number | null
           hourly_rate: number | null
           id: string
@@ -31237,12 +38506,16 @@ export type Database = {
           preferred_payment_method: string | null
           primary_color: string | null
           profit_margin: number | null
+          qs_approval_required: boolean
           quote_terms: string | null
           quote_validity_days: number | null
           registration_expiry: string | null
           registration_number: string | null
           registration_scheme: string | null
           registration_scheme_logo: string | null
+          review_links: Json
+          review_request_enabled: boolean
+          review_request_message: string | null
           scheme_logo_data_url: string | null
           secondary_color: string | null
           signature_data: string | null
@@ -31286,6 +38559,8 @@ export type Database = {
           isSetofReturn: true
         }
       }
+      get_my_progress_check: { Args: never; Returns: Json }
+      get_my_qs_team_context: { Args: never; Returns: Json }
       get_next_ai_job: {
         Args: { max_global_concurrent?: number; p_provider?: string }
         Returns: {
@@ -31348,6 +38623,13 @@ export type Database = {
       get_next_sunday_education_refresh: { Args: never; Returns: string }
       get_next_sunday_market_refresh: { Args: never; Returns: string }
       get_next_sunday_refresh: { Args: never; Returns: string }
+      get_or_create_invoice_action_token: {
+        Args: { p_action?: string; p_invoice_id: string }
+        Returns: {
+          expires_at: string
+          public_token: string
+        }[]
+      }
       get_peer_supporter_by_id: {
         Args: { supporter_id: string }
         Returns: {
@@ -31394,6 +38676,10 @@ export type Database = {
           table_number: string
           title: string
         }[]
+      }
+      get_permit_by_signing_token: {
+        Args: { token_param: string }
+        Returns: Json
       }
       get_portal_by_token: {
         Args: { p_token: string }
@@ -31447,6 +38733,47 @@ export type Database = {
         }[]
       }
       get_profile_count: { Args: never; Returns: number }
+      get_public_quote_for_booking: {
+        Args: { quote_id_param: string }
+        Returns: {
+          booked_slot_start: string
+          client_email: string
+          client_name: string
+          client_phone: string
+          job_location: string
+          job_title: string
+          quote_number: string
+          user_id: string
+        }[]
+      }
+      get_qs_countersignature_for_pdf: {
+        Args: { p_report_id: string }
+        Returns: Json
+      }
+      get_qs_review_queue: {
+        Args: { p_status?: string }
+        Returns: {
+          certificate_number: string
+          client_name: string
+          electrician_id: string
+          electrician_name: string
+          inspection_date: string
+          inspector_name: string
+          installation_address: string
+          report_id: string
+          report_type: string
+          report_updated_at: string
+          report_uuid: string
+          review_comments: string
+          review_id: string
+          reviewed_at: string
+          reviewer_name: string
+          status: string
+          submitted_at: string
+          submitted_note: string
+        }[]
+      }
+      get_qs_review_report: { Args: { p_review_id: string }; Returns: Json }
       get_qualification_acs: {
         Args: { p_qualification_code: string }
         Returns: {
@@ -31483,10 +38810,17 @@ export type Database = {
           accepted_user_agent: string | null
           additional_invoice_items: Json | null
           auto_followup_enabled: boolean | null
+          booked_slot_end: string | null
+          booked_slot_start: string | null
+          booking_calendar_event_id: string | null
           client_data: Json
           created_at: string
           customer_id: string | null
           deleted_at: string | null
+          deposit_amount_pennies: number | null
+          deposit_invoice_id: string | null
+          deposit_paid_at: string | null
+          deposit_required: boolean | null
           docusign_envelope_id: string | null
           docusign_status: string | null
           expiry_date: string
@@ -31507,8 +38841,10 @@ export type Database = {
           invoice_raised: boolean | null
           invoice_sent_at: string | null
           invoice_status: string | null
+          is_active_version: boolean | null
           items: Json
           job_details: Json | null
+          last_payment_prompt_pushed_at: string | null
           last_reminder_sent_at: string | null
           linked_certificate_id: string | null
           linked_certificate_pdf_url: string | null
@@ -31516,8 +38852,10 @@ export type Database = {
           linked_certificate_type: string | null
           notes: string | null
           overhead: number
+          parent_quote_id: string | null
           partial_payments: Json | null
           payment_proof_urls: string[] | null
+          payment_thankyou_sent_at: string | null
           pdf_document_id: string | null
           pdf_generated_at: string | null
           pdf_url: string | null
@@ -31534,12 +38872,16 @@ export type Database = {
           stripe_payment_intent_id: string | null
           stripe_payment_link_url: string | null
           subtotal: number
+          supersedes_id: string | null
           tags: string[] | null
           total: number
           total_paid: number | null
           updated_at: string
           user_id: string
+          variation_reason: string | null
+          variation_type: string | null
           vat_amount: number
+          version_number: number
           work_completion_date: string | null
         }[]
         SetofOptions: {
@@ -31592,6 +38934,7 @@ export type Database = {
             }[]
           }
       get_referral_stats: { Args: { p_user_id: string }; Returns: Json }
+      get_safety_sign_token: { Args: { token_param: string }; Returns: Json }
       get_shared_portfolio: {
         Args: { share_token: string }
         Returns: {
@@ -31671,6 +39014,7 @@ export type Database = {
         }
         Returns: undefined
       }
+      increment_announcement_tap: { Args: { aid: string }; Returns: undefined }
       increment_cache_hit: {
         Args: { p_cache_key: string; p_last_hit_at: string }
         Returns: undefined
@@ -31688,8 +39032,19 @@ export type Database = {
         Returns: undefined
       }
       is_admin: { Args: never; Returns: boolean }
+      is_assessing_staff_at_students_college: {
+        Args: { _student_id: string }
+        Returns: boolean
+      }
       is_college_staff: { Args: { p_user_id: string }; Returns: boolean }
       is_owner_of_quote: { Args: { q_id: string }; Returns: boolean }
+      is_qs_issue_blocked: { Args: { p_report_uuid: string }; Returns: boolean }
+      is_qs_reviewer_for: { Args: { p_employer_id: string }; Returns: boolean }
+      is_staff_at_students_college: {
+        Args: { _student_id: string }
+        Returns: boolean
+      }
+      is_the_student: { Args: { _student_id: string }; Returns: boolean }
       log_board_scan_analysis: {
         Args: {
           p_circuits_detected: number
@@ -31712,6 +39067,18 @@ export type Database = {
           failed_launches_deleted: number
           sessions_deleted: number
         }[]
+      }
+      mark_message_thread_read: {
+        Args: { p_thread_id: string }
+        Returns: undefined
+      }
+      mark_notebook_proposal_filed: {
+        Args: {
+          p_filed_record_id: string
+          p_message_id: string
+          p_proposal_index: number
+        }
+        Returns: Json
       }
       match_bs7671_for_curriculum_ac: {
         Args: {
@@ -31767,6 +39134,38 @@ export type Database = {
           system_types: string[]
         }[]
       }
+      match_bs7671_hybrid: {
+        Args: {
+          doc_type?: string
+          k_rrf?: number
+          max_results?: number
+          q_embedding: unknown
+          q_text: string
+        }
+        Returns: {
+          bs7671_zones: string[]
+          content: string
+          context_prefix: string
+          disconnection_time_s: number
+          document_type: string
+          equipment_category: string
+          facet_id: string
+          facet_type: string
+          is_a4_change: boolean
+          keyword_rank: number
+          keywords: string[]
+          page_number: number
+          primary_topic: string
+          protection_method: string
+          reg_number: string
+          reg_part: string
+          reg_title: string
+          regulation_id: string
+          rrf_score: number
+          semantic_rank: number
+          system_types: string[]
+        }[]
+      }
       match_extracted_hazards: {
         Args: {
           match_count?: number
@@ -31809,6 +39208,25 @@ export type Database = {
           similarity: number
         }[]
       }
+      match_qualification_acs: {
+        Args: {
+          max_results?: number
+          q_embedding: string
+          qual_code: string
+          similarity_threshold?: number
+        }
+        Returns: {
+          ac_code: string
+          ac_text: string
+          id: string
+          lo_number: number
+          lo_text: string
+          qualification_code: string
+          similarity: number
+          unit_code: string
+          unit_title: string
+        }[]
+      }
       match_rams_cache: {
         Args: {
           job_scale: string
@@ -31842,7 +39260,48 @@ export type Database = {
           similarity: number
         }[]
       }
+      mate_founder_count: {
+        Args: never
+        Returns: {
+          cap: number
+          count: number
+          slots_left: number
+        }[]
+      }
+      merge_customers: {
+        Args: { source_id: string; target_id: string }
+        Returns: Json
+      }
+      normalize_compliance_statuses: {
+        Args: never
+        Returns: {
+          updated_count: number
+        }[]
+      }
       normalize_query_text: { Args: { query_text: string }; Returns: string }
+      propose_ac_signoff: {
+        Args: {
+          p_ac_code: string
+          p_ac_id: string
+          p_ac_title: string
+          p_evidence_id: string
+          p_evidence_kind: string
+          p_score_pct: number
+          p_student_id: string
+        }
+        Returns: string
+      }
+      propose_ilp_goal: {
+        Args: {
+          p_acceptance_criteria: string
+          p_category: string
+          p_description: string
+          p_priority: string
+          p_target_date: string
+          p_title: string
+        }
+        Returns: string
+      }
       prune_design_knowledge_facets_to_8: {
         Args: never
         Returns: {
@@ -31870,13 +39329,98 @@ export type Database = {
           total_facets_before: number
         }[]
       }
+      publish_policy_version: {
+        Args: { p_change_summary?: string; p_policy_id: string }
+        Returns: {
+          effective_from: string
+          new_version: number
+          policy_id: string
+          status: string
+        }[]
+      }
+      pwi_apply_embedding_batch: {
+        Args: { p_embeddings: string[]; p_ids: string[] }
+        Returns: number
+      }
+      pwi_build_tsv: {
+        Args: {
+          p_activity_types: string[]
+          p_bs7671_zones: string[]
+          p_common_defects: string[]
+          p_equipment_category: string
+          p_equipment_subcategory: string
+          p_facet_type: string
+          p_installation_method: string
+          p_keywords: string[]
+          p_primary_topic: string
+          p_related_topics: string[]
+        }
+        Returns: unknown
+      }
+      pwi_osg_unclassified_batch: {
+        Args: { p_limit?: number }
+        Returns: {
+          bs7671_regulations: string[]
+          id: string
+          keywords: string[]
+          primary_topic: string
+          provenance: Json
+        }[]
+      }
+      pwi_populate_tsv_for_ids: {
+        Args: { p_ids: string[] }
+        Returns: undefined
+      }
+      qs_review_push: {
+        Args: {
+          p_body: string
+          p_data?: Json
+          p_title: string
+          p_user_id: string
+        }
+        Returns: undefined
+      }
       queue_webhook_notification: {
         Args: { p_college_id: string; p_event: string; p_payload: Json }
         Returns: undefined
       }
+      reap_stuck_cost_engineer_jobs: { Args: never; Returns: number }
       recompute_contact_engagement: {
         Args: { p_contact_id: string }
         Returns: undefined
+      }
+      record_email_open: {
+        Args: {
+          p_entity_id: string
+          p_entity_type: string
+          p_ip?: string
+          p_owner_user_id: string
+          p_recipient_email?: string
+          p_user_agent?: string
+        }
+        Returns: {
+          is_first_open: boolean
+          open_count: number
+        }[]
+      }
+      record_iqa_otj_sample: {
+        Args: {
+          p_entry_id: string
+          p_feedback?: string
+          p_followup_required?: boolean
+          p_verdict: string
+        }
+        Returns: undefined
+      }
+      record_resource_event: {
+        Args: {
+          p_ac_id?: string
+          p_context?: string
+          p_duration_seconds?: number
+          p_event_kind: string
+          p_resource_id: string
+        }
+        Returns: string
       }
       record_training_correction: {
         Args: {
@@ -31916,9 +39460,21 @@ export type Database = {
           stuck_duration_minutes: number
         }[]
       }
+      resolve_qs_employer: {
+        Args: { p_report_uuid: string; p_user_id: string }
+        Returns: string
+      }
       resolve_requirement_code: {
         Args: { p_qualification_code: string }
         Returns: string
+      }
+      return_qs_review: {
+        Args: { p_comments: string; p_review_id: string }
+        Returns: Json
+      }
+      reverse_invoice_stock_decrement: {
+        Args: { p_quote_id: string; p_user_id?: string }
+        Returns: undefined
       }
       review_shared_submission: {
         Args: {
@@ -32463,6 +40019,44 @@ export type Database = {
           isSetofReturn: true
         }
       }
+      search_practical_v1: {
+        Args: {
+          bm25_weight?: number
+          equipment_filter?: string
+          facet_type_filter?: string
+          match_count?: number
+          min_confidence?: number
+          query_embedding?: unknown
+          query_text?: string
+          reg_filter?: string[]
+          rrf_k?: number
+          vector_weight?: number
+        }
+        Returns: {
+          acceptance_criteria: Json
+          bm25_score: number
+          bs7671_regulations: string[]
+          bs7671_zones: string[]
+          common_defects: string[]
+          confidence_score: number
+          equipment_category: string
+          equipment_subcategory: string
+          facet_id: string
+          facet_type: string
+          inspection_checklist: string[]
+          installation_method: string
+          keywords: string[]
+          primary_topic: string
+          retrieval_source: string
+          rrf_score: number
+          skill_level: string
+          test_procedures: Json
+          tools_required: string[]
+          troubleshooting_steps: string[]
+          typical_duration_minutes: number
+          vector_score: number
+        }[]
+      }
       search_practical_work_fast: {
         Args: { match_count?: number; query_text: string }
         Returns: {
@@ -32562,6 +40156,45 @@ export type Database = {
           topic: string
         }[]
       }
+      search_practical_work_v2: {
+        Args: {
+          p_applies_to?: string[]
+          p_equipment_category?: string
+          p_facet_types?: string[]
+          p_match_count?: number
+          p_min_confidence?: number
+          p_pool_size?: number
+          p_query_embedding?: unknown
+          p_query_text?: string
+          p_rrf_k?: number
+        }
+        Returns: {
+          acceptance_criteria: Json
+          applies_to: string[]
+          bs7671_regulations: string[]
+          bs7671_zones: string[]
+          common_defects: string[]
+          common_mistakes: string[]
+          confidence_score: number
+          equipment_category: string
+          equipment_subcategory: string
+          facet_type: string
+          id: string
+          inspection_checklist: Json[]
+          installation_method: string
+          keywords: string[]
+          materials_needed: Json[]
+          primary_topic: string
+          rrf_score: number
+          safety_requirements: Json
+          similarity: number
+          skill_level: string
+          test_procedures: Json[]
+          tools_required: string[]
+          troubleshooting_steps: string[]
+          typical_duration_minutes: number
+        }[]
+      }
       search_pricing: {
         Args: {
           category_filter?: string
@@ -32641,6 +40274,40 @@ export type Database = {
           subcategory: string
         }[]
       }
+      search_safety_facets_v2: {
+        Args: {
+          p_applies_to?: string[]
+          p_control_types?: string[]
+          p_document_types?: string[]
+          p_hazard_categories?: string[]
+          p_industries?: string[]
+          p_match_count?: number
+          p_pool_size?: number
+          p_query_embedding?: unknown
+          p_query_text?: string
+          p_rrf_k?: number
+        }
+        Returns: {
+          applies_to: string[]
+          content: string
+          control_type: string
+          document_code: string
+          document_type: string
+          hazard_category: string
+          id: string
+          industries: string[]
+          metadata: Json
+          page_number: number
+          paragraph: string
+          primary_topic: string
+          reg_number: string
+          rrf_score: number
+          section: string
+          severity_indicator: string
+          similarity: number
+          source_url: string
+        }[]
+      }
       search_tutor_hybrid: {
         Args: {
           level_filter?: string
@@ -32658,13 +40325,29 @@ export type Database = {
           topic: string
         }[]
       }
+      seed_student_ac_coverage: {
+        Args: { p_student_id: string }
+        Returns: number
+      }
+      seed_student_ac_coverage_all: {
+        Args: never
+        Returns: {
+          inserted: number
+          student_id: string
+        }[]
+      }
       send_portal_message: {
         Args: { p_message: string; p_token: string }
         Returns: string
       }
+      set_resource_gold_standard: {
+        Args: { p_gold_standard: boolean; p_resource_id: string }
+        Returns: undefined
+      }
       setup_failed_payments_cron: { Args: never; Returns: Json }
       setup_quote_followup_cron: { Args: never; Returns: Json }
       setup_task_cron_jobs: { Args: never; Returns: Json }
+      setup_xero_autosync_cron: { Args: never; Returns: Json }
       show_limit: { Args: never; Returns: number }
       show_trgm: { Args: { "": string }; Returns: string[] }
       sign_briefing_by_token: {
@@ -32678,8 +40361,28 @@ export type Database = {
         }
         Returns: Json
       }
+      sign_permit_by_token: {
+        Args: {
+          signature_data: string
+          signer_name: string
+          token_param: string
+        }
+        Returns: Json
+      }
+      sign_safety_doc_token: {
+        Args: {
+          signature_data: string
+          signer_name: string
+          token_param: string
+        }
+        Returns: Json
+      }
       soft_delete_report: {
         Args: { p_report_id: string; p_user_id: string }
+        Returns: Json
+      }
+      submit_report_for_qs_review: {
+        Args: { p_note?: string; p_report_uuid: string }
         Returns: Json
       }
       submit_supervisor_verification: {
@@ -32738,6 +40441,7 @@ export type Database = {
         }
         Returns: string
       }
+      user_id_for_email: { Args: { p_email: string }; Returns: string }
     }
     Enums: {
       app_role: "admin" | "moderator" | "user"

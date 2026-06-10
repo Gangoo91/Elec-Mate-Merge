@@ -211,6 +211,25 @@ const handler = async (req: Request): Promise<Response> => {
     console.log(`Report fetched: ${certificateNumber}`);
 
     // ========================================================================
+    // QS issue gate — when the owner's company requires Qualifying Supervisor
+    // approval, an unapproved (or edited-since-approval) certificate must not
+    // be emailed out. Same rule the DB trigger enforces on PDF issue.
+    // ========================================================================
+    const { data: qsBlocked } = await supabaseClient.rpc('is_qs_issue_blocked', {
+      p_report_uuid: report.id,
+    });
+    if (qsBlocked === true) {
+      return new Response(
+        JSON.stringify({
+          success: false,
+          error:
+            'This certificate requires Qualifying Supervisor approval before it can be sent. Submit it for QS review first.',
+        }),
+        { status: 403, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
+      );
+    }
+
+    // ========================================================================
     // STEP 5: Determine recipient email
     // ========================================================================
     const reportData = report.pdf_payload || report.form_data || report.data || {};
