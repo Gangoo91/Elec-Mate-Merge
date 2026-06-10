@@ -1,4 +1,7 @@
 import { InvoiceSettings } from '@/types/invoice';
+import type { QuoteItem } from '@/types/quote';
+import { computeQuoteTotals } from '@/utils/quote-calculations';
+import { useMemo } from 'react';
 import { Calendar } from '@/components/ui/calendar';
 import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover';
 import { format } from 'date-fns';
@@ -14,6 +17,7 @@ import {
 
 interface InvoiceSettingsStepProps {
   settings?: InvoiceSettings;
+  items?: QuoteItem[];
   notes?: string;
   onUpdateSettings: (settings: Partial<InvoiceSettings>) => void;
   onUpdateNotes: (notes: string) => void;
@@ -26,11 +30,19 @@ const labelClass = 'text-[11px] text-white uppercase tracking-wider block mb-1.5
 
 export const InvoiceSettingsStep = ({
   settings,
+  items,
   notes,
   onUpdateSettings,
   onUpdateNotes,
 }: InvoiceSettingsStepProps) => {
   const darkStyle: React.CSSProperties = { colorScheme: 'dark' };
+
+  // Live CIS preview — so the deduction can never silently come out as £0.
+  // Mirrors the invoice calc (applyOverheadAndProfit: true).
+  const cisPreview = useMemo(
+    () => computeQuoteTotals((items || []) as QuoteItem[], settings as any, { applyOverheadAndProfit: true }),
+    [items, settings]
+  );
 
   const updateBankField = (field: string, value: string) => {
     onUpdateSettings({
@@ -153,6 +165,30 @@ export const InvoiceSettingsStep = ({
               ))}
             </div>
             <p className="text-[11px] text-white/55 mt-2">Calculated on the Labour element only — categorise chargeable labour as Labour.</p>
+
+            {/* Live preview + guard — makes a silent £0 deduction impossible. */}
+            {cisPreview.labourNet > 0 ? (
+              <div className="mt-3 rounded-lg border border-white/[0.12] bg-white/[0.04] p-3 space-y-1.5">
+                <div className="flex justify-between text-[12px]">
+                  <span className="text-white/70">Labour (ex-VAT)</span>
+                  <span className="text-white tabular-nums">£{cisPreview.labourNet.toFixed(2)}</span>
+                </div>
+                <div className="flex justify-between text-[12px]">
+                  <span className="text-white/70">Less CIS ({cisPreview.cisRate}%)</span>
+                  <span className="text-red-300 tabular-nums">−£{cisPreview.cisAmount.toFixed(2)}</span>
+                </div>
+                <div className="flex justify-between text-[13px] font-semibold pt-1 border-t border-white/[0.08]">
+                  <span className="text-white">Net payable</span>
+                  <span className="text-elec-yellow tabular-nums">£{cisPreview.netPayable.toFixed(2)}</span>
+                </div>
+              </div>
+            ) : (
+              <div className="mt-3 rounded-lg border border-amber-400/40 bg-amber-400/10 p-3">
+                <p className="text-[12px] text-amber-200 leading-relaxed">
+                  ⚠️ CIS is on but no <span className="font-semibold">Labour</span> lines were found, so nothing will be deducted. Add your chargeable labour under the <span className="font-semibold">Labour</span> category on the Items step.
+                </p>
+              </div>
+            )}
           </div>
         )}
       </div>

@@ -4,8 +4,9 @@ import * as z from 'zod';
 import { Form, FormControl, FormField, FormItem, FormMessage } from '@/components/ui/form';
 import { Input } from '@/components/ui/input';
 import { Switch } from '@/components/ui/switch';
-import { QuoteSettings } from '@/types/quote';
-import { useEffect } from 'react';
+import { QuoteSettings, QuoteItem } from '@/types/quote';
+import { computeQuoteTotals } from '@/utils/quote-calculations';
+import { useEffect, useMemo } from 'react';
 import { cn } from '@/lib/utils';
 
 const settingsSchema = z.object({
@@ -38,13 +39,14 @@ const settingsSchema = z.object({
 
 interface QuoteSettingsStepProps {
   settings?: QuoteSettings;
+  items?: QuoteItem[];
   onUpdate: (settings: QuoteSettings) => void;
 }
 
 const inputClass =
   'h-11 px-3 rounded-xl text-base text-white bg-white/[0.06] border border-white/[0.08] focus:border-elec-yellow focus:ring-1 focus:ring-elec-yellow/20 outline-none touch-manipulation placeholder:text-white';
 
-export const QuoteSettingsStep = ({ settings, onUpdate }: QuoteSettingsStepProps) => {
+export const QuoteSettingsStep = ({ settings, items, onUpdate }: QuoteSettingsStepProps) => {
   const form = useForm<QuoteSettings>({
     resolver: zodResolver(settingsSchema),
     defaultValues: settings || {
@@ -72,6 +74,14 @@ export const QuoteSettingsStep = ({ settings, onUpdate }: QuoteSettingsStepProps
   const discountType = form.watch('discountType');
   const isReverseCharge = form.watch('reverseCharge');
   const isCisEnabled = form.watch('cisEnabled');
+  const watchedCisRate = form.watch('cisRate');
+
+  // Live CIS preview — quotes don't apply O&P (see useQuoteBuilder), so match that.
+  const cisPreview = useMemo(
+    () =>
+      computeQuoteTotals((items || []) as QuoteItem[], { ...(settings as any), cisEnabled: isCisEnabled, cisRate: watchedCisRate }, { applyOverheadAndProfit: false }),
+    [items, settings, isCisEnabled, watchedCisRate]
+  );
 
   return (
     <Form {...form}>
@@ -205,6 +215,30 @@ export const QuoteSettingsStep = ({ settings, onUpdate }: QuoteSettingsStepProps
                 ))}
               </div>
               <p className="text-[11px] text-white/55 mt-2">Calculated on the Labour element only — categorise chargeable labour as Labour.</p>
+
+              {/* Live preview + guard — makes a silent £0 deduction impossible. */}
+              {cisPreview.labourNet > 0 ? (
+                <div className="mt-3 rounded-lg border border-white/[0.12] bg-white/[0.04] p-3 space-y-1.5">
+                  <div className="flex justify-between text-[12px]">
+                    <span className="text-white/70">Labour (ex-VAT)</span>
+                    <span className="text-white tabular-nums">£{cisPreview.labourNet.toFixed(2)}</span>
+                  </div>
+                  <div className="flex justify-between text-[12px]">
+                    <span className="text-white/70">Less CIS ({cisPreview.cisRate}%)</span>
+                    <span className="text-red-300 tabular-nums">−£{cisPreview.cisAmount.toFixed(2)}</span>
+                  </div>
+                  <div className="flex justify-between text-[13px] font-semibold pt-1 border-t border-white/[0.08]">
+                    <span className="text-white">Net payable</span>
+                    <span className="text-elec-yellow tabular-nums">£{cisPreview.netPayable.toFixed(2)}</span>
+                  </div>
+                </div>
+              ) : (
+                <div className="mt-3 rounded-lg border border-amber-400/40 bg-amber-400/10 p-3">
+                  <p className="text-[12px] text-amber-200 leading-relaxed">
+                    ⚠️ CIS is on but no <span className="font-semibold">Labour</span> lines were found, so nothing will be deducted. Add your chargeable labour under the <span className="font-semibold">Labour</span> category on the Items step.
+                  </p>
+                </div>
+              )}
             </div>
           )}
         </div>

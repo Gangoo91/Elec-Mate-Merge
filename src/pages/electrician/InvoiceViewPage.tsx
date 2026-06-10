@@ -673,7 +673,7 @@ const InvoiceViewPage = () => {
                     <span className="text-red-300 tabular-nums">−{formatCurrency(cisT.cisAmount)}</span>
                   </div>
                   <div className="flex justify-between items-baseline">
-                    <span className="text-[14px] font-semibold text-white">Net payable</span>
+                    <span className="text-[14px] font-semibold text-white">Amount due</span>
                     <span className="text-[18px] font-bold text-elec-yellow tabular-nums">{formatCurrency(cisT.netPayable)}</span>
                   </div>
                 </>
@@ -691,9 +691,11 @@ const InvoiceViewPage = () => {
                 </>
               )}
               {cisT.reverseCharge && (
-                <p className="text-[11px] text-white/55 mt-2 leading-relaxed">
-                  Reverse charge: customer to account to HMRC for the VAT — {formatCurrency(cisT.notionalVat)} @ {invoice.settings?.vatRate ?? 20}%.
-                </p>
+                <div className="mt-3 rounded-lg border-l-2 border-elec-yellow bg-white/[0.04] px-3 py-2.5">
+                  <p className="text-[11px] text-white/70 leading-relaxed">
+                    <span className="font-semibold text-white">VAT reverse charge applies.</span> Customer to account to HMRC for the VAT of {formatCurrency(cisT.notionalVat)} ({invoice.settings?.vatRate ?? 20}%). This invoice shows £0 VAT — do not pay the VAT to the supplier. VAT Act 1994, s.55A.
+                  </p>
+                </div>
               )}
             </div>
           </div>

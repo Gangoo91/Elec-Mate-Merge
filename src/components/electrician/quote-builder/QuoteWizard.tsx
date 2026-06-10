@@ -354,7 +354,7 @@ export const QuoteWizard = ({
       {/* 4. Settings & Pricing */}
       <section>
         <SectionHeader title="Settings" completed />
-        <QuoteSettingsStep settings={quote.settings} onUpdate={updateSettings} />
+        <QuoteSettingsStep settings={quote.settings} items={quote.items} onUpdate={updateSettings} />
       </section>
 
       {/* 5. Review */}

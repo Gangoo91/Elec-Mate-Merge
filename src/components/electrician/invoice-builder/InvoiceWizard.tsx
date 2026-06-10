@@ -287,6 +287,7 @@ export const InvoiceWizard = ({
         <h2 className="text-sm font-bold text-white uppercase tracking-wide mb-3">Settings</h2>
         <InvoiceSettingsStep
           settings={invoiceBuilder.invoice.settings}
+          items={invoiceBuilder.invoice.items}
           notes={invoiceBuilder.invoice.invoice_notes}
           onUpdateSettings={invoiceBuilder.updateInvoiceSettings}
           onUpdateNotes={invoiceBuilder.setInvoiceNotes}
