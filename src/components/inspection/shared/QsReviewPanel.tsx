@@ -3,6 +3,7 @@ import { Button } from '@/components/ui/button';
 import { Textarea } from '@/components/ui/textarea';
 import { ShieldCheck, Clock, Loader2, RotateCcw } from 'lucide-react';
 import { useToast } from '@/hooks/use-toast';
+import { useHaptic } from '@/hooks/useHaptic';
 import {
   useQsTeamContext,
   useQsReviewStatus,
@@ -24,6 +25,7 @@ interface QsReviewPanelProps {
  */
 const QsReviewPanel: React.FC<QsReviewPanelProps> = ({ reportId, reportType, onBeforeSubmit }) => {
   const { toast } = useToast();
+  const haptic = useHaptic();
   const { data: ctx } = useQsTeamContext();
   const isTeamMember = !!ctx?.is_team_member;
   const { data: review } = useQsReviewStatus(reportId, isTeamMember);
@@ -35,6 +37,7 @@ const QsReviewPanel: React.FC<QsReviewPanelProps> = ({ reportId, reportType, onB
   if (!isTeamMember || !reportId) return null;
 
   const handleSubmit = async () => {
+    haptic.light();
     try {
       await onBeforeSubmit?.();
       await submitMutation.mutateAsync({ reportId, note: note.trim() || undefined });
@@ -57,6 +60,7 @@ const QsReviewPanel: React.FC<QsReviewPanelProps> = ({ reportId, reportType, onB
 
   const handleCancel = async () => {
     if (!review) return;
+    haptic.light();
     try {
       await cancelMutation.mutateAsync({ reviewId: review.id, reportId });
       toast({ title: 'Review cancelled' });
@@ -80,8 +84,8 @@ const QsReviewPanel: React.FC<QsReviewPanelProps> = ({ reportId, reportType, onB
 
       {ctx?.qs_approval_required && status !== 'approved' && (
         <p className="text-xs text-amber-300">
-          {ctx?.company_name || 'Your company'} requires QS approval before this certificate can
-          be issued.
+          {ctx?.company_name || 'Your company'} requires QS approval before this certificate can be
+          issued.
         </p>
       )}
 
@@ -156,8 +160,8 @@ const QsReviewPanel: React.FC<QsReviewPanelProps> = ({ reportId, reportType, onB
       {(!status || status === 'cancelled') && (
         <div className="space-y-3">
           <p className="text-sm text-white/70">
-            Send this certificate to {ctx?.company_name || 'your company'} for Qualifying
-            Supervisor sign-off.
+            Send this certificate to {ctx?.company_name || 'your company'} for Qualifying Supervisor
+            sign-off.
           </p>
           {showNote && (
             <Textarea

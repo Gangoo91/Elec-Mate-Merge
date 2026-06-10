@@ -1,11 +1,15 @@
 import { useMemo, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { Sheet, SheetContent, SheetHeader, SheetTitle } from '@/components/ui/sheet';
 import { Button } from '@/components/ui/button';
 import { Textarea } from '@/components/ui/textarea';
 import { Input } from '@/components/ui/input';
 import { Loader2, ShieldCheck, Undo2 } from 'lucide-react';
 import { useToast } from '@/hooks/use-toast';
+import { useEffect } from 'react';
+import { supabase } from '@/integrations/supabase/client';
 import SignatureInput from '@/components/signature/SignatureInput';
+import QsCertReviewBody from '@/components/employer/sections/QsCertReviewBody';
 import {
   ListCard,
   ListCardHeader,
@@ -40,14 +44,12 @@ const formatDate = (iso: string | null) =>
   iso ? new Date(iso).toLocaleDateString('en-GB', { day: '2-digit', month: 'short' }) : '—';
 
 export function QSReviewsSection() {
+  const navigate = useNavigate();
   const [scope, setScope] = useState<'pending' | 'all'>('pending');
   const { data: items = [], isLoading } = useQsReviewQueue(scope);
   const [openItem, setOpenItem] = useState<QsQueueItem | null>(null);
 
-  const pendingCount = useMemo(
-    () => items.filter((i) => i.status === 'pending').length,
-    [items]
-  );
+  const pendingCount = useMemo(() => items.filter((i) => i.status === 'pending').length, [items]);
 
   if (isLoading) return <LoadingState />;
 
@@ -79,15 +81,26 @@ export function QSReviewsSection() {
       </div>
 
       {items.length === 0 ? (
-        <div className="rounded-2xl border border-white/[0.06] bg-[hsl(0_0%_12%)] px-5 py-10 text-center space-y-1.5">
+        <div className="rounded-2xl border border-white/[0.06] bg-[hsl(0_0%_12%)] px-5 py-10 text-center space-y-3">
           <ShieldCheck className="h-6 w-6 mx-auto text-white/30" />
-          <p className="text-sm font-medium text-white">
-            {scope === 'pending' ? 'No certificates awaiting review' : 'No reviews yet'}
-          </p>
-          <p className="text-xs text-white/50 max-w-sm mx-auto">
-            When a team member submits an EICR, EIC or Minor Works certificate for Qualifying
-            Supervisor sign-off, it will appear here.
-          </p>
+          <div className="space-y-1.5">
+            <p className="text-sm font-medium text-white">
+              {scope === 'pending' ? 'No certificates awaiting review' : 'No reviews yet'}
+            </p>
+            <p className="text-xs text-white/50 max-w-sm mx-auto">
+              When a team member submits an EICR, EIC or Minor Works certificate for Qualifying
+              Supervisor sign-off, it will appear here. To get started, add your team in Settings
+              and assign someone the QS role — team members link automatically when they sign in
+              with the email on their roster entry.
+            </p>
+          </div>
+          <button
+            type="button"
+            onClick={() => navigate('/employer?section=settings')}
+            className="h-11 px-5 rounded-lg text-sm font-semibold bg-elec-yellow/15 border border-elec-yellow/30 text-elec-yellow touch-manipulation active:scale-[0.98]"
+          >
+            Set up your team
+          </button>
         </div>
       ) : (
         <ListCard>
@@ -142,13 +155,7 @@ function DetailField({ label, value }: { label: string; value: string | null | u
   );
 }
 
-function QsReviewDetailSheet({
-  item,
-  onClose,
-}: {
-  item: QsQueueItem | null;
-  onClose: () => void;
-}) {
+function QsReviewDetailSheet({ item, onClose }: { item: QsQueueItem | null; onClose: () => void }) {
   const { toast } = useToast();
   const { data: detail, isLoading, isError } = useQsReviewReport(item?.review_id ?? null);
   const approveMutation = useApproveQsReview();
@@ -158,6 +165,31 @@ function QsReviewDetailSheet({
   const [signature, setSignature] = useState<string | null>(null);
   const [comments, setComments] = useState('');
   const [mode, setMode] = useState<'view' | 'approve' | 'return'>('view');
+
+  // Pre-fill the reviewer's name from their profile — typing it every
+  // approval is needless friction.
+  useEffect(() => {
+    if (!item || reviewerName) return;
+    let cancelled = false;
+    (async () => {
+      const {
+        data: { user },
+      } = await supabase.auth.getUser();
+      if (!user) return;
+      const { data: profile } = await supabase
+        .from('profiles')
+        .select('full_name')
+        .eq('id', user.id)
+        .maybeSingle();
+      if (!cancelled && profile?.full_name) {
+        setReviewerName((current) => current || profile.full_name || '');
+      }
+    })();
+    return () => {
+      cancelled = true;
+    };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [item?.review_id]);
 
   const reset = () => {
     setReviewerName('');
@@ -223,15 +255,6 @@ function QsReviewDetailSheet({
     }
   };
 
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  const data: any = detail?.report?.data ?? {};
-  const observationCount = Array.isArray(data?.defectObservations)
-    ? data.defectObservations.length
-    : Array.isArray(data?.observations)
-      ? data.observations.length
-      : 0;
-  const circuitCount = Array.isArray(data?.scheduleOfTests) ? data.scheduleOfTests.length : 0;
-
   // Decisions are only allowed once the certificate itself loaded — if the
   // electrician deleted it, the RPC errors and there is nothing to countersign.
   const isPending = item?.status === 'pending' && !!detail && !isError;
@@ -279,10 +302,6 @@ function QsReviewDetailSheet({
                     <DetailField label="Submitted by" value={item.electrician_name} />
                     <DetailField label="Inspector on cert" value={item.inspector_name} />
                   </div>
-                  <div className="grid grid-cols-2 gap-3">
-                    <DetailField label="Circuits tested" value={String(circuitCount)} />
-                    <DetailField label="Observations" value={String(observationCount)} />
-                  </div>
                   {item.submitted_note && (
                     <div className="rounded-lg border border-white/[0.08] bg-white/[0.04] px-3 py-2.5">
                       <p className="text-[10px] uppercase tracking-[0.14em] text-white/40">
@@ -303,6 +322,15 @@ function QsReviewDetailSheet({
                     </button>
                   )}
                 </div>
+
+                {/* Full technical review — observations, test schedule, declarations */}
+                {detail?.report?.data && (
+                  <QsCertReviewBody
+                    reportType={item.report_type}
+                    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+                    data={detail.report.data as Record<string, any>}
+                  />
+                )}
 
                 {/* Prior decision (non-pending) */}
                 {!isPending && (
