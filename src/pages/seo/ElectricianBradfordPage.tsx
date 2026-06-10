@@ -115,7 +115,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Guide',
   },
   {
-    href: '/electrical-quoting-app',
+    href: '/tools/electrical-quoting-app',
     title: 'Quoting App',
     description:
       'Quote rewires, consumer unit upgrades, and EV charger installations with accurate Bradford pricing.',
@@ -481,7 +481,7 @@ const sections = [
                 <h4 className="font-bold text-white mb-1">Professional Quoting</h4>
                 <p className="text-white text-sm leading-relaxed">
                   Use the{' '}
-                  <SEOInternalLink href="/electrical-quoting-app">quoting app</SEOInternalLink> to
+                  <SEOInternalLink href="/tools/electrical-quoting-app">quoting app</SEOInternalLink> to
                   send professional, detailed quotes to Bradford homeowners, landlords, and letting
                   agents. Itemised quotes with accurate Bradford pricing win more work in a
                   competitive market.
@@ -512,7 +512,7 @@ export default function ElectricianBradfordPage() {
       title="Electrician Bradford | Find Qualified Electricians in"
       description="Find qualified electricians in Bradford. NICEIC and NAPIT registered, Part P compliant. Bradford electrician rates, EICRs for landlords…"
       datePublished="2026-03-27"
-      dateModified="2026-05-18"
+      dateModified="2026-06-10"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Bradford"

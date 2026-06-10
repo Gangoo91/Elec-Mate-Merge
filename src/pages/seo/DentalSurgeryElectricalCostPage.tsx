@@ -111,7 +111,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Certificate',
   },
   {
-    href: '/electrical-quoting-app',
+    href: '/tools/electrical-quoting-app',
     title: 'Electrical Quoting App',
     description:
       'Quote dental surgery electrical work with equipment schedules and Section 710 provisions.',

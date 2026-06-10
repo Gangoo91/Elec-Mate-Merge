@@ -118,7 +118,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Certificate',
   },
   {
-    href: '/electrical-quoting-app',
+    href: '/tools/electrical-quoting-app',
     title: 'Electrical Quoting App',
     description: 'Quote EV charger installations in minutes with material and labour pricing.',
     icon: PoundSterling,
@@ -555,7 +555,7 @@ const sections = [
                 <h4 className="font-bold text-white mb-1">Quote EV Jobs in Minutes</h4>
                 <p className="text-white text-sm leading-relaxed">
                   Generate professional EV charger installation quotes using the{' '}
-                  <SEOInternalLink href="/electrical-quoting-app">
+                  <SEOInternalLink href="/tools/electrical-quoting-app">
                     Elec-Mate quoting app
                   </SEOInternalLink>
                   . Include itemised materials, labour, and OZEV grant deduction automatically. Win

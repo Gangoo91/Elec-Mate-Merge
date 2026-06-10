@@ -120,7 +120,7 @@ const relatedPages = [
     category: 'Guide',
   },
   {
-    href: '/how-to-do-safe-isolation',
+    href: '/guides/how-to-do-safe-isolation',
     title: 'Safe Isolation Procedure',
     description: 'The prove-test-prove method you will learn in year 1 — step by step.',
     icon: Shield,
@@ -665,7 +665,7 @@ export default function Year1ApprenticeGuidePage() {
       title="Year 1 Electrical Apprentice | What to Expect"
       description="Complete guide for first-year electrical apprentices in the UK. What year 1 looks like day by day, what you learn, employer expectations…"
       datePublished="2025-11-15"
-      dateModified="2026-05-18"
+      dateModified="2026-06-10"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Apprentice Guide"

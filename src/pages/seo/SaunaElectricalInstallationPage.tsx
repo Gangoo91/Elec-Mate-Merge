@@ -697,7 +697,7 @@ const sections = [
                 <h4 className="font-bold text-white mb-1">Quote with Specialist Materials</h4>
                 <p className="text-white text-sm leading-relaxed">
                   Use the{' '}
-                  <SEOInternalLink href="/electrical-quoting-app">quoting app</SEOInternalLink> to
+                  <SEOInternalLink href="/tools/electrical-quoting-app">quoting app</SEOInternalLink> to
                   itemise the heat-resistant cable, silicone fixings, fireproof junction box, and
                   specialist luminaires. These cost more than standard materials — make sure the
                   quote reflects this.
@@ -726,7 +726,7 @@ export default function SaunaElectricalInstallationPage() {
       title="Sauna Electrical Installation | Special Location Guide UK"
       description="Complete guide to sauna electrical installation in the UK. Dedicated supply, BS 7671 Section 703 requirements, heat-resistant cable, temperature zones…"
       datePublished="2026-03-27"
-      dateModified="2026-05-18"
+      dateModified="2026-06-10"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Installation Guide"

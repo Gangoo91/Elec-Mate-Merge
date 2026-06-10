@@ -498,7 +498,7 @@ export default function DataCablingCoursePage() {
       title={PAGE_TITLE}
       description={PAGE_DESCRIPTION}
       datePublished="2025-08-01"
-      dateModified="2026-05-18"
+      dateModified="2026-06-10"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Specialist Training"

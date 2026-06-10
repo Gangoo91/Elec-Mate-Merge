@@ -631,7 +631,7 @@ const sections = [
                 <h4 className="font-bold text-white mb-1">Quote Accurately with Elec-Mate</h4>
                 <p className="text-white text-sm leading-relaxed">
                   Use the{' '}
-                  <SEOInternalLink href="/electrical-quoting-app">quoting app</SEOInternalLink> to
+                  <SEOInternalLink href="/tools/electrical-quoting-app">quoting app</SEOInternalLink> to
                   itemise materials (SWA cable per metre, RCBO, isolator, glands, clips, warning
                   tape) and labour. Send a professional PDF quote from the survey.
                 </p>
@@ -673,7 +673,7 @@ export default function HotTubElectricalConnectionPage() {
       title="Hot Tub Electrical Connection | Dedicated Circuit Guide UK"
       description="Complete guide to hot tub electrical connections in the UK. Dedicated 32A/40A circuit, RCD protection, SWA cable, outdoor IP ratings…"
       datePublished="2026-03-27"
-      dateModified="2026-05-18"
+      dateModified="2026-06-10"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Installation Guide"

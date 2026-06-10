@@ -877,7 +877,7 @@ export default function SafeIsolationProcedureGuidePage() {
       title="6 Step Safe Isolation Procedure | GS38"
       description="Master the 6 step safe isolation sequence for UK electrical work. Prove-isolate-secure-prove method, GS38 test instrument rules, multi-lock hasps."
       datePublished="2026-03-27"
-      dateModified="2026-05-18"
+      dateModified="2026-06-10"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Safety Procedure Guide"

@@ -65,7 +65,7 @@ const toolCollections = [
     links: [
       { href: '/tools/digital-certificates-app', label: 'Digital Certificates App' },
       { href: '/tools/eicr-certificate', label: 'EICR Certificate' },
-      { href: '/tools/eic-certificate', label: 'EIC Certificate' },
+      { href: '/eic-certificate', label: 'EIC Certificate' },
       { href: '/tools/minor-works-certificate', label: 'Minor Works Certificate' },
     ],
   },
@@ -96,7 +96,7 @@ const toolCollections = [
       { href: '/study-centre', label: 'Study Centre' },
       { href: '/training/electrical-apprentice', label: 'Electrical Apprentice Training' },
       { href: '/tools/employer-electrical-platform', label: 'Employer Electrical Platform' },
-      { href: '/best-electrician-app', label: 'Why Electricians Choose Elec-Mate' },
+      { href: '/tools/best-electrician-app-uk', label: 'Why Electricians Choose Elec-Mate' },
     ],
   },
 ];
@@ -136,7 +136,7 @@ export default function ToolsHubPage() {
       { name: 'Tools', url: '/tools' },
     ],
     dateModified: '2026-05-18',
-    author: 'Elec-Mate Technical Team',
+    author: 'Andrew Moore',
   });
 
   return (

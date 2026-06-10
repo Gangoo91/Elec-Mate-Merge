@@ -477,7 +477,7 @@ const sections = [
                 <h4 className="font-bold text-white mb-1">Quote the Full Scope Upfront</h4>
                 <p className="text-white text-sm leading-relaxed">
                   Use the{' '}
-                  <SEOInternalLink href="/electrical-quoting-app">
+                  <SEOInternalLink href="/tools/electrical-quoting-app">
                     Elec-Mate quoting app
                   </SEOInternalLink>{' '}
                   to itemise every element of the loft conversion electrical works — first fix,

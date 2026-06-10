@@ -124,7 +124,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Tool',
   },
   {
-    href: '/electrical-quoting-app',
+    href: '/tools/electrical-quoting-app',
     title: 'Electrical Quoting App',
     description: 'Create professional quotes with accurate pricing for Birmingham customers.',
     icon: PoundSterling,
@@ -548,7 +548,7 @@ export default function ElectricianBirminghamPage() {
       title="Electrician in Birmingham | Find Local Electricians 2026"
       description="Find qualified, registered electricians in Birmingham. 2026 pricing guide, NICEIC/NAPIT verification, Victorian and 1930s rewiring…"
       datePublished="2026-03-27"
-      dateModified="2026-05-18"
+      dateModified="2026-06-10"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Find an Electrician"

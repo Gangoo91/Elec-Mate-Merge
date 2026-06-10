@@ -22,7 +22,7 @@ import {
 // -------------------------------------------------------------------
 
 const breadcrumbs = [
-  { label: 'AI Tools', href: '/ai-electrician-tools' },
+  { label: 'AI Tools', href: '/tools/ai-electrician' },
   { label: 'AI Fault Diagnosis', href: '/tools/ai-fault-diagnosis' },
 ];
 
@@ -297,7 +297,7 @@ const sections = [
           PVC cables), nuisance RCD tripping caused by cumulative earth leakage across multiple
           circuits, high earth fault loop impedance on long cable runs in TT earthing systems,
           neutral-earth faults in{' '}
-          <SEOInternalLink href="/earthing-arrangements">
+          <SEOInternalLink href="/guides/earthing-arrangements">
             TN-C-S (PME) systems
           </SEOInternalLink>{' '}
           causing voltage on exposed metalwork, and overloaded circuits where diversity assumptions

@@ -5,7 +5,7 @@ import type { GeneratedGuideConfig } from '@/pages/seo/generated/GeneratedGuideP
 // published 15 April 2026) and the IET On-Site Guide.
 
 const published = '2026-05-17';
-const modified = '2026-05-29';
+const modified = '2026-06-10';
 
 export const knxWiringInstallationConfig: GeneratedGuideConfig = {
   pagePath: '/guides/knx-wiring-installation-guide-uk',

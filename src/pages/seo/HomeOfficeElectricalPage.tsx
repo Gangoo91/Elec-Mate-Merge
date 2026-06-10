@@ -116,7 +116,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Certificate',
   },
   {
-    href: '/electrical-quoting-app',
+    href: '/tools/electrical-quoting-app',
     title: 'Quoting App',
     description: 'Price home office electrical upgrades with itemised materials and labour costs.',
     icon: Wrench,
@@ -669,7 +669,7 @@ const sections = [
                 <h4 className="font-bold text-white mb-1">Quick Professional Quoting</h4>
                 <p className="text-white text-sm leading-relaxed">
                   Price the home office setup with Elec-Mate's{' '}
-                  <SEOInternalLink href="/electrical-quoting-app">quoting app</SEOInternalLink>.
+                  <SEOInternalLink href="/tools/electrical-quoting-app">quoting app</SEOInternalLink>.
                   Dedicated circuit, sockets, data cabling, lighting — all itemised. Send a
                   professional PDF quote from the survey visit.
                 </p>
@@ -710,7 +710,7 @@ export default function HomeOfficeElectricalPage() {
       title="Home Office Electrical Setup | Wiring & Power Guide"
       description="Complete guide to home office electrical setup in the UK. Dedicated circuits, ergonomic socket placement, Cat6/Cat6a data cabling, USB-C charging points…"
       datePublished="2026-03-27"
-      dateModified="2026-05-18"
+      dateModified="2026-06-10"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Installation Guide"

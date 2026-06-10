@@ -116,7 +116,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Certificate',
   },
   {
-    href: '/guides/consumer-unit-regulations',
+    href: '/consumer-unit-regulations',
     title: 'Consumer Unit Regulations',
     description: 'Consumer unit upgrade requirements when adding a 32A EV charger circuit.',
     icon: ShieldCheck,
@@ -473,7 +473,7 @@ const sections = [
                   Factor in Yorkshire labour rates (£38 to £52/hour), site survey time for complex
                   terrain, earth rod costs, Northern Powergrid notification, and certification. Use
                   Elec-Mate's{' '}
-                  <SEOInternalLink href="/electrical-quoting-app">
+                  <SEOInternalLink href="/tools/electrical-quoting-app">
                     electrical quoting app
                   </SEOInternalLink>{' '}
                   to build itemised quotes that account for all job-specific variables.
@@ -520,7 +520,7 @@ export default function EVChargerInstallationSheffieldPage() {
       title="EV Charger Installation Sheffield | Home EV Charging"
       description="EV charger installation costs in Sheffield 2026: 7kW charger £800-1,200 installed, OZEV grants up to £350, Northern Powergrid DNO notification…"
       datePublished="2026-03-27"
-      dateModified="2026-05-18"
+      dateModified="2026-06-10"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Sheffield Guide"

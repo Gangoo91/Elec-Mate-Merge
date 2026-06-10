@@ -92,14 +92,14 @@ const relatedPages = [
     category: 'Guide',
   },
   {
-    href: '/epa-preparation',
+    href: '/training/epa-preparation',
     title: 'EPA Preparation',
     description: 'End Point Assessment simulator with AI grading for all three EPA components.',
     icon: ClipboardCheck,
     category: 'Training',
   },
   {
-    href: '/level2-electrical',
+    href: '/training/level-2-electrical',
     title: 'Level 2 Electrical',
     description:
       'Everything you need to know about the Level 2 Diploma in Electrical Installation.',
@@ -107,7 +107,7 @@ const relatedPages = [
     category: 'Training',
   },
   {
-    href: '/level3-electrical',
+    href: '/training/level-3-electrical',
     title: 'Level 3 Electrical',
     description: 'Level 3 diploma content, exam preparation, and career progression.',
     icon: Award,
@@ -147,12 +147,12 @@ const sections = [
         <p>
           The qualification pathway within the apprenticeship progresses through two main stages.
           You begin with the{' '}
-          <SEOInternalLink href="/level2-electrical">
+          <SEOInternalLink href="/training/level-2-electrical">
             Level 2 Diploma in Electrical Installation
           </SEOInternalLink>
           , which covers fundamental skills — cable installation, basic wiring, health and safety,
           and electrical science. Once Level 2 is complete, you move to the{' '}
-          <SEOInternalLink href="/level3-electrical">
+          <SEOInternalLink href="/training/level-3-electrical">
             Level 3 Diploma in Electrical Installation
           </SEOInternalLink>
           , which covers more advanced topics including circuit design, inspection and testing,
@@ -252,7 +252,7 @@ const sections = [
         </p>
         <p>
           <strong>Portfolio building:</strong> Throughout the apprenticeship, you build a{' '}
-          <SEOInternalLink href="/apprentice-portfolio-guide">
+          <SEOInternalLink href="/training/apprentice-portfolio">
             portfolio of evidence
           </SEOInternalLink>{' '}
           demonstrating your competence across the apprenticeship standard criteria. This includes
@@ -381,7 +381,7 @@ const sections = [
           Before you can attempt the EPA, you must pass through the "gateway." The gateway
           requirements include: completion of the Level 3 Diploma, achievement of the AM2 practical
           assessment, Level 2 Functional Skills in English and Maths, a comprehensive{' '}
-          <SEOInternalLink href="/apprentice-portfolio-guide">
+          <SEOInternalLink href="/training/apprentice-portfolio">
             portfolio of evidence
           </SEOInternalLink>
           , meeting the 20% off-the-job training hours requirement, and agreement from both your
@@ -389,7 +389,7 @@ const sections = [
         </p>
         <p>
           The{' '}
-          <SEOInternalLink href="/epa-preparation">
+          <SEOInternalLink href="/training/epa-preparation">
             EPA itself consists of three components
           </SEOInternalLink>
           : a practical assessment (similar to the AM2 but assessed by the EPAO), a knowledge test
@@ -437,7 +437,7 @@ const sections = [
         <p>
           <strong>Further qualifications:</strong> Many electricians pursue additional
           qualifications after the apprenticeship, including the{' '}
-          <SEOInternalLink href="/city-guilds2391">
+          <SEOInternalLink href="/training/city-guilds-2391">
             C&G 2391 Inspection and Testing
           </SEOInternalLink>
           , C&G 2396 Design and Verification, and specialist courses in EV charging, solar PV, fire

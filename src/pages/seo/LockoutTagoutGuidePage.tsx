@@ -112,7 +112,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Guide',
   },
   {
-    href: '/rams-generator',
+    href: '/tools/rams-generator',
     title: 'RAMS Generator',
     description: 'Generate site-specific risk assessments and method statements instantly.',
     icon: FileCheck2,
@@ -581,7 +581,7 @@ const sections = [
               <h4 className="font-bold text-white mb-1">Generate Safe Isolation RAMS Instantly</h4>
               <p className="text-white text-sm leading-relaxed">
                 Use the{' '}
-                <SEOInternalLink href="/rams-generator">Elec-Mate RAMS generator</SEOInternalLink> to
+                <SEOInternalLink href="/tools/rams-generator">Elec-Mate RAMS generator</SEOInternalLink> to
                 create site-specific risk assessments and method statements for electrical work
                 including safe isolation procedures, permit to work requirements, and multi-trade
                 coordination. Compliant with UK health and safety regulations and ready to share

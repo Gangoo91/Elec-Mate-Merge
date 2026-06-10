@@ -99,7 +99,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Guide',
   },
   {
-    href: '/how-to-test-insulation-resistance',
+    href: '/guides/insulation-resistance-testing-bs7671',
     title: 'How to Test Insulation Resistance',
     description: 'Step-by-step insulation resistance testing procedure for fixed wiring.',
     icon: ShieldCheck,
@@ -563,7 +563,7 @@ export default function ClampMeterGuideElectriciansPage() {
       title="Clamp Meter Guide for Electricians UK 2026 | AC vs DC,"
       description="Complete clamp meter guide for UK electricians. AC vs DC clamp meters, accuracy considerations, harmonic assessment, leakage current measurement…"
       datePublished="2026-03-27"
-      dateModified="2026-05-18"
+      dateModified="2026-06-10"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Tools & Equipment Guide"

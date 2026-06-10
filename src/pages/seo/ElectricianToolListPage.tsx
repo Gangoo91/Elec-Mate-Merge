@@ -252,7 +252,7 @@ const sections = [
           Test equipment is what separates a qualified electrician from someone who just connects
           wires. Without proper test instruments, you cannot verify that an installation is safe,
           you cannot produce an{' '}
-          <SEOInternalLink href="/tools/eic-certificate">
+          <SEOInternalLink href="/eic-certificate">
             Electrical Installation Certificate
           </SEOInternalLink>
           , and you cannot carry out{' '}
@@ -791,7 +791,7 @@ export default function ElectricianToolListPage() {
       title="Electrician Tool List UK 2026 | Essential Tools Guide"
       description="Complete UK electrician tool list for 2026. Hand tools, VDE insulated tools, test equipment, power tools, PPE, budget guide, and brand recommendations."
       datePublished="2025-01-15"
-      dateModified="2026-05-18"
+      dateModified="2026-06-10"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Career Guide"

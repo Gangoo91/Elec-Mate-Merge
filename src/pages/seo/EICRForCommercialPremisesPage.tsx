@@ -604,7 +604,7 @@ const sections = [
                 <strong>Live testing</strong> — earth fault loop impedance (Zs) at the most remote
                 point of each circuit, prospective fault current (Ipf) at each distribution board
                 and at the origin, and{' '}
-                <SEOInternalLink href="/rcd-testing-guide">RCD operation</SEOInternalLink>{' '}
+                <SEOInternalLink href="/tools/rcd-testing-guide">RCD operation</SEOInternalLink>{' '}
                 (trip time and trip current for all RCDs). Live testing can generally be carried out
                 without disrupting the supply.
               </span>

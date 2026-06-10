@@ -116,7 +116,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Tool',
   },
   {
-    href: '/electrical-quoting-app',
+    href: '/tools/electrical-quoting-app',
     title: 'Electrical Quoting App',
     description:
       'Create professional quotes for Bournemouth customers with accurate local pricing.',
@@ -466,7 +466,7 @@ export default function ElectricianBournemouthPage() {
       title="Electrician in Bournemouth | Find Qualified Electricians"
       description="Find qualified, registered electricians in Bournemouth. Realistic 2026 pricing, SSEN connections, coastal electrical considerations…"
       datePublished="2026-03-27"
-      dateModified="2026-05-18"
+      dateModified="2026-06-10"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Find an Electrician"

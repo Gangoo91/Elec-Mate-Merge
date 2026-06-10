@@ -24,7 +24,7 @@ export default function OfflineElectricalAppPage() {
       title="Offline Electrical App | Work Without Signal"
       description="Elec-Mate works fully offline: complete EICR, EIC, and Minor Works certificates, use 70+ BS 7671 calculators in basements + remote sites."
       datePublished="2026-01-20"
-      dateModified="2026-05-18"
+      dateModified="2026-06-10"
       breadcrumbs={[
         { label: 'Tools', href: '/tools' },
         { label: 'Offline Electrical App', href: '/tools/offline-electrical-app' },
@@ -143,7 +143,7 @@ export default function OfflineElectricalAppPage() {
               <p>
                 Every calculator in Elec-Mate runs entirely on your device. There is no server
                 round-trip, no API call, and no dependency on internet connectivity. All 70+{' '}
-                <SEOInternalLink href="/electrical-testing-calculators">
+                <SEOInternalLink href="/tools/electrical-testing-calculators">
                   BS 7671 calculators
                 </SEOInternalLink>{' '}
                 work offline with identical performance:
@@ -202,7 +202,7 @@ export default function OfflineElectricalAppPage() {
               <p>
                 Mock exams and practice tests also work offline, with results stored locally and
                 synced later. This means you can run through a full{' '}
-                <SEOInternalLink href="/am2-exam-preparation">AM2 practice exam</SEOInternalLink> on
+                <SEOInternalLink href="/training/am2-exam-preparation">AM2 practice exam</SEOInternalLink> on
                 the train home without worrying about signal.
               </p>
             </>
@@ -292,9 +292,9 @@ export default function OfflineElectricalAppPage() {
               <p>
                 That matters commercially as well as technically. You can keep the job moving in
                 low-signal environments, then feed the completed work into the{' '}
-                <SEOInternalLink href="/electrical-quoting-app">quoting workflow</SEOInternalLink>{' '}
+                <SEOInternalLink href="/tools/electrical-quoting-app">quoting workflow</SEOInternalLink>{' '}
                 or the{' '}
-                <SEOInternalLink href="/electrician-invoice-app">invoice workflow</SEOInternalLink>{' '}
+                <SEOInternalLink href="/tools/electrician-invoice-app">invoice workflow</SEOInternalLink>{' '}
                 once connectivity returns, without rebuilding the admin from scratch.
               </p>
             </>
@@ -424,7 +424,7 @@ export default function OfflineElectricalAppPage() {
           category: 'Tools',
         },
         {
-          href: '/electrical-testing-calculators',
+          href: '/tools/electrical-testing-calculators',
           title: 'Electrical Calculators',
           description: '70+ BS 7671 calculators — all work offline with no performance difference.',
           icon: Calculator,
@@ -447,7 +447,7 @@ export default function OfflineElectricalAppPage() {
           category: 'Platform',
         },
         {
-          href: '/electrician-invoice-app',
+          href: '/tools/electrician-invoice-app',
           title: 'Electrician Invoice App',
           description:
             'Turn completed offline jobs into invoices quickly once you are back in signal.',
@@ -456,7 +456,7 @@ export default function OfflineElectricalAppPage() {
         },
       ]}
       ctaHeading="Try offline mode free for 7 days"
-      ctaSubheading="Full offline capability, auto-save, cloud sync, all 16 certificate types, 70+ calculators, and 46+ courses. Start your free trial — no card required."
+      ctaSubheading="Full offline capability, auto-save, cloud sync, all 16 certificate types, 70+ calculators, and 46+ courses. Start your free trial — no charge until day 8."
       toolPath="/tools/offline-electrical-app"
     />
   );

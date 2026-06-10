@@ -215,7 +215,7 @@ const relatedPages = [
     category: 'Guide',
   },
   {
-    href: '/apprentice-portfolio-guide',
+    href: '/training/apprentice-portfolio',
     title: 'Apprentice Portfolio Guide',
     description: 'Digital evidence tracking and AI-powered criteria mapping for your portfolio.',
     icon: FolderOpen,
@@ -680,7 +680,7 @@ const sections = [
           evidence to each entry — a photograph from a training session, a certificate from a
           manufacturer course, a screenshot of a completed quiz, or a note from a mentoring session.
           This evidence strengthens your OTJ record and links naturally to your{' '}
-          <SEOInternalLink href="/apprentice-portfolio-guide">apprentice portfolio</SEOInternalLink>
+          <SEOInternalLink href="/training/apprentice-portfolio">apprentice portfolio</SEOInternalLink>
           .
         </p>
       </>
@@ -813,7 +813,7 @@ const sections = [
         <p>
           <strong>Evidence attachments:</strong> Attach photographs, certificates, screenshots, or
           notes to any entry. This evidence feeds into your{' '}
-          <SEOInternalLink href="/apprentice-portfolio-guide">portfolio</SEOInternalLink> and
+          <SEOInternalLink href="/training/apprentice-portfolio">portfolio</SEOInternalLink> and
           creates Ofsted-ready documentation.
         </p>
         <p>
@@ -838,7 +838,7 @@ export default function OffJobTrainingHoursPage() {
       title="Off-the-Job Training Hours | 20% Requirement Explained"
       description="Off-the-job training hours for UK electrical apprentices: the 2025 fixed-hours rule (1,066h on ST0152), the old 20% rule, what counts, how to log evidence, employer duties."
       datePublished="2025-10-15"
-      dateModified="2026-05-18"
+      dateModified="2026-06-10"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Apprentice Guide"

@@ -1,7 +1,7 @@
 import type { GeneratedGuideConfig } from '@/pages/seo/generated/GeneratedGuidePage';
 
 const published = '2026-04-12';
-const modified = '2026-05-18';
+const modified = '2026-06-10';
 
 const faultCtaHeading = 'Work through fault finding without losing the paperwork';
 const faultCtaSubheading =
@@ -1178,7 +1178,7 @@ export const consumerUnitUpgradeCostGuideConfig: GeneratedGuideConfig = {
       category: 'Guide',
     },
     {
-      href: '/electrical-quoting-app',
+      href: '/tools/electrical-quoting-app',
       title: 'Electrical Quoting App',
       description: 'Build a cleaner quote and send it from the same job.',
       icon: 'Calculator',
@@ -1306,7 +1306,7 @@ export const consumerUnitUpgradePriceBreakdownConfig: GeneratedGuideConfig = {
       category: 'Guide',
     },
     {
-      href: '/electrical-quoting-app',
+      href: '/tools/electrical-quoting-app',
       title: 'Electrical Quoting App',
       description: 'Turn the price breakdown into a clean PDF quote.',
       icon: 'Calculator',
@@ -1430,14 +1430,14 @@ export const consumerUnitUpgradeLabourAndMaterialsConfig: GeneratedGuideConfig =
       category: 'Guide',
     },
     {
-      href: '/electrical-quoting-app',
+      href: '/tools/electrical-quoting-app',
       title: 'Electrical Quoting App',
       description: 'Keep the quote and the final job value aligned.',
       icon: 'Calculator',
       category: 'Tool',
     },
     {
-      href: '/electrician-invoice-app',
+      href: '/tools/electrician-invoice-app',
       title: 'Electrician Invoice App',
       description: 'Carry the same job structure through to final invoice.',
       icon: 'FileText',
@@ -1567,7 +1567,7 @@ export const victorianTerraceElectricalRequirementsConfig: GeneratedGuideConfig 
       category: 'Guide',
     },
     {
-      href: '/electrical-quoting-app',
+      href: '/tools/electrical-quoting-app',
       title: 'Electrical Quoting App',
       description: 'Turn the survey into a cleaner quote while still on the job.',
       icon: 'Calculator',
@@ -1692,7 +1692,7 @@ export const victorianTerraceConsumerUnitUpgradeConfig: GeneratedGuideConfig = {
       category: 'Guide',
     },
     {
-      href: '/electrical-quoting-app',
+      href: '/tools/electrical-quoting-app',
       title: 'Electrical Quoting App',
       description: 'Build the quote and keep it tied to the same property.',
       icon: 'Calculator',

@@ -704,7 +704,7 @@ const sections = [
                 <h4 className="font-bold text-white mb-1">Professional Quoting</h4>
                 <p className="text-white text-sm leading-relaxed">
                   Price the complete annex electrical package with Elec-Mate's{' '}
-                  <SEOInternalLink href="/electrical-quoting-app">quoting app</SEOInternalLink>.
+                  <SEOInternalLink href="/tools/electrical-quoting-app">quoting app</SEOInternalLink>.
                   Sub-main, consumer unit, all circuits, heating, testing, and certification — all
                   itemised with your margins. A professional PDF quote wins the job against
                   competitors who send a text message with a single number.
@@ -746,7 +746,7 @@ export default function AnnexElectricalInstallationPage() {
       title="Granny Annex Electrical Installation | Wiring Guide UK"
       description="Complete guide to granny annex electrical installation in the UK. Separate supply vs extension, consumer unit design, kitchen and bathroom circuits…"
       datePublished="2026-03-27"
-      dateModified="2026-05-18"
+      dateModified="2026-06-10"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Installation Guide"

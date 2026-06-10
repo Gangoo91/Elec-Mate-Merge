@@ -647,7 +647,7 @@ export default function CalculationsForApprenticesPage() {
       title="Electrical Calculations for Apprentices | Easy Guide"
       description="Beginner-friendly guide to electrical calculations for UK apprentices. Ohm's law, power triangle, cable sizing, voltage drop, diversity…"
       datePublished="2025-11-01"
-      dateModified="2026-05-18"
+      dateModified="2026-06-10"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Apprentice Guide"

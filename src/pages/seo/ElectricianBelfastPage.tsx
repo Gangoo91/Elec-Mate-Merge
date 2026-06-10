@@ -119,7 +119,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Tool',
   },
   {
-    href: '/electrical-quoting-app',
+    href: '/tools/electrical-quoting-app',
     title: 'Electrical Quoting App',
     description: 'Create professional quotes for Belfast customers with accurate local pricing.',
     icon: PoundSterling,
@@ -588,7 +588,7 @@ export default function ElectricianBelfastPage() {
       title="Electrician in Belfast | Find Qualified Electricians 2026"
       description="Find qualified, registered electricians in Belfast. Realistic 2026 pricing, NIE Networks DNO, Northern Ireland Building Regulations (NOT Part P)…"
       datePublished="2026-03-27"
-      dateModified="2026-05-18"
+      dateModified="2026-06-10"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Find an Electrician"

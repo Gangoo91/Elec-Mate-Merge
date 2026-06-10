@@ -88,6 +88,13 @@ const faqs = [
 
 const relatedPages: RelatedPage[] = [
   {
+    href: '/guides/eicr-cost-oxford',
+    title: 'EICR Cost in Oxford',
+    description: 'Local EICR price bands by property size, hourly rates, and remedial costs for Oxford.',
+    icon: Home,
+    category: 'Guide',
+  },
+  {
     href: '/guides/eicr-for-landlords',
     title: 'EICR for Landlords',
     description:
@@ -557,7 +564,7 @@ const sections = [
                 <p className="text-white text-sm leading-relaxed">
                   When the EICR identifies C1 or C2 observations, quote the remedial work on the day
                   using the{' '}
-                  <SEOInternalLink href="/electrical-quoting-app">quoting app</SEOInternalLink>.
+                  <SEOInternalLink href="/tools/electrical-quoting-app">quoting app</SEOInternalLink>.
                   Oxford landlords face a 28-day deadline — quoting on the day is the most effective
                   way to win the follow-on work.
                 </p>
@@ -585,7 +592,7 @@ export default function EICROxfordPage() {
       title="EICR Oxford | Electrical Safety Certificate Cost 2026"
       description="EICR costs in Oxford for 2026. Landlord legal requirements, Oxford City Council enforcement, Victorian HMO housing stock findings, observation codes…"
       datePublished="2026-03-27"
-      dateModified="2026-05-18"
+      dateModified="2026-06-10"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="EICR Guide"

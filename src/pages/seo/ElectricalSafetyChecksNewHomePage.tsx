@@ -592,7 +592,7 @@ export default function ElectricalSafetyChecksNewHomePage() {
       title="Electrical Safety Checks for a New Home | EICR Buyer's"
       description="What to check in the electrical installation when buying a home in the UK. How to commission an EICR, wiring age indicators (rubber pre-1960s…"
       datePublished="2026-03-27"
-      dateModified="2026-05-18"
+      dateModified="2026-06-10"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Home Buyer's Guide"

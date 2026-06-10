@@ -347,7 +347,7 @@ export default function MinimumChargeCalculatorPage() {
           category: 'Business Calculators',
         },
         {
-          href: '/electrical-quoting-app',
+          href: '/tools/electrical-quoting-app',
           title: 'Electrical Quoting App',
           description: 'Turn your pricing rules into professional quotes on site without losing margin.',
           icon: Receipt,

@@ -87,7 +87,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Guide',
   },
   {
-    href: '/part-p-building-regulations',
+    href: '/guides/part-p-building-regulations',
     title: 'Part P Building Regulations',
     description:
       'What Part P covers, what work is notifiable, and how competent person schemes work.',
@@ -103,7 +103,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Guide',
   },
   {
-    href: '/eighteenth-edition-course',
+    href: '/training/18th-edition-course',
     title: '18th Edition Course',
     description:
       'Study for the C&G 2382 qualification covering BS 7671:2018+A4:2026 on the Elec-Mate platform.',
@@ -111,7 +111,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Training',
   },
   {
-    href: '/earthing-arrangements',
+    href: '/guides/earthing-arrangements',
     title: 'Earthing Arrangements',
     description:
       'TN-S, TN-C-S, and TT earthing systems explained with diagrams and fault path analysis.',
@@ -305,7 +305,7 @@ const sections = [
         </div>
         <p>
           The introduction of{' '}
-          <SEOInternalLink href="/part-p-building-regulations">Part P</SEOInternalLink> in 2005 was
+          <SEOInternalLink href="/guides/part-p-building-regulations">Part P</SEOInternalLink> in 2005 was
           the most significant regulatory change in the modern era. It transformed domestic
           electrical work from an unregulated activity to one requiring notification and
           certification. This single change drove the growth of competent person schemes and
@@ -672,7 +672,7 @@ export default function ElectricalRegulationsTimelinePage() {
       title="UK Wiring Regulations by Edition: 14th to 18th + A4:2026"
       description="UK Wiring Regulations editions explained: 14th (1966), 15th (1981), 16th (1991), 17th (2008), 18th (2018) + A1/A2/A3/A4:2026. Year + key changes per edition."
       datePublished="2026-01-25"
-      dateModified="2026-05-23"
+      dateModified="2026-06-10"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Regulations"

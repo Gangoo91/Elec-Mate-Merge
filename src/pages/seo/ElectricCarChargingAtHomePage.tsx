@@ -111,7 +111,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Calculator',
   },
   {
-    href: '/guides/consumer-unit-regulations',
+    href: '/consumer-unit-regulations',
     title: 'Consumer Unit Regulations',
     description:
       'MCB, RCBO, and SPD requirements when adding a new EV charger circuit to the consumer unit.',
@@ -119,7 +119,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Guide',
   },
   {
-    href: '/earthing-arrangements',
+    href: '/guides/earthing-arrangements',
     title: 'Earthing Arrangements',
     description:
       'TN-C-S (PME) considerations for EV charger installations including earth rod requirements.',
@@ -606,7 +606,7 @@ const sections = [
                 <h4 className="font-bold text-white mb-1">Quote and Invoice from Site</h4>
                 <p className="text-white text-sm leading-relaxed">
                   Price the EV charger installation using Elec-Mate's{' '}
-                  <SEOInternalLink href="/electrical-quoting-app">quoting app</SEOInternalLink>.
+                  <SEOInternalLink href="/tools/electrical-quoting-app">quoting app</SEOInternalLink>.
                   Charger unit, cable, RCBO, earth rod, labour, and margin. Send a professional PDF
                   quote from the survey visit. Do the job. Send the invoice. All from your phone.
                 </p>
@@ -634,7 +634,7 @@ export default function ElectricCarChargingAtHomePage() {
       title="Electric Car Charging at Home | Installation Guide UK"
       description="Complete guide to electric car charging at home in the UK. 3-pin vs wallbox, 7kW vs 22kW charging speeds, installation costs, smart charging regulations…"
       datePublished="2025-04-20"
-      dateModified="2026-05-18"
+      dateModified="2026-06-10"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Installation Guide"

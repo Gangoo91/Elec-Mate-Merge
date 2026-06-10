@@ -101,7 +101,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Calculator',
   },
   {
-    href: '/guides/consumer-unit-regulations',
+    href: '/consumer-unit-regulations',
     title: 'Consumer Unit Regulations',
     description:
       'MCB and RCD requirements for new circuits including dedicated radial feeds for heating systems.',
@@ -133,7 +133,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Calculator',
   },
   {
-    href: '/eighteenth-edition-course',
+    href: '/training/18th-edition-course',
     title: '18th Edition Course',
     description:
       'Study BS 7671:2018+A4:2026 with structured training modules on the Elec-Mate platform.',
@@ -232,7 +232,7 @@ const sections = [
         <p>
           Every electric underfloor heating installation should be supplied by a dedicated radial
           circuit from the{' '}
-          <SEOInternalLink href="/guides/consumer-unit-regulations">consumer unit</SEOInternalLink>.
+          <SEOInternalLink href="/consumer-unit-regulations">consumer unit</SEOInternalLink>.
           This is standard good practice for continuous heating loads and is essential for correct
           circuit protection and fault isolation.
         </p>
@@ -519,7 +519,7 @@ const sections = [
               <span>
                 <strong>Test 3 — After covering:</strong> Once the screed or adhesive has been
                 applied, test again as part of the final circuit{' '}
-                <SEOInternalLink href="/how-to-test-insulation-resistance">
+                <SEOInternalLink href="/guides/insulation-resistance-testing-bs7671">
                   insulation resistance test
                 </SEOInternalLink>
                 . This is the last chance to identify a problem before the floor finish goes down.
@@ -609,7 +609,7 @@ export default function UnderfloorHeatingElectricalPage() {
       title="Underfloor Heating Electrical | Wiring & Circuit Guide"
       description="Complete guide to electric underfloor heating wiring. Cable vs mat systems, dedicated circuit requirements, thermostat wiring, RCD protection…"
       datePublished="2025-06-15"
-      dateModified="2026-05-18"
+      dateModified="2026-06-10"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Installation Guide"

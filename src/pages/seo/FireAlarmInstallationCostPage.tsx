@@ -106,7 +106,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Guide',
   },
   {
-    href: '/tools/fire-alarm-certificate',
+    href: '/fire-alarm-certificate',
     title: 'Fire Alarm Certificate App',
     description: 'Complete fire alarm installation and commissioning certificates on your phone.',
     icon: FileCheck2,
@@ -121,7 +121,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Guide',
   },
   {
-    href: '/electrical-quoting-app',
+    href: '/tools/electrical-quoting-app',
     title: 'Electrical Quoting App',
     description:
       'Quote fire alarm installations with itemised detectors, cable, panels, and labour.',
@@ -544,7 +544,7 @@ const sections = [
         </div>
         <p>
           Elec-Mate supports{' '}
-          <SEOInternalLink href="/tools/fire-alarm-certificate">
+          <SEOInternalLink href="/fire-alarm-certificate">
             fire alarm certification
           </SEOInternalLink>{' '}
           on mobile — complete the installation details, system design, test schedule, declarations,
@@ -572,7 +572,7 @@ const sections = [
                 <h4 className="font-bold text-white mb-1">AI Cost Engineer</h4>
                 <p className="text-white text-sm leading-relaxed">
                   Use Elec-Mate's{' '}
-                  <SEOInternalLink href="/electrical-quoting-app">
+                  <SEOInternalLink href="/tools/electrical-quoting-app">
                     quoting app
                   </SEOInternalLink>{' '}
                   to build itemised quotes for fire alarm installations. Detectors, call points,
@@ -589,7 +589,7 @@ const sections = [
                 <h4 className="font-bold text-white mb-1">Fire Alarm Certificate</h4>
                 <p className="text-white text-sm leading-relaxed">
                   Complete{' '}
-                  <SEOInternalLink href="/tools/fire-alarm-certificate">
+                  <SEOInternalLink href="/fire-alarm-certificate">
                     fire alarm certificates
                   </SEOInternalLink>{' '}
                   on your phone. Installation details, system design, detection layout, test

@@ -216,7 +216,7 @@ export const nearMissReportingElectriciansConfig: GeneratedGuideConfig = {
           tone: 'pricing',
           title: 'Build the reporting system into your paperwork',
           text:
-            'Near-miss reporting works best when it sits inside the same toolkit as your risk assessment and method statement. Elec-Mate\'s [RAMS Generator](/tools/rams-generator) lets you spin up site-specific RAMS, embed your near-miss reporting procedure as a control, and update the document the next time the procedure changes. 7-day free trial, no card required.',
+            'Near-miss reporting works best when it sits inside the same toolkit as your risk assessment and method statement. Elec-Mate\'s [RAMS Generator](/tools/rams-generator) lets you spin up site-specific RAMS, embed your near-miss reporting procedure as a control, and update the document the next time the procedure changes. 7-day free trial, no charge until day 8.',
         },
       ],
     },
@@ -357,5 +357,5 @@ export const nearMissReportingElectriciansConfig: GeneratedGuideConfig = {
   ],
   ctaHeading: 'Turn near-miss reports into corrective actions',
   ctaSubheading:
-    'Elec-Mate\'s RAMS Generator builds site-specific RAMS that embed near-miss reporting as a live control — capture the event on your phone, update the document, and brief the team without ever opening a paper form. 7-day free trial, no card required, cancel anytime.',
+    'Elec-Mate\'s RAMS Generator builds site-specific RAMS that embed near-miss reporting as a live control — capture the event on your phone, update the document, and brief the team without ever opening a paper form. 7-day free trial, no charge until day 8, cancel anytime.',
 };

@@ -21,7 +21,7 @@ export default function CableTrayCalculatorPage() {
       title="Cable Tray Sizing Calculator | Fill Capacity Tool"
       description="Calculate cable tray fill percentage and select the correct tray size for any cable combination. BS EN 61537 aligned. UK electricians."
       datePublished="2026-02-01"
-      dateModified="2026-05-18"
+      dateModified="2026-06-10"
       breadcrumbs={[
         { label: 'Tools', href: '/tools' },
         { label: 'Cable Tray Sizing Calculator', href: '/tools/cable-tray-sizing-calculator' },
@@ -461,7 +461,7 @@ export default function CableTrayCalculatorPage() {
           category: 'Calculators',
         },
         {
-          href: '/electrical-testing-calculators',
+          href: '/tools/electrical-testing-calculators',
           title: 'All Electrical Calculators',
           description: '50+ BS 7671 calculators and containment tools for UK electricians.',
           icon: Calculator,

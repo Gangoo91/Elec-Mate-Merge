@@ -507,7 +507,7 @@ const sections = [
             <li className="flex items-start gap-3">
               <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <SEOAppBridge href="/minor-works-certificate" label="Minor Works Certificate" /> —
+                <SEOAppBridge href="/tools/minor-works-certificate" label="Minor Works Certificate" /> —
                 issue a minor works certificate when connecting UFH to an existing suitable circuit
                 without consumer unit modifications.
               </span>
@@ -529,7 +529,7 @@ export default function ElectricUnderfloorHeatingGuidePage() {
       title="Electric Underfloor Heating Installation Guide — Mat, Loose"
       description="Complete UK guide to electric underfloor heating: mat vs loose wire systems, thermostat wiring, BS 7671 Regulation 753, circuit sizing, RCBO protection…"
       datePublished="2024-06-01"
-      dateModified="2026-05-18"
+      dateModified="2026-06-10"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Underfloor Heating"

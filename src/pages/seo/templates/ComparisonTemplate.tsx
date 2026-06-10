@@ -124,7 +124,7 @@ export default function ComparisonTemplate({
     ],
     datePublished,
     dateModified,
-    author: 'Elec-Mate Technical Team',
+    author: 'Andrew Moore',
   });
 
   return (
@@ -182,14 +182,16 @@ export default function ComparisonTemplate({
               <h2 className="text-2xl sm:text-3xl font-bold text-white mb-6">{section.heading}</h2>
               <div className="space-y-4 text-white leading-relaxed">{section.content}</div>
             </section>
-            {(index + 1) % 2 === 0 && index < (sections?.length ?? 0) - 1 && (
-              <SEOAppBridge
-                title="Try Elec-Mate free for 7 days"
-                description="16 certificate types, 70+ calculators, RAMS, quoting, invoicing, AI agents, and 46+ training courses — from £5.99/mo."
-                ctaText="Start free trial"
-                icon={Zap}
-              />
-            )}
+            {index ===
+              Math.min(Math.floor((sections?.length ?? 0) / 2), (sections?.length ?? 0) - 2) &&
+              (sections?.length ?? 0) >= 3 && (
+                <SEOAppBridge
+                  title="Try Elec-Mate free for 7 days"
+                  description="16 certificate types, 70+ calculators, RAMS, quoting, invoicing, AI agents, and 46+ training courses — from £5.99/mo."
+                  ctaText="Start free trial"
+                  icon={Zap}
+                />
+              )}
           </div>
         ))}
 
@@ -207,7 +209,7 @@ export default function ComparisonTemplate({
           >
             Switch to Elec-Mate <ArrowRight className="w-4 h-4" />
           </a>
-          <span className="text-sm text-white">7-day free trial. No card required.</span>
+          <span className="text-sm text-white">7-day free trial. No charge until day 8.</span>
         </div>
       </section>
 

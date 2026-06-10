@@ -4,15 +4,7 @@ import { PublicPageLayout } from '@/components/seo/PublicPageLayout';
 import { SEOCTASection } from '@/components/seo/SEOCTASection';
 import { SEOFeatureGrid } from '@/components/seo/SEOFeatureGrid';
 import { SEOInternalLink } from '@/components/seo/SEOInternalLink';
-import {
-  BookOpen,
-  ClipboardCheck,
-  FileSearch,
-  Home,
-  Shield,
-  SunMedium,
-  Zap,
-} from 'lucide-react';
+import { BookOpen, ClipboardCheck, FileSearch, Home, Shield, SunMedium, Zap } from 'lucide-react';
 
 const PAGE_TITLE = 'UK Electrical Guides | BS 7671, Testing, Compliance';
 const PAGE_DESCRIPTION =
@@ -59,30 +51,147 @@ const features = [
 
 const guideCollections = [
   {
-    heading: 'Regs and compliance',
+    heading: 'BS 7671 and compliance',
     links: [
-      { href: '/guides/bs7671-observation-codes', label: 'BS 7671 Observation Codes' },
+      { href: '/guides/bs-7671-18th-edition-guide', label: 'BS 7671 18th Edition Guide' },
+      { href: '/bs7671-observation-codes', label: 'BS 7671 Observation Codes' },
       { href: '/guides/part-p-building-regulations', label: 'Part P Building Regulations' },
-      { href: '/guides/consumer-unit-regulations', label: 'Consumer Unit Regulations' },
+      { href: '/consumer-unit-regulations', label: 'Consumer Unit Regulations' },
       { href: '/guides/earthing-arrangements', label: 'Earthing Arrangements' },
+      { href: '/guides/special-locations-part-7-bs-7671', label: 'Special Locations (Part 7)' },
+      { href: '/guides/appendix-4-tables-bs-7671', label: 'Appendix 4 Tables' },
     ],
   },
   {
-    heading: 'Inspection, testing, and certificates',
+    heading: 'Amendment 4:2026',
+    links: [
+      { href: '/guides/bs-7671-amendment-4-2026', label: 'Amendment 4 (2026) Overview' },
+      { href: '/guides/bs-7671-a4-2026-afdd-changes', label: 'A4:2026 AFDD Changes' },
+      {
+        href: '/guides/afdd-mandatory-hmo-care-home-a4-2026',
+        label: 'AFDDs in HMOs and Care Homes',
+      },
+      { href: '/guides/spd-chapter-443-a4-2026', label: 'SPDs and Chapter 443' },
+      { href: '/guides/section-722-ev-charging-complete-guide', label: 'Section 722 EV Charging' },
+    ],
+  },
+  {
+    heading: 'Inspection and testing',
     links: [
       { href: '/guides/testing-sequence-guide', label: 'Testing Sequence Guide' },
       { href: '/guides/safe-isolation-procedure', label: 'Safe Isolation Procedure' },
       { href: '/guides/how-to-fill-in-eicr', label: 'How to Fill in an EICR' },
-      { href: '/tools/eicr-certificate', label: 'EICR Certificate App' },
+      { href: '/loop-impedance-testing-guide', label: 'Ze vs Zs: Loop Impedance Testing' },
+      { href: '/guides/ze-values-uk', label: 'Maximum Ze Values' },
+      { href: '/polarity-test-guide', label: 'Polarity Testing' },
+      { href: '/continuity-testing-guide', label: 'Continuity Testing' },
+      {
+        href: '/guides/insulation-resistance-testing-bs7671',
+        label: 'Insulation Resistance Testing',
+      },
+      { href: '/guides/gs-38-proving-dead', label: 'GS38 and Proving Dead' },
     ],
   },
   {
-    heading: 'Installation topics',
+    heading: 'EICR and certification',
+    links: [
+      { href: '/guides/eicr-cost-uk', label: 'EICR Cost UK' },
+      { href: '/guides/eicr-code-c1-danger-present', label: 'EICR Code C1' },
+      { href: '/guides/eicr-code-c2-potentially-dangerous', label: 'EICR Code C2' },
+      { href: '/guides/eicr-code-c3-improvement-recommended', label: 'EICR Code C3' },
+      { href: '/guides/eicr-code-fi-further-investigation', label: 'EICR Code FI' },
+      { href: '/guides/eicr-for-landlords', label: 'EICR for Landlords' },
+      { href: '/guides/commercial-eicr-guide', label: 'Commercial EICR Guide' },
+      { href: '/tools/eicr-certificate', label: 'EICR Certificate App' },
+      { href: '/tools/electrical-certificate-software', label: 'Electrical Certificate Software' },
+    ],
+  },
+  {
+    heading: 'Calculators and reference',
+    links: [
+      { href: '/tools/cable-sizing-calculator', label: 'Cable Sizing Calculator' },
+      { href: '/tools/voltage-drop-calculator', label: 'Voltage Drop Calculator' },
+      { href: '/tools/adiabatic-equation-calculator', label: 'Adiabatic Equation Calculator' },
+      { href: '/tools/disconnection-time-calculator', label: 'Disconnection Time Calculator' },
+      { href: '/tools/earth-loop-impedance-calculator', label: 'Earth Loop Impedance Calculator' },
+      { href: '/tools/busbar-sizing-calculator', label: 'Busbar Sizing Calculator' },
+      { href: '/tools/conduit-fill-calculator', label: 'Conduit Fill Calculator' },
+      { href: '/tools/power-factor-calculator', label: 'Power Factor Calculator' },
+      { href: '/guides/max-demand-calculation-guide', label: 'Maximum Demand and Diversity' },
+      { href: '/guides/maximum-zs-values-bs-7671', label: 'Maximum Zs Values Table' },
+    ],
+  },
+  {
+    heading: 'Apprentices and exams',
+    links: [
+      { href: '/mock-exams', label: 'Free Mock Exams' },
+      { href: '/guides/am2-exam-tips', label: 'AM2 Exam Tips' },
+      { href: '/guides/18th-edition-exam-tips', label: '18th Edition Exam Tips' },
+      { href: '/guides/apprentice-electrician-salary', label: 'Apprentice Electrician Pay' },
+      { href: '/guides/electrician-salary-uk', label: 'Electrician Salary UK' },
+      { href: '/guides/jib-pay-scales-2026', label: 'JIB Pay Scales 2026' },
+      { href: '/guides/nvq-level-3-electrical', label: 'NVQ Level 3 Electrical' },
+      { href: '/guides/electrical-apprenticeship-guide', label: 'Electrical Apprenticeship Guide' },
+      { href: '/guides/electrical-apprentice-year-1-revision-plan', label: 'Year 1 Revision Plan' },
+    ],
+  },
+  {
+    heading: 'Qualification guides',
+    links: [
+      { href: '/guides/2365-02-complete-guide', label: 'C&G 2365 Level 2 Guide' },
+      { href: '/guides/2365-03-complete-guide', label: 'C&G 2365 Level 3 Guide' },
+      { href: '/guides/2357-complete-guide', label: 'C&G 2357 NVQ Guide' },
+      { href: '/guides/5357-complete-guide', label: 'C&G 5357 Apprenticeship Guide' },
+      { href: '/guides/2346-03-complete-guide', label: 'C&G 2346 Experienced Worker Guide' },
+      { href: '/guides/5393-03-complete-guide', label: 'C&G 5393 Dwellings Guide' },
+      { href: '/guides/8202-complete-guide', label: 'C&G 8202 T Level Guide' },
+      {
+        href: '/guides/eal-level-3-electrotechnical-complete-guide',
+        label: 'EAL Level 3 Electrotechnical Guide',
+      },
+      { href: '/guides/cg-2365-vs-5357-vs-2366', label: '2365 vs 5357 vs 2366 Compared' },
+      { href: '/guides/city-and-guilds-vs-eal', label: 'City & Guilds vs EAL' },
+    ],
+  },
+  {
+    heading: 'Pricing and business',
+    links: [
+      {
+        href: '/guides/pricing-electrical-work-per-point',
+        label: 'Pricing Electrical Work Per Point',
+      },
+      { href: '/guides/how-to-price-eicr-as-an-electrician', label: 'How to Price an EICR' },
+      { href: '/guides/electrician-day-rates-uk', label: 'Electrician Day Rates UK' },
+      {
+        href: '/guides/starting-an-electrical-business',
+        label: 'Starting an Electrical Business',
+      },
+      { href: '/guides/electrician-insurance-uk', label: 'Electrician Insurance UK' },
+      { href: '/compare/best-invoice-app-electricians', label: 'Best Invoice Apps Compared' },
+    ],
+  },
+  {
+    heading: 'EV, solar, and smart homes',
     links: [
       { href: '/guides/ev-charger-installation', label: 'EV Charger Installation' },
+      { href: '/guides/iet-code-of-practice-ev', label: 'IET Code of Practice (EV)' },
       { href: '/guides/solar-panel-installation', label: 'Solar Panel Installation' },
-      { href: '/guides/how-to-size-cables-bs-7671', label: 'How to Size Cables' },
-      { href: '/tools/cable-sizing-calculator', label: 'Cable Sizing Calculator' },
+      { href: '/guides/battery-storage-installation', label: 'Battery Storage Installation' },
+      { href: '/solar-pv-system-design', label: 'Solar PV System Design' },
+      { href: '/guides/smart-home-wiring-cost', label: 'Smart Home Wiring Cost' },
+    ],
+  },
+  {
+    heading: 'Wiring and circuits',
+    links: [
+      { href: '/guides/electrical-symbols-chart', label: 'Electrical Symbols Chart' },
+      { href: '/guides/ring-vs-radial-circuits', label: 'Ring vs Radial Circuits' },
+      { href: '/guides/radial-circuit-explained', label: 'Radial Circuits Explained' },
+      { href: '/bonding-conductors-guide', label: 'Bonding Conductors' },
+      { href: '/guides/cable-sizing-guide-bs-7671', label: 'Cable Sizing to BS 7671' },
+      { href: '/guides/consumer-unit-upgrade', label: 'Consumer Unit Upgrades' },
+      { href: '/guides/electric-shower-installation', label: 'Electric Shower Installation' },
+      { href: '/guides/cooker-circuit-guide', label: 'Cooker Circuits' },
     ],
   },
 ];
@@ -122,7 +231,7 @@ export default function GuidesHubPage() {
       { name: 'Guides', url: '/guides' },
     ],
     dateModified: '2026-05-18',
-    author: 'Elec-Mate Technical Team',
+    author: 'Andrew Moore',
   });
 
   return (
@@ -160,13 +269,21 @@ export default function GuidesHubPage() {
 
       <section className="py-12 px-5 border-t border-white/5">
         <div className="max-w-6xl mx-auto">
-          <h2 className="text-2xl sm:text-3xl font-bold text-white mb-4">Guidance for real electrical work</h2>
+          <h2 className="text-2xl sm:text-3xl font-bold text-white mb-4">
+            Guidance for real electrical work
+          </h2>
           <p className="text-white leading-relaxed mb-8 max-w-4xl">
             If you need a quick answer on{' '}
             <SEOInternalLink href="/guides/part-p-building-regulations">Part P</SEOInternalLink>,{' '}
-            <SEOInternalLink href="/guides/earthing-arrangements">earthing arrangements</SEOInternalLink>,{' '}
-            <SEOInternalLink href="/guides/testing-sequence-guide">testing sequence</SEOInternalLink>,
-            or <SEOInternalLink href="/guides/how-to-fill-in-eicr">EICR workflows</SEOInternalLink>,
+            <SEOInternalLink href="/guides/earthing-arrangements">
+              earthing arrangements
+            </SEOInternalLink>
+            ,{' '}
+            <SEOInternalLink href="/guides/testing-sequence-guide">
+              testing sequence
+            </SEOInternalLink>
+            , or{' '}
+            <SEOInternalLink href="/guides/how-to-fill-in-eicr">EICR workflows</SEOInternalLink>,
             this page gives you a clear route into the right guide without digging through unrelated
             pages.
           </p>
@@ -205,17 +322,21 @@ export default function GuidesHubPage() {
         <div className="max-w-4xl mx-auto space-y-4 text-white leading-relaxed">
           <h2 className="text-2xl sm:text-3xl font-bold text-white">From guidance to action</h2>
           <p>
-            Good guidance should help you do the next part of the job as well. Someone reading
-            about{' '}
-            <SEOInternalLink href="/guides/testing-sequence-guide">testing sequence</SEOInternalLink>{' '}
+            Good guidance should help you do the next part of the job as well. Someone reading about{' '}
+            <SEOInternalLink href="/guides/testing-sequence-guide">
+              testing sequence
+            </SEOInternalLink>{' '}
             should be able to move into the{' '}
-            <SEOInternalLink href="/tools/electrical-testing-calculators">calculator suite</SEOInternalLink>.
-            Someone reading about EICR completion should be able to move into the{' '}
-            <SEOInternalLink href="/tools/digital-certificates-app">certificate workflow</SEOInternalLink>.
+            <SEOInternalLink href="/tools/electrical-testing-calculators">
+              calculator suite
+            </SEOInternalLink>
+            . Someone reading about EICR completion should be able to move into the{' '}
+            <SEOInternalLink href="/tools/digital-certificates-app">
+              certificate workflow
+            </SEOInternalLink>
+            .
           </p>
-          <p>
-            That way the guides stay genuinely useful instead of ending at the article itself.
-          </p>
+          <p>That way the guides stay genuinely useful instead of ending at the article itself.</p>
         </div>
       </section>
 
@@ -224,7 +345,10 @@ export default function GuidesHubPage() {
           <h2 className="text-2xl sm:text-3xl font-bold text-white mb-6">Guides hub FAQs</h2>
           <div className="space-y-4">
             {faqs.map((faq) => (
-              <div key={faq.question} className="rounded-2xl border border-white/8 bg-white/[0.03] p-5">
+              <div
+                key={faq.question}
+                className="rounded-2xl border border-white/8 bg-white/[0.03] p-5"
+              >
                 <h3 className="text-lg font-semibold text-white mb-2">{faq.question}</h3>
                 <p className="text-white leading-relaxed">{faq.answer}</p>
               </div>

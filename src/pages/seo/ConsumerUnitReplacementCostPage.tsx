@@ -1,3 +1,4 @@
+import { Link } from 'react-router-dom';
 import GuideTemplate from '@/pages/seo/templates/GuideTemplate';
 import { SEOInternalLink } from '@/components/seo/SEOInternalLink';
 import { SEOAppBridge } from '@/components/seo/SEOAppBridge';
@@ -32,6 +33,7 @@ const tocItems = [
   { id: 'labour-costs', label: 'Labour and Installation Costs' },
   { id: 'total-costs', label: 'Total Cost by Type' },
   { id: 'factors', label: 'Factors Affecting Price' },
+  { id: 'cost-by-region', label: 'Cost by City' },
   { id: 'when-needed', label: 'When Is Replacement Needed?' },
   { id: 'part-p', label: 'Part P and Building Regulations' },
   { id: 'choosing-electrician', label: 'Choosing an Electrician' },
@@ -94,7 +96,7 @@ const faqs = [
 
 const relatedPages: RelatedPage[] = [
   {
-    href: '/guides/consumer-unit-regulations',
+    href: '/consumer-unit-regulations',
     title: 'Consumer Unit Regulations UK',
     description:
       'Detailed guide to the regulations governing consumer units including Amendment 4 changes.',
@@ -125,7 +127,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Certificate',
   },
   {
-    href: '/electrical-quoting-app',
+    href: '/tools/electrical-quoting-app',
     title: 'Electrical Quoting App',
     description:
       'Quote consumer unit replacements with itemised materials, labour, and professional PDF output.',
@@ -536,6 +538,62 @@ const sections = [
     ),
   },
   {
+    id: 'cost-by-region',
+    heading: 'Consumer Unit Replacement Cost by City',
+    content: (
+      <>
+        <p>
+          Labour rates drive most of the regional variation in consumer unit replacement pricing —
+          London and the South East typically run 10 to 25% above the national average, with
+          Scotland, Wales, and the North usually at or below it. We track local price bands and
+          labour rates for 30 UK cities:
+        </p>
+        <div className="grid grid-cols-2 sm:grid-cols-3 gap-2 my-4">
+          {[
+            { slug: 'aberdeen', name: 'Aberdeen' },
+            { slug: 'belfast', name: 'Belfast' },
+            { slug: 'birmingham', name: 'Birmingham' },
+            { slug: 'brighton', name: 'Brighton' },
+            { slug: 'bristol', name: 'Bristol' },
+            { slug: 'cambridge', name: 'Cambridge' },
+            { slug: 'cardiff', name: 'Cardiff' },
+            { slug: 'dundee', name: 'Dundee' },
+            { slug: 'edinburgh', name: 'Edinburgh' },
+            { slug: 'exeter', name: 'Exeter' },
+            { slug: 'glasgow', name: 'Glasgow' },
+            { slug: 'hull', name: 'Hull' },
+            { slug: 'leeds', name: 'Leeds' },
+            { slug: 'liverpool', name: 'Liverpool' },
+            { slug: 'luton', name: 'Luton' },
+            { slug: 'manchester', name: 'Manchester' },
+            { slug: 'milton-keynes', name: 'Milton Keynes' },
+            { slug: 'newcastle', name: 'Newcastle' },
+            { slug: 'norwich', name: 'Norwich' },
+            { slug: 'nottingham', name: 'Nottingham' },
+            { slug: 'oxford', name: 'Oxford' },
+            { slug: 'plymouth', name: 'Plymouth' },
+            { slug: 'portsmouth', name: 'Portsmouth' },
+            { slug: 'reading', name: 'Reading' },
+            { slug: 'sheffield', name: 'Sheffield' },
+            { slug: 'southampton', name: 'Southampton' },
+            { slug: 'stoke', name: 'Stoke-on-Trent' },
+            { slug: 'swansea', name: 'Swansea' },
+            { slug: 'swindon', name: 'Swindon' },
+            { slug: 'york', name: 'York' },
+          ].map((city) => (
+            <Link
+              key={city.slug}
+              to={`/guides/consumer-unit-replacement-cost-${city.slug}`}
+              className="rounded-xl border border-white/10 bg-white/[0.04] px-3 py-2.5 text-sm text-white hover:border-yellow-500/30 hover:text-yellow-300 transition-colors touch-manipulation"
+            >
+              CU replacement in {city.name}
+            </Link>
+          ))}
+        </div>
+      </>
+    ),
+  },
+  {
     id: 'when-needed',
     heading: 'When Is a Consumer Unit Replacement Needed?',
     content: (
@@ -720,7 +778,7 @@ const sections = [
                 <h4 className="font-bold text-white mb-1">AI Cost Engineer</h4>
                 <p className="text-white text-sm leading-relaxed">
                   Use Elec-Mate's{' '}
-                  <SEOInternalLink href="/electrical-quoting-app">quoting app</SEOInternalLink> to
+                  <SEOInternalLink href="/tools/electrical-quoting-app">quoting app</SEOInternalLink> to
                   build itemised quotes with real trade pricing data. The AI cost engineer checks
                   your material costs against current wholesaler prices and flags anything that
                   looks too high or too low.
@@ -778,7 +836,7 @@ export default function ConsumerUnitReplacementCostPage() {
       title="Consumer Unit Replacement Cost 2026 | UK Price Guide"
       description="How much does a consumer unit replacement cost in 2026? Complete UK price guide covering material costs, labour, Part P notification, EIC certification…"
       datePublished="2026-03-27"
-      dateModified="2026-05-18"
+      dateModified="2026-06-10"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Cost Guide"

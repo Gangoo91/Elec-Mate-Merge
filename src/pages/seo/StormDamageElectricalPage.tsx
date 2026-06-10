@@ -96,7 +96,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Guide',
   },
   {
-    href: '/earthing-arrangements',
+    href: '/guides/earthing-arrangements',
     title: 'Earthing Arrangements',
     description: 'TN-S, TN-C-S, and TT earthing systems explained.',
     icon: Cable,
@@ -110,7 +110,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Certificate',
   },
   {
-    href: '/guides/consumer-unit-regulations',
+    href: '/consumer-unit-regulations',
     title: 'Consumer Unit Regulations',
     description: 'Current regulations for consumer unit installation and replacement.',
     icon: ShieldCheck,
@@ -477,7 +477,7 @@ const sections = [
                 <h4 className="font-bold text-white mb-1">Emergency Quoting</h4>
                 <p className="text-white text-sm leading-relaxed">
                   Use Elec-Mate's{' '}
-                  <SEOInternalLink href="/electrical-quoting-app">
+                  <SEOInternalLink href="/tools/electrical-quoting-app">
                     quoting app
                   </SEOInternalLink>{' '}
                   to provide an itemised quote for repair work on site. Consumer unit replacement,

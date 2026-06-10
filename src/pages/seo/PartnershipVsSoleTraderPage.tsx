@@ -128,7 +128,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Guide',
   },
   {
-    href: '/electrical-quoting-app',
+    href: '/tools/electrical-quoting-app',
     title: 'Electrical Quoting App',
     description: 'Professional quotes with your business details — sole trader or Ltd.',
     icon: PoundSterling,
@@ -641,7 +641,7 @@ export default function PartnershipVsSoleTraderPage() {
       title="Partnership vs Sole Trader vs Ltd for Electricians UK 2026"
       description="Compare sole trader, partnership, LLP, and limited company for electricians. Tax comparison with 2026/27 figures, liability, admin burden…"
       datePublished="2026-03-27"
-      dateModified="2026-05-18"
+      dateModified="2026-06-10"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Tax Guide"

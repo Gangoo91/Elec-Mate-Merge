@@ -82,7 +82,7 @@ const trainingCollections = [
       { href: '/training/apprentice-portfolio', label: 'Apprentice Portfolio' },
       { href: '/study-centre', label: 'Study Centre' },
       { href: '/tools/ai-electrician', label: 'AI Learning Tools' },
-      { href: '/best-electrician-app', label: 'Best Electrician App Overview' },
+      { href: '/tools/best-electrician-app-uk', label: 'Best Electrician App Overview' },
     ],
   },
   {
@@ -214,8 +214,8 @@ export default function TrainingHubPage() {
       { name: 'Home', url: '/' },
       { name: 'Training', url: '/training' },
     ],
-    dateModified: '2026-05-18',
-    author: 'Elec-Mate Technical Team',
+    dateModified: '2026-06-10',
+    author: 'Andrew Moore',
   });
 
   return (

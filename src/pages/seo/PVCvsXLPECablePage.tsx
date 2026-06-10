@@ -417,7 +417,7 @@ export default function PVCvsXLPECablePage() {
       title="PVC vs XLPE vs LSOH Cable | Temperature Ratings and CPR"
       description="Complete guide to PVC, XLPE, and LSOH cable insulation types for UK electricians. Temperature ratings (70°C vs 90°C), BS EN 50575 CPR fire classes…"
       datePublished="2026-03-27"
-      dateModified="2026-05-18"
+      dateModified="2026-06-10"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Cable Insulation Guide"

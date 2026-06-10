@@ -116,7 +116,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Guide',
   },
   {
-    href: '/electrical-quoting-app',
+    href: '/tools/electrical-quoting-app',
     title: 'Quoting App',
     description:
       'Quote Highland jobs with travel time allowances and accurate Inverness labour rates.',
@@ -496,7 +496,7 @@ const sections = [
                 <h4 className="font-bold text-white mb-1">Professional Quoting</h4>
                 <p className="text-white text-sm leading-relaxed">
                   Use the{' '}
-                  <SEOInternalLink href="/electrical-quoting-app">quoting app</SEOInternalLink> to
+                  <SEOInternalLink href="/tools/electrical-quoting-app">quoting app</SEOInternalLink> to
                   send professional quotes with travel allowances built in. Send PDF quotes to
                   Highland landlords and homeowners from the site survey.
                 </p>
@@ -526,7 +526,7 @@ export default function ElectricianInvernessPage() {
       title="Electrician in Inverness | Local Electricians 2026"
       description="Find qualified electricians in Inverness. Scottish Building Standards (not Part P), SSEN DNO, TT earthing, Highland property rewires, EICRs…"
       datePublished="2026-03-27"
-      dateModified="2026-05-18"
+      dateModified="2026-06-10"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Inverness"

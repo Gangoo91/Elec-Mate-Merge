@@ -111,7 +111,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Certificate',
   },
   {
-    href: '/electrical-quoting-app',
+    href: '/tools/electrical-quoting-app',
     title: 'Electrical Quoting App',
     description: 'Quote flat rewires with itemised materials, labour, and professional PDF output.',
     icon: Calculator,
@@ -461,7 +461,7 @@ const sections = [
                 <h4 className="font-bold text-white mb-1">Use Elec-Mate for Quoting and Certs</h4>
                 <p className="text-white text-sm leading-relaxed">
                   Build itemised rewire quotes with the{' '}
-                  <SEOInternalLink href="/electrical-quoting-app">
+                  <SEOInternalLink href="/tools/electrical-quoting-app">
                     quoting app
                   </SEOInternalLink>
                   . Complete the{' '}

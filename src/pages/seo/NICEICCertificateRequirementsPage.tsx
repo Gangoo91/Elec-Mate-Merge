@@ -176,7 +176,7 @@ const sections = [
           Every electrical certificate — whether an{' '}
           <SEOInternalLink href="/eic-certificate">EIC</SEOInternalLink>,{' '}
           <SEOInternalLink href="/tools/eicr-certificate">EICR</SEOInternalLink>, or{' '}
-          <SEOInternalLink href="/minor-works-certificate">Minor Works Certificate</SEOInternalLink>{' '}
+          <SEOInternalLink href="/tools/minor-works-certificate">Minor Works Certificate</SEOInternalLink>{' '}
           — has mandatory fields that must be completed. NICEIC assessors check for the following on
           every certificate:
         </p>
@@ -634,7 +634,7 @@ const sections = [
         <p>
           While the EICR gets the most attention, NICEIC also expects high standards on{' '}
           <SEOInternalLink href="/eic-certificate">EICs</SEOInternalLink> and{' '}
-          <SEOInternalLink href="/minor-works-certificate">
+          <SEOInternalLink href="/tools/minor-works-certificate">
             Minor Works Certificates
           </SEOInternalLink>
           . The most common issues are:
@@ -827,7 +827,7 @@ export default function NICEICCertificateRequirementsPage() {
       title="NICEIC Certificate Requirements 2026 | Guide"
       description="Complete guide to NICEIC certificate requirements for UK electricians. What assessors check, common rejection reasons, formatting standards…"
       datePublished="2025-04-20"
-      dateModified="2026-05-18"
+      dateModified="2026-06-10"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Scheme Compliance"

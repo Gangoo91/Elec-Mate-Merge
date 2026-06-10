@@ -88,7 +88,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Guide',
   },
   {
-    href: '/rams-generator',
+    href: '/tools/rams-generator',
     title: 'RAMS Generator Tool',
     description:
       'AI-powered RAMS generator. Describe your job and get a complete risk assessment and method statement in minutes.',
@@ -606,7 +606,7 @@ const sections = [
           work than sitting at a desk writing safety documents.
         </p>
         <p>
-          Elec-Mate's <SEOInternalLink href="/rams-generator">RAMS generator</SEOInternalLink>{' '}
+          Elec-Mate's <SEOInternalLink href="/tools/rams-generator">RAMS generator</SEOInternalLink>{' '}
           solves this problem. The AI Health and Safety agent creates complete, site-specific method
           statements in minutes. You describe the job — the task, the site, the equipment, the
           personnel — and the AI produces a professional method statement covering all steps, safety
@@ -617,9 +617,9 @@ const sections = [
         <p>
           The training courses on the Elec-Mate platform — including{' '}
           <SEOInternalLink href="/training/asbestos-awareness">asbestos awareness</SEOInternalLink>,{' '}
-          <SEOInternalLink href="/training/pasma-training">PASMA</SEOInternalLink>,{' '}
-          <SEOInternalLink href="/training/ipaf-training">IPAF</SEOInternalLink>, and{' '}
-          <SEOInternalLink href="/manual-handling-course">manual handling</SEOInternalLink> —
+          <SEOInternalLink href="/pasma-training">PASMA</SEOInternalLink>,{' '}
+          <SEOInternalLink href="/ipaf-training">IPAF</SEOInternalLink>, and{' '}
+          <SEOInternalLink href="/training/manual-handling">manual handling</SEOInternalLink> —
           ensure your team has the knowledge to implement the safe systems of work described in the
           method statement.
         </p>

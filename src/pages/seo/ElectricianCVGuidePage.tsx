@@ -22,7 +22,7 @@ import {
 // -------------------------------------------------------------------
 
 const breadcrumbs = [
-  { label: 'Career', href: '/guides/how-to-become-electrician' },
+  { label: 'Career', href: '/guides/how-to-become-an-electrician' },
   { label: 'CV Guide', href: '/guides/electrician-cv-guide' },
 ];
 
@@ -98,7 +98,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Career',
   },
   {
-    href: '/guides/how-to-become-electrician',
+    href: '/guides/how-to-become-an-electrician',
     title: 'How to Become an Electrician',
     description:
       'Complete pathway from school leaver to qualified electrician — apprenticeships, courses, and qualifications.',
@@ -159,7 +159,7 @@ const sections = [
           The good news is that writing an effective electrician CV is not complicated. It follows a
           clear structure, and the content is largely factual — qualifications, experience, and
           skills. This guide walks you through every section, with specific advice for{' '}
-          <SEOInternalLink href="/guides/how-to-become-electrician">
+          <SEOInternalLink href="/guides/how-to-become-an-electrician">
             newly qualified electricians
           </SEOInternalLink>
           , experienced installers, and those looking to move into{' '}
@@ -260,7 +260,7 @@ const sections = [
           to any job in any industry. Tailor your personal statement to each application — if you
           are applying for a commercial role, lead with your commercial experience; if it is a
           testing-focused role, lead with your{' '}
-          <SEOInternalLink href="/city-guilds2391">2391 qualification</SEOInternalLink> and testing
+          <SEOInternalLink href="/training/city-guilds-2391">2391 qualification</SEOInternalLink> and testing
           experience.
         </p>
       </>

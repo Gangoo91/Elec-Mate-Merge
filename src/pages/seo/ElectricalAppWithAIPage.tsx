@@ -173,7 +173,7 @@ const relatedPages: RelatedPage[] = [
     category: 'AI Tool',
   },
   {
-    href: '/tools/ai-circuit-designer',
+    href: '/ai-circuit-designer',
     title: 'AI Circuit Designer',
     description:
       'Complete consumer unit schedules with cable sizes, protective devices, and diversity calculations to BS 7671.',
@@ -478,7 +478,7 @@ const sections = [
           at Work Regulations 1989.
         </p>
         <p>
-          The <SEOInternalLink href="/rams-generator">RAMS Generator</SEOInternalLink> exports the
+          The <SEOInternalLink href="/tools/rams-generator">RAMS Generator</SEOInternalLink> exports the
           document as a professional PDF ready for submission. No more spending 30 minutes adapting
           a generic template for each job. No more RAMS that read like they were written for a
           different site. Describe the job, and the AI does the rest.
@@ -575,7 +575,7 @@ export default function ElectricalAppWithAIPage() {
       title="Electrical App with AI | Smart Tools for Electricians"
       description="Elec-Mate is the only UK electrical app with AI built into every workflow. AI board scanning, defect coding, fault diagnosis, cost estimation…"
       datePublished="2025-10-01"
-      dateModified="2026-05-29"
+      dateModified="2026-06-10"
       toolPath="/tools/electrical-app-with-ai"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
@@ -605,7 +605,7 @@ export default function ElectricalAppWithAIPage() {
       faqHeading="Frequently Asked Questions About Elec-Mate's AI Features"
       relatedPages={relatedPages}
       ctaHeading="Try Every AI Feature Free for 7 Days"
-      ctaSubheading="8 AI agents, 12 AI tools, 16 certificate types, 70+ calculators, quoting, invoicing, and training — everything an electrician needs in one app. No card required to start."
+      ctaSubheading="8 AI agents, 12 AI tools, 16 certificate types, 70+ calculators, quoting, invoicing, and training — everything an electrician needs in one app. No charge until day 8."
     />
   );
 }

@@ -22,7 +22,7 @@ import {
 // -------------------------------------------------------------------
 
 const breadcrumbs = [
-  { label: 'Calculators', href: '/electrical-testing-calculators' },
+  { label: 'Calculators', href: '/tools/electrical-testing-calculators' },
   { label: 'Appendix 4 Tables', href: '/guides/appendix-4-tables-bs-7671' },
 ];
 
@@ -606,7 +606,7 @@ export default function AppendixFourTablesGuidePage() {
       title="Appendix 4 Tables BS 7671 | How to Use Them"
       description="Complete guide to using the Appendix 4 current-carrying capacity tables in BS 7671. Table-by-table overview, reference methods…"
       datePublished="2025-04-10"
-      dateModified="2026-05-18"
+      dateModified="2026-06-10"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Technical Guide"

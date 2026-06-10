@@ -739,14 +739,14 @@ export default function SmokeAlarmRegsPage() {
           category: 'Regulations',
         },
         {
-          href: '/minor-works-certificate',
+          href: '/tools/minor-works-certificate',
           title: 'Minor Works Certificate',
           description: 'Certifying mains-powered smoke alarm installations.',
           icon: FileText,
           category: 'Certification',
         },
         {
-          href: '/guides/consumer-unit-regulations',
+          href: '/consumer-unit-regulations',
           title: 'Consumer Unit Regulations',
           description: 'Consumer unit requirements including alarm circuit protection.',
           icon: Zap,

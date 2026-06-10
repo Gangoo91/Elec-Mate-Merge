@@ -752,7 +752,7 @@ export default function BestThermalImagingCameraElectricianPage() {
       title="Best Thermal Imaging Camera for Electricians 2026"
       description="Honest comparison of the best thermal imaging cameras for UK electricians in 2026. FLIR C5, HikMicro B1L, Fluke PTi120, FLIR ONE Pro…"
       datePublished="2026-03-27"
-      dateModified="2026-05-18"
+      dateModified="2026-06-10"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Equipment Guide"

@@ -135,7 +135,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Certificate',
   },
   {
-    href: '/electrical-quoting-app',
+    href: '/tools/electrical-quoting-app',
     title: 'Electrical Quoting App',
     description:
       'Quote smart lighting installations with per-point costs, commissioning, and programming.',
@@ -586,7 +586,7 @@ export default function SmartHomeLightingInstallationPage() {
       title="Smart Home Lighting Installation UK | DALI, KNX &amp; Zigbee Guide"
       description="Complete guide to smart home lighting installation in the UK. DALI vs KNX vs Zigbee, neutral wire requirements…"
       datePublished="2026-03-27"
-      dateModified="2026-05-18"
+      dateModified="2026-06-10"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Installation Guide"

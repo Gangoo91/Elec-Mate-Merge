@@ -128,7 +128,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Guide',
   },
   {
-    href: '/electrician-invoice-app',
+    href: '/tools/electrician-invoice-app',
     title: 'Invoice App',
     description:
       'Create and send professional invoices from your phone. Track payments, send reminders, and export for your accountant.',
@@ -495,7 +495,7 @@ const sections = [
           Making Tax Digital (MTD) requires all VAT-registered businesses to keep digital records
           and submit VAT returns using compatible software. Spreadsheets alone are no longer
           acceptable — you need digital record-keeping software. Elec-Mate's{' '}
-          <SEOInternalLink href="/electrician-invoice-app">invoice app</SEOInternalLink> and{' '}
+          <SEOInternalLink href="/tools/electrician-invoice-app">invoice app</SEOInternalLink> and{' '}
           <SEOInternalLink href="/tools/expenses-manager-electrician">
             expenses tracker
           </SEOInternalLink>{' '}

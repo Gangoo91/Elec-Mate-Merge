@@ -330,7 +330,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Guide',
   },
   {
-    href: '/how-to-fill-in-eicr',
+    href: '/guides/how-to-fill-in-eicr',
     title: 'How to Fill In an EICR',
     description:
       'Step-by-step guide to completing the full EICR, including schedules and observations.',
@@ -345,7 +345,7 @@ export default function ScheduleOfTestResultsPage() {
       title="Schedule of Test Results Guide for Electricians"
       description="Learn what the schedule of test results records, what values belong on it, common mistakes to avoid, and how to complete cleaner electrical certificates."
       datePublished="2026-04-12"
-      dateModified="2026-05-18"
+      dateModified="2026-06-10"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Certificate Guide"

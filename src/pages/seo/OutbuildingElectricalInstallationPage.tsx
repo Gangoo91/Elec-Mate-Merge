@@ -450,7 +450,7 @@ const sections = [
                 <h4 className="font-bold text-white mb-1">Quote for the Full Installation</h4>
                 <p className="text-white text-sm leading-relaxed">
                   Use the{' '}
-                  <SEOInternalLink href="/electrical-quoting-app">
+                  <SEOInternalLink href="/tools/electrical-quoting-app">
                     quoting app
                   </SEOInternalLink>{' '}
                   to itemise SWA cable, glands, sub-board, earth rod, circuits, and testing. Clients

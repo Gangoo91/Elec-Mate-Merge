@@ -517,7 +517,7 @@ const sections = [
           If any circuit produces a reading below 1.0 MΩ, the circuit fails and the fault must be
           investigated and rectified. On an EICR, a failing IR reading is recorded as an observation
           with the appropriate{' '}
-          <SEOInternalLink href="/guides/bs7671-observation-codes">
+          <SEOInternalLink href="/bs7671-observation-codes">
             observation code
           </SEOInternalLink>
           . On an EIC, the certificate should not be issued until the insulation fault is rectified.
@@ -543,7 +543,7 @@ const sections = [
         />
         <p>
           The app records the test voltage alongside each IR value and includes the{' '}
-          <SEOInternalLink href="/electrical-testing-calculators">
+          <SEOInternalLink href="/tools/electrical-testing-calculators">
             complete schedule of tests
           </SEOInternalLink>{' '}
           with auto-validated IR, R1+R2, Zs, and RCD results — all cross-referenced against BS 7671
@@ -596,7 +596,7 @@ const relatedPages = [
     category: 'Certificate',
   },
   {
-    href: '/electrical-testing-calculators',
+    href: '/tools/electrical-testing-calculators',
     title: '70+ Electrical Calculators',
     description:
       'Zs verification, cable sizing, voltage drop, PFC, and dozens more. All built to BS 7671.',
@@ -615,7 +615,7 @@ export default function InsulationResistanceMinimumValuesPage() {
       title={PAGE_TITLE}
       description={PAGE_DESCRIPTION}
       datePublished="2025-03-12"
-      dateModified="2026-05-29"
+      dateModified="2026-06-10"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Testing Guide"

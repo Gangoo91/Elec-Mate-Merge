@@ -211,7 +211,7 @@ const sections = [
         </div>
         <p>
           All three schemes are authorised by the UK Government under{' '}
-          <SEOInternalLink href="/part-p-building-regulations">
+          <SEOInternalLink href="/guides/part-p-building-regulations">
             Part P of the Building Regulations
           </SEOInternalLink>
           . Registration with any of them confirms that the electrician has been independently
@@ -369,7 +369,7 @@ const sections = [
               <strong>What certification will I receive?</strong> For new circuits or a consumer
               unit replacement, you should receive an{' '}
               <SEOInternalLink href="/eic-certificate">EIC</SEOInternalLink>. A{' '}
-              <SEOInternalLink href="/minor-works-certificate">
+              <SEOInternalLink href="/tools/minor-works-certificate">
                 Minor Works Certificate
               </SEOInternalLink>{' '}
               is only valid where no new circuit is introduced — adding a shower, EV charger, or
@@ -647,7 +647,7 @@ export default function HowToFindAnElectricianPage() {
       title="How to Find a Good Electrician UK | What to Check"
       description="Finding a qualified electrician in the UK: NICEIC, NAPIT, ELECSA, Stroma explained. Questions to ask, certs to demand, red flags to avoid."
       datePublished="2026-01-22"
-      dateModified="2026-05-18"
+      dateModified="2026-06-10"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Homeowner Guide"

@@ -762,7 +762,7 @@ const sections = [
         </div>
         <p>
           On the Elec-Mate platform, the{' '}
-          <SEOInternalLink href="/tools/eic-certificate">EIC tool</SEOInternalLink> covers the
+          <SEOInternalLink href="/eic-certificate">EIC tool</SEOInternalLink> covers the
           mains-side certification, and lighting commissioning record templates cover the DALI
           handover — both produced as PDFs aligned to BS 7671:2018+A4:2026.
         </p>
@@ -915,7 +915,7 @@ export default function DALILightingControlWiringPage() {
       title="DALI Lighting Control Wiring Guide (BS EN 62386) for UK"
       description="A UK electrician guide to DALI lighting control wiring under BS EN 62386 — DALI-1 vs DALI-2 vs D4i, bus topology, 16V DC power, cable selection and BS 7671 Section 528 segregation."
       datePublished="2026-05-17"
-      dateModified="2026-06-09"
+      dateModified="2026-06-10"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Lighting Control Systems"

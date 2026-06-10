@@ -105,7 +105,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Certificate',
   },
   {
-    href: '/electrical-quoting-app',
+    href: '/tools/electrical-quoting-app',
     title: 'Electrical Quoting App',
     description: 'Quote battery storage installations accurately with AI-assisted pricing.',
     icon: PoundSterling,
@@ -505,7 +505,7 @@ const sections = [
                 <p className="text-white text-sm leading-relaxed">
                   Every solar EICR or consumer unit upgrade is an opportunity to quote battery
                   storage. Use the{' '}
-                  <SEOInternalLink href="/electrical-quoting-app">
+                  <SEOInternalLink href="/tools/electrical-quoting-app">
                     quoting app
                   </SEOInternalLink>{' '}
                   to generate a professional battery storage proposal on site while the customer is

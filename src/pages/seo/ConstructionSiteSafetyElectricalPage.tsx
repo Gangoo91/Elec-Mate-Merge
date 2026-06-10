@@ -95,7 +95,7 @@ const faqs = [
 
 const relatedPages: RelatedPage[] = [
   {
-    href: '/rams-generator',
+    href: '/tools/rams-generator',
     title: 'RAMS Generator',
     description:
       'AI-powered Risk Assessment and Method Statement generator for electrical work on construction sites.',
@@ -135,7 +135,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Guide',
   },
   {
-    href: '/manual-handling-course',
+    href: '/training/manual-handling',
     title: 'Manual Handling Course',
     description:
       'Online training for manual handling on construction sites — a common requirement for site induction.',
@@ -431,7 +431,7 @@ const sections = [
             </div>
           </div>
         </div>
-        <SEOInternalLink href="/how-to-do-safe-isolation">
+        <SEOInternalLink href="/guides/how-to-do-safe-isolation">
           See also: Safe Isolation Procedure — essential for working on construction site circuits
         </SEOInternalLink>
       </>

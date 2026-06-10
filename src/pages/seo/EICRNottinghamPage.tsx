@@ -80,6 +80,13 @@ const faqs = [
 
 const relatedPages: RelatedPage[] = [
   {
+    href: '/guides/eicr-cost-nottingham',
+    title: 'EICR Cost in Nottingham',
+    description: 'Local EICR price bands by property size, hourly rates, and remedial costs for Nottingham.',
+    icon: Home,
+    category: 'Guide',
+  },
+  {
     href: '/guides/eicr-for-landlords',
     title: 'EICR for Landlords',
     description:
@@ -637,7 +644,7 @@ const sections = [
                 <p className="text-white text-sm leading-relaxed">
                   When the EICR identifies C1 or C2 observations, quote the remedial work
                   immediately using the{' '}
-                  <SEOInternalLink href="/electrical-quoting-app">quoting app</SEOInternalLink>.
+                  <SEOInternalLink href="/tools/electrical-quoting-app">quoting app</SEOInternalLink>.
                   Landlords must act within 28 days — deliver the quote on the day to win the work.
                 </p>
               </div>
@@ -660,7 +667,7 @@ export default function EICRNottinghamPage() {
       title="EICR Nottingham | Electrical Safety Certificate Cost 2026"
       description="EICR cost in Nottingham 2026: prices by property type, selective licensing rules, landlord obligations and observation codes. Get a compliant report today."
       datePublished="2026-03-27"
-      dateModified="2026-05-18"
+      dateModified="2026-06-10"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="EICR Guide"

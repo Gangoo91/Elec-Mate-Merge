@@ -123,7 +123,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Location',
   },
   {
-    href: '/guides/consumer-unit-regulations',
+    href: '/consumer-unit-regulations',
     title: 'Consumer Unit Regulations',
     description:
       'Consumer unit upgrade requirements — often needed when adding a 32A EV charger circuit.',
@@ -444,7 +444,7 @@ const sections = [
                 <p className="text-white text-sm leading-relaxed">
                   Factor in terraced house cable runs (12 to 20 metres average), frequent board
                   upgrades, and earth rod installations on PME supplies. Use Elec-Mate's{' '}
-                  <SEOInternalLink href="/electrical-quoting-app">quoting app</SEOInternalLink> to
+                  <SEOInternalLink href="/tools/electrical-quoting-app">quoting app</SEOInternalLink> to
                   build accurate itemised quotes on site.
                 </p>
               </div>
@@ -485,7 +485,7 @@ export default function EVChargerInstallationManchesterPage() {
       title="EV Charger Installation Manchester 2026 | Costs, DNO, and"
       description="How much does EV charger installation cost in Manchester in 2026? Local costs, Electricity North West DNO notification, Manchester grants…"
       datePublished="2026-03-27"
-      dateModified="2026-05-18"
+      dateModified="2026-06-10"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Manchester Guide"

@@ -658,7 +658,7 @@ const relatedPages = [
     category: 'Certificate',
   },
   {
-    href: '/electrical-testing-calculators',
+    href: '/tools/electrical-testing-calculators',
     title: '70+ Electrical Calculators',
     description: 'RCD discrimination calculator, Zs lookup, R1+R2, cable sizing, and dozens more.',
     icon: Calculator,
@@ -676,7 +676,7 @@ export default function RCDTestingProcedurePage() {
       title={PAGE_TITLE}
       description={PAGE_DESCRIPTION}
       datePublished="2024-11-12"
-      dateModified="2026-05-18"
+      dateModified="2026-06-10"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Testing Guide"

@@ -90,7 +90,7 @@ export default function TaxNIEstimatorPage() {
                 The solution is simple: estimate your tax throughout the year and set aside the
                 right amount each month. Elec-Mate's Tax and NI Estimator does this automatically.
                 As you log income through the{' '}
-                <SEOInternalLink href="/electrician-invoice-app">
+                <SEOInternalLink href="/tools/electrician-invoice-app">
                   invoice tool
                 </SEOInternalLink>{' '}
                 and expenses through the expense tracker, the estimator recalculates your projected

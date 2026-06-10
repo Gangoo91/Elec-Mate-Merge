@@ -22,7 +22,7 @@ import {
 // -------------------------------------------------------------------
 
 const breadcrumbs = [
-  { label: 'Career', href: '/guides/how-to-become-electrician' },
+  { label: 'Career', href: '/guides/how-to-become-an-electrician' },
   { label: 'Domestic vs Commercial', href: '/guides/domestic-vs-commercial-electrician' },
 ];
 
@@ -106,7 +106,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Business',
   },
   {
-    href: '/guides/how-to-become-electrician',
+    href: '/guides/how-to-become-an-electrician',
     title: 'How to Become an Electrician',
     description:
       'Complete pathway from school leaver to qualified electrician — apprenticeships, courses, and qualifications.',
@@ -193,7 +193,7 @@ const sections = [
               <span>
                 <strong>Consumer unit upgrades</strong> — replacing an old fuse board with a modern
                 RCBO or dual-RCD consumer unit compliant with{' '}
-                <SEOInternalLink href="/guides/consumer-unit-regulations">
+                <SEOInternalLink href="/consumer-unit-regulations">
                   current regulations
                 </SEOInternalLink>
                 .
@@ -620,8 +620,8 @@ const sections = [
                 <h4 className="font-bold text-white mb-1">Domestic to Commercial</h4>
                 <p className="text-white text-sm leading-relaxed">
                   Get your ECS card (apply through the JIB). Complete SSSTS training (2-day course).
-                  Consider <SEOInternalLink href="/training/ipaf-training">IPAF</SEOInternalLink> and{' '}
-                  <SEOInternalLink href="/training/pasma-training">PASMA</SEOInternalLink> if you want to
+                  Consider <SEOInternalLink href="/ipaf-training">IPAF</SEOInternalLink> and{' '}
+                  <SEOInternalLink href="/pasma-training">PASMA</SEOInternalLink> if you want to
                   work at height. Build experience with three-phase systems and containment — ask to
                   shadow a commercial electrician or take on light commercial work first. Update
                   your <SEOInternalLink href="/guides/electrician-cv-guide">CV</SEOInternalLink> to

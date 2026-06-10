@@ -115,7 +115,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Guide',
   },
   {
-    href: '/emergency-lighting-certificate',
+    href: '/tools/emergency-lighting-certificate',
     title: 'Emergency Lighting Certificate',
     description: 'BS 5266-1 emergency lighting inspection, testing, and certification guide.',
     icon: Zap,
@@ -718,7 +718,7 @@ const sections = [
                 <p className="text-white text-sm leading-relaxed">
                   Distribution board replacements, emergency lighting upgrades, and fire alarm
                   remediation in hotels are high-value contracts. Quote on site with the{' '}
-                  <SEOInternalLink href="/electrical-quoting-app">
+                  <SEOInternalLink href="/tools/electrical-quoting-app">
                     quoting app
                   </SEOInternalLink>{' '}
                   and convert inspection clients into recurring annual maintenance relationships.
@@ -747,7 +747,7 @@ export default function HotelEICRPage() {
       title="Hotel EICR UK | Electrical Inspection for Hotels & Guest"
       description="Complete guide to EICR for hotels and guest houses in the UK. Regulatory Reform (Fire Safety) Order 2005 obligations, recommended EICR frequency…"
       datePublished="2026-03-27"
-      dateModified="2026-05-18"
+      dateModified="2026-06-10"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Hotel Electrical Guide"

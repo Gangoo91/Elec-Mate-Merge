@@ -23,7 +23,7 @@ export default function ElecMateVsSimplyEICRPage() {
       title="Elec-Mate vs SimplyEICR | Feature Comparison 2026"
       description="Detailed comparison of Elec-Mate and SimplyEICR for UK electricians in 2026. Compare certificates, AI tools, calculators, training, business features…"
       datePublished="2026-01-25"
-      dateModified="2026-05-18"
+      dateModified="2026-06-10"
       breadcrumbs={[
         { label: 'Comparisons', href: '/compare' },
         { label: 'Elec-Mate vs SimplyEICR', href: '/compare/elec-mate-vs-simply-eicr' },
@@ -192,7 +192,7 @@ export default function ElecMateVsSimplyEICRPage() {
                 verification, maximum demand, diversity factors, earth fault loop impedance checks,
                 prospective fault current, disconnection times, and more. All referencing BS
                 7671:2018+A4:2026 tables. See the full{' '}
-                <SEOInternalLink href="/electrical-testing-calculators">
+                <SEOInternalLink href="/tools/electrical-testing-calculators">
                   electrical calculators page
                 </SEOInternalLink>
                 .

@@ -112,7 +112,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Guide',
   },
   {
-    href: '/earthing-arrangements',
+    href: '/guides/earthing-arrangements',
     title: 'Earthing Arrangements',
     description: 'TN-C-S, TN-S, and TT earthing systems explained with main bonding requirements.',
     icon: Zap,
@@ -127,7 +127,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Guide',
   },
   {
-    href: '/eighteenth-edition-course',
+    href: '/training/18th-edition-course',
     title: '18th Edition Course',
     description:
       'Study BS 7671:2018+A4:2026 including Section 701 (bathrooms) on the Elec-Mate platform.',
@@ -586,7 +586,7 @@ export default function BondingInBathroomPage() {
       title="Bonding in a Bathroom | When It's Required (Reg 701.415.2)"
       description="Supplementary bonding in bathrooms under BS 7671 Reg 701.415.2 — when it's required, the 3 conditions to omit it + how to test cross-bond continuity."
       datePublished="2025-05-20"
-      dateModified="2026-05-18"
+      dateModified="2026-06-10"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Installation Guide"

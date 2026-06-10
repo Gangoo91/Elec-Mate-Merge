@@ -324,7 +324,7 @@ export const ramsForSolarPVInstallationConfig: GeneratedGuideConfig = {
       category: 'Tool',
     },
     {
-      href: '/solar-pv-certificate',
+      href: '/tools/solar-pv-certificate',
       title: 'Solar PV Certificate',
       description:
         'Digital solar PV commissioning and handover document — string test results, inverter detail, anti-islanding record, customer pack.',

@@ -122,7 +122,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Certificate',
   },
   {
-    href: '/guides/consumer-unit-regulations',
+    href: '/consumer-unit-regulations',
     title: 'Consumer Unit Regulations',
     description: 'Consumer unit upgrade requirements when adding a 32A EV charger circuit.',
     icon: ShieldCheck,
@@ -498,7 +498,7 @@ const sections = [
                   Factor in East of England labour rates (£42 to £58/hour), additional time for
                   listed building or conservation area assessments, earth rod costs, UKPN G98
                   notification, and EIC certification. Use Elec-Mate's{' '}
-                  <SEOInternalLink href="/electrical-quoting-app">quoting app</SEOInternalLink> to
+                  <SEOInternalLink href="/tools/electrical-quoting-app">quoting app</SEOInternalLink> to
                   build itemised, professional quotes that justify Cambridge pricing to informed
                   customers.
                 </p>
@@ -543,7 +543,7 @@ export default function EVChargerInstallationCambridgePage() {
       title="EV Charger Installation Cambridge | Home EV Charging"
       description="EV charger installation costs in Cambridge 2026: 7kW charger £850-1,300 installed, OZEV grants up to £350, UKPN DNO notification…"
       datePublished="2026-03-27"
-      dateModified="2026-05-18"
+      dateModified="2026-06-10"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Cambridge Guide"

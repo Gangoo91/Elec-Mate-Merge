@@ -113,7 +113,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Certificate',
   },
   {
-    href: '/electrical-quoting-app',
+    href: '/tools/electrical-quoting-app',
     title: 'Quoting App',
     description:
       'Price shed electrical installations with itemised materials, labour, and certification.',
@@ -637,7 +637,7 @@ const sections = [
                 <h4 className="font-bold text-white mb-1">Professional Quoting</h4>
                 <p className="text-white text-sm leading-relaxed">
                   Price the job with Elec-Mate's{' '}
-                  <SEOInternalLink href="/electrical-quoting-app">quoting app</SEOInternalLink>. SWA
+                  <SEOInternalLink href="/tools/electrical-quoting-app">quoting app</SEOInternalLink>. SWA
                   cable, glands, consumer unit, accessories, labour, trench work, testing, and
                   certification — all itemised with your margins. Send a professional PDF quote from
                   the survey.
@@ -679,7 +679,7 @@ export default function ShedElectricalInstallationPage() {
       title="Shed Electrical Installation | Complete Wiring Guide UK"
       description="Complete guide to shed electrical installation in the UK. SWA cable selection, sub-panel installation, lighting and sockets, IP ratings…"
       datePublished="2026-03-27"
-      dateModified="2026-05-18"
+      dateModified="2026-06-10"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Installation Guide"

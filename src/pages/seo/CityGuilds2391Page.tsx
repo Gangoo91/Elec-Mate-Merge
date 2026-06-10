@@ -257,7 +257,7 @@ export default function CityGuilds2391Page() {
               significantly. Holding the 2391-52 opens a lucrative revenue stream for self-employed
               electricians and small contractors. Before sitting the 2391-52, ensure you have
               completed the{' '}
-              <SEOInternalLink href="/eighteenth-edition-course">
+              <SEOInternalLink href="/training/18th-edition-course">
                 18th Edition wiring regulations course
               </SEOInternalLink>
               .

@@ -620,7 +620,7 @@ export default function EICRLimitationsPage() {
       title="EICR Limitations | What the EICR Does Not Cover"
       description="Understanding EICR extent and limitations. What the EICR covers, what it does not, sampling, concealed wiring, and how to record limitations correctly."
       datePublished="2025-03-20"
-      dateModified="2026-05-18"
+      dateModified="2026-06-10"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="EICR Guide"

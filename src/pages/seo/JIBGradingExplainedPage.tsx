@@ -554,7 +554,7 @@ export default function JIBGradingExplainedPage() {
       title="JIB Grading Explained: 2026 Pay Rates & Career Progression"
       description="JIB grading structure for UK electricians: 4 grades, 2026 pay scales, and clear progression from Electrician to Approved Electrician to Technician. Get certified today."
       datePublished="2026-03-27"
-      dateModified="2026-05-18"
+      dateModified="2026-06-10"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       answerBox={{

@@ -677,7 +677,7 @@ const sections = [
                 <p className="text-white text-sm leading-relaxed">
                   Holiday let owners need annual PAT testing, five-yearly EICRs, and ongoing
                   remedial work. Use the{' '}
-                  <SEOInternalLink href="/electrical-quoting-app">quoting app</SEOInternalLink> to
+                  <SEOInternalLink href="/tools/electrical-quoting-app">quoting app</SEOInternalLink> to
                   provide professional quotes on the day and convert inspection clients into
                   long-term maintenance relationships.
                 </p>
@@ -705,7 +705,7 @@ export default function HolidayLetElectricalPage() {
       title="Do You Need an EICR for a Holiday Let? UK Rules 2026"
       description="Do you need an electrical certificate for a UK holiday let? No mandatory EICR — but Occupiers Liability Act + Airbnb + insurance expect one. Frequency, PAT, alarms."
       datePublished="2026-03-27"
-      dateModified="2026-05-23"
+      dateModified="2026-06-10"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Holiday Let Guide"

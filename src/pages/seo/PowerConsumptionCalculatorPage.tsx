@@ -22,7 +22,7 @@ export default function PowerConsumptionCalculatorPage() {
       title="Power Consumption Calculator | kWh & Running Cost"
       description="Calculate power consumption in kWh and running costs for any electrical appliance. Convert wattage to annual energy use…"
       datePublished="2026-02-01"
-      dateModified="2026-05-18"
+      dateModified="2026-06-10"
       breadcrumbs={[
         { label: 'Tools', href: '/tools' },
         { label: 'Power Consumption Calculator', href: '/tools/power-consumption-calculator' },
@@ -374,7 +374,7 @@ export default function PowerConsumptionCalculatorPage() {
               </ul>
               <p>
                 The{' '}
-                <SEOInternalLink href="/electrical-testing-calculators">
+                <SEOInternalLink href="/tools/electrical-testing-calculators">
                   electrical calculator suite
                 </SEOInternalLink>{' '}
                 in Elec-Mate includes energy efficiency calculations alongside the standard BS 7671
@@ -523,7 +523,7 @@ export default function PowerConsumptionCalculatorPage() {
           category: 'Calculators',
         },
         {
-          href: '/electrical-testing-calculators',
+          href: '/tools/electrical-testing-calculators',
           title: 'All 50+ Calculators',
           description:
             'Browse the full suite of BS 7671 electrical calculators for testing, sizing, and design.',

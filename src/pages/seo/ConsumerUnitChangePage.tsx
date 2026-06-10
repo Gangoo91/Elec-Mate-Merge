@@ -22,7 +22,7 @@ export default function ConsumerUnitChangePage() {
       title="Consumer Unit Change UK 2026 | Cost, Regulations & Guide"
       description="Complete guide to changing a consumer unit in the UK. Costs from £500 to £1,200, Part P notification requirements…"
       datePublished="2025-04-20"
-      dateModified="2026-05-18"
+      dateModified="2026-06-10"
       breadcrumbs={[
         { label: 'Guides', href: '/guides' },
         { label: 'Consumer Unit Change', href: '/guides/consumer-unit-change' },
@@ -240,7 +240,7 @@ export default function ConsumerUnitChangePage() {
               </div>
               <p>
                 For full details on the regulatory framework, see the{' '}
-                <SEOInternalLink href="/guides/consumer-unit-regulations">
+                <SEOInternalLink href="/consumer-unit-regulations">
                   Consumer Unit Regulations
                 </SEOInternalLink>{' '}
                 guide.
@@ -479,7 +479,7 @@ export default function ConsumerUnitChangePage() {
                     <p className="text-white text-sm leading-relaxed">
                       Once all circuits are connected and the supply is restored, every circuit must
                       be tested. The full{' '}
-                      <SEOInternalLink href="/testing-sequence-guide">
+                      <SEOInternalLink href="/guides/testing-sequence-guide">
                         testing sequence
                       </SEOInternalLink>{' '}
                       includes continuity of protective conductors (R1+R2), insulation resistance,
@@ -570,7 +570,7 @@ export default function ConsumerUnitChangePage() {
       ]}
       relatedPages={[
         {
-          href: '/guides/consumer-unit-regulations',
+          href: '/consumer-unit-regulations',
           title: 'Consumer Unit Regulations',
           description: 'Full guide to BS 7671 and BS EN 61439-3 regulatory requirements.',
           icon: BookOpen,
@@ -598,7 +598,7 @@ export default function ConsumerUnitChangePage() {
           category: 'Calculator',
         },
         {
-          href: '/testing-sequence-guide',
+          href: '/guides/testing-sequence-guide',
           title: 'Testing Sequence Guide',
           description: 'The correct order of tests for initial verification.',
           icon: ClipboardCheck,

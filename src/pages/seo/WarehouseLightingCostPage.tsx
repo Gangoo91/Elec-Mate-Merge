@@ -110,7 +110,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Certificate',
   },
   {
-    href: '/electrical-quoting-app',
+    href: '/tools/electrical-quoting-app',
     title: 'Electrical Quoting App',
     description: 'Quote warehouse lighting with itemised fitting schedules and installation rates.',
     icon: Calculator,

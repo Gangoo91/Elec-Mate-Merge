@@ -1,7 +1,7 @@
 import type { GeneratedGuideConfig } from '@/pages/seo/generated/GeneratedGuidePage';
 
 const published = '2026-04-12';
-const modified = '2026-05-29';
+const modified = '2026-06-10';
 
 export const eicrExampleAndTemplateConfig: GeneratedGuideConfig = {
   pagePath: '/guides/eicr-example-and-template',

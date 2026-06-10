@@ -115,7 +115,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Guide',
   },
   {
-    href: '/electrical-quoting-app',
+    href: '/tools/electrical-quoting-app',
     title: 'Quoting App',
     description:
       'Send professional PDF quotes for rewires, EICRs, and EV charger installations in Dundee.',
@@ -454,7 +454,7 @@ const sections = [
                 <h4 className="font-bold text-white mb-1">Professional Quoting</h4>
                 <p className="text-white text-sm leading-relaxed">
                   Win Dundee jobs with the{' '}
-                  <SEOInternalLink href="/electrical-quoting-app">quoting app</SEOInternalLink>.
+                  <SEOInternalLink href="/tools/electrical-quoting-app">quoting app</SEOInternalLink>.
                   Send professional PDF quotes to customers and landlords from the survey.
                 </p>
               </div>
@@ -483,7 +483,7 @@ export default function ElectricianDundeePage() {
       title="Electrician in Dundee | Local Electricians 2026"
       description="Find qualified electricians in Dundee. Scottish Building Standards, SSEN DNO, SELECT registration, tenement and social housing rewiring, EICR costs…"
       datePublished="2026-03-27"
-      dateModified="2026-05-18"
+      dateModified="2026-06-10"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Dundee"

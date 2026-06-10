@@ -18,7 +18,7 @@ export default function AIElectricalFaultFindingPage() {
       title="AI Electrical Fault Finding | How It Works | Elec-Mate"
       description="How AI analyses electrical fault symptoms, matches them against known fault patterns, suggests probable causes ranked by likelihood…"
       datePublished="2026-01-28"
-      dateModified="2026-05-18"
+      dateModified="2026-06-10"
       breadcrumbs={[
         { label: 'Guides', href: '/guides' },
         { label: 'AI Electrical Fault Finding', href: '/guides/ai-electrical-fault-finding' },
@@ -321,7 +321,7 @@ export default function AIElectricalFaultFindingPage() {
                 Each suggested test includes the expected result if the probable cause is confirmed,
                 what to do next if the result is inconclusive, and the relevant testing procedure
                 from the{' '}
-                <SEOInternalLink href="/testing-sequence-guide">
+                <SEOInternalLink href="/guides/testing-sequence-guide">
                   testing sequence guide
                 </SEOInternalLink>
                 . This systematic approach reduces the time spent on fault finding by eliminating
@@ -570,7 +570,7 @@ export default function AIElectricalFaultFindingPage() {
           category: 'Guides',
         },
         {
-          href: '/testing-sequence-guide',
+          href: '/guides/testing-sequence-guide',
           title: 'Testing Sequence Guide',
           description:
             'The correct sequence for electrical testing to BS 7671 — continuity, insulation resistance, polarity, earth fault loop impedance, and RCD testing.',

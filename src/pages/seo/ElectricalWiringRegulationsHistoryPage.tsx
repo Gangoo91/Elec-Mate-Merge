@@ -146,7 +146,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Guide',
   },
   {
-    href: '/guides/consumer-unit-regulations',
+    href: '/consumer-unit-regulations',
     title: 'Consumer Unit Regulations',
     description:
       'Current regulations for consumer units including RCD protection, AFDDs, and Amendment 3.',
@@ -170,7 +170,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Guide',
   },
   {
-    href: '/eighteenth-edition-course',
+    href: '/training/18th-edition-course',
     title: '18th Edition Course Guide',
     description: 'Everything you need to know about the City and Guilds 2382 18th Edition course.',
     icon: GraduationCap,
@@ -696,7 +696,7 @@ export default function ElectricalWiringRegulationsHistoryPage() {
       title="History of UK Wiring Regulations | IEE to IET"
       description="History of UK wiring regulations from the first IEE rules (1882) through every edition to BS 7671:2018+A4:2026. Major changes, drivers, milestones."
       datePublished="2025-10-01"
-      dateModified="2026-05-18"
+      dateModified="2026-06-10"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Regulation History"

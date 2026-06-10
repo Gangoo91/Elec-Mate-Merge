@@ -112,14 +112,14 @@ const relatedPages: RelatedPage[] = [
     category: 'Guide',
   },
   {
-    href: '/how-to-do-safe-isolation',
+    href: '/guides/how-to-do-safe-isolation',
     title: 'How to Do Safe Isolation',
     description: 'The step-by-step procedure that prevents most reportable electrical accidents.',
     icon: ShieldCheck,
     category: 'Safety',
   },
   {
-    href: '/rams-generator',
+    href: '/tools/rams-generator',
     title: 'RAMS Generator',
     description: 'Generate site-specific risk assessments to prevent reportable accidents.',
     icon: FileCheck2,
@@ -518,7 +518,7 @@ const sections = [
               <HardHat className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Electrical near misses to report internally</strong> —{' '}
-                <SEOInternalLink href="/how-to-do-safe-isolation">safe isolation</SEOInternalLink>{' '}
+                <SEOInternalLink href="/guides/how-to-do-safe-isolation">safe isolation</SEOInternalLink>{' '}
                 failures discovered before contact; live conductors found exposed in accessible
                 locations; tools or equipment contacting live conductors without injury; incorrect
                 isolation of the wrong circuit discovered before work began;{' '}
@@ -680,7 +680,7 @@ const sections = [
               </h4>
               <p className="text-white text-sm leading-relaxed">
                 Use the{' '}
-                <SEOInternalLink href="/rams-generator">Elec-Mate RAMS generator</SEOInternalLink> to
+                <SEOInternalLink href="/tools/rams-generator">Elec-Mate RAMS generator</SEOInternalLink> to
                 create site-specific risk assessments and method statements for electrical work.
                 Including safe isolation procedures, electrical hazard identification, PPE
                 requirements, and emergency procedures — the documentation required by law and
@@ -710,7 +710,7 @@ export default function ElectricalAccidentReportingPage() {
       title="Electrical Accident Reporting UK | RIDDOR & Near Miss Guide"
       description="UK guide to electrical accident reporting under RIDDOR 2013. What must be reported including electric shock and arc flash, how to report to the HSE…"
       datePublished="2026-03-27"
-      dateModified="2026-05-18"
+      dateModified="2026-06-10"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Legal Compliance"

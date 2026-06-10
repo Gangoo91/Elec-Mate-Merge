@@ -402,7 +402,7 @@ export default function MICCCableGuidePage() {
             <>
               <p>
                 Testing MICC cable installations follows the standard{' '}
-                <SEOInternalLink href="/testing-sequence-guide">
+                <SEOInternalLink href="/guides/testing-sequence-guide">
                   BS 7671 testing sequence
                 </SEOInternalLink>
                 , but with particular attention to insulation resistance. The insulation resistance

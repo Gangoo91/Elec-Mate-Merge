@@ -683,7 +683,7 @@ const relatedPages = [
     category: 'Certificate',
   },
   {
-    href: '/electrical-testing-calculators',
+    href: '/tools/electrical-testing-calculators',
     title: '70+ Electrical Calculators',
     description:
       'Zs lookup, R1+R2, cable sizing, voltage drop, PFC, and dozens more built-in calculators.',
@@ -703,7 +703,7 @@ export default function InsulationResistanceTestPage() {
       title={PAGE_TITLE}
       description={PAGE_DESCRIPTION}
       datePublished="2024-10-20"
-      dateModified="2026-05-18"
+      dateModified="2026-06-10"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Testing Guide"

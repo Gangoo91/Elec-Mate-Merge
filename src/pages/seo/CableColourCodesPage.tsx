@@ -85,7 +85,7 @@ const relatedPages = [
     category: 'Guide' as const,
   },
   {
-    href: '/guides/consumer-unit-regulations',
+    href: '/consumer-unit-regulations',
     title: 'Consumer Unit Regulations',
     description: 'Consumer unit change requirements and wiring standards.',
     icon: ShieldCheck,
@@ -430,7 +430,7 @@ const sections = [
         </div>
         <p>
           This notice should be durable, legible, and positioned at or near the{' '}
-          <SEOInternalLink href="/guides/consumer-unit-regulations">consumer unit</SEOInternalLink>{' '}
+          <SEOInternalLink href="/consumer-unit-regulations">consumer unit</SEOInternalLink>{' '}
           or distribution board where circuits of both colour codes are present. Self-adhesive
           labels are available from electrical wholesalers, or the notice can be printed and
           laminated.
@@ -601,7 +601,7 @@ const sections = [
                 <h4 className="font-bold text-white mb-2">Missing Mixed-Colour Warning Notice</h4>
                 <p className="text-white text-sm leading-relaxed">
                   Installations with both old and new colour codes but no warning notice at the{' '}
-                  <SEOInternalLink href="/guides/consumer-unit-regulations">
+                  <SEOInternalLink href="/consumer-unit-regulations">
                     consumer unit
                   </SEOInternalLink>
                   . The On-Site Guide (OSG Reg 6.12) recommends this notice. Note: BS 7671 Reg
@@ -645,7 +645,7 @@ export default function CableColourCodesPage() {
       title="UK Cable Colour Codes 2026 | New + Old Colours Reference"
       description="UK cable colour codes: current harmonised (brown/blue/green-yellow) + pre-2004 old colours (red/black/green). What to do when joining old to new."
       datePublished="2025-05-15"
-      dateModified="2026-05-18"
+      dateModified="2026-06-10"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Essential Reference"

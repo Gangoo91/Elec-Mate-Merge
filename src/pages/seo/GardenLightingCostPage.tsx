@@ -132,7 +132,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Certificate',
   },
   {
-    href: '/electrical-quoting-app',
+    href: '/tools/electrical-quoting-app',
     title: 'Electrical Quoting App',
     description: 'Quote garden lighting projects with itemised materials, cable runs, and labour.',
     icon: Wrench,
@@ -666,7 +666,7 @@ const sections = [
                 <h4 className="font-bold text-white mb-1">Quoting App</h4>
                 <p className="text-white text-sm leading-relaxed">
                   Use Elec-Mate's{' '}
-                  <SEOInternalLink href="/electrical-quoting-app">quoting app</SEOInternalLink> to
+                  <SEOInternalLink href="/tools/electrical-quoting-app">quoting app</SEOInternalLink> to
                   build itemised garden lighting quotes. List each fitting type, cable quantities,
                   junction boxes, controls, labour for trenching, installation, testing, and
                   certification. Professional PDF sent to the customer.
@@ -724,7 +724,7 @@ export default function GardenLightingCostPage() {
       title="Garden Lighting Installation Cost UK 2026 | Pricing Guide"
       description="How much does garden lighting installation cost in the UK in 2026? Complete pricing guide covering LED path lights, deck lights, uplights…"
       datePublished="2026-03-27"
-      dateModified="2026-05-18"
+      dateModified="2026-06-10"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Cost Guide"

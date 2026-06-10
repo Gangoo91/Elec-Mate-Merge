@@ -533,7 +533,7 @@ export default function PartPSelfCertificationPage() {
       title="Part P Self-Certification UK 2026 | Notifiable Work"
       description="Part P explained for UK electricians: what's notifiable, how Competent Person Schemes (NICEIC, NAPIT, ELECSA, Stroma) work, fines for non-compliance."
       datePublished="2026-03-27"
-      dateModified="2026-05-18"
+      dateModified="2026-06-10"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Building Regulations Guide"

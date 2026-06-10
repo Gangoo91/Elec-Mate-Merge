@@ -212,7 +212,7 @@ export default function ElecMateVsEasyEICRPage() {
                 earth fault loop impedance checks, prospective fault current, disconnection time
                 verification, and many more. All referencing BS 7671:2018+A4:2026 tables. See our
                 full{' '}
-                <SEOInternalLink href="/electrical-testing-calculators">
+                <SEOInternalLink href="/tools/electrical-testing-calculators">
                   electrical calculators page
                 </SEOInternalLink>{' '}
                 for the complete list.
@@ -348,7 +348,7 @@ export default function ElecMateVsEasyEICRPage() {
       ]}
       relatedPages={[
         {
-          href: '/compare/elec-mate-vs-icertifi',
+          href: '/elec-mate-vs-i-certifi',
           title: 'Elec-Mate vs iCertifi',
           description:
             'Head-to-head comparison with iCertifi covering certificates, calculators, AI tools, training, and pricing.',

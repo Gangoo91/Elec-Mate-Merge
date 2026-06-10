@@ -520,7 +520,7 @@ const sections = [
                 </h4>
                 <p className="text-white text-sm leading-relaxed">
                   Annual inspection is the recommended interval for marina installations. Use the{' '}
-                  <SEOInternalLink href="/electrical-quoting-app">
+                  <SEOInternalLink href="/tools/electrical-quoting-app">
                     quoting app
                   </SEOInternalLink>{' '}
                   to offer multi-year maintenance packages to marina operators, covering annual

@@ -9,7 +9,7 @@ interface SEOReadingMetaProps {
 export function SEOReadingMeta({
   readingTime,
   dateUpdated,
-  author = 'Elec-Mate Technical Team',
+  author = 'Andrew Moore, Founder of Elec-Mate',
 }: SEOReadingMetaProps) {
   return (
     <div className="flex flex-wrap items-center gap-4 text-sm text-white">

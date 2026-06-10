@@ -122,7 +122,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Tool',
   },
   {
-    href: '/electrical-quoting-app',
+    href: '/tools/electrical-quoting-app',
     title: 'Electrical Quoting App',
     description:
       'Create professional quotes for Stoke-on-Trent customers with accurate local pricing.',
@@ -474,7 +474,7 @@ export default function ElectricianStokeOnTrentPage() {
       title="Electrician in Stoke-on-Trent | Find Qualified Electricians"
       description="Find qualified, registered electricians in Stoke-on-Trent. Realistic 2026 pricing, NICEIC/NAPIT verification, NGED connections, Part P compliance…"
       datePublished="2026-03-27"
-      dateModified="2026-05-18"
+      dateModified="2026-06-10"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Find an Electrician"

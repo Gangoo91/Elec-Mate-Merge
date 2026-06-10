@@ -84,6 +84,13 @@ const faqs = [
 
 const relatedPages: RelatedPage[] = [
   {
+    href: '/guides/eicr-cost-manchester',
+    title: 'EICR Cost in Manchester',
+    description: 'Local EICR price bands by property size, hourly rates, and remedial costs for Manchester.',
+    icon: Home,
+    category: 'Guide',
+  },
+  {
     href: '/guides/eicr-for-landlords',
     title: 'EICR for Landlords',
     description:
@@ -673,7 +680,7 @@ const sections = [
                 <h4 className="font-bold text-white mb-1">Win the Remedial Work</h4>
                 <p className="text-white text-sm leading-relaxed">
                   When C1 or C2 observations are found, quote the remedial work on the spot using
-                  the <SEOInternalLink href="/electrical-quoting-app">quoting app</SEOInternalLink>.
+                  the <SEOInternalLink href="/tools/electrical-quoting-app">quoting app</SEOInternalLink>.
                   Landlords must act within 28 days — the electrician who provides the quote
                   immediately is most likely to get the job.
                 </p>
@@ -701,7 +708,7 @@ export default function EICRManchesterPage() {
       title="EICR Manchester | Electrical Inspection Cost 2026"
       description="EICR costs in Manchester for 2026. Landlord legal requirements, selective licensing areas, terraced house inspection challenges, observation codes…"
       datePublished="2026-03-27"
-      dateModified="2026-05-18"
+      dateModified="2026-06-10"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="EICR Guide"

@@ -330,7 +330,7 @@ export const ramsForConsumerUnitReplacementConfig: GeneratedGuideConfig = {
       category: 'Tool',
     },
     {
-      href: '/tools/eic-certificate',
+      href: '/eic-certificate',
       title: 'EIC Certificate Tool',
       description:
         'Digital Electrical Installation Certificate aligned to BS 7671:2018+A4:2026 — full initial verification workflow, schedule of test results, PDF export.',

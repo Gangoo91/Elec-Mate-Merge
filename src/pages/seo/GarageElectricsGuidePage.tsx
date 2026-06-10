@@ -128,7 +128,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Guide',
   },
   {
-    href: '/earthing-arrangements',
+    href: '/guides/earthing-arrangements',
     title: 'Earthing Arrangements',
     description:
       'TN-S, TN-C-S, and TT earthing systems explained with implications for outbuilding supplies.',
@@ -608,7 +608,7 @@ const sections = [
                 <h4 className="font-bold text-white mb-1">Quoting App</h4>
                 <p className="text-white text-sm leading-relaxed">
                   Price the garage installation with Elec-Mate's{' '}
-                  <SEOInternalLink href="/electrical-quoting-app">quoting app</SEOInternalLink>. SWA
+                  <SEOInternalLink href="/tools/electrical-quoting-app">quoting app</SEOInternalLink>. SWA
                   cable by the metre, trenching labour, sub-board, accessories, testing, and
                   certification — all calculated with your margins and sent to the customer as a
                   professional PDF quote.
@@ -650,7 +650,7 @@ export default function GarageElectricsGuidePage() {
       title="Garage Electrics | Wiring, Sockets & Lighting Guide"
       description="Complete guide to garage electrics in the UK. SWA cable from house, sub-distribution board, IP ratings, RCD protection, sockets and lighting…"
       datePublished="2025-07-01"
-      dateModified="2026-05-18"
+      dateModified="2026-06-10"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Installation Guide"

@@ -23,7 +23,7 @@ export default function TransformerSizingCalculatorPage() {
       title="Transformer Sizing Calculator | kVA Rating Tool"
       description="Calculate transformer kVA rating for single-phase and three-phase installations. Considers load calculation, diversity factors, oversize allowance…"
       datePublished="2026-02-01"
-      dateModified="2026-05-18"
+      dateModified="2026-06-10"
       breadcrumbs={[
         { label: 'Tools', href: '/tools' },
         { label: 'Transformer Sizing Calculator', href: '/tools/transformer-sizing-calculator' },

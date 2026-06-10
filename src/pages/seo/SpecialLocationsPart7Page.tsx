@@ -122,7 +122,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Guide',
   },
   {
-    href: '/eighteenth-edition-course',
+    href: '/training/18th-edition-course',
     title: '18th Edition Course',
     description:
       'Study all Part 7 special locations with structured training modules on the Elec-Mate platform.',
@@ -175,7 +175,7 @@ const sections = [
         <p>
           Every electrician working in the UK must be familiar with Part 7. These sections are
           heavily tested in the{' '}
-          <SEOInternalLink href="/eighteenth-edition-course">
+          <SEOInternalLink href="/training/18th-edition-course">
             C&G 2382 (18th Edition)
           </SEOInternalLink>{' '}
           and{' '}
@@ -745,7 +745,7 @@ const sections = [
       <>
         <p>
           Part 7 is one of the most examination-heavy areas of BS 7671. Whether you are studying for
-          the <SEOInternalLink href="/eighteenth-edition-course">18th Edition exam</SEOInternalLink>{' '}
+          the <SEOInternalLink href="/training/18th-edition-course">18th Edition exam</SEOInternalLink>{' '}
           or preparing for the{' '}
           <SEOInternalLink href="/training/inspection-and-testing">
             C&G 2391 inspection and testing qualification
@@ -824,7 +824,7 @@ export default function SpecialLocationsPart7Page() {
       title="BS 7671 Special Locations List: Part 7 Sections 701-712"
       description="Complete list of BS 7671 Part 7 special locations: bathrooms (701), pools (702), saunas (703), sites (704), agricultural (705), caravans, marinas + more."
       datePublished="2025-03-15"
-      dateModified="2026-05-22"
+      dateModified="2026-06-10"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Regulations Guide"

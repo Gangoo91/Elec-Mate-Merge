@@ -263,7 +263,7 @@ export const a4MEIWCModelFormConfig: GeneratedGuideConfig = {
       category: 'Guide',
     },
     {
-      href: '/minor-works-certificate',
+      href: '/tools/minor-works-certificate',
       title: 'Minor Works Certificate Tool',
       description: 'Digital A4:2026 MEIWC with AFDD/SPD fields, test button verification, PDF export.',
       icon: 'FileCheck2',

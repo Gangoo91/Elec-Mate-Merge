@@ -103,7 +103,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Guide',
   },
   {
-    href: '/guides/consumer-unit-regulations',
+    href: '/consumer-unit-regulations',
     title: 'Consumer Unit Regulations',
     description: 'Understanding circuit protection in your consumer unit.',
     icon: ShieldCheck,
@@ -117,7 +117,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Guide',
   },
   {
-    href: '/minor-works-certificate',
+    href: '/tools/minor-works-certificate',
     title: 'Minor Works Certificate',
     description: 'Documentation for socket replacement and minor electrical works.',
     icon: FileCheck2,

@@ -24,7 +24,7 @@ export default function ElectricianAppForiPhonePage() {
       title="Best Electrician App for iPhone 2026 | Elec-Mate iOS"
       description="Elec-Mate is the best electrician app for iPhone in 2026. Native iOS experience with Face ID, 16 certificate types, AI board scanner…"
       datePublished="2026-01-12"
-      dateModified="2026-05-18"
+      dateModified="2026-06-10"
       breadcrumbs={[
         { label: 'Tools', href: '/tools' },
         { label: 'Electrician App for iPhone', href: '/tools/electrician-app-iphone' },
@@ -87,7 +87,7 @@ export default function ElectricianAppForiPhonePage() {
                 tool, and an AI assistant. Having everything in one app means less switching, less
                 storage used, and a single subscription instead of multiple. See how we compare
                 against other options in our{' '}
-                <SEOInternalLink href="/best-electrician-app">
+                <SEOInternalLink href="/tools/best-electrician-app-uk">
                   best electrician app guide
                 </SEOInternalLink>
                 .
@@ -97,7 +97,7 @@ export default function ElectricianAppForiPhonePage() {
           appBridge: {
             title: 'Download Elec-Mate for iPhone',
             description:
-              'Native iOS app with Face ID, 16 certificate types, 70+ calculators, 46+ courses, and full offline mode. 7-day free trial, no card required to start.',
+              'Native iOS app with Face ID, 16 certificate types, 70+ calculators, 46+ courses, and full offline mode. 7-day free trial, no charge until day 8.',
             icon: Download,
           },
         },
@@ -219,7 +219,7 @@ export default function ElectricianAppForiPhonePage() {
             <>
               <p>
                 The full suite of{' '}
-                <SEOInternalLink href="/electrical-testing-calculators">
+                <SEOInternalLink href="/tools/electrical-testing-calculators">
                   70+ BS 7671 calculators
                 </SEOInternalLink>{' '}
                 runs natively on your iPhone. All calculations execute locally — no network
@@ -305,7 +305,7 @@ export default function ElectricianAppForiPhonePage() {
                 Courses can be downloaded for offline study — ideal for commutes, lunch breaks, or
                 quiet periods on site. Progress syncs to the cloud when connectivity returns, so
                 your employer dashboard stays up to date. Mock exams for{' '}
-                <SEOInternalLink href="/am2-exam-preparation">AM2</SEOInternalLink> and other
+                <SEOInternalLink href="/training/am2-exam-preparation">AM2</SEOInternalLink> and other
                 qualifications work offline too.
               </p>
               <p>
@@ -366,9 +366,9 @@ export default function ElectricianAppForiPhonePage() {
               <p>
                 On iPhone, that creates a proper mobile workflow rather than just a form filler:
                 capture the certificate, run the calculator, price the remedial using the{' '}
-                <SEOInternalLink href="/ai-cost-engineer">AI Cost Engineer</SEOInternalLink>, then
+                <SEOInternalLink href="/tools/ai-cost-engineer">AI Cost Engineer</SEOInternalLink>, then
                 finish with the{' '}
-                <SEOInternalLink href="/electrician-invoice-app">invoice app</SEOInternalLink> from
+                <SEOInternalLink href="/tools/electrician-invoice-app">invoice app</SEOInternalLink> from
                 the same device.
               </p>
             </>
@@ -503,7 +503,7 @@ export default function ElectricianAppForiPhonePage() {
           category: 'Tools',
         },
         {
-          href: '/electrical-testing-calculators',
+          href: '/tools/electrical-testing-calculators',
           title: 'Electrical Calculators',
           description:
             '70+ BS 7671 calculators for cable sizing, voltage drop, Zs verification, and more.',
@@ -527,7 +527,7 @@ export default function ElectricianAppForiPhonePage() {
           category: 'Platform',
         },
         {
-          href: '/ai-cost-engineer',
+          href: '/tools/ai-cost-engineer',
           title: 'AI Cost Engineer',
           description:
             'Use your iPhone to turn site notes into priced quotes and remedial estimates quickly.',
@@ -536,7 +536,7 @@ export default function ElectricianAppForiPhonePage() {
         },
       ]}
       ctaHeading="Download Elec-Mate for iPhone — free for 7 days"
-      ctaSubheading="16 certificate types, 70+ calculators, 46+ courses, AI tools, and full offline mode. Native iOS experience with Face ID. No card required to start your trial."
+      ctaSubheading="16 certificate types, 70+ calculators, 46+ courses, AI tools, and full offline mode. Native iOS experience with Face ID. No charge until day 8 — cancel anytime."
       toolPath="/tools/electrician-app-iphone"
     />
   );

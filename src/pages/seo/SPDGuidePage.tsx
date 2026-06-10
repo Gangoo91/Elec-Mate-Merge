@@ -81,7 +81,7 @@ const faqs = [
 
 const relatedPages: RelatedPage[] = [
   {
-    href: '/guides/consumer-unit-regulations',
+    href: '/consumer-unit-regulations',
     title: 'Consumer Unit Regulations',
     description:
       'Requirements for consumer unit specification, installation, and compliance with BS 7671.',
@@ -120,7 +120,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Tool',
   },
   {
-    href: '/eighteenth-edition-course',
+    href: '/training/18th-edition-course',
     title: '18th Edition Course',
     description:
       'Study for C&G 2382 with structured training modules covering all BS 7671 requirements.',
@@ -372,7 +372,7 @@ const sections = [
         </p>
         <p>
           For electricians studying for the{' '}
-          <SEOInternalLink href="/eighteenth-edition-course">
+          <SEOInternalLink href="/training/18th-edition-course">
             18th Edition qualification
           </SEOInternalLink>
           , Section 534 and Regulation 443.4 are commonly examined topics. Understanding the risk
@@ -621,7 +621,7 @@ const sections = [
         </div>
         <p>
           Use the{' '}
-          <SEOInternalLink href="/electrical-testing-calculators">
+          <SEOInternalLink href="/tools/electrical-testing-calculators">
             Elec-Mate calculators
           </SEOInternalLink>{' '}
           to verify conductor sizes, earth fault loop impedance, and{' '}
@@ -644,7 +644,7 @@ export default function SPDGuidePage() {
       title="SPD Installation Guide | BS 7671 443.4 Walkthrough"
       description="Installer-focused SPD walkthrough for UK electricians: Type 1/2/3 selection, 443.4 risk assessment, CU mounting, conductor lengths, and end-of-life checks."
       datePublished="2025-06-15"
-      dateModified="2026-05-18"
+      dateModified="2026-06-10"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Regulations Guide"

@@ -25,7 +25,7 @@ export default function BestQuotingAppPage() {
       title="Best Quoting App for Electricians 2026 | Compared"
       description="Compare the best quoting and invoicing apps for UK electricians in 2026. Elec-Mate vs Powered Now vs Tradify — pricing, certificate integration…"
       datePublished="2026-01-30"
-      dateModified="2026-05-29"
+      dateModified="2026-06-10"
       breadcrumbs={[
         { label: 'Comparisons', href: '/compare' },
         {

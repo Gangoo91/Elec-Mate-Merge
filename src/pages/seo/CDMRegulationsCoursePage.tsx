@@ -186,7 +186,7 @@ const sections = [
         </p>
         <p>
           The Elec-Mate{' '}
-          <SEOInternalLink href="/rams-generator">AI RAMS generator</SEOInternalLink> creates
+          <SEOInternalLink href="/tools/rams-generator">AI RAMS generator</SEOInternalLink> creates
           CDM-compliant risk assessments and method statements for every type of electrical work —
           from domestic installations to commercial fit-outs and industrial projects.
         </p>
@@ -474,7 +474,7 @@ const sections = [
 
 const relatedPages = [
   {
-    href: '/rams-generator',
+    href: '/tools/rams-generator',
     title: 'AI RAMS Generator',
     description:
       'Generate professional, CDM-compliant risk assessments and method statements from your phone.',

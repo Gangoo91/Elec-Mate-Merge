@@ -577,7 +577,7 @@ const sections = [
                 <h4 className="font-bold text-white mb-1">Professional Rewire Quotes</h4>
                 <p className="text-white text-sm leading-relaxed">
                   Generate detailed, itemised rewire quotes in minutes using the{' '}
-                  <SEOInternalLink href="/electrical-quoting-app">
+                  <SEOInternalLink href="/tools/electrical-quoting-app">
                     Elec-Mate quoting app
                   </SEOInternalLink>
                   . Win more Cardiff rewire jobs with professional quotes that clearly break down

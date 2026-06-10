@@ -626,7 +626,7 @@ const sections = [
                 <h4 className="font-bold text-white mb-1">Quoting App</h4>
                 <p className="text-white text-sm leading-relaxed">
                   Price ASHP electrical work with Elec-Mate's{' '}
-                  <SEOInternalLink href="/electrical-quoting-app">quoting app</SEOInternalLink>.
+                  <SEOInternalLink href="/tools/electrical-quoting-app">quoting app</SEOInternalLink>.
                   Dedicated circuit, SWA, isolator, immersion, controller wiring — all itemised.
                 </p>
               </div>
@@ -666,7 +666,7 @@ export default function AirSourceHeatPumpElectricalPage() {
       title="Air Source Heat Pump Electrical Installation | Guide UK"
       description="Complete guide to air source heat pump electrical installation in the UK. Supply requirements, circuit sizing, dedicated MCB/RCBO…"
       datePublished="2026-03-27"
-      dateModified="2026-05-18"
+      dateModified="2026-06-10"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Emerging Technology"

@@ -239,7 +239,7 @@ export default function IPAFTrainingPage() {
                 PASMA scaffold tower training
               </SEOInternalLink>{' '}
               and pairs with technical qualifications like the{' '}
-              <SEOInternalLink href="/inspection-testing-course">
+              <SEOInternalLink href="/training/inspection-and-testing">
                 C&G 2391 Inspection and Testing
               </SEOInternalLink>{' '}
               for a well-rounded professional profile.

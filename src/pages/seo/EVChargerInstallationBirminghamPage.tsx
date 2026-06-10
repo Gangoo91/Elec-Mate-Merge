@@ -122,7 +122,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Location',
   },
   {
-    href: '/guides/consumer-unit-regulations',
+    href: '/consumer-unit-regulations',
     title: 'Consumer Unit Regulations',
     description:
       'Consumer unit upgrade requirements — often needed when adding a 32A EV charger circuit.',
@@ -250,7 +250,7 @@ const sections = [
                 <strong>Older consumer units</strong> — many Birmingham properties still have
                 rewirable fuse boards or early MCB boards without RCD protection. Adding a 32A EV
                 circuit often triggers a full{' '}
-                <SEOInternalLink href="/guides/consumer-unit-regulations">
+                <SEOInternalLink href="/consumer-unit-regulations">
                   consumer unit upgrade
                 </SEOInternalLink>
                 .
@@ -455,7 +455,7 @@ const sections = [
                 <h4 className="font-bold text-white mb-1">Pricing Birmingham Jobs</h4>
                 <p className="text-white text-sm leading-relaxed">
                   Use Elec-Mate's{' '}
-                  <SEOInternalLink href="/electrical-quoting-app">quoting app</SEOInternalLink> to
+                  <SEOInternalLink href="/tools/electrical-quoting-app">quoting app</SEOInternalLink> to
                   build accurate itemised quotes. Factor in cable run distance, board upgrade
                   likelihood, and earth rod requirements.
                 </p>
@@ -497,7 +497,7 @@ export default function EVChargerInstallationBirminghamPage() {
       title="EV Charger Installation Birmingham 2026 | Costs, DNO Notification and Grants"
       description="How much does EV charger installation cost in Birmingham in 2026? Local costs, NGED DNO notification, Clean Air Zone impact, property challenges…"
       datePublished="2026-03-27"
-      dateModified="2026-05-18"
+      dateModified="2026-06-10"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Birmingham Guide"

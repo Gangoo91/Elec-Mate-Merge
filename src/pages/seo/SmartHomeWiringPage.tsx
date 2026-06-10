@@ -120,7 +120,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Certificate',
   },
   {
-    href: '/guides/consumer-unit-regulations',
+    href: '/consumer-unit-regulations',
     title: 'Consumer Unit Regulations',
     description:
       'Current regulations for consumer units — relevant when adding circuits for smart home systems.',
@@ -625,7 +625,7 @@ const sections = [
                 <h4 className="font-bold text-white mb-1">Professional Quoting</h4>
                 <p className="text-white text-sm leading-relaxed">
                   Quote smart home packages with Elec-Mate's{' '}
-                  <SEOInternalLink href="/electrical-quoting-app">quoting app</SEOInternalLink>.
+                  <SEOInternalLink href="/tools/electrical-quoting-app">quoting app</SEOInternalLink>.
                   Structured cabling, containment, access points, smart switches, network equipment,
                   labour, and testing — all itemised with your margins. Professional PDF quote sent
                   on the spot.
@@ -667,7 +667,7 @@ export default function SmartHomeWiringPage() {
       title="Smart Home Wiring Guide | Electrician's Perspective"
       description="Complete guide to smart home wiring for UK electricians. Cat 6 structured cabling, smart switches with neutral wire, Wi-Fi access points…"
       datePublished="2025-09-15"
-      dateModified="2026-05-18"
+      dateModified="2026-06-10"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Installation Guide"

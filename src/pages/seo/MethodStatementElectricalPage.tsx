@@ -741,7 +741,7 @@ const relatedPages = [
     category: 'Guide',
   },
   {
-    href: '/rams-generator',
+    href: '/tools/rams-generator',
     title: 'AI RAMS Generator',
     description: 'Generate complete RAMS packs from a job description using AI.',
     icon: Brain,
@@ -759,7 +759,7 @@ export default function MethodStatementElectricalPage() {
       title={PAGE_TITLE}
       description={PAGE_DESCRIPTION}
       datePublished="2025-01-28"
-      dateModified="2026-05-18"
+      dateModified="2026-06-10"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Safety Hub"

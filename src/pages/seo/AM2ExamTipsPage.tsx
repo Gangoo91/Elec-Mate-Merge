@@ -84,7 +84,7 @@ const relatedPages = [
     category: 'Training',
   },
   {
-    href: '/how-to-do-safe-isolation',
+    href: '/guides/how-to-do-safe-isolation',
     title: 'Safe Isolation Procedure',
     description: 'Step-by-step prove-test-prove method following HSE GS38 guidance.',
     icon: ShieldCheck,
@@ -98,14 +98,14 @@ const relatedPages = [
     category: 'Guide',
   },
   {
-    href: '/level3-electrical',
+    href: '/training/level-3-electrical',
     title: 'Level 3 Electrical',
     description: 'Level 3 diploma content, circuit design, and inspection and testing.',
     icon: BookOpen,
     category: 'Training',
   },
   {
-    href: '/epa-preparation',
+    href: '/training/epa-preparation',
     title: 'EPA Preparation',
     description: 'End Point Assessment simulator for all three EPA components.',
     icon: Award,
@@ -245,7 +245,7 @@ const sections = [
                 <p className="text-white text-sm leading-relaxed">
                   You are presented with a pre-built circuit containing one or more faults. You must
                   perform{' '}
-                  <SEOInternalLink href="/how-to-do-safe-isolation">safe isolation</SEOInternalLink>{' '}
+                  <SEOInternalLink href="/guides/how-to-do-safe-isolation">safe isolation</SEOInternalLink>{' '}
                   following the correct GS 38 procedure, then systematically test the circuit to
                   identify the fault. Common faults include open circuits, reversed polarity,
                   incorrect connections, and earth faults. Assessors watch your safe isolation
@@ -392,7 +392,7 @@ const sections = [
         </p>
         <p>
           <strong>Step 3 — Drill safe isolation until automatic:</strong> The{' '}
-          <SEOInternalLink href="/how-to-do-safe-isolation">
+          <SEOInternalLink href="/guides/how-to-do-safe-isolation">
             safe isolation procedure
           </SEOInternalLink>{' '}
           must be completely automatic. Prove the voltage indicator on a known source. Test between
@@ -555,7 +555,7 @@ export default function AM2ExamTipsPage() {
       title="AM2 Exam Tips 2026: How to Pass First Time (NET)"
       description="AM2 practical assessment 2026: consumer unit installation, ring final circuit, lighting circuit, fault finding, and testing. Common failures, what to bring, and A4:2026 BS 7671 updates you need to know."
       datePublished="2025-06-20"
-      dateModified="2026-05-22"
+      dateModified="2026-06-10"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Exam Guide"

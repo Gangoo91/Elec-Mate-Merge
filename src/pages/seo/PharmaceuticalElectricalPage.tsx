@@ -756,7 +756,7 @@ export default function PharmaceuticalElectricalPage() {
       title="Pharmaceutical Electrical Installation UK | GMP Clean Room"
       description="Complete guide to pharmaceutical electrical installation in the UK — GMP requirements, cleanroom wiring (no exposed conduit fittings)…"
       datePublished="2026-03-27"
-      dateModified="2026-05-18"
+      dateModified="2026-06-10"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Specialist Sector"

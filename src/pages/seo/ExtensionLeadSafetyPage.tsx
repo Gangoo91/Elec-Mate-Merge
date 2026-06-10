@@ -523,7 +523,7 @@ export default function ExtensionLeadSafetyPage() {
       title="Extension Lead Safety UK | Load + Daisy-Chain Rules"
       description="Extension lead safety: 13A load limit, why daisy-chaining is dangerous, when to use an RCD lead, and the BS 1363 plug marking to check before buying."
       datePublished="2026-03-27"
-      dateModified="2026-05-18"
+      dateModified="2026-06-10"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Safety Guide"

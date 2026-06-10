@@ -22,7 +22,7 @@ export default function LightingLuxCalculatorPage() {
       title="Lux Level Calculator UK | BS EN 12464-1 Lighting Design Tool"
       description="Free UK lux level calculator: 20+ room types, BS EN 12464-1 illuminance values for offices, warehouses, retail, schools, residential. No signup."
       datePublished="2026-01-20"
-      dateModified="2026-05-29"
+      dateModified="2026-06-10"
       breadcrumbs={[
         { label: 'Tools', href: '/tools' },
         { label: 'Lighting Lux Calculator', href: '/tools/lighting-lux-calculator' },
@@ -89,7 +89,7 @@ export default function LightingLuxCalculatorPage() {
                 for indoor workplaces. These standards specify the maintained illuminance — the
                 minimum average lux level on the working plane — for every type of room and task.
                 The{' '}
-                <SEOInternalLink href="/electrical-testing-calculators">
+                <SEOInternalLink href="/tools/electrical-testing-calculators">
                   Elec-Mate calculator suite
                 </SEOInternalLink>{' '}
                 includes all these values built in, so you do not need to look them up manually.
@@ -493,7 +493,7 @@ export default function LightingLuxCalculatorPage() {
           category: 'Calculators',
         },
         {
-          href: '/electrical-testing-calculators',
+          href: '/tools/electrical-testing-calculators',
           title: 'All Electrical Calculators',
           description:
             '50+ BS 7671 calculators for cable sizing, Zs verification, voltage drop, and more.',
@@ -501,7 +501,7 @@ export default function LightingLuxCalculatorPage() {
           category: 'Tools',
         },
         {
-          href: '/emergency-lighting-certificate',
+          href: '/tools/emergency-lighting-certificate',
           title: 'Emergency Lighting Certificate',
           description:
             'Complete emergency lighting certificates with built-in BS 5266-1 compliance checks.',

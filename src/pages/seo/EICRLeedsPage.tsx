@@ -84,6 +84,13 @@ const faqs = [
 
 const relatedPages: RelatedPage[] = [
   {
+    href: '/guides/eicr-cost-leeds',
+    title: 'EICR Cost in Leeds',
+    description: 'Local EICR price bands by property size, hourly rates, and remedial costs for Leeds.',
+    icon: Home,
+    category: 'Guide',
+  },
+  {
     href: '/guides/eicr-for-landlords',
     title: 'EICR for Landlords',
     description:
@@ -604,7 +611,7 @@ const sections = [
                 <h4 className="font-bold text-white mb-1">Quote Remedial Work on the Spot</h4>
                 <p className="text-white text-sm leading-relaxed">
                   When C1 or C2 observations are found, quote immediately with the{' '}
-                  <SEOInternalLink href="/electrical-quoting-app">
+                  <SEOInternalLink href="/tools/electrical-quoting-app">
                     quoting app
                   </SEOInternalLink>
                   . Landlords have 28 days to act — the electrician who quotes on the day wins the

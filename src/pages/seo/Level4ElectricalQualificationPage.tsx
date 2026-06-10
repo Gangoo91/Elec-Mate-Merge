@@ -521,7 +521,7 @@ export default function Level4ElectricalQualificationPage() {
           'The Level 4 electrical qualification is the HNC-equivalent step above Level 3. It moves you from installing systems to designing and managing them, covering advanced design, three-phase distribution, building services and project management. Common routes are the C&G Level 4 Award in Design and Verification, the EAL Level 4 Diploma, and the Pearson BTEC Level 4 HNC.',
       }}
       datePublished="2026-03-27"
-      dateModified="2026-05-18"
+      dateModified="2026-06-10"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Training Guide"

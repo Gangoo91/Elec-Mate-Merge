@@ -669,7 +669,7 @@ export default function ApprenticeFirstYearRevisionPage() {
       title="Electrical Apprentice Year 1 Revision | First Year Study"
       description="Complete Year 1 electrical apprentice revision guide. Ohm's Law, electrical units (V, A, Ω, W), basic circuit theory, series and parallel circuits…"
       datePublished="2026-03-27"
-      dateModified="2026-05-18"
+      dateModified="2026-06-10"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Apprentice Study Guide"

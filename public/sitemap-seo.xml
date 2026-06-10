@@ -22,34 +22,10 @@
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://www.elec-mate.com/ai-cost-engineer</loc>
-    <lastmod>2026-03-27</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.75</priority>
-  </url>
-  <url>
-    <loc>https://www.elec-mate.com/ai-electrician-tools</loc>
-    <lastmod>2026-03-27</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>https://www.elec-mate.com/ai-health-safety-agent</loc>
-    <lastmod>2026-03-27</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
-  </url>
-  <url>
     <loc>https://www.elec-mate.com/airbnb-electrical-safety</loc>
     <lastmod>2026-03-27</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
-  </url>
-  <url>
-    <loc>https://www.elec-mate.com/am2-exam-preparation</loc>
-    <lastmod>2026-03-27</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.85</priority>
   </url>
   <url>
     <loc>https://www.elec-mate.com/apprentice-endpoint-assessment</loc>
@@ -70,22 +46,10 @@
     <priority>0.75</priority>
   </url>
   <url>
-    <loc>https://www.elec-mate.com/apprentice-portfolio-guide</loc>
-    <lastmod>2026-03-27</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
-  </url>
-  <url>
     <loc>https://www.elec-mate.com/apprentice-progression-guide</loc>
     <lastmod>2026-03-27</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>https://www.elec-mate.com/apprentice-training</loc>
-    <lastmod>2026-03-27</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.75</priority>
   </url>
   <url>
     <loc>https://www.elec-mate.com/armoured-cable-installation</loc>
@@ -100,18 +64,6 @@
     <priority>0.7</priority>
   </url>
   
-  <url>
-    <loc>https://www.elec-mate.com/best-electrician-app</loc>
-    <lastmod>2026-03-27</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>https://www.elec-mate.com/bms-course</loc>
-    <lastmod>2026-03-27</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.75</priority>
-  </url>
   <url>
     <loc>https://www.elec-mate.com/bonding-conductors-guide</loc>
     <lastmod>2026-06-03</lastmod>
@@ -179,12 +131,6 @@
     <priority>0.75</priority>
   </url>
   <url>
-    <loc>https://www.elec-mate.com/cash-flow-planner</loc>
-    <lastmod>2026-03-27</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
-  </url>
-  <url>
     <loc>https://www.elec-mate.com/cctv-installation-electrical</loc>
     <lastmod>2026-03-27</lastmod>
     <changefreq>monthly</changefreq>
@@ -207,12 +153,6 @@
     <lastmod>2026-03-27</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>https://www.elec-mate.com/city-guilds2391</loc>
-    <lastmod>2026-03-27</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
   </url>
   <url>
     <loc>https://www.elec-mate.com/cleanroom-electrical</loc>
@@ -396,12 +336,6 @@
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://www.elec-mate.com/earthing-arrangements</loc>
-    <lastmod>2026-03-27</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
-  </url>
-  <url>
     <loc>https://www.elec-mate.com/earthing-systems-guide</loc>
     <lastmod>2026-03-27</lastmod>
     <changefreq>monthly</changefreq>
@@ -564,18 +498,6 @@
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://www.elec-mate.com/eighteenth-edition-course</loc>
-    <lastmod>2026-03-27</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.75</priority>
-  </url>
-  <url>
-    <loc>https://www.elec-mate.com/elec-mate-vs-certs-app</loc>
-    <lastmod>2026-03-27</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.75</priority>
-  </url>
-  <url>
     <loc>https://www.elec-mate.com/elec-mate-vs-i-certifi</loc>
     <lastmod>2026-03-27</lastmod>
     <changefreq>monthly</changefreq>
@@ -684,12 +606,6 @@
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://www.elec-mate.com/electrical-quoting-app</loc>
-    <lastmod>2026-03-27</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
-  </url>
-  <url>
     <loc>https://www.elec-mate.com/electrical-rescue-procedure</loc>
     <lastmod>2026-03-27</lastmod>
     <changefreq>monthly</changefreq>
@@ -709,12 +625,6 @@
   </url>
   <url>
     <loc>https://www.elec-mate.com/electrical-test-equipment-guide</loc>
-    <lastmod>2026-03-27</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>https://www.elec-mate.com/electrical-testing-calculators</loc>
     <lastmod>2026-03-27</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
@@ -763,12 +673,6 @@
   </url>
   <url>
     <loc>https://www.elec-mate.com/electrician-hourly-rate</loc>
-    <lastmod>2026-03-27</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>https://www.elec-mate.com/electrician-invoice-app</loc>
     <lastmod>2026-03-27</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
@@ -1080,12 +984,6 @@
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://www.elec-mate.com/emergency-lighting-certificate</loc>
-    <lastmod>2026-03-27</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
-  </url>
-  <url>
     <loc>https://www.elec-mate.com/emergency-lighting-fault-finding</loc>
     <lastmod>2026-03-27</lastmod>
     <changefreq>monthly</changefreq>
@@ -1096,12 +994,6 @@
     <lastmod>2026-03-27</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>https://www.elec-mate.com/epa-preparation</loc>
-    <lastmod>2026-03-27</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
   </url>
   <url>
     <loc>https://www.elec-mate.com/ev-charger-brand-comparison</loc>
@@ -3342,12 +3234,6 @@
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://www.elec-mate.com/guides/how-to-become-electrician</loc>
-    <lastmod>2026-03-27</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
-  </url>
-  <url>
     <loc>https://www.elec-mate.com/guides/how-to-fill-in-minor-works</loc>
     <lastmod>2026-03-27</lastmod>
     <changefreq>monthly</changefreq>
@@ -4736,31 +4622,7 @@
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://www.elec-mate.com/how-to-do-safe-isolation</loc>
-    <lastmod>2026-03-27</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>https://www.elec-mate.com/how-to-fill-in-eicr</loc>
-    <lastmod>2026-03-27</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
-  </url>
-  <url>
     <loc>https://www.elec-mate.com/how-to-read-wiring-diagram</loc>
-    <lastmod>2026-03-27</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>https://www.elec-mate.com/how-to-size-cables</loc>
-    <lastmod>2026-03-27</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>https://www.elec-mate.com/how-to-test-insulation-resistance</loc>
     <lastmod>2026-03-27</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
@@ -4797,12 +4659,6 @@
   </url>
   <url>
     <loc>https://www.elec-mate.com/infrared-heating-installation</loc>
-    <lastmod>2026-03-27</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>https://www.elec-mate.com/inspection-testing-course</loc>
     <lastmod>2026-03-27</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
@@ -4917,18 +4773,6 @@
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://www.elec-mate.com/level2-electrical</loc>
-    <lastmod>2026-03-27</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.75</priority>
-  </url>
-  <url>
-    <loc>https://www.elec-mate.com/level3-electrical</loc>
-    <lastmod>2026-03-27</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.75</priority>
-  </url>
-  <url>
     <loc>https://www.elec-mate.com/lighting-circuit-installation</loc>
     <lastmod>2026-03-27</lastmod>
     <changefreq>monthly</changefreq>
@@ -4965,12 +4809,6 @@
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://www.elec-mate.com/manual-handling-course</loc>
-    <lastmod>2026-03-27</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.75</priority>
-  </url>
-  <url>
     <loc>https://www.elec-mate.com/manufacturing-plant-electrical</loc>
     <lastmod>2026-03-27</lastmod>
     <changefreq>monthly</changefreq>
@@ -4993,12 +4831,6 @@
     <lastmod>2026-03-27</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>https://www.elec-mate.com/minor-works-certificate</loc>
-    <lastmod>2026-03-27</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
   </url>
   <url>
     <loc>https://www.elec-mate.com/motor-starters-installation</loc>
@@ -5091,12 +4923,6 @@
     <priority>0.75</priority>
   </url>
   <url>
-    <loc>https://www.elec-mate.com/pat-testing</loc>
-    <lastmod>2026-03-27</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
-  </url>
-  <url>
     <loc>https://www.elec-mate.com/period-property-electrical</loc>
     <lastmod>2026-03-27</lastmod>
     <changefreq>monthly</changefreq>
@@ -5163,19 +4989,13 @@
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://www.elec-mate.com/rams-generator</loc>
-    <lastmod>2026-03-27</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
-  </url>
-  <url>
     <loc>https://www.elec-mate.com/rcbo-installation-guide</loc>
     <lastmod>2026-03-27</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://www.elec-mate.com/rcd-testing-guide</loc>
+    <loc>https://www.elec-mate.com/tools/rcd-testing-guide</loc>
     <lastmod>2026-03-27</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
@@ -5401,12 +5221,6 @@
     <lastmod>2026-03-27</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>https://www.elec-mate.com/solar-pv-certificate</loc>
-    <lastmod>2026-03-27</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
   </url>
   <url>
     <loc>https://www.elec-mate.com/solar-pv-grants</loc>

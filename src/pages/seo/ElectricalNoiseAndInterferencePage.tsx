@@ -22,7 +22,7 @@ export default function ElectricalNoiseAndInterferencePage() {
       title="Electrical Noise & Interference | EMC Guide for Electricians"
       description="Comprehensive guide to electromagnetic interference (EMI) and radio frequency interference (RFI) in electrical installations."
       datePublished="2025-08-01"
-      dateModified="2026-05-18"
+      dateModified="2026-06-10"
       breadcrumbs={[
         { label: 'Guides', href: '/guides' },
         { label: 'Electrical Noise', href: '/guides/electrical-noise-interference' },
@@ -603,7 +603,7 @@ export default function ElectricalNoiseAndInterferencePage() {
           category: 'Calculator',
         },
         {
-          href: '/testing-sequence-guide',
+          href: '/guides/testing-sequence-guide',
           title: 'Testing Sequence Guide',
           description: 'The correct order of electrical tests.',
           icon: ClipboardCheck,

@@ -246,7 +246,7 @@ const sections = [
         <p>
           During periodic inspection, electricians should torque-check every accessible terminal
           connection. Elec-Mate&apos;s{' '}
-          <SEOInternalLink href="/electrical-testing-calculators">
+          <SEOInternalLink href="/tools/electrical-testing-calculators">
             testing calculators
           </SEOInternalLink>{' '}
           help you verify that measured values are within acceptable limits for each circuit type.
@@ -597,7 +597,7 @@ const sections = [
         <p>
           For electricians, recommending AFDDs and regular thermal imaging surveys to clients is an
           opportunity to add value. Elec-Mate's{' '}
-          <SEOInternalLink href="/eighteenth-edition-course">
+          <SEOInternalLink href="/training/18th-edition-course">
             18th Edition training courses
           </SEOInternalLink>{' '}
           cover the latest requirements for arc fault protection and socket circuit design.
@@ -617,7 +617,7 @@ export default function BurningSmellFromSocketPage() {
       title="Burning Smell from Socket | Causes & What to Do"
       description="Burning smell from an electrical socket? Expert guide covering loose connections, overloaded circuits, arcing faults, when to isolate…"
       datePublished="2025-08-20"
-      dateModified="2026-05-18"
+      dateModified="2026-06-10"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Safety Guide"

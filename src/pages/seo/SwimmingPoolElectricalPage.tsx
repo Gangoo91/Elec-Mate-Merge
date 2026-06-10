@@ -101,7 +101,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Guide',
   },
   {
-    href: '/earthing-arrangements',
+    href: '/guides/earthing-arrangements',
     title: 'Earthing Arrangements Explained',
     description:
       'TN-S, TN-C-S, and TT earthing systems explained — critical knowledge for pool installations.',
@@ -125,7 +125,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Certificate',
   },
   {
-    href: '/eighteenth-edition-course',
+    href: '/training/18th-edition-course',
     title: '18th Edition Course',
     description:
       'Study Section 702 in detail with structured training modules and practice exam questions.',
@@ -762,7 +762,7 @@ export default function SwimmingPoolElectricalPage() {
       title="Swimming Pool + Hot Tub Electrics: BS 7671 Section 702"
       description="Swimming pool + hot tub electrics under BS 7671 Section 702: zones 0/1/2, SELV in Zone 0, IP ratings, supplementary bonding, 30mA RCD. Indoor + outdoor."
       datePublished="2025-04-20"
-      dateModified="2026-05-22"
+      dateModified="2026-06-10"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Regulations Guide"

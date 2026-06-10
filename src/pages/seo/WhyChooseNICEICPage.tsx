@@ -116,14 +116,14 @@ const relatedPages: RelatedPage[] = [
     category: 'Guide',
   },
   {
-    href: '/how-to-fill-in-eicr',
+    href: '/guides/how-to-fill-in-eicr',
     title: 'How to Fill In an EICR',
     description: 'Step-by-step guide to completing every section of the EICR form correctly.',
     icon: ClipboardCheck,
     category: 'Guide',
   },
   {
-    href: '/inspection-testing-course',
+    href: '/training/inspection-and-testing',
     title: 'Inspection & Testing Course',
     description:
       'Study for C&G 2391 with 50+ structured training courses on the Elec-Mate platform.',
@@ -633,7 +633,7 @@ const sections = [
                 <td className="p-3 font-medium text-yellow-400">Inspection &amp; testing</td>
                 <td className="p-3">
                   A recognised initial verification and periodic inspection qualification — see the{' '}
-                  <SEOInternalLink href="/inspection-testing-course">Inspection &amp; Testing course</SEOInternalLink>
+                  <SEOInternalLink href="/training/inspection-and-testing">Inspection &amp; Testing course</SEOInternalLink>
                 </td>
               </tr>
               <tr className="border-t border-white/10">
@@ -714,7 +714,7 @@ export default function WhyChooseNICEICPage() {
       title="Why Choose a NICEIC Electrician | Consumer Guide"
       description="Complete guide to NICEIC registration for consumers. What NICEIC registration means, the Platinum Promise guarantee, complaints procedure…"
       datePublished="2025-07-01"
-      dateModified="2026-05-18"
+      dateModified="2026-06-10"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Consumer Guide"

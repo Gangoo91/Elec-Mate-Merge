@@ -289,7 +289,7 @@ const sections = [
                   Inconsistent quoting — sometimes charging market rates, sometimes undercharging
                   out of habit — is the most common reason small electrical businesses leave money
                   on the table. Use a{' '}
-                  <SEOInternalLink href="/electrical-quoting-app">
+                  <SEOInternalLink href="/tools/electrical-quoting-app">
                     professional quoting app
                   </SEOInternalLink>{' '}
                   with pre-built price lists for your common jobs. This ensures consistency, speeds
@@ -587,7 +587,7 @@ export default function GrowingElectricalBusinessPage() {
       title="How to Grow Your Electrical Business UK | Scaling Guide"
       description="Complete guide to growing a UK electrical business — from sole trader to small team to established contractor."
       datePublished="2026-03-27"
-      dateModified="2026-05-18"
+      dateModified="2026-06-10"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Business Guide"

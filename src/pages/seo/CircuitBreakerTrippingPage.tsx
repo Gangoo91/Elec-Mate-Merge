@@ -663,7 +663,7 @@ export default function CircuitBreakerTrippingPage() {
       title={PAGE_TITLE}
       description={PAGE_DESCRIPTION}
       datePublished="2025-08-10"
-      dateModified="2026-05-29"
+      dateModified="2026-06-10"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Troubleshooting"

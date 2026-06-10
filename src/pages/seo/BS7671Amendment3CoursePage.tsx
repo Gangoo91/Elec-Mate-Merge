@@ -178,7 +178,7 @@ const sections = [
         </p>
         <p>
           For electricians studying for or holding the{' '}
-          <SEOInternalLink href="/eighteenth-edition-course">
+          <SEOInternalLink href="/training/18th-edition-course">
             18th Edition qualification (C&G 2382)
           </SEOInternalLink>
           , Amendment 3 is required knowledge. Exam questions may reference the A3:2024 Section 530
@@ -469,7 +469,7 @@ const sections = [
 
 const relatedPages = [
   {
-    href: '/eighteenth-edition-course',
+    href: '/training/18th-edition-course',
     title: '18th Edition Course (C&G 2382)',
     description:
       'Full 18th Edition study course covering all parts of BS 7671:2018+A3:2024 with interactive quizzes and mock exams.',
@@ -509,7 +509,7 @@ const relatedPages = [
     category: 'Training' as const,
   },
   {
-    href: '/solar-pv-certificate',
+    href: '/tools/solar-pv-certificate',
     title: 'Solar PV Installation Course',
     description:
       'Solar PV design and installation training — including inverter selection and bidirectional protection.',

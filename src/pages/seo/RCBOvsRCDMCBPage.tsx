@@ -102,7 +102,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Guide',
   },
   {
-    href: '/guides/consumer-unit-regulations',
+    href: '/consumer-unit-regulations',
     title: 'Consumer Unit Regulations',
     description:
       'Amendment 4 requirements, metal enclosures, and consumer unit replacement regulations.',
@@ -638,7 +638,7 @@ export default function RCBOvsRCDMCBPage() {
       title="RCBO vs RCD + MCB | Which Is Better?"
       description="Complete comparison of RCBO boards vs split-load RCD+MCB consumer units for UK electricians. Cost comparison, nuisance tripping advantage…"
       datePublished="2025-07-01"
-      dateModified="2026-05-18"
+      dateModified="2026-06-10"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Protection Design"

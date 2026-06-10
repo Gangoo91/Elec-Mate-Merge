@@ -88,6 +88,13 @@ const faqs = [
 
 const relatedPages: RelatedPage[] = [
   {
+    href: '/guides/eicr-cost-southampton',
+    title: 'EICR Cost in Southampton',
+    description: 'Local EICR price bands by property size, hourly rates, and remedial costs for Southampton.',
+    icon: Home,
+    category: 'Guide',
+  },
+  {
     href: '/guides/eicr-for-landlords',
     title: 'EICR for Landlords',
     description:
@@ -611,7 +618,7 @@ const sections = [
                 <p className="text-white text-sm leading-relaxed">
                   When the EICR identifies C1 or C2 observations, quote the remedial work
                   immediately using the{' '}
-                  <SEOInternalLink href="/electrical-quoting-app">quoting app</SEOInternalLink>.
+                  <SEOInternalLink href="/tools/electrical-quoting-app">quoting app</SEOInternalLink>.
                   Southampton landlords are legally obligated to act within 28 days — the
                   electrician who delivers the quote on the day wins the remedial work.
                 </p>
@@ -661,7 +668,7 @@ export default function EICRSouthamptonPage() {
       title="EICR Southampton | Electrical Safety Certificate Cost 2026"
       description="EICR costs in Southampton for 2026. Landlord legal requirements, Southampton City Council enforcement, post-war housing stock findings…"
       datePublished="2026-03-27"
-      dateModified="2026-05-18"
+      dateModified="2026-06-10"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="EICR Guide"

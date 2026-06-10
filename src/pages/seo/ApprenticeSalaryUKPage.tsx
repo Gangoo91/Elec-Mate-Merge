@@ -113,14 +113,14 @@ const relatedPages: RelatedPage[] = [
     category: 'Guide',
   },
   {
-    href: '/apprentice-portfolio-guide',
+    href: '/training/apprentice-portfolio',
     title: 'Apprentice Portfolio Guide',
     description: 'How to build an evidence portfolio that impresses your EPA assessor.',
     icon: BookOpen,
     category: 'Guide',
   },
   {
-    href: '/apprentice-training',
+    href: '/training/electrical-apprentice',
     title: 'Apprentice Training Hub',
     description:
       'Level 2 and Level 3 courses, revision tools, and study resources for electrical apprentices.',
@@ -238,7 +238,7 @@ const sections = [
                   You are doing productive work on site with minimal supervision. You may be running
                   small jobs on your own. You are studying for your Level 3 qualification and
                   preparing for the{' '}
-                  <SEOInternalLink href="/am2-exam-preparation">AM2 assessment</SEOInternalLink>.
+                  <SEOInternalLink href="/training/am2-exam-preparation">AM2 assessment</SEOInternalLink>.
                   Your productivity is close to a qualified electrician, and your pay is stepping up
                   accordingly.
                 </p>
@@ -551,7 +551,7 @@ const sections = [
               <span>
                 <strong>Study hard and pass first time.</strong> Failing exams costs time and money.
                 Use the{' '}
-                <SEOInternalLink href="/apprentice-training">
+                <SEOInternalLink href="/training/electrical-apprentice">
                   Elec-Mate apprentice training hub
                 </SEOInternalLink>{' '}
                 to revise between college sessions. Passing first time gets you to qualified status
@@ -562,7 +562,7 @@ const sections = [
               <TrendingUp className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Keep records of everything you learn.</strong> Build your{' '}
-                <SEOInternalLink href="/apprentice-portfolio-guide">
+                <SEOInternalLink href="/training/apprentice-portfolio">
                   apprentice portfolio
                 </SEOInternalLink>{' '}
                 as you go. A strong portfolio makes the EPA easier and demonstrates your competence
@@ -595,7 +595,7 @@ const sections = [
       <>
         <p>
           Completing your apprenticeship and passing the{' '}
-          <SEOInternalLink href="/am2-exam-preparation">AM2 assessment</SEOInternalLink> is the
+          <SEOInternalLink href="/training/am2-exam-preparation">AM2 assessment</SEOInternalLink> is the
           gateway to significantly higher earnings. Here is what typically happens to your income
           after you qualify:
         </p>
@@ -660,7 +660,7 @@ export default function ApprenticeSalaryUKPage() {
       title="Apprentice Electrician Pay 2026: Year 1-4 Rates UK"
       description="UK apprentice electrician pay 2026: Year 1 £14-18k, Year 4 £22-28k. NMW rates by age, JIB rates, London weighting, overtime, take-home explained."
       datePublished="2025-06-15"
-      dateModified="2026-05-22"
+      dateModified="2026-06-10"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Career Guide"

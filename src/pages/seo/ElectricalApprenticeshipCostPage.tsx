@@ -103,7 +103,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Guide',
   },
   {
-    href: '/epa-preparation',
+    href: '/training/epa-preparation',
     title: 'EPA Preparation Guide',
     description:
       'How to prepare for the end-point assessment — knowledge test, skills test, and professional discussion.',
@@ -119,7 +119,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Guide',
   },
   {
-    href: '/guides/how-to-become-electrician',
+    href: '/guides/how-to-become-an-electrician',
     title: 'How to Become an Electrician',
     description:
       'Step-by-step route to becoming a qualified electrician in the UK — college, apprenticeship, or adult retraining.',
@@ -127,7 +127,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Guide',
   },
   {
-    href: '/apprentice-portfolio-guide',
+    href: '/training/apprentice-portfolio',
     title: 'Apprentice Portfolio Guide',
     description:
       'How to build your apprentice portfolio — evidence requirements, photo tips, and common mistakes.',
@@ -628,7 +628,7 @@ export default function ElectricalApprenticeshipCostPage() {
       title="Electrical Apprenticeship Cost | Fees & Funding UK"
       description="How much does an electrical apprenticeship cost in the UK? Apprenticeship levy explained, funding bands, 5% co-investment, tool and PPE costs, and apprentice wages from year 1 to qualified."
       datePublished="2025-08-01"
-      dateModified="2026-05-18"
+      dateModified="2026-06-10"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Apprentice Guide"

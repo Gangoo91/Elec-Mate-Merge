@@ -104,7 +104,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Guide',
   },
   {
-    href: '/electrical-quoting-app',
+    href: '/tools/electrical-quoting-app',
     title: 'Electrical Quoting App',
     description: 'Professional quotes sent from your phone directly to clients.',
     icon: FileCheck2,
@@ -501,7 +501,7 @@ const sections = [
         <p>
           Insurance protects you when things go wrong, but strong business systems reduce the
           likelihood of disputes and lost revenue in the first place. Elec-Mate's{' '}
-          <SEOInternalLink href="/electrical-quoting-app">quoting</SEOInternalLink> and{' '}
+          <SEOInternalLink href="/tools/electrical-quoting-app">quoting</SEOInternalLink> and{' '}
           <SEOInternalLink href="/tools/eicr-certificate">certification tools</SEOInternalLink>{' '}
           create a professional record of every job, protecting you commercially as well as giving
           your clients the documentation they need.

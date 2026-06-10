@@ -564,7 +564,7 @@ const sections = [
                 <h4 className="font-bold text-white mb-1">Show Grant Savings on Your Quotes</h4>
                 <p className="text-white text-sm leading-relaxed">
                   Use the{' '}
-                  <SEOInternalLink href="/electrical-quoting-app">
+                  <SEOInternalLink href="/tools/electrical-quoting-app">
                     Elec-Mate quoting app
                   </SEOInternalLink>{' '}
                   to present WCS quotes with the per-socket grant deduction clearly shown. Business

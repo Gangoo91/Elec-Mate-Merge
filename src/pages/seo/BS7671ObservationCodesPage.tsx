@@ -107,7 +107,7 @@ const articleSchema = {
   headline: PAGE_TITLE,
   description: PAGE_DESCRIPTION,
   datePublished: '2025-01-15',
-  dateModified: '2026-05-18',
+  dateModified: '2026-06-10',
   author: {
     '@type': 'Organization',
     name: 'Elec-Mate',
@@ -265,7 +265,7 @@ export default function BS7671ObservationCodesPage() {
               before the certificate is issued, so there is no need for classification codes. The
               EICR, by contrast, reports on the condition of an installation as found, which may
               include defects of varying severity. Preparing for your{' '}
-              <SEOInternalLink href="/city-guilds2391">
+              <SEOInternalLink href="/training/city-guilds-2391">
                 C&G 2391-52 inspection and testing qualification
               </SEOInternalLink>{' '}
               gives you the knowledge to code observations consistently and correctly.

@@ -119,7 +119,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Tool',
   },
   {
-    href: '/guides/consumer-unit-regulations',
+    href: '/consumer-unit-regulations',
     title: 'Consumer Unit Regulations',
     description:
       'Current regulations for consumer units including Amendment 4 and AFDD requirements.',
@@ -448,7 +448,7 @@ const sections = [
         <p>
           Understanding schematic diagrams is particularly important for electricians working on
           commercial and industrial installations, where control circuits can be complex.{' '}
-          <SEOInternalLink href="/guides/how-to-become-electrician">Apprentices</SEOInternalLink>{' '}
+          <SEOInternalLink href="/guides/how-to-become-an-electrician">Apprentices</SEOInternalLink>{' '}
           learn schematic reading as part of the Level 3 qualification, and it is tested in both
           theory exams and the AM2.
         </p>
@@ -675,7 +675,7 @@ export default function HowToReadElectricalDrawingsPage() {
       title="How to Read Electrical Drawings | Symbols Guide UK"
       description="Learn how to read electrical drawings and diagrams. BS EN 60617 symbols explained, single-line diagrams, wiring diagrams, schematic diagrams…"
       datePublished="2025-07-01"
-      dateModified="2026-05-18"
+      dateModified="2026-06-10"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Skills Guide"

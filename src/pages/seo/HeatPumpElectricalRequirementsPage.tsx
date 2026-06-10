@@ -101,7 +101,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Certificate',
   },
   {
-    href: '/electrical-quoting-app',
+    href: '/tools/electrical-quoting-app',
     title: 'Electrical Quoting App',
     description:
       'Quote heat pump electrical packages including dedicated circuit, immersion, and controls wiring.',
@@ -555,7 +555,7 @@ export default function HeatPumpElectricalRequirementsPage() {
       title="Heat Pump Electrical Requirements UK | ASHP Circuit Sizing"
       description="Complete guide to air source heat pump electrical requirements in the UK. ASHP circuit sizing (32A–63A), DNO notification, immersion backup circuit…"
       datePublished="2026-03-27"
-      dateModified="2026-05-18"
+      dateModified="2026-06-10"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Installation Guide"

@@ -127,7 +127,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Certificate',
   },
   {
-    href: '/earthing-arrangements',
+    href: '/guides/earthing-arrangements',
     title: 'Earthing Arrangements',
     description:
       'TN-S, TN-C-S, and TT earthing systems and their implications for outdoor electrical work.',
@@ -277,7 +277,7 @@ const sections = [
         <p>
           If the property has an older consumer unit without RCD protection, adding an outdoor
           socket is a strong reason to upgrade the{' '}
-          <SEOInternalLink href="/guides/consumer-unit-regulations">consumer unit</SEOInternalLink>.
+          <SEOInternalLink href="/consumer-unit-regulations">consumer unit</SEOInternalLink>.
           Do not install an outdoor socket without 30mA RCD protection under any circumstances.
         </p>
       </>
@@ -622,7 +622,7 @@ const sections = [
                 <h4 className="font-bold text-white mb-1">Professional Quoting</h4>
                 <p className="text-white text-sm leading-relaxed">
                   Quote outdoor socket installations with Elec-Mate's{' '}
-                  <SEOInternalLink href="/electrical-quoting-app">quoting app</SEOInternalLink>.
+                  <SEOInternalLink href="/tools/electrical-quoting-app">quoting app</SEOInternalLink>.
                   Materials, cable, trenching, RCBO, testing, and certification — itemised with your
                   margins. Send a professional PDF quote on the spot.
                 </p>
@@ -663,7 +663,7 @@ export default function OutdoorSocketsGuidePage() {
       title="Outdoor Sockets Regulations | IP Rating & RCD Guide"
       description="Complete guide to outdoor socket regulations in the UK. IP65/IP66 requirements, 30mA RCD protection, cable burial depth…"
       datePublished="2025-10-01"
-      dateModified="2026-05-18"
+      dateModified="2026-06-10"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Installation Guide"

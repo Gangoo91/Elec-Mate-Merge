@@ -22,7 +22,7 @@ import {
 // -------------------------------------------------------------------
 
 const breadcrumbs = [
-  { label: 'Calculators', href: '/electrical-testing-calculators' },
+  { label: 'Calculators', href: '/tools/electrical-testing-calculators' },
   { label: 'Earth Fault Loop Impedance', href: '/guides/earth-fault-loop-impedance-calculation' },
 ];
 
@@ -128,7 +128,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Guide',
   },
   {
-    href: '/earthing-arrangements',
+    href: '/guides/earthing-arrangements',
     title: 'Earthing Arrangements',
     description:
       'TN-S, TN-C-S (PME), and TT earthing systems and how they affect Ze and Zs values.',
@@ -227,7 +227,7 @@ const sections = [
           outside the installation, belonging to the supply company. It includes the impedance of
           the supply transformer winding, the phase conductor of the supply cable from the
           transformer to the property, and the earth return path (which varies depending on the{' '}
-          <SEOInternalLink href="/earthing-arrangements">earthing arrangement</SEOInternalLink>
+          <SEOInternalLink href="/guides/earthing-arrangements">earthing arrangement</SEOInternalLink>
           ).
         </p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
@@ -589,7 +589,7 @@ const sections = [
               Note: If Ze were higher (for example, 0.80 ohms on a property far from the
               transformer), Zs would be 0.939 ohms — still within the maximum but above the 80% rule
               of thumb. This shows why{' '}
-              <SEOInternalLink href="/earthing-arrangements">Ze values</SEOInternalLink> matter for
+              <SEOInternalLink href="/guides/earthing-arrangements">Ze values</SEOInternalLink> matter for
               high-current circuits.
             </p>
           </div>
@@ -753,7 +753,7 @@ export default function EarthFaultLoopImpedancePage() {
       title="Earth Fault Loop Impedance Calculation | Zs Guide"
       description="Complete guide to earth fault loop impedance (Zs) calculation. The formula Zs = Ze + (R1+R2), temperature correction factors…"
       datePublished="2025-05-10"
-      dateModified="2026-05-18"
+      dateModified="2026-06-10"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Technical Guide"

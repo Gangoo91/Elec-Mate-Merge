@@ -22,7 +22,7 @@ import {
 // -------------------------------------------------------------------
 
 const breadcrumbs = [
-  { label: 'AI Tools', href: '/ai-electrician-tools' },
+  { label: 'AI Tools', href: '/tools/ai-electrician' },
   { label: 'AI Commissioning Specialist', href: '/tools/ai-commissioning-specialist' },
 ];
 
@@ -97,7 +97,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Tool',
   },
   {
-    href: '/tools/ai-circuit-designer',
+    href: '/ai-circuit-designer',
     title: 'AI Circuit Designer',
     description:
       'Design complete electrical circuits with automatic cable sizing, protection device selection, and voltage drop verification.',
@@ -220,7 +220,7 @@ const sections = [
         <p>
           Unlike a generic checklist template, this AI agent understands the specific requirements
           of each installation type. An{' '}
-          <SEOInternalLink href="/tools/ai-circuit-designer">AI-designed circuit</SEOInternalLink>{' '}
+          <SEOInternalLink href="/ai-circuit-designer">AI-designed circuit</SEOInternalLink>{' '}
           with an EV charger has different commissioning requirements than a standard domestic
           rewire. A three-phase commercial distribution board requires phase rotation verification
           and load balance checks that are not relevant to single-phase domestic work. The AI adapts
@@ -229,7 +229,7 @@ const sections = [
         <p>
           The Commissioning Specialist works alongside the other Elec-AI agents. Circuit designs
           from the{' '}
-          <SEOInternalLink href="/tools/ai-circuit-designer">Circuit Designer</SEOInternalLink> can
+          <SEOInternalLink href="/ai-circuit-designer">Circuit Designer</SEOInternalLink> can
           be fed directly into the Commissioning Specialist, which then generates a commissioning
           plan that matches the design specification exactly. Completed commissioning results flow
           into the{' '}

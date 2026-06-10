@@ -106,7 +106,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Cost Guide',
   },
   {
-    href: '/electrical-quoting-app',
+    href: '/tools/electrical-quoting-app',
     title: 'Electrical Quoting App',
     description: 'Create professional garage and outbuilding electrical quotes from your phone.',
     icon: FileCheck2,
@@ -504,7 +504,7 @@ const sections = [
                 <p className="text-white text-sm leading-relaxed">
                   If the customer has a car, offer the EV charger option. On a new garage
                   installation, adding a 32A EV circuit costs far less than a standalone job. Use
-                  the <SEOInternalLink href="/electrical-quoting-app">quoting app</SEOInternalLink>{' '}
+                  the <SEOInternalLink href="/tools/electrical-quoting-app">quoting app</SEOInternalLink>{' '}
                   to show the cost with and without the EV charger option — most customers choose
                   the upgrade when the price difference is clear.
                 </p>
@@ -532,7 +532,7 @@ export default function GarageElectricalCostPage() {
       title="Garage Electrical Installation Cost UK 2026 | Garage Wiring"
       description="Garage electrical installation costs in the UK for 2026. Detached garage from £800–£2,000, integral garage £400–£800."
       datePublished="2026-01-01"
-      dateModified="2026-05-18"
+      dateModified="2026-06-10"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Cost Guide"

@@ -429,7 +429,7 @@ const sections = [
                 <strong>Support their portfolio.</strong> Help the apprentice identify portfolio
                 evidence from their daily work. Photographs of completed work, descriptions of
                 tasks, and supervisor witness statements all contribute to their{' '}
-                <SEOInternalLink href="/apprentice-portfolio-guide">
+                <SEOInternalLink href="/training/apprentice-portfolio">
                   portfolio
                 </SEOInternalLink>
                 .
@@ -481,7 +481,7 @@ const relatedPages = [
     category: 'Training' as const,
   },
   {
-    href: '/apprentice-portfolio-guide',
+    href: '/training/apprentice-portfolio',
     title: 'Apprentice Portfolio Guide',
     description:
       'How to build a strong NVQ portfolio — evidence types, witness statements, and assessment preparation.',

@@ -690,7 +690,7 @@ const sections = [
                 <h4 className="font-bold text-white mb-1">Quote Wiring Upgrades On the Spot</h4>
                 <p className="text-white text-sm leading-relaxed">
                   Garages frequently have substandard or aged wiring. When you find a fault, use the{' '}
-                  <SEOInternalLink href="/electrical-quoting-app">
+                  <SEOInternalLink href="/tools/electrical-quoting-app">
                     Elec-Mate quoting app
                   </SEOInternalLink>{' '}
                   to produce a professional quote for any upgrade work on the spot. Customers who

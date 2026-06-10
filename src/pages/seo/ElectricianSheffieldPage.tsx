@@ -122,7 +122,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Guide',
   },
   {
-    href: '/electrical-quoting-app',
+    href: '/tools/electrical-quoting-app',
     title: 'Electrical Quoting App',
     description: 'Create professional quotes for Sheffield customers with accurate local pricing.',
     icon: PoundSterling,
@@ -276,7 +276,7 @@ const sections = [
         <p>
           These prices are indicative and vary based on property condition, access, and
           specification. Use Elec-Mate's{' '}
-          <SEOInternalLink href="/electrical-quoting-app">quoting app</SEOInternalLink> to build
+          <SEOInternalLink href="/tools/electrical-quoting-app">quoting app</SEOInternalLink> to build
           accurate, itemised quotes on site and send professional PDFs to customers instantly.
         </p>
       </>
@@ -639,7 +639,7 @@ const sections = [
                 <h4 className="font-bold text-white mb-1">Quote on Site, Win More Work</h4>
                 <p className="text-white text-sm leading-relaxed">
                   Use the{' '}
-                  <SEOInternalLink href="/electrical-quoting-app">quoting app</SEOInternalLink> to
+                  <SEOInternalLink href="/tools/electrical-quoting-app">quoting app</SEOInternalLink> to
                   build professional, itemised quotes during the survey. Sheffield landlords with
                   multiple HMOs value electricians who can provide clear pricing quickly. Send the
                   PDF quote before you leave the property.
@@ -699,7 +699,7 @@ export default function ElectricianSheffieldPage() {
       title="Electrician in Sheffield | Find Qualified Electricians 2026"
       description="Find qualified, registered electricians in Sheffield. Realistic 2026 pricing, Northern Powergrid DNO, steel city industrial conversions…"
       datePublished="2026-03-27"
-      dateModified="2026-05-18"
+      dateModified="2026-06-10"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Find an Electrician"

@@ -22,7 +22,7 @@ import {
 // -------------------------------------------------------------------
 
 const breadcrumbs = [
-  { label: 'AI Tools', href: '/ai-electrician-tools' },
+  { label: 'AI Tools', href: '/tools/ai-electrician' },
   { label: 'AI Regulations Lookup', href: '/tools/ai-regulations-lookup' },
 ];
 
@@ -121,7 +121,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Guide',
   },
   {
-    href: '/earthing-arrangements',
+    href: '/guides/earthing-arrangements',
     title: 'Earthing Arrangements UK',
     description:
       'TN-S, TN-C-S, and TT earthing systems explained with regulation references and practical guidance.',
@@ -454,7 +454,7 @@ export default function AIRegulationsLookupPage() {
       title="AI Regulations Lookup | BS 7671 Search Tool"
       description="Search BS 7671:2018+A4:2026 in plain English. Ask any question and get the specific regulation number, full text, and practical guidance."
       datePublished="2025-06-15"
-      dateModified="2026-05-18"
+      dateModified="2026-06-10"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="AI Regulations Agent"

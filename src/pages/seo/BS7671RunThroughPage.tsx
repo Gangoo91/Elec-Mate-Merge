@@ -177,7 +177,7 @@ const sections = [
         </p>
         <p>
           Spend time reading Part 2 carefully. Mark definitions you find confusing and use the{' '}
-          <SEOInternalLink href="/eighteenth-edition-course">
+          <SEOInternalLink href="/training/18th-edition-course">
             Elec-Mate 18th Edition course
           </SEOInternalLink>{' '}
           flashcards to practise them until they are second nature.
@@ -488,7 +488,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Training',
   },
   {
-    href: '/eighteenth-edition-course',
+    href: '/training/18th-edition-course',
     title: '18th Edition Course',
     description:
       'Full structured study course for the C&G 2382 exam with interactive quizzes and mock exams.',
@@ -507,7 +507,7 @@ export default function BS7671RunThroughPage() {
       title="BS 7671 Run-Through Study Guide | 18th Edition Part by Part"
       description="Complete run-through of BS 7671:2018+A4:2026 for UK electricians. Part 1 to Part 7 overview, key regulations, exam focus areas, and study strategy."
       datePublished="2025-07-20"
-      dateModified="2026-05-18"
+      dateModified="2026-06-10"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Study Guide"

@@ -248,17 +248,17 @@ export default function Level3ElectricalPage() {
               Achieving Level 3 is a major milestone because it is the last knowledge-based
               qualification before the AM2 practical assessment. Once you have Level 3 plus the AM2,
               plus the{' '}
-              <SEOInternalLink href="/eighteenth-edition-course">
+              <SEOInternalLink href="/training/18th-edition-course">
                 18th Edition (C&G 2382)
               </SEOInternalLink>
               , you are eligible for the JIB Installation Electrician Gold Card — the industry's
               benchmark for a fully qualified electrician. From there, the path continues to the{' '}
-              <SEOInternalLink href="/inspection-testing-course">
+              <SEOInternalLink href="/training/inspection-and-testing">
                 C&G 2391 Inspection and Testing
               </SEOInternalLink>
               , scheme registration with NICEIC, NAPIT, or ELECSA, and potentially the JIB Approved
               Electrician grading. Elec-Mate covers every step with AI-powered study tools,{' '}
-              <SEOInternalLink href="/electrical-testing-calculators">
+              <SEOInternalLink href="/tools/electrical-testing-calculators">
                 70 technical calculators
               </SEOInternalLink>
               , and digital certification.

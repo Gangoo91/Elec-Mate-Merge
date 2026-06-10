@@ -99,7 +99,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Certificate',
   },
   {
-    href: '/electrical-quoting-app',
+    href: '/tools/electrical-quoting-app',
     title: 'Electrical Quoting App',
     description:
       'Quote underfloor heating installations with element, thermostat, circuit, and Part P costs.',
@@ -509,7 +509,7 @@ export default function ElectricUnderfloorHeatingCostPage() {
       title="Electric Underfloor Heating Cost UK | Installation, Running"
       description="Complete guide to electric underfloor heating installation cost in the UK. Mat vs loose element systems, installation costs £800–£2,500 per room…"
       datePublished="2026-03-27"
-      dateModified="2026-05-18"
+      dateModified="2026-06-10"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Cost Guide"

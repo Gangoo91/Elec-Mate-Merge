@@ -113,7 +113,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Guide',
   },
   {
-    href: '/electrical-quoting-app',
+    href: '/tools/electrical-quoting-app',
     title: 'Quoting App',
     description:
       'Quote heritage rewires and commercial maintenance with professional itemised PDFs.',
@@ -524,7 +524,7 @@ const sections = [
           discount. The Royal Crescent and Lansdown Crescent areas command the highest rates.
           Properties outside the conservation areas (Twerton, Odd Down, Weston) are priced closer to
           national averages. Use Elec-Mate's{' '}
-          <SEOInternalLink href="/electrical-quoting-app">quoting app</SEOInternalLink> to produce
+          <SEOInternalLink href="/tools/electrical-quoting-app">quoting app</SEOInternalLink> to produce
           accurate, itemised quotes that reflect the true cost of Bath heritage work.
         </p>
       </>
@@ -580,7 +580,7 @@ const sections = [
                 <p className="text-white text-sm leading-relaxed">
                   Quote Georgian rewires, UFH installations, and commercial maintenance with
                   Elec-Mate's{' '}
-                  <SEOInternalLink href="/electrical-quoting-app">quoting app</SEOInternalLink>.
+                  <SEOInternalLink href="/tools/electrical-quoting-app">quoting app</SEOInternalLink>.
                   Itemised PDF quotes with heritage-specific line items, sent from the survey.
                 </p>
               </div>
@@ -608,7 +608,7 @@ export default function ElectricianBathPage() {
       title="Electrician in Bath | Local Electrical Guide"
       description="Complete guide for electricians working in Bath. NGED DNO, UNESCO World Heritage conservation controls, Georgian townhouse rewiring…"
       datePublished="2026-03-27"
-      dateModified="2026-05-18"
+      dateModified="2026-06-10"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Location Guide"

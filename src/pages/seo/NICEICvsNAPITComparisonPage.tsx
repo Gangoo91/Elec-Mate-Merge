@@ -598,7 +598,7 @@ export default function NICEICvsNAPITComparisonPage() {
       title="NICEIC vs NAPIT 2026: Cost, Scope, Which to Pick"
       description="NICEIC vs NAPIT 2026 compared: registration cost, assessment process, insurer + Building Control acceptance, public recognition. Which suits your firm?"
       datePublished="2026-03-27"
-      dateModified="2026-05-22"
+      dateModified="2026-06-10"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Registration Guide"

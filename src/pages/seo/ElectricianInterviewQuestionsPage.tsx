@@ -22,7 +22,7 @@ import {
 // -------------------------------------------------------------------
 
 const breadcrumbs = [
-  { label: 'Career', href: '/guides/how-to-become-electrician' },
+  { label: 'Career', href: '/guides/how-to-become-an-electrician' },
   { label: 'Interview Questions', href: '/guides/electrician-interview-questions' },
 ];
 
@@ -98,7 +98,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Career',
   },
   {
-    href: '/guides/how-to-become-electrician',
+    href: '/guides/how-to-become-an-electrician',
     title: 'How to Become an Electrician',
     description:
       'Complete pathway from school leaver to qualified electrician — apprenticeships, courses, and qualifications.',
@@ -400,7 +400,7 @@ const sections = [
       <>
         <p>
           If you are applying for a role that involves inspection and testing — or if you hold a{' '}
-          <SEOInternalLink href="/city-guilds2391">C&G 2391 qualification</SEOInternalLink> — expect
+          <SEOInternalLink href="/training/city-guilds-2391">C&G 2391 qualification</SEOInternalLink> — expect
           questions about test procedures and acceptable values:
         </p>
         <div className="space-y-4 my-4">

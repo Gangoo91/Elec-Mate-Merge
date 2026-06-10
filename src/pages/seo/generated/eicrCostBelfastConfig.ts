@@ -21,6 +21,7 @@ export const eicrCostBelfastConfig: GeneratedGuideConfig = {
   badge: 'Cost Guide',
   badgeIcon: 'PoundSterling',
   breadcrumbLabel: 'EICR Cost in Belfast',
+  breadcrumbParent: { label: 'EICR Cost UK', href: '/guides/eicr-cost-uk' },
   heroPrefix: 'EICR Cost in Belfast:',
   heroHighlight: '2026 Pricing Guide',
   heroSuffix: '— Domestic & Commercial',
@@ -209,6 +210,27 @@ export const eicrCostBelfastConfig: GeneratedGuideConfig = {
     },
   ],
   relatedPages: [
+    {
+      href: '/guides/eicr-cost-uk',
+      title: 'EICR Cost UK — National Guide',
+      description: 'UK-wide EICR prices by property type, what affects cost, and remedial pricing.',
+      icon: 'PoundSterling',
+      category: 'Guide',
+    },
+    {
+      href: '/guides/eicr-cost-glasgow',
+      title: 'EICR cost in Glasgow',
+      description: 'Local price bands and labour rates for Glasgow.',
+      icon: 'MapPin',
+      category: 'Guide',
+    },
+    {
+      href: '/guides/eicr-cost-liverpool',
+      title: 'EICR cost in Liverpool',
+      description: 'Local price bands and labour rates for Liverpool.',
+      icon: 'MapPin',
+      category: 'Guide',
+    },
     {
       href: '/electricians/belfast',
       title: 'Find an Electrician in Belfast',

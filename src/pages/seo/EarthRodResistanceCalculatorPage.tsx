@@ -21,7 +21,7 @@ export default function EarthRodResistanceCalculatorPage() {
       title="Earth Electrode Resistance Calculator (TT, Free UK)"
       description="Free earth rod / electrode resistance calculator for TT installs: checks Ra × IΔn ≤ 50V per BS 7671 Reg 411.5.3. Instant pass/fail for 30mA + 100mA RCDs."
       datePublished="2026-01-22"
-      dateModified="2026-05-22"
+      dateModified="2026-06-10"
       breadcrumbs={[
         { label: 'Tools', href: '/tools' },
         {
@@ -132,7 +132,7 @@ export default function EarthRodResistanceCalculatorPage() {
                 (MCBs, fuses) alone cannot provide adequate disconnection times — the fault current
                 is too low to trip them quickly. This is why BS 7671 requires RCD protection on
                 every circuit in a TT system. Understanding{' '}
-                <SEOInternalLink href="/earthing-arrangements">
+                <SEOInternalLink href="/guides/earthing-arrangements">
                   earthing arrangements
                 </SEOInternalLink>{' '}
                 is fundamental to safe installation design.
@@ -394,7 +394,7 @@ export default function EarthRodResistanceCalculatorPage() {
           category: 'Calculators',
         },
         {
-          href: '/earthing-arrangements',
+          href: '/guides/earthing-arrangements',
           title: 'Earthing Arrangements Guide',
           description:
             'Complete guide to TN-S, TN-C-S, and TT earthing systems with BS 7671 requirements explained.',
@@ -426,7 +426,7 @@ export default function EarthRodResistanceCalculatorPage() {
           category: 'Guides',
         },
         {
-          href: '/electrical-testing-calculators',
+          href: '/tools/electrical-testing-calculators',
           title: 'All Electrical Calculators',
           description:
             '50+ BS 7671 calculators for cable sizing, Zs verification, voltage drop, and more.',

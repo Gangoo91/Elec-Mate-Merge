@@ -697,7 +697,7 @@ export default function BondingConductorsGuidePage() {
       title="Bonding Conductor Sizes BS 7671: Main + Supplementary"
       description="Bonding conductor sizes for UK installs: main protective bonding (gas, water, oil) and supplementary bonding to BS 7671:2018+A4:2026 Reg 544.1.1 / Table 54.8. Worked examples."
       datePublished="2026-03-27"
-      dateModified="2026-05-29"
+      dateModified="2026-06-10"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Wiring Guide"

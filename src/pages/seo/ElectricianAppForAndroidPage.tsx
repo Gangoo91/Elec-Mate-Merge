@@ -24,7 +24,7 @@ export default function ElectricianAppForAndroidPage() {
       title="Best Electrician App for Android 2026 | 4 Tools Compared"
       description="Best Android apps for UK electricians in 2026 — Elec-Mate, iCertifi, CertsApp + more. EICR, EIC, calculators, offline support + price compared."
       datePublished="2026-02-03"
-      dateModified="2026-05-18"
+      dateModified="2026-06-10"
       breadcrumbs={[
         { label: 'Comparisons', href: '/compare' },
         { label: 'Electrician App for Android', href: '/compare/electrician-app-android' },

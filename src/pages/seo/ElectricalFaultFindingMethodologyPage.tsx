@@ -665,7 +665,7 @@ export default function ElectricalFaultFindingMethodologyPage() {
       title="Electrical Fault Finding Methodology | Systematic Approach"
       description="Complete guide to electrical fault finding methodology for UK electricians. Covers the systematic approach (gather info, visual inspection, test…"
       datePublished="2026-03-27"
-      dateModified="2026-05-18"
+      dateModified="2026-06-10"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Fault Finding Guide"

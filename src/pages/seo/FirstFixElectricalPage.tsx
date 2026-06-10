@@ -103,7 +103,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Guide',
   },
   {
-    href: '/tools/ai-circuit-designer',
+    href: '/ai-circuit-designer',
     title: 'AI Circuit Designer',
     description:
       'Plan circuit layouts, cable routes, and board schedules with AI assistance before starting first fix.',
@@ -163,7 +163,7 @@ const sections = [
         <p>
           On a typical domestic new build or full rewire, first fix accounts for roughly 60-70% of
           the total installation time. It involves running all cables from the{' '}
-          <SEOInternalLink href="/guides/consumer-unit-regulations">
+          <SEOInternalLink href="/consumer-unit-regulations">
             consumer unit position
           </SEOInternalLink>{' '}
           to every switch, socket, light, and fixed appliance position in the property. It also
@@ -448,7 +448,7 @@ const sections = [
         </div>
         <p>
           Use Elec-Mate's{' '}
-          <SEOInternalLink href="/electrical-quoting-app">quoting app</SEOInternalLink> to produce a
+          <SEOInternalLink href="/tools/electrical-quoting-app">quoting app</SEOInternalLink> to produce a
           clear first fix specification and quote that details every accessory position, circuit
           allocation, and containment requirement. Sharing this with the builder and other trades at
           the start of the project prevents misunderstandings and keeps the programme on track.
@@ -681,7 +681,7 @@ export default function FirstFixElectricalPage() {
       title="First Fix Electrical | UK Guide for Sparks + Builders"
       description="First fix electrical explained: cable routing, BS 7671 safe zones, back-box depth, prescribed routes, containment + coordinating with other trades."
       datePublished="2025-07-01"
-      dateModified="2026-05-18"
+      dateModified="2026-06-10"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Installation Guide"

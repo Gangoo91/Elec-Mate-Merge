@@ -114,7 +114,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Guide',
   },
   {
-    href: '/electrical-quoting-app',
+    href: '/tools/electrical-quoting-app',
     title: 'Quoting App',
     description:
       'Quote rewires, commercial fit-outs, and maintenance contracts with professional itemised PDFs.',
@@ -507,7 +507,7 @@ const sections = [
         <p>
           These rates reflect 2026 Cambridge market conditions. Commercial and biotech work commands
           significantly higher rates — laboratory fit-out day rates of £400 to £550 are common. Use
-          Elec-Mate's <SEOInternalLink href="/electrical-quoting-app">quoting app</SEOInternalLink>{' '}
+          Elec-Mate's <SEOInternalLink href="/tools/electrical-quoting-app">quoting app</SEOInternalLink>{' '}
           to produce accurate, itemised quotes that reflect Cambridge pricing levels.
         </p>
       </>
@@ -565,7 +565,7 @@ const sections = [
                 <p className="text-white text-sm leading-relaxed">
                   Quote heritage rewires, laboratory fit-outs, and maintenance contracts with
                   Elec-Mate's{' '}
-                  <SEOInternalLink href="/electrical-quoting-app">quoting app</SEOInternalLink>.
+                  <SEOInternalLink href="/tools/electrical-quoting-app">quoting app</SEOInternalLink>.
                   Itemised PDF quotes with your branding, sent from the survey.
                 </p>
               </div>
@@ -593,7 +593,7 @@ export default function ElectricianCambridgePage() {
       title="Electrician in Cambridge | Local Electrical Guide"
       description="Complete guide for electricians working in Cambridge. UKPN DNO, university college electrical maintenance, listed building work…"
       datePublished="2026-03-27"
-      dateModified="2026-05-18"
+      dateModified="2026-06-10"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Location Guide"

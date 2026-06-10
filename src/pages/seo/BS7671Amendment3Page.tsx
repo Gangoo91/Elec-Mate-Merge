@@ -125,7 +125,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Guide',
   },
   {
-    href: '/eighteenth-edition-course',
+    href: '/training/18th-edition-course',
     title: '18th Edition Course',
     description:
       'Study for the C&G 2382 18th Edition qualification with structured training modules and mock exams.',
@@ -423,7 +423,7 @@ const sections = [
         </div>
         <p>
           If you are studying for your{' '}
-          <SEOInternalLink href="/city-guilds2391">
+          <SEOInternalLink href="/training/city-guilds-2391">
             C&G 2391 inspection and testing qualification
           </SEOInternalLink>
           , expect questions on Amendment 3 to appear in exam papers. The examiners will be looking
@@ -663,7 +663,7 @@ export default function BS7671Amendment3Page() {
       title="BS 7671 Amendment 3 (A3:2024) | Changes Explained"
       description="Complete guide to BS 7671:2018+A3:2024: Reg 530.3.201 bidirectional device requirements for solar PV, battery storage and V2G installations explained."
       datePublished="2025-08-01"
-      dateModified="2026-05-18"
+      dateModified="2026-06-10"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Regulations"

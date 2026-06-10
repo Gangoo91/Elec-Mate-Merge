@@ -223,7 +223,7 @@ export const SEOSchemas = {
     description: string,
     datePublished: string,
     dateModified?: string,
-    author = 'Elec-Mate Technical Team'
+    author = 'Andrew Moore'
   ) => ({
     '@type': 'Article',
     headline: title,
@@ -231,8 +231,15 @@ export const SEOSchemas = {
     datePublished,
     dateModified: dateModified || datePublished,
     author: {
-      '@type': 'Organization',
+      '@type': 'Person',
       name: author,
+      jobTitle: 'Founder',
+      url: `${BASE_URL}/`,
+      worksFor: {
+        '@type': 'Organization',
+        '@id': `${BASE_URL}/#organization`,
+        name: 'Elec-Mate',
+      },
     },
     publisher: {
       '@type': 'Organization',

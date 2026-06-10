@@ -91,7 +91,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Guide',
   },
   {
-    href: '/apprentice-portfolio-guide',
+    href: '/training/apprentice-portfolio',
     title: 'Apprentice Portfolio Guide',
     description: 'Digital evidence tracking and AI-powered criteria mapping for your portfolio.',
     icon: FolderOpen,
@@ -240,7 +240,7 @@ const sections = [
               <h3 className="font-bold text-white text-base mb-1">Online Learning and Study</h3>
               <p className="text-white text-sm leading-relaxed">
                 Studying courses on Elec-Mate, completing quizzes, using the{' '}
-                <SEOInternalLink href="/am2-exam-preparation">flashcards tool</SEOInternalLink>,
+                <SEOInternalLink href="/training/am2-exam-preparation">flashcards tool</SEOInternalLink>,
                 practising mock exams, and working through BS 7671 content. Self-directed study of
                 textbooks and technical resources also counts.
               </p>
@@ -277,7 +277,7 @@ const sections = [
               <p className="text-white text-sm leading-relaxed">
                 Practising new skills in a supervised environment — safe isolation, testing
                 techniques, two-way switching wiring. Using the Elec-Mate{' '}
-                <SEOInternalLink href="/am2-exam-preparation">AM2 Simulator</SEOInternalLink> or{' '}
+                <SEOInternalLink href="/training/am2-exam-preparation">AM2 Simulator</SEOInternalLink> or{' '}
                 <SEOInternalLink href="/guides/epa-what-to-expect">EPA Simulator</SEOInternalLink>{' '}
                 to rehearse assessment tasks.
               </p>
@@ -589,7 +589,7 @@ const sections = [
                 <h4 className="font-bold text-white mb-1">Portfolio Integration</h4>
                 <p className="text-white text-sm leading-relaxed">
                   OTJ evidence feeds directly into your{' '}
-                  <SEOInternalLink href="/apprentice-portfolio-guide">
+                  <SEOInternalLink href="/training/apprentice-portfolio">
                     apprentice portfolio
                   </SEOInternalLink>
                   . Each entry links to apprenticeship standard criteria and can include evidence

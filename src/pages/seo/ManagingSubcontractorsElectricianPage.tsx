@@ -106,7 +106,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Guide',
   },
   {
-    href: '/electrical-quoting-app',
+    href: '/tools/electrical-quoting-app',
     title: 'Electrical Quoting App',
     description: 'Quote jobs quickly on site and send professional PDFs to clients instantly.',
     icon: FileCheck2,
@@ -514,7 +514,7 @@ const sections = [
           Managing multiple subcontractors across different sites is a significant administrative
           burden. Elec-Mate's{' '}
           <SEOInternalLink href="/tools/schedule-manager-electrician">job scheduling</SEOInternalLink> and{' '}
-          <SEOInternalLink href="/electrical-quoting-app">quoting tools</SEOInternalLink> help
+          <SEOInternalLink href="/tools/electrical-quoting-app">quoting tools</SEOInternalLink> help
           you keep track of who is working where and at what cost.
         </p>
         <div className="space-y-4 my-4">

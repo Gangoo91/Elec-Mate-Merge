@@ -214,7 +214,7 @@ const sections = [
           </div>
           <p className="text-white/60 text-xs mt-3">
             Full detail in the{' '}
-            <SEOInternalLink href="/how-to-do-safe-isolation">
+            <SEOInternalLink href="/guides/how-to-do-safe-isolation">
               GS 38 proving-dead guide
             </SEOInternalLink>{' '}
             and the 10-step procedure below.
@@ -875,7 +875,7 @@ const relatedPages = [
     category: 'Guide',
   },
   {
-    href: '/how-to-do-safe-isolation',
+    href: '/guides/how-to-do-safe-isolation',
     title: 'GS 38 Proving Dead Guide',
     description: 'Detailed guide to the prove-test-prove procedure and voltage indicator use.',
     icon: ShieldAlert,
@@ -922,7 +922,7 @@ export default function SafeIsolationProcedurePage() {
       title={PAGE_TITLE}
       description={PAGE_DESCRIPTION}
       datePublished="2024-10-01"
-      dateModified="2026-05-23"
+      dateModified="2026-06-10"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Safety Hub"

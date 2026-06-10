@@ -21,6 +21,7 @@ export const eicrCostBristolConfig: GeneratedGuideConfig = {
   badge: 'Cost Guide',
   badgeIcon: 'PoundSterling',
   breadcrumbLabel: 'EICR Cost in Bristol',
+  breadcrumbParent: { label: 'EICR Cost UK', href: '/guides/eicr-cost-uk' },
   heroPrefix: 'EICR Cost in Bristol:',
   heroHighlight: '2026 Pricing Guide',
   heroSuffix: '— Domestic & Commercial',
@@ -209,6 +210,27 @@ export const eicrCostBristolConfig: GeneratedGuideConfig = {
     },
   ],
   relatedPages: [
+    {
+      href: '/guides/eicr-cost-uk',
+      title: 'EICR Cost UK — National Guide',
+      description: 'UK-wide EICR prices by property type, what affects cost, and remedial pricing.',
+      icon: 'PoundSterling',
+      category: 'Guide',
+    },
+    {
+      href: '/guides/eicr-cost-cardiff',
+      title: 'EICR cost in Cardiff',
+      description: 'Local price bands and labour rates for Cardiff.',
+      icon: 'MapPin',
+      category: 'Guide',
+    },
+    {
+      href: '/guides/eicr-cost-swindon',
+      title: 'EICR cost in Swindon',
+      description: 'Local price bands and labour rates for Swindon.',
+      icon: 'MapPin',
+      category: 'Guide',
+    },
     {
       href: '/electricians/bristol',
       title: 'Find an Electrician in Bristol',

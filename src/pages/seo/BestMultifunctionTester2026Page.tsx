@@ -702,7 +702,7 @@ export default function BestMultifunctionTester2026Page() {
       title="Best Multifunction Tester 2026 | Top MFTs Compared"
       description="Honest comparison of the best multifunction testers for UK electricians in 2026. Fluke 1664 FC, Megger MFT1741+, Metrel MI 3152, Kewtech KT66DL…"
       datePublished="2026-03-27"
-      dateModified="2026-05-18"
+      dateModified="2026-06-10"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Equipment Guide"

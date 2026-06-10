@@ -581,7 +581,7 @@ const relatedPages = [
     category: 'Guide',
   },
   {
-    href: '/rams-generator',
+    href: '/tools/rams-generator',
     title: 'AI RAMS Generator',
     description: 'Generate risk assessments and method statements with AI.',
     icon: Brain,

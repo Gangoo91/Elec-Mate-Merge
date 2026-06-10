@@ -727,7 +727,7 @@ export default function Regulation314CircuitDivisionPage() {
       title="Regulation 314 | Division of Installation Into Circuits"
       description="Complete guide to Regulation 314 of BS 7671 — division of installation into circuits. Circuit design principles, ring vs radial decisions…"
       datePublished="2026-03-27"
-      dateModified="2026-05-18"
+      dateModified="2026-06-10"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Regulation Deep-Dive"

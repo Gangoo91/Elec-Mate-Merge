@@ -340,7 +340,7 @@ export default function BestCableSizingAppPage() {
           category: 'Guide',
         },
         {
-          href: '/electrical-testing-calculators',
+          href: '/tools/electrical-testing-calculators',
           title: 'Electrical Calculators',
           description:
             '50+ BS 7671 calculators including cable sizing, voltage drop, Zs, maximum demand, and more.',

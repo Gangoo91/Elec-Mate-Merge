@@ -98,7 +98,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Guide',
   },
   {
-    href: '/rcd-testing-guide',
+    href: '/tools/rcd-testing-guide',
     title: 'RCD Testing Guide',
     description: 'Half-rated, rated, and 5× current RCD test procedures.',
     icon: ShieldCheck,

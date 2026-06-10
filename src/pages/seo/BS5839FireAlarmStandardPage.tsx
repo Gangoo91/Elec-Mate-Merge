@@ -84,7 +84,7 @@ const faqs = [
 
 const relatedPages: RelatedPage[] = [
   {
-    href: '/tools/fire-alarm-certificate',
+    href: '/fire-alarm-certificate',
     title: 'Fire Alarm Certificate App',
     description:
       'Create digital fire alarm certificates on your phone with BS 5839 compliance, zone diagrams, and professional PDF export.',
@@ -777,7 +777,7 @@ export default function BS5839FireAlarmStandardPage() {
       title="BS 5839 Fire Alarm Standard | Complete Guide UK"
       description="Complete guide to BS 5839 fire alarm standard. Part 1 commercial, Part 6 domestic, system categories L1-L5 and P1-P2, grades A-F, design, installation…"
       datePublished="2025-06-15"
-      dateModified="2026-05-18"
+      dateModified="2026-06-10"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Regulations"
@@ -788,7 +788,7 @@ export default function BS5839FireAlarmStandardPage() {
           <span className="text-yellow-400">The Complete UK Guide</span>
         </>
       }
-      heroSubtitle="BS 5839 is the UK standard for fire detection and fire alarm systems. Part 1 covers commercial premises, Part 6 covers domestic dwellings. This guide explains system categories, grades, design requirements, testing intervals, and certification — everything an electrician needs to know. Reviewed by the Elec-Mate Technical Team, qualified electricians and FIA-certificated fire alarm engineers."
+      heroSubtitle="BS 5839 is the UK standard for fire detection and fire alarm systems. Part 1 covers commercial premises, Part 6 covers domestic dwellings. This guide explains system categories, grades, design requirements, testing intervals, and certification — everything an electrician needs to know. Reviewed by Andrew Moore, founder of Elec-Mate, against BS 5839 and current FIA guidance."
       readingTime={13}
       keyTakeaways={keyTakeaways}
       sections={sections}

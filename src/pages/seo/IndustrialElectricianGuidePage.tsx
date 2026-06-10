@@ -125,7 +125,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Guide',
   },
   {
-    href: '/rams-generator',
+    href: '/tools/rams-generator',
     title: 'RAMS Generator',
     description:
       'Generate professional Risk Assessments and Method Statements with AI for industrial projects.',
@@ -808,7 +808,7 @@ export default function IndustrialElectricianGuidePage() {
       title="Industrial Electrician Guide | Skills & Career UK"
       description="Complete guide to working as an industrial electrician in the UK. Three-phase systems, motor control, PLC programming, variable speed drives…"
       datePublished="2025-06-25"
-      dateModified="2026-05-18"
+      dateModified="2026-06-10"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Career Guide"

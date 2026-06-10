@@ -181,7 +181,7 @@ export default function WiringColoursUKPage() {
                 in a building that also has old single-phase circuits could encounter black
                 conductors that are live (three-phase L2) alongside black conductors that are
                 neutral (old single-phase). The{' '}
-                <SEOInternalLink href="/guides/consumer-unit-regulations">
+                <SEOInternalLink href="/consumer-unit-regulations">
                   warning notice requirement
                 </SEOInternalLink>{' '}
                 exists precisely for this reason.
@@ -543,7 +543,7 @@ export default function WiringColoursUKPage() {
                 The lesson is clear: never assume a conductor's function based on colour alone
                 without first establishing which colour scheme is in use. Check the installation
                 age, look for warning notices, and always prove circuits dead with a{' '}
-                <SEOInternalLink href="/how-to-do-safe-isolation">
+                <SEOInternalLink href="/guides/how-to-do-safe-isolation">
                   safe isolation procedure
                 </SEOInternalLink>{' '}
                 before working on them.
@@ -592,14 +592,14 @@ export default function WiringColoursUKPage() {
       ]}
       relatedPages={[
         {
-          href: '/guides/consumer-unit-regulations',
+          href: '/consumer-unit-regulations',
           title: 'Consumer Unit Regulations',
           description: 'Metal CU requirements, RCD protection, and Amendment 4 changes.',
           icon: ShieldCheck,
           category: 'Regulations',
         },
         {
-          href: '/earthing-arrangements',
+          href: '/guides/earthing-arrangements',
           title: 'Earthing Arrangements',
           description: 'TN-S, TN-C-S, and TT earthing systems explained.',
           icon: Cable,
@@ -613,7 +613,7 @@ export default function WiringColoursUKPage() {
           category: 'Certification',
         },
         {
-          href: '/how-to-do-safe-isolation',
+          href: '/guides/how-to-do-safe-isolation',
           title: 'Safe Isolation Procedure',
           description: 'GS38 prove-test-prove method step by step.',
           icon: Zap,

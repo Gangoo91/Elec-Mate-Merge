@@ -580,7 +580,7 @@ const sections = [
         </div>
         <p>
           Record all jointing work on a{' '}
-          <SEOInternalLink href="/minor-works-certificate" label="Minor Works Certificate" /> for
+          <SEOInternalLink href="/tools/minor-works-certificate" label="Minor Works Certificate" /> for
           small repairs or an{' '}
           <SEOInternalLink href="/eic-certificate" label="Electrical Installation Certificate" />{' '}
           for new circuit work. Test results must be documented.
@@ -603,7 +603,7 @@ const sections = [
             <li className="flex items-start gap-3">
               <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <SEOAppBridge href="/minor-works-certificate" label="Minor Works Certificate" /> —
+                <SEOAppBridge href="/tools/minor-works-certificate" label="Minor Works Certificate" /> —
                 issue minor electrical installation works certificates for cable repairs and joint
                 work, including pre- and post-repair insulation resistance readings.
               </span>
@@ -641,7 +641,7 @@ export default function CableJointingGuidePage() {
       title="Cable Jointing Guide — LV and MV Jointing for UK"
       description="Complete guide to cable jointing for UK electricians: heat shrink vs cold shrink joints, Scotchlok connectors, cable stripping techniques…"
       datePublished="2024-06-01"
-      dateModified="2026-05-18"
+      dateModified="2026-06-10"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Cable Jointing"

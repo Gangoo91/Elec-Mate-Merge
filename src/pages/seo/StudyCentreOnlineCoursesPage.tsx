@@ -99,7 +99,7 @@ export default function StudyCentreOnlineCoursesPage() {
                 The strongest SEO and product advantage here is that learning does not sit in a
                 separate silo. Study a topic, then apply it immediately in the{' '}
                 <SEOInternalLink href="/tools/digital-certificates-app">certificate workflow</SEOInternalLink>,
-                the <SEOInternalLink href="/electrical-testing-calculators">calculator suite</SEOInternalLink>,
+                the <SEOInternalLink href="/tools/electrical-testing-calculators">calculator suite</SEOInternalLink>,
                 or the <SEOInternalLink href="/tools/electrical-app-with-ai">AI app tools</SEOInternalLink>.
               </p>
             </>
@@ -150,7 +150,7 @@ export default function StudyCentreOnlineCoursesPage() {
                 </li>
                 <li>Fault finding and diagnosis</li>
                 <li>
-                  <SEOInternalLink href="/earthing-arrangements">
+                  <SEOInternalLink href="/guides/earthing-arrangements">
                     Earthing arrangements
                   </SEOInternalLink>{' '}
                   (TN-S, TN-C-S, TT)
@@ -334,7 +334,7 @@ export default function StudyCentreOnlineCoursesPage() {
                   <span className="font-semibold text-white">AM2 mock exam</span> — practical
                   assessment preparation with scenario-based questions covering installation,
                   inspection, testing, and fault finding. See our{' '}
-                  <SEOInternalLink href="/am2-exam-preparation">
+                  <SEOInternalLink href="/training/am2-exam-preparation">
                     AM2 exam preparation guide
                   </SEOInternalLink>
                   .
@@ -543,7 +543,7 @@ export default function StudyCentreOnlineCoursesPage() {
           category: 'Tools',
         },
         {
-          href: '/electrical-testing-calculators',
+          href: '/tools/electrical-testing-calculators',
           title: 'Electrical Calculators',
           description:
             '70+ calculators to apply what you learn — cable sizing, voltage drop, Zs verification, and more.',

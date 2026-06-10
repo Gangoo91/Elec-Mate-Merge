@@ -114,7 +114,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Finance Guide',
   },
   {
-    href: '/electrical-quoting-app',
+    href: '/tools/electrical-quoting-app',
     title: 'Electrical Quoting App',
     description:
       'Professional invoicing to support your income evidence for mortgage applications.',
@@ -500,7 +500,7 @@ const sections = [
                 </h4>
                 <p className="text-white text-sm leading-relaxed">
                   Use{' '}
-                  <SEOInternalLink href="/electrical-quoting-app">
+                  <SEOInternalLink href="/tools/electrical-quoting-app">
                     Elec-Mate's invoicing tool
                   </SEOInternalLink>{' '}
                   to raise professional invoices for every job. Every invoice is stored with date,

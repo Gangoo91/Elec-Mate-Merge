@@ -23,7 +23,7 @@ export default function IPRatingGuidePage() {
       title="IP Rating Guide | Ingress Protection Explained"
       description="Complete guide to IP ratings for electrical equipment. Explains first digit (solids 0-6), second digit (liquids 0-9), IP2X, IPXXB…"
       datePublished="2026-01-30"
-      dateModified="2026-05-18"
+      dateModified="2026-06-10"
       breadcrumbs={[
         { label: 'Tools', href: '/tools' },
         { label: 'IP Rating Guide', href: '/tools/ip-rating-guide' },
@@ -172,7 +172,7 @@ export default function IPRatingGuidePage() {
                 requires that live parts must be protected against finger contact — this is why IP2X
                 is such a critical requirement. Consumer units installed in domestic premises must
                 meet IP2X or IPXXB as a minimum when the cover is removed, per{' '}
-                <SEOInternalLink href="/guides/consumer-unit-regulations">
+                <SEOInternalLink href="/consumer-unit-regulations">
                   consumer unit regulations
                 </SEOInternalLink>
                 .
@@ -323,7 +323,7 @@ export default function IPRatingGuidePage() {
                 Equipment with an insufficient IP rating for its location is recorded as a departure
                 from BS 7671 and may result in a C2 (potentially dangerous) or C3 (improvement
                 recommended) observation code. Understanding{' '}
-                <SEOInternalLink href="/guides/bs7671-observation-codes">
+                <SEOInternalLink href="/bs7671-observation-codes">
                   observation codes
                 </SEOInternalLink>{' '}
                 helps interpret these findings correctly.
@@ -486,14 +486,14 @@ export default function IPRatingGuidePage() {
           category: 'Certificates',
         },
         {
-          href: '/guides/consumer-unit-regulations',
+          href: '/consumer-unit-regulations',
           title: 'Consumer Unit Regulations',
           description: 'IP2X and IPXXB requirements for domestic consumer units explained in full.',
           icon: Shield,
           category: 'Guides',
         },
         {
-          href: '/guides/bs7671-observation-codes',
+          href: '/bs7671-observation-codes',
           title: 'EICR Observation Codes',
           description:
             'C1, C2, C3, and FI observation codes explained — including when to use them for IP rating issues.',
@@ -517,7 +517,7 @@ export default function IPRatingGuidePage() {
           category: 'Calculators',
         },
         {
-          href: '/electrical-testing-calculators',
+          href: '/tools/electrical-testing-calculators',
           title: 'All Electrical Calculators',
           description: '50+ BS 7671 calculators and reference tools for UK electricians.',
           icon: Calculator,

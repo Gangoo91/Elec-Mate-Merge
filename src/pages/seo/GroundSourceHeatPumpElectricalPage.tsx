@@ -788,7 +788,7 @@ const sections = [
                 <h4 className="font-bold text-white mb-1">Quoting App</h4>
                 <p className="text-white text-sm leading-relaxed">
                   Price GSHP electrical work with Elec-Mate's{' '}
-                  <SEOInternalLink href="/electrical-quoting-app">quoting app</SEOInternalLink>.
+                  <SEOInternalLink href="/tools/electrical-quoting-app">quoting app</SEOInternalLink>.
                   Compressor circuit, three-phase supply, circulation pumps, zone valves, immersion
                   heaters — all itemised.
                 </p>
@@ -858,7 +858,7 @@ export default function GroundSourceHeatPumpElectricalPage() {
       title="Ground Source Heat Pump Electrical | Wiring Guide UK"
       description="Complete guide to ground source heat pump electrical installation in the UK. Covers power demands, three-phase supply, circuit wiring, earthing, and BS 7671:2018+A4:2026 compliance."
       datePublished="2026-03-27"
-      dateModified="2026-05-18"
+      dateModified="2026-06-10"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Renewables"

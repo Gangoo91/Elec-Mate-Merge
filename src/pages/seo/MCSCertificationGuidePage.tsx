@@ -576,7 +576,7 @@ export default function MCSCertificationGuidePage() {
       title="MCS Certification for Solar Installers UK | How to Become"
       description="Complete guide to MCS certification for solar installers in the UK — how to get certified, MCS 001 costs, annual audit checklist, and the BS 7671 Section 712 requirements auditors check on every solar PV installation."
       datePublished="2026-03-27"
-      dateModified="2026-05-18"
+      dateModified="2026-06-10"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="MCS Certification Guide"

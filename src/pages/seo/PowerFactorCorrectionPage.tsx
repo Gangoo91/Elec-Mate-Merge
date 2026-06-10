@@ -648,7 +648,7 @@ const sections = [
                   When completing an EICR or motor installation at an industrial site, check the
                   power factor using your power quality analyser and calculate the savings
                   potential. Quote the PFC bank immediately using the{' '}
-                  <SEOInternalLink href="/electrical-quoting-app">
+                  <SEOInternalLink href="/tools/electrical-quoting-app">
                     Elec-Mate quoting app
                   </SEOInternalLink>
                   . A well-presented 2–3 year payback calculation makes PFC an easy decision for a
@@ -706,7 +706,7 @@ export default function PowerFactorCorrectionPage() {
       title="Power Factor Correction UK | PFC Installation Guide for Businesses"
       description="Complete guide to power factor correction in the UK. kVA vs kW explained, DNO reactive power charges, automatic and fixed capacitor banks…"
       datePublished="2026-03-27"
-      dateModified="2026-05-18"
+      dateModified="2026-06-10"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Industrial Guide"

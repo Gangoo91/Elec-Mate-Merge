@@ -125,7 +125,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Guide',
   },
   {
-    href: '/earthing-arrangements',
+    href: '/guides/earthing-arrangements',
     title: 'Earthing Arrangements',
     description:
       'TN-S, TN-C-S, and TT earthing systems with implications for outbuilding supplies.',
@@ -577,7 +577,7 @@ const sections = [
                 <h4 className="font-bold text-white mb-1">Professional Quoting</h4>
                 <p className="text-white text-sm leading-relaxed">
                   Price the full garden office package with Elec-Mate's{' '}
-                  <SEOInternalLink href="/electrical-quoting-app">quoting app</SEOInternalLink>. SWA
+                  <SEOInternalLink href="/tools/electrical-quoting-app">quoting app</SEOInternalLink>. SWA
                   cable, trenching, sub-board, circuits, accessories, testing, and certification —
                   all itemised with your margins. Send a professional PDF quote to the homeowner on
                   the spot.
@@ -619,7 +619,7 @@ export default function GardenOfficeElectricsPage() {
       title="Garden Office Electrics | Power Supply Guide UK"
       description="Complete guide to garden office electrics in the UK. SWA cable run, dedicated circuit, sub-distribution board, Part P notification, IP-rated accessories…"
       datePublished="2025-08-10"
-      dateModified="2026-05-18"
+      dateModified="2026-06-10"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Installation Guide"

@@ -174,14 +174,14 @@ export const fullRewireLabourAndMaterialsConfig: GeneratedGuideConfig = {
       category: 'Guide',
     },
     {
-      href: '/electrical-quoting-app',
+      href: '/tools/electrical-quoting-app',
       title: 'Electrical Quoting App',
       description: 'Build and adjust the labour and materials split on site.',
       icon: 'Calculator',
       category: 'App',
     },
     {
-      href: '/electrician-invoice-app',
+      href: '/tools/electrician-invoice-app',
       title: 'Electrician Invoice App',
       description: 'Keep the final bill aligned with the work that was actually completed.',
       icon: 'FileText',

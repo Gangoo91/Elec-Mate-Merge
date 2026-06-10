@@ -94,7 +94,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Guide',
   },
   {
-    href: '/earthing-arrangements',
+    href: '/guides/earthing-arrangements',
     title: 'Earthing Arrangements',
     description:
       'TN-S, TN-C-S, TT, and IT earthing systems explained with practical testing guidance.',
@@ -102,7 +102,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Guide',
   },
   {
-    href: '/rcd-testing-guide',
+    href: '/tools/rcd-testing-guide',
     title: 'RCD Testing Guide',
     description:
       'How to test RCDs correctly including trip times, test currents, and recording results.',
@@ -403,7 +403,7 @@ const sections = [
           configuration. A generator with an earthed star point typically operates as a TN-S system.
           An unearthed generator operates as an IT system, which requires an insulation monitoring
           device to detect first faults. The{' '}
-          <SEOInternalLink href="/earthing-arrangements">earthing arrangement</SEOInternalLink> must
+          <SEOInternalLink href="/guides/earthing-arrangements">earthing arrangement</SEOInternalLink> must
           be documented on the single-line diagram and verified by testing before the installation
           is energised.
         </p>
@@ -549,7 +549,7 @@ const sections = [
             <li>
               <strong>Live tests:</strong> Earth fault loop impedance at the furthest point of each
               circuit (to verify disconnection times); prospective fault current at the origin;{' '}
-              <SEOInternalLink href="/rcd-testing-guide">RCD testing</SEOInternalLink> (trip time at
+              <SEOInternalLink href="/tools/rcd-testing-guide">RCD testing</SEOInternalLink> (trip time at
               rated current, 5x rated current, and ramp test); voltage and frequency at the origin.
             </li>
             <li>
@@ -727,7 +727,7 @@ export default function TemporaryInstallationsBS7909Page() {
       title="Temporary Installations BS 7909 | Events & Construction"
       description="Complete guide to temporary electrical installations under BS 7909 and BS 7671. Covers supply design, earthing, protection devices, testing…"
       datePublished="2025-09-12"
-      dateModified="2026-05-18"
+      dateModified="2026-06-10"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Technical Guide"

@@ -590,7 +590,7 @@ const sections = [
                   </SEOInternalLink>{' '}
                   (Reg 644.4.201) is appropriate. If the circuit cable or protective device is
                   uprated, or a new circuit is provided, an{' '}
-                  <SEOInternalLink href="/tools/eic-certificate">
+                  <SEOInternalLink href="/eic-certificate">
                     Electrical Installation Certificate
                   </SEOInternalLink>{' '}
                   is required instead. In dwellings, the work may also be notifiable under Part P of
@@ -661,7 +661,7 @@ export default function StorageHeaterNotWorkingPage() {
       title="Storage Heater Not Working | Causes & Fixes"
       description="Why is your storage heater not heating? Covers input/output controls, Economy 7 off-peak supply faults, element failure, and time switch problems."
       datePublished="2026-03-27"
-      dateModified="2026-05-18"
+      dateModified="2026-06-10"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Troubleshooting"

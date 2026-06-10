@@ -272,7 +272,7 @@ const sections = [
         <p>
           Every one of these jobs requires certification. The type of certificate depends on the
           work: an EIC for new installations and rewires, a{' '}
-          <SEOInternalLink href="/minor-works-certificate">Minor Works Certificate</SEOInternalLink>{' '}
+          <SEOInternalLink href="/tools/minor-works-certificate">Minor Works Certificate</SEOInternalLink>{' '}
           for smaller alterations, and an EICR for periodic inspections. Elec-Mate handles all 8
           certificate types that a domestic electrician needs, directly from your phone.
         </p>
@@ -850,7 +850,7 @@ export default function DomesticElectricianGuidePage() {
       title="Domestic Electrician Guide UK 2026 | Everything You Need"
       description="Complete guide to working as a domestic electrician in the UK. Typical jobs, Part P requirements, competent person schemes, qualifications, earnings…"
       datePublished="2025-06-15"
-      dateModified="2026-05-18"
+      dateModified="2026-06-10"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Career Guide"

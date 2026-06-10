@@ -595,7 +595,7 @@ const sections = [
                 <h4 className="font-bold text-white mb-1">Quote Brighton Rewires Professionally</h4>
                 <p className="text-white text-sm leading-relaxed">
                   Generate detailed, itemised rewire quotes in minutes with the{' '}
-                  <SEOInternalLink href="/electrical-quoting-app">
+                  <SEOInternalLink href="/tools/electrical-quoting-app">
                     Elec-Mate quoting app
                   </SEOInternalLink>
                   . In Brighton's competitive market, a professional quote with clear circuit

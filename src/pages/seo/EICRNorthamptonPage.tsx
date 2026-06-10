@@ -538,7 +538,7 @@ const sections = [
                 <p className="text-white text-sm leading-relaxed">
                   When you identify C1 or C2 observations, quote the remedial work immediately using
                   the{' '}
-                  <SEOInternalLink href="/electrical-quoting-app">
+                  <SEOInternalLink href="/tools/electrical-quoting-app">
                     Elec-Mate quoting app
                   </SEOInternalLink>
                   . Northampton landlords must act within 28 days — the electrician who quotes on

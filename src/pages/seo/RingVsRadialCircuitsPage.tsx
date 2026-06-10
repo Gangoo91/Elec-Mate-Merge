@@ -459,7 +459,7 @@ export default function RingVsRadialCircuitsPage() {
       title="Ring vs Radial Final Circuits: BS 7671:2018+A4:2026 Guide"
       description="Ring vs radial final circuits: A1 ring (32A), A2/A3 radial, cable sizes, load limits, ring continuity test (r1+r2/4 method). Appendix 15 of BS 7671."
       datePublished="2026-03-27"
-      dateModified="2026-05-22"
+      dateModified="2026-06-10"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Circuit Design Guide"

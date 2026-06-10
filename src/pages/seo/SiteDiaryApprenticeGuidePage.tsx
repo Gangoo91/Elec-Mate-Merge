@@ -81,7 +81,7 @@ const faqs = [
 
 const relatedPages = [
   {
-    href: '/apprentice-portfolio-guide',
+    href: '/training/apprentice-portfolio',
     title: 'Apprentice Portfolio Guide',
     description: 'Digital evidence tracking, AI criteria mapping, and EPAO-ready export.',
     icon: FolderOpen,
@@ -139,7 +139,7 @@ const sections = [
         </p>
         <p>
           <strong>Evidence for your portfolio:</strong> Your{' '}
-          <SEOInternalLink href="/apprentice-portfolio-guide">
+          <SEOInternalLink href="/training/apprentice-portfolio">
             apprentice portfolio
           </SEOInternalLink>{' '}
           must demonstrate your competence across the full range of the apprenticeship standard.
@@ -537,7 +537,7 @@ const sections = [
         </p>
         <p>
           <strong>Portfolio integration:</strong> Diary entries link directly to your{' '}
-          <SEOInternalLink href="/apprentice-portfolio-guide">
+          <SEOInternalLink href="/training/apprentice-portfolio">
             apprentice portfolio
           </SEOInternalLink>
           . Any entry can be promoted to a full portfolio entry with additional detail, photographs,

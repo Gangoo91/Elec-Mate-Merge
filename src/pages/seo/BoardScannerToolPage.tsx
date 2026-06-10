@@ -188,7 +188,7 @@ export default function BoardScannerToolPage() {
                 Each device identification includes the manufacturer where recognisable. The AI is
                 trained on components from Hager, Wylex, Schneider Electric, MK, Contactum, Fusebox,
                 Chint, and other common UK brands. For more on how these devices relate to{' '}
-                <SEOInternalLink href="/guides/consumer-unit-regulations">
+                <SEOInternalLink href="/consumer-unit-regulations">
                   consumer unit regulations
                 </SEOInternalLink>
                 , see our dedicated guide.
@@ -312,7 +312,7 @@ export default function BoardScannerToolPage() {
                 </SEOInternalLink>{' '}
                 page for full details on offline capabilities. You can also explore our full range
                 of{' '}
-                <SEOInternalLink href="/electrical-testing-calculators">
+                <SEOInternalLink href="/tools/electrical-testing-calculators">
                   electrical testing calculators
                 </SEOInternalLink>{' '}
                 that work without an internet connection.
@@ -456,7 +456,7 @@ export default function BoardScannerToolPage() {
           category: 'Tools',
         },
         {
-          href: '/electrical-testing-calculators',
+          href: '/tools/electrical-testing-calculators',
           title: 'Electrical Calculators',
           description:
             '70+ BS 7671 calculators for cable sizing, voltage drop, Zs verification, and more.',
@@ -473,7 +473,7 @@ export default function BoardScannerToolPage() {
         },
       ]}
       ctaHeading="Scan your first board free"
-      ctaSubheading="7-day free trial includes unlimited board scans, all 16 certificate types, 70+ calculators, and every AI tool. No card required to start."
+      ctaSubheading="7-day free trial includes unlimited board scans, all 16 certificate types, 70+ calculators, and every AI tool. No charge until day 8."
       toolPath="/tools/board-scanner"
     />
   );

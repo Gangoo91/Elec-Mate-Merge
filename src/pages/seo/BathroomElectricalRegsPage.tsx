@@ -18,7 +18,7 @@ export default function BathroomElectricalRegsPage() {
       title="Bathroom Electrical Regulations UK | BS 7671 Zones"
       description="Complete guide to bathroom electrical regulations under BS 7671 Part 7 Section 701. Bathroom zones (0, 1, 2, outside zones), IP ratings…"
       datePublished="2025-04-20"
-      dateModified="2026-05-18"
+      dateModified="2026-06-10"
       breadcrumbs={[
         { label: 'Guides', href: '/guides' },
         {
@@ -695,14 +695,14 @@ export default function BathroomElectricalRegsPage() {
           category: 'Calculator',
         },
         {
-          href: '/earthing-arrangements',
+          href: '/guides/earthing-arrangements',
           title: 'Earthing Arrangements',
           description: 'Understanding earthing — essential for bonding decisions.',
           icon: Cable,
           category: 'Guide',
         },
         {
-          href: '/rcd-testing-guide',
+          href: '/tools/rcd-testing-guide',
           title: 'RCD Testing Guide',
           description: 'How to test RCDs correctly — mandatory for all bathroom circuits.',
           icon: ShieldCheck,

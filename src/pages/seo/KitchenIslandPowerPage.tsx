@@ -492,7 +492,7 @@ const sections = [
                 <p className="text-white text-sm leading-relaxed">
                   Kitchen island work often has weeks or months between first fix and second fix.
                   Quote them as separate visits in the{' '}
-                  <SEOInternalLink href="/electrical-quoting-app">quoting app</SEOInternalLink> so
+                  <SEOInternalLink href="/tools/electrical-quoting-app">quoting app</SEOInternalLink> so
                   the customer understands the timeline and cost breakdown.
                 </p>
               </div>
@@ -519,7 +519,7 @@ export default function KitchenIslandPowerPage() {
       title="Kitchen Island Power Supply | Floor Box & Hob Circuit Guide"
       description="Complete guide to getting power to a kitchen island in the UK. Floor box vs pillar, induction hob dedicated circuit, socket outlets, first fix planning…"
       datePublished="2026-03-27"
-      dateModified="2026-05-18"
+      dateModified="2026-06-10"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Installation Guide"

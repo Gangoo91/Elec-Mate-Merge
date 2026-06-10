@@ -17,7 +17,7 @@ import { Cable, Zap, Calculator, ClipboardCheck, BookOpen, Network } from 'lucid
 // -------------------------------------------------------------------
 
 const published = '2026-05-17';
-const modified = '2026-06-09';
+const modified = '2026-06-10';
 
 const breadcrumbs = [
   { label: 'Guides', href: '/guides' },
@@ -548,7 +548,7 @@ const sections = [
           For BS 7671 inspection and testing, PoE switches are fixed equipment. The supply circuit
           is tested in the normal way — IR, polarity, Zs, RCD operation. The PoE cabling itself is
           not a BS 7671 circuit and is not tested on the{' '}
-          <SEOInternalLink href="/tools/eic-certificate">EIC</SEOInternalLink> or EICR — but
+          <SEOInternalLink href="/eic-certificate">EIC</SEOInternalLink> or EICR — but
           manufacturers require a structured-cabling certification test (Fluke DSX or equivalent)
           for warranty validity.
         </Callout>

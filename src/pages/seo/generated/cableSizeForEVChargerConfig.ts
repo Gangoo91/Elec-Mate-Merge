@@ -6,7 +6,7 @@ import type { GeneratedGuideConfig } from '@/pages/seo/generated/GeneratedGuideP
 // (5th Edition).
 
 const published = '2026-05-17';
-const modified = '2026-05-18';
+const modified = '2026-06-10';
 
 export const cableSizeForEVChargerConfig: GeneratedGuideConfig = {
   pagePath: '/guides/cable-size-for-ev-charger',

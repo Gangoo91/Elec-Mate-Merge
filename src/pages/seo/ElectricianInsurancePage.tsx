@@ -720,7 +720,7 @@ export default function ElectricianInsurancePage() {
       title="Electrician Insurance UK 2026 | What Cover Do You Need?"
       description="Public liability, professional indemnity, employers liability, tools cover and van insurance for UK electricians. Costs, cover levels and what to avoid."
       datePublished="2026-01-18"
-      dateModified="2026-05-18"
+      dateModified="2026-06-10"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Insurance Guide"

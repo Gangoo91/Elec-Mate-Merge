@@ -91,7 +91,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Calculator',
   },
   {
-    href: '/tools/ai-circuit-designer',
+    href: '/ai-circuit-designer',
     title: 'AI Circuit Designer',
     description:
       'Design complete kitchen wiring layouts with AI-assisted circuit allocation and cable sizing.',
@@ -107,7 +107,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Guide',
   },
   {
-    href: '/guides/consumer-unit-regulations',
+    href: '/consumer-unit-regulations',
     title: 'Consumer Unit Regulations',
     description:
       'Consumer unit requirements including RCBO selection and circuit protection for kitchen circuits.',
@@ -700,7 +700,7 @@ export default function KitchenWiringGuidePage() {
       title="Kitchen Wiring Guide | Circuits, RCDs & Regulations"
       description="Complete guide to kitchen wiring in the UK. Number of circuits needed, ring vs radial, dedicated appliance circuits, RCD protection, zone restrictions…"
       datePublished="2025-08-15"
-      dateModified="2026-05-18"
+      dateModified="2026-06-10"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Installation Guide"

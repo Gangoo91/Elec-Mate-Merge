@@ -23,7 +23,7 @@ import {
 // -------------------------------------------------------------------
 
 const breadcrumbs = [
-  { label: 'Career', href: '/guides/how-to-become-electrician' },
+  { label: 'Career', href: '/guides/how-to-become-an-electrician' },
   { label: 'School Leavers', href: '/guides/electrical-careers-school-leavers' },
 ];
 
@@ -82,7 +82,7 @@ const faqs = [
 
 const relatedPages: RelatedPage[] = [
   {
-    href: '/guides/how-to-become-electrician',
+    href: '/guides/how-to-become-an-electrician',
     title: 'How to Become an Electrician',
     description:
       'Complete guide to all routes into the electrical trade — apprenticeship, college, and adult retraining.',

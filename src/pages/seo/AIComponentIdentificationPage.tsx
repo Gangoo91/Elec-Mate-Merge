@@ -20,7 +20,7 @@ export default function AIComponentIdentificationPage() {
       title="AI Component ID | Photo Scanner Tool | Elec-Mate"
       description="Point your phone camera at any electrical component and Elec-Mate's AI identifies it instantly. UK-spec accessories, MCBs, RCDs, conduit, more."
       datePublished="2026-01-20"
-      dateModified="2026-05-18"
+      dateModified="2026-06-10"
       toolPath="/tools/ai-component-identification"
       breadcrumbs={[
         { label: 'Tools', href: '/tools' },
@@ -94,7 +94,7 @@ export default function AIComponentIdentificationPage() {
                 The tool is part of Elec-Mate's broader AI toolkit, which includes the{' '}
                 <SEOInternalLink href="/tools/ai-electrician">AI Board Scanner</SEOInternalLink>,
                 the{' '}
-                <SEOInternalLink href="/tools/ai-circuit-designer">
+                <SEOInternalLink href="/ai-circuit-designer">
                   AI Circuit Designer
                 </SEOInternalLink>
                 , and the{' '}
@@ -437,7 +437,7 @@ export default function AIComponentIdentificationPage() {
           category: 'AI Tools',
         },
         {
-          href: '/tools/ai-circuit-designer',
+          href: '/ai-circuit-designer',
           title: 'AI Circuit Designer',
           description:
             'Design complete consumer unit schedules with cable sizes, protective devices, and diversity calculations to BS 7671.',

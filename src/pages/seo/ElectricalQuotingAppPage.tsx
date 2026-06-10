@@ -139,10 +139,10 @@ export default function ElectricalQuotingAppPage() {
       'AI quoting app built for UK electricians: real trade material prices, labour costs and instant PDF quotes for rewires, CU upgrades, EICRs and EV chargers. Free to start.',
     breadcrumbs: [
       { name: 'Home', url: '/' },
-      { name: 'Electrical Quoting App', url: '/electrical-quoting-app' },
+      { name: 'Electrical Quoting App', url: '/tools/electrical-quoting-app' },
     ],
-    dateModified: '2026-05-18',
-    author: 'Elec-Mate Technical Team',
+    dateModified: '2026-06-10',
+    author: 'Andrew Moore',
   });
 
   return (
@@ -505,7 +505,7 @@ export default function ElectricalQuotingAppPage() {
                 digital EICR and EIC certification
               </SEOInternalLink>
               , and the full quoting,
-              <SEOInternalLink href="/electrician-invoice-app"> invoicing</SEOInternalLink>, and
+              <SEOInternalLink href="/tools/electrician-invoice-app"> invoicing</SEOInternalLink>, and
               payment system described on this page.
             </p>
             <p>
@@ -540,13 +540,13 @@ export default function ElectricalQuotingAppPage() {
           <div className="space-y-4 text-white leading-relaxed">
             <p>
               Quoting works best when it is connected to the rest of the commercial stack. Start
-              with the <SEOInternalLink href="/ai-cost-engineer">AI Cost Engineer</SEOInternalLink>{' '}
+              with the <SEOInternalLink href="/tools/ai-cost-engineer">AI Cost Engineer</SEOInternalLink>{' '}
               for the estimate, protect margin with the{' '}
               <SEOInternalLink href="/tools/minimum-charge-calculator">
                 minimum charge calculator
               </SEOInternalLink>
               , convert the accepted job into the{' '}
-              <SEOInternalLink href="/electrician-invoice-app">invoice workflow</SEOInternalLink>,
+              <SEOInternalLink href="/tools/electrician-invoice-app">invoice workflow</SEOInternalLink>,
               and tie completed work back to the{' '}
               <SEOInternalLink href="/tools/eicr-certificate">certificate record</SEOInternalLink>{' '}
               where relevant.

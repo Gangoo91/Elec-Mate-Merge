@@ -585,7 +585,7 @@ export default function WhatIsACircuitBreakerPage() {
       title="What Is a Circuit Breaker? | MCB Explained Simply"
       description="Plain English guide to circuit breakers (MCBs). How MCBs work with thermal and magnetic trip mechanisms, MCB vs fuse, Type B, C, and D explained…"
       datePublished="2025-06-15"
-      dateModified="2026-05-18"
+      dateModified="2026-06-10"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Electrical Basics"

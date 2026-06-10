@@ -475,7 +475,7 @@ const relatedPages = [
     category: 'Training' as const,
   },
   {
-    href: '/eighteenth-edition-course',
+    href: '/training/18th-edition-course',
     title: '18th Edition Course',
     description:
       'BS 7671 training — the wiring regulations you will apply in your HNC design modules.',

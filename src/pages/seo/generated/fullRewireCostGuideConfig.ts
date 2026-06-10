@@ -149,14 +149,14 @@ export const fullRewireCostGuideConfig: GeneratedGuideConfig = {
       category: 'Guide',
     },
     {
-      href: '/electrical-quoting-app',
+      href: '/tools/electrical-quoting-app',
       title: 'Electrical Quoting App',
       description: 'Build a clear rewire quote with labour, materials, and extras separated.',
       icon: 'Wrench',
       category: 'App',
     },
     {
-      href: '/electrician-invoice-app',
+      href: '/tools/electrician-invoice-app',
       title: 'Electrician Invoice App',
       description: 'Keep the billing side of the job simple after the work is complete.',
       icon: 'FileCheck2',

@@ -95,7 +95,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Guide',
   },
   {
-    href: '/solar-pv-certificate',
+    href: '/tools/solar-pv-certificate',
     title: 'Solar PV Certificates',
     description: 'EIC and MCS handover documentation required for a compliant PV installation.',
     icon: FileCheck2,
@@ -583,7 +583,7 @@ export default function SolarPVSystemSizingPage() {
       title="Solar PV System Sizing — UK Guide | kWp Calculation & G98/G99"
       description="How to size a solar PV system for UK homes: kWp calculation methods, orientation and tilt factors, MCS standards, G98/G99 DNO notification thresholds, and BS 7671 Section 712 requirements."
       datePublished="2024-06-01"
-      dateModified="2026-06-09"
+      dateModified="2026-06-10"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Solar PV Guide"

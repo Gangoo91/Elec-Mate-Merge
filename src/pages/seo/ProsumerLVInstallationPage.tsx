@@ -12,7 +12,7 @@ import { Battery, FileCheck2, BookOpen, ShieldCheck } from 'lucide-react';
 // -------------------------------------------------------------------
 
 const published = '2026-05-17';
-const modified = '2026-06-09';
+const modified = '2026-06-10';
 
 const breadcrumbs = [
   { label: 'Guides', href: '/guides' },
@@ -92,7 +92,7 @@ const relatedPages = [
     category: 'Guide' as const,
   },
   {
-    href: '/solar-pv-certificate',
+    href: '/tools/solar-pv-certificate',
     title: 'Solar PV Certificate',
     description: 'Digital certificate for the AC side of a solar PV prosumer installation.',
     icon: FileCheck2,

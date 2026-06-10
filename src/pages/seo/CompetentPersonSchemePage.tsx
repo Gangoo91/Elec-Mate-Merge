@@ -119,7 +119,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Guide',
   },
   {
-    href: '/guides/how-to-become-electrician',
+    href: '/guides/how-to-become-an-electrician',
     title: 'How to Become an Electrician UK',
     description:
       'Complete career guide from apprenticeship to qualified status including qualifications needed.',
@@ -142,7 +142,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Guide',
   },
   {
-    href: '/eighteenth-edition-course',
+    href: '/training/18th-edition-course',
     title: '18th Edition Course',
     description:
       'Study for C&G 2382 — the qualification required for competent person scheme registration.',
@@ -669,7 +669,7 @@ export default function CompetentPersonSchemePage() {
       title="Competent Person Scheme | Electrical Registration UK"
       description="Competent person schemes for UK electricians: NICEIC, NAPIT, ELECSA, Stroma, BRE compared on cost, assessment, and notifiable work coverage."
       datePublished="2025-05-10"
-      dateModified="2026-05-18"
+      dateModified="2026-06-10"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Registration Guide"

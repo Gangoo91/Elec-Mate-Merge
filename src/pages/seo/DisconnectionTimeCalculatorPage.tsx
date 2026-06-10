@@ -20,7 +20,7 @@ export default function DisconnectionTimeCalculatorPage() {
       title="Disconnection Time Calculator: BS 7671 0.4s & 5s"
       description="Check maximum disconnection times to BS 7671 Table 41.1: 0.4 s for final circuits, 5 s for distribution. Free calculator with maximum Zs lookup."
       datePublished="2026-01-20"
-      dateModified="2026-05-24"
+      dateModified="2026-06-10"
       breadcrumbs={[
         { label: 'Tools', href: '/tools' },
         { label: 'Disconnection Time Calculator', href: '/tools/disconnection-time-calculator' },
@@ -77,7 +77,7 @@ export default function DisconnectionTimeCalculatorPage() {
               <p>
                 BS 7671:2018+A4:2026 sets specific disconnection time limits based on the type of
                 circuit and the{' '}
-                <SEOInternalLink href="/earthing-arrangements">earthing system</SEOInternalLink> in
+                <SEOInternalLink href="/guides/earthing-arrangements">earthing system</SEOInternalLink> in
                 use. The fundamental requirement comes from Regulation 411.3.2, which states that
                 protective devices must disconnect the supply within the times specified in Table
                 41.1. These times are derived from the IEC body current curves — the relationship
@@ -184,7 +184,7 @@ export default function DisconnectionTimeCalculatorPage() {
                 quickly enough and the circuit fails the disconnection time test. You would need to
                 either reduce the circuit impedance (shorter cables, larger CPC) or add
                 supplementary protection such as an{' '}
-                <SEOInternalLink href="/rcd-testing-guide">RCD</SEOInternalLink>.
+                <SEOInternalLink href="/tools/rcd-testing-guide">RCD</SEOInternalLink>.
               </p>
               <p>
                 BS 7671 Regulation 411.3.3 (A4:2026) requires 30&nbsp;mA RCD additional protection
@@ -221,7 +221,7 @@ export default function DisconnectionTimeCalculatorPage() {
                 Because the earth fault loop impedance is so much higher in TT systems, the fault
                 current is correspondingly lower. In most cases, the fault current in a TT system is
                 insufficient to operate an MCB or fuse within the required disconnection time. This
-                is why <SEOInternalLink href="/rcd-testing-guide">RCD protection</SEOInternalLink>{' '}
+                is why <SEOInternalLink href="/tools/rcd-testing-guide">RCD protection</SEOInternalLink>{' '}
                 is essential in TT installations — the RCD detects the imbalance between live and
                 neutral caused by the earth fault current, and disconnects even when that current is
                 relatively small.
@@ -235,7 +235,7 @@ export default function DisconnectionTimeCalculatorPage() {
               </p>
               <p>
                 The Elec-Mate{' '}
-                <SEOInternalLink href="/electrical-testing-calculators">
+                <SEOInternalLink href="/tools/electrical-testing-calculators">
                   electrical testing calculators
                 </SEOInternalLink>{' '}
                 include specific TT system verification, checking the earth electrode resistance
@@ -467,7 +467,7 @@ export default function DisconnectionTimeCalculatorPage() {
           category: 'Calculators',
         },
         {
-          href: '/rcd-testing-guide',
+          href: '/tools/rcd-testing-guide',
           title: 'RCD Testing Guide',
           description:
             'How to test RCDs on site including trip times, ramp tests, and BS 7671 pass criteria.',
@@ -475,7 +475,7 @@ export default function DisconnectionTimeCalculatorPage() {
           category: 'Guides',
         },
         {
-          href: '/earthing-arrangements',
+          href: '/guides/earthing-arrangements',
           title: 'Earthing Arrangements Explained',
           description:
             'TN-S, TN-C-S, and TT earthing systems explained with diagrams and fault loop paths.',

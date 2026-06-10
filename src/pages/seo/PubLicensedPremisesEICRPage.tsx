@@ -109,7 +109,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Guide',
   },
   {
-    href: '/emergency-lighting-certificate',
+    href: '/tools/emergency-lighting-certificate',
     title: 'Emergency Lighting Certificate',
     description: 'BS 5266-1 emergency lighting inspection, testing, and certification guide.',
     icon: Zap,
@@ -717,7 +717,7 @@ const sections = [
                 <p className="text-white text-sm leading-relaxed">
                   Distribution board replacements, emergency lighting upgrades, and fire alarm
                   circuit remediation are high-value jobs. Quote on the day with the{' '}
-                  <SEOInternalLink href="/electrical-quoting-app">quoting app</SEOInternalLink> and
+                  <SEOInternalLink href="/tools/electrical-quoting-app">quoting app</SEOInternalLink> and
                   convert inspection clients into recurring commercial maintenance contracts.
                 </p>
               </div>
@@ -744,7 +744,7 @@ export default function PubLicensedPremisesEICRPage() {
       title="EICR for Pubs & Licensed Premises UK | Licensing"
       description="Complete guide to EICR for pubs and licensed premises in the UK. Licensing Act 2003 requirements, local authority licence conditions, EICR frequency…"
       datePublished="2026-03-27"
-      dateModified="2026-05-29"
+      dateModified="2026-06-10"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Licensed Premises Guide"

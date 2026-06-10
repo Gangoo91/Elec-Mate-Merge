@@ -4,7 +4,7 @@ import type { GeneratedGuideConfig } from '@/pages/seo/generated/GeneratedGuideP
 // (Inspection & Testing, 9th Edition) and the IET On-Site Guide.
 
 const published = '2026-05-17';
-const modified = '2026-05-29';
+const modified = '2026-06-10';
 
 export const cableSizeForElectricShowerConfig: GeneratedGuideConfig = {
   pagePath: '/guides/cable-size-for-electric-shower',

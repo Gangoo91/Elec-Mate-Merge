@@ -521,7 +521,7 @@ const sections = [
                 <h4 className="font-bold text-white mb-1">Step 3: Insulation Resistance Testing</h4>
                 <p className="text-white text-sm leading-relaxed">
                   If the fault is on a specific circuit (MCB or RCD tripping), carry out{' '}
-                  <SEOInternalLink href="/how-to-test-insulation-resistance">
+                  <SEOInternalLink href="/guides/insulation-resistance-testing-bs7671">
                     insulation resistance testing
                   </SEOInternalLink>{' '}
                   on the affected circuit. A reading below 1M ohm indicates insulation breakdown.
@@ -572,7 +572,7 @@ export default function PowerGoingOffPage() {
       title="Power Going Off Randomly | Electrical Causes & Fixes"
       description="Why does your power keep going off? Expert guide covering loose main fuse connections, MCB and RCD tripping, overloaded circuits, DNO supply faults…"
       datePublished="2025-03-15"
-      dateModified="2026-05-18"
+      dateModified="2026-06-10"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Troubleshooting"

@@ -401,7 +401,7 @@ const sections = [
               <span>
                 <strong>Tip 15: All outdoor electrical work must be done by a professional.</strong>{' '}
                 Under{' '}
-                <SEOInternalLink href="/part-p-building-regulations">
+                <SEOInternalLink href="/guides/part-p-building-regulations">
                   Part P of the Building Regulations
                 </SEOInternalLink>
                 , all outdoor electrical work (lighting, sockets, garden building supplies) is

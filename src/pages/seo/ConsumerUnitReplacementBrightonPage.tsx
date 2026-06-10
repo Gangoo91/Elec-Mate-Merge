@@ -85,6 +85,13 @@ const faqs = [
 
 const relatedPages: RelatedPage[] = [
   {
+    href: '/guides/consumer-unit-replacement-cost-brighton',
+    title: 'Consumer Unit Replacement Cost in Brighton',
+    description: 'Local price bands and labour rates for consumer unit replacement in Brighton.',
+    icon: Wrench,
+    category: 'Guide',
+  },
+  {
     href: '/guides/consumer-unit-replacement-cost',
     title: 'Consumer Unit Replacement Guide',
     description: 'Complete UK guide to fuse box upgrades — costs, regulations, and process.',
@@ -530,7 +537,7 @@ const sections = [
                 <p className="text-white text-sm leading-relaxed">
                   When a Brighton EICR reveals C2 consumer unit deficiencies, quote the replacement
                   immediately using the{' '}
-                  <SEOInternalLink href="/electrical-quoting-app">
+                  <SEOInternalLink href="/tools/electrical-quoting-app">
                     Elec-Mate quoting app
                   </SEOInternalLink>
                   . Landlords must act within 28 days — the first professional quote wins the job.

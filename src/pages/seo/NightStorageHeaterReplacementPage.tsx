@@ -587,7 +587,7 @@ const sections = [
             <li className="flex items-start gap-3">
               <CheckCircle2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
-                <SEOAppBridge href="/minor-works-certificate" label="Minor Works Certificate" /> — issue
+                <SEOAppBridge href="/tools/minor-works-certificate" label="Minor Works Certificate" /> — issue
                 minor works certificates for small additions like fused spurs for panel heaters.
               </span>
             </li>

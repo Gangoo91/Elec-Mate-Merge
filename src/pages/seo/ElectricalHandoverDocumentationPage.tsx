@@ -378,7 +378,7 @@ const sections = [
               <span>
                 <strong>Maintenance requirements</strong> -- what routine maintenance the client is
                 responsible for (monthly{' '}
-                <SEOInternalLink href="/emergency-lighting-certificate">
+                <SEOInternalLink href="/tools/emergency-lighting-certificate">
                   emergency lighting
                 </SEOInternalLink>{' '}
                 function tests, quarterly RCD tests, keeping ventilation clear around distribution
@@ -727,7 +727,7 @@ export default function ElectricalHandoverDocumentationPage() {
       title="Electrical Handover Documentation | What to Provide"
       description="Complete guide to electrical handover documentation. EIC, test results, O&M manual, as-built drawings, cable schedules, warranty info…"
       datePublished="2026-01-18"
-      dateModified="2026-05-18"
+      dateModified="2026-06-10"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Guide"

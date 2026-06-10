@@ -167,7 +167,7 @@ const sections = [
           rooms with limited ventilation, lift motor rooms, ceiling voids and crawl spaces above
           suspended ceilings, switchroom basements, and trenches where cables are being laid are all
           potentially confined spaces. Each time you enter one of these environments to carry out{' '}
-          <SEOInternalLink href="/inspection-testing-course">
+          <SEOInternalLink href="/training/inspection-and-testing">
             inspection and testing
           </SEOInternalLink>{' '}
           or installation work, you need to assess whether confined space hazards are present.
@@ -301,7 +301,7 @@ const sections = [
         </p>
         <p>
           The{' '}
-          <SEOInternalLink href="/manual-handling-course">manual handling course</SEOInternalLink>{' '}
+          <SEOInternalLink href="/training/manual-handling">manual handling course</SEOInternalLink>{' '}
           covers the additional challenges of handling heavy equipment in restricted spaces where
           normal lifting postures may not be achievable.
         </p>

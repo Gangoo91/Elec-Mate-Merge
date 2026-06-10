@@ -24,7 +24,7 @@ export default function HouseRewireGuidePage() {
       title="House Rewire Guide UK | What's Involved & What to Expect"
       description="Complete guide to house rewiring in the UK. Signs you need a rewire, what's involved in first fix and second fix, typical timeline for a 3-bed house…"
       datePublished="2025-05-01"
-      dateModified="2026-05-18"
+      dateModified="2026-06-10"
       breadcrumbs={[
         { label: 'Guides', href: '/guides' },
         { label: 'House Rewire Guide', href: '/guides/house-rewire-guide' },
@@ -374,7 +374,7 @@ export default function HouseRewireGuidePage() {
                     <h4 className="font-bold text-white mb-1">Testing and Commissioning</h4>
                     <p className="text-white text-sm leading-relaxed">
                       The full{' '}
-                      <SEOInternalLink href="/testing-sequence-guide">
+                      <SEOInternalLink href="/guides/testing-sequence-guide">
                         testing sequence
                       </SEOInternalLink>{' '}
                       is carried out on every circuit: continuity of protective conductors (R1+R2),

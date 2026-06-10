@@ -22,7 +22,7 @@ export default function EVChargerInstallationPage() {
       title="EV Charger Installation UK 2026 | Requirements & Cost"
       description="Complete guide to EV charger installation in the UK. Types of chargers, installation requirements, RCD and earthing regulations, IET Code of Practice…"
       datePublished="2025-03-10"
-      dateModified="2026-05-18"
+      dateModified="2026-06-10"
       breadcrumbs={[
         { label: 'Guides', href: '/guides' },
         { label: 'EV Charger Installation', href: '/guides/ev-charger-installation' },
@@ -250,7 +250,7 @@ export default function EVChargerInstallationPage() {
                 For properties with an existing TN-S earthing system (earth provided by the cable
                 sheath) or TT system (existing earth electrode), the separate earth rod may not be
                 required — but the 30 mA RCD protection is still mandatory. Always check the{' '}
-                <SEOInternalLink href="/earthing-arrangements">
+                <SEOInternalLink href="/guides/earthing-arrangements">
                   earthing arrangement
                 </SEOInternalLink>{' '}
                 before specifying the installation design.
@@ -628,7 +628,7 @@ export default function EVChargerInstallationPage() {
           category: 'Calculator',
         },
         {
-          href: '/earthing-arrangements',
+          href: '/guides/earthing-arrangements',
           title: 'Earthing Arrangements',
           description: 'TN-S, TN-C-S, and TT earthing systems explained.',
           icon: Cable,

@@ -764,7 +764,7 @@ const sections = [
                 <h4 className="font-bold text-white mb-1">Quote and Certificate Industrial Work</h4>
                 <p className="text-white text-sm leading-relaxed">
                   Use the{' '}
-                  <SEOInternalLink href="/electrical-quoting-app">
+                  <SEOInternalLink href="/tools/electrical-quoting-app">
                     Elec-Mate quoting app
                   </SEOInternalLink>{' '}
                   to produce detailed itemised quotes for industrial projects. Issue{' '}
@@ -795,7 +795,7 @@ export default function IndustrialElectricalCostPage() {
       title="Industrial Electrical Installation Cost UK 2025 | Factory"
       description="Industrial electrical installation costs UK 2025. Per square metre estimates, 3-phase distribution, motor control centres, cable containment systems…"
       datePublished="2025-01-01"
-      dateModified="2026-05-18"
+      dateModified="2026-06-10"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Industrial Cost Guide"

@@ -4,7 +4,7 @@ import type { GeneratedGuideConfig } from '@/pages/seo/generated/GeneratedGuideP
 // Updated 2026-05-18.
 
 const published = '2026-05-18';
-const modified = '2026-05-18';
+const modified = '2026-06-10';
 
 export const EighteenthEditionChapter41ProtectionAgainstElectricShockExamConfig: GeneratedGuideConfig =
   {

@@ -637,7 +637,7 @@ const sections = [
                 <h4 className="font-bold text-white mb-1">Quote and Certificate on Site</h4>
                 <p className="text-white text-sm leading-relaxed">
                   Use the{' '}
-                  <SEOInternalLink href="/electrical-quoting-app">
+                  <SEOInternalLink href="/tools/electrical-quoting-app">
                     Elec-Mate quoting app
                   </SEOInternalLink>{' '}
                   to produce a professional itemised quote during your site survey. Issue{' '}
@@ -670,7 +670,7 @@ export default function RestaurantElectricalCostPage() {
       title="Restaurant Electrical Installation Cost UK 2025/2026 | Catering"
       description="Restaurant electrical installation costs UK 2025/2026. 3-phase supply for commercial catering, gas interlock wiring, emergency lighting to BS 5266-1…"
       datePublished="2025-01-01"
-      dateModified="2026-05-18"
+      dateModified="2026-06-10"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Commercial Cost Guide"

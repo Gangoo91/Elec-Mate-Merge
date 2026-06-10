@@ -105,7 +105,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Certificate',
   },
   {
-    href: '/guides/consumer-unit-regulations',
+    href: '/consumer-unit-regulations',
     title: 'Consumer Unit Regulations',
     description:
       'Current regulations for consumer unit replacement including Amendment 4 requirements.',
@@ -155,7 +155,7 @@ const sections = [
           A partial rewire can include replacing individual circuits (for example, all lighting
           circuits), replacing wiring in specific areas (for example, the ground floor only), or
           upgrading the{' '}
-          <SEOInternalLink href="/guides/consumer-unit-regulations">consumer unit</SEOInternalLink>{' '}
+          <SEOInternalLink href="/consumer-unit-regulations">consumer unit</SEOInternalLink>{' '}
           and main distribution while retaining the final circuits.
         </p>
       </>
@@ -351,7 +351,7 @@ const sections = [
             </li>
             <li>
               <strong>
-                <SEOInternalLink href="/how-to-test-insulation-resistance">
+                <SEOInternalLink href="/guides/insulation-resistance-testing-bs7671">
                   Insulation resistance
                 </SEOInternalLink>
               </strong>{' '}

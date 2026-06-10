@@ -704,7 +704,7 @@ const sections = [
                 <h4 className="font-bold text-white mb-1">Quote and Invoice Like a Professional</h4>
                 <p className="text-white text-sm leading-relaxed">
                   Going self-employed means quoting and invoicing from day one. Use the{' '}
-                  <SEOInternalLink href="/electrical-quoting-app">
+                  <SEOInternalLink href="/tools/electrical-quoting-app">
                     Elec-Mate quoting app
                   </SEOInternalLink>{' '}
                   to produce written, itemised quotes and turn them into invoices in one tap.
@@ -752,7 +752,7 @@ export default function NVQLevel3ElectricalPage() {
       title="NVQ Level 3 Electrical Installation UK | Qualification"
       description="Complete guide to the NVQ Level 3 Electrotechnical Installation qualification. What it is, how it differs from City and Guilds 2365, who needs it…"
       datePublished="2026-03-27"
-      dateModified="2026-05-18"
+      dateModified="2026-06-10"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Qualification Guide"

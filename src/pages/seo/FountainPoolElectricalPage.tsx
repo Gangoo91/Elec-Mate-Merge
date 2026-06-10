@@ -508,7 +508,7 @@ const sections = [
                 <h4 className="font-bold text-white mb-1">Annual Inspection Contracts</h4>
                 <p className="text-white text-sm leading-relaxed">
                   Commercial fountain installations require annual periodic inspection. Use the{' '}
-                  <SEOInternalLink href="/electrical-quoting-app">
+                  <SEOInternalLink href="/tools/electrical-quoting-app">
                     quoting app
                   </SEOInternalLink>{' '}
                   to offer annual maintenance contracts to commercial property managers and

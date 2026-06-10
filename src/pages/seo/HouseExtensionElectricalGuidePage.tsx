@@ -489,7 +489,7 @@ const sections = [
                 <h4 className="font-bold text-white mb-1">Quote Accurately and Win More Jobs</h4>
                 <p className="text-white text-sm leading-relaxed">
                   Use the{' '}
-                  <SEOInternalLink href="/electrical-quoting-app">quoting app</SEOInternalLink> to
+                  <SEOInternalLink href="/tools/electrical-quoting-app">quoting app</SEOInternalLink> to
                   build professional extension quotes with itemised materials and labour. Homeowners
                   commissioning extensions are quality-focused — a professional, detailed quote wins
                   the job over a verbal estimate every time.
@@ -518,7 +518,7 @@ export default function HouseExtensionElectricalGuidePage() {
       title="House Extension Electrical Guide UK | Wiring a House"
       description="Complete guide to electrical work in a house extension. Circuit planning, consumer unit capacity check, ring main extension vs new circuit…"
       datePublished="2026-03-27"
-      dateModified="2026-05-18"
+      dateModified="2026-06-10"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Extension Guide"

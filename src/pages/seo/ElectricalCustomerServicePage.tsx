@@ -559,7 +559,7 @@ export default function ElectricalCustomerServicePage() {
           category: 'Guide',
         },
         {
-          href: '/electrical-quoting-app',
+          href: '/tools/electrical-quoting-app',
           title: 'Electrical Quoting App',
           description:
             'Professional PDF quotes with AI cost estimation, sent from site in minutes.',
@@ -567,7 +567,7 @@ export default function ElectricalCustomerServicePage() {
           category: 'Tool',
         },
         {
-          href: '/electrician-invoice-app',
+          href: '/tools/electrician-invoice-app',
           title: 'Electrician Invoice App',
           description: 'Professional invoices with online payment links, created from site.',
           icon: Receipt,

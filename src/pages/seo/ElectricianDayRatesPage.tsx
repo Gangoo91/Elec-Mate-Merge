@@ -606,7 +606,7 @@ export default function ElectricianDayRatesPage() {
       title="Electrician Day Rates UK 2026 | What to Charge"
       description="What UK electricians charge in 2026 — domestic vs commercial day rates by region, specialist rates for testing, EV and CompEx, and how to calculate your true day rate from costs up."
       datePublished="2025-07-01"
-      dateModified="2026-05-18"
+      dateModified="2026-06-10"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Career Guide"

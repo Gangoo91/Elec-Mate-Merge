@@ -100,7 +100,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Guide',
   },
   {
-    href: '/emergency-lighting-certificate',
+    href: '/tools/emergency-lighting-certificate',
     title: 'Emergency Lighting Certificate',
     description:
       'Guide to emergency lighting testing, certification, and compliance for healthcare facilities.',
@@ -124,7 +124,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Guide',
   },
   {
-    href: '/eighteenth-edition-course',
+    href: '/training/18th-edition-course',
     title: '18th Edition Course',
     description:
       'Study for C&G 2382 with 50+ structured training modules including Section 710 (Medical Locations).',
@@ -666,7 +666,7 @@ export default function HospitalElectricalSystemsPage() {
       title="Hospital Electrical Systems | HTM 06-01 Guide"
       description="Complete guide to hospital electrical systems under HTM 06-01 and BS 7671 Section 710. Essential supply categories, medical IT systems (IPS)…"
       datePublished="2025-09-05"
-      dateModified="2026-05-18"
+      dateModified="2026-06-10"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Healthcare Guide"

@@ -570,7 +570,7 @@ export default function ApprenticePortfolioGuidePage() {
           />
           <p className="text-white mt-4 text-sm">
             Ready to study for your next assessment?{' '}
-            <SEOInternalLink href="/apprentice-training">
+            <SEOInternalLink href="/training/electrical-apprentice">
               Access the full apprentice training centre
             </SEOInternalLink>{' '}
             with courses, flashcards, and AI tutoring.

@@ -21,7 +21,7 @@ export default function SolarPanelInstallationPage() {
       title="Solar Panel Installation UK 2026 | Guide & Requirements"
       description="Complete UK guide to domestic solar panel installation. MCS certification, DNO notification (G98/G99), Part P, earthing considerations, inverter types…"
       datePublished="2025-06-15"
-      dateModified="2026-05-18"
+      dateModified="2026-06-10"
       breadcrumbs={[
         { label: 'Guides', href: '/guides' },
         { label: 'Solar Panel Installation', href: '/guides/solar-panel-installation' },
@@ -293,7 +293,7 @@ export default function SolarPanelInstallationPage() {
               </p>
               <p>
                 Always verify the{' '}
-                <SEOInternalLink href="/earthing-arrangements">
+                <SEOInternalLink href="/guides/earthing-arrangements">
                   earthing arrangement
                 </SEOInternalLink>{' '}
                 by inspecting the supply and measuring Ze before designing the PV installation
@@ -398,7 +398,7 @@ export default function SolarPanelInstallationPage() {
               <p>
                 Battery storage installations are notifiable under Part P and require appropriate
                 certification. The{' '}
-                <SEOInternalLink href="/guides/consumer-unit-regulations">
+                <SEOInternalLink href="/consumer-unit-regulations">
                   consumer unit regulations
                 </SEOInternalLink>{' '}
                 apply in full, including the Amendment 4 requirements for bidirectional devices.
@@ -698,7 +698,7 @@ export default function SolarPanelInstallationPage() {
       ]}
       relatedPages={[
         {
-          href: '/solar-pv-certificate',
+          href: '/tools/solar-pv-certificate',
           title: 'Solar PV Certificate',
           description:
             'How to complete a solar PV installation certificate to BS 7671 Section 712.',
@@ -720,14 +720,14 @@ export default function SolarPanelInstallationPage() {
           category: 'Calculator',
         },
         {
-          href: '/earthing-arrangements',
+          href: '/guides/earthing-arrangements',
           title: 'Earthing Arrangements',
           description: 'TN-S, TN-C-S, and TT earthing — critical for PV installations.',
           icon: Cable,
           category: 'Guide',
         },
         {
-          href: '/guides/consumer-unit-regulations',
+          href: '/consumer-unit-regulations',
           title: 'Consumer Unit Regulations',
           description: 'Amendment 4, bidirectional devices, and consumer unit requirements.',
           icon: ShieldCheck,

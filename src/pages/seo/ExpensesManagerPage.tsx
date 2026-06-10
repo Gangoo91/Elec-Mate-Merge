@@ -476,14 +476,14 @@ const relatedPages = [
     category: 'Business Tool',
   },
   {
-    href: '/electrical-quoting-app',
+    href: '/tools/electrical-quoting-app',
     title: 'Quoting App',
     description: 'AI-powered cost estimation and professional PDF quotes for electrical work.',
     icon: FileText,
     category: 'Business Tool',
   },
   {
-    href: '/electrician-invoice-app',
+    href: '/tools/electrician-invoice-app',
     title: 'Invoice App',
     description:
       'Digital invoicing with Stripe payments, automatic reminders, and accounting sync.',
@@ -512,7 +512,7 @@ export default function ExpensesManagerPage() {
       title="Expenses Manager for Electricians | Track & Claim"
       description="Track mileage, materials, tools and receipts for your electrical business. HMRC-compliant expense categories, digital receipt capture and MTD-ready reporting."
       datePublished="2025-06-01"
-      dateModified="2026-05-18"
+      dateModified="2026-06-10"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Business Tools"

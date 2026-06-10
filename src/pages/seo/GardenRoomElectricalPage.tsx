@@ -465,7 +465,7 @@ const sections = [
                   infrastructure. A client who is not planning an EV now may be planning one in two
                   years — upsizing the cable now costs little but saves them thousands later. Use
                   the{' '}
-                  <SEOInternalLink href="/electrical-quoting-app">
+                  <SEOInternalLink href="/tools/electrical-quoting-app">
                     quoting app
                   </SEOInternalLink>{' '}
                   to produce clear alternative quotes for standard, EV-ready, and full-spec options.

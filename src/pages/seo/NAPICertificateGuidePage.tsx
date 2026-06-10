@@ -637,7 +637,7 @@ export default function NAPICertificateGuidePage() {
       title={PAGE_TITLE}
       description={PAGE_DESCRIPTION}
       datePublished="2025-06-20"
-      dateModified="2026-05-23"
+      dateModified="2026-06-10"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Registration Guide"

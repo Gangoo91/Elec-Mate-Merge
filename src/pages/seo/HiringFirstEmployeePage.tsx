@@ -113,7 +113,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Comparison',
   },
   {
-    href: '/electrical-quoting-app',
+    href: '/tools/electrical-quoting-app',
     title: 'Electrical Quoting App',
     description:
       'Quote jobs quickly and accurately as your team grows. Consistent pricing across your business.',
@@ -682,7 +682,7 @@ const sections = [
                 <h4 className="font-bold text-white mb-1">Consistent Quoting</h4>
                 <p className="text-white text-sm leading-relaxed">
                   Use the{' '}
-                  <SEOInternalLink href="/electrical-quoting-app">
+                  <SEOInternalLink href="/tools/electrical-quoting-app">
                     quoting app
                   </SEOInternalLink>{' '}
                   to ensure every team member quotes accurately and consistently. No more

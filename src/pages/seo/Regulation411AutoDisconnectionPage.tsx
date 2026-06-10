@@ -676,7 +676,7 @@ export default function Regulation411AutoDisconnectionPage() {
       title="Regulation 411 | Automatic Disconnection of Supply Explained"
       description="Complete guide to Regulation 411 (Automatic Disconnection of Supply) in BS 7671. Disconnection times, Zs values, MCB types B/C/D…"
       datePublished="2026-03-27"
-      dateModified="2026-05-18"
+      dateModified="2026-06-10"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Regulation Deep-Dive"

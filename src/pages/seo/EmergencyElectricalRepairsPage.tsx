@@ -446,7 +446,7 @@ export default function EmergencyElectricalRepairsPage() {
                 <li>
                   <span className="font-semibold text-white">Do not attempt DIY repairs</span> —
                   electrical work must be carried out by a{' '}
-                  <SEOInternalLink href="/guides/how-to-become-electrician">
+                  <SEOInternalLink href="/guides/how-to-become-an-electrician">
                     qualified electrician
                   </SEOInternalLink>
                   . DIY electrical repairs during an emergency are extremely dangerous.
@@ -574,7 +574,7 @@ export default function EmergencyElectricalRepairsPage() {
           category: 'Guide',
         },
         {
-          href: '/electrician-invoice-app',
+          href: '/tools/electrician-invoice-app',
           title: 'Electrician Invoice App',
           description: 'Create and send professional invoices with online payment links from site.',
           icon: Receipt,

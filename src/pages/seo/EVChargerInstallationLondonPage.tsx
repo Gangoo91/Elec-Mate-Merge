@@ -114,7 +114,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Certificate',
   },
   {
-    href: '/guides/consumer-unit-regulations',
+    href: '/consumer-unit-regulations',
     title: 'Consumer Unit Regulations',
     description:
       'Consumer unit upgrade requirements — often needed when adding a 32A EV charger circuit.',
@@ -268,7 +268,7 @@ const sections = [
                 <strong>Ageing consumer units</strong> — many London properties still have older
                 consumer units without RCD protection. Adding a 32A EV charger circuit often
                 triggers a full{' '}
-                <SEOInternalLink href="/guides/consumer-unit-regulations">
+                <SEOInternalLink href="/consumer-unit-regulations">
                   consumer unit upgrade
                 </SEOInternalLink>{' '}
                 to meet current regulations, adding £300 to £800 to the total cost.
@@ -502,7 +502,7 @@ const sections = [
                   18 metres in terraced properties), frequent consumer unit upgrades, parking
                   restrictions affecting van access, and the time cost of congestion. Use
                   Elec-Mate's{' '}
-                  <SEOInternalLink href="/electrical-quoting-app">quoting app</SEOInternalLink> to
+                  <SEOInternalLink href="/tools/electrical-quoting-app">quoting app</SEOInternalLink> to
                   build accurate itemised quotes on site.
                 </p>
               </div>
@@ -546,7 +546,7 @@ export default function EVChargerInstallationLondonPage() {
       title="EV Charger Installation London 2026 | Costs, DNO, and Grants"
       description="How much does EV charger installation cost in London in 2026? Local costs, UKPN DNO notification, London borough grants, terraced house cable routing…"
       datePublished="2026-03-27"
-      dateModified="2026-05-18"
+      dateModified="2026-06-10"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="London Guide"

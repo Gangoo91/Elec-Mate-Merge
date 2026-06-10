@@ -113,7 +113,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Guide',
   },
   {
-    href: '/electrical-quoting-app',
+    href: '/tools/electrical-quoting-app',
     title: 'Quoting App',
     description:
       'Quote rewires, consumer unit upgrades, and EV charger installations with accurate Wigan pricing.',
@@ -467,7 +467,7 @@ const sections = [
                 <h4 className="font-bold text-white mb-1">Professional Quoting</h4>
                 <p className="text-white text-sm leading-relaxed">
                   Use the{' '}
-                  <SEOInternalLink href="/electrical-quoting-app">quoting app</SEOInternalLink> to
+                  <SEOInternalLink href="/tools/electrical-quoting-app">quoting app</SEOInternalLink> to
                   send professional quotes to Wigan homeowners and landlords. Clear, itemised quotes
                   help win work in a competitive local market.
                 </p>
@@ -497,7 +497,7 @@ export default function ElectricianWiganPage() {
       title="Electrician in Wigan | Local Electricians 2026"
       description="Find qualified electricians in Wigan. Part P compliance, NICEIC registered, EICR for landlords, consumer unit replacement, house rewiring…"
       datePublished="2026-03-27"
-      dateModified="2026-05-18"
+      dateModified="2026-06-10"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Wigan"

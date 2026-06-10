@@ -170,7 +170,7 @@ const sections = [
       <>
         <p>
           Bristol is in England, so{' '}
-          <SEOInternalLink href="/part-p-building-regulations">
+          <SEOInternalLink href="/guides/part-p-building-regulations">
             Part P of the Building Regulations
           </SEOInternalLink>{' '}
           applies to all notifiable domestic electrical work. The key points for Bristol
@@ -569,7 +569,7 @@ const sections = [
                 <h4 className="font-bold text-white mb-1">Professional Quoting</h4>
                 <p className="text-white text-sm leading-relaxed">
                   Price Bristol jobs accurately with the{' '}
-                  <SEOInternalLink href="/electrical-quoting-app">quoting app</SEOInternalLink>.
+                  <SEOInternalLink href="/tools/electrical-quoting-app">quoting app</SEOInternalLink>.
                   Itemise materials, labour, testing, and certification for everything from consumer
                   unit upgrades to full eco-retrofit packages. Professional PDF quotes build trust
                   with Bristol's quality-conscious customers.
@@ -599,7 +599,7 @@ export default function ElectricianBristolPage() {
       title="Electrician in Bristol | Find Electricians 2026"
       description="Find qualified electricians in Bristol. WPD DNO, Georgian and Victorian properties in Clifton and Redland, eco-retrofit demand, HMO compliance…"
       datePublished="2026-03-27"
-      dateModified="2026-05-18"
+      dateModified="2026-06-10"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Bristol"

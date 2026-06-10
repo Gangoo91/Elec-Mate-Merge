@@ -7,12 +7,6 @@
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://www.elec-mate.com/tools/ai-circuit-designer</loc>
-    <lastmod>2026-04-12</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.7</priority>
-  </url>
-  <url>
     <loc>https://www.elec-mate.com/tools/ai-client-explainer</loc>
     <lastmod>2026-04-12</lastmod>
     <changefreq>weekly</changefreq>
@@ -235,6 +229,12 @@
     <priority>0.7</priority>
   </url>
   <url>
+    <loc>https://www.elec-mate.com/tools/electrical-certificate-software</loc>
+    <lastmod>2026-06-10</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
     <loc>https://www.elec-mate.com/tools/disconnection-time-calculator</loc>
     <lastmod>2026-06-03</lastmod>
     <changefreq>weekly</changefreq>
@@ -254,12 +254,6 @@
   </url>
   <url>
     <loc>https://www.elec-mate.com/tools/earth-rod-resistance-calculator</loc>
-    <lastmod>2026-04-12</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.7</priority>
-  </url>
-  <url>
-    <loc>https://www.elec-mate.com/tools/eic-certificate</loc>
     <lastmod>2026-04-12</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
@@ -337,12 +331,6 @@
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://www.elec-mate.com/tools/ev-charger-certificate</loc>
-    <lastmod>2026-04-12</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.7</priority>
-  </url>
-  <url>
     <loc>https://www.elec-mate.com/tools/ev-charger-load-calculator</loc>
     <lastmod>2026-04-12</lastmod>
     <changefreq>weekly</changefreq>
@@ -350,12 +338,6 @@
   </url>
   <url>
     <loc>https://www.elec-mate.com/tools/expenses-manager-electrician</loc>
-    <lastmod>2026-04-12</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.7</priority>
-  </url>
-  <url>
-    <loc>https://www.elec-mate.com/tools/fire-alarm-certificate</loc>
     <lastmod>2026-04-12</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>

@@ -539,7 +539,7 @@ const sections = [
                 <strong>Consumer unit upgrade:</strong> If there are no spare ways in the consumer
                 unit, a larger board may be needed. This is an opportunity to bring the installation
                 up to current standards — fitting RCBOs, ensuring correct{' '}
-                <SEOInternalLink href="/guides/consumer-unit-regulations">
+                <SEOInternalLink href="/consumer-unit-regulations">
                   consumer unit regulations
                 </SEOInternalLink>{' '}
                 compliance, and labelling all circuits.
@@ -624,7 +624,7 @@ const sections = [
         </div>
         <p>
           Elec-Mate's{' '}
-          <SEOInternalLink href="/eighteenth-edition-course">training courses</SEOInternalLink>{' '}
+          <SEOInternalLink href="/training/18th-edition-course">training courses</SEOInternalLink>{' '}
           cover circuit design, cable sizing, and maximum demand calculation in detail — essential
           knowledge for every electrician advising customers on safe circuit loading.
         </p>
@@ -643,7 +643,7 @@ export default function OverloadedCircuitPage() {
       title="Overloaded Circuit | Signs, Dangers & Solutions"
       description="Expert guide to overloaded electrical circuits. Covers signs of overload, maximum demand calculation, MCB tripping, the dangers of overloading…"
       datePublished="2025-10-10"
-      dateModified="2026-05-18"
+      dateModified="2026-06-10"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Safety Guide"

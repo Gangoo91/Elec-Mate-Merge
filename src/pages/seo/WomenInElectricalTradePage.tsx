@@ -386,7 +386,7 @@ const sections = [
               <span>
                 <strong>Build your portfolio from day one.</strong> Document your work with photos,
                 descriptions, and evidence of competence. The{' '}
-                <SEOInternalLink href="/apprentice-portfolio-guide">
+                <SEOInternalLink href="/training/apprentice-portfolio">
                   apprentice portfolio
                 </SEOInternalLink>{' '}
                 is a requirement for your NVQ — start it early and keep it up to date throughout

@@ -120,7 +120,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Guide',
   },
   {
-    href: '/electrical-quoting-app',
+    href: '/tools/electrical-quoting-app',
     title: 'Elec-Mate Quoting App',
     description: 'Send professional quotes from your phone in under two minutes.',
     icon: PoundSterling,
@@ -573,7 +573,7 @@ const sections = [
                 </h4>
                 <p className="text-white text-sm leading-relaxed">
                   Use the{' '}
-                  <SEOInternalLink href="/electrical-quoting-app">
+                  <SEOInternalLink href="/tools/electrical-quoting-app">
                     Elec-Mate quoting app
                   </SEOInternalLink>{' '}
                   to send a professional, itemised quote from your phone within minutes of an
@@ -638,7 +638,7 @@ export default function ElectricalBusinessWebsitePage() {
       faqHeading="Frequently Asked Questions About Electrician Websites"
       relatedPages={relatedPages}
       ctaHeading="Win More Jobs With Elec-Mate"
-      ctaSubheading="Professional quoting, invoicing, and job management for UK electricians. Join 1,000+ electrical businesses. 7-day free trial, no card required."
+      ctaSubheading="Professional quoting, invoicing, and job management for UK electricians. Join 1,000+ electrical businesses. 7-day free trial, no charge until day 8."
     />
   );
 }

@@ -118,7 +118,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Tool',
   },
   {
-    href: '/electrical-quoting-app',
+    href: '/tools/electrical-quoting-app',
     title: 'Electrical Quoting App',
     description: 'Create itemised quotes for smart home installations with your margins built in.',
     icon: PoundSterling,
@@ -417,9 +417,9 @@ const sections = [
             installations create many independent lighting circuits. Protecting these with a single
             upstream RCD means that one faulty smart switch or driver can trip the whole lighting
             ring. BS 7671:2018+A4:2026 Reg 531.3.2(b) specifically highlights the use of RCBOs for
-            individual final circuits in residential premises to minimise unwanted tripping.
-            Specify one RCBO per smart lighting circuit — the modest extra cost avoids call-backs
-            and nuisance trips.
+            individual final circuits in residential premises to minimise unwanted tripping. Specify
+            one RCBO per smart lighting circuit — the modest extra cost avoids call-backs and
+            nuisance trips.
           </p>
         </div>
       </>
@@ -573,7 +573,7 @@ const sections = [
                 <h4 className="font-bold text-white mb-1">Quoting App</h4>
                 <p className="text-white text-sm leading-relaxed">
                   Create detailed, itemised quotes for smart home installations with Elec-Mate's{' '}
-                  <SEOInternalLink href="/electrical-quoting-app">quoting app</SEOInternalLink>.
+                  <SEOInternalLink href="/tools/electrical-quoting-app">quoting app</SEOInternalLink>.
                   Smart switches, Cat6 cable runs, access points, patch panels, labour, testing —
                   all priced with your margins. Professional PDF sent to the client on site.
                 </p>
@@ -611,26 +611,26 @@ const sections = [
 export default function SmartHomeWiringCostPage() {
   return (
     <GuideTemplate
-      title="Smart Home Wiring Renovation Cost UK 2026: £500–£5,000+"
-      description="Smart home wiring renovation cost in the UK (2026): single-room smart lighting from £500, whole-house retrofit with Cat6 + lighting + hub from £5,000+. Real retrofit & rewire pricing for clients and electricians."
+      title="Smart Home Wiring & Installation Cost UK 2026: £500–£5,000+"
+      description="How much does smart home wiring and installation cost in the UK (2026)? Single-room smart lighting from £500, whole-house retrofit with Cat6 + lighting + hub from £5,000+. Real pricing for clients and electricians."
       datePublished="2026-03-27"
-      dateModified="2026-05-24"
+      dateModified="2026-06-10"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Cost Guide"
       badgeIcon={PoundSterling}
       heroTitle={
         <>
-          Smart Home Wiring Renovation Cost UK:{' '}
+          Smart Home Wiring & Installation Cost UK:{' '}
           <span className="text-yellow-400">Retrofit & Rewire Pricing 2026</span>
         </>
       }
       heroSubtitle="Planning a smart home renovation? This guide covers retrofit costs by room and whole-house rewire pricing — smart lighting, Cat6 structured cabling, WiFi access points, smart sockets, switches and dimmers. From £500 for a single room to £5,000+ for a full retrofit, with real 2026 UK pricing from working electricians."
       readingTime={10}
       answerBox={{
-        question: 'How much does a smart home wiring renovation cost in the UK?',
+        question: 'How much does smart home wiring and installation cost in the UK?',
         answer:
-          'A smart home wiring renovation typically costs £500–£1,200 for a basic setup (smart switches in the main rooms of a 3-bedroom house), £1,500–£3,000 for a mid-range retrofit adding smart sockets, a hub and Cat6 to key rooms, and £3,000–£5,000+ for a comprehensive whole-house system with structured cabling and WiFi access points. Retrofitting an existing property adds roughly 30–50% over wiring during a new build or rewire.',
+          'Smart home wiring and installation typically costs £500–£1,200 for a basic setup (smart switches in the main rooms of a 3-bedroom house), £1,500–£3,000 for a mid-range retrofit adding smart sockets, a hub and Cat6 to key rooms, and £3,000–£5,000+ for a comprehensive whole-house system with structured cabling and WiFi access points. Retrofitting an existing property adds roughly 30–50% over wiring during a new build or rewire.',
         detail:
           'The main cost driver is the labour to route cables and make good — not the smart devices themselves.',
       }}

@@ -628,7 +628,7 @@ const sections = [
                   If you're installing an untethered charger, offer to supply a quality 32A Type 2
                   to Type 2 cable (7.5m) as a chargeable add-on. A quality cable is worth £150–250
                   to the customer and a useful margin item for you. Use the{' '}
-                  <SEOInternalLink href="/electrical-quoting-app">
+                  <SEOInternalLink href="/tools/electrical-quoting-app">
                     Elec-Mate quoting app
                   </SEOInternalLink>{' '}
                   to add it as a line item on the quote.

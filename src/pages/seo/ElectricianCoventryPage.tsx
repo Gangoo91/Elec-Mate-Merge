@@ -114,7 +114,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Certificate',
   },
   {
-    href: '/electrical-quoting-app',
+    href: '/tools/electrical-quoting-app',
     title: 'Quoting App',
     description:
       'Quote rewires, EV charger installations, and HMO conversions with professional itemised PDFs.',
@@ -522,7 +522,7 @@ const sections = [
           Coventry's strength is volume. The sheer number of post-war properties needing rewires,
           the growing HMO market, and the accelerating EV charger demand mean that a well-organised
           electrician can achieve strong turnover at these rates. Use Elec-Mate's{' '}
-          <SEOInternalLink href="/electrical-quoting-app">quoting app</SEOInternalLink> to produce
+          <SEOInternalLink href="/tools/electrical-quoting-app">quoting app</SEOInternalLink> to produce
           accurate quotes quickly and convert more surveys into confirmed jobs.
         </p>
       </>
@@ -578,7 +578,7 @@ const sections = [
                 <h4 className="font-bold text-white mb-1">Professional Quoting</h4>
                 <p className="text-white text-sm leading-relaxed">
                   Quote rewires, EV charger installations, and HMO conversions with Elec-Mate's{' '}
-                  <SEOInternalLink href="/electrical-quoting-app">quoting app</SEOInternalLink>.
+                  <SEOInternalLink href="/tools/electrical-quoting-app">quoting app</SEOInternalLink>.
                   Professional PDF quotes with clear itemisation help you convert more surveys into
                   confirmed work.
                 </p>
@@ -607,7 +607,7 @@ export default function ElectricianCoventryPage() {
       title="Electrician in Coventry | Local Electrical Guide"
       description="Complete guide for electricians working in Coventry. NGED DNO, post-war housing rewiring, ring main vs radial circuits, university student HMOs…"
       datePublished="2026-03-27"
-      dateModified="2026-05-18"
+      dateModified="2026-06-10"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Location Guide"

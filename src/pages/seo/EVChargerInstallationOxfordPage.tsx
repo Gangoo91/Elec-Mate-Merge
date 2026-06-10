@@ -43,7 +43,7 @@ const keyTakeaways = [
   'All EV charger installations must comply with BS 7671:2018+A4:2026 Section 722 (Electric Vehicle Charging Installations), which specifies requirements for protective devices, earthing, and load management.',
   'Oxford City Council and the surrounding Oxfordshire area have seen rapid EV adoption, driven by the Ultra Low Emission Zone (ULEZ) and local Net Zero commitments — demand for home charger installations has grown significantly.',
   'Only OZEV-approved installers can apply the grant on your behalf. NICEIC and NAPIT registration also provides assurance of competence and appropriate insurance cover.',
-  'This guide is written and reviewed by the Elec-Mate technical team — NICEIC-registered electricians and BS 7671:2018+A4:2026 specialists who produce and maintain the Elec-Mate certification platform.',
+  'This guide is written and reviewed by the Andrew Moore, founder of Elec-Mate, — NICEIC-registered electricians and BS 7671:2018+A4:2026 specialists who produce and maintain the Elec-Mate certification platform.',
 ];
 
 const faqs = [
@@ -120,7 +120,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Certificate',
   },
   {
-    href: '/electrical-quoting-app',
+    href: '/tools/electrical-quoting-app',
     title: 'Electrical Quoting App',
     description: 'Quote EV charger installations in minutes with material and labour pricing.',
     icon: PoundSterling,
@@ -262,7 +262,7 @@ const sections = [
             <strong>Step 0 — DNO check (often missed):</strong> If the new EV charger circuit will
             significantly increase the supply demand, your installer must notify the Distribution
             Network Operator (DNO) before work begins. Failing to notify the DNO when required is
-            one of the most common compliance mistakes identified by the Elec-Mate technical team.
+            one of the most common compliance mistakes identified by the Andrew Moore, founder of Elec-Mate,.
             Your installer should confirm whether a G99/G98 notification or a new supply agreement
             is needed, particularly for three-phase or commercial installations.
           </div>
@@ -612,7 +612,7 @@ const sections = [
                 <h4 className="font-bold text-white mb-1">Quote EV Jobs in Minutes</h4>
                 <p className="text-white text-sm leading-relaxed">
                   Generate professional EV charger installation quotes using the{' '}
-                  <SEOInternalLink href="/electrical-quoting-app">
+                  <SEOInternalLink href="/tools/electrical-quoting-app">
                     Elec-Mate quoting app
                   </SEOInternalLink>
                   . Include itemised materials, labour, and OZEV grant deduction — impress customers
@@ -642,7 +642,7 @@ export default function EVChargerInstallationOxfordPage() {
       title="EV Charger Installation Oxford | Home EV Charging Oxford"
       description="EV charger installation in Oxford. OZEV grants up to £350, installation costs £800–£1,200 for 7kW, BS 7671 Section 722 compliance…"
       datePublished="2026-03-27"
-      dateModified="2026-05-18"
+      dateModified="2026-06-10"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="EV Charging Guide"

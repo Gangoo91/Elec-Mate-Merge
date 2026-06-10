@@ -605,7 +605,7 @@ export default function Chapter42ThermalProtectionPage() {
       title="Chapter 42 BS 7671 | Protection Against Thermal Effects"
       description="Complete guide to Chapter 42 of BS 7671 — protection against thermal effects. Fire protection from electrical equipment…"
       datePublished="2026-03-27"
-      dateModified="2026-05-18"
+      dateModified="2026-06-10"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Regulation Deep-Dive"

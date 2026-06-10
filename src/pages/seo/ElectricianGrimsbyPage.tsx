@@ -115,7 +115,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Guide',
   },
   {
-    href: '/electrical-quoting-app',
+    href: '/tools/electrical-quoting-app',
     title: 'Quoting App',
     description:
       'Quote rewires, consumer unit upgrades, and EV charger installations with accurate Grimsby pricing.',
@@ -487,7 +487,7 @@ const sections = [
                 <h4 className="font-bold text-white mb-1">Professional Quoting</h4>
                 <p className="text-white text-sm leading-relaxed">
                   Use the{' '}
-                  <SEOInternalLink href="/electrical-quoting-app">quoting app</SEOInternalLink> to
+                  <SEOInternalLink href="/tools/electrical-quoting-app">quoting app</SEOInternalLink> to
                   send professional, detailed quotes to Grimsby homeowners and landlords. Itemised
                   quotes with accurate local pricing win more work in a competitive and
                   price-sensitive market.
@@ -535,7 +535,7 @@ export default function ElectricianGrimsbyPage() {
       title="Electrician Grimsby | Find Electricians in Grimsby &"
       description="Find qualified electricians in Grimsby + Cleethorpes: NICEIC and NAPIT registered, Part P compliant, BS 7671:2018+A4:2026 trained. Local prices."
       datePublished="2026-03-27"
-      dateModified="2026-05-18"
+      dateModified="2026-06-10"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Grimsby"

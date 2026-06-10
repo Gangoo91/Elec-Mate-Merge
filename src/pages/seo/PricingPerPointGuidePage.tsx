@@ -21,6 +21,7 @@ const tocItems = [
   { id: 'when-to-use', label: 'When Per-Point Pricing Works' },
   { id: 'when-not-to-use', label: 'When NOT to Use Per-Point Pricing' },
   { id: 'adjustments', label: 'Adjusting Your Per-Point Rate' },
+  { id: 'price-any-job', label: 'How to Price Any Job' },
   { id: 'for-electricians', label: 'For Electricians' },
   { id: 'faq', label: 'FAQ' },
   { id: 'related', label: 'Related Pages' },
@@ -101,7 +102,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Guide',
   },
   {
-    href: '/electrical-quoting-app',
+    href: '/tools/electrical-quoting-app',
     title: 'Electrical Quoting App',
     description: 'Create professional PDF quotes with per-point pricing built in.',
     icon: PoundSterling,
@@ -502,6 +503,46 @@ const sections = [
     ),
   },
   {
+    id: 'price-any-job',
+    heading: 'How to Price Any Electrical Job',
+    content: (
+      <>
+        <p>
+          Per-point pricing is one tool in the box — some jobs price better by fixed quote, day
+          rate, or a hybrid. We have a fair-margin pricing guide for every common job type, each
+          with realistic UK price bands, time-on-site assumptions, and the mistakes that erode
+          margin:
+        </p>
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 my-4">
+          {[
+            { slug: 'eicr', label: 'EICR' },
+            { slug: 'commercial-eicr', label: 'Commercial EICR' },
+            { slug: 'consumer-unit-replacement', label: 'Consumer Unit Replacement' },
+            { slug: 'full-rewire', label: 'Full Rewire' },
+            { slug: 'kitchen-rewire', label: 'Kitchen Rewire' },
+            { slug: 'ev-charger-install', label: 'EV Charger Installation' },
+            { slug: 'solar-pv-installation', label: 'Solar PV Installation' },
+            { slug: 'smart-home-installation', label: 'Smart Home Installation' },
+            { slug: 'commercial-install', label: 'Commercial Installation' },
+            { slug: 'minor-works', label: 'Minor Works' },
+            { slug: 'pat-testing', label: 'PAT Testing' },
+            { slug: 'emergency-callout', label: 'Emergency Callout' },
+            { slug: 'out-of-hours', label: 'Out-of-Hours Work' },
+            { slug: 'day-rate-subcontract', label: 'Day-Rate Subcontract' },
+            { slug: 'maintenance-contract', label: 'Maintenance Contracts' },
+          ].map((job) => (
+            <SEOInternalLink
+              key={job.slug}
+              href={`/guides/how-to-price-${job.slug}-as-an-electrician`}
+            >
+              How to price {job.label.toLowerCase()} work
+            </SEOInternalLink>
+          ))}
+        </div>
+      </>
+    ),
+  },
+  {
     id: 'for-electricians',
     heading: 'For Electricians: Build Your Per-Point Rate',
     content: (
@@ -531,7 +572,7 @@ export default function PricingPerPointGuidePage() {
       title="Electrical Price Per Point UK 2026: £80-£150 Rates"
       description="Per-point pricing for UK electrical work 2026: £80-£150 per outlet/switch. What counts, regional variation, supply-and-fix vs labour-only rates."
       datePublished="2026-03-27"
-      dateModified="2026-05-22"
+      dateModified="2026-06-10"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Pricing Guide"

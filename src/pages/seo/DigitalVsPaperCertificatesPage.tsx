@@ -249,7 +249,7 @@ const sections = [
             Electrical Installation Condition Report (EICR)
           </SEOInternalLink>
           , and the{' '}
-          <SEOInternalLink href="/minor-works-certificate">
+          <SEOInternalLink href="/tools/minor-works-certificate">
             Minor Works Certificate
           </SEOInternalLink>
           . These model forms specify the information that must be included — they do not specify

@@ -112,7 +112,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Guide',
   },
   {
-    href: '/minor-works-certificate',
+    href: '/tools/minor-works-certificate',
     title: 'Minor Works Certificate',
     description:
       'When to issue a Minor Works Certificate for spur additions and how to complete it correctly.',
@@ -599,7 +599,7 @@ const sections = [
               <FileCheck2 className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>
-                  <SEOInternalLink href="/minor-works-certificate">
+                  <SEOInternalLink href="/tools/minor-works-certificate">
                     Minor Works Certificate
                   </SEOInternalLink>
                 </strong>{' '}
@@ -666,7 +666,7 @@ export default function SpurSocketRegsPage() {
       title="Spur Socket Regulations | Fused Spur Guide UK"
       description="Complete guide to spur socket regulations in the UK. Fused vs unfused spurs, when to use each type, connection methods, cable sizes, common mistakes…"
       datePublished="2025-07-01"
-      dateModified="2026-05-18"
+      dateModified="2026-06-10"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Installation Guide"

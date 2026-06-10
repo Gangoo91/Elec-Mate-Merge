@@ -666,7 +666,7 @@ export default function HighVoltageElectricalWorkPage() {
       title="High Voltage Electrical Work UK | HV Electrician Guide"
       description="Complete guide to high voltage electrical work in the UK. HV definition (above 1kV AC), AP/CP/SAP authorisation roles, ENA G74 and G82…"
       datePublished="2026-03-27"
-      dateModified="2026-05-18"
+      dateModified="2026-06-10"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Specialist Guide"

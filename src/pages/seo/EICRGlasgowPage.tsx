@@ -84,6 +84,13 @@ const faqs = [
 
 const relatedPages: RelatedPage[] = [
   {
+    href: '/guides/eicr-cost-glasgow',
+    title: 'EICR Cost in Glasgow',
+    description: 'Local EICR price bands by property size, hourly rates, and remedial costs for Glasgow.',
+    icon: Home,
+    category: 'Guide',
+  },
+  {
     href: '/guides/eicr-for-landlords',
     title: 'EICR for Landlords',
     description: 'Complete guide to landlord EICR requirements across the UK.',
@@ -656,7 +663,7 @@ const sections = [
                 <h4 className="font-bold text-white mb-1">Win Remedial Work</h4>
                 <p className="text-white text-sm leading-relaxed">
                   When C1 or C2 observations are found, quote the remedial work immediately with the{' '}
-                  <SEOInternalLink href="/electrical-quoting-app">
+                  <SEOInternalLink href="/tools/electrical-quoting-app">
                     quoting app
                   </SEOInternalLink>
                   . The landlord (or factor) needs a quote quickly to meet their Repairing Standard

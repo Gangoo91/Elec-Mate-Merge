@@ -95,7 +95,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Guide',
   },
   {
-    href: '/earthing-arrangements',
+    href: '/guides/earthing-arrangements',
     title: 'Earthing Arrangements Explained',
     description:
       'TN-S, TN-C-S, and TT earthing systems and how they affect supply voltage and fault protection.',
@@ -619,7 +619,7 @@ export default function VoltageTooHighLowPage() {
       title="Voltage Too High or Too Low | Causes & Solutions"
       description="Is your voltage too high or too low? Expert guide covering the acceptable UK range (216V-253V), loose neutral faults, DNO supply issues…"
       datePublished="2025-05-10"
-      dateModified="2026-05-18"
+      dateModified="2026-06-10"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Troubleshooting"

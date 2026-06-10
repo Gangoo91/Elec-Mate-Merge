@@ -309,7 +309,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Guide',
   },
   {
-    href: '/rams-generator',
+    href: '/tools/rams-generator',
     title: 'RAMS Generator',
     description: 'Create risk assessments and method statements with AI from a plain-English job description.',
     icon: Flame,

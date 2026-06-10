@@ -89,7 +89,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Guide',
   },
   {
-    href: '/how-to-test-insulation-resistance',
+    href: '/guides/insulation-resistance-testing-bs7671',
     title: 'How to Test Insulation Resistance',
     description:
       'Step-by-step guide to insulation resistance testing including test voltages, pass criteria, and recording.',
@@ -105,7 +105,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Guide',
   },
   {
-    href: '/earthing-arrangements',
+    href: '/guides/earthing-arrangements',
     title: 'Earthing Arrangements Explained',
     description:
       'TN-S, TN-C-S, and TT systems — understanding earthing is essential for earth fault diagnosis.',
@@ -671,7 +671,7 @@ export default function EarthingFaultDiagnosisPage() {
       title="Earthing Fault Diagnosis | Finding Earth Faults"
       description="How to find earth faults in electrical installations. Expert guide covering insulation resistance testing, the half-split method…"
       datePublished="2025-06-01"
-      dateModified="2026-05-18"
+      dateModified="2026-06-10"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Troubleshooting"

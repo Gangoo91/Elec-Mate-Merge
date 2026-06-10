@@ -21,7 +21,7 @@ export default function ElectricalLoadSchedulePage() {
       title="Electrical Load Schedule Calculator | Free Tool"
       description="Build a circuit-by-circuit electrical load schedule with automatic diversity, total demand, and BS 7671 Appendix A factors. For UK electricians."
       datePublished="2026-01-28"
-      dateModified="2026-05-18"
+      dateModified="2026-06-10"
       breadcrumbs={[
         { label: 'Tools', href: '/tools' },
         { label: 'Electrical Load Schedule', href: '/tools/electrical-load-schedule' },
@@ -445,7 +445,7 @@ export default function ElectricalLoadSchedulePage() {
           category: 'Certificates',
         },
         {
-          href: '/electrical-testing-calculators',
+          href: '/tools/electrical-testing-calculators',
           title: 'All Electrical Calculators',
           description:
             '50+ BS 7671 calculators for cable sizing, Zs verification, voltage drop, and more.',

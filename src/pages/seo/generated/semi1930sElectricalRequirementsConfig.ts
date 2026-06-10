@@ -148,7 +148,7 @@ export const semi1930sElectricalRequirementsConfig: GeneratedGuideConfig = {
       category: 'Certificate',
     },
     {
-      href: '/electrical-quoting-app',
+      href: '/tools/electrical-quoting-app',
       title: 'Electrical Quoting App',
       description: 'Turn the survey into a clear, mobile-friendly quote.',
       icon: 'Wrench',

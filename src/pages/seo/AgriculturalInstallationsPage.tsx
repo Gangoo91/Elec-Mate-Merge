@@ -95,7 +95,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Certificate',
   },
   {
-    href: '/earthing-arrangements',
+    href: '/guides/earthing-arrangements',
     title: 'Earthing Arrangements Explained',
     description:
       'In-depth guide to TN-S, TN-C-S, and TT earthing systems with practical guidance for each type.',
@@ -119,7 +119,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Calculator',
   },
   {
-    href: '/rcd-testing-guide',
+    href: '/tools/rcd-testing-guide',
     title: 'RCD Testing Guide',
     description:
       'Step-by-step guide to RCD testing including trip times, test currents, and recording results.',
@@ -616,7 +616,7 @@ export default function AgriculturalInstallationsPage() {
       title="Agricultural Electrical Installations | BS 7671 Part 7"
       description="Complete guide to agricultural electrical installations under BS 7671 Section 705. Earthing and bonding for livestock buildings, IP ratings…"
       datePublished="2025-07-20"
-      dateModified="2026-05-18"
+      dateModified="2026-06-10"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Agricultural Guide"

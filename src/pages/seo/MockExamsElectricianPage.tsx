@@ -104,8 +104,8 @@ const sections = [
           The most common reason electricians fail their exams is not lack of knowledge — it is poor
           exam technique, particularly time management. Mock exams under timed conditions are the
           only way to develop the speed you need. If you are preparing for the{' '}
-          <SEOInternalLink href="/eighteenth-edition-course">18th Edition exam</SEOInternalLink> or
-          the{' '}
+          <SEOInternalLink href="/training/18th-edition-course">18th Edition exam</SEOInternalLink>{' '}
+          or the{' '}
           <SEOInternalLink href="/training/inspection-and-testing">
             2391 inspection and testing qualification
           </SEOInternalLink>
@@ -210,6 +210,14 @@ const sections = [
           After each mock, the AI highlights your weakest topics and recommends specific regulations
           to review.
         </p>
+        <p>
+          Ready to test yourself? Take the{' '}
+          <SEOInternalLink href="/mock-exams/18th-edition-bs-7671">
+            free 18th Edition mock exam
+          </SEOInternalLink>{' '}
+          now — timed, instantly marked, with a worked explanation on every question. No sign-up
+          needed.
+        </p>
       </>
     ),
   },
@@ -244,6 +252,13 @@ const sections = [
           When completing 2391 mock exams, pay attention to the language of your answers. The
           examiners are looking for precise technical language — use BS 7671 terminology, cite
           specific regulation numbers where relevant, and structure your answers clearly.
+        </p>
+        <p>
+          Put it into practice with the{' '}
+          <SEOInternalLink href="/mock-exams/2391-inspection-testing">
+            free 2391 inspection and testing mock exam
+          </SEOInternalLink>{' '}
+          — timed, instantly marked, free to take without signing up.
         </p>
       </>
     ),
@@ -370,7 +385,7 @@ const sections = [
         </p>
         <p>
           <strong>Study groups.</strong> If you are studying with others — whether on a{' '}
-          <SEOInternalLink href="/eighteenth-edition-course">training course</SEOInternalLink> or
+          <SEOInternalLink href="/training/18th-edition-course">training course</SEOInternalLink> or
           informally — test each other with mock questions. Explaining why an answer is wrong is
           just as valuable as explaining why the correct answer is right.
         </p>
@@ -490,7 +505,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Guide',
   },
   {
-    href: '/eighteenth-edition-course',
+    href: '/training/18th-edition-course',
     title: '18th Edition Course',
     description:
       'Structured study course for the C&G 2382 exam with interactive quizzes and AI tutor support.',
@@ -517,7 +532,7 @@ export default function MockExamsElectricianPage() {
       title="How to Revise for Electrician Exams: 18th Ed, 2391, AM2"
       description="Step-by-step revision strategy for UK electrician exams: how mock exams work, what to revise, study schedules, exam-day technique, common traps + which mock test to take when."
       datePublished="2025-08-12"
-      dateModified="2026-05-29"
+      dateModified="2026-06-10"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Exam Preparation"

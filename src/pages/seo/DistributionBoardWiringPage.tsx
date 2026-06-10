@@ -88,7 +88,7 @@ const faqs = [
 
 const relatedPages: RelatedPage[] = [
   {
-    href: '/tools/ai-circuit-designer',
+    href: '/ai-circuit-designer',
     title: 'AI Circuit Designer',
     description:
       'Generate a complete circuit schedule with board layout, circuit allocation, and cable sizing for any installation.',
@@ -104,7 +104,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Tool',
   },
   {
-    href: '/guides/consumer-unit-regulations',
+    href: '/consumer-unit-regulations',
     title: 'Consumer Unit Regulations',
     description:
       'Detailed guide to consumer unit change regulations, metal enclosure requirements, and Part P notification.',
@@ -863,7 +863,7 @@ export default function DistributionBoardWiringPage() {
       title="Distribution Board Wiring Guide | Consumer Unit Layout"
       description="Complete guide to distribution board wiring and consumer unit layout in the UK. Split load vs dual RCD vs RCBO boards, circuit arrangement…"
       datePublished="2025-08-15"
-      dateModified="2026-05-18"
+      dateModified="2026-06-10"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Installation Guide"

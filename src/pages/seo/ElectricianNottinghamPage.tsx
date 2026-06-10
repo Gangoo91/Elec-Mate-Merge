@@ -116,7 +116,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Tool',
   },
   {
-    href: '/electrical-quoting-app',
+    href: '/tools/electrical-quoting-app',
     title: 'Electrical Quoting App',
     description: 'Create professional quotes for Nottingham customers with accurate local pricing.',
     icon: PoundSterling,
@@ -583,7 +583,7 @@ export default function ElectricianNottinghamPage() {
       title="Electrician in Nottingham | Find Qualified Electricians 2026"
       description="Find qualified, registered electricians in Nottingham. Realistic 2026 pricing, NGED DNO connections, selective licensing EICR requirements…"
       datePublished="2026-03-27"
-      dateModified="2026-05-18"
+      dateModified="2026-06-10"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Find an Electrician"

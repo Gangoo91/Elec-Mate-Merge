@@ -125,7 +125,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Guide',
   },
   {
-    href: '/electrician-invoice-app',
+    href: '/tools/electrician-invoice-app',
     title: 'Invoice App',
     description:
       'Create and send professional invoices from your phone. Track payments and chase overdue invoices.',
@@ -389,7 +389,7 @@ const sections = [
         </p>
         <p>
           Elec-Mate's{' '}
-          <SEOInternalLink href="/electrical-quoting-app">AI cost engineer</SEOInternalLink> helps
+          <SEOInternalLink href="/tools/electrical-quoting-app">AI cost engineer</SEOInternalLink> helps
           you price jobs accurately by calculating the true cost of labour, materials, and
           overheads. It ensures your quotes are competitive but profitable.
         </p>

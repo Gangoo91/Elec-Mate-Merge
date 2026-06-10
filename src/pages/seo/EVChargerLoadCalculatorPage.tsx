@@ -23,7 +23,7 @@ export default function EVChargerLoadCalculatorPage() {
       title="EV Charger Load Calculator | Demand Assessment"
       description="Calculate EV charger electrical load for single and three-phase installations. Assess demand, apply diversity for multiple chargers…"
       datePublished="2026-01-28"
-      dateModified="2026-05-18"
+      dateModified="2026-06-10"
       breadcrumbs={[
         { label: 'Tools', href: '/tools' },
         { label: 'EV Charger Load Calculator', href: '/tools/ev-charger-load-calculator' },
@@ -320,7 +320,7 @@ export default function EVChargerLoadCalculatorPage() {
                 The Elec-Mate calculator flags PME earthing requirements automatically when you
                 specify a TN-C-S earthing system and an EV charger installation. For more
                 information on{' '}
-                <SEOInternalLink href="/earthing-arrangements">
+                <SEOInternalLink href="/guides/earthing-arrangements">
                   earthing arrangements
                 </SEOInternalLink>
                 , see our dedicated guide.
@@ -505,7 +505,7 @@ export default function EVChargerLoadCalculatorPage() {
           category: 'Calculators',
         },
         {
-          href: '/earthing-arrangements',
+          href: '/guides/earthing-arrangements',
           title: 'Earthing Arrangements Guide',
           description:
             'TN-S, TN-C-S, and TT earthing systems explained with PME considerations for EV charging.',

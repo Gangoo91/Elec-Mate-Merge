@@ -499,7 +499,7 @@ export default function NetworkedFireAlarmPage() {
                     device. Some panels support Class A (loop returns to panel) and Class B (radial
                     — does not return) loop configurations. Class A provides the highest resilience
                     and is the standard for most commercial installations. The{' '}
-                    <SEOInternalLink href="/testing-sequence-guide">
+                    <SEOInternalLink href="/guides/testing-sequence-guide">
                       testing sequence
                     </SEOInternalLink>{' '}
                     for fire alarm circuits includes loop resistance, insulation resistance, and
@@ -582,7 +582,7 @@ export default function NetworkedFireAlarmPage() {
           category: 'Certification',
         },
         {
-          href: '/emergency-lighting-certificate',
+          href: '/tools/emergency-lighting-certificate',
           title: 'Emergency Lighting Certificate',
           description: 'BS 5266 emergency lighting certification guide.',
           icon: Zap,
@@ -610,7 +610,7 @@ export default function NetworkedFireAlarmPage() {
           category: 'Guide',
         },
         {
-          href: '/testing-sequence-guide',
+          href: '/guides/testing-sequence-guide',
           title: 'Testing Sequence Guide',
           description: 'The correct sequence for electrical testing procedures.',
           icon: ShieldCheck,

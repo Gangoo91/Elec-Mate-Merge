@@ -77,14 +77,14 @@ const faqs = [
 
 const relatedPages = [
   {
-    href: '/eighteenth-edition-course',
+    href: '/training/18th-edition-course',
     title: '18th Edition Course',
     description: 'BS 7671:2018+A4:2026 wiring regulations course with practice exams.',
     icon: BookOpen,
     category: 'Course',
   },
   {
-    href: '/inspection-testing-course',
+    href: '/training/inspection-and-testing',
     title: 'Inspection and Testing',
     description: 'C&G 2391 preparation with testing sequence guides and practice questions.',
     icon: ClipboardCheck,
@@ -105,7 +105,7 @@ const relatedPages = [
     category: 'Course',
   },
   {
-    href: '/solar-pv-certificate',
+    href: '/tools/solar-pv-certificate',
     title: 'Solar PV Course',
     description: 'Solar PV installation and commissioning for domestic and commercial systems.',
     icon: Sun,
@@ -164,7 +164,7 @@ const sections = [
         </p>
         <p>
           <strong>Regulatory changes:</strong>{' '}
-          <SEOInternalLink href="/eighteenth-edition-course">BS 7671</SEOInternalLink> is amended
+          <SEOInternalLink href="/training/18th-edition-course">BS 7671</SEOInternalLink> is amended
           regularly. Amendment 3 (A3:2024) was issued on 31 July 2024, introducing two new
           definitions and one new regulation covering bidirectional and unidirectional devices.
           Amendment 4 (A4:2026) was issued on 15 April 2026, adding the new Chapter 82 for
@@ -338,7 +338,7 @@ const sections = [
         </ul>
         <p>
           The{' '}
-          <SEOInternalLink href="/eighteenth-edition-course">
+          <SEOInternalLink href="/training/18th-edition-course">
             18th Edition course on Elec-Mate
           </SEOInternalLink>{' '}
           covers the full regulations including all amendments.
@@ -371,7 +371,7 @@ const sections = [
         </p>
         <p>
           <strong>Inspection and Testing Update:</strong> If you hold the{' '}
-          <SEOInternalLink href="/city-guilds2391">C&G 2391</SEOInternalLink> and want to stay
+          <SEOInternalLink href="/training/city-guilds-2391">C&G 2391</SEOInternalLink> and want to stay
           current with testing practices, a refresher course covers the latest requirements, common
           EICR issues, and changes introduced by Amendment 4.
         </p>
@@ -538,7 +538,7 @@ export default function CPDForElectriciansPage() {
       title="CPD for UK Electricians 2026: Hours, NICEIC, NAPIT"
       description="CPD for UK electricians 2026: required hours by scheme, what counts, popular courses, NICEIC + NAPIT requirements, free CPD options. Stay registered."
       datePublished="2025-07-01"
-      dateModified="2026-05-22"
+      dateModified="2026-06-10"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="CPD Guide"

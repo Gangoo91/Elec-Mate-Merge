@@ -113,7 +113,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Tool',
   },
   {
-    href: '/apprentice-training',
+    href: '/training/electrical-apprentice',
     title: 'Apprentice Training Hub',
     description: 'Full Level 2 and Level 3 training modules with AI study support.',
     icon: GraduationCap,
@@ -538,7 +538,7 @@ export default function CityGuilds2365Unit202Page() {
       title="City & Guilds 2365 Unit 202 — Electrical Principles"
       description="C&G 2365 Unit 202 revision: Principles of Building Services Engineering. Learning outcomes, key terms, mock questions for UK apprentices."
       datePublished="2026-03-27"
-      dateModified="2026-05-18"
+      dateModified="2026-06-10"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Apprentice Guide"

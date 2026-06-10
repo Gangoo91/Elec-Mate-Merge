@@ -544,7 +544,7 @@ const sections = [
                 <p className="text-white text-sm leading-relaxed">
                   When you identify C1 or C2 observations, quote the remedial work immediately using
                   the{' '}
-                  <SEOInternalLink href="/electrical-quoting-app">
+                  <SEOInternalLink href="/tools/electrical-quoting-app">
                     Elec-Mate quoting app
                   </SEOInternalLink>
                   . Scottish landlords must act within 28 days — the electrician who quotes on the
@@ -574,7 +574,7 @@ export default function EICRDundeePage() {
       title="EICR Dundee | Electrical Inspection Dundee"
       description="EICR Dundee 2026: typical costs, Scottish letting + landlord legal duties, and what to expect from an electrical inspection — for trade + clients."
       datePublished="2026-03-27"
-      dateModified="2026-05-18"
+      dateModified="2026-06-10"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="EICR Guide"

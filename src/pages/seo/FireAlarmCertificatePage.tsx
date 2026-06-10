@@ -562,7 +562,7 @@ export default function FireAlarmCertificatePage() {
               <SEOInternalLink href="/tools/eicr-certificate">EICR</SEOInternalLink>,{' '}
               <SEOInternalLink href="/eic-certificate">EIC</SEOInternalLink>, Minor
               Works,{' '}
-              <SEOInternalLink href="/emergency-lighting-certificate">
+              <SEOInternalLink href="/tools/emergency-lighting-certificate">
                 emergency lighting
               </SEOInternalLink>
               , fire alarm, EV charger, PAT testing, and solar PV), 8 Elec-AI agents, 12 AI tools,

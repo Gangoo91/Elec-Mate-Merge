@@ -5,7 +5,7 @@ import type { GeneratedGuideConfig } from '@/pages/seo/generated/GeneratedGuideP
 // cabling systems), BS EN 50174 (Installation of cabling) and BS EN 60950 / 62368.
 
 const published = '2026-05-17';
-const modified = '2026-05-18';
+const modified = '2026-06-10';
 
 export const poePlusPlusType4Config: GeneratedGuideConfig = {
   pagePath: '/guides/poe-plus-plus-type-4-90w-installation',

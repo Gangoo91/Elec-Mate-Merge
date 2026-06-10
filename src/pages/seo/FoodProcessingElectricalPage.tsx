@@ -806,7 +806,7 @@ export default function FoodProcessingElectricalPage() {
       title="Food Processing Electrical Installation UK | Food Factory"
       description="Complete guide to food processing electrical installation in the UK — IP69K wash-down environments, ATEX dust zones (Zone 20/21/22), hygienic design…"
       datePublished="2026-03-27"
-      dateModified="2026-05-18"
+      dateModified="2026-06-10"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Specialist Sector"

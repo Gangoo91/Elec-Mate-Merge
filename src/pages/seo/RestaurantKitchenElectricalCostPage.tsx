@@ -138,7 +138,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Certificate',
   },
   {
-    href: '/electrical-quoting-app',
+    href: '/tools/electrical-quoting-app',
     title: 'Electrical Quoting App',
     description: 'Quote restaurant electrical work with equipment schedules and itemised pricing.',
     icon: Calculator,
@@ -669,7 +669,7 @@ export default function RestaurantKitchenElectricalCostPage() {
       title="Restaurant Kitchen Electrical Cost 2026 | UK Commercial"
       description="How much does restaurant kitchen electrical installation cost in 2026? UK guide covering 3-phase supply, extraction interlock, IP ratings…"
       datePublished="2026-03-27"
-      dateModified="2026-05-18"
+      dateModified="2026-06-10"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Cost Guide"

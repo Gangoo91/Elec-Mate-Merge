@@ -98,7 +98,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Guide',
   },
   {
-    href: '/how-to-test-insulation-resistance',
+    href: '/guides/insulation-resistance-testing-bs7671',
     title: 'How to Test Insulation Resistance',
     description: 'Step-by-step insulation resistance testing procedure for fixed wiring.',
     icon: ShieldCheck,
@@ -585,7 +585,7 @@ export default function MultimeterGuideElectriciansPage() {
       title="Multimeter Guide for Electricians UK 2026 | CAT Ratings,"
       description="Complete multimeter guide for UK electricians. CAT III vs CAT IV ratings, True RMS vs average sensing, voltage and resistance measurements…"
       datePublished="2026-03-27"
-      dateModified="2026-05-18"
+      dateModified="2026-06-10"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Tools & Equipment Guide"

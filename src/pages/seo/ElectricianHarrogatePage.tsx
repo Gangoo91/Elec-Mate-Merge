@@ -116,7 +116,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Guide',
   },
   {
-    href: '/electrical-quoting-app',
+    href: '/tools/electrical-quoting-app',
     title: 'Quoting App',
     description:
       'Quote Harrogate electrical jobs at accurate Yorkshire premium rates — send professional quotes on site.',
@@ -445,7 +445,7 @@ const sections = [
                 <h4 className="font-bold text-white mb-1">Win Harrogate Jobs Professionally</h4>
                 <p className="text-white text-sm leading-relaxed">
                   Use the{' '}
-                  <SEOInternalLink href="/electrical-quoting-app">quoting app</SEOInternalLink> to
+                  <SEOInternalLink href="/tools/electrical-quoting-app">quoting app</SEOInternalLink> to
                   produce professional PDF quotes for Harrogate customers. Quote Victorian property
                   rewires, EV charger installations, and consumer unit upgrades at accurate North
                   Yorkshire rates — send quotes before you leave the survey.
@@ -476,7 +476,7 @@ export default function ElectricianHarrogatePage() {
       title="Electrician in Harrogate | Local Electricians 2026"
       description="Find qualified electricians in Harrogate. NICEIC and NAPIT registered, Part P compliant. Yorkshire rates, Victorian property rewires, EICRs, EV chargers…"
       datePublished="2026-03-27"
-      dateModified="2026-05-18"
+      dateModified="2026-06-10"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Harrogate"

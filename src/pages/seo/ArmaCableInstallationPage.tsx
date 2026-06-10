@@ -600,9 +600,8 @@ const sections = [
           icon={FileCheck2}
         />
         <p className="text-sm text-white/50 mt-4">
-          Reviewed by the Elec-Mate Technical Team — qualified electricians and IET Wiring
-          Regulations practitioners. Content is grounded in BS 7671:2018+A4:2026 and the IET
-          Guidance Notes series.
+          Reviewed by Andrew Moore, founder of Elec-Mate. Content is grounded in
+          BS 7671:2018+A4:2026 and the IET Guidance Notes series.
         </p>
       </>
     ),
@@ -619,7 +618,7 @@ export default function ArmaCableInstallationPage() {
       title="Armoured Cable Installation UK | SWA Cable Guide"
       description="Complete UK guide to Steel Wire Armoured (SWA) cable installation. Types, current ratings, stripping and terminating with SWA glands…"
       datePublished="2026-03-27"
-      dateModified="2026-05-29"
+      dateModified="2026-06-10"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Installation Guide"

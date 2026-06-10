@@ -152,7 +152,7 @@ export default function ElectricalArchitecturalSymbolsPage() {
       title="Architectural Symbols on Electrical Drawings | UK Reference"
       description="Door, window, stairs and north arrow architectural symbols used on UK electrical installation drawings — context for switch placement…"
       datePublished="2026-05-18"
-      dateModified="2026-05-18"
+      dateModified="2026-06-10"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Symbol Reference"

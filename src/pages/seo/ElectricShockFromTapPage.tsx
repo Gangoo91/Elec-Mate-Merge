@@ -98,7 +98,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Guide',
   },
   {
-    href: '/earthing-arrangements',
+    href: '/guides/earthing-arrangements',
     title: 'Earthing Arrangements Explained',
     description:
       'TN-S, TN-C-S, and TT earthing systems — how they work and why they matter for fault protection.',
@@ -335,7 +335,7 @@ const sections = [
         <p>
           Most modern UK domestic properties are supplied with a PME (Protective Multiple Earthing)
           system, technically known as{' '}
-          <SEOInternalLink href="/earthing-arrangements">TN-C-S earthing</SEOInternalLink>. In this
+          <SEOInternalLink href="/guides/earthing-arrangements">TN-C-S earthing</SEOInternalLink>. In this
           system, the DNO combines the neutral and earth conductors into a single PEN (Protective
           Earth Neutral) conductor in the supply cable. At the property, the DNO provides an earth
           terminal by connecting it to the neutral.
@@ -615,7 +615,7 @@ export default function ElectricShockFromTapPage() {
       title="Electric Shock From a Tap? Causes + Urgent Safety Steps"
       description="Tingle from a tap means an earthing fault. Immersion heater leakage, lost PEN, broken main bond — what to check, what to do right now, when to call an electrician."
       datePublished="2025-04-20"
-      dateModified="2026-05-22"
+      dateModified="2026-06-10"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Troubleshooting"

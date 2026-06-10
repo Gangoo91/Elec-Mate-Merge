@@ -543,7 +543,7 @@ export default function CableDetectorBuyingGuidePage() {
       title="Cable Detector Buying Guide UK 2026 | CAT & Genny for"
       description="Complete cable detector buying guide for UK electricians and contractors. How CAT and Genny systems work, signal generator vs passive detection…"
       datePublished="2026-03-27"
-      dateModified="2026-05-18"
+      dateModified="2026-06-10"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Tools & Equipment Guide"

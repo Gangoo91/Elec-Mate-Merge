@@ -318,7 +318,7 @@ export const ramsForFullRewireConfig: GeneratedGuideConfig = {
       category: 'Tool',
     },
     {
-      href: '/tools/eic-certificate',
+      href: '/eic-certificate',
       title: 'EIC Certificate Tool',
       description:
         'Issue the A4:2026 Electrical Installation Certificate at handover, with full Schedule of Test Results, AFDD and SPD records.',

@@ -21,6 +21,7 @@ export const eicrCostLeedsConfig: GeneratedGuideConfig = {
   badge: 'Cost Guide',
   badgeIcon: 'PoundSterling',
   breadcrumbLabel: 'EICR Cost in Leeds',
+  breadcrumbParent: { label: 'EICR Cost UK', href: '/guides/eicr-cost-uk' },
   heroPrefix: 'EICR Cost in Leeds:',
   heroHighlight: '2026 Pricing Guide',
   heroSuffix: '— Domestic & Commercial',
@@ -209,6 +210,27 @@ export const eicrCostLeedsConfig: GeneratedGuideConfig = {
     },
   ],
   relatedPages: [
+    {
+      href: '/guides/eicr-cost-uk',
+      title: 'EICR Cost UK — National Guide',
+      description: 'UK-wide EICR prices by property type, what affects cost, and remedial pricing.',
+      icon: 'PoundSterling',
+      category: 'Guide',
+    },
+    {
+      href: '/guides/eicr-cost-york',
+      title: 'EICR cost in York',
+      description: 'Local price bands and labour rates for York.',
+      icon: 'MapPin',
+      category: 'Guide',
+    },
+    {
+      href: '/guides/eicr-cost-sheffield',
+      title: 'EICR cost in Sheffield',
+      description: 'Local price bands and labour rates for Sheffield.',
+      icon: 'MapPin',
+      category: 'Guide',
+    },
     {
       href: '/electricians/leeds',
       title: 'Find an Electrician in Leeds',

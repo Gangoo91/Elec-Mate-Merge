@@ -105,7 +105,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Certificate',
   },
   {
-    href: '/electrical-quoting-app',
+    href: '/tools/electrical-quoting-app',
     title: 'Electrical Quoting App',
     description:
       'Quote outdoor entertaining area electrical packages including armoured cable and IP66 sockets.',
@@ -580,7 +580,7 @@ export default function OutdoorEntertainingAreaElectricalPage() {
       title="Outdoor Entertaining Area Electrical UK | IP Ratings,"
       description="Complete guide to outdoor entertaining area electrical installations in the UK. IP ratings for outdoor equipment, IP66 sockets, outdoor kitchen circuits…"
       datePublished="2026-03-27"
-      dateModified="2026-05-18"
+      dateModified="2026-06-10"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Installation Guide"

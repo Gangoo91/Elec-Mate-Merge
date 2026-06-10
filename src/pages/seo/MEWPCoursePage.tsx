@@ -276,7 +276,7 @@ const sections = [
         </p>
         <p>
           The Elec-Mate MEWP course covers all the theory knowledge you need for your{' '}
-          <SEOInternalLink href="/training/ipaf-training">IPAF assessment</SEOInternalLink>, but the
+          <SEOInternalLink href="/ipaf-training">IPAF assessment</SEOInternalLink>, but the
           practical training must be completed at an IPAF-approved centre. Use the IPAF website to
           find your nearest approved training centre.
         </p>
@@ -457,7 +457,7 @@ const sections = [
 
 const relatedPages = [
   {
-    href: '/training/ipaf-training',
+    href: '/ipaf-training',
     title: 'IPAF Training Guide',
     description:
       'Complete IPAF operator training guide — categories, PAL Card, training centres, and renewal.',

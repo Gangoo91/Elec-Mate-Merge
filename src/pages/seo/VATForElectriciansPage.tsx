@@ -115,7 +115,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Finance Guide',
   },
   {
-    href: '/electrical-quoting-app',
+    href: '/tools/electrical-quoting-app',
     title: 'Electrical Quoting App',
     description: 'Create VAT-compliant invoices with correct DRC wording on your phone.',
     icon: Zap,
@@ -701,7 +701,7 @@ const sections = [
                 <h4 className="font-bold text-white mb-1">VAT-Compliant Invoices on Your Phone</h4>
                 <p className="text-white text-sm leading-relaxed">
                   Use{' '}
-                  <SEOInternalLink href="/electrical-quoting-app">
+                  <SEOInternalLink href="/tools/electrical-quoting-app">
                     Elec-Mate's invoicing tool
                   </SEOInternalLink>{' '}
                   to create professional, VAT-compliant invoices in seconds on your phone. Include
@@ -747,7 +747,7 @@ export default function VATForElectriciansPage() {
       title="VAT for Electricians UK | When to Register & VAT Schemes"
       description="Complete VAT guide for UK electricians — the £90,000 registration threshold, voluntary registration, flat rate scheme (9.5% / 14.5%), cash accounting, domestic reverse charge and MTD obligations."
       datePublished="2026-03-27"
-      dateModified="2026-06-09"
+      dateModified="2026-06-10"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Finance Guide"

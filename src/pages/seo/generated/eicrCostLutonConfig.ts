@@ -21,6 +21,7 @@ export const eicrCostLutonConfig: GeneratedGuideConfig = {
   badge: 'Cost Guide',
   badgeIcon: 'PoundSterling',
   breadcrumbLabel: 'EICR Cost in Luton',
+  breadcrumbParent: { label: 'EICR Cost UK', href: '/guides/eicr-cost-uk' },
   heroPrefix: 'EICR Cost in Luton:',
   heroHighlight: '2026 Pricing Guide',
   heroSuffix: '— Domestic & Commercial',
@@ -209,6 +210,27 @@ export const eicrCostLutonConfig: GeneratedGuideConfig = {
     },
   ],
   relatedPages: [
+    {
+      href: '/guides/eicr-cost-uk',
+      title: 'EICR Cost UK — National Guide',
+      description: 'UK-wide EICR prices by property type, what affects cost, and remedial pricing.',
+      icon: 'PoundSterling',
+      category: 'Guide',
+    },
+    {
+      href: '/guides/eicr-cost-milton-keynes',
+      title: 'EICR cost in Milton Keynes',
+      description: 'Local price bands and labour rates for Milton Keynes.',
+      icon: 'MapPin',
+      category: 'Guide',
+    },
+    {
+      href: '/guides/eicr-cost-reading',
+      title: 'EICR cost in Reading',
+      description: 'Local price bands and labour rates for Reading.',
+      icon: 'MapPin',
+      category: 'Guide',
+    },
     {
       href: '/electricians/luton',
       title: 'Find an Electrician in Luton',

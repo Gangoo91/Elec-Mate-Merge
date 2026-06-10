@@ -125,7 +125,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Certificate',
   },
   {
-    href: '/emergency-lighting-certificate',
+    href: '/tools/emergency-lighting-certificate',
     title: 'Emergency Lighting Certificate',
     description:
       'BS 5266 requirements, testing schedules, system design, and emergency lighting certification on your phone.',
@@ -141,7 +141,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Guide',
   },
   {
-    href: '/rams-generator',
+    href: '/tools/rams-generator',
     title: 'RAMS Generator',
     description:
       'Generate professional Risk Assessments and Method Statements with AI for commercial projects.',
@@ -179,7 +179,7 @@ const sections = [
           Beyond the core electrical installation, commercial electricians often work on specialist
           systems that are rarely found in domestic settings: fire alarm systems to{' '}
           <SEOInternalLink href="/fire-alarm-certificate">BS 5839-1</SEOInternalLink>,{' '}
-          <SEOInternalLink href="/emergency-lighting-certificate">
+          <SEOInternalLink href="/tools/emergency-lighting-certificate">
             emergency lighting systems
           </SEOInternalLink>{' '}
           to BS 5266, data and communications cabling, access control, CCTV, intruder alarms, and
@@ -729,7 +729,7 @@ const sections = [
                     fire alarm certificates
                   </SEOInternalLink>{' '}
                   to BS 5839 and{' '}
-                  <SEOInternalLink href="/emergency-lighting-certificate">
+                  <SEOInternalLink href="/tools/emergency-lighting-certificate">
                     emergency lighting certificates
                   </SEOInternalLink>{' '}
                   to BS 5266 on your phone. Record system details, zone plans, device schedules, and

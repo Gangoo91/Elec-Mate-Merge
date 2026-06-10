@@ -109,7 +109,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Guide',
   },
   {
-    href: '/electrical-quoting-app',
+    href: '/tools/electrical-quoting-app',
     title: 'Electrical Quoting App',
     description: 'Quote security system jobs accurately with the Elec-Mate quoting tool.',
     icon: PoundSterling,
@@ -618,7 +618,7 @@ const sections = [
                 <h4 className="font-bold text-white mb-1">Quote Security System Jobs Accurately</h4>
                 <p className="text-white text-sm leading-relaxed">
                   Use the{' '}
-                  <SEOInternalLink href="/electrical-quoting-app">
+                  <SEOInternalLink href="/tools/electrical-quoting-app">
                     Elec-Mate quoting app
                   </SEOInternalLink>{' '}
                   to generate accurate quotes for intruder alarm cabling, conduit installation, PSU
@@ -669,7 +669,7 @@ export default function IntruderAlarmInstallationPage() {
       title="Intruder Alarm Installation UK | Burglar Alarm Wiring Guide"
       description="Intruder alarm installation guide for the UK. BS EN 50131 grades 1–4 explained, wired vs wireless systems, PIR placement, door contacts…"
       datePublished="2026-03-27"
-      dateModified="2026-05-18"
+      dateModified="2026-06-10"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Security Systems Guide"

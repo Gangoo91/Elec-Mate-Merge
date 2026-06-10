@@ -197,7 +197,7 @@ const sections = [
         </div>
         <p>
           Common C2 observations in this section include:{' '}
-          <SEOInternalLink href="/guides/consumer-unit-regulations">consumer unit</SEOInternalLink>{' '}
+          <SEOInternalLink href="/consumer-unit-regulations">consumer unit</SEOInternalLink>{' '}
           with a combustible (plastic) enclosure in a domestic premises where Regulation 421.1.201
           requires a non-combustible (or non-combustible-enclosed) enclosure, missing or damaged
           covers exposing live busbars, and absence of circuit identification.
@@ -408,7 +408,7 @@ const sections = [
           periodic inspection. It is almost always classified as C2 (Potentially Dangerous) because
           the absence of bonding means that metallic services could become live in the event of a
           fault, creating a shock risk. For guidance on earthing systems, see the{' '}
-          <SEOInternalLink href="/earthing-arrangements">
+          <SEOInternalLink href="/guides/earthing-arrangements">
             earthing arrangements guide
           </SEOInternalLink>
           .
@@ -726,7 +726,7 @@ export default function EICRScheduleOfInspectionsPage() {
       title={PAGE_TITLE}
       description={PAGE_DESCRIPTION}
       datePublished="2025-07-15"
-      dateModified="2026-05-18"
+      dateModified="2026-06-10"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Inspection Guide"

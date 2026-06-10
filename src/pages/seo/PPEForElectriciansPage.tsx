@@ -712,9 +712,9 @@ const sections = [
         </p>
         <p>
           Elec-Mate training courses including{' '}
-          <SEOInternalLink href="/manual-handling-course">manual handling</SEOInternalLink>,{' '}
-          <SEOInternalLink href="/training/pasma-training">PASMA</SEOInternalLink>,{' '}
-          <SEOInternalLink href="/training/ipaf-training">IPAF</SEOInternalLink>, and{' '}
+          <SEOInternalLink href="/training/manual-handling">manual handling</SEOInternalLink>,{' '}
+          <SEOInternalLink href="/pasma-training">PASMA</SEOInternalLink>,{' '}
+          <SEOInternalLink href="/ipaf-training">IPAF</SEOInternalLink>, and{' '}
           <SEOInternalLink href="/training/working-at-height">working at height</SEOInternalLink>{' '}
           ensure your team understands when and how to use each type of PPE correctly.
         </p>
@@ -738,7 +738,7 @@ export default function PPEForElectriciansPage() {
       title="PPE for Electricians: Gloves, Arc Flash, Boots & Legal Duties (2026)"
       description="PPE for UK electricians on site: insulated gloves (Class 0/00), arc flash suits, safety boots, hi-vis, helmets, eye protection — what + when + how."
       datePublished="2025-04-20"
-      dateModified="2026-05-18"
+      dateModified="2026-06-10"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Safety Guide"

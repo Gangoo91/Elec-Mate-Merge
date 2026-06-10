@@ -22,7 +22,7 @@ export default function LEDLightingGuidePage() {
       title="LED Lighting Guide | Choosing, Installing & Dimming"
       description="Complete guide to LED lighting for electricians and homeowners. Covers LED technology, colour temperature, lumens vs watts, dimmable drivers…"
       datePublished="2025-07-01"
-      dateModified="2026-05-18"
+      dateModified="2026-06-10"
       breadcrumbs={[
         { label: 'Installation', href: '/guides' },
         { label: 'LED Lighting', href: '/guides/led-lighting-guide' },
@@ -498,7 +498,7 @@ export default function LEDLightingGuidePage() {
                     <span>
                       <strong className="text-yellow-400">Emergency lighting</strong> — In
                       commercial installations, LED{' '}
-                      <SEOInternalLink href="/emergency-lighting-certificate">
+                      <SEOInternalLink href="/tools/emergency-lighting-certificate">
                         emergency lighting
                       </SEOInternalLink>{' '}
                       must comply with BS 5266 and provide the required lux levels for the specified
@@ -611,7 +611,7 @@ export default function LEDLightingGuidePage() {
       ]}
       relatedPages={[
         {
-          href: '/emergency-lighting-certificate',
+          href: '/tools/emergency-lighting-certificate',
           title: 'Emergency Lighting Certificate',
           description: 'Guide to emergency lighting testing and certification.',
           icon: FileText,
@@ -639,7 +639,7 @@ export default function LEDLightingGuidePage() {
           category: 'Guide',
         },
         {
-          href: '/testing-sequence-guide',
+          href: '/guides/testing-sequence-guide',
           title: 'Testing Sequence Guide',
           description: 'The correct order of electrical tests.',
           icon: ClipboardCheck,

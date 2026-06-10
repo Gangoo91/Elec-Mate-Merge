@@ -22,7 +22,7 @@ export default function ElectricalBIMGuidePage() {
       title="Electrical BIM Guide | Building Information Modelling"
       description="Guide to Building Information Modelling (BIM) for electrical engineers and electricians. Covers what BIM is, LOD levels, Revit MEP for electrical…"
       datePublished="2025-10-01"
-      dateModified="2026-05-18"
+      dateModified="2026-06-10"
       breadcrumbs={[
         { label: 'Guides', href: '/guides' },
         { label: 'BIM Guide', href: '/guides/electrical-bim-guide' },
@@ -668,7 +668,7 @@ export default function ElectricalBIMGuidePage() {
           category: 'Regulation',
         },
         {
-          href: '/testing-sequence-guide',
+          href: '/guides/testing-sequence-guide',
           title: 'Testing Sequence Guide',
           description: 'The correct order of electrical tests.',
           icon: Zap,

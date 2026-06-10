@@ -123,7 +123,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Tool',
   },
   {
-    href: '/electrical-quoting-app',
+    href: '/tools/electrical-quoting-app',
     title: 'Electrical Quoting App',
     description: 'Create professional quotes for Plymouth customers with accurate local pricing.',
     icon: PoundSterling,
@@ -578,7 +578,7 @@ export default function ElectricianPlymouthPage() {
       title="Electrician in Plymouth | Find Qualified Electricians 2026"
       description="Find qualified, registered electricians in Plymouth. Realistic 2026 pricing, how to verify NICEIC/NAPIT registration, post-war rewiring…"
       datePublished="2026-03-27"
-      dateModified="2026-05-18"
+      dateModified="2026-06-10"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Find an Electrician"

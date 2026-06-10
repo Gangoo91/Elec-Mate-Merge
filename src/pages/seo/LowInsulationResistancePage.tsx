@@ -636,7 +636,7 @@ const relatedPages = [
     category: 'Certification',
   },
   {
-    href: '/electrical-testing-calculators',
+    href: '/tools/electrical-testing-calculators',
     title: '70+ Electrical Calculators',
     description: 'Zs lookup, R1+R2, cable sizing, voltage drop, and more built-in calculators.',
     icon: Calculator,
@@ -654,7 +654,7 @@ export default function LowInsulationResistancePage() {
       title={PAGE_TITLE}
       description={PAGE_DESCRIPTION}
       datePublished="2025-09-05"
-      dateModified="2026-05-22"
+      dateModified="2026-06-10"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Troubleshooting"

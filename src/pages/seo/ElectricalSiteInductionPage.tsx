@@ -22,7 +22,7 @@ export default function ElectricalSiteInductionPage() {
       title="Site Induction for Electricians | What to Expect"
       description="Site inductions for electricians on UK construction + commercial sites: what to expect, paperwork, PPE, permits, CDM 2015 duties, RAMS sign-off."
       datePublished="2026-01-28"
-      dateModified="2026-05-18"
+      dateModified="2026-06-10"
       breadcrumbs={[
         { label: 'Safety', href: '/guides/safety' },
         { label: 'Site Induction', href: '/guides/electrical-site-induction' },
@@ -592,7 +592,7 @@ export default function ElectricalSiteInductionPage() {
           category: 'Guide',
         },
         {
-          href: '/rams-generator',
+          href: '/tools/rams-generator',
           title: 'AI RAMS Generator',
           description: 'Generate site-specific risk assessments and method statements with AI.',
           icon: Brain,

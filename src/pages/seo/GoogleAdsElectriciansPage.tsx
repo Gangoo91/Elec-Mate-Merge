@@ -117,7 +117,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Guide',
   },
   {
-    href: '/electrical-quoting-app',
+    href: '/tools/electrical-quoting-app',
     title: 'Elec-Mate Quoting App',
     description:
       'Convert ad leads into booked jobs with professional quotes sent in under two minutes.',
@@ -137,7 +137,7 @@ const sections = [
     content: (
       <>
         <p className="text-sm text-white/50 mb-4">
-          Written by the Elec-Mate technical team — qualified electricians and NICEIC-registered
+          Written by the Andrew Moore, founder of Elec-Mate, — qualified electricians and NICEIC-registered
           contractors who have run Google Ads campaigns for their own businesses.
         </p>
         <p>
@@ -559,7 +559,7 @@ const sections = [
                   Customers who enquire via a Google Ad have often already visited two or three
                   competitor websites and may have submitted multiple enquiry forms. The first
                   electrician with a professional, detailed quote typically wins the job. Use the{' '}
-                  <SEOInternalLink href="/electrical-quoting-app">
+                  <SEOInternalLink href="/tools/electrical-quoting-app">
                     Elec-Mate quoting app
                   </SEOInternalLink>{' '}
                   to send a branded quote from your phone within minutes of receiving the enquiry.
@@ -602,7 +602,7 @@ export default function GoogleAdsElectriciansPage() {
       title="Google Ads for Electricians UK | PPC Guide for Electrical"
       description="Google Ads for UK electricians: Local Services Ads, Google Guaranteed badge, costs of £3–£10 per click, and realistic budgets for every business size."
       datePublished="2026-03-27"
-      dateModified="2026-05-18"
+      dateModified="2026-06-10"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Business Guide"

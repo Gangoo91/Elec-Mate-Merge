@@ -21,7 +21,7 @@ export default function WhenIsEICRequiredPage() {
       title="When Is an EIC Required? BS 7671 Guide | Elec-Mate"
       description="When an Electrical Installation Certificate (EIC) is required under BS 7671:2018+A4:2026: new installs, alterations, what triggers EIC vs MWC."
       datePublished="2025-06-10"
-      dateModified="2026-05-18"
+      dateModified="2026-06-10"
       breadcrumbs={[
         { label: 'Guides', href: '/guides' },
         { label: 'When Is an EIC Required?', href: '/guides/when-is-eic-required' },
@@ -70,7 +70,7 @@ export default function WhenIsEICRequiredPage() {
                 The EIC is defined in Appendix 6 of BS 7671 and follows the model forms published in
                 the standard. It is the most comprehensive of the three electrical certificates —
                 the EIC, the{' '}
-                <SEOInternalLink href="/minor-works-certificate">
+                <SEOInternalLink href="/tools/minor-works-certificate">
                   Minor Works Certificate
                 </SEOInternalLink>
                 , and the{' '}
@@ -209,7 +209,7 @@ export default function WhenIsEICRequiredPage() {
             <>
               <p>
                 There are situations where a full EIC is not required. In these cases, a{' '}
-                <SEOInternalLink href="/minor-works-certificate">
+                <SEOInternalLink href="/tools/minor-works-certificate">
                   Minor Works Certificate
                 </SEOInternalLink>{' '}
                 is the appropriate document. The key distinction is that a Minor Works Certificate
@@ -618,7 +618,7 @@ export default function WhenIsEICRequiredPage() {
           category: 'Certification',
         },
         {
-          href: '/minor-works-certificate',
+          href: '/tools/minor-works-certificate',
           title: 'Minor Works Certificate',
           description: 'When to use a Minor Works Certificate and how to fill it in.',
           icon: ClipboardCheck,
@@ -646,7 +646,7 @@ export default function WhenIsEICRequiredPage() {
           category: 'Guide',
         },
         {
-          href: '/testing-sequence-guide',
+          href: '/guides/testing-sequence-guide',
           title: 'Testing Sequence Guide',
           description:
             'The correct order of tests for initial verification and periodic inspection.',

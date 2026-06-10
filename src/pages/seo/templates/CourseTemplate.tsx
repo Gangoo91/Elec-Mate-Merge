@@ -126,7 +126,7 @@ export default function CourseTemplate({
     ],
     datePublished,
     dateModified,
-    author: 'Elec-Mate Technical Team',
+    author: 'Andrew Moore',
   });
 
   return (
@@ -159,7 +159,7 @@ export default function CourseTemplate({
           </a>
         </div>
         <p className="text-xs text-white/60 mb-6">
-          No card required · Free for 7 days · Cancel anytime · Used by 1,000+ UK electricians
+          Free for 7 days · No charge until day 8 · Cancel anytime · Used by 1,000+ UK electricians
         </p>
 
         <SEOReadingMeta readingTime={readingTime} dateUpdated={dateModified} />
@@ -198,14 +198,17 @@ export default function CourseTemplate({
             <h2 className="text-2xl sm:text-3xl font-bold text-white mb-6">{section.heading}</h2>
             <div className="space-y-4 text-white leading-relaxed">{section.content}</div>
           </section>
-          {(index + 1) % 2 === 0 && index < sections.length - 1 && (
-            <SEOAppBridge
-              title="Try Elec-Mate free for 7 days"
-              description="16 certificate types, 70+ calculators, RAMS, quoting, invoicing, AI agents, and 46+ training courses — from £5.99/mo."
-              ctaText="Start free trial"
-              icon={Zap}
-            />
-          )}
+          {/* Single mid-article CTA — one well-placed pitch beats the same
+              pitch repeated every two sections (CTA fatigue). */}
+          {index === Math.min(Math.floor(sections.length / 2), sections.length - 2) &&
+            sections.length >= 3 && (
+              <SEOAppBridge
+                title="Practise with unlimited mock exams"
+                description="AI-generated mocks, instant marking, and explanations on every question — targeted at your weakest topics. From £5.99/mo."
+                ctaText="Start practising free"
+                icon={Zap}
+              />
+            )}
         </div>
       ))}
 

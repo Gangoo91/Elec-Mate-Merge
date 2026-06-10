@@ -85,6 +85,13 @@ const faqs = [
 
 const relatedPages: RelatedPage[] = [
   {
+    href: '/guides/consumer-unit-replacement-cost-sheffield',
+    title: 'Consumer Unit Replacement Cost in Sheffield',
+    description: 'Local price bands and labour rates for consumer unit replacement in Sheffield.',
+    icon: Home,
+    category: 'Guide',
+  },
+  {
     href: '/guides/consumer-unit-replacement-cost',
     title: 'Consumer Unit Replacement Guide',
     description:
@@ -517,7 +524,7 @@ const sections = [
                 <p className="text-white text-sm leading-relaxed">
                   When your inspection uncovers old wiring, missing bonding, or additional circuits
                   needed, use the{' '}
-                  <SEOInternalLink href="/electrical-quoting-app">
+                  <SEOInternalLink href="/tools/electrical-quoting-app">
                     Elec-Mate quoting app
                   </SEOInternalLink>{' '}
                   to quote the additional work while you are still on site. Customers in Sheffield

@@ -22,7 +22,7 @@ export default function ElectricianAccountingSoftwarePage() {
       title="Accounting Software for Electricians | Best Options 2026"
       description="Compare the best accounting software for UK electricians in 2026. Covers QuickBooks, Xero, and FreeAgent features, MTD for VAT compliance…"
       datePublished="2026-01-08"
-      dateModified="2026-05-18"
+      dateModified="2026-06-10"
       breadcrumbs={[
         { label: 'Business', href: '/guides' },
         { label: 'Accounting Software', href: '/guides/electrician-accounting-software' },
@@ -491,7 +491,7 @@ export default function ElectricianAccountingSoftwarePage() {
                       quoting and pricing tools
                     </SEOInternalLink>{' '}
                     calculate material costs, labour, and margins for every job. The{' '}
-                    <SEOInternalLink href="/electrician-invoice-app">
+                    <SEOInternalLink href="/tools/electrician-invoice-app">
                       invoicing features
                     </SEOInternalLink>{' '}
                     generate professional invoices on site. This data feeds into your accounting
@@ -573,7 +573,7 @@ export default function ElectricianAccountingSoftwarePage() {
           category: 'Business',
         },
         {
-          href: '/electrician-invoice-app',
+          href: '/tools/electrician-invoice-app',
           title: 'Electrician Invoice App',
           description: 'Generate professional invoices from the job site.',
           icon: FileText,

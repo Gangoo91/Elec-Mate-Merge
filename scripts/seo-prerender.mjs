@@ -80,6 +80,23 @@ function discoverRoutes() {
   while ((m = re.exec(source)) !== null) {
     if (m[1].startsWith('/')) out.push(m[1]);
   }
+
+  // Mock-exam surface (hub + exams + topic landings) lives in MockExamRoutes.tsx
+  // with relative paths and a dynamic :examSlug/:topicSlug route, so the route
+  // file can't be parsed for concrete URLs. sitemap-mock-exams.xml is the
+  // source of truth for every concrete mock-exam URL — prerender from there.
+  const mockSitemap = join(ROOT, 'public/sitemap-mock-exams.xml');
+  if (existsSync(mockSitemap)) {
+    const xml = readFileSync(mockSitemap, 'utf-8');
+    const locRe = /<loc>https?:\/\/[^/]+(\/[^<]*)<\/loc>/g;
+    let count = 0;
+    while ((m = locRe.exec(xml)) !== null) {
+      out.push(m[1]);
+      count++;
+    }
+    console.log(`[prerender] added ${count} mock-exam routes from sitemap-mock-exams.xml`);
+  }
+
   // Dedupe + stable sort
   const unique = Array.from(new Set(out)).sort();
   return LIMIT ? unique.slice(0, LIMIT) : unique;

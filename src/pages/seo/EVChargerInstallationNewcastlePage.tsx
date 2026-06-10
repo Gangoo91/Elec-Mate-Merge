@@ -118,7 +118,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Certificate',
   },
   {
-    href: '/guides/consumer-unit-regulations',
+    href: '/consumer-unit-regulations',
     title: 'Consumer Unit Regulations',
     description:
       'Consumer unit upgrade requirements — often needed when adding a 32A EV charger circuit.',
@@ -512,7 +512,7 @@ const sections = [
                   Factor in North East labour rates (£35 to £50/hour), typical cable run distances
                   (5 to 15 metres for most Newcastle semis and terraces), earth rod costs where
                   needed, and Northern Powergrid notification time. Use Elec-Mate's{' '}
-                  <SEOInternalLink href="/electrical-quoting-app">quoting app</SEOInternalLink> to
+                  <SEOInternalLink href="/tools/electrical-quoting-app">quoting app</SEOInternalLink> to
                   build accurate itemised quotes on site, including all materials and certification
                   costs.
                 </p>
@@ -557,7 +557,7 @@ export default function EVChargerInstallationNewcastlePage() {
       title="EV Charger Installation Newcastle | Home EV Charging"
       description="EV charger installation costs in Newcastle 2026: 7kW charger £800-1,200 installed, OZEV grants up to £350, Northern Powergrid DNO notification…"
       datePublished="2026-03-27"
-      dateModified="2026-05-18"
+      dateModified="2026-06-10"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Newcastle Guide"

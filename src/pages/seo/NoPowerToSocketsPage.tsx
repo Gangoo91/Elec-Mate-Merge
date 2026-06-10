@@ -114,7 +114,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Troubleshooting',
   },
   {
-    href: '/electrical-testing-calculators',
+    href: '/tools/electrical-testing-calculators',
     title: 'Ring Circuit Calculator',
     description:
       'Verify ring circuit continuity with R1, Rn, and R2 values to confirm the ring is intact.',
@@ -793,7 +793,7 @@ export default function NoPowerToSocketsPage() {
       title="No Power to Sockets | Troubleshooting Guide"
       description="Complete guide to diagnosing dead sockets. Covers tripped MCBs and RCDs, broken ring circuits, loose connections, spur faults…"
       datePublished="2025-07-15"
-      dateModified="2026-05-18"
+      dateModified="2026-06-10"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Troubleshooting"

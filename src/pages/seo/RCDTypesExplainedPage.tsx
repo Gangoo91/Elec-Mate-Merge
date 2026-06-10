@@ -22,7 +22,7 @@ export default function RCDTypesExplainedPage() {
       title="RCD Types Explained | Type AC, A, B, F | Which Do You Need?"
       description="Complete guide to RCD types for UK electricians. Type AC (sinusoidal AC only), Type A (AC + pulsating DC), Type B (AC + smooth DC for EV chargers)…"
       datePublished="2025-06-01"
-      dateModified="2026-05-18"
+      dateModified="2026-06-10"
       breadcrumbs={[
         { label: 'Guides', href: '/guides' },
         { label: 'RCD Types Explained', href: '/guides/rcd-types-explained' },
@@ -201,7 +201,7 @@ export default function RCDTypesExplainedPage() {
                 the waveform of residual current likely to occur. Since almost every modern circuit
                 supplies equipment with rectifiers, Type A is the minimum appropriate type for
                 virtually all circuits. In practice, if you are installing a new{' '}
-                <SEOInternalLink href="/guides/consumer-unit-regulations">
+                <SEOInternalLink href="/consumer-unit-regulations">
                   consumer unit
                 </SEOInternalLink>{' '}
                 or specifying RCBOs for a new installation, Type A should be the default choice.
@@ -697,7 +697,7 @@ export default function RCDTypesExplainedPage() {
       ]}
       relatedPages={[
         {
-          href: '/guides/consumer-unit-regulations',
+          href: '/consumer-unit-regulations',
           title: 'Consumer Unit Regulations',
           description: 'RCD architecture, RCBO boards, and board design.',
           icon: ShieldCheck,
@@ -718,14 +718,14 @@ export default function RCDTypesExplainedPage() {
           category: 'Guide',
         },
         {
-          href: '/rcd-testing-guide',
+          href: '/tools/rcd-testing-guide',
           title: 'RCD Testing Guide',
           description: 'Trip time testing procedures and pass/fail criteria.',
           icon: Timer,
           category: 'Guide',
         },
         {
-          href: '/earthing-arrangements',
+          href: '/guides/earthing-arrangements',
           title: 'Earthing Arrangements',
           description: 'TN-S, TN-C-S, TT and their impact on RCD selection.',
           icon: Cable,

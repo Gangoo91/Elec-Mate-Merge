@@ -109,7 +109,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Certificate',
   },
   {
-    href: '/electrical-quoting-app',
+    href: '/tools/electrical-quoting-app',
     title: 'Electrical Quoting App',
     description: 'Price outdoor socket installations accurately with itemised professional quotes.',
     icon: PoundSterling,
@@ -495,7 +495,7 @@ const sections = [
                 <h4 className="font-bold text-white mb-1">Quoting App</h4>
                 <p className="text-white text-sm leading-relaxed">
                   Price the complete job with Elec-Mate's{' '}
-                  <SEOInternalLink href="/electrical-quoting-app">quoting app</SEOInternalLink>.
+                  <SEOInternalLink href="/tools/electrical-quoting-app">quoting app</SEOInternalLink>.
                   IP66 socket, SWA cable (per metre), RCBO, glands, trenching labour, testing, and
                   Part P notification — all itemised with your margins.
                 </p>
@@ -539,7 +539,7 @@ export default function OutdoorSocketInstallationCostPage() {
       title="Outdoor Socket Installation Cost UK 2026 | Price Guide"
       description="How much does an outdoor socket cost to install in the UK in 2026? Typical prices £150–£400 depending on cable run, IP66 socket, RCD protection."
       datePublished="2026-03-27"
-      dateModified="2026-05-18"
+      dateModified="2026-06-10"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Cost Guide"

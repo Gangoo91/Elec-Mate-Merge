@@ -26,9 +26,9 @@ const navSections = [
     label: 'Certificates',
     links: [
       { to: '/tools/eicr-certificate', label: 'EICR Certificate' },
-      { to: '/tools/eic-certificate', label: 'EIC Certificate' },
+      { to: '/eic-certificate', label: 'EIC Certificate' },
       { to: '/tools/minor-works-certificate', label: 'Minor Works' },
-      { to: '/tools/ev-charger-certificate', label: 'EV Charger' },
+      { to: '/ev-charger-certificate', label: 'EV Charger' },
     ],
   },
   {
@@ -51,12 +51,12 @@ const navSections = [
 
 const footerCertificates = [
   { to: '/tools/eicr-certificate', label: 'EICR Certificate' },
-  { to: '/tools/eic-certificate', label: 'EIC Certificate' },
+  { to: '/eic-certificate', label: 'EIC Certificate' },
   { to: '/tools/minor-works-certificate', label: 'Minor Works' },
   { to: '/tools/emergency-lighting-certificate', label: 'Emergency Lighting' },
-  { to: '/tools/fire-alarm-certificate', label: 'Fire Alarm' },
+  { to: '/fire-alarm-certificate', label: 'Fire Alarm' },
   { to: '/tools/pat-testing', label: 'PAT Testing' },
-  { to: '/tools/ev-charger-certificate', label: 'EV Charger' },
+  { to: '/ev-charger-certificate', label: 'EV Charger' },
   { to: '/tools/solar-pv-certificate', label: 'Solar PV' },
 ];
 
@@ -92,13 +92,13 @@ const footerAIAndGuides = [
   { to: '/tools/rams-generator', label: 'RAMS Generator' },
   { to: '/tools/electrical-quoting-app', label: 'Smart Quoting' },
   { to: '/tools/electrician-invoice-app', label: 'Invoice Builder' },
-  { to: '/guides/bs7671-observation-codes', label: 'Observation Codes' },
+  { to: '/bs7671-observation-codes', label: 'Observation Codes' },
   { to: '/guides/part-p-building-regulations', label: 'Part P Guide' },
   { to: '/guides/earthing-arrangements', label: 'Earthing Systems' },
-  { to: '/guides/consumer-unit-regulations', label: 'Consumer Units' },
+  { to: '/consumer-unit-regulations', label: 'Consumer Units' },
   { to: '/guides/testing-sequence-guide', label: 'Testing Sequence' },
   { to: '/tools/best-electrician-app-uk', label: 'Why Elec-Mate?' },
-  { to: '/compare/elec-mate-vs-icertifi', label: 'vs iCertifi' },
+  { to: '/elec-mate-vs-i-certifi', label: 'vs iCertifi' },
   { to: '/compare/elec-mate-vs-certsapp', label: 'vs CertsApp' },
 ];
 

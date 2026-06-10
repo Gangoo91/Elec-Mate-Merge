@@ -125,7 +125,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Certificate',
   },
   {
-    href: '/emergency-lighting-certificate',
+    href: '/tools/emergency-lighting-certificate',
     title: 'Emergency Lighting Certificate',
     description:
       'BS 5266 requirements, testing schedules, and emergency lighting certification for commercial buildings.',

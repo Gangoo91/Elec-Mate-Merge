@@ -145,7 +145,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Guide',
   },
   {
-    href: '/rams-generator',
+    href: '/tools/rams-generator',
     title: 'RAMS Generator',
     description:
       'AI-powered risk assessment and method statement generator. Describe the job and get a professional RAMS document in minutes.',

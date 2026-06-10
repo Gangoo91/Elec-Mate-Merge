@@ -575,7 +575,7 @@ export default function ElectricBoilerInstallationPage() {
       title="Electric Boiler Installation: Cable Size & Wiring (BS 7671)"
       description="Electric boiler wiring guide: cable and breaker size by kW, supply and RCD requirements, and load and diversity to BS 7671."
       datePublished="2024-06-01"
-      dateModified="2026-05-18"
+      dateModified="2026-06-10"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Installation Guide"

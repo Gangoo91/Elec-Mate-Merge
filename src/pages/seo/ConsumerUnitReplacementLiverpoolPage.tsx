@@ -90,6 +90,13 @@ const faqs = [
 
 const relatedPages: RelatedPage[] = [
   {
+    href: '/guides/consumer-unit-replacement-cost-liverpool',
+    title: 'Consumer Unit Replacement Cost in Liverpool',
+    description: 'Local price bands and labour rates for consumer unit replacement in Liverpool.',
+    icon: Home,
+    category: 'Guide',
+  },
+  {
     href: '/guides/consumer-unit-replacement-cost',
     title: 'Consumer Unit Replacement Guide',
     description:
@@ -504,7 +511,7 @@ const sections = [
                 <p className="text-white text-sm leading-relaxed">
                   When you discover old wiring, bonding deficiencies, or additional circuits needed,
                   use the{' '}
-                  <SEOInternalLink href="/electrical-quoting-app">
+                  <SEOInternalLink href="/tools/electrical-quoting-app">
                     Elec-Mate quoting tool
                   </SEOInternalLink>{' '}
                   to quote the additional work on site. Liverpool landlords are far more likely to

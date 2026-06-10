@@ -24,7 +24,7 @@ const PAGE_DESCRIPTION =
   'Three-phase electrical calculations: power formula (P = √3·VL·IL·cosφ), line vs phase, star vs delta, current, PF, balancing, VD, cable sizing.';
 
 const breadcrumbs = [
-  { label: 'Calculators', href: '/electrical-testing-calculators' },
+  { label: 'Calculators', href: '/tools/electrical-testing-calculators' },
   { label: 'Three Phase Calculations', href: '/guides/three-phase-calculations' },
 ];
 
@@ -897,7 +897,7 @@ export default function ThreePhaseCalculationsPage() {
       title={PAGE_TITLE}
       description={PAGE_DESCRIPTION}
       datePublished="2025-06-01"
-      dateModified="2026-05-18"
+      dateModified="2026-06-10"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Electrical Calculations"

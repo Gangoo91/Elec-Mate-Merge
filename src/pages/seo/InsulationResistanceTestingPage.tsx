@@ -539,7 +539,7 @@ export default function InsulationResistanceTestingPage() {
       title="Insulation Resistance Testing BS 7671 | IR Testing Guide UK"
       description="Complete guide to insulation resistance testing under BS 7671 for UK electricians. Covers test voltages (250V, 500V, 1000V), minimum values (≥1 MΩ)…"
       datePublished="2026-03-27"
-      dateModified="2026-05-29"
+      dateModified="2026-06-10"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Testing Guide"

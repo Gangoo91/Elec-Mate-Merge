@@ -83,7 +83,7 @@ const faqs = [
 
 const relatedPages: RelatedPage[] = [
   {
-    href: '/tools/ai-circuit-designer',
+    href: '/ai-circuit-designer',
     title: 'AI Circuit Designer',
     description:
       'Generate complete lighting circuit layouts with cable sizing, switch positions, and dimming arrangements.',
@@ -123,7 +123,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Guide',
   },
   {
-    href: '/minor-works-certificate',
+    href: '/tools/minor-works-certificate',
     title: 'Minor Works Certificate',
     description:
       'Issue a Minor Works Certificate for LED downlight replacements and additions to existing circuits.',
@@ -419,7 +419,7 @@ const sections = [
         <p>
           When quoting LED downlight installations with dimming, always specify the dimmer switch
           and confirm compatibility with the chosen downlight before ordering materials. Elec-Mate's{' '}
-          <SEOInternalLink href="/electrical-quoting-app">quoting app</SEOInternalLink> lets you
+          <SEOInternalLink href="/tools/electrical-quoting-app">quoting app</SEOInternalLink> lets you
           build a detailed quote with specific fittings, switches, and cable quantities — so the
           customer knows exactly what they are getting.
         </p>
@@ -576,7 +576,7 @@ const sections = [
                 <strong>No certification for new circuit work.</strong> Installing LED downlights on
                 a new circuit in a bathroom without issuing an EIC and notifying Building Control.
                 This is a Part P offence. A{' '}
-                <SEOInternalLink href="/minor-works-certificate">
+                <SEOInternalLink href="/tools/minor-works-certificate">
                   Minor Works Certificate
                 </SEOInternalLink>{' '}
                 is appropriate for additions to existing circuits outside special locations.
@@ -604,7 +604,7 @@ export default function LEDDownlightGuidePage() {
       title="LED Downlight Installation | Fire Rating & IC Guide"
       description="Complete guide to LED downlight installation in the UK. Fire-rated vs non-fire-rated, IC rating for insulation contact, thermal protection…"
       datePublished="2025-07-10"
-      dateModified="2026-05-18"
+      dateModified="2026-06-10"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Installation Guide"

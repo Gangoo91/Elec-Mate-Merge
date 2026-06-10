@@ -133,7 +133,7 @@ export default function BusinessTemplate({
     ],
     datePublished,
     dateModified,
-    author: 'Elec-Mate Technical Team',
+    author: 'Andrew Moore',
   });
 
   return (
@@ -160,7 +160,7 @@ export default function BusinessTemplate({
           </a>
         </div>
         <p className="text-xs text-white/60 mb-6">
-          No card required · Free for 7 days · Cancel anytime · Used by 1,000+ UK electricians
+          Free for 7 days · No charge until day 8 · Cancel anytime · Used by 1,000+ UK electricians
         </p>
 
         <SEOReadingMeta readingTime={readingTime} dateUpdated={dateModified} />
@@ -212,14 +212,17 @@ export default function BusinessTemplate({
               />
             )}
           </section>
-          {(index + 1) % 2 === 0 && index < sections.length - 1 && (
-            <SEOAppBridge
-              title="Try Elec-Mate free for 7 days"
-              description="16 certificate types, 70+ calculators, RAMS, quoting, invoicing, AI agents, and 46+ training courses — from £5.99/mo."
-              ctaText="Start free trial"
-              icon={Zap}
-            />
-          )}
+          {/* Single mid-article CTA — one well-placed pitch beats the same
+              pitch repeated every two sections (CTA fatigue). */}
+          {index === Math.min(Math.floor(sections.length / 2), sections.length - 2) &&
+            sections.length >= 3 && (
+              <SEOAppBridge
+                title="Run the business side from your phone"
+                description="Quoting, invoicing, payment collection, and the remedial estimator — the paperwork done before you leave site. From £5.99/mo."
+                ctaText="Try the business tools free"
+                icon={Zap}
+              />
+            )}
         </div>
       ))}
 

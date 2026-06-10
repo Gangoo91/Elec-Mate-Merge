@@ -5,7 +5,7 @@ import type { GeneratedGuideConfig } from '@/pages/seo/generated/GeneratedGuideP
 // Every regulation cite resolves to a canonical reference.
 
 const published = '2026-05-17';
-const modified = '2026-05-29';
+const modified = '2026-06-10';
 
 export const section710MedicalLocationsConfig: GeneratedGuideConfig = {
   pagePath: '/guides/bs-7671-section-710-medical-locations',
@@ -353,7 +353,7 @@ export const section710MedicalLocationsConfig: GeneratedGuideConfig = {
       category: 'Guide',
     },
     {
-      href: '/electrical-testing-calculators',
+      href: '/tools/electrical-testing-calculators',
       title: 'All 70 Electrical Calculators',
       description:
         'Voltage drop, cable sizing, Zs, fault current, adiabatic, RCD — every calc free to use.',

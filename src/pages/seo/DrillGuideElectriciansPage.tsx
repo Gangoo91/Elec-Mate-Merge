@@ -118,7 +118,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Tool',
   },
   {
-    href: '/apprentice-training',
+    href: '/training/electrical-apprentice',
     title: 'Apprentice Training Hub',
     description: 'Practical tool use, installation techniques, and theory modules.',
     icon: GraduationCap,
@@ -560,7 +560,7 @@ export default function DrillGuideElectriciansPage() {
       title="Drill Guide for Electricians 2026 | SDS Plus, Cordless,"
       description="Complete drill guide for UK electricians. SDS Plus vs SDS Max vs standard combi drills, 18V vs 54V cordless platforms…"
       datePublished="2026-03-27"
-      dateModified="2026-05-18"
+      dateModified="2026-06-10"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Tools & Equipment Guide"

@@ -107,7 +107,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Guide',
   },
   {
-    href: '/guides/consumer-unit-regulations',
+    href: '/consumer-unit-regulations',
     title: 'Consumer Unit Regulations',
     description:
       'All the rules around consumer unit specification, installation, and replacement — always notifiable.',
@@ -123,7 +123,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Guide',
   },
   {
-    href: '/eighteenth-edition-course',
+    href: '/training/18th-edition-course',
     title: '18th Edition Course',
     description:
       'Study for C&G 2382 with structured modules covering Part P, BS 7671, and certification.',
@@ -257,7 +257,7 @@ const sections = [
                 is always notifiable, regardless of whether new circuits are being added. This
                 includes upgrading from a rewireable fuseboard to MCBs, adding RCD or RCBO
                 protection, and full{' '}
-                <SEOInternalLink href="/guides/consumer-unit-regulations">
+                <SEOInternalLink href="/consumer-unit-regulations">
                   consumer unit upgrades
                 </SEOInternalLink>
                 . Since A4:2026, Reg 421.1.7 recommends arc fault detection devices (AFDDs) on AC
@@ -354,7 +354,7 @@ const sections = [
         <p>
           Even though non-notifiable work does not require formal notification, it must still comply
           with BS 7671 and should be documented. For additions and alterations, a{' '}
-          <SEOInternalLink href="/minor-works-certificate">Minor Works Certificate</SEOInternalLink>{' '}
+          <SEOInternalLink href="/tools/minor-works-certificate">Minor Works Certificate</SEOInternalLink>{' '}
           should be issued. For like-for-like replacements, a certificate is not legally required
           but is good practice — particularly for rented properties where the landlord may need
           evidence of compliance.
@@ -550,7 +550,7 @@ const sections = [
         </div>
         <p>
           For electricians, the special location rules are examined in the{' '}
-          <SEOInternalLink href="/eighteenth-edition-course">
+          <SEOInternalLink href="/training/18th-edition-course">
             18th Edition qualification
           </SEOInternalLink>{' '}
           and the{' '}
@@ -646,7 +646,7 @@ export default function NotifiableWorkGuidePage() {
       title="Notifiable Electrical Work | Part P Guide UK"
       description="Complete guide to notifiable electrical work under Part P Building Regulations. Covers which work needs notification, competent person schemes…"
       datePublished="2025-04-10"
-      dateModified="2026-05-18"
+      dateModified="2026-06-10"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Regulations Guide"

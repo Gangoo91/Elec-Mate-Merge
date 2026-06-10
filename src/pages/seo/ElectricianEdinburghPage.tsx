@@ -114,7 +114,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Guide',
   },
   {
-    href: '/electrical-quoting-app',
+    href: '/tools/electrical-quoting-app',
     title: 'Quoting App',
     description:
       'Quote tenement rewires, consumer unit upgrades, and EV charger installations with accurate Edinburgh pricing.',
@@ -571,7 +571,7 @@ const sections = [
                 <h4 className="font-bold text-white mb-1">Professional Quoting</h4>
                 <p className="text-white text-sm leading-relaxed">
                   Price Edinburgh jobs accurately with the{' '}
-                  <SEOInternalLink href="/electrical-quoting-app">quoting app</SEOInternalLink>.
+                  <SEOInternalLink href="/tools/electrical-quoting-app">quoting app</SEOInternalLink>.
                   Account for the higher material costs and labour times associated with tenement
                   and period property work. Send professional PDF quotes to Edinburgh customers from
                   the survey.
@@ -601,7 +601,7 @@ export default function ElectricianEdinburghPage() {
       title="Electrician in Edinburgh | Local Electricians 2026"
       description="Find qualified electricians in Edinburgh. Scottish Building Standards, SPEN DNO, listed building work, tenement rewiring…"
       datePublished="2026-03-27"
-      dateModified="2026-05-18"
+      dateModified="2026-06-10"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Edinburgh"

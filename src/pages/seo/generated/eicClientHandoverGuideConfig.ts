@@ -173,7 +173,7 @@ export const eicClientHandoverGuideConfig: GeneratedGuideConfig = {
       category: 'Certificate',
     },
     {
-      href: '/electrical-quoting-app',
+      href: '/tools/electrical-quoting-app',
       title: 'Electrical Quoting App',
       description: 'Turn follow-on work into a clear quote while the job is still fresh.',
       icon: 'Calculator',

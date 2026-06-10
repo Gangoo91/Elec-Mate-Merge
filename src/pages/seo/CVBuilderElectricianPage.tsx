@@ -98,7 +98,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Tool',
   },
   {
-    href: '/guides/how-to-become-electrician',
+    href: '/guides/how-to-become-an-electrician',
     title: 'How to Become an Electrician',
     description:
       'Complete guide to starting a career as an electrician in the UK. Qualifications, routes, and career progression.',
@@ -290,7 +290,7 @@ const sections = [
         </p>
         <p>
           The section is divided into categories: core electrical qualifications (C&G 2365, 2357,{' '}
-          <SEOInternalLink href="/eighteenth-edition-course">C&G 2382</SEOInternalLink>,{' '}
+          <SEOInternalLink href="/training/18th-edition-course">C&G 2382</SEOInternalLink>,{' '}
           <SEOInternalLink href="/training/inspection-and-testing">C&G 2391</SEOInternalLink>),
           practical assessments (AM2), industry card details (ECS/JIB card type, number, and
           expiry), Part P registration and scheme membership, and specialist certifications (EV
@@ -425,7 +425,7 @@ export default function CVBuilderElectricianPage() {
       title="CV Builder for Electricians | Professional CV Tool"
       description="Build a professional electrician CV with templates designed for the electrical trade. Highlight qualifications, ECS card details, specialist skills…"
       datePublished="2025-06-15"
-      dateModified="2026-05-18"
+      dateModified="2026-06-10"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Professional CV Tool"

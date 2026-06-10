@@ -114,7 +114,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Guide',
   },
   {
-    href: '/electrical-quoting-app',
+    href: '/tools/electrical-quoting-app',
     title: 'Electrical Quoting App',
     description: 'Quote BMS electrical installation and controls work accurately.',
     icon: PoundSterling,
@@ -587,7 +587,7 @@ const sections = [
                 <h4 className="font-bold text-white mb-1">Quote BMS Electrical Work Accurately</h4>
                 <p className="text-white text-sm leading-relaxed">
                   Use the{' '}
-                  <SEOInternalLink href="/electrical-quoting-app">
+                  <SEOInternalLink href="/tools/electrical-quoting-app">
                     Elec-Mate quoting app
                   </SEOInternalLink>{' '}
                   to build accurate quotes for BMS electrical installation — sensor wiring,

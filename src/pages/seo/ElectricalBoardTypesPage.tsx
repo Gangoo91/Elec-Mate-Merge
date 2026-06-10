@@ -71,7 +71,7 @@ export default function ElectricalBoardTypesPage() {
               </p>
               <p>
                 Under{' '}
-                <SEOInternalLink href="/guides/consumer-unit-regulations">
+                <SEOInternalLink href="/consumer-unit-regulations">
                   current BS 7671 regulations
                 </SEOInternalLink>
                 , all consumer units in domestic premises must have metal enclosures (Regulation
@@ -426,7 +426,7 @@ export default function ElectricalBoardTypesPage() {
                 correct variant — a dual RCD board cannot easily be converted to a main switch only
                 board, and vice versa.
               </p>
-              <SEOInternalLink href="/guides/consumer-unit-regulations">
+              <SEOInternalLink href="/consumer-unit-regulations">
                 See our consumer unit regulations guide
               </SEOInternalLink>{' '}
               for the full regulatory requirements for consumer unit design and installation.
@@ -559,7 +559,7 @@ export default function ElectricalBoardTypesPage() {
       ]}
       relatedPages={[
         {
-          href: '/guides/consumer-unit-regulations',
+          href: '/consumer-unit-regulations',
           title: 'Consumer Unit Regulations',
           description: 'Metal CU requirements, RCD protection, and Amendment 4 changes.',
           icon: ShieldCheck,

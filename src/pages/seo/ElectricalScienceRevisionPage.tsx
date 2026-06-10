@@ -655,7 +655,7 @@ export default function ElectricalScienceRevisionPage() {
       title="Electrical Science Revision | Ohm's Law to 3-Phase"
       description="Complete electrical science revision guide for apprentices. Ohm's law, power triangle, Kirchhoff's laws, series and parallel circuits, AC theory…"
       datePublished="2026-03-27"
-      dateModified="2026-05-18"
+      dateModified="2026-06-10"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Revision Guide"

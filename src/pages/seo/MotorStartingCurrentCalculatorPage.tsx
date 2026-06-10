@@ -24,7 +24,7 @@ export default function MotorStartingCurrentCalculatorPage() {
       title="Motor Starting Current Calculator | DOL & Star-Delta"
       description="Calculate motor starting current for DOL, star-delta, soft starter, and VFD starting methods. UK supply assumptions, locked-rotor multipliers built in."
       datePublished="2026-02-01"
-      dateModified="2026-05-18"
+      dateModified="2026-06-10"
       breadcrumbs={[
         { label: 'Tools', href: '/tools' },
         {

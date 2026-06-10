@@ -26,7 +26,7 @@ export default function DigitalCertificatesAppPage() {
       title="Digital Electrical Certificates App | EICR, EIC, EV Charger, Solar PV, PAT"
       description="Elec-Mate's digital electrical certificates app for UK electricians. 16 certificate types — EICR, EIC, Minor Works, EV Charger, Solar PV, PAT Testing. BS 7671:2018+A4:2026 compliant. Start a 7-day free trial."
       datePublished="2026-01-10"
-      dateModified="2026-05-29"
+      dateModified="2026-06-10"
       breadcrumbs={[
         { label: 'Tools', href: '/tools' },
         { label: 'Digital Certificates App', href: '/tools/digital-certificates-app' },
@@ -280,9 +280,9 @@ export default function DigitalCertificatesAppPage() {
               </p>
               <p>
                 That certificate workflow becomes even stronger when it feeds straight into the{' '}
-                <SEOInternalLink href="/electrician-invoice-app">invoice app</SEOInternalLink> or a
+                <SEOInternalLink href="/tools/electrician-invoice-app">invoice app</SEOInternalLink> or a
                 priced remedial quote via the{' '}
-                <SEOInternalLink href="/ai-cost-engineer">AI Cost Engineer</SEOInternalLink>. The
+                <SEOInternalLink href="/tools/ai-cost-engineer">AI Cost Engineer</SEOInternalLink>. The
                 point is not just sending a PDF quickly; it is turning completed certification into
                 a clean commercial workflow while the job is still live.
               </p>
@@ -351,7 +351,7 @@ export default function DigitalCertificatesAppPage() {
                 Automatic validation catches errors before they appear on the final certificate. It
                 is like having a second pair of eyes checking every test result against the
                 regulations. For more on testing procedures, see our{' '}
-                <SEOInternalLink href="/testing-sequence-guide">
+                <SEOInternalLink href="/guides/testing-sequence-guide">
                   testing sequence guide
                 </SEOInternalLink>{' '}
                 and{' '}
@@ -503,7 +503,7 @@ export default function DigitalCertificatesAppPage() {
           category: 'Tools',
         },
         {
-          href: '/electrician-invoice-app',
+          href: '/tools/electrician-invoice-app',
           title: 'Electrician Invoice App',
           description:
             'Turn completed certificates into invoices quickly and collect payment without rebuilding the job admin.',
@@ -511,7 +511,7 @@ export default function DigitalCertificatesAppPage() {
           category: 'Business',
         },
         {
-          href: '/ai-cost-engineer',
+          href: '/tools/ai-cost-engineer',
           title: 'AI Cost Engineer',
           description:
             'Convert defects and follow-on work into priced remedial quotes using UK labour and material assumptions.',
@@ -519,7 +519,7 @@ export default function DigitalCertificatesAppPage() {
           category: 'AI Tools',
         },
         {
-          href: '/electrical-testing-calculators',
+          href: '/tools/electrical-testing-calculators',
           title: 'Electrical Calculators',
           description:
             '70+ BS 7671 calculators for cable sizing, voltage drop, Zs verification, and more.',
@@ -527,12 +527,12 @@ export default function DigitalCertificatesAppPage() {
           category: 'Tools',
         },
         {
-          href: '/tools/employer-electrical-platform',
-          title: 'Employer Platform',
+          href: '/tools/electrical-certificate-software',
+          title: 'Electrical Certificate Software',
           description:
-            'Manage your team, track apprentices, oversee certificates, and monitor compliance.',
+            'How to choose certificate software: coverage, true cost per certificate, current forms, and on-site speed.',
           icon: Building,
-          category: 'Platform',
+          category: 'Tools',
         },
       ]}
       ctaHeading="Try all 16 certificate types free for 7 days"

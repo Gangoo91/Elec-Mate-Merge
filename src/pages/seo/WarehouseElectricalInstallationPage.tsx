@@ -115,7 +115,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Certificate',
   },
   {
-    href: '/electrical-quoting-app',
+    href: '/tools/electrical-quoting-app',
     title: 'Electrical Quoting App',
     description: 'Quote warehouse and industrial electrical projects with instant PDF proposals.',
     icon: PoundSterling,
@@ -587,7 +587,7 @@ const sections = [
                 <p className="text-white text-sm leading-relaxed">
                   Warehouse projects involve large cable quantities, significant containment
                   systems, and multiple sub-systems. Use the{' '}
-                  <SEOInternalLink href="/electrical-quoting-app">
+                  <SEOInternalLink href="/tools/electrical-quoting-app">
                     Elec-Mate quoting app
                   </SEOInternalLink>{' '}
                   to build detailed, professional proposals with accurate material takeoffs and
@@ -617,7 +617,7 @@ export default function WarehouseElectricalInstallationPage() {
       title="Warehouse Electrical Installation UK | Industrial Lighting"
       description="Complete guide to warehouse electrical installation in the UK. High-bay LED lighting design, three-phase distribution, EV charging infrastructure…"
       datePublished="2026-03-27"
-      dateModified="2026-05-18"
+      dateModified="2026-06-10"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Industrial Electrical Guide"

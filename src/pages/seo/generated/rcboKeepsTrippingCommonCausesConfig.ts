@@ -1,7 +1,7 @@
 import type { GeneratedGuideConfig } from '@/pages/seo/generated/GeneratedGuidePage';
 
 const published = '2026-04-12';
-const modified = '2026-05-18';
+const modified = '2026-06-10';
 
 export const rcboKeepsTrippingCommonCausesConfig: GeneratedGuideConfig = {
   pagePath: '/guides/rcbo-keeps-tripping-common-causes',

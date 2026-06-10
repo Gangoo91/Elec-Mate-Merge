@@ -413,7 +413,7 @@ const sections = [
         </div>
         <p>
           When testing the completed installation, the{' '}
-          <SEOInternalLink href="/rcd-testing-guide">RCD must be tested</SEOInternalLink> at rated
+          <SEOInternalLink href="/tools/rcd-testing-guide">RCD must be tested</SEOInternalLink> at rated
           residual operating current (30mA) and at 5x (150mA). The trip times must be within 300ms
           at 1x and 40ms at 5x.
         </p>
@@ -609,7 +609,7 @@ export default function ElectricShowerInstallationPage() {
       title="Electric Shower Cable Size: 7.5kW-12kW (UK Install Guide)"
       description="Cable + MCB size for UK electric showers by kW: 7.5kW→6mm²/32A, 8.5kW→10mm²/40A, 9.5kW→10mm²/45A, 10.5kW→16mm²/50A, 12kW→16mm²/50A. RCD, pull-cord, Section 701 zoning."
       datePublished="2025-06-20"
-      dateModified="2026-05-23"
+      dateModified="2026-06-10"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Installation Guide"

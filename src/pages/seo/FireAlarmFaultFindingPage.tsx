@@ -106,7 +106,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Guide',
   },
   {
-    href: '/tools/fire-alarm-certificate',
+    href: '/fire-alarm-certificate',
     title: 'Fire Alarm Certificate App',
     description: 'Generate fire alarm installation and commissioning certificates on site.',
     icon: FileCheck2,
@@ -484,7 +484,7 @@ const sections = [
                 <h4 className="font-bold text-white mb-1">Fire Alarm Installation Certificates</h4>
                 <p className="text-white text-sm leading-relaxed">
                   If you are a competent fire alarm engineer, use the{' '}
-                  <SEOInternalLink href="/tools/fire-alarm-certificate">
+                  <SEOInternalLink href="/fire-alarm-certificate">
                     Elec-Mate fire alarm certificate app
                   </SEOInternalLink>{' '}
                   to generate installation and commissioning certificates on site. Covers system
@@ -563,7 +563,7 @@ export default function FireAlarmFaultFindingPage() {
       title="Fire Alarm Fault Finding | Fire Detection System Problems UK"
       description="Fire alarm showing a fault? This guide explains zone faults, detector contamination, panel faults, power supply issues and BS 5839-1 compliance for UK electricians."
       datePublished="2026-03-27"
-      dateModified="2026-05-18"
+      dateModified="2026-06-10"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Fault Finding Guide"

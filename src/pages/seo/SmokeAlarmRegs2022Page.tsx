@@ -82,7 +82,7 @@ const faqs = [
 
 const relatedPages: RelatedPage[] = [
   {
-    href: '/tools/fire-alarm-certificate',
+    href: '/fire-alarm-certificate',
     title: 'Fire Alarm Certificate',
     description:
       'Create BS 5839-6 compliant fire alarm certificates on your phone with professional PDF export.',
@@ -261,7 +261,7 @@ const sections = [
                 detection requirements under HMO licensing conditions, but the 2022 Regulations
                 apply as an additional layer. HMO licensing typically requires a higher standard
                 (mains-wired, interlinked, to{' '}
-                <SEOInternalLink href="/tools/fire-alarm-certificate">BS 5839-6</SEOInternalLink>
+                <SEOInternalLink href="/fire-alarm-certificate">BS 5839-6</SEOInternalLink>
                 ).
               </span>
             </li>

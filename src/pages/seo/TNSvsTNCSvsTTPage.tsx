@@ -435,7 +435,7 @@ export default function TNSvsTNCSvsTTPage() {
       title="Earthing Systems Explained: TN-S, TN-C-S and TT | UK Guide"
       description="Complete guide to UK earthing systems: TN-S, TN-C-S (PME) and TT. Zs differences, PME risks, Regulation 8 of the ESQCR 2002, when each system is used…"
       datePublished="2026-03-27"
-      dateModified="2026-05-18"
+      dateModified="2026-06-10"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Earthing Systems Guide"

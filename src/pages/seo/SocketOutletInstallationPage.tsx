@@ -552,7 +552,7 @@ export default function SocketOutletInstallationPage() {
       title="Socket Outlet Installation Guide — Ring Main, Spurs, and Outdoor Requirements"
       description="Complete UK guide to adding socket outlets. Ring main vs radial circuits, spur rules, one socket per spur from a ring, maximum floor area…"
       datePublished="2024-07-01"
-      dateModified="2026-05-18"
+      dateModified="2026-06-10"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Guide"

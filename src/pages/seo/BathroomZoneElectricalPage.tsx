@@ -731,7 +731,7 @@ export default function BathroomZoneElectricalPage() {
       title="Bathroom Zones BS 7671: IPX7/IPX4 + Zone 0/1/2 Rules"
       description="Bathroom electrical zones to BS 7671 §701: IPX7 in zone 0, IPX4 in zones 1-2, no 13A sockets, shaver socket allowed in zone 2 only, 30mA RCD mandatory."
       datePublished="2026-03-27"
-      dateModified="2026-05-23"
+      dateModified="2026-06-10"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="BS 7671 Guide"

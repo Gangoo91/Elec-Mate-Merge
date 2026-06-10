@@ -109,7 +109,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Guide',
   },
   {
-    href: '/electrical-quoting-app',
+    href: '/tools/electrical-quoting-app',
     title: 'Electrical Quoting App',
     description:
       'Price security lighting installations accurately with itemised professional quotes.',
@@ -512,7 +512,7 @@ const sections = [
                 <h4 className="font-bold text-white mb-1">Quoting App</h4>
                 <p className="text-white text-sm leading-relaxed">
                   Price security lighting installations with Elec-Mate's{' '}
-                  <SEOInternalLink href="/electrical-quoting-app">quoting app</SEOInternalLink>. PIR
+                  <SEOInternalLink href="/tools/electrical-quoting-app">quoting app</SEOInternalLink>. PIR
                   floodlights, SWA cable, RCBO, glands, fixings, CCTV preparation, labour, and
                   testing — all itemised with your margins. Send a professional PDF quote from the
                   survey.
@@ -557,7 +557,7 @@ export default function SecurityLightingCostPage() {
       title="Security Lighting Installation Cost UK 2026 | Prices"
       description="Security lighting installation cost in the UK 2026: £100–£600 per light. PIR, dusk-to-dawn, LED, smart-controlled — wiring, IP rating, RCD."
       datePublished="2026-03-27"
-      dateModified="2026-05-18"
+      dateModified="2026-06-10"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Cost Guide"

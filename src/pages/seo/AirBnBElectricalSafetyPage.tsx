@@ -602,7 +602,7 @@ const sections = [
                 <p className="text-white text-sm leading-relaxed">
                   Consumer unit upgrades, additional sockets, hot tub connections, and garden
                   supplies are all high-value follow-on jobs. Quote on the day with the{' '}
-                  <SEOInternalLink href="/electrical-quoting-app">
+                  <SEOInternalLink href="/tools/electrical-quoting-app">
                     quoting app
                   </SEOInternalLink>{' '}
                   and convert inspection clients into installation clients.

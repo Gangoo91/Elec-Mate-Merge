@@ -266,7 +266,7 @@ export default function ElecMateVsElectricalOMPage() {
       ]}
       relatedPages={[
         {
-          href: '/compare/elec-mate-vs-icertifi',
+          href: '/elec-mate-vs-i-certifi',
           title: 'Elec-Mate vs iCertifi',
           description: 'Feature comparison between Elec-Mate and iCertifi for UK electricians.',
           icon: Zap,

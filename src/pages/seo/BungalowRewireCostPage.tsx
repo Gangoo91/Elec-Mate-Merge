@@ -447,7 +447,7 @@ const sections = [
                   Complete the <SEOInternalLink href="/eic-certificate">EIC</SEOInternalLink>{' '}
                   on your phone using Elec-Mate. Voice-entry for test results and PDF export before
                   you leave. Quote and invoice with the{' '}
-                  <SEOInternalLink href="/electrical-quoting-app">
+                  <SEOInternalLink href="/tools/electrical-quoting-app">
                     quoting app
                   </SEOInternalLink>
                   .

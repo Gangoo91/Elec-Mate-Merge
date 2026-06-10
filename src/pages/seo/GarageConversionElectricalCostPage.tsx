@@ -101,7 +101,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Certificate',
   },
   {
-    href: '/electrical-quoting-app',
+    href: '/tools/electrical-quoting-app',
     title: 'Electrical Quoting App',
     description:
       'Price garage conversion electrical packages with labour, materials, and Part P notification.',
@@ -488,7 +488,7 @@ export default function GarageConversionElectricalCostPage() {
       title="Garage Conversion Electrical Cost UK | Circuits, Costs &"
       description="How much does garage conversion electrical work cost in the UK? Typical costs £1,500–£4,500. Covers required circuits, heating load calculations…"
       datePublished="2026-03-27"
-      dateModified="2026-05-18"
+      dateModified="2026-06-10"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Cost Guide"

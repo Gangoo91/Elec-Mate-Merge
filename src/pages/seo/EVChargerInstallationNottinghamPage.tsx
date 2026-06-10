@@ -118,7 +118,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Certificate',
   },
   {
-    href: '/guides/consumer-unit-regulations',
+    href: '/consumer-unit-regulations',
     title: 'Consumer Unit Regulations',
     description: 'Consumer unit upgrade requirements when adding a 32A EV charger circuit.',
     icon: ShieldCheck,
@@ -494,7 +494,7 @@ const sections = [
                   Factor in East Midlands labour rates (£38 to £50/hour), site survey time for older
                   properties, earth rod costs, NGED G98 notification, and EIC certification. Use
                   Elec-Mate's{' '}
-                  <SEOInternalLink href="/electrical-quoting-app">quoting app</SEOInternalLink> to
+                  <SEOInternalLink href="/tools/electrical-quoting-app">quoting app</SEOInternalLink> to
                   build itemised quotes that clearly show all costs to the customer.
                 </p>
               </div>
@@ -573,7 +573,7 @@ export default function EVChargerInstallationNottinghamPage() {
       title="EV Charger Installation Nottingham | Home EV Charging"
       description="EV charger installation costs in Nottingham 2026: 7kW charger £800-1,200 installed, OZEV grants up to £350, NGED DNO notification…"
       datePublished="2026-03-27"
-      dateModified="2026-05-29"
+      dateModified="2026-06-10"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Nottingham Guide"

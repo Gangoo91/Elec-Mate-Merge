@@ -120,7 +120,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Guide',
   },
   {
-    href: '/electrical-quoting-app',
+    href: '/tools/electrical-quoting-app',
     title: 'Quoting App',
     description:
       'Quote Cumbrian electrical jobs accurately — including rural travel time and specialist industrial work.',
@@ -587,7 +587,7 @@ const sections = [
                 <h4 className="font-bold text-white mb-1">Professional Quoting</h4>
                 <p className="text-white text-sm leading-relaxed">
                   Price Cumbrian jobs accurately with the{' '}
-                  <SEOInternalLink href="/electrical-quoting-app">quoting app</SEOInternalLink>.
+                  <SEOInternalLink href="/tools/electrical-quoting-app">quoting app</SEOInternalLink>.
                   Factor travel time premiums for rural jobs, material lead times for remote sites,
                   and specialist rates for industrial work. Send professional PDF quotes to clients
                   from the survey.
@@ -618,7 +618,7 @@ export default function ElectricianCumbriaPage() {
       title="Cumbria Electricians 2026 | Carlisle, Barrow, Sellafield"
       description="Cumbria electricians covering Carlisle, Barrow + Sellafield. BS 7671:2018+A4:2026 EICRs, EV chargers, nuclear-site experience. Electricity North West area."
       datePublished="2026-03-27"
-      dateModified="2026-05-18"
+      dateModified="2026-06-10"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Cumbria"

@@ -465,7 +465,7 @@ const relatedPages = [
     category: 'Training' as const,
   },
   {
-    href: '/rams-generator',
+    href: '/tools/rams-generator',
     title: 'AI RAMS Generator',
     description: 'Generate professional risk assessments and method statements from your phone.',
     icon: FileCheck2,

@@ -325,7 +325,7 @@ export default function RAMSGeneratorPage() {
               expectation now exceeds the legal minimum, and any electrician who cannot produce
               professional RAMS will struggle to win work on commercial and managed residential
               sites. Pair RAMS with your{' '}
-              <SEOInternalLink href="/manual-handling-course">
+              <SEOInternalLink href="/training/manual-handling">
                 manual handling training
               </SEOInternalLink>{' '}
               and{' '}

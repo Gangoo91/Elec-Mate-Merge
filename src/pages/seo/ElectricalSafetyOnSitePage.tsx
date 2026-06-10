@@ -521,7 +521,7 @@ const sections = [
             permit to work guide
           </SEOInternalLink>
           . Elec-Mate can generate permit to work documents as part of the{' '}
-          <SEOInternalLink href="/rams-generator">RAMS package</SEOInternalLink>, pre-populated with
+          <SEOInternalLink href="/tools/rams-generator">RAMS package</SEOInternalLink>, pre-populated with
           the site details and the specific hazards identified in your{' '}
           <SEOInternalLink href="/guides/risk-assessment-electricians">
             risk assessment
@@ -669,7 +669,7 @@ export default function ElectricalSafetyOnSitePage() {
       title="Electrical Safety on Site | Construction Guide UK"
       description="Complete UK guide: 110V CTE systems, PAT testing, BS 7671 Section 704 temporary supplies, permit to work, and cable routing for construction sites."
       datePublished="2025-05-20"
-      dateModified="2026-05-18"
+      dateModified="2026-06-10"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Safety Guide"

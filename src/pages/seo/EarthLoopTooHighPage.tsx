@@ -83,7 +83,7 @@ const faqs = [
 
 const relatedPages: RelatedPage[] = [
   {
-    href: '/electrical-testing-calculators',
+    href: '/tools/electrical-testing-calculators',
     title: 'Zs Calculator',
     description:
       'Look up the maximum Zs for any MCB, RCBO, or fuse type and compare with your measured value.',
@@ -115,7 +115,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Guide',
   },
   {
-    href: '/earthing-arrangements',
+    href: '/guides/earthing-arrangements',
     title: 'Earthing Arrangements Guide',
     description:
       'TN-S, TN-C-S, TT — understand earthing systems and how they affect loop impedance.',

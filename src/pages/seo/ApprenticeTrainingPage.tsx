@@ -549,7 +549,7 @@ export default function ApprenticeTrainingPage() {
           />
           <p className="text-white mt-4 text-sm">
             Ready to access your training?{' '}
-            <SEOInternalLink href="/apprentice-training">
+            <SEOInternalLink href="/training/electrical-apprentice">
               Go to the apprentice training centre
             </SEOInternalLink>{' '}
             to start your Level 2 or Level 3 courses.

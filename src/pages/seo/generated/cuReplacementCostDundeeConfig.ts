@@ -20,6 +20,7 @@ export const cuReplacementCostDundeeConfig: GeneratedGuideConfig = {
   badge: 'Cost Guide',
   badgeIcon: 'PoundSterling',
   breadcrumbLabel: 'Consumer Unit Replacement Cost in Dundee',
+  breadcrumbParent: { label: 'Consumer Unit Replacement Cost', href: '/guides/consumer-unit-replacement-cost' },
   heroPrefix: 'Consumer Unit Replacement Cost in Dundee:',
   heroHighlight: '2026 Full Pricing Guide',
   heroSuffix: '— RCBO Boards & BS 7671:2018+A4:2026',
@@ -226,6 +227,27 @@ export const cuReplacementCostDundeeConfig: GeneratedGuideConfig = {
     },
   ],
   relatedPages: [
+    {
+      href: '/guides/consumer-unit-replacement-cost',
+      title: 'Consumer Unit Replacement Cost UK',
+      description: 'National consumer unit replacement prices, what is included, and regulations.',
+      icon: 'PoundSterling',
+      category: 'Guide',
+    },
+    {
+      href: '/guides/consumer-unit-replacement-cost-aberdeen',
+      title: 'Consumer unit replacement cost in Aberdeen',
+      description: 'Local price bands and labour rates for Aberdeen.',
+      icon: 'MapPin',
+      category: 'Guide',
+    },
+    {
+      href: '/guides/consumer-unit-replacement-cost-edinburgh',
+      title: 'Consumer unit replacement cost in Edinburgh',
+      description: 'Local price bands and labour rates for Edinburgh.',
+      icon: 'MapPin',
+      category: 'Guide',
+    },
     {
       href: '/guides/how-to-price-consumer-unit-replacement-as-an-electrician',
       title: 'How to Price CU Replacement as an Electrician',

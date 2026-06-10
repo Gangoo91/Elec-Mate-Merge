@@ -107,7 +107,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Training',
   },
   {
-    href: '/am2-exam-preparation',
+    href: '/training/am2-exam-preparation',
     title: 'AM2 Exam Preparation',
     description:
       'Detailed guide to the AM2 practical assessment with task breakdowns and scoring criteria.',
@@ -115,7 +115,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Training',
   },
   {
-    href: '/epa-preparation',
+    href: '/training/epa-preparation',
     title: 'EPA Preparation Guide',
     description: 'End-Point Assessment preparation for Level 3 electrical apprentices.',
     icon: Target,
@@ -226,7 +226,7 @@ const sections = [
               <span>
                 <strong>Part 4:</strong> Protection for safety — protection against electric shock,
                 overcurrent, overvoltage,{' '}
-                <SEOInternalLink href="/earthing-arrangements">
+                <SEOInternalLink href="/guides/earthing-arrangements">
                   earthing arrangements
                 </SEOInternalLink>
                 , RCD selection.
@@ -376,7 +376,7 @@ const sections = [
     content: (
       <>
         <p>
-          The <SEOInternalLink href="/am2-exam-preparation">AM2</SEOInternalLink> is the practical
+          The <SEOInternalLink href="/training/am2-exam-preparation">AM2</SEOInternalLink> is the practical
           assessment that sits at the end of an electrical apprenticeship. It is administered by the
           JIB (Joint Industry Board) and typically takes 1 to 2 days at an approved assessment
           centre.
@@ -436,7 +436,7 @@ const sections = [
     content: (
       <>
         <p>
-          The End-Point Assessment (<SEOInternalLink href="/epa-preparation">EPA</SEOInternalLink>)
+          The End-Point Assessment (<SEOInternalLink href="/training/epa-preparation">EPA</SEOInternalLink>)
           is the final assessment for electrical apprentices under the apprenticeship standard. It
           confirms that you are occupationally competent — that you can work safely and effectively
           as a qualified electrician.
@@ -463,7 +463,7 @@ const sections = [
               <span>
                 <strong>Professional discussion:</strong> A structured interview where you discuss
                 your workplace experience, using your{' '}
-                <SEOInternalLink href="/apprentice-portfolio-guide">
+                <SEOInternalLink href="/training/apprentice-portfolio">
                   apprentice portfolio
                 </SEOInternalLink>{' '}
                 as evidence. You need to demonstrate understanding, not just describe what you did.
@@ -672,7 +672,7 @@ export default function MockExamsElectricalPage() {
       title="Mock Exams for Electricians — 18th Edition, 2391, AM2 &amp; EPA (2026)"
       description="How to revise for UK electrical qualifications using mock exams effectively: study schedule, weak-area technique, exam-day strategy, common pitfalls. Plus where to take each free mock test."
       datePublished="2025-02-28"
-      dateModified="2026-05-23"
+      dateModified="2026-06-10"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Exam Preparation"

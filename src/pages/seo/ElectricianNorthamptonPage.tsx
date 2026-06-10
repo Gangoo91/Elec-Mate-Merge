@@ -124,7 +124,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Tool',
   },
   {
-    href: '/electrical-quoting-app',
+    href: '/tools/electrical-quoting-app',
     title: 'Electrical Quoting App',
     description:
       'Create professional quotes for Northampton customers with accurate local pricing.',
@@ -553,7 +553,7 @@ export default function ElectricianNorthamptonPage() {
       title="Electrician in Northampton | Find Qualified Electricians"
       description="Find NICEIC/NAPIT-registered electricians in Northampton. 2026 prices for EICRs (from £170), consumer unit replacements, Victorian rewires, and NGED connections. Verify any electrician's registration online."
       datePublished="2026-03-27"
-      dateModified="2026-05-29"
+      dateModified="2026-06-10"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Find an Electrician"

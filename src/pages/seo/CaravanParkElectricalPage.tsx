@@ -541,7 +541,7 @@ const sections = [
                 <p className="text-white text-sm leading-relaxed">
                   The recommended annual inspection interval means repeat business for the
                   electrician. Use the{' '}
-                  <SEOInternalLink href="/electrical-quoting-app">quoting app</SEOInternalLink> to
+                  <SEOInternalLink href="/tools/electrical-quoting-app">quoting app</SEOInternalLink> to
                   offer multi-year maintenance contracts to park operators, building predictable
                   recurring revenue.
                 </p>
@@ -569,7 +569,7 @@ export default function CaravanParkElectricalPage() {
       title="Caravan Park Electrics: BS 7671 Section 708 Rules UK"
       description="Caravan park electrical installations to BS 7671 Section 708: IEC 60309 CEE connectors, 30mA RCD per pitch, socket spacing, TT earthing, supply ratings."
       datePublished="2026-03-27"
-      dateModified="2026-05-29"
+      dateModified="2026-06-10"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Specialist Installation"

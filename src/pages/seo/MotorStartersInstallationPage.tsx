@@ -605,7 +605,7 @@ const sections = [
                 <p className="text-white text-sm leading-relaxed">
                   When servicing star-delta or DOL starters, calculate the energy savings from a VFD
                   upgrade and quote immediately using the{' '}
-                  <SEOInternalLink href="/electrical-quoting-app">
+                  <SEOInternalLink href="/tools/electrical-quoting-app">
                     Elec-Mate quoting app
                   </SEOInternalLink>
                   . A VFD upgrade on a 15 kW pump running at 80% speed typically pays back in under

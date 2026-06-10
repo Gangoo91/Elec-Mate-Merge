@@ -561,7 +561,7 @@ const sections = [
                   the ramp test (gradually increasing current until trip) confirms the actual trip
                   current. The test uses the RCD function on a multifunction tester, connected at a
                   socket or accessory on the protected circuit. See the{' '}
-                  <SEOInternalLink href="/rcd-testing-guide">RCD testing guide</SEOInternalLink> for
+                  <SEOInternalLink href="/tools/rcd-testing-guide">RCD testing guide</SEOInternalLink> for
                   detailed procedures.
                 </p>
               </div>
@@ -775,7 +775,7 @@ export default function DeadVsLiveTestingPage() {
       title="Dead Testing vs Live Testing | What's the Difference?"
       description="Complete guide to dead testing and live testing in electrical installations. Which tests are dead, which are live, the correct sequence from BS 7671…"
       datePublished="2025-07-01"
-      dateModified="2026-05-18"
+      dateModified="2026-06-10"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Testing Guide"

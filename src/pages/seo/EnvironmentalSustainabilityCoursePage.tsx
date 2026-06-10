@@ -270,7 +270,7 @@ const sections = [
                 Solar photovoltaic systems convert sunlight into electricity. A typical domestic
                 system (3.5 to 4kWp) generates 3,000 to 4,000kWh per year, offsetting 30% to 50% of
                 household electricity consumption. The{' '}
-                <SEOInternalLink href="/solar-pv-certificate">
+                <SEOInternalLink href="/tools/solar-pv-certificate">
                   solar PV installation course
                 </SEOInternalLink>{' '}
                 covers design, DC wiring, inverter selection, and MCS certification.
@@ -479,7 +479,7 @@ const relatedPages = [
     category: 'Training' as const,
   },
   {
-    href: '/solar-pv-certificate',
+    href: '/tools/solar-pv-certificate',
     title: 'Solar PV Installation Course',
     description:
       'Solar PV system design, DC wiring, inverter selection, and MCS certification training.',
@@ -558,7 +558,7 @@ export default function EnvironmentalSustainabilityCoursePage() {
       title={PAGE_TITLE}
       description={PAGE_DESCRIPTION}
       datePublished="2025-07-10"
-      dateModified="2026-05-18"
+      dateModified="2026-06-10"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Green Skills Training"

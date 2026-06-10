@@ -817,7 +817,7 @@ const sections = [
                 <p className="text-white text-sm leading-relaxed">
                   HMO remedial works — consumer unit upgrades, fire alarm installations, emergency
                   lighting — are high-value jobs. Quote on site using the{' '}
-                  <SEOInternalLink href="/electrical-quoting-app">quoting app</SEOInternalLink>.
+                  <SEOInternalLink href="/tools/electrical-quoting-app">quoting app</SEOInternalLink>.
                   Landlords under a 28-day remedial deadline will instruct the electrician who
                   quotes first.
                 </p>
@@ -845,7 +845,7 @@ export default function HMOElectricalRequirementsPage() {
       title="HMO Electrical Requirements 2026 | Licensing + EICR"
       description="HMO electrical rules: 5-year EICR, BS 5839-6 fire detection, BS 5266-1 emergency lighting, AFDD + RCD protection requirements + mandatory licensing thresholds for UK landlords."
       datePublished="2026-03-27"
-      dateModified="2026-05-18"
+      dateModified="2026-06-10"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="HMO Landlord Guide"

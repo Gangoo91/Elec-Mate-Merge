@@ -22,7 +22,7 @@ import {
 // -------------------------------------------------------------------
 
 const breadcrumbs = [
-  { label: 'AI Tools', href: '/ai-electrician-tools' },
+  { label: 'AI Tools', href: '/tools/ai-electrician' },
   { label: 'AI Installation Specialist', href: '/tools/ai-installation-specialist' },
 ];
 
@@ -121,7 +121,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Guide',
   },
   {
-    href: '/guides/consumer-unit-regulations',
+    href: '/consumer-unit-regulations',
     title: 'Consumer Unit Regulations',
     description:
       'Regulation 421.1.201 requirements for non-combustible consumer units and AMD3 compliance.',
@@ -412,7 +412,7 @@ const sections = [
               <TestTube className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>
-                  <SEOInternalLink href="/how-to-test-insulation-resistance">
+                  <SEOInternalLink href="/guides/insulation-resistance-testing-bs7671">
                     Insulation resistance
                   </SEOInternalLink>
                   :
@@ -466,7 +466,7 @@ export default function AIInstallationSpecialistPage() {
       title="AI Installation Specialist | Guidance Tool"
       description="Step-by-step electrical installation guidance from AI trained for UK work. Cable routing, containment sizing, first and second fix checklists…"
       datePublished="2025-06-15"
-      dateModified="2026-05-18"
+      dateModified="2026-06-10"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="AI Installation Agent"

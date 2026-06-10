@@ -92,6 +92,13 @@ const faqs = [
 
 const relatedPages: RelatedPage[] = [
   {
+    href: '/guides/consumer-unit-replacement-cost-cardiff',
+    title: 'Consumer Unit Replacement Cost in Cardiff',
+    description: 'Local price bands and labour rates for consumer unit replacement in Cardiff.',
+    icon: Home,
+    category: 'Guide',
+  },
+  {
     href: '/guides/consumer-unit-replacement-cost',
     title: 'Consumer Unit Replacement Guide',
     description:
@@ -532,7 +539,7 @@ const sections = [
                 <p className="text-white text-sm leading-relaxed">
                   When you discover bonding deficiencies, old wiring, or additional circuits
                   required during a Cardiff consumer unit job, use the{' '}
-                  <SEOInternalLink href="/electrical-quoting-app">
+                  <SEOInternalLink href="/tools/electrical-quoting-app">
                     Elec-Mate quoting tool
                   </SEOInternalLink>{' '}
                   to provide a quote on site. Cardiff landlords with multiple properties are

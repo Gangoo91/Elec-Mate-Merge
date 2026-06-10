@@ -826,7 +826,7 @@ export default function EICRObservationCodesPage() {
       title="C1 C2 C3 FI EICR Codes Explained: Examples + What Each Means"
       description="EICR observation codes C1 (Danger Present), C2 (Potentially Dangerous), C3 (Improvement Recommended), FI (Further Investigation). Real examples, BS 7671 cites."
       datePublished="2025-01-15"
-      dateModified="2026-05-23"
+      dateModified="2026-06-10"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Classification Guide"

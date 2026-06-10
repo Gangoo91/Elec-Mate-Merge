@@ -108,7 +108,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Certificate',
   },
   {
-    href: '/electrical-quoting-app',
+    href: '/tools/electrical-quoting-app',
     title: 'Electrical Quoting App',
     description:
       'Create itemised quotes for kitchen rewires with accurate material and labour pricing.',
@@ -520,7 +520,7 @@ const sections = [
                 <h4 className="font-bold text-white mb-1">Quoting App</h4>
                 <p className="text-white text-sm leading-relaxed">
                   Price the full kitchen rewire with Elec-Mate's{' '}
-                  <SEOInternalLink href="/electrical-quoting-app">quoting app</SEOInternalLink>.
+                  <SEOInternalLink href="/tools/electrical-quoting-app">quoting app</SEOInternalLink>.
                   Ring main, cooker circuit, appliance circuits, lighting, extractor, island power,
                   consumer unit — all itemised with your margins. Send a professional PDF quote from
                   the survey.
@@ -566,7 +566,7 @@ export default function KitchenRewireCostPage() {
       title="Kitchen Rewire Cost UK 2026 | Electrical Pricing Guide"
       description="How much does a kitchen rewire cost in the UK? Typical prices from £800 to £2,500. Cooker circuits, ring mains, under-cabinet lighting, island power…"
       datePublished="2026-03-27"
-      dateModified="2026-05-18"
+      dateModified="2026-06-10"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Cost Guide"

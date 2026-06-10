@@ -148,7 +148,7 @@ const sections = [
           You will spend four years learning a skilled trade. During that time, you will work on
           construction sites, attend college, study for qualifications, build a portfolio of
           evidence, complete practical assessments, and eventually sit the{' '}
-          <SEOInternalLink href="/am2-exam-preparation">AM2</SEOInternalLink> and{' '}
+          <SEOInternalLink href="/training/am2-exam-preparation">AM2</SEOInternalLink> and{' '}
           <SEOInternalLink href="/guides/epa-what-to-expect">End Point Assessment</SEOInternalLink>{' '}
           to become a qualified electrician. You will earn money from day one (unlike university),
           and you will finish with a qualification that is in demand across the country.
@@ -613,7 +613,7 @@ const sections = [
                     off-the-job training hours
                   </SEOInternalLink>
                   , and build your{' '}
-                  <SEOInternalLink href="/apprentice-portfolio-guide">portfolio</SEOInternalLink>{' '}
+                  <SEOInternalLink href="/training/apprentice-portfolio">portfolio</SEOInternalLink>{' '}
                   evidence as you go. Everything connects so your evidence accumulates naturally
                   over four years.
                 </p>

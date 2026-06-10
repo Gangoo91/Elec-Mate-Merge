@@ -20,7 +20,7 @@ export default function AIInstallationVerificationPage() {
       title="AI Installation Verification | Quality Check Tool"
       description="Automated checking of electrical installations against BS 7671:2018+A4:2026. AI-powered verification checklists, compliance reporting…"
       datePublished="2026-01-22"
-      dateModified="2026-05-18"
+      dateModified="2026-06-10"
       toolPath="/tools/ai-installation-verification"
       breadcrumbs={[
         { label: 'Tools', href: '/tools' },
@@ -95,7 +95,7 @@ export default function AIInstallationVerificationPage() {
                 This integrates with Elec-Mate's complete certification workflow, including the{' '}
                 <SEOInternalLink href="/tools/ai-electrician">AI Board Scanner</SEOInternalLink> for
                 data capture, the{' '}
-                <SEOInternalLink href="/tools/ai-circuit-designer">
+                <SEOInternalLink href="/ai-circuit-designer">
                   AI Circuit Designer
                 </SEOInternalLink>{' '}
                 for design verification, and the certificate forms for{' '}
@@ -444,7 +444,7 @@ export default function AIInstallationVerificationPage() {
           category: 'AI Tools',
         },
         {
-          href: '/tools/ai-circuit-designer',
+          href: '/ai-circuit-designer',
           title: 'AI Circuit Designer',
           description:
             'Design complete circuits to BS 7671 with automatic cable sizing, protection selection, and verification.',
@@ -460,7 +460,7 @@ export default function AIInstallationVerificationPage() {
           category: 'Guides',
         },
         {
-          href: '/guides/bs7671-observation-codes',
+          href: '/bs7671-observation-codes',
           title: 'BS 7671 Observation Codes',
           description:
             'Understanding C1, C2, C3, and FI observation codes for EICR inspections, with examples and regulation references.',

@@ -21,6 +21,7 @@ export const eicrCostDundeeConfig: GeneratedGuideConfig = {
   badge: 'Cost Guide',
   badgeIcon: 'PoundSterling',
   breadcrumbLabel: 'EICR Cost in Dundee',
+  breadcrumbParent: { label: 'EICR Cost UK', href: '/guides/eicr-cost-uk' },
   heroPrefix: 'EICR Cost in Dundee:',
   heroHighlight: '2026 Pricing Guide',
   heroSuffix: '— Domestic & Commercial',
@@ -209,6 +210,27 @@ export const eicrCostDundeeConfig: GeneratedGuideConfig = {
     },
   ],
   relatedPages: [
+    {
+      href: '/guides/eicr-cost-uk',
+      title: 'EICR Cost UK — National Guide',
+      description: 'UK-wide EICR prices by property type, what affects cost, and remedial pricing.',
+      icon: 'PoundSterling',
+      category: 'Guide',
+    },
+    {
+      href: '/guides/eicr-cost-aberdeen',
+      title: 'EICR cost in Aberdeen',
+      description: 'Local price bands and labour rates for Aberdeen.',
+      icon: 'MapPin',
+      category: 'Guide',
+    },
+    {
+      href: '/guides/eicr-cost-edinburgh',
+      title: 'EICR cost in Edinburgh',
+      description: 'Local price bands and labour rates for Edinburgh.',
+      icon: 'MapPin',
+      category: 'Guide',
+    },
     {
       href: '/electricians/dundee',
       title: 'Find an Electrician in Dundee',

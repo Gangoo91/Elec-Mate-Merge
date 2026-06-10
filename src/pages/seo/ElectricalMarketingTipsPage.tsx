@@ -22,7 +22,7 @@ export default function ElectricalMarketingTipsPage() {
       title="Marketing Tips for Electricians | Get More Work UK"
       description="Practical marketing strategies for UK electricians. Covers Google Business Profile optimisation, social media, word of mouth, website essentials…"
       datePublished="2026-01-30"
-      dateModified="2026-05-18"
+      dateModified="2026-06-10"
       breadcrumbs={[
         { label: 'Business', href: '/guides/business' },
         { label: 'Marketing Tips', href: '/guides/marketing-tips-electricians' },
@@ -687,7 +687,7 @@ export default function ElectricalMarketingTipsPage() {
           category: 'Guide',
         },
         {
-          href: '/electrical-quoting-app',
+          href: '/tools/electrical-quoting-app',
           title: 'Electrical Quoting App',
           description:
             'Professional PDF quotes with AI cost estimation, sent from site in minutes.',
@@ -695,7 +695,7 @@ export default function ElectricalMarketingTipsPage() {
           category: 'Tool',
         },
         {
-          href: '/electrician-invoice-app',
+          href: '/tools/electrician-invoice-app',
           title: 'Electrician Invoice App',
           description:
             'Professional invoices with online payment links, created and sent from site.',

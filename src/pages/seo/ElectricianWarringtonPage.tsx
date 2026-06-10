@@ -115,7 +115,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Guide',
   },
   {
-    href: '/electrical-quoting-app',
+    href: '/tools/electrical-quoting-app',
     title: 'Quoting App',
     description:
       'Quote rewires, consumer unit upgrades, and commercial electrical work with Warrington pricing.',
@@ -462,7 +462,7 @@ const sections = [
                 <h4 className="font-bold text-white mb-1">Professional Quoting</h4>
                 <p className="text-white text-sm leading-relaxed">
                   Use the{' '}
-                  <SEOInternalLink href="/electrical-quoting-app">quoting app</SEOInternalLink> to
+                  <SEOInternalLink href="/tools/electrical-quoting-app">quoting app</SEOInternalLink> to
                   send professional quotes to Warrington homeowners and commercial clients.
                   Detailed, professional quotes are particularly important when competing for
                   commercial and industrial work.
@@ -493,7 +493,7 @@ export default function ElectricianWarringtonPage() {
       title="Electrician in Warrington | Local Electricians 2026"
       description="Find qualified electricians in Warrington. Part P compliance, NICEIC registered, EICR for landlords, commercial electrical work…"
       datePublished="2026-03-27"
-      dateModified="2026-05-18"
+      dateModified="2026-06-10"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Warrington"

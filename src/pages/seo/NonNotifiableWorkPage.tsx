@@ -584,7 +584,7 @@ const sections = [
             Electrical Installation Certificates
           </SEOInternalLink>{' '}
           with complete schedules of test results. The{' '}
-          <SEOInternalLink href="/electrical-testing-calculators">
+          <SEOInternalLink href="/tools/electrical-testing-calculators">
             70+ electrical calculators
           </SEOInternalLink>{' '}
           help you verify cable sizes, voltage drop, and Zs values for every circuit. The 8 Elec-AI
@@ -613,7 +613,7 @@ const relatedPages = [
     category: 'Certificate',
   },
   {
-    href: '/guides/consumer-unit-regulations',
+    href: '/consumer-unit-regulations',
     title: 'Consumer Unit Regulations',
     description:
       'Consumer unit replacement is always notifiable. Current regulations, AMD3, and metal CU requirements.',
@@ -637,7 +637,7 @@ const relatedPages = [
     category: 'Guide',
   },
   {
-    href: '/electrical-testing-calculators',
+    href: '/tools/electrical-testing-calculators',
     title: '70+ Electrical Calculators',
     description:
       'Cable sizing, voltage drop, Zs verification, PFC, and dozens more. Verify your work to BS 7671.',

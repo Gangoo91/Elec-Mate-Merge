@@ -598,7 +598,7 @@ const sections = [
             inspection and testing training courses
           </SEOInternalLink>{' '}
           cover GS 38 compliance, test equipment requirements, and the prove-test-prove procedure in
-          detail. The <SEOInternalLink href="/rams-generator">RAMS generator</SEOInternalLink>{' '}
+          detail. The <SEOInternalLink href="/tools/rams-generator">RAMS generator</SEOInternalLink>{' '}
           includes GS 38 references in every risk assessment and method statement it produces.
         </p>
         <SEOAppBridge
@@ -621,7 +621,7 @@ export default function GS38ProvingDeadPage() {
       title="GS 38 Test Leads + Probes: HSE Rules for Proving Dead"
       description="HSE GS 38 (4th ed) for UK electricians: 2-pole voltage indicator, proving unit, 4 mm probe tip + 500 mA HBC fused leads, prove-test-prove procedure, CAT III/IV."
       datePublished="2025-06-01"
-      dateModified="2026-05-23"
+      dateModified="2026-06-10"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Safety Guide"

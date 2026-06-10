@@ -108,7 +108,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Guide',
   },
   {
-    href: '/guides/consumer-unit-regulations',
+    href: '/consumer-unit-regulations',
     title: 'Consumer Unit Regulations',
     description: 'Current regulations for consumer units including RCD and RCBO requirements.',
     icon: ShieldCheck,
@@ -648,7 +648,7 @@ export default function TripSwitchKeepsGoingOffPage() {
       title="Trip Switch Keeps Going Off | Why & How to Fix"
       description="Trip switch keeps tripping? Learn why — MCB vs RCD tripping explained, overloaded circuits, earth faults, moisture ingress, faulty appliance isolation…"
       datePublished="2026-03-27"
-      dateModified="2026-05-18"
+      dateModified="2026-06-10"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Common Problem"

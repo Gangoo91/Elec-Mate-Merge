@@ -97,6 +97,63 @@ export interface GuideTemplateProps {
   localArea?: string;
 }
 
+/**
+ * Intent-matched mid-content CTA copy, keyed off the page badge. One generic
+ * pitch per reader intent beats the kitchen-sink pitch repeated three times.
+ */
+function getMidCta(badge: string) {
+  const b = badge.toLowerCase();
+  if (b.includes('pricing') || b.includes('cost') || b.includes('business')) {
+    return {
+      title: 'Price the job in minutes, not evenings',
+      description:
+        'Professional quotes with the remedial estimator, then invoice from your phone the moment the work is done. From £5.99/mo.',
+      ctaText: 'Try the quoting tools free',
+    };
+  }
+  if (
+    b.includes('test') ||
+    b.includes('eicr') ||
+    b.includes('certificat') ||
+    b.includes('inspection')
+  ) {
+    return {
+      title: 'Record test results hands-free on site',
+      description:
+        'AI board scanner, voice test entry, and automatic BS 7671 validation — finish the certificate before you leave the property. From £5.99/mo.',
+      ctaText: 'Try the certificate tools free',
+    };
+  }
+  if (
+    b.includes('exam') ||
+    b.includes('revision') ||
+    b.includes('apprentice') ||
+    b.includes('training') ||
+    b.includes('course')
+  ) {
+    return {
+      title: 'Practise with unlimited mock exams',
+      description:
+        'AI-generated mocks, instant marking, and explanations on every question — targeted at your weakest topics. From £5.99/mo.',
+      ctaText: 'Start practising free',
+    };
+  }
+  if (b.includes('safety') || b.includes('rams')) {
+    return {
+      title: 'Generate RAMS in minutes',
+      description:
+        'Site-specific risk assessments and method statements, written to CDM 2015 expectations and ready to send. From £5.99/mo.',
+      ctaText: 'Try the safety tools free',
+    };
+  }
+  return {
+    title: 'Try Elec-Mate free for 7 days',
+    description:
+      '16 certificate types, 70+ calculators, RAMS, quoting, invoicing, AI agents, and 46+ training courses — from £5.99/mo.',
+    ctaText: 'Start free trial',
+  };
+}
+
 export default function GuideTemplate({
   title,
   description,
@@ -145,14 +202,25 @@ export default function GuideTemplate({
       name: 'Elec-Mate',
     },
     author: {
-      '@type': 'Organization',
-      name: 'Elec-Mate Technical Team',
-      url: 'https://www.elec-mate.com',
+      '@type': 'Person',
+      name: 'Andrew Moore',
+      jobTitle: 'Founder',
+      url: 'https://www.elec-mate.com/',
+      worksFor: {
+        '@type': 'Organization',
+        '@id': 'https://www.elec-mate.com/#organization',
+        name: 'Elec-Mate',
+      },
     },
     reviewedBy: {
-      '@type': 'Organization',
-      '@id': 'https://www.elec-mate.com/#organization',
-      name: 'Elec-Mate Technical Team',
+      '@type': 'Person',
+      name: 'Andrew Moore',
+      jobTitle: 'Founder',
+      worksFor: {
+        '@type': 'Organization',
+        '@id': 'https://www.elec-mate.com/#organization',
+        name: 'Elec-Mate',
+      },
     },
     lastReviewed: dateModified || datePublished,
     breadcrumb: {
@@ -198,7 +266,7 @@ export default function GuideTemplate({
     ],
     datePublished,
     dateModified,
-    author: 'Elec-Mate Technical Team',
+    author: 'Andrew Moore',
     noindex,
   });
 
@@ -221,7 +289,7 @@ export default function GuideTemplate({
           }
         />
         <p className="mt-3 text-[11.5px] text-white/60">
-          No card required · Free for 7 days · Cancel anytime · Used by 1,000+ UK electricians
+          Free for 7 days · No charge until day 8 · Cancel anytime · Used by 1,000+ UK electricians
         </p>
 
         <div className="mt-6">
@@ -229,8 +297,8 @@ export default function GuideTemplate({
         </div>
 
         <p className="mt-3 text-[11.5px] text-white/55 leading-relaxed">
-          Written and reviewed by the Elec-Mate technical team against BS 7671:2018+A4:2026, IET
-          Guidance Note 3 and the IET On-Site Guide.
+          Written and reviewed by Andrew Moore, founder of Elec-Mate, against BS 7671:2018+A4:2026,
+          IET Guidance Note 3 and the IET On-Site Guide.
         </p>
 
         <div className="mt-4 flex flex-wrap items-center gap-6">
@@ -280,15 +348,11 @@ export default function GuideTemplate({
               to give an email. */}
           {index === 0 && sections.length >= 5 && <SEOInlineLeadMagnet />}
 
-          {/* Insert mid-content CTA after every 2nd section (but not the last) */}
-          {(index + 1) % 2 === 0 && index < sections.length - 1 && (
-            <SEOAppBridge
-              title="Try Elec-Mate free for 7 days"
-              description="16 certificate types, 70+ calculators, RAMS, quoting, invoicing, AI agents, and 46+ training courses — from £5.99/mo."
-              ctaText="Start free trial"
-              icon={Zap}
-            />
-          )}
+          {/* Single mid-article CTA, intent-matched to the page type. One
+              well-placed pitch converts better than the same generic pitch
+              repeated every two sections (CTA fatigue). */}
+          {index === Math.min(Math.floor(sections.length / 2), sections.length - 2) &&
+            sections.length >= 3 && <SEOAppBridge {...getMidCta(badge)} icon={Zap} />}
         </div>
       ))}
 

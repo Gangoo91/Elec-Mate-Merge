@@ -518,7 +518,7 @@ const sections = [
                 <strong className="text-yellow-400">Additions and alterations</strong> — any new
                 circuit or modification to an existing circuit must have polarity verified. This
                 applies to{' '}
-                <SEOInternalLink href="/minor-works-certificate">minor works</SEOInternalLink> as
+                <SEOInternalLink href="/tools/minor-works-certificate">minor works</SEOInternalLink> as
                 well as full EIC work.
               </span>
             </li>
@@ -616,7 +616,7 @@ const sections = [
                 <h4 className="font-bold text-white mb-2">Consumer Unit Connections</h4>
                 <p className="text-white text-sm leading-relaxed">
                   Line and neutral conductors crossed at the{' '}
-                  <SEOInternalLink href="/guides/consumer-unit-regulations">
+                  <SEOInternalLink href="/consumer-unit-regulations">
                     consumer unit
                   </SEOInternalLink>
                   . This reverses polarity for the entire circuit. More common after DIY
@@ -726,7 +726,7 @@ export default function PolarityTestingGuidePage() {
       title="Polarity Testing | BS 7671 Procedure + Mistakes to Avoid"
       description="Polarity testing per BS 7671: visual + continuity + instrument checks. Why reversed polarity bypasses fusing, common ring + lighting circuit traps."
       datePublished="2025-06-15"
-      dateModified="2026-05-18"
+      dateModified="2026-06-10"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Essential Guide"

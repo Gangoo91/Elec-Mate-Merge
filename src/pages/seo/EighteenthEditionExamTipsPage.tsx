@@ -117,7 +117,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Guide',
   },
   {
-    href: '/eighteenth-edition-course',
+    href: '/training/18th-edition-course',
     title: '18th Edition Course',
     description:
       'Study the 18th Edition on Elec-Mate with structured modules, flashcards, and mock exams.',
@@ -221,7 +221,7 @@ const sections = [
                   Chapter 52 (wiring systems) covers cable selection, installation methods, and the
                   correction factors from Appendix 4. Chapter 53 (switching and control) and Chapter
                   54 (earthing and protective conductors) are also frequently tested.{' '}
-                  <SEOInternalLink href="/earthing-arrangements">
+                  <SEOInternalLink href="/guides/earthing-arrangements">
                     Earthing arrangements
                   </SEOInternalLink>{' '}
                   (TN-S, TN-C-S, TT) are essential knowledge.
@@ -600,7 +600,7 @@ export default function EighteenthEditionExamTipsPage() {
       title="18th Edition Exam Tips | How to Pass C&G 2382"
       description="How to pass the C&G 2382 18th Edition exam. Covers exam format, key BS 7671 regulation areas, study strategy, book tabs, time management…"
       datePublished="2025-03-15"
-      dateModified="2026-05-18"
+      dateModified="2026-06-10"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Exam Guide"

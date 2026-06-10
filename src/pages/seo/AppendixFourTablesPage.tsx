@@ -8,8 +8,7 @@ import { BookOpen, Cable, Calculator, Layers, Zap, Thermometer, Search } from 'l
 // Data
 // -------------------------------------------------------------------
 
-const PAGE_TITLE =
-  'BS 7671 Appendix 4 Current-Carrying Capacity Table (4D1A, 4D5A)';
+const PAGE_TITLE = 'BS 7671 Appendix 4 Current-Carrying Capacity Table (4D1A, 4D5A)';
 const PAGE_DESCRIPTION =
   'BS 7671 Appendix 4 cable tables in full: Table 4D1A & 4D5A current-carrying capacity (Iz), reference methods A–G, volt drop (mV/A/m) and correction factors Ca/Cg/Ci/Cs. Free lookup.';
 
@@ -87,6 +86,14 @@ const sections = [
     heading: 'What Is Appendix 4?',
     content: (
       <>
+        <p className="rounded-xl border border-yellow-500/20 bg-yellow-500/[0.06] px-4 py-3 text-sm">
+          Looking for <strong>Amendment 4</strong> (the A4:2026 update to BS 7671) rather than
+          Appendix 4 (the cable tables)? See the{' '}
+          <SEOInternalLink href="/guides/bs-7671-amendment-4-2026">
+            BS 7671 Amendment 4:2026 guide
+          </SEOInternalLink>{' '}
+          for every change and what it means for your work.
+        </p>
         <p>
           Appendix 4 of BS 7671 is the section that every electrician turns to most frequently. It
           contains the current-carrying capacity tables for all standard cable types used in UK
@@ -152,8 +159,8 @@ const sections = [
           The single most important point: the letter alone does not tell you the insulation.{' '}
           <strong className="text-yellow-400">Table 4D1A</strong> is 70&deg;C thermoplastic (PVC)
           twin and earth, while <strong className="text-yellow-400">Table 4D5A</strong> — still in
-          the 4D series — is 90&deg;C thermosetting (XLPE) twin and earth. Both are &ldquo;4D&rdquo;.
-          Pick the table by what is printed in its heading.
+          the 4D series — is 90&deg;C thermosetting (XLPE) twin and earth. Both are
+          &ldquo;4D&rdquo;. Pick the table by what is printed in its heading.
         </p>
         {/* grounded: bs7671_facets context_prefix — Table 4D1A (PVC T+E 70C), 4D5A (XLPE T+E 90C), Reg 521.201 installation method per Table 4A1. */}
         <div className="rounded-2xl bg-yellow-500/5 border border-yellow-500/20 p-5 my-6">
@@ -194,9 +201,9 @@ const sections = [
           This is the table most electricians come to Appendix 4 for: the current-carrying capacity
           (Iz) of twin and earth cable. The values below are for{' '}
           <strong className="text-yellow-400">Reference Method C (clipped direct)</strong>, two
-          loaded conductors, at the standard reference conditions — 30&deg;C ambient, single circuit,
-          no grouping and no thermal insulation. Apply correction factors for any condition that
-          differs.
+          loaded conductors, at the standard reference conditions — 30&deg;C ambient, single
+          circuit, no grouping and no thermal insulation. Apply correction factors for any condition
+          that differs.
         </p>
         {/* grounded: bs7671_facets — BS 7671:2018+A4:2026 Appendix 4, Table 4D1A (PVC T+E 70°C, Method C) and Table 4D5A (XLPE T+E 90°C, Method C). Iz in amperes. Every value sourced from a per-cable facet. */}
         <div className="rounded-2xl bg-yellow-500/5 border border-yellow-500/20 p-5 my-6">
@@ -246,15 +253,15 @@ const sections = [
           </div>
           <p className="text-white/70 text-xs mt-4">
             Values per BS 7671:2018+A4:2026 Appendix 4, Tables 4D1A and 4D5A, Reference Method C. Iz
-            is the tabulated capacity before correction factors — always compare against the required
-            It once Ca, Cg, Ci and Cf are applied.
+            is the tabulated capacity before correction factors — always compare against the
+            required It once Ca, Cg, Ci and Cf are applied.
           </p>
         </div>
         <p>
-          The XLPE (4D5A) column is consistently around 25% higher than the PVC (4D1A) column for the
-          same conductor size, because the 90&deg;C insulation tolerates more heat than 70&deg;C PVC.
-          For any installation method other than clipped direct, the capacity changes — read the
-          correct column for your{' '}
+          The XLPE (4D5A) column is consistently around 25% higher than the PVC (4D1A) column for
+          the same conductor size, because the 90&deg;C insulation tolerates more heat than 70&deg;C
+          PVC. For any installation method other than clipped direct, the capacity changes — read
+          the correct column for your{' '}
           <SEOInternalLink href="/guides/reference-methods-cable-installation">
             reference method
           </SEOInternalLink>
@@ -821,7 +828,7 @@ export default function AppendixFourTablesPage() {
       title={PAGE_TITLE}
       description={PAGE_DESCRIPTION}
       datePublished="2025-06-01"
-      dateModified="2026-05-22"
+      dateModified="2026-06-10"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="BS 7671 Appendix 4"

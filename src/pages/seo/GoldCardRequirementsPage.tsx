@@ -530,7 +530,7 @@ export default function GoldCardRequirementsPage() {
       title="ECS Gold Card: How to Apply (UK Electrician 2026)"
       description="ECS Gold Card for UK electricians 2026: NVQ Level 3 + AM2 + 18th Edition + ECS H&S, application steps, cost, renewal cycle, what it unlocks on site."
       datePublished="2026-03-27"
-      dateModified="2026-05-23"
+      dateModified="2026-06-10"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Career Guide"

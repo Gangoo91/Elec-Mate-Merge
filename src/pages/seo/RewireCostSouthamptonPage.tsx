@@ -512,7 +512,7 @@ const sections = [
                 <h4 className="font-bold text-white mb-1">Quote and Win More Rewires</h4>
                 <p className="text-white text-sm leading-relaxed">
                   Generate professional rewire quotes in minutes with the{' '}
-                  <SEOInternalLink href="/electrical-quoting-app">
+                  <SEOInternalLink href="/tools/electrical-quoting-app">
                     Elec-Mate quoting app
                   </SEOInternalLink>
                   . Itemised materials, labour, and Part P fees in a format that builds customer

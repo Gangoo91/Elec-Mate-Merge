@@ -506,6 +506,9 @@ const CustomerManagementElectricianPage = lazy(
 );
 const CVBuilderElectricianPage = lazy(() => import('@/pages/seo/CVBuilderElectricianPage'));
 const DigitalCertificatesAppPage = lazy(() => import('@/pages/seo/DigitalCertificatesAppPage'));
+const ElectricalCertificateSoftwarePage = lazy(
+  () => import('@/pages/seo/ElectricalCertificateSoftwarePage')
+);
 const DisconnectionTimeCalculatorPage = lazy(
   () => import('@/pages/seo/DisconnectionTimeCalculatorPage')
 );
@@ -5036,6 +5039,14 @@ export function getSEORoutes() {
         element={
           <LazyRoute>
             <DigitalCertificatesAppPage />
+          </LazyRoute>
+        }
+      />
+      <Route
+        path="/tools/electrical-certificate-software"
+        element={
+          <LazyRoute>
+            <ElectricalCertificateSoftwarePage />
           </LazyRoute>
         }
       />

@@ -21,6 +21,7 @@ export const eicrCostCambridgeConfig: GeneratedGuideConfig = {
   badge: 'Cost Guide',
   badgeIcon: 'PoundSterling',
   breadcrumbLabel: 'EICR Cost in Cambridge',
+  breadcrumbParent: { label: 'EICR Cost UK', href: '/guides/eicr-cost-uk' },
   heroPrefix: 'EICR Cost in Cambridge:',
   heroHighlight: '2026 Pricing Guide',
   heroSuffix: '— Domestic & Commercial',
@@ -209,6 +210,27 @@ export const eicrCostCambridgeConfig: GeneratedGuideConfig = {
     },
   ],
   relatedPages: [
+    {
+      href: '/guides/eicr-cost-uk',
+      title: 'EICR Cost UK — National Guide',
+      description: 'UK-wide EICR prices by property type, what affects cost, and remedial pricing.',
+      icon: 'PoundSterling',
+      category: 'Guide',
+    },
+    {
+      href: '/guides/eicr-cost-norwich',
+      title: 'EICR cost in Norwich',
+      description: 'Local price bands and labour rates for Norwich.',
+      icon: 'MapPin',
+      category: 'Guide',
+    },
+    {
+      href: '/guides/eicr-cost-luton',
+      title: 'EICR cost in Luton',
+      description: 'Local price bands and labour rates for Luton.',
+      icon: 'MapPin',
+      category: 'Guide',
+    },
     {
       href: '/electricians/cambridge',
       title: 'Find an Electrician in Cambridge',

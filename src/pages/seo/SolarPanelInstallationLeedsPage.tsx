@@ -106,7 +106,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Guide',
   },
   {
-    href: '/electrical-quoting-app',
+    href: '/tools/electrical-quoting-app',
     title: 'Electrical Quoting App',
     description: 'Quote solar PV and EV charger jobs on your phone with instant PDF.',
     icon: PoundSterling,
@@ -488,7 +488,7 @@ const sections = [
                 <h4 className="font-bold text-white mb-1">Quote Solar Jobs Professionally</h4>
                 <p className="text-white text-sm leading-relaxed">
                   Use the{' '}
-                  <SEOInternalLink href="/electrical-quoting-app">
+                  <SEOInternalLink href="/tools/electrical-quoting-app">
                     Elec-Mate quoting app
                   </SEOInternalLink>{' '}
                   to produce detailed, professional solar PV quotes on site. Include system size,

@@ -21,6 +21,7 @@ export const eicrCostBrightonConfig: GeneratedGuideConfig = {
   badge: 'Cost Guide',
   badgeIcon: 'PoundSterling',
   breadcrumbLabel: 'EICR Cost in Brighton',
+  breadcrumbParent: { label: 'EICR Cost UK', href: '/guides/eicr-cost-uk' },
   heroPrefix: 'EICR Cost in Brighton:',
   heroHighlight: '2026 Pricing Guide',
   heroSuffix: '— Domestic & Commercial',
@@ -209,6 +210,27 @@ export const eicrCostBrightonConfig: GeneratedGuideConfig = {
     },
   ],
   relatedPages: [
+    {
+      href: '/guides/eicr-cost-uk',
+      title: 'EICR Cost UK — National Guide',
+      description: 'UK-wide EICR prices by property type, what affects cost, and remedial pricing.',
+      icon: 'PoundSterling',
+      category: 'Guide',
+    },
+    {
+      href: '/guides/eicr-cost-portsmouth',
+      title: 'EICR cost in Portsmouth',
+      description: 'Local price bands and labour rates for Portsmouth.',
+      icon: 'MapPin',
+      category: 'Guide',
+    },
+    {
+      href: '/guides/eicr-cost-reading',
+      title: 'EICR cost in Reading',
+      description: 'Local price bands and labour rates for Reading.',
+      icon: 'MapPin',
+      category: 'Guide',
+    },
     {
       href: '/electricians/brighton',
       title: 'Find an Electrician in Brighton',

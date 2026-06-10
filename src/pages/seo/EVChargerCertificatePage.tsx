@@ -264,7 +264,7 @@ export default function EVChargerCertificatePage() {
             <p>
               Unlike a standard domestic circuit installation, an EV charger certificate must
               address several additional considerations specific to Section 722. These include the{' '}
-              <SEOInternalLink href="/earthing-arrangements">
+              <SEOInternalLink href="/guides/earthing-arrangements">
                 earthing arrangement assessment (particularly for PME supplies)
               </SEOInternalLink>
               , load management provisions, the type of charging mode, cable sizing for continuous

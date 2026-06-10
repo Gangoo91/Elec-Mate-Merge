@@ -89,7 +89,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Tool',
   },
   {
-    href: '/epa-preparation',
+    href: '/training/epa-preparation',
     title: 'EPA Preparation',
     description: 'Complete guide to the End-Point Assessment including knowledge test preparation.',
     icon: ClipboardCheck,
@@ -119,7 +119,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Guide',
   },
   {
-    href: '/level2-electrical',
+    href: '/training/level-2-electrical',
     title: 'Level 2 Electrical Course',
     description: 'Study for Level 2 with structured course content on the Elec-Mate platform.',
     icon: GraduationCap,

@@ -275,7 +275,7 @@ export default function EICCertificatePage() {
               </SEOInternalLink>{' '}
               requiring a new circuit from the consumer unit. To issue an EIC independently you must
               hold the{' '}
-              <SEOInternalLink href="/city-guilds2391">
+              <SEOInternalLink href="/training/city-guilds-2391">
                 C&G 2391-52 inspection and testing qualification
               </SEOInternalLink>
               .

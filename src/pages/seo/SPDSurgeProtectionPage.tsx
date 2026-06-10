@@ -22,7 +22,7 @@ export default function SPDSurgeProtectionPage() {
       title="SPD Surge Protection Guide | BS 7671 Requirements"
       description="Complete guide to Surge Protective Devices (SPDs) under BS 7671. Type 1, 2, and 3 SPDs, risk assessment under Regulation 443.4…"
       datePublished="2025-05-15"
-      dateModified="2026-05-18"
+      dateModified="2026-06-10"
       breadcrumbs={[
         { label: 'Guides', href: '/guides' },
         { label: 'SPD Surge Protection', href: '/guides/spd-surge-protection' },
@@ -301,7 +301,7 @@ export default function SPDSurgeProtectionPage() {
               </div>
               <p>
                 The{' '}
-                <SEOInternalLink href="/earthing-arrangements">
+                <SEOInternalLink href="/guides/earthing-arrangements">
                   earthing arrangement
                 </SEOInternalLink>{' '}
                 must be verified on site before specifying the SPD. The SPD manufacturer's
@@ -562,14 +562,14 @@ export default function SPDSurgeProtectionPage() {
       ]}
       relatedPages={[
         {
-          href: '/guides/consumer-unit-regulations',
+          href: '/consumer-unit-regulations',
           title: 'Consumer Unit Regulations',
           description: 'Metal CU, RCD protection, and SPD requirements in the board.',
           icon: ShieldCheck,
           category: 'Regulations',
         },
         {
-          href: '/earthing-arrangements',
+          href: '/guides/earthing-arrangements',
           title: 'Earthing Arrangements',
           description: 'TN-S, TN-C-S, and TT systems and their impact on SPD selection.',
           icon: Cable,

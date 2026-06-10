@@ -122,7 +122,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Certificate',
   },
   {
-    href: '/guides/consumer-unit-regulations',
+    href: '/consumer-unit-regulations',
     title: 'Consumer Unit Regulations',
     description: 'Consumer unit upgrade requirements when adding a 32A EV charger circuit.',
     icon: ShieldCheck,
@@ -489,7 +489,7 @@ const sections = [
                   Factor in Welsh labour rates (£38 to £52/hour), site survey time for Victorian
                   terrace properties, earth rod costs, SP Manweb G98 notification, and EIC
                   certification costs. Use Elec-Mate's{' '}
-                  <SEOInternalLink href="/electrical-quoting-app">quoting app</SEOInternalLink> to
+                  <SEOInternalLink href="/tools/electrical-quoting-app">quoting app</SEOInternalLink> to
                   build itemised, professional quotes that cover all job-specific variables.
                 </p>
               </div>
@@ -533,7 +533,7 @@ export default function EVChargerInstallationCardiffPage() {
       title="EV Charger Installation Cardiff | Home EV Charging Wales"
       description="EV charger installation costs in Cardiff 2026: 7kW charger £800-1,200 installed, Welsh Government EV grants, OZEV grant up to £350…"
       datePublished="2026-03-27"
-      dateModified="2026-05-18"
+      dateModified="2026-06-10"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Cardiff & Wales Guide"

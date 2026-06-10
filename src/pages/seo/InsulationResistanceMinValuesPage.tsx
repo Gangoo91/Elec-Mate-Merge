@@ -105,7 +105,7 @@ const relatedPages = [
     category: 'Guide' as const,
   },
   {
-    href: '/how-to-test-insulation-resistance',
+    href: '/guides/insulation-resistance-testing-bs7671',
     title: 'How to Test Insulation Resistance',
     description: 'Practical guide with step-by-step instrument setup and connections.',
     icon: Gauge,

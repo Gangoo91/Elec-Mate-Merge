@@ -490,7 +490,7 @@ const sections = [
         </p>
         <p>
           <strong>Portfolio builder:</strong> The{' '}
-          <SEOInternalLink href="/apprentice-portfolio-guide">portfolio builder</SEOInternalLink>{' '}
+          <SEOInternalLink href="/training/apprentice-portfolio">portfolio builder</SEOInternalLink>{' '}
           with AC (assessment criteria) mapping helps you demonstrate competence to your employer
           and training provider, supporting timely progression through the apprenticeship stages and
           pay grades. A strong portfolio also supports your{' '}
@@ -526,7 +526,7 @@ export default function ApprenticeSalaryPage() {
       title="Apprentice Electrician Pay UK 2026 | £7.55-£12.21 + JIB"
       description="Complete guide to apprentice electrician pay rates in the UK for 2026. Minimum wage rates by age and year, JIB/ECS graded rates, weekly take-home pay…"
       datePublished="2025-09-10"
-      dateModified="2026-05-19"
+      dateModified="2026-06-10"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Salary Guide"

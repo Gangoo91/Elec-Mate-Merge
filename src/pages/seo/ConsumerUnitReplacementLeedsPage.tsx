@@ -90,6 +90,13 @@ const faqs = [
 
 const relatedPages: RelatedPage[] = [
   {
+    href: '/guides/consumer-unit-replacement-cost-leeds',
+    title: 'Consumer Unit Replacement Cost in Leeds',
+    description: 'Local price bands and labour rates for consumer unit replacement in Leeds.',
+    icon: PoundSterling,
+    category: 'Guide',
+  },
+  {
     href: '/guides/consumer-unit-replacement-cost',
     title: 'Consumer Unit Replacement Cost UK',
     description: 'National price guide with material costs, labour rates, and trade pricing data.',
@@ -97,7 +104,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Guide',
   },
   {
-    href: '/guides/consumer-unit-regulations',
+    href: '/consumer-unit-regulations',
     title: 'Consumer Unit Regulations UK',
     description:
       'Detailed guide to the regulations governing consumer units including Amendment 4 changes.',
@@ -121,7 +128,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Certificate',
   },
   {
-    href: '/electrical-quoting-app',
+    href: '/tools/electrical-quoting-app',
     title: 'Electrical Quoting App',
     description:
       'Quote consumer unit replacements with itemised materials, labour, and professional PDF output.',
@@ -462,7 +469,7 @@ export default function ConsumerUnitReplacementLeedsPage() {
       title="Consumer Unit Replacement Leeds | Fuse Board Upgrade Cost"
       description="How much does a consumer unit replacement cost in Leeds in 2026? Local pricing for fuse board upgrades, Part P notification, what to expect…"
       datePublished="2026-03-27"
-      dateModified="2026-05-18"
+      dateModified="2026-06-10"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Leeds Price Guide"

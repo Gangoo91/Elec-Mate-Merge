@@ -118,7 +118,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Guide',
   },
   {
-    href: '/electrical-quoting-app',
+    href: '/tools/electrical-quoting-app',
     title: 'Quoting App',
     description:
       'Quote Swindon electrical jobs accurately with the right South West pricing — send professional quotes on site.',
@@ -445,7 +445,7 @@ const sections = [
                 <h4 className="font-bold text-white mb-1">Win More Swindon Jobs</h4>
                 <p className="text-white text-sm leading-relaxed">
                   Send professional PDF quotes from site using the{' '}
-                  <SEOInternalLink href="/electrical-quoting-app">quoting app</SEOInternalLink>.
+                  <SEOInternalLink href="/tools/electrical-quoting-app">quoting app</SEOInternalLink>.
                   Accurate pricing for the Swindon market — quote consumer unit upgrades, EV
                   chargers, and rewires and win work before the competition.
                 </p>
@@ -474,7 +474,7 @@ export default function ElectricianSwindonPage() {
       title="Electrician in Swindon | Local Electricians 2026"
       description="Find qualified electricians in Swindon. NICEIC and NAPIT registered, Part P compliant. Typical costs, EICRs, consumer unit upgrades, EV chargers…"
       datePublished="2026-03-27"
-      dateModified="2026-05-18"
+      dateModified="2026-06-10"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Swindon"

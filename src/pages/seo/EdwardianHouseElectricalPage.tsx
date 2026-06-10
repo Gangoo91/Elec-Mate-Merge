@@ -585,7 +585,7 @@ const sections = [
                 <p className="text-white text-sm leading-relaxed">
                   Edwardian house rewires are typically quoted at the survey stage. Present a
                   detailed, professional quote using the{' '}
-                  <SEOInternalLink href="/electrical-quoting-app">
+                  <SEOInternalLink href="/tools/electrical-quoting-app">
                     Elec-Mate quoting app
                   </SEOInternalLink>{' '}
                   on the day of the survey. A thorough quote that specifies circuit numbers, socket
@@ -616,7 +616,7 @@ export default function EdwardianHouseElectricalPage() {
       title="Edwardian House Electrical Guide | Rewiring 1900–1910 Homes"
       description="Complete electrical guide for Edwardian houses built 1901–1910. VIR cable hazards, early consumer units, renovation considerations…"
       datePublished="2026-03-27"
-      dateModified="2026-05-18"
+      dateModified="2026-06-10"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Property Guide"

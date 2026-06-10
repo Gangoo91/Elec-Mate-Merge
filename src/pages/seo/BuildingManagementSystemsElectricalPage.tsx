@@ -488,7 +488,7 @@ export default function BuildingManagementSystemsElectricalPage() {
       title="Building Management Systems (BMS) Electrical Guide UK"
       description="Complete guide to building management systems for UK electricians. BMS architecture (DDC controllers, sensors, actuators), BACnet, Modbus, KNX…"
       datePublished="2026-03-27"
-      dateModified="2026-05-18"
+      dateModified="2026-06-10"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Specialist Guide"

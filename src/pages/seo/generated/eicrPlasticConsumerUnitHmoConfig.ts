@@ -6,7 +6,7 @@ import type { GeneratedGuideConfig } from '@/pages/seo/generated/GeneratedGuideP
 // of Houses in Multiple Occupation (England) Regulations 2006.
 
 const published = '2026-05-17';
-const modified = '2026-05-18';
+const modified = '2026-06-10';
 
 export const eicrPlasticConsumerUnitHmoConfig: GeneratedGuideConfig = {
   pagePath: '/guides/eicr-plastic-consumer-unit-hmo',

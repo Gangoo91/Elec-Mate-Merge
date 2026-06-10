@@ -22,7 +22,7 @@ import {
 // -------------------------------------------------------------------
 
 const breadcrumbs = [
-  { label: 'AI Tools', href: '/ai-electrician-tools' },
+  { label: 'AI Tools', href: '/tools/ai-electrician' },
   { label: 'AI Tutor', href: '/tools/ai-tutor' },
 ];
 
@@ -415,7 +415,7 @@ const sections = [
           For apprentices, this "study while you earn" approach is particularly effective. It
           connects classroom learning to real-world application — when you encounter a regulation on
           site, you understand it more deeply than if you had only read it in a textbook. Many{' '}
-          <SEOInternalLink href="/apprentice-training">electrical apprentices</SEOInternalLink>{' '}
+          <SEOInternalLink href="/training/electrical-apprentice">electrical apprentices</SEOInternalLink>{' '}
           using Elec-Mate report that the AI Tutor helped them understand regulations they had
           struggled with in college, because the AI explains them in the context of actual
           installation work.
@@ -440,7 +440,7 @@ export default function AITutorPage() {
       title="AI Tutor for Electricians | Study Assistant"
       description="AI study assistant for UK electricians. Explains any BS 7671 regulation in plain English, generates unlimited practice questions for C&G 2382, 2391…"
       datePublished="2025-06-15"
-      dateModified="2026-05-18"
+      dateModified="2026-06-10"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="AI Study Agent"

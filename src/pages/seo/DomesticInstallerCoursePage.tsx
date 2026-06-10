@@ -316,7 +316,7 @@ const sections = [
         </p>
         <p>
           Membership requirements typically include: Level 3 electrical qualification, current{' '}
-          <SEOInternalLink href="/eighteenth-edition-course">
+          <SEOInternalLink href="/training/18th-edition-course">
             BS 7671 (18th Edition) certificate
           </SEOInternalLink>
           , inspection and testing qualification (
@@ -379,7 +379,7 @@ const sections = [
         <p>
           Consumer unit replacement is one of the most common domestic electrical jobs, and it
           became notifiable work in 2016. Understanding the current{' '}
-          <SEOInternalLink href="/guides/consumer-unit-regulations">
+          <SEOInternalLink href="/consumer-unit-regulations">
             consumer unit regulations
           </SEOInternalLink>{' '}
           is essential for every domestic installer.
@@ -476,7 +476,7 @@ const relatedPages = [
     category: 'Training',
   },
   {
-    href: '/guides/consumer-unit-regulations',
+    href: '/consumer-unit-regulations',
     title: 'Consumer Unit Regulations Guide',
     description:
       'Detailed guide to metal consumer unit requirements, RCD selection, and AFDD recommendations.',
@@ -545,7 +545,7 @@ export default function DomesticInstallerCoursePage() {
       title={PAGE_TITLE}
       description={PAGE_DESCRIPTION}
       datePublished="2025-03-15"
-      dateModified="2026-05-18"
+      dateModified="2026-06-10"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Domestic Installation Training"

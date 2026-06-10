@@ -23,7 +23,7 @@ export default function TrunkingInstallationGuidePage() {
       title="Trunking Installation Guide | Types & Sizing UK"
       description="Complete guide to electrical trunking for UK installations. PVC trunking, metal trunking, dado trunking, skirting trunking, mini trunking…"
       datePublished="2025-06-01"
-      dateModified="2026-05-18"
+      dateModified="2026-06-10"
       breadcrumbs={[
         { label: 'Installation', href: '/guides' },
         { label: 'Trunking Guide', href: '/guides/trunking-installation-guide' },

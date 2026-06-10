@@ -112,7 +112,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Guide',
   },
   {
-    href: '/guides/consumer-unit-regulations',
+    href: '/consumer-unit-regulations',
     title: 'Consumer Unit Regulations',
     description:
       'Requirements for consumer unit selection, wiring, and labelling under BS 7671 and Part P.',
@@ -158,7 +158,7 @@ const sections = [
           about infrastructure — cables, containment, and back boxes — second fix is about
           completion. It includes fitting every accessory (socket, switch, light fitting, smoke
           detector, and fixed appliance), wiring and commissioning the{' '}
-          <SEOInternalLink href="/guides/consumer-unit-regulations">consumer unit</SEOInternalLink>,
+          <SEOInternalLink href="/consumer-unit-regulations">consumer unit</SEOInternalLink>,
           labelling all circuits, performing the full initial verification testing sequence, and
           issuing the Electrical Installation Certificate (EIC).
         </p>
@@ -237,7 +237,7 @@ const sections = [
         </p>
         <p>
           Under{' '}
-          <SEOInternalLink href="/guides/consumer-unit-regulations">
+          <SEOInternalLink href="/consumer-unit-regulations">
             BS 7671 and Amendment 4 (A4:2026)
           </SEOInternalLink>
           , consumer units in domestic premises must be constructed of non-combustible material
@@ -562,7 +562,7 @@ const sections = [
         </div>
         <p>
           Use Elec-Mate's{' '}
-          <SEOInternalLink href="/electrical-quoting-app">quoting app</SEOInternalLink> to send the
+          <SEOInternalLink href="/tools/electrical-quoting-app">quoting app</SEOInternalLink> to send the
           final invoice alongside the certificate. The customer receives the EIC and the invoice in
           one professional package — no chasing for payment later.
         </p>
@@ -581,7 +581,7 @@ export default function SecondFixElectricalPage() {
       title="Second Fix Electrical | Completion & Testing Guide"
       description="Second fix electrical work in the UK: fitting accessories, consumer unit wiring, labelling, testing sequence, snagging, sign-off documentation."
       datePublished="2025-07-15"
-      dateModified="2026-05-18"
+      dateModified="2026-06-10"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Installation Guide"

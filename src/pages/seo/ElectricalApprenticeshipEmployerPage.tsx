@@ -104,7 +104,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Study',
   },
   {
-    href: '/am2-exam-preparation',
+    href: '/training/am2-exam-preparation',
     title: 'AM2 Exam Preparation',
     description:
       'AM2 practical assessment preparation with simulated tasks, time management, and marking scheme guidance.',
@@ -128,7 +128,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Business Tool',
   },
   {
-    href: '/eighteenth-edition-course',
+    href: '/training/18th-edition-course',
     title: '18th Edition Course',
     description:
       'BS 7671:2018+A2:2022 study materials -- the regulations your apprentice needs to know.',
@@ -473,7 +473,7 @@ const sections = [
                 under controlled conditions. The apprentice must demonstrate competence in
                 installation, wiring, termination, and testing within a set time. This is similar in
                 format to the{' '}
-                <SEOInternalLink href="/am2-exam-preparation">
+                <SEOInternalLink href="/training/am2-exam-preparation">
                   AM2 assessment
                 </SEOInternalLink>{' '}
                 and tests the same core practical skills.
@@ -676,7 +676,7 @@ const sections = [
               <div>
                 <h4 className="font-bold text-white mb-1">AM2 Preparation</h4>
                 <p className="text-white text-sm leading-relaxed">
-                  <SEOInternalLink href="/am2-exam-preparation">
+                  <SEOInternalLink href="/training/am2-exam-preparation">
                     AM2 preparation modules
                   </SEOInternalLink>{' '}
                   with simulated tasks, time management guidance, marking scheme breakdowns, and

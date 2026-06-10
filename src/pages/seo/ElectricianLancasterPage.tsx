@@ -115,7 +115,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Guide',
   },
   {
-    href: '/electrical-quoting-app',
+    href: '/tools/electrical-quoting-app',
     title: 'Quoting App',
     description:
       'Quote rewires, HMO electrical upgrades, and consumer unit replacements with Lancaster pricing.',
@@ -458,7 +458,7 @@ const sections = [
                 <h4 className="font-bold text-white mb-1">Professional Quoting</h4>
                 <p className="text-white text-sm leading-relaxed">
                   Use the{' '}
-                  <SEOInternalLink href="/electrical-quoting-app">quoting app</SEOInternalLink> to
+                  <SEOInternalLink href="/tools/electrical-quoting-app">quoting app</SEOInternalLink> to
                   send professional quotes to Lancaster landlords and homeowners. Include travel
                   allowances for rural jobs and breakdowns for compliance certification.
                 </p>
@@ -488,7 +488,7 @@ export default function ElectricianLancasterPage() {
       title="Electrician in Lancaster | Local Electricians 2026"
       description="Find qualified electricians in Lancaster. Part P compliance, NICEIC registered, EICR for HMO landlords, consumer unit replacement…"
       datePublished="2026-03-27"
-      dateModified="2026-05-18"
+      dateModified="2026-06-10"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Lancaster"

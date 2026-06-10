@@ -107,7 +107,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Cost Guide',
   },
   {
-    href: '/electrical-quoting-app',
+    href: '/tools/electrical-quoting-app',
     title: 'Electrical Quoting App',
     description: 'Create professional extension electrical quotes in minutes with Elec-Mate.',
     icon: FileCheck2,
@@ -465,7 +465,7 @@ const sections = [
                 <p className="text-white text-sm leading-relaxed">
                   At the first-fix stage, you can see exactly what the consumer unit situation is.
                   Quote the upgrade immediately using the{' '}
-                  <SEOInternalLink href="/electrical-quoting-app">
+                  <SEOInternalLink href="/tools/electrical-quoting-app">
                     quoting app
                   </SEOInternalLink>{' '}
                   — customers almost always accept when the need is clearly explained on site.

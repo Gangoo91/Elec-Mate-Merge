@@ -18,7 +18,7 @@ export default function HowToPriceElectricalJobsPage() {
       title="How to Price Electrical Jobs UK 2026 | Pricing Guide"
       description="Complete guide to pricing electrical work in the UK. Covers day rates, fixed prices, per-point pricing, cost-plus, hourly rate calculation…"
       datePublished="2026-01-20"
-      dateModified="2026-05-18"
+      dateModified="2026-06-10"
       breadcrumbs={[
         { label: 'Guides', href: '/guides' },
         { label: 'How to Price Electrical Jobs', href: '/guides/how-to-price-electrical-jobs' },
@@ -535,8 +535,8 @@ export default function HowToPriceElectricalJobsPage() {
                 <SEOInternalLink href="/tools/cash-flow-planner">Cash Flow Planner</SEOInternalLink>{' '}
                 forecasts incoming payments and outgoing costs so you can see potential cash flow
                 gaps before they become crises. Combined with the{' '}
-                <SEOInternalLink href="/electrical-quoting-app">quoting app</SEOInternalLink> and{' '}
-                <SEOInternalLink href="/electrician-invoice-app">invoice builder</SEOInternalLink>,
+                <SEOInternalLink href="/tools/electrical-quoting-app">quoting app</SEOInternalLink> and{' '}
+                <SEOInternalLink href="/tools/electrician-invoice-app">invoice builder</SEOInternalLink>,
                 you have a complete financial management system built specifically for electrical
                 contractors.
               </p>
@@ -589,7 +589,7 @@ export default function HowToPriceElectricalJobsPage() {
       ]}
       relatedPages={[
         {
-          href: '/electrical-quoting-app',
+          href: '/tools/electrical-quoting-app',
           title: 'Electrical Quoting App',
           description:
             'Professional PDF quotes with AI cost estimation, material pricing, and one-tap send. Win more work with faster, better quotes.',
@@ -597,7 +597,7 @@ export default function HowToPriceElectricalJobsPage() {
           category: 'Business Tools',
         },
         {
-          href: '/electrician-invoice-app',
+          href: '/tools/electrician-invoice-app',
           title: 'Electrician Invoice App',
           description:
             'Create and send professional invoices from site. Track payments, chase overdue invoices, and sync with Xero or QuickBooks.',

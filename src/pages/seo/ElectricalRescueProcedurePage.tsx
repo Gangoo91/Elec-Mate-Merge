@@ -112,7 +112,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Safety',
   },
   {
-    href: '/rams-generator',
+    href: '/tools/rams-generator',
     title: 'RAMS Generator',
     description: 'Generate site-specific risk assessments including electrical emergency procedures.',
     icon: HardHat,
@@ -536,7 +536,7 @@ const sections = [
               <h4 className="font-bold text-white mb-1">Generate Site RAMS with Emergency Procedures</h4>
               <p className="text-white text-sm leading-relaxed">
                 Use the{' '}
-                <SEOInternalLink href="/rams-generator">
+                <SEOInternalLink href="/tools/rams-generator">
                   Elec-Mate RAMS generator
                 </SEOInternalLink>{' '}
                 to create site-specific risk assessments that include electrical emergency rescue

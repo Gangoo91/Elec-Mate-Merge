@@ -87,14 +87,14 @@ const faqs = [
 
 const relatedPages = [
   {
-    href: '/testing-sequence-guide',
+    href: '/guides/testing-sequence-guide',
     title: 'BS 7671 Testing Sequence',
     description: 'The complete testing sequence for initial verification and periodic inspection.',
     icon: ClipboardCheck,
     category: 'Guide' as const,
   },
   {
-    href: '/how-to-do-safe-isolation',
+    href: '/guides/how-to-do-safe-isolation',
     title: 'Safe Isolation Procedure',
     description: 'The prove-test-prove method you must complete before any dead testing.',
     icon: ShieldCheck,
@@ -115,7 +115,7 @@ const relatedPages = [
     category: 'Guide' as const,
   },
   {
-    href: '/am2-exam-preparation',
+    href: '/training/am2-exam-preparation',
     title: 'AM2 Exam Preparation',
     description: 'Complete guide to preparing for the AM2 practical assessment including testing.',
     icon: Target,
@@ -183,7 +183,7 @@ const sections = [
         <p>
           <strong>Dead tests (supply disconnected):</strong> All dead tests are carried out with the
           supply isolated using the{' '}
-          <SEOInternalLink href="/how-to-do-safe-isolation">
+          <SEOInternalLink href="/guides/how-to-do-safe-isolation">
             safe isolation procedure
           </SEOInternalLink>
           . The dead test sequence is:
@@ -291,7 +291,7 @@ const sections = [
         </div>
         <p>
           For the full{' '}
-          <SEOInternalLink href="/testing-sequence-guide">testing sequence</SEOInternalLink> with
+          <SEOInternalLink href="/guides/testing-sequence-guide">testing sequence</SEOInternalLink> with
           detailed procedures for each test, see our dedicated guide.
         </p>
       </>
@@ -625,7 +625,7 @@ const sections = [
         </p>
         <p>
           <strong>AM2 preparation:</strong> The{' '}
-          <SEOInternalLink href="/am2-exam-preparation">AM2 exam</SEOInternalLink> requires
+          <SEOInternalLink href="/training/am2-exam-preparation">AM2 exam</SEOInternalLink> requires
           you to carry out the complete testing sequence within a time limit. Elec-Mate's AM2
           preparation content includes testing practice scenarios, timing guidance, and step-by-step
           procedures for every test you will need to perform.

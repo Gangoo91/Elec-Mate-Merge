@@ -9,9 +9,11 @@ const footerLinks = {
     { name: 'Elec-ID', href: '/elec-id' },
   ],
   Resources: [
-    { name: 'BS7671 Guide', href: '/study-centre' },
-    { name: 'Calculators', href: '/electrician' },
-    { name: 'Help Centre', href: '/dashboard' },
+    { name: 'Guides Library', href: '/guides' },
+    { name: 'BS 7671 Guide', href: '/guides/bs-7671-18th-edition-guide' },
+    { name: 'Electrical Calculators', href: '/tools' },
+    { name: 'Free Mock Exams', href: '/mock-exams' },
+    { name: 'Training Courses', href: '/training' },
   ],
   Legal: [
     { name: 'Privacy Policy', href: '/privacy' },

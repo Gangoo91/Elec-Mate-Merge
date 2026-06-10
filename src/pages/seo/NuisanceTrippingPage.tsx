@@ -440,7 +440,7 @@ const relatedPages = [
     category: 'Certification',
   },
   {
-    href: '/guides/consumer-unit-regulations',
+    href: '/consumer-unit-regulations',
     title: 'Consumer Unit Regulations',
     description: 'BS 7671 requirements for consumer units, RCD protection, and RCBO boards.',
     icon: ClipboardCheck,

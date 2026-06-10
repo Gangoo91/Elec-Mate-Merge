@@ -117,7 +117,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Guide',
   },
   {
-    href: '/guides/consumer-unit-regulations',
+    href: '/consumer-unit-regulations',
     title: 'Consumer Unit Regulations',
     description:
       'BS 7671 requirements for consumer units including EV charging circuit protection.',
@@ -155,7 +155,7 @@ const sections = [
           brands — Zappi (myenergi), Pod Point, and Andersen — and explains what each error means,
           what you can do, and when to call a qualified electrician. If you are an electrician, the
           later sections cover the{' '}
-          <SEOInternalLink href="/guides/consumer-unit-regulations">
+          <SEOInternalLink href="/consumer-unit-regulations">
             BS 7671 regulations
           </SEOInternalLink>{' '}
           specific to EV charging circuits.

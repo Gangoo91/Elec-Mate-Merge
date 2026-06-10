@@ -430,7 +430,7 @@ const relatedPages = [
     category: 'Training',
   },
   {
-    href: '/solar-pv-certificate',
+    href: '/tools/solar-pv-certificate',
     title: 'Solar PV Installation Course',
     description: 'Solar PV and battery storage integration for smart energy management systems.',
     icon: Lightbulb,
@@ -496,7 +496,7 @@ export default function SmartHomeAutomationCoursePage() {
       title={PAGE_TITLE}
       description={PAGE_DESCRIPTION}
       datePublished="2025-09-01"
-      dateModified="2026-05-18"
+      dateModified="2026-06-10"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Smart Home Training"

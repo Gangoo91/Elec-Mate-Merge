@@ -419,7 +419,7 @@ const sections = [
           These thresholds are practical fault-finding guidance for a single appliance element, not
           a circuit insulation resistance acceptance value. For circuit insulation resistance
           minimums during inspection and testing, refer to{' '}
-          <SEOInternalLink href="/guides/how-to-test-insulation-resistance">
+          <SEOInternalLink href="/guides/insulation-resistance-testing-bs7671">
             insulation resistance testing
           </SEOInternalLink>
           .
@@ -776,7 +776,7 @@ const sections = [
                 <p className="text-white text-sm leading-relaxed">
                   If the shower circuit has undersized cable or an unprotected circuit, quote the
                   upgrade immediately using the{' '}
-                  <SEOInternalLink href="/electrical-quoting-app">
+                  <SEOInternalLink href="/tools/electrical-quoting-app">
                     Elec-Mate quoting app
                   </SEOInternalLink>
                   . Customers who receive a professional quote while you are present approve work at
@@ -832,7 +832,7 @@ export default function ElectricShowerFaultFindingPage() {
       title="Electric Shower Not Working | Fault Finding & Repair Guide"
       description="Electric shower fault finding guide for UK homeowners and electricians. RCD tripping, solenoid valve, heating element, flow switch, pressure issues…"
       datePublished="2026-03-27"
-      dateModified="2026-05-18"
+      dateModified="2026-06-10"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Fault Finding Guide"

@@ -769,7 +769,7 @@ export default function ConduitFillCalculatorPage() {
             <SEOInternalLink href="/electrical-installation-conduit">
               Electrical Installation Conduit Guide — Steel, PVC, Fill Calculations & Earthing
             </SEOInternalLink>
-            <SEOInternalLink href="/how-to-fill-in-eicr">
+            <SEOInternalLink href="/guides/how-to-fill-in-eicr">
               How to Fill In an EICR Form
             </SEOInternalLink>
             <SEOInternalLink href="/guides/how-to-fill-in-minor-works">

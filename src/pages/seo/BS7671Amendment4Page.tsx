@@ -125,7 +125,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Guide',
   },
   {
-    href: '/eighteenth-edition-course',
+    href: '/training/18th-edition-course',
     title: '18th Edition Course',
     description:
       'Study for C&G 2382 with structured training modules, flashcards, and mock exams on the Elec-Mate platform.',
@@ -524,7 +524,7 @@ const sections = [
               <ClipboardCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Keep your qualifications current.</strong> If your{' '}
-                <SEOInternalLink href="/city-guilds2391">C&G 2391</SEOInternalLink> or
+                <SEOInternalLink href="/training/city-guilds-2391">C&G 2391</SEOInternalLink> or
                 C&G 2382 qualification is more than a few years old, consider refresher training.
                 When A4 is published, the awarding bodies will update their exam content, and recent
                 study will help you stay ahead.

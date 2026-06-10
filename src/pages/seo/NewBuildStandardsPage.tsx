@@ -128,7 +128,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Guide',
   },
   {
-    href: '/eighteenth-edition-course',
+    href: '/training/18th-edition-course',
     title: '18th Edition Course',
     description:
       'Study for C&G 2382 with 50+ structured training modules on the Elec-Mate platform.',
@@ -633,7 +633,7 @@ export default function NewBuildStandardsPage() {
       title="New Build Electrical Standards | Building Regs Guide"
       description="Complete guide to new build electrical standards in the UK. Approved Document P, EV charging (Part S), smoke and heat detection…"
       datePublished="2025-06-15"
-      dateModified="2026-05-18"
+      dateModified="2026-06-10"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="New Build Guide"

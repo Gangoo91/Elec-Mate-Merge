@@ -286,7 +286,7 @@ export default function AdiabaticEquationCalculatorPage() {
             <SEOInternalLink href="/tools/max-demand-calculator">
               Maximum Demand Calculator
             </SEOInternalLink>
-            <SEOInternalLink href="/electrical-testing-calculators">
+            <SEOInternalLink href="/tools/electrical-testing-calculators">
               All 70 Electrical Calculators
             </SEOInternalLink>
             <SEOInternalLink href="/guides/bs-7671-amendment-4-2026">

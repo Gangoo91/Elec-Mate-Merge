@@ -97,6 +97,13 @@ const faqs = [
 
 const relatedPages: RelatedPage[] = [
   {
+    href: '/guides/consumer-unit-replacement-cost-southampton',
+    title: 'Consumer Unit Replacement Cost in Southampton',
+    description: 'Local price bands and labour rates for consumer unit replacement in Southampton.',
+    icon: Home,
+    category: 'Guide',
+  },
+  {
     href: '/guides/consumer-unit-replacement-cost',
     title: 'Consumer Unit Replacement Guide',
     description:
@@ -559,7 +566,7 @@ const sections = [
                 <h4 className="font-bold text-white mb-1">Quote Additional Work on the Day</h4>
                 <p className="text-white text-sm leading-relaxed">
                   Use the{' '}
-                  <SEOInternalLink href="/electrical-quoting-app">
+                  <SEOInternalLink href="/tools/electrical-quoting-app">
                     Elec-Mate quoting tool
                   </SEOInternalLink>{' '}
                   to quote earthing upgrades, smoke alarm systems, or additional circuits while
@@ -596,7 +603,7 @@ export default function ConsumerUnitReplacementSouthamptonPage() {
       title="Consumer Unit Replacement Southampton | Fuse Box Southampton"
       description="Consumer unit replacement in Southampton — metal enclosure rules, Part P Building Regulations, costs £400–800, BS EN 61439…"
       datePublished="2026-03-27"
-      dateModified="2026-05-18"
+      dateModified="2026-06-10"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Electrical Guide"

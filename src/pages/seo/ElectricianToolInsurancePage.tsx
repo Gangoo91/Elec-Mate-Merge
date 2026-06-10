@@ -124,7 +124,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Guide',
   },
   {
-    href: '/electrical-quoting-app',
+    href: '/tools/electrical-quoting-app',
     title: 'Electrical Quoting App',
     description:
       'Professional PDF quotes with itemised pricing — include insurance overhead in your rates.',
@@ -702,7 +702,7 @@ export default function ElectricianToolInsurancePage() {
       title="Electrician Tool Insurance UK 2026 | Cover Your Kit"
       description="Complete guide to tool insurance for UK electricians: cover types, van security discounts, provider comparison, and how to document your kit for a successful claim."
       datePublished="2026-03-27"
-      dateModified="2026-05-18"
+      dateModified="2026-06-10"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Insurance Guide"

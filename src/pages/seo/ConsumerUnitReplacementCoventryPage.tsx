@@ -470,7 +470,7 @@ const sections = [
                 <p className="text-white text-sm leading-relaxed">
                   When an EICR reveals C2 observations, quote the consumer unit replacement
                   immediately using the{' '}
-                  <SEOInternalLink href="/electrical-quoting-app">
+                  <SEOInternalLink href="/tools/electrical-quoting-app">
                     Elec-Mate quoting app
                   </SEOInternalLink>
                   . Landlords must act within 28 days — the first quote sent wins the job.

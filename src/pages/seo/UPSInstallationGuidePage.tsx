@@ -22,7 +22,7 @@ export default function UPSInstallationGuidePage() {
       title="UPS Installation Guide | Uninterruptible Power Supply"
       description="Complete guide to UPS installation for electricians. Covers online, offline, and line-interactive UPS types, sizing calculations…"
       datePublished="2025-09-01"
-      dateModified="2026-05-18"
+      dateModified="2026-06-10"
       breadcrumbs={[
         { label: 'Installation', href: '/guides' },
         { label: 'UPS Installation', href: '/guides/ups-installation-guide' },
@@ -373,7 +373,7 @@ export default function UPSInstallationGuidePage() {
                 In all cases, the UPS chassis must be bonded to the installation earth. Any external
                 battery cabinets must also be bonded. The earth continuity through the UPS must be
                 verified during{' '}
-                <SEOInternalLink href="/testing-sequence-guide">testing</SEOInternalLink> — an open
+                <SEOInternalLink href="/guides/testing-sequence-guide">testing</SEOInternalLink> — an open
                 earth on the UPS output would leave connected equipment without a safety earth,
                 creating a serious danger.
               </p>
@@ -612,7 +612,7 @@ export default function UPSInstallationGuidePage() {
           category: 'Regulation',
         },
         {
-          href: '/testing-sequence-guide',
+          href: '/guides/testing-sequence-guide',
           title: 'Testing Sequence Guide',
           description: 'The correct order of electrical tests.',
           icon: ClipboardCheck,
@@ -626,7 +626,7 @@ export default function UPSInstallationGuidePage() {
           category: 'Calculator',
         },
         {
-          href: '/earthing-arrangements',
+          href: '/guides/earthing-arrangements',
           title: 'Earthing Arrangements',
           description: 'TN-S, TN-C-S, and TT earthing explained.',
           icon: Zap,

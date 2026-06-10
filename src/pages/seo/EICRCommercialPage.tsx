@@ -97,7 +97,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Certificate',
   },
   {
-    href: '/electrical-quoting-app',
+    href: '/tools/electrical-quoting-app',
     title: 'Electrical Quoting App',
     description: 'Quote commercial EICR and remedial works packages for commercial landlords.',
     icon: Wrench,
@@ -622,7 +622,7 @@ const sections = [
                 <h4 className="font-bold text-white mb-1">Quote Remedial Works at the Same Time</h4>
                 <p className="text-white text-sm leading-relaxed">
                   Use Elec-Mate's{' '}
-                  <SEOInternalLink href="/electrical-quoting-app">quoting app</SEOInternalLink> to
+                  <SEOInternalLink href="/tools/electrical-quoting-app">quoting app</SEOInternalLink> to
                   quote remedial works immediately after identifying C1 and C2 defects. Sending the
                   remedial quote with the EICR report converts a one-off inspection into a repair
                   job — and positions you as the natural choice to carry out the work.
@@ -651,7 +651,7 @@ export default function EICRCommercialPage() {
       title="Commercial EICR Guide UK | Intervals, Scope, Qualifications"
       description="Complete guide to commercial property EICRs in the UK. Inspection intervals, scope vs domestic EICR, qualifications required, three-phase installations…"
       datePublished="2026-03-27"
-      dateModified="2026-05-18"
+      dateModified="2026-06-10"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Inspection Guide"

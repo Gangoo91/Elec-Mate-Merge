@@ -84,6 +84,13 @@ const faqs = [
 
 const relatedPages: RelatedPage[] = [
   {
+    href: '/guides/consumer-unit-replacement-cost-exeter',
+    title: 'Consumer Unit Replacement Cost in Exeter',
+    description: 'Local price bands and labour rates for consumer unit replacement in Exeter.',
+    icon: Wrench,
+    category: 'Guide',
+  },
+  {
     href: '/guides/consumer-unit-replacement-cost',
     title: 'Consumer Unit Replacement Guide',
     description: 'Complete UK guide to fuse box upgrades — costs, regulations, and process.',
@@ -446,7 +453,7 @@ const sections = [
                 <h4 className="font-bold text-white mb-1">Quote Remedial Work on the Day</h4>
                 <p className="text-white text-sm leading-relaxed">
                   When an Exeter EICR identifies C2 consumer unit deficiencies, use the{' '}
-                  <SEOInternalLink href="/electrical-quoting-app">
+                  <SEOInternalLink href="/tools/electrical-quoting-app">
                     Elec-Mate quoting app
                   </SEOInternalLink>{' '}
                   to send a quote on the same day. Landlords must act within 28 days — the first

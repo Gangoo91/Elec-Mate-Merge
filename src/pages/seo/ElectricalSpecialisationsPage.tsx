@@ -24,7 +24,7 @@ import {
 // -------------------------------------------------------------------
 
 const breadcrumbs = [
-  { label: 'Career', href: '/guides/how-to-become-electrician' },
+  { label: 'Career', href: '/guides/how-to-become-an-electrician' },
   { label: 'Specialisations', href: '/guides/electrical-specialisations' },
 ];
 
@@ -164,7 +164,7 @@ const sections = [
           This guide covers the seven most in-demand electrical specialisations in the UK in 2026,
           with details on what each involves, what qualifications you need, and what you can expect
           to earn. Whether you are a{' '}
-          <SEOInternalLink href="/guides/how-to-become-electrician">
+          <SEOInternalLink href="/guides/how-to-become-an-electrician">
             newly qualified electrician
           </SEOInternalLink>{' '}
           planning your career or an experienced installer looking to diversify, there is a
@@ -528,7 +528,7 @@ const sections = [
               <Award className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Qualifications needed:</strong>{' '}
-                <SEOInternalLink href="/city-guilds2391">C&G 2391</SEOInternalLink>{' '}
+                <SEOInternalLink href="/training/city-guilds-2391">C&G 2391</SEOInternalLink>{' '}
                 (Inspection and Testing) is the essential qualification, plus 18th Edition and
                 competent person scheme registration. Experience and a thorough understanding of GN3
                 (Guidance Note 3) are critical.

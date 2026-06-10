@@ -106,7 +106,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Guide',
   },
   {
-    href: '/electrical-quoting-app',
+    href: '/tools/electrical-quoting-app',
     title: 'Electrical Quoting App',
     description: 'Quote access control jobs in minutes with the Elec-Mate quoting tool.',
     icon: PoundSterling,
@@ -555,7 +555,7 @@ const sections = [
                 <h4 className="font-bold text-white mb-1">Quote Access Control Jobs Accurately</h4>
                 <p className="text-white text-sm leading-relaxed">
                   Use the{' '}
-                  <SEOInternalLink href="/electrical-quoting-app">
+                  <SEOInternalLink href="/tools/electrical-quoting-app">
                     Elec-Mate quoting app
                   </SEOInternalLink>{' '}
                   to build accurate quotes for access control installations. Include lock hardware,

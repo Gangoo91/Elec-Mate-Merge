@@ -492,7 +492,7 @@ const sections = [
             NICEIC, NAPIT, or ELECSA
           </SEOInternalLink>
           ) and hold an{' '}
-          <SEOInternalLink href="/city-guilds2391">
+          <SEOInternalLink href="/training/city-guilds-2391">
             inspection and testing qualification
           </SEOInternalLink>
           . A general handyman is not qualified to diagnose electrical faults.
@@ -599,7 +599,7 @@ const sections = [
                 <p className="text-white text-sm leading-relaxed">
                   If the callout results in remedial work — replacing a faulty MCB, re-terminating a
                   connection, or fitting a new socket — generate the{' '}
-                  <SEOInternalLink href="/minor-works-certificate">
+                  <SEOInternalLink href="/tools/minor-works-certificate">
                     Minor Works Certificate
                   </SEOInternalLink>{' '}
                   or <SEOInternalLink href="/eic-certificate">EIC</SEOInternalLink>{' '}

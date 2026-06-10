@@ -91,7 +91,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Guide',
   },
   {
-    href: '/earthing-arrangements',
+    href: '/guides/earthing-arrangements',
     title: 'Earthing Arrangements Explained',
     description:
       'TN-S, TN-C-S, and TT systems — how each earthing arrangement works and when you encounter them.',
@@ -146,7 +146,7 @@ const sections = [
           An earth electrode is a conductor (usually a copper-clad steel rod) driven into the ground
           to provide a connection between the electrical installation's earthing system and the
           general mass of earth. It is the foundation of the{' '}
-          <SEOInternalLink href="/earthing-arrangements">TT earthing system</SEOInternalLink>, where
+          <SEOInternalLink href="/guides/earthing-arrangements">TT earthing system</SEOInternalLink>, where
           the electricity supplier does not provide an earth terminal and the installation must
           create its own earth path.
         </p>
@@ -676,7 +676,7 @@ export default function EarthElectrodeTestPage() {
       title="Earth Electrode Testing | TT System Guide UK"
       description="Complete guide to earth electrode resistance testing for TT systems. Fall of potential method, 3-pin test procedure, acceptable RA values…"
       datePublished="2025-06-15"
-      dateModified="2026-05-18"
+      dateModified="2026-06-10"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Testing Guide"

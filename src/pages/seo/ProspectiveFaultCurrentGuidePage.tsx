@@ -410,7 +410,7 @@ const sections = [
           (line-to-neutral). The overall PFC recorded on the certificate should be the higher of the
           two values — typically the line-to-neutral short circuit current. The Ze is recorded
           separately in the supply characteristics section of the{' '}
-          <SEOInternalLink href="/earthing-arrangements">earthing arrangements</SEOInternalLink>{' '}
+          <SEOInternalLink href="/guides/earthing-arrangements">earthing arrangements</SEOInternalLink>{' '}
           data.
         </p>
         <SEOAppBridge
@@ -576,7 +576,7 @@ const relatedPages = [
     category: 'Tool' as const,
   },
   {
-    href: '/earthing-arrangements',
+    href: '/guides/earthing-arrangements',
     title: 'Earthing Arrangements Guide',
     description: 'TN-S, TN-C-S, TT systems explained. Ze values and their relationship to PFC.',
     icon: Activity,
@@ -617,7 +617,7 @@ export default function ProspectiveFaultCurrentGuidePage() {
       title={PAGE_TITLE}
       description={PAGE_DESCRIPTION}
       datePublished="2025-06-01"
-      dateModified="2026-05-22"
+      dateModified="2026-06-10"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="BS 7671 Testing"

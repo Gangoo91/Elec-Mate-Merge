@@ -215,7 +215,7 @@ const sections = [
           <SEOInternalLink href="/tools/cable-sizing-calculator">circuit design</SEOInternalLink>,
           accurate fault diagnosis, and the ability to explain technical concepts to clients and
           colleagues. It is also essential for passing the{' '}
-          <SEOInternalLink href="/city-guilds2391">inspection and testing</SEOInternalLink>{' '}
+          <SEOInternalLink href="/training/city-guilds-2391">inspection and testing</SEOInternalLink>{' '}
           examination (2391/2394/2395) where electrical science questions feature prominently.
         </p>
       </>
@@ -535,7 +535,7 @@ export default function ElectricalScienceFundamentalsCoursePage() {
       title={PAGE_TITLE}
       description={PAGE_DESCRIPTION}
       datePublished="2025-06-01"
-      dateModified="2026-05-18"
+      dateModified="2026-06-10"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Theory Course"

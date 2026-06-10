@@ -568,7 +568,7 @@ export default function RewireCostBirminghamPage() {
       title="Rewire Cost Birmingham 2026 | West Midlands Prices &amp; Guide"
       description="House rewire cost in Birmingham 2026: 2-bed £2,800–£4,500, 3-bed £4,000–£6,500, 4-bed £6,000–£9,500. Includes Part P notification + EIC."
       datePublished="2026-03-27"
-      dateModified="2026-05-18"
+      dateModified="2026-06-10"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Cost Guide"

@@ -795,7 +795,7 @@ export default function CommissioningGuidePage() {
       title="Commissioning an Electrical Installation | Guide UK"
       description="Complete guide to commissioning an electrical installation. What commissioning involves, how it differs from testing, functional checks…"
       datePublished="2025-10-01"
-      dateModified="2026-05-18"
+      dateModified="2026-06-10"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Testing Guide"

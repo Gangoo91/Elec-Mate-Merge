@@ -198,7 +198,7 @@ const sections = [
           you quoted a consumer unit upgrade at 6 hours of labour but the time tracker shows 9 hours
           (including travel and certification), you know your quoting needs adjustment. Over time,
           you build a dataset of actual labour times for different job types, which feeds into the{' '}
-          <SEOInternalLink href="/electrical-quoting-app">AI quoting tool</SEOInternalLink> to
+          <SEOInternalLink href="/tools/electrical-quoting-app">AI quoting tool</SEOInternalLink> to
           improve future estimates.
         </p>
         <p>
@@ -316,7 +316,7 @@ const sections = [
         <p>
           When any credential is within 90 days of expiry, automatic reminders are sent to both the
           operative and the business owner. This gives adequate time to book training or renewal
-          courses. For <SEOInternalLink href="/eighteenth-edition-course">18th Edition</SEOInternalLink>{' '}
+          courses. For <SEOInternalLink href="/training/18th-edition-course">18th Edition</SEOInternalLink>{' '}
           updates and ECS card renewals, early booking is essential as popular courses fill up
           quickly.
         </p>

@@ -22,7 +22,7 @@ import {
 // -------------------------------------------------------------------
 
 const breadcrumbs = [
-  { label: 'AI Tools', href: '/ai-electrician-tools' },
+  { label: 'AI Tools', href: '/tools/ai-electrician' },
   { label: 'AI Method Statement Generator', href: '/tools/ai-method-statement-generator' },
 ];
 
@@ -105,7 +105,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Tool',
   },
   {
-    href: '/how-to-do-safe-isolation',
+    href: '/guides/how-to-do-safe-isolation',
     title: 'Safe Isolation Guide',
     description:
       'Step-by-step guide to safe isolation procedures in accordance with GS38 and the Electricity at Work Regulations.',
@@ -113,7 +113,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Guide',
   },
   {
-    href: '/manual-handling-course',
+    href: '/training/manual-handling',
     title: 'Manual Handling Course',
     description:
       'Training on manual handling regulations and safe lifting techniques for electricians on site.',
@@ -216,7 +216,7 @@ const sections = [
           The generator covers the full scope of electrical installation work, from simple domestic
           tasks to complex commercial and industrial projects. It understands the specific hazards
           associated with electrical work —{' '}
-          <SEOInternalLink href="/how-to-do-safe-isolation">safe isolation</SEOInternalLink>,
+          <SEOInternalLink href="/guides/how-to-do-safe-isolation">safe isolation</SEOInternalLink>,
           live working, arc flash, cable avoidance, working at height near distribution boards,
           asbestos risk in older buildings — and produces control measures and method statements
           that reflect the actual risks of your specific job.
@@ -385,7 +385,7 @@ const sections = [
           combustible materials, permits to work on or near live conductors (as required under
           Regulation 14 of the Electricity at Work Regulations), confined space entry permits for
           work in risers, and isolation permits for work that affects building{' '}
-          <SEOInternalLink href="/tools/fire-alarm-certificate">fire alarm</SEOInternalLink> or{' '}
+          <SEOInternalLink href="/fire-alarm-certificate">fire alarm</SEOInternalLink> or{' '}
           <SEOInternalLink href="/tools/emergency-lighting-certificate">
             emergency lighting
           </SEOInternalLink>{' '}
@@ -418,7 +418,7 @@ const sections = [
           job description, specifies control measures that are practical and actionable for the
           actual work being carried out, describes a method statement that follows the logical
           sequence of your specific task, and includes details such as the{' '}
-          <SEOInternalLink href="/earthing-arrangements">
+          <SEOInternalLink href="/guides/earthing-arrangements">
             earthing system type
           </SEOInternalLink>
           , cable routes, access arrangements, and building occupancy that demonstrate genuine site

@@ -115,7 +115,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Guide',
   },
   {
-    href: '/earthing-arrangements',
+    href: '/guides/earthing-arrangements',
     title: 'Earthing Arrangements',
     description:
       'TN-S, TN-C-S, and TT earthing systems explained — characteristics, advantages, and BS 7671 requirements.',
@@ -130,7 +130,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Guide',
   },
   {
-    href: '/eighteenth-edition-course',
+    href: '/training/18th-edition-course',
     title: '18th Edition Course',
     description: 'Study for C&G 2382 with structured training courses on the Elec-Mate platform.',
     icon: GraduationCap,
@@ -211,7 +211,7 @@ const sections = [
                 <strong>Earthing arrangement.</strong> Identify the type of earthing system — TN-S,
                 TN-C-S (PME), or TT. This is determined by the DNO and fundamentally affects the
                 design of the{' '}
-                <SEOInternalLink href="/earthing-arrangements">
+                <SEOInternalLink href="/guides/earthing-arrangements">
                   earthing and bonding
                 </SEOInternalLink>
                 , the selection of protective devices, and the maximum earth fault loop impedance
@@ -487,7 +487,7 @@ const sections = [
       <>
         <p>
           The{' '}
-          <SEOInternalLink href="/earthing-arrangements">
+          <SEOInternalLink href="/guides/earthing-arrangements">
             earthing and bonding arrangement
           </SEOInternalLink>{' '}
           is a fundamental part of the design. It provides the path for earth fault current to flow,
@@ -649,7 +649,7 @@ export default function ElectricalDesignGuidePage() {
       title="Electrical Design Guide | BS 7671 Design Process"
       description="Complete guide to electrical design under BS 7671. Assessment of general characteristics, design current, cable selection with correction factors…"
       datePublished="2025-10-01"
-      dateModified="2026-05-18"
+      dateModified="2026-06-10"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Design Guide"

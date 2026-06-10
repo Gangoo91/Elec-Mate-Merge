@@ -117,7 +117,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Tool',
   },
   {
-    href: '/electrical-quoting-app',
+    href: '/tools/electrical-quoting-app',
     title: 'Electrical Quoting App',
     description:
       'Create professional quotes for Milton Keynes customers with accurate local pricing.',
@@ -560,7 +560,7 @@ export default function ElectricianMiltonKeynesPage() {
       title="Electrician in Milton Keynes | Find Qualified Electricians"
       description="Find qualified, registered electricians in Milton Keynes. Realistic 2026 pricing, how to verify NICEIC/NAPIT registration, new-build snagging…"
       datePublished="2026-03-27"
-      dateModified="2026-05-18"
+      dateModified="2026-06-10"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Find an Electrician"

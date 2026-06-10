@@ -98,7 +98,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Guide',
   },
   {
-    href: '/earthing-arrangements',
+    href: '/guides/earthing-arrangements',
     title: 'Earthing Arrangements Explained',
     description:
       'TN-C-S, TN-S, and TT earthing systems — how they work and why they matter for fault finding.',
@@ -345,7 +345,7 @@ const sections = [
       <>
         <p>
           The danger of a lost neutral is greatest on{' '}
-          <SEOInternalLink href="/earthing-arrangements">
+          <SEOInternalLink href="/guides/earthing-arrangements">
             TN-C-S (Protective Multiple Earthing)
           </SEOInternalLink>{' '}
           installations, which are the most common earthing arrangement in the UK. On a TN-C-S
@@ -468,7 +468,7 @@ const sections = [
           A thermal imaging camera can also be invaluable for locating loose neutral connections
           within the consumer unit — the loose terminal will show as a hotspot under load.
           Elec-Mate's{' '}
-          <SEOInternalLink href="/electrical-testing-calculators">
+          <SEOInternalLink href="/tools/electrical-testing-calculators">
             testing calculators
           </SEOInternalLink>{' '}
           help you verify that measured values are within the acceptable ranges specified by BS
@@ -533,7 +533,7 @@ const sections = [
               <span>
                 <strong>Issue certification.</strong> If the repair involves work at the consumer
                 unit, issue a{' '}
-                <SEOInternalLink href="/minor-works-certificate">
+                <SEOInternalLink href="/tools/minor-works-certificate">
                   Minor Works Certificate
                 </SEOInternalLink>
                 . If a full inspection was carried out, issue the EICR.
@@ -580,7 +580,7 @@ export default function LooseNeutralSymptomsPage() {
       title="Loose Neutral | Symptoms, Dangers & How to Fix"
       description="Loose neutral symptoms: flickering lights, voltage fluctuations, tingling from metalwork, dim/bright cycle. How to diagnose, fix, and stay safe."
       datePublished="2025-09-12"
-      dateModified="2026-05-29"
+      dateModified="2026-06-10"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Troubleshooting Guide"

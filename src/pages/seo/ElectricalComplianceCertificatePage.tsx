@@ -257,7 +257,7 @@ const sections = [
             EV Charger Installation Certificate
           </SEOInternalLink>
           ,{' '}
-          <SEOInternalLink href="/tools/fire-alarm-certificate">
+          <SEOInternalLink href="/fire-alarm-certificate">
             Fire Alarm Certificate
           </SEOInternalLink>
           , and{' '}
@@ -626,7 +626,7 @@ export default function ElectricalComplianceCertificatePage() {
       title="Electrical Compliance Certificate | What You Need"
       description="Complete guide to UK electrical compliance certificates (EIC, MEIWC, EICR), Part P building regulations, competent person schemes, and landlord requirements."
       datePublished="2025-07-20"
-      dateModified="2026-05-18"
+      dateModified="2026-06-10"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Certificate Guide"

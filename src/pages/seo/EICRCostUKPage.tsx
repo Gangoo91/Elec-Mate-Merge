@@ -1,3 +1,4 @@
+import { Link } from 'react-router-dom';
 import GuideTemplate from '@/pages/seo/templates/GuideTemplate';
 import { SEOInternalLink } from '@/components/seo/SEOInternalLink';
 import { SEOAppBridge } from '@/components/seo/SEOAppBridge';
@@ -37,6 +38,7 @@ const tocItems = [
   { id: 'eicr-pricing-overview', label: 'EICR Pricing Overview' },
   { id: 'prices-by-property', label: 'Prices by Property Type' },
   { id: 'factors-affecting-cost', label: 'Factors Affecting Cost' },
+  { id: 'eicr-cost-by-region', label: 'Cost by City and Region' },
   { id: 'how-to-price-competitively', label: 'How to Price Competitively' },
   { id: 'charging-for-remedials', label: 'Charging for Remedial Work' },
   { id: 'maximising-eicr-profit', label: 'Maximising EICR Profitability' },
@@ -110,7 +112,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Guide',
   },
   {
-    href: '/electrical-quoting-app',
+    href: '/tools/electrical-quoting-app',
     title: 'Electrical Quoting App',
     description:
       'AI-powered quoting with material pricing, labour estimation, and professional PDF output.',
@@ -118,7 +120,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Tool',
   },
   {
-    href: '/electrician-invoice-app',
+    href: '/tools/electrician-invoice-app',
     title: 'Electrician Invoice App',
     description:
       'Generate and send invoices from site. Convert accepted quotes to invoices with a single tap.',
@@ -176,8 +178,8 @@ const sections = [
         <p>
           Before you set a price, it helps to be clear about what a compliant EICR actually
           involves. A periodic inspection (BS 7671 Chapter 65) applies the test methods of Chapter
-          64, carried out circuit by circuit in the prescribed sequence — and these are the reason
-          a thorough inspection takes hours, not minutes:
+          64, carried out circuit by circuit in the prescribed sequence — and these are the reason a
+          thorough inspection takes hours, not minutes:
         </p>
         <div className="grid sm:grid-cols-2 gap-3 my-4">
           {[
@@ -212,10 +214,7 @@ const sections = [
               note: 'Operation of main switches, RCDs and AFDDs proven to work.',
             },
           ].map((row) => (
-            <div
-              key={row.test}
-              className="rounded-2xl bg-white/[0.04] border border-white/10 p-4"
-            >
+            <div key={row.test} className="rounded-2xl bg-white/[0.04] border border-white/10 p-4">
               <div className="flex items-center justify-between gap-2 mb-1">
                 <h4 className="font-bold text-white text-sm">{row.test}</h4>
                 <span className="text-xs font-semibold text-yellow-400 shrink-0">{row.reg}</span>
@@ -468,6 +467,70 @@ const sections = [
           description="Point your phone camera at the distribution board. Elec-Mate reads MCB/RCBO ratings, circuit details and board layout, then pre-fills the schedule of test results — so you spend your time testing, not transcribing."
           icon={Camera}
         />
+      </>
+    ),
+  },
+  {
+    id: 'eicr-cost-by-region',
+    heading: 'EICR Cost by City and Region',
+    content: (
+      <>
+        <p>
+          EICR prices vary noticeably across the UK. London and the South East typically price 10 to
+          25% above the national average, while Scotland, Wales, and the North of England are
+          usually at or below it. The differences come from local labour rates, travel time, and how
+          much landlord demand the local rental market generates.
+        </p>
+        <p>
+          We track typical EICR pricing for 30 UK cities, with local price bands by property size,
+          hourly labour rates, and the local DNO details for each area:
+        </p>
+        <div className="grid grid-cols-2 sm:grid-cols-3 gap-2 my-4">
+          {[
+            { slug: 'aberdeen', name: 'Aberdeen' },
+            { slug: 'belfast', name: 'Belfast' },
+            { slug: 'birmingham', name: 'Birmingham' },
+            { slug: 'brighton', name: 'Brighton' },
+            { slug: 'bristol', name: 'Bristol' },
+            { slug: 'cambridge', name: 'Cambridge' },
+            { slug: 'cardiff', name: 'Cardiff' },
+            { slug: 'dundee', name: 'Dundee' },
+            { slug: 'edinburgh', name: 'Edinburgh' },
+            { slug: 'exeter', name: 'Exeter' },
+            { slug: 'glasgow', name: 'Glasgow' },
+            { slug: 'hull', name: 'Hull' },
+            { slug: 'leeds', name: 'Leeds' },
+            { slug: 'liverpool', name: 'Liverpool' },
+            { slug: 'luton', name: 'Luton' },
+            { slug: 'manchester', name: 'Manchester' },
+            { slug: 'milton-keynes', name: 'Milton Keynes' },
+            { slug: 'newcastle', name: 'Newcastle' },
+            { slug: 'norwich', name: 'Norwich' },
+            { slug: 'nottingham', name: 'Nottingham' },
+            { slug: 'oxford', name: 'Oxford' },
+            { slug: 'plymouth', name: 'Plymouth' },
+            { slug: 'portsmouth', name: 'Portsmouth' },
+            { slug: 'reading', name: 'Reading' },
+            { slug: 'sheffield', name: 'Sheffield' },
+            { slug: 'southampton', name: 'Southampton' },
+            { slug: 'stoke', name: 'Stoke-on-Trent' },
+            { slug: 'swansea', name: 'Swansea' },
+            { slug: 'swindon', name: 'Swindon' },
+            { slug: 'york', name: 'York' },
+          ].map((city) => (
+            <Link
+              key={city.slug}
+              to={`/guides/eicr-cost-${city.slug}`}
+              className="rounded-xl border border-white/10 bg-white/[0.04] px-3 py-2.5 text-sm text-white hover:border-yellow-500/30 hover:text-yellow-300 transition-colors touch-manipulation"
+            >
+              EICR cost in {city.name}
+            </Link>
+          ))}
+        </div>
+        <p>
+          If your city is not listed, the national bands above are the right starting point — and
+          for an exact figure, the property&apos;s circuit count matters more than its postcode.
+        </p>
       </>
     ),
   },
@@ -875,10 +938,10 @@ const sections = [
 export default function EICRCostUKPage() {
   return (
     <GuideTemplate
-      title="EICR Cost UK 2026 | What Should You Charge?"
-      description="Average EICR costs in 2026 by property type — from £120 for a 1-bed flat to £450+ for an HMO. Pricing guide for UK electricians and landlords covering circuits, time on site, and remedial work."
+      title="EICR Cost UK 2026: Prices by Property Type & Region"
+      description="How much does an EICR cost? UK prices for 2026: £120-£180 for a 1-bed flat, £180-£280 for a 3-bed house, £250-£450+ for HMOs. Costs by property type, city-by-city prices, and what electricians should charge."
       datePublished="2025-02-01"
-      dateModified="2026-05-18"
+      dateModified="2026-06-10"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Pricing Guide"
@@ -892,10 +955,11 @@ export default function EICRCostUKPage() {
       }}
       heroTitle={
         <>
-          EICR Cost UK 2026: <span className="text-yellow-400">What Should You Charge?</span>
+          EICR Cost UK 2026:{' '}
+          <span className="text-yellow-400">Prices by Property Type & Region</span>
         </>
       }
-      heroSubtitle="Most electricians undercharge for EICRs because they do not account for the time spent typing up reports at home. This guide covers average EICR prices by property type, factors that affect cost, how to price competitively, and how Elec-Mate eliminates post-site admin so every EICR is a fully-invoiced, single-visit job."
+      heroSubtitle="Whether you are a landlord budgeting for a condition report or an electrician working out what to charge, this guide covers real 2026 EICR prices by property type, city-by-city regional pricing, the factors that move the price, and how remedial work is charged on top."
       readingTime={11}
       keyTakeaways={keyTakeaways}
       sections={sections}

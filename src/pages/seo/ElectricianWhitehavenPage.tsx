@@ -521,7 +521,7 @@ const sections = [
                 <h4 className="font-bold text-white mb-1">Professional Quoting</h4>
                 <p className="text-white text-sm leading-relaxed">
                   Price Whitehaven jobs accurately with the{' '}
-                  <SEOInternalLink href="/electrical-quoting-app">quoting app</SEOInternalLink>.
+                  <SEOInternalLink href="/tools/electrical-quoting-app">quoting app</SEOInternalLink>.
                   Factor heritage premiums for Georgian town centre properties, planning
                   administration time for listed buildings, and coastal installation requirements
                   into your quotes.
@@ -552,7 +552,7 @@ export default function ElectricianWhitehavenPage() {
       title="Whitehaven Electricians 2026 | EICR + Nuclear Site"
       description="Whitehaven electricians for EICR, EV charging + Sellafield-area work. BS 7671:2018+A4:2026 compliant, Electricity North West certified. Book today."
       datePublished="2026-03-27"
-      dateModified="2026-05-18"
+      dateModified="2026-06-10"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Whitehaven"

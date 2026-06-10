@@ -97,7 +97,7 @@ const relatedPages = [
     category: 'Calculator' as const,
   },
   {
-    href: '/earthing-arrangements',
+    href: '/guides/earthing-arrangements',
     title: 'Earthing Arrangements Guide',
     description: 'TN-S, TN-C-S, and TT earthing systems explained.',
     icon: ShieldCheck,
@@ -184,7 +184,7 @@ const sections = [
           </p>
         </div>
         <p>
-          The <SEOInternalLink href="/earthing-arrangements">earthing arrangement</SEOInternalLink>{' '}
+          The <SEOInternalLink href="/guides/earthing-arrangements">earthing arrangement</SEOInternalLink>{' '}
           of an installation directly determines the significance of earth electrode resistance. For
           TN-S and TN-C-S systems, the supply company provides the earth path and RA is not
           relevant. For TT systems, RA is a critical measurement that must be tested and verified.
@@ -662,7 +662,7 @@ export default function HighEarthResistancePage() {
       title="High Earth Resistance | Causes and Solutions for UK"
       description="Complete guide to high earth resistance for UK electricians. Causes, soil conditions, electrode types (rods, plates, tapes)…"
       datePublished="2025-08-01"
-      dateModified="2026-05-18"
+      dateModified="2026-06-10"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Essential Guide"

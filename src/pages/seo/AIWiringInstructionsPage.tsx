@@ -24,7 +24,7 @@ import {
 // -------------------------------------------------------------------
 
 const breadcrumbs = [
-  { label: 'AI Tools', href: '/ai-electrician-tools' },
+  { label: 'AI Tools', href: '/tools/ai-electrician' },
   { label: 'AI Wiring Instructions', href: '/tools/ai-wiring-instructions' },
 ];
 
@@ -83,7 +83,7 @@ const faqs = [
 
 const relatedPages: RelatedPage[] = [
   {
-    href: '/tools/ai-circuit-designer',
+    href: '/ai-circuit-designer',
     title: 'AI Circuit Designer',
     description:
       'Design complete electrical circuits with automatic cable sizing, protection device selection, and voltage drop verification.',
@@ -397,7 +397,7 @@ const sections = [
         <p>
           The regulation references also help apprentices connect their practical work with the
           theory they learn in{' '}
-          <SEOInternalLink href="/eighteenth-edition-course">
+          <SEOInternalLink href="/training/18th-edition-course">
             18th Edition course studies
           </SEOInternalLink>
           . Understanding why a cable must be in a safe zone (not just that it must) deepens their
@@ -424,7 +424,7 @@ export default function AIWiringInstructionsPage() {
       title="AI Wiring Instructions | Step-by-Step Guidance"
       description="Get step-by-step wiring instructions for any UK electrical circuit type. Circuit-specific guides, cable routing, connection diagrams…"
       datePublished="2025-08-01"
-      dateModified="2026-05-18"
+      dateModified="2026-06-10"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="AI Wiring Guidance"

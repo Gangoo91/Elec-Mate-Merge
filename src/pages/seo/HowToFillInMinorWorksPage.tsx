@@ -21,7 +21,7 @@ export default function HowToFillInMinorWorksPage() {
       title="How to Fill In a Minor Works Certificate | Step by Step"
       description="Step-by-step guide to completing a Minor Works Certificate (BS 7671 Appendix 6). Every section explained — description of work, essential tests…"
       datePublished="2025-05-15"
-      dateModified="2026-05-18"
+      dateModified="2026-06-10"
       breadcrumbs={[
         { label: 'Guides', href: '/guides' },
         {
@@ -274,7 +274,7 @@ export default function HowToFillInMinorWorksPage() {
                     circuits read well above 100 megohms. Record the result in megohms. Ensure all
                     loads are disconnected and all switches are in the on position during the test.
                     For more detail, see the{' '}
-                    <SEOInternalLink href="/how-to-test-insulation-resistance">
+                    <SEOInternalLink href="/guides/insulation-resistance-testing-bs7671">
                       insulation resistance testing guide
                     </SEOInternalLink>
                     .
@@ -615,7 +615,7 @@ export default function HowToFillInMinorWorksPage() {
       ]}
       relatedPages={[
         {
-          href: '/minor-works-certificate',
+          href: '/tools/minor-works-certificate',
           title: 'Minor Works Certificate',
           description: 'Complete guide to the Minor Works Certificate format.',
           icon: FileText,
@@ -636,14 +636,14 @@ export default function HowToFillInMinorWorksPage() {
           category: 'Certification',
         },
         {
-          href: '/how-to-test-insulation-resistance',
+          href: '/guides/insulation-resistance-testing-bs7671',
           title: 'Insulation Resistance Testing',
           description: 'How to test insulation resistance correctly.',
           icon: Zap,
           category: 'Testing',
         },
         {
-          href: '/testing-sequence-guide',
+          href: '/guides/testing-sequence-guide',
           title: 'Testing Sequence Guide',
           description: 'The correct order of tests for initial verification.',
           icon: ListOrdered,

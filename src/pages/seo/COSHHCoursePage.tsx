@@ -208,7 +208,7 @@ const sections = [
           rosin which produces toxic fumes when heated. Inhalation of soldering fumes can cause
           occupational asthma — a condition that, once developed, means permanent sensitivity and
           potentially the end of soldering work. Electricians carrying out{' '}
-          <SEOInternalLink href="/inspection-testing-course">
+          <SEOInternalLink href="/training/inspection-and-testing">
             inspection and testing
           </SEOInternalLink>{' '}
           work should also be aware of flux residues on older installations.

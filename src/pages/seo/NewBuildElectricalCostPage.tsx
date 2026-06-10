@@ -114,7 +114,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Certificate',
   },
   {
-    href: '/electrical-quoting-app',
+    href: '/tools/electrical-quoting-app',
     title: 'Electrical Quoting App',
     description:
       'Quote new build electrical packages with per-plot pricing and specification levels.',
@@ -455,7 +455,7 @@ const sections = [
                 <p className="text-white text-sm leading-relaxed">
                   Calculate your cost per house type (based on the outlet schedule), then quote the
                   development in phases. Use Elec-Mate's{' '}
-                  <SEOInternalLink href="/electrical-quoting-app">quoting app</SEOInternalLink> to
+                  <SEOInternalLink href="/tools/electrical-quoting-app">quoting app</SEOInternalLink> to
                   build per-plot pricing templates that you can replicate across the development.
                 </p>
               </div>
@@ -509,7 +509,7 @@ export default function NewBuildElectricalCostPage() {
       title="New Build Electrical Cost Per m² UK 2026 | Real Pricing"
       description="What it actually costs to wire a new house in 2026: £35–£85/m² breakdown — first fix, second fix, DB + DNO connection. Domestic vs spec-build pricing."
       datePublished="2026-03-27"
-      dateModified="2026-05-18"
+      dateModified="2026-06-10"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Cost Guide"

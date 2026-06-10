@@ -365,7 +365,7 @@ const sections = [
               <ShieldCheck className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>
-                  <SEOInternalLink href="/how-to-test-insulation-resistance">
+                  <SEOInternalLink href="/guides/insulation-resistance-testing-bs7671">
                     Insulation resistance testing
                   </SEOInternalLink>
                 </strong>{' '}
@@ -637,7 +637,7 @@ export default function ElectricalSurveyCostPage() {
       title="Electrical Survey Cost UK 2026 | What to Expect"
       description="Complete guide to electrical survey costs in the UK for 2026. Pre-purchase survey prices, commercial EICR costs, large installation assessments…"
       datePublished="2025-06-15"
-      dateModified="2026-05-18"
+      dateModified="2026-06-10"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Cost Guide"

@@ -338,7 +338,7 @@ const relatedPages = [
     category: 'Training',
   },
   {
-    href: '/manual-handling-course',
+    href: '/training/manual-handling',
     title: 'Manual Handling Course',
     description:
       'Manual handling technique and risk assessment — a key HS&E test topic for construction workers.',

@@ -847,7 +847,7 @@ export default function PATTestingPage() {
             <SEOInternalLink href="/guides/polarity-testing-guide">
               Polarity Testing Procedure
             </SEOInternalLink>
-            <SEOInternalLink href="/rcd-testing-guide">RCD Testing Guide UK</SEOInternalLink>
+            <SEOInternalLink href="/tools/rcd-testing-guide">RCD Testing Guide UK</SEOInternalLink>
             <SEOInternalLink href="/guides/testing-sequence-guide">
               Electrical Testing Sequence BS 7671
             </SEOInternalLink>

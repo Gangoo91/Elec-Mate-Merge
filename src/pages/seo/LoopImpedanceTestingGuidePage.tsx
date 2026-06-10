@@ -97,7 +97,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Guide',
   },
   {
-    href: '/rcd-testing-guide',
+    href: '/tools/rcd-testing-guide',
     title: 'RCD Testing Guide',
     description: 'Half-rated, rated, and 5× current RCD test procedures.',
     icon: ShieldCheck,
@@ -595,7 +595,7 @@ export default function LoopImpedanceTestingGuidePage() {
       title="Ze vs Zs Explained: Loop Impedance Testing UK"
       description="Difference between Ze and Zs: how to measure each, max Zs values for Type B/C MCBs, prospective fault current, BS 7671 + GN3 test procedure explained."
       datePublished="2026-03-27"
-      dateModified="2026-05-22"
+      dateModified="2026-06-10"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Testing Guide"

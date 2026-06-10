@@ -633,7 +633,7 @@ export default function RCBOInstallationGuidePage() {
       title="RCBO Installation Guide — Types, Costs, and BS 7671"
       description="Complete guide to RCBO installation for UK electricians. Covers Type A, B, and F RCBOs, nuisance tripping on LED circuits, consumer unit compatibility…"
       datePublished="2024-07-01"
-      dateModified="2026-05-18"
+      dateModified="2026-06-10"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Guide"

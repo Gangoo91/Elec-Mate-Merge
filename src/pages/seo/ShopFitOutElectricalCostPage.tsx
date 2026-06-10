@@ -110,7 +110,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Tool',
   },
   {
-    href: '/electrical-quoting-app',
+    href: '/tools/electrical-quoting-app',
     title: 'Electrical Quoting App',
     description: 'Create detailed, itemised quotes for commercial fit-out projects.',
     icon: PoundSterling,
@@ -644,7 +644,7 @@ const sections = [
                 <h4 className="font-bold text-white mb-1">Commercial Quoting</h4>
                 <p className="text-white text-sm leading-relaxed">
                   Create detailed, itemised commercial quotes with Elec-Mate's{' '}
-                  <SEOInternalLink href="/electrical-quoting-app">quoting app</SEOInternalLink>.
+                  <SEOInternalLink href="/tools/electrical-quoting-app">quoting app</SEOInternalLink>.
                   Lighting, power, emergency lighting, fire alarm, data cabling — all broken down
                   with materials, labour, and your margins. Present a professional quotation to the
                   main contractor or tenant. New to commercial pricing? Read{' '}
@@ -691,7 +691,7 @@ export default function ShopFitOutElectricalCostPage() {
       title="Shop Fit-Out Electrical Cost UK 2026 | Commercial Pricing"
       description="Shop fit-out electrical installation cost in the UK 2026: £3,000–£15,000+ depending on size, lighting, sockets, EPOS power, CCTV, BS 7671 EIC."
       datePublished="2026-03-27"
-      dateModified="2026-05-18"
+      dateModified="2026-06-10"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Cost Guide"

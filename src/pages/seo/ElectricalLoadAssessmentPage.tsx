@@ -22,7 +22,7 @@ export default function ElectricalLoadAssessmentPage() {
       title="Electrical Load Assessment | Maximum Demand Guide"
       description="Electrical load assessments + max demand calculations for UK electricians. Diversity factors, single + three-phase, supply upgrades, DNO submissions."
       datePublished="2026-01-22"
-      dateModified="2026-05-18"
+      dateModified="2026-06-10"
       breadcrumbs={[
         { label: 'Guides', href: '/guides' },
         { label: 'Load Assessment', href: '/guides/electrical-load-assessment' },

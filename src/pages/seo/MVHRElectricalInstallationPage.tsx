@@ -119,7 +119,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Guide',
   },
   {
-    href: '/electrical-quoting-app',
+    href: '/tools/electrical-quoting-app',
     title: 'Electrical Quoting App',
     description: 'Quote MVHR electrical work professionally with itemised costs.',
     icon: Wrench,
@@ -544,7 +544,7 @@ const sections = [
                 <h4 className="font-bold text-white mb-1">Quoting App</h4>
                 <p className="text-white text-sm leading-relaxed">
                   Price MVHR electrical work with Elec-Mate's{' '}
-                  <SEOInternalLink href="/electrical-quoting-app">quoting app</SEOInternalLink>.
+                  <SEOInternalLink href="/tools/electrical-quoting-app">quoting app</SEOInternalLink>.
                   Dedicated circuit, boost switches, condensate pump, duct heater — all itemised.
                 </p>
               </div>
@@ -583,7 +583,7 @@ export default function MVHRElectricalInstallationPage() {
       title="MVHR Electrical Installation | Ventilation Wiring Guide"
       description="Complete guide to MVHR electrical installation in the UK. Dedicated circuit, boost switch wiring, summer bypass controls, condensate pump…"
       datePublished="2026-03-27"
-      dateModified="2026-05-18"
+      dateModified="2026-06-10"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Emerging Technology"

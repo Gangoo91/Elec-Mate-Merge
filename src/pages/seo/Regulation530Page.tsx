@@ -124,7 +124,7 @@ const relatedPages = [
     category: 'Guide' as const,
   },
   {
-    href: '/solar-pv-certificate',
+    href: '/tools/solar-pv-certificate',
     title: 'Solar PV Certificate',
     description: 'Digital solar PV installation certificate with A4:2026 compliance fields.',
     icon: FileCheck2,
@@ -455,7 +455,7 @@ const sections = [
         </div>
         <p>
           When specifying protective devices for a{' '}
-          <SEOInternalLink href="/solar-pv-certificate">
+          <SEOInternalLink href="/tools/solar-pv-certificate">
             solar PV installation
           </SEOInternalLink>
           , confirm with the device manufacturer that each device in the bidirectional current path
@@ -696,7 +696,7 @@ export default function Regulation530Page() {
       title="Regulation 530.3.201 BS 7671 | Bidirectional Devices"
       description="Complete guide to Regulation 530.3.201 from BS 7671:2018+A4:2026 (Amendment 4). Bidirectional vs unidirectional switching devices, impact on solar PV…"
       datePublished="2025-09-01"
-      dateModified="2026-05-18"
+      dateModified="2026-06-10"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Amendment 4"

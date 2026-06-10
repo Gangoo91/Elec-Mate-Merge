@@ -491,7 +491,7 @@ const relatedPages = [
     category: 'Guide',
   },
   {
-    href: '/tools/fire-alarm-certificate',
+    href: '/fire-alarm-certificate',
     title: 'Fire Alarm Certificate App',
     description:
       'Generate professional fire alarm certificates with Elec-Mate, including commissioning records.',
@@ -554,7 +554,7 @@ export default function FireAlarmSystemsCoursePage() {
       title={PAGE_TITLE}
       description={PAGE_DESCRIPTION}
       datePublished="2025-06-15"
-      dateModified="2026-05-18"
+      dateModified="2026-06-10"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Fire Safety Training"

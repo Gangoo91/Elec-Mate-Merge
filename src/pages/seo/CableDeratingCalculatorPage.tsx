@@ -23,7 +23,7 @@ export default function CableDeratingCalculatorPage() {
       title="Cable Derating Calculator | Correction Factors Tool"
       description="Calculate cable derating correction factors to BS 7671. Apply Ca (ambient temperature), Cg (grouping), Ci (thermal insulation), and Cf (BS 3036 fuse) correction factors. Free cable derating calculator for UK electricians."
       datePublished="2026-01-22"
-      dateModified="2026-05-18"
+      dateModified="2026-06-10"
       breadcrumbs={[
         { label: 'Tools', href: '/tools' },
         { label: 'Cable Derating Calculator', href: '/tools/cable-derating-calculator' },
@@ -482,7 +482,7 @@ export default function CableDeratingCalculatorPage() {
               </div>
               <p>
                 The Elec-Mate{' '}
-                <SEOInternalLink href="/electrical-testing-calculators">
+                <SEOInternalLink href="/tools/electrical-testing-calculators">
                   electrical calculator suite
                 </SEOInternalLink>{' '}
                 links the derating calculator directly to the cable sizing tables, so once you have
@@ -626,7 +626,7 @@ export default function CableDeratingCalculatorPage() {
           category: 'Calculators',
         },
         {
-          href: '/electrical-testing-calculators',
+          href: '/tools/electrical-testing-calculators',
           title: 'All 50+ Calculators',
           description:
             'Browse the full suite of BS 7671 electrical calculators for cable sizing, testing, and design.',

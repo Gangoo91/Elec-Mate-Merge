@@ -115,7 +115,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Certificate',
   },
   {
-    href: '/guides/consumer-unit-regulations',
+    href: '/consumer-unit-regulations',
     title: 'Consumer Unit Regulations',
     description:
       'Full guide to BS 7671 requirements for consumer units, SPDs, AFDDs, and non-combustible enclosures.',
@@ -308,7 +308,7 @@ const sections = [
       <>
         <p>
           The current edition,{' '}
-          <SEOInternalLink href="/guides/consumer-unit-regulations">
+          <SEOInternalLink href="/consumer-unit-regulations">
             BS 7671:2018+A4:2026
           </SEOInternalLink>
           , consolidates the requirements for domestic consumer units introduced from Amendment 3
@@ -650,7 +650,7 @@ export default function ConsumerUnitUpgradePage() {
       title="Consumer Unit Upgrade | Cost, Regulations & Guide UK"
       description="Complete guide to consumer unit upgrades in the UK. When to upgrade, metal vs plastic requirements, Amendment 4, AFDDs and SPDs, Part P certification…"
       datePublished="2025-05-20"
-      dateModified="2026-05-18"
+      dateModified="2026-06-10"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Installation Guide"

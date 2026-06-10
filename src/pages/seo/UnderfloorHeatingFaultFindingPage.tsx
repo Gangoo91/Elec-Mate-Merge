@@ -558,7 +558,7 @@ const sections = [
                 <h4 className="font-bold text-white mb-1">Quote the Floor Replacement Scope</h4>
                 <p className="text-white text-sm leading-relaxed">
                   When diagnosing a mat fault, use the{' '}
-                  <SEOInternalLink href="/electrical-quoting-app">
+                  <SEOInternalLink href="/tools/electrical-quoting-app">
                     Elec-Mate quoting app
                   </SEOInternalLink>{' '}
                   to produce a detailed quote covering the electrical work element. Present it

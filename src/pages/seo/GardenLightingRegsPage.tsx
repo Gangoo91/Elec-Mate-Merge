@@ -114,7 +114,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Guide',
   },
   {
-    href: '/earthing-arrangements',
+    href: '/guides/earthing-arrangements',
     title: 'Earthing Arrangements Explained',
     description:
       'TN-S, TN-C-S, and TT earthing — critical for outdoor circuits where PME restrictions may apply.',
@@ -624,7 +624,7 @@ export default function GardenLightingRegsPage() {
       title="Garden Lighting Regulations | Outdoor Electrical Guide"
       description="Complete guide to garden lighting regulations for UK electricians. IP ratings, SWA cable burial depths, RCD protection, SELV/PELV options…"
       datePublished="2025-05-10"
-      dateModified="2026-05-18"
+      dateModified="2026-06-10"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Regulations Guide"

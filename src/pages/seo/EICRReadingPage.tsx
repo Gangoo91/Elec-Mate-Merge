@@ -91,6 +91,20 @@ const faqs = [
 
 const relatedPages: RelatedPage[] = [
   {
+    href: '/guides/eicr-cost-reading',
+    title: 'EICR Cost in Reading',
+    description: 'Local EICR price bands by property size, hourly rates, and remedial costs for Reading.',
+    icon: ClipboardCheck,
+    category: 'Guide',
+  },
+  {
+    href: '/guides/eicr-cost-uk',
+    title: 'EICR Cost UK — National Guide',
+    description: 'UK-wide EICR prices by property type and what affects the cost.',
+    icon: ClipboardCheck,
+    category: 'Guide',
+  },
+  {
     href: '/tools/eicr-certificate',
     title: 'EICR Explained',
     description:
@@ -543,7 +557,7 @@ const sections = [
                 <p className="text-white text-sm leading-relaxed">
                   When C1 or C2 observations are identified, quote the remedial work on the day
                   using the{' '}
-                  <SEOInternalLink href="/electrical-quoting-app">
+                  <SEOInternalLink href="/tools/electrical-quoting-app">
                     Elec-Mate quoting app
                   </SEOInternalLink>
                   . Reading landlords must complete remedial work within 28 days — the electrician

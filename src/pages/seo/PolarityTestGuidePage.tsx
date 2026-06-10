@@ -90,7 +90,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Guide',
   },
   {
-    href: '/rcd-testing-guide',
+    href: '/tools/rcd-testing-guide',
     title: 'RCD Testing Guide',
     description: 'Half-rated, rated, and 5 times current RCD test procedures.',
     icon: ShieldCheck,
@@ -587,7 +587,7 @@ export default function PolarityTestGuidePage() {
       title="Polarity Test UK: How to Test for Polarity (BS 7671)"
       description="How to do a polarity test (UK): dead test (continuity method), live test sequence, common errors, BS 7671 + GN3 procedure, what fails an EICR."
       datePublished="2026-03-27"
-      dateModified="2026-05-22"
+      dateModified="2026-06-10"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Testing Guide"

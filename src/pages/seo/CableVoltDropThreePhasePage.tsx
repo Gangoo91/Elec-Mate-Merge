@@ -9,7 +9,7 @@ import { Calculator, Cable, BarChart3, Shield, BookOpen, Activity, Ruler } from 
 // -------------------------------------------------------------------
 
 const breadcrumbs = [
-  { label: 'Calculators', href: '/electrical-testing-calculators' },
+  { label: 'Calculators', href: '/tools/electrical-testing-calculators' },
   { label: 'Three Phase Voltage Drop', href: '/tools/cable-volt-drop-three-phase' },
 ];
 
@@ -115,7 +115,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Guide',
   },
   {
-    href: '/electrical-testing-calculators',
+    href: '/tools/electrical-testing-calculators',
     title: 'All Electrical Calculators',
     description:
       '70+ BS 7671 compliant calculators for UK electricians. Voltage drop, cable sizing, fault current, and more.',
@@ -644,7 +644,7 @@ export default function CableVoltDropThreePhasePage() {
       title="3 Phase Voltage Drop Calculator (Free) — BS 7671 UK"
       description="Free 3-phase voltage drop calculator: √3 (1.732) factor, balanced + unbalanced loads, SWA + multicore. 5% power + 3% lighting limits — instant pass/fail."
       datePublished="2025-06-15"
-      dateModified="2026-05-22"
+      dateModified="2026-06-10"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="BS 7671 Compliant"

@@ -230,7 +230,7 @@ export default function CashFlowPlannerPage() {
                 business analytics dashboard
               </SEOInternalLink>{' '}
               to track profitability alongside cash position, and use the{' '}
-              <SEOInternalLink href="/electrician-invoice-app">invoice app</SEOInternalLink> to
+              <SEOInternalLink href="/tools/electrician-invoice-app">invoice app</SEOInternalLink> to
               reduce debtor days with automatic payment reminders.
             </p>
           </div>
@@ -378,7 +378,7 @@ export default function CashFlowPlannerPage() {
               Over 430 UK electricians trust Elec-Mate to manage their business finances. The
               platform complies with BS 7671:2018+A4:2026 for all technical calculations and is
               fully GDPR compliant. All financial data is encrypted and securely stored. Your
-              subscription starts with a 7-day free trial — no card required, cancel anytime.
+              subscription starts with a 7-day free trial — no charge until day 8, cancel anytime.
             </p>
           </div>
         </div>

@@ -893,7 +893,7 @@ export default function SolarPVCertificateRequirementsPage() {
       title="Solar PV Certificate Requirements | MCS UK"
       description="Complete guide to solar PV certificate requirements in the UK. Covers EIC, MCS certification, G98/G99 DNO notification, handover documentation…"
       datePublished="2026-02-01"
-      dateModified="2026-05-29"
+      dateModified="2026-06-10"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Certificates"

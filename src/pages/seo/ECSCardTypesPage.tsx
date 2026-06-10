@@ -595,7 +595,7 @@ const sections = [
           <ol className="space-y-4 text-white list-decimal list-inside">
             <li>
               <strong>Apprentice card (red)</strong> — start your apprenticeship, study{' '}
-              <SEOInternalLink href="/level2-electrical">Level 2</SEOInternalLink> and{' '}
+              <SEOInternalLink href="/training/level-2-electrical">Level 2</SEOInternalLink> and{' '}
               <SEOInternalLink href="/guides/nvq-level-3-electrical">Level 3</SEOInternalLink> at
               college while gaining on-site experience.
             </li>
@@ -642,7 +642,7 @@ export default function ECSCardTypesPage() {
       title="ECS Card Types | Which Card Do You Need?"
       description="Complete guide to ECS card types for electricians in the UK. Covers Apprentice, Provisional, Installation Electrician (gold), and Technician cards."
       datePublished="2025-05-10"
-      dateModified="2026-05-29"
+      dateModified="2026-06-10"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Career Guide"

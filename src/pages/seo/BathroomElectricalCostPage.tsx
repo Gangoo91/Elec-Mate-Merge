@@ -114,7 +114,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Certificate',
   },
   {
-    href: '/electrical-quoting-app',
+    href: '/tools/electrical-quoting-app',
     title: 'Electrical Quoting App',
     description:
       'Quote bathroom electrical work with itemised materials, labour, and professional PDF output.',
@@ -493,7 +493,7 @@ const sections = [
                   Quote each fitting separately — downlights, fan, shaver socket, towel rail
                   connection, underfloor heating, shower circuit. This makes the quote transparent
                   and allows the customer to adjust scope. Use Elec-Mate's{' '}
-                  <SEOInternalLink href="/electrical-quoting-app">
+                  <SEOInternalLink href="/tools/electrical-quoting-app">
                     quoting app
                   </SEOInternalLink>{' '}
                   for professional PDF quotes.

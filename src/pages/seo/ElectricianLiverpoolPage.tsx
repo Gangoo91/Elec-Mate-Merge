@@ -114,7 +114,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Guide',
   },
   {
-    href: '/electrical-quoting-app',
+    href: '/tools/electrical-quoting-app',
     title: 'Quoting App',
     description:
       'Quote rewires, consumer unit upgrades, and commercial fit-outs with accurate Liverpool pricing.',
@@ -570,7 +570,7 @@ const sections = [
                 <h4 className="font-bold text-white mb-1">Professional Quoting</h4>
                 <p className="text-white text-sm leading-relaxed">
                   Price Liverpool jobs accurately with the{' '}
-                  <SEOInternalLink href="/electrical-quoting-app">quoting app</SEOInternalLink>.
+                  <SEOInternalLink href="/tools/electrical-quoting-app">quoting app</SEOInternalLink>.
                   From a standard terraced house rewire to a Baltic Triangle commercial fit-out,
                   itemise materials, labour, testing, and certification. Professional PDF quotes
                   give you the edge in a competitive Liverpool market.
@@ -600,7 +600,7 @@ export default function ElectricianLiverpoolPage() {
       title="Electrician in Liverpool | Qualified Electricians 2026"
       description="Find qualified electricians in Liverpool. SP Energy Networks DNO, dock area regeneration, conservation areas, terraced house rewiring, HMO compliance…"
       datePublished="2026-03-27"
-      dateModified="2026-05-18"
+      dateModified="2026-06-10"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Liverpool"

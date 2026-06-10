@@ -135,6 +135,12 @@ export interface GeneratedGuideConfig {
   badge?: string;
   badgeIcon?: IconName;
   breadcrumbLabel: string;
+  /**
+   * Optional intermediate hub crumb between "Guides" and this page, e.g. the
+   * national cost page above a city page. Improves BreadcrumbList schema and
+   * gives every spoke a crawlable link up to its cluster hub.
+   */
+  breadcrumbParent?: { label: string; href: string };
   heroPrefix: string;
   heroHighlight?: string;
   heroSuffix?: string;
@@ -330,6 +336,7 @@ export default function GeneratedGuidePage({ config }: { config: GeneratedGuideC
       dateModified={config.dateModified}
       breadcrumbs={[
         { label: 'Guides', href: '/guides' },
+        ...(config.breadcrumbParent ? [config.breadcrumbParent] : []),
         { label: config.breadcrumbLabel, href: config.pagePath },
       ]}
       tocItems={tocItems}

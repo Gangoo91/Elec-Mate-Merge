@@ -328,7 +328,7 @@ const sections = [
           (two hands and one foot, or two feet and one hand). This means you can only use one hand
           for work — which limits the type of electrical work that can be safely carried out from a
           ladder. Installing a{' '}
-          <SEOInternalLink href="/guides/consumer-unit-regulations">consumer unit</SEOInternalLink>,
+          <SEOInternalLink href="/consumer-unit-regulations">consumer unit</SEOInternalLink>,
           fitting multiple accessories, or pulling cables are all tasks that typically require two
           hands and should be done from a more stable platform.
         </p>

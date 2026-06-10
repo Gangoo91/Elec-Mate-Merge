@@ -181,7 +181,7 @@ export default function BestElectricalTrainingAppPage() {
               <p>
                 What makes Elec-Mate's training unique is that it sits alongside professional tools.
                 You can study the 18th Edition during your lunch break, then use the{' '}
-                <SEOInternalLink href="/electrical-testing-calculators">
+                <SEOInternalLink href="/tools/electrical-testing-calculators">
                   70+ BS 7671 calculators
                 </SEOInternalLink>{' '}
                 to apply what you have learned on site. You can revise safe isolation in the
@@ -502,7 +502,7 @@ export default function BestElectricalTrainingAppPage() {
       ]}
       relatedPages={[
         {
-          href: '/eighteenth-edition-course',
+          href: '/training/18th-edition-course',
           title: '18th Edition Course',
           description:
             'Complete BS 7671:2018+A4:2026 course with practice questions, flashcards, and AI study assistant.',
@@ -510,7 +510,7 @@ export default function BestElectricalTrainingAppPage() {
           category: 'Training',
         },
         {
-          href: '/am2-exam-preparation',
+          href: '/training/am2-exam-preparation',
           title: 'AM2 Exam Preparation',
           description:
             'AM2 simulator with practical scenarios, testing sequences, and assessor expectations.',
@@ -533,7 +533,7 @@ export default function BestElectricalTrainingAppPage() {
           category: 'Guide',
         },
         {
-          href: '/electrical-testing-calculators',
+          href: '/tools/electrical-testing-calculators',
           title: 'Electrical Calculators',
           description:
             '70+ BS 7671 calculators for cable sizing, voltage drop, maximum demand, and more.',

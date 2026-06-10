@@ -611,7 +611,7 @@ const sections = [
                 <p className="text-white text-sm leading-relaxed">
                   When C2 findings such as unprotected consumer units come up — which is common in
                   Sunderland's older housing stock — quote the remedial work immediately using the{' '}
-                  <SEOInternalLink href="/electrical-quoting-app">
+                  <SEOInternalLink href="/tools/electrical-quoting-app">
                     Elec-Mate quoting app
                   </SEOInternalLink>
                   . Landlords under the 28-day clock almost always proceed with the electrician who
@@ -666,7 +666,7 @@ export default function EICRSunderlandPage() {
       title="EICR Sunderland | Electrical Inspection Sunderland"
       description="EICR requirements for Sunderland landlords and homeowners. Legal obligations under the 2020 Regulations, Sunderland City Council enforcement…"
       datePublished="2026-03-27"
-      dateModified="2026-05-29"
+      dateModified="2026-06-10"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="EICR Guide"

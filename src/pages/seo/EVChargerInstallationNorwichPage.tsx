@@ -560,7 +560,7 @@ const sections = [
                 <p className="text-white text-sm leading-relaxed">
                   Generate professional EV charger quotes — including armoured cable, earth
                   electrodes, and consumer unit upgrades — using the{' '}
-                  <SEOInternalLink href="/electrical-quoting-app">
+                  <SEOInternalLink href="/tools/electrical-quoting-app">
                     Elec-Mate quoting app
                   </SEOInternalLink>
                   . Include OZEV grant deductions automatically and send a professional PDF quote

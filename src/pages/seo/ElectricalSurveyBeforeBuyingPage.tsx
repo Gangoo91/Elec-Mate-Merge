@@ -637,7 +637,7 @@ const sections = [
                 <h4 className="font-bold text-white mb-1">Quote Remedial Work on the Day</h4>
                 <p className="text-white text-sm leading-relaxed">
                   When C1 or C2 findings are identified, quote the remedial work immediately using
-                  the <SEOInternalLink href="/electrical-quoting-app">quoting app</SEOInternalLink>.
+                  the <SEOInternalLink href="/tools/electrical-quoting-app">quoting app</SEOInternalLink>.
                   Buyers need quotes quickly to negotiate with vendors. The electrician who provides
                   a quote on the day of the EICR almost always wins the work.
                 </p>
@@ -665,7 +665,7 @@ export default function ElectricalSurveyBeforeBuyingPage() {
       title="Electrical Survey When Buying a House UK | EICR for House"
       description="Do you need an EICR when buying a house? Not legally required but strongly recommended for properties over 25 years old."
       datePublished="2026-03-27"
-      dateModified="2026-05-18"
+      dateModified="2026-06-10"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Buyer's Guide"

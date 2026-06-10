@@ -99,7 +99,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Certificate',
   },
   {
-    href: '/electrical-quoting-app',
+    href: '/tools/electrical-quoting-app',
     title: 'Electrical Quoting App',
     description: 'Quote storage heater replacement jobs accurately.',
     icon: PoundSterling,
@@ -500,7 +500,7 @@ const sections = [
                 <p className="text-white text-sm leading-relaxed">
                   Storage heater replacement often reveals inadequate consumer units with
                   insufficient spare ways or no RCD protection. Use the{' '}
-                  <SEOInternalLink href="/electrical-quoting-app">
+                  <SEOInternalLink href="/tools/electrical-quoting-app">
                     quoting app
                   </SEOInternalLink>{' '}
                   to present a combined storage heater and consumer unit upgrade quote that secures

@@ -114,7 +114,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Guide',
   },
   {
-    href: '/electrical-quoting-app',
+    href: '/tools/electrical-quoting-app',
     title: 'Quoting App',
     description:
       'Quote guesthouse rewires, HMO electrical upgrades, and consumer unit replacements in Blackpool.',
@@ -461,7 +461,7 @@ const sections = [
                 <h4 className="font-bold text-white mb-1">Professional Quoting for Guesthouses</h4>
                 <p className="text-white text-sm leading-relaxed">
                   Use the{' '}
-                  <SEOInternalLink href="/electrical-quoting-app">quoting app</SEOInternalLink> to
+                  <SEOInternalLink href="/tools/electrical-quoting-app">quoting app</SEOInternalLink> to
                   produce detailed quotes for Blackpool guesthouse rewires and HMO upgrades.
                   Professional quotes help win higher-value commercial jobs.
                 </p>
@@ -491,7 +491,7 @@ export default function ElectricianBlackpoolPage() {
       title="Electrician in Blackpool | Local Electricians 2026"
       description="Find qualified electricians in Blackpool. Part P compliance, NICEIC registered, EICR for guesthouses and HMOs, guesthouse rewiring…"
       datePublished="2026-03-27"
-      dateModified="2026-05-18"
+      dateModified="2026-06-10"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Blackpool"

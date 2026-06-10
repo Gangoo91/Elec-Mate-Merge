@@ -113,7 +113,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Guide',
   },
   {
-    href: '/electrical-quoting-app',
+    href: '/tools/electrical-quoting-app',
     title: 'Quoting App',
     description:
       'Quote rewires, EICRs, and commercial work with professional PDF quotes sent from site.',
@@ -462,7 +462,7 @@ const sections = [
           These rates are indicative for 2026 and will vary based on property access, complexity,
           and material costs. Flood-affected property work and listed building work command the
           highest premiums. Use Elec-Mate's{' '}
-          <SEOInternalLink href="/electrical-quoting-app">quoting app</SEOInternalLink> to produce
+          <SEOInternalLink href="/tools/electrical-quoting-app">quoting app</SEOInternalLink> to produce
           accurate, itemised quotes that reflect the true cost of specialist work.
         </p>
       </>
@@ -522,7 +522,7 @@ const sections = [
                 <p className="text-white text-sm leading-relaxed">
                   Price heritage rewires, flood remediation, and commercial maintenance contracts
                   with Elec-Mate's{' '}
-                  <SEOInternalLink href="/electrical-quoting-app">quoting app</SEOInternalLink>.
+                  <SEOInternalLink href="/tools/electrical-quoting-app">quoting app</SEOInternalLink>.
                   Itemised PDF quotes with your branding, sent from the survey.
                 </p>
               </div>
@@ -550,7 +550,7 @@ export default function ElectricianYorkPage() {
       title="Electrician in York | Local Electrical Guide"
       description="Complete guide for electricians working in York. Northern Powergrid DNO, listed building electrical work, flood risk safety…"
       datePublished="2026-03-27"
-      dateModified="2026-05-18"
+      dateModified="2026-06-10"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Location Guide"

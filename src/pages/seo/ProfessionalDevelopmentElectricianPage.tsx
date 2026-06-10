@@ -23,7 +23,7 @@ import {
 // -------------------------------------------------------------------
 
 const breadcrumbs = [
-  { label: 'Career', href: '/guides/how-to-become-electrician' },
+  { label: 'Career', href: '/guides/how-to-become-an-electrician' },
   { label: 'Professional Development', href: '/guides/professional-development-electrician' },
 ];
 
@@ -91,7 +91,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Guide',
   },
   {
-    href: '/eighteenth-edition-course',
+    href: '/training/18th-edition-course',
     title: '18th Edition Course',
     description:
       'Study for the C&G 2382 18th Edition qualification with structured training content.',
@@ -99,7 +99,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Training',
   },
   {
-    href: '/city-guilds2391',
+    href: '/training/city-guilds-2391',
     title: 'C&G 2391 Guide',
     description: 'Everything you need to know about the inspection and testing qualification.',
     icon: ClipboardCheck,
@@ -273,7 +273,7 @@ const sections = [
             </h3>
             <p className="text-white text-sm leading-relaxed">
               If you qualified through the installation route and do not hold{' '}
-              <SEOInternalLink href="/city-guilds2391">C&G 2391</SEOInternalLink>,
+              <SEOInternalLink href="/training/city-guilds-2391">C&G 2391</SEOInternalLink>,
               adding this qualification opens up periodic inspection work — a steady, recurring
               income stream, particularly landlord EICRs.
             </p>

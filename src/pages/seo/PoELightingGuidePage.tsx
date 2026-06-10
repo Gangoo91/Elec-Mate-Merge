@@ -606,7 +606,7 @@ const sections = [
                 <h4 className="font-bold text-white mb-1">Quoting App</h4>
                 <p className="text-white text-sm leading-relaxed">
                   Quote PoE lighting electrical work with Elec-Mate's{' '}
-                  <SEOInternalLink href="/electrical-quoting-app">quoting app</SEOInternalLink>.
+                  <SEOInternalLink href="/tools/electrical-quoting-app">quoting app</SEOInternalLink>.
                   Mains supply circuits, switch installation, containment, and testing — all
                   itemised.
                 </p>
@@ -646,7 +646,7 @@ export default function PoELightingGuidePage() {
       title="Power over Ethernet Lighting | PoE Installation Guide"
       description="Complete guide to Power over Ethernet (PoE) lighting installation. IEEE 802.3bt (90W), Cat6/Cat6a cabling, PoE switches, commercial applications…"
       datePublished="2026-03-27"
-      dateModified="2026-05-18"
+      dateModified="2026-06-10"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Emerging Technology"

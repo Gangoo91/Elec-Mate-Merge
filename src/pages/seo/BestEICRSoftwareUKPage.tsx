@@ -135,7 +135,7 @@ export default function BestEICRSoftwareUKPage() {
                 <strong>Beyond EICRs:</strong> Elec-Mate includes 7 additional certificate types
                 (EIC, Minor Works, EV Charger, Solar PV, Fire Alarm, Emergency Lighting, PAT), 70+
                 BS 7671{' '}
-                <SEOInternalLink href="/electrical-testing-calculators">
+                <SEOInternalLink href="/tools/electrical-testing-calculators">
                   electrical calculators
                 </SEOInternalLink>
                 , and business tools for quoting, invoicing, and payment collection. Training
@@ -182,7 +182,7 @@ export default function BestEICRSoftwareUKPage() {
                 classification). Limited calculator suite compared to specialist platforms. No
                 training courses. Business management features are limited. For a detailed
                 comparison, see our{' '}
-                <SEOInternalLink href="/compare/elec-mate-vs-icertifi">
+                <SEOInternalLink href="/elec-mate-vs-i-certifi">
                   Elec-Mate vs iCertifi
                 </SEOInternalLink>{' '}
                 page.
@@ -520,7 +520,7 @@ export default function BestEICRSoftwareUKPage() {
           category: 'Comparison',
         },
         {
-          href: '/compare/elec-mate-vs-icertifi',
+          href: '/elec-mate-vs-i-certifi',
           title: 'Elec-Mate vs iCertifi',
           description:
             'Head-to-head comparison with iCertifi covering certificates, calculators, AI tools, and training.',

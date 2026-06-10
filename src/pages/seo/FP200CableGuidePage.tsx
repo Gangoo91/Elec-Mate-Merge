@@ -416,7 +416,7 @@ export default function FP200CableGuidePage() {
             <>
               <p>
                 Testing FP200 cable installations follows the standard{' '}
-                <SEOInternalLink href="/testing-sequence-guide">
+                <SEOInternalLink href="/guides/testing-sequence-guide">
                   BS 7671 testing sequence
                 </SEOInternalLink>
                 . Unlike MICC cable, FP200 does not have moisture sensitivity issues, so insulation

@@ -533,7 +533,7 @@ const sections = [
         </div>
         <p>
           Elec-Mate's{' '}
-          <SEOInternalLink href="/tools/ai-circuit-designer">AI circuit designer</SEOInternalLink>{' '}
+          <SEOInternalLink href="/ai-circuit-designer">AI circuit designer</SEOInternalLink>{' '}
           can generate a complete circuit schedule for a domestic installation, specifying radial or
           ring circuits for each area based on the load, floor area, and your design preferences.
         </p>
@@ -580,7 +580,7 @@ const sections = [
             </li>
             <li>
               <strong>
-                <SEOInternalLink href="/rcd-testing-guide">RCD operation.</SEOInternalLink>
+                <SEOInternalLink href="/tools/rcd-testing-guide">RCD operation.</SEOInternalLink>
               </strong>{' '}
               If the circuit is RCD-protected, test using an alternating current test at the rated
               residual operating current (IΔn — 30mA for domestic circuits), as required by BS
@@ -670,7 +670,7 @@ export default function RadialCircuitGuidePage() {
       title="Radial Circuit Cable Size UK: 20A in 2.5mm² / 32A in 4mm²"
       description="Radial circuits to BS 7671:2018+A4:2026: 20A radial in 2.5mm² T&E (up to 50m²), 32A in 4mm² (up to 75m²), MCB/RCBO selection, RCD requirements, testing sequence. Worked examples + cable size tables."
       datePublished="2025-06-15"
-      dateModified="2026-05-22"
+      dateModified="2026-06-10"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Installation Guide"

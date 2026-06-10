@@ -120,7 +120,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Certificate',
   },
   {
-    href: '/guides/consumer-unit-regulations',
+    href: '/consumer-unit-regulations',
     title: 'Consumer Unit Regulations',
     description:
       'Current regulations for consumer units including metal enclosure requirements and RCD protection.',
@@ -279,7 +279,7 @@ const sections = [
           All new circuits must be RCD-protected. Under BS 7671 Regulation 411.3.3, socket outlets
           rated up to 32A must be protected by a 30mA RCD, and Regulation 411.3.4 requires
           additional protection for cables concealed in walls or partitions. If the existing{' '}
-          <SEOInternalLink href="/guides/consumer-unit-regulations">consumer unit</SEOInternalLink>{' '}
+          <SEOInternalLink href="/consumer-unit-regulations">consumer unit</SEOInternalLink>{' '}
           does not have RCD protection, this may trigger a consumer unit upgrade as part of the loft
           conversion project.
         </p>
@@ -628,7 +628,7 @@ const sections = [
                 <h4 className="font-bold text-white mb-1">Quoting App for Accurate Pricing</h4>
                 <p className="text-white text-sm leading-relaxed">
                   Price the loft conversion electrical package with Elec-Mate's{' '}
-                  <SEOInternalLink href="/electrical-quoting-app">quoting app</SEOInternalLink>.
+                  <SEOInternalLink href="/tools/electrical-quoting-app">quoting app</SEOInternalLink>.
                   Materials, labour, margins, and VAT calculated automatically. Send a professional
                   quote to the customer before you leave the survey.
                 </p>
@@ -656,7 +656,7 @@ export default function LoftConversionElectricsPage() {
       title="Loft Conversion Electrics | Wiring Requirements UK"
       description="Complete guide to loft conversion electrics in the UK. Part P notification, new circuits, lighting design, smoke alarms, fire detection…"
       datePublished="2025-06-15"
-      dateModified="2026-05-18"
+      dateModified="2026-06-10"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Installation Guide"

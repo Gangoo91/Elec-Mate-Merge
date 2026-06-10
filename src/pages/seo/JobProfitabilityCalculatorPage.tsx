@@ -422,7 +422,7 @@ export default function JobProfitabilityCalculatorPage() {
               <SEOInternalLink href="/eic-certificate">EIC</SEOInternalLink>, Minor Works, EV
               charger, and more), 8 Elec-AI agents with 12 AI tools, and 46+ training courses.
               Everything works together in one platform. Quotes from the{' '}
-              <SEOInternalLink href="/electrical-quoting-app">quoting tool</SEOInternalLink> feed
+              <SEOInternalLink href="/tools/electrical-quoting-app">quoting tool</SEOInternalLink> feed
               directly into profit tracking, giving you real margin data per job.
             </p>
             <p>

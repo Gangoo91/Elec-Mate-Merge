@@ -101,7 +101,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Guide',
   },
   {
-    href: '/guides/consumer-unit-regulations',
+    href: '/consumer-unit-regulations',
     title: 'Consumer Unit Regulations',
     description:
       'Current regulations for consumer units, MCB types, RCD arrangements, and Amendment 4.',
@@ -109,7 +109,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Guide',
   },
   {
-    href: '/earthing-arrangements',
+    href: '/guides/earthing-arrangements',
     title: 'Earthing Arrangements',
     description: 'TN-S, TN-C-S, and TT earthing systems explained with symbols and diagrams.',
     icon: Zap,
@@ -381,7 +381,7 @@ const sections = [
       <>
         <p>
           Protection device symbols are critical for understanding{' '}
-          <SEOInternalLink href="/guides/consumer-unit-regulations">consumer unit</SEOInternalLink>{' '}
+          <SEOInternalLink href="/consumer-unit-regulations">consumer unit</SEOInternalLink>{' '}
           schedules and circuit diagrams. Each type of protective device has a distinct symbol.
         </p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
@@ -599,7 +599,7 @@ const sections = [
             </li>
             <li>
               <strong>Check the earthing.</strong> Identify the{' '}
-              <SEOInternalLink href="/earthing-arrangements">earthing arrangement</SEOInternalLink>{' '}
+              <SEOInternalLink href="/guides/earthing-arrangements">earthing arrangement</SEOInternalLink>{' '}
               (TN-S, TN-C-S, or TT) and trace the main earth conductor to the earthing terminal.
             </li>
             <li>
@@ -667,7 +667,7 @@ export default function ElectricalSymbolsChartPage() {
       title="UK Electrical Symbols (IEC 60617): 114 Free Symbols"
       description="114 UK electrical symbols to IEC 60617: sockets, switches, RCBOs, FCUs, lighting, fire alarm, fuse spurs. Free SVG chart + per-symbol reference. BS EN 60617 has been withdrawn and replaced by IEC 60617."
       datePublished="2025-11-01"
-      dateModified="2026-05-29"
+      dateModified="2026-06-10"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Reference Guide"

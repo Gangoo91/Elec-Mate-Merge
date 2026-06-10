@@ -104,7 +104,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Guide',
   },
   {
-    href: '/guides/consumer-unit-regulations',
+    href: '/consumer-unit-regulations',
     title: 'Consumer Unit Regulations',
     description: 'Understanding MCBs, RCDs, and circuit protection in your consumer unit.',
     icon: ShieldCheck,
@@ -119,7 +119,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Guide',
   },
   {
-    href: '/minor-works-certificate',
+    href: '/tools/minor-works-certificate',
     title: 'Minor Works Certificate',
     description:
       'Documentation required when replacing or repairing an extractor fan installation.',

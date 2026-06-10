@@ -86,7 +86,7 @@ const faqs = [
 
 const relatedPages = [
   {
-    href: '/how-to-do-safe-isolation',
+    href: '/guides/how-to-do-safe-isolation',
     title: 'Safe Isolation Procedure',
     description:
       'Step-by-step prove-test-prove method for confirming circuits are dead before work begins.',
@@ -189,7 +189,7 @@ const sections = [
           the faceplate and touched the terminals, he received a 230V shock. The supervisor had
           isolated the wrong circuit. The apprentice suffered burns to his hand and was taken to
           hospital. The lesson: always verify isolation yourself using the{' '}
-          <SEOInternalLink href="/how-to-do-safe-isolation">
+          <SEOInternalLink href="/guides/how-to-do-safe-isolation">
             prove-test-prove method
           </SEOInternalLink>
           . Never rely on someone else telling you a circuit is dead.
@@ -501,7 +501,7 @@ const sections = [
         <p>
           <strong>Risk assessment guidance:</strong> Learn to identify hazards, assess risks, and
           select appropriate controls. The AI Health and Safety Agent can generate{' '}
-          <SEOInternalLink href="/rams-generator">RAMS documents</SEOInternalLink> for
+          <SEOInternalLink href="/tools/rams-generator">RAMS documents</SEOInternalLink> for
           specific tasks, helping you understand what a thorough risk assessment looks like in
           practice.
         </p>

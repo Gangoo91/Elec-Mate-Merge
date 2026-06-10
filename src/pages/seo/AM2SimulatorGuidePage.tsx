@@ -91,7 +91,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Guide',
   },
   {
-    href: '/epa-preparation',
+    href: '/training/epa-preparation',
     title: 'EPA Preparation Guide',
     description: 'Complete guide to the End-Point Assessment for electrical apprentices.',
     icon: ClipboardCheck,
@@ -120,7 +120,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Guide',
   },
   {
-    href: '/level3-electrical',
+    href: '/training/level-3-electrical',
     title: 'Level 3 Electrical Course',
     description: 'Study for Level 3 NVQ with structured course content on the Elec-Mate platform.',
     icon: GraduationCap,
@@ -592,7 +592,7 @@ export default function AM2SimulatorGuidePage() {
       title="AM2 Practical Simulator: Timed Scenarios + Fault Diagnosis"
       description="In-app AM2 practical simulator (separate from the online knowledge test mock): timed scenarios, cable termination practice, full testing-sequence walkthrough, fault diagnosis trainer."
       datePublished="2025-06-15"
-      dateModified="2026-05-23"
+      dateModified="2026-06-10"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Apprentice Tool"

@@ -127,7 +127,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Guide',
   },
   {
-    href: '/manual-handling-course',
+    href: '/training/manual-handling',
     title: 'Manual Handling Course',
     description:
       'Manual handling training covering lifting techniques, risk assessment, and injury prevention.',
@@ -135,7 +135,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Training',
   },
   {
-    href: '/rams-generator',
+    href: '/tools/rams-generator',
     title: 'AI RAMS Generator',
     description:
       'Generate compliant Risk Assessments and Method Statements for electrical work on site in minutes.',
@@ -143,7 +143,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Tool',
   },
   {
-    href: '/training/ipaf-training',
+    href: '/ipaf-training',
     title: 'IPAF Training Guide',
     description:
       'IPAF powered access licence categories, training requirements, and renewal guidance for electricians.',
@@ -151,7 +151,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Training',
   },
   {
-    href: '/training/pasma-training',
+    href: '/pasma-training',
     title: 'PASMA Training Guide',
     description:
       'Mobile access tower training for electricians. Assembly, inspection, and safe use on construction sites.',

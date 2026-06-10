@@ -103,7 +103,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Certificate',
   },
   {
-    href: '/electrical-quoting-app',
+    href: '/tools/electrical-quoting-app',
     title: 'Electrical Quoting App',
     description: 'Quote hybrid solar and battery installations accurately.',
     icon: PoundSterling,
@@ -471,7 +471,7 @@ const sections = [
                 <h4 className="font-bold text-white mb-1">Upsell Battery on Every Solar Quote</h4>
                 <p className="text-white text-sm leading-relaxed">
                   Present hybrid system options alongside every solar-only quote using the{' '}
-                  <SEOInternalLink href="/electrical-quoting-app">
+                  <SEOInternalLink href="/tools/electrical-quoting-app">
                     quoting app
                   </SEOInternalLink>
                   . Show the customer the payback difference between solar only and solar plus

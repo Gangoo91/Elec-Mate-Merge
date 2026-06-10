@@ -24,7 +24,7 @@ import {
 // -------------------------------------------------------------------
 
 const breadcrumbs = [
-  { label: 'Calculators', href: '/electrical-testing-calculators' },
+  { label: 'Calculators', href: '/tools/electrical-testing-calculators' },
   { label: 'Reference Methods', href: '/guides/reference-methods-cable-installation' },
 ];
 
@@ -674,7 +674,7 @@ export default function ReferenceMethodsGuidePage() {
       title="BS 7671 Installation Methods: Reference Methods A-G + 100/102"
       description="BS 7671 installation methods explained: reference methods A, B, C, D, E, F, G + numbered methods 100, 102. Current-carrying capacity from Appendix 4 tables."
       datePublished="2025-04-20"
-      dateModified="2026-05-23"
+      dateModified="2026-06-10"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Technical Guide"

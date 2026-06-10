@@ -624,7 +624,7 @@ const sections = [
                 <h4 className="font-bold text-white mb-1">Quote the Full Scope</h4>
                 <p className="text-white text-sm leading-relaxed">
                   Home office enquiries often grow once you meet the customer. Use the{' '}
-                  <SEOInternalLink href="/electrical-quoting-app">quoting app</SEOInternalLink> to
+                  <SEOInternalLink href="/tools/electrical-quoting-app">quoting app</SEOInternalLink> to
                   quickly add data cabling, garden lighting, EV charging, and additional socket
                   circuits to a quote. A comprehensive quote wins more work than a minimum-scope
                   tender.
@@ -653,7 +653,7 @@ export default function HomeOfficeElectricalGuidePage() {
       title="Home Office Electrical Guide UK | Wiring for Working from Home"
       description="Complete electrical guide for home offices in the UK. Dedicated circuits, data point installation, lighting design, EV charging…"
       datePublished="2026-03-27"
-      dateModified="2026-05-18"
+      dateModified="2026-06-10"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Home Office Guide"

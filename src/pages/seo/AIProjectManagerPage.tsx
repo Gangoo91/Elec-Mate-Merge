@@ -25,7 +25,7 @@ import {
 // -------------------------------------------------------------------
 
 const breadcrumbs = [
-  { label: 'AI Tools', href: '/ai-electrician-tools' },
+  { label: 'AI Tools', href: '/tools/ai-electrician' },
   { label: 'AI Project Manager', href: '/tools/ai-project-manager' },
 ];
 
@@ -92,7 +92,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Tool',
   },
   {
-    href: '/tools/ai-circuit-designer',
+    href: '/ai-circuit-designer',
     title: 'AI Circuit Designer',
     description:
       'Design complete electrical circuits with automatic cable sizing, protection device selection, and voltage drop verification.',
@@ -108,7 +108,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Tool',
   },
   {
-    href: '/rams-generator',
+    href: '/tools/rams-generator',
     title: 'RAMS Generator',
     description:
       'Generate site-specific risk assessments and method statements for your project before work begins.',
@@ -233,9 +233,9 @@ const sections = [
           The AI Project Manager integrates with other Elec-Mate tools. The{' '}
           <SEOInternalLink href="/tools/ai-cost-engineer">AI Cost Engineer</SEOInternalLink> can
           price the project plan to produce an accurate quotation. The{' '}
-          <SEOInternalLink href="/tools/ai-circuit-designer">Circuit Designer</SEOInternalLink> can
+          <SEOInternalLink href="/ai-circuit-designer">Circuit Designer</SEOInternalLink> can
           feed circuit specifications into the material list. And the{' '}
-          <SEOInternalLink href="/rams-generator">RAMS Generator</SEOInternalLink> produces
+          <SEOInternalLink href="/tools/rams-generator">RAMS Generator</SEOInternalLink> produces
           the health and safety documentation you need before starting work.
         </p>
       </>

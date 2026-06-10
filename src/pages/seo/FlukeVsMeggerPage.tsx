@@ -444,7 +444,7 @@ export default function FlukeVsMeggerPage() {
               <p>
                 In terms of learning curve, both instruments are straightforward for anyone who has
                 completed a{' '}
-                <SEOInternalLink href="/city-guilds2391">
+                <SEOInternalLink href="/training/city-guilds-2391">
                   City and Guilds 2391 inspection and testing course
                 </SEOInternalLink>
                 . If you trained on a Megger (which is more common in UK training centres), you may
@@ -652,7 +652,7 @@ export default function FlukeVsMeggerPage() {
           category: 'Certificate' as const,
         },
         {
-          href: '/electrical-testing-calculators',
+          href: '/tools/electrical-testing-calculators',
           title: '70+ Electrical Calculators',
           description:
             'Zs verification, cable sizing, voltage drop, PFC, and dozens more. Verify your MFT readings on site.',

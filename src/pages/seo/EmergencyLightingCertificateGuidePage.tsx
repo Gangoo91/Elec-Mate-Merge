@@ -732,7 +732,7 @@ export default function EmergencyLightingCertificateGuidePage() {
       title="Emergency Lighting Certificate Guide | BS 5266 UK"
       description="Complete guide to emergency lighting certificate requirements under BS 5266. Covers completion certificates, verification…"
       datePublished="2026-02-01"
-      dateModified="2026-05-18"
+      dateModified="2026-06-10"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Certificates"

@@ -112,7 +112,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Study Tool',
   },
   {
-    href: '/electrical-quoting-app',
+    href: '/tools/electrical-quoting-app',
     title: 'Electrical Quoting App',
     description: 'Quote jobs professionally from your phone — essential for self-employed electricians.',
     icon: PoundSterling,
@@ -506,7 +506,7 @@ const sections = [
               <PoundSterling className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <span>
                 <strong>Business tools:</strong> Use the{' '}
-                <SEOInternalLink href="/electrical-quoting-app">
+                <SEOInternalLink href="/tools/electrical-quoting-app">
                   Elec-Mate quoting app
                 </SEOInternalLink>{' '}
                 to produce professional quotes from your phone, and the EICR and certificate tools

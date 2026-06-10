@@ -90,7 +90,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Guide',
   },
   {
-    href: '/rcd-testing-guide',
+    href: '/tools/rcd-testing-guide',
     title: 'RCD Testing Guide',
     description: 'Half-rated, rated, and 5× current RCD test procedures.',
     icon: ShieldCheck,
@@ -578,7 +578,7 @@ export default function ContinuityTestingGuidePage() {
       title="CPC + Ring Continuity Testing UK: r1+r2, R1+R2 Method"
       description="Continuity testing for UK electricians: CPC test (R1+R2), ring final end-to-end + cross-connected (r1+rn / r2), acceptable values, BS 7671 + GN3 procedure."
       datePublished="2026-03-27"
-      dateModified="2026-05-22"
+      dateModified="2026-06-10"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Testing Guide"

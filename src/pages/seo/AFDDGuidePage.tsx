@@ -340,7 +340,7 @@ export default function AFDDGuidePage() {
               <p>
                 When specifying AFDDs, most electricians choose combined AFDD/RCBO devices that
                 replace the standard RCBO in the{' '}
-                <SEOInternalLink href="/guides/consumer-unit-regulations">
+                <SEOInternalLink href="/consumer-unit-regulations">
                   consumer unit
                 </SEOInternalLink>
                 . This provides all three levels of protection from a single device, occupying a
@@ -588,7 +588,7 @@ export default function AFDDGuidePage() {
       ]}
       relatedPages={[
         {
-          href: '/guides/consumer-unit-regulations',
+          href: '/consumer-unit-regulations',
           title: 'Consumer Unit Regulations',
           description: 'Metal CU requirements, RCD protection, and Amendment 4.',
           icon: ShieldCheck,

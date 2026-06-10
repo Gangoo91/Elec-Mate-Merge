@@ -763,7 +763,7 @@ const sections = [
                 <p className="text-white text-sm leading-relaxed">
                   As you move into engineering or grow your trade business, professional quoting and
                   invoicing becomes increasingly important. Use the{' '}
-                  <SEOInternalLink href="/electrical-quoting-app">
+                  <SEOInternalLink href="/tools/electrical-quoting-app">
                     Elec-Mate quoting app
                   </SEOInternalLink>{' '}
                   to produce written quotes and invoices that reflect the quality of your work.
@@ -884,7 +884,7 @@ export default function ElectricalEngineeringDegreePage() {
         title="Electrical Engineering Degree UK | BEng vs MEng, CEng"
         description="Complete guide to electrical engineering degrees in the UK. BEng vs MEng, HNC/HND to degree top-up, Chartered Engineer (CEng) routes, IET membership…"
         datePublished="2026-03-27"
-        dateModified="2026-05-29"
+        dateModified="2026-06-10"
         breadcrumbs={breadcrumbs}
         tocItems={tocItems}
         badge="Career Guide"

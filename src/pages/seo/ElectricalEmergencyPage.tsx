@@ -411,7 +411,7 @@ const sections = [
         </div>
         <p>
           After a flood, the electrician will carry out comprehensive{' '}
-          <SEOInternalLink href="/how-to-test-insulation-resistance">
+          <SEOInternalLink href="/guides/insulation-resistance-testing-bs7671">
             insulation resistance testing
           </SEOInternalLink>{' '}
           on every circuit, inspect all accessories and junction boxes for water damage, and verify

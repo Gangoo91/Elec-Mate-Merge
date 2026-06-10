@@ -111,7 +111,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Certificate',
   },
   {
-    href: '/electrical-quoting-app',
+    href: '/tools/electrical-quoting-app',
     title: 'Electrical Quoting App',
     description: 'Quote salon electrical work with station-by-station pricing.',
     icon: Calculator,
@@ -392,7 +392,7 @@ const sections = [
                 <p className="text-white text-sm leading-relaxed">
                   Get the salon floor plan showing every styling station, wash station, reception
                   desk, and back-of-house area. Price per station plus common areas. Use Elec-Mate's{' '}
-                  <SEOInternalLink href="/electrical-quoting-app">
+                  <SEOInternalLink href="/tools/electrical-quoting-app">
                     quoting app
                   </SEOInternalLink>{' '}
                   to build the quote station by station.

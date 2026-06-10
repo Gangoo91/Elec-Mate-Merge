@@ -105,7 +105,7 @@ const articleSchema = {
   headline: PAGE_TITLE,
   description: PAGE_DESCRIPTION,
   datePublished: '2025-03-15',
-  dateModified: '2026-05-18',
+  dateModified: '2026-06-10',
   author: {
     '@type': 'Organization',
     name: 'Elec-Mate',
@@ -858,7 +858,7 @@ export default function TestingSequenceGuidePage() {
                 within 300 ms (130–500 ms for ‘S’ type) at rated IΔn. The 0.5× and 5× multiples and
                 their limits derive from the RCD product standards (BS EN 61008-1 / 61009-1). See
                 the{' '}
-                <SEOInternalLink href="/rcd-testing-guide">RCD testing guide</SEOInternalLink> for
+                <SEOInternalLink href="/tools/rcd-testing-guide">RCD testing guide</SEOInternalLink> for
                 the full procedure.
               </p>
               <p>

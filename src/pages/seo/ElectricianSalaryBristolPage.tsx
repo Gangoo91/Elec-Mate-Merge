@@ -107,7 +107,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Guide',
   },
   {
-    href: '/electrical-quoting-app',
+    href: '/tools/electrical-quoting-app',
     title: 'Electrical Quoting App',
     description:
       'Quote jobs professionally and maximise your day rate as a self-employed electrician.',
@@ -581,7 +581,7 @@ const sections = [
                 <p className="text-white text-sm leading-relaxed">
                   Self-employed Bristol electricians lose income through slow quoting and late
                   invoicing. Use the{' '}
-                  <SEOInternalLink href="/electrical-quoting-app">
+                  <SEOInternalLink href="/tools/electrical-quoting-app">
                     Elec-Mate quoting app
                   </SEOInternalLink>{' '}
                   to produce professional quotes on site and send invoices the moment the job is

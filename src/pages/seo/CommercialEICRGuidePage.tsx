@@ -629,7 +629,7 @@ const relatedPages = [
     category: 'Guide',
   },
   {
-    href: '/inspection-testing-course',
+    href: '/training/inspection-and-testing',
     title: '2391 Inspection & Testing Course',
     description: 'Guide to the City & Guilds 2391 qualification for inspection and testing.',
     icon: Award,
@@ -654,7 +654,7 @@ export default function CommercialEICRGuidePage() {
       title={PAGE_TITLE}
       description={PAGE_DESCRIPTION}
       datePublished="2025-08-01"
-      dateModified="2026-05-18"
+      dateModified="2026-06-10"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Certificates"

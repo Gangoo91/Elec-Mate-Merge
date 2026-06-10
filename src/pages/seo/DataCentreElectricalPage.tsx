@@ -112,7 +112,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Guide',
   },
   {
-    href: '/electrical-quoting-app',
+    href: '/tools/electrical-quoting-app',
     title: 'Electrical Quoting App',
     description:
       'Quote data centre and commercial electrical projects on site with instant PDF export.',
@@ -635,7 +635,7 @@ export default function DataCentreElectricalPage() {
       title="Data Centre Electrical Installation UK | Critical Power"
       description="Complete guide to data centre electrical installation in the UK. UPS systems, dual power feeds, PDUs, N+1 redundancy, Tier classifications…"
       datePublished="2026-03-27"
-      dateModified="2026-05-18"
+      dateModified="2026-06-10"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Industrial Guide"

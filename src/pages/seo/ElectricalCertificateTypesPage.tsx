@@ -386,7 +386,7 @@ const sections = [
     content: (
       <>
         <p>
-          <SEOInternalLink href="/tools/fire-alarm-certificate">
+          <SEOInternalLink href="/fire-alarm-certificate">
             Fire alarm certificates
           </SEOInternalLink>{' '}
           document the design, installation, commissioning, and testing of fire detection and fire
@@ -730,7 +730,7 @@ const relatedPages = [
     category: 'Certificate',
   },
   {
-    href: '/tools/fire-alarm-certificate',
+    href: '/fire-alarm-certificate',
     title: 'Fire Alarm Certificate',
     description: 'BS 5839 compliant fire alarm installation and commissioning certificates.',
     icon: Flame,
@@ -755,7 +755,7 @@ export default function ElectricalCertificateTypesPage() {
       title={PAGE_TITLE}
       description={PAGE_DESCRIPTION}
       datePublished="2024-08-01"
-      dateModified="2026-05-18"
+      dateModified="2026-06-10"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Certificate Hub"

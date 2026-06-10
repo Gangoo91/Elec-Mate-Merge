@@ -22,7 +22,7 @@ export default function ElectricalRetrofitGuidePage() {
       title="Electrical Retrofit Guide | Upgrading Older Properties"
       description="Complete guide to retrofitting electrical installations in older UK properties. Covers common wiring issues, rewire vs partial upgrade…"
       datePublished="2026-01-15"
-      dateModified="2026-05-18"
+      dateModified="2026-06-10"
       breadcrumbs={[
         { label: 'Installation', href: '/guides' },
         { label: 'Retrofit Guide', href: '/guides/electrical-retrofit-guide' },
@@ -328,7 +328,7 @@ export default function ElectricalRetrofitGuidePage() {
               <p>
                 Earthing deficiencies are among the most common findings during inspections of older
                 properties. The{' '}
-                <SEOInternalLink href="/earthing-arrangements">
+                <SEOInternalLink href="/guides/earthing-arrangements">
                   earthing arrangements guide
                 </SEOInternalLink>{' '}
                 covers the theory in detail. In a retrofit context, the practical considerations
@@ -474,7 +474,7 @@ export default function ElectricalRetrofitGuidePage() {
                   Electrical Installation Certificate (EIC)
                 </SEOInternalLink>
                 . Adding a spur or replacing accessories requires a{' '}
-                <SEOInternalLink href="/minor-works-certificate">
+                <SEOInternalLink href="/tools/minor-works-certificate">
                   Minor Works Certificate
                 </SEOInternalLink>
                 . A larger retrofit involving multiple new circuits and a consumer unit change
@@ -637,7 +637,7 @@ export default function ElectricalRetrofitGuidePage() {
           category: 'Guide',
         },
         {
-          href: '/earthing-arrangements',
+          href: '/guides/earthing-arrangements',
           title: 'Earthing Arrangements',
           description: 'TN-S, TN-C-S, and TT earthing systems explained.',
           icon: ShieldCheck,

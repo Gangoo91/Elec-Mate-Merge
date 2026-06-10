@@ -111,7 +111,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Guide',
   },
   {
-    href: '/tools/fire-alarm-certificate',
+    href: '/fire-alarm-certificate',
     title: 'Fire Alarm Certificate',
     description: 'BS 5839 compliant fire alarm certificates for domestic and commercial systems.',
     icon: AlertTriangle,
@@ -533,7 +533,7 @@ const sections = [
                 <h4 className="font-bold text-white mb-1">Quote the Full System</h4>
                 <p className="text-white text-sm leading-relaxed">
                   Use Elec-Mate's{' '}
-                  <SEOInternalLink href="/electrical-quoting-app">
+                  <SEOInternalLink href="/tools/electrical-quoting-app">
                     quoting app
                   </SEOInternalLink>{' '}
                   to price the complete smoke detection package: detectors, cables, fixings, labour,

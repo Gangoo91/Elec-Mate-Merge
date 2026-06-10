@@ -112,7 +112,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Guide',
   },
   {
-    href: '/electrical-quoting-app',
+    href: '/tools/electrical-quoting-app',
     title: 'Electrical Quoting App',
     description: 'Quote faster and win more London jobs with professional estimates.',
     icon: Calculator,
@@ -596,7 +596,7 @@ export default function ElectricianSalaryLondonPage() {
       title="Electrician Salary London 2026 | Employed & Self-Employed"
       description="Realistic electrician salary figures for London in 2026. Employed rates £38,000–£65,000, self-employed £55,000–£90,000, specialist roles £70,000+."
       datePublished="2026-03-27"
-      dateModified="2026-05-18"
+      dateModified="2026-06-10"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Salary Guide"
@@ -616,7 +616,7 @@ export default function ElectricianSalaryLondonPage() {
       faqHeading="Frequently Asked Questions About Electrician Salaries in London"
       relatedPages={relatedPages}
       ctaHeading="Quote, Certify and Manage Your London Electrical Business"
-      ctaSubheading="Elec-Mate helps London electricians quote faster, complete certificates on site, and manage jobs professionally. 7-day free trial, no card required."
+      ctaSubheading="Elec-Mate helps London electricians quote faster, complete certificates on site, and manage jobs professionally. 7-day free trial, no charge until day 8."
     />
   );
 }

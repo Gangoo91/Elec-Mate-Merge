@@ -21,7 +21,7 @@ export default function SolarPanelSizingCalculatorPage() {
       title="Solar Panel Sizing Calculator UK | Free Tool"
       description="Calculate solar panel system size for UK installations. Determine kWp capacity, estimate annual yield based on roof orientation and tilt…"
       datePublished="2026-01-30"
-      dateModified="2026-05-29"
+      dateModified="2026-06-10"
       breadcrumbs={[
         { label: 'Tools', href: '/tools' },
         { label: 'Solar Panel Sizing Calculator', href: '/tools/solar-panel-sizing-calculator' },
@@ -342,7 +342,7 @@ export default function SolarPanelSizingCalculatorPage() {
               </p>
               <p>
                 Isolation, ventilation, and fire safety must also be considered. The{' '}
-                <SEOInternalLink href="/electrical-testing-calculators">
+                <SEOInternalLink href="/tools/electrical-testing-calculators">
                   electrical testing calculators
                 </SEOInternalLink>{' '}
                 in Elec-Mate include tests specific to battery energy storage systems.
@@ -656,7 +656,7 @@ export default function SolarPanelSizingCalculatorPage() {
           category: 'Certificates',
         },
         {
-          href: '/electrical-testing-calculators',
+          href: '/tools/electrical-testing-calculators',
           title: 'All 50+ Calculators',
           description:
             'Browse the full suite of BS 7671 electrical calculators for testing, sizing, and design.',

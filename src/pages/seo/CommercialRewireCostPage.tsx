@@ -107,7 +107,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Certificate',
   },
   {
-    href: '/electrical-quoting-app',
+    href: '/tools/electrical-quoting-app',
     title: 'Electrical Quoting App',
     description:
       'Quote commercial rewires with itemised materials, labour, and professional PDF output.',
@@ -594,7 +594,7 @@ const sections = [
                 <p className="text-white text-sm leading-relaxed">
                   Walk the building and measure every containment route before pricing anything
                   else. Containment is the biggest variable cost. Use Elec-Mate's{' '}
-                  <SEOInternalLink href="/electrical-quoting-app">quoting app</SEOInternalLink> to
+                  <SEOInternalLink href="/tools/electrical-quoting-app">quoting app</SEOInternalLink> to
                   build itemised schedules of containment, distribution equipment, and final
                   circuits.
                 </p>
@@ -649,7 +649,7 @@ export default function CommercialRewireCostPage() {
       title="Commercial Rewire Cost UK 2026: Per m² Price Guide"
       description="Commercial rewire costs £30–£80 per m² in 2026. Per square metre pricing for 3-phase distribution, containment, data cabling, fire alarm, and BS 7671:2018+A4:2026 compliance."
       datePublished="2026-03-27"
-      dateModified="2026-05-18"
+      dateModified="2026-06-10"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Cost Guide"

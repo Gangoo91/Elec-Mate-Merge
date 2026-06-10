@@ -22,7 +22,7 @@ import {
 // -------------------------------------------------------------------
 
 const breadcrumbs = [
-  { label: 'Training', href: '/apprentice-training' },
+  { label: 'Training', href: '/training/electrical-apprentice' },
   { label: 'Learning Videos', href: '/tools/learning-videos-electrician' },
 ];
 
@@ -271,7 +271,7 @@ const sections = [
                 <strong>Testing sequences</strong> — each test in the BS 7671 initial verification
                 sequence demonstrated with the correct instrument, settings, connections, and result
                 interpretation. Includes{' '}
-                <SEOInternalLink href="/how-to-test-insulation-resistance">
+                <SEOInternalLink href="/guides/insulation-resistance-testing-bs7671">
                   insulation resistance testing
                 </SEOInternalLink>
                 , earth fault loop impedance, and RCD testing.
@@ -359,7 +359,7 @@ const sections = [
         <p>
           The exam preparation videos are designed for electricians preparing for City & Guilds
           examinations, particularly the{' '}
-          <SEOInternalLink href="/eighteenth-edition-course">C&G 2382</SEOInternalLink> (18th
+          <SEOInternalLink href="/training/18th-edition-course">C&G 2382</SEOInternalLink> (18th
           Edition),{' '}
           <SEOInternalLink href="/training/inspection-and-testing">C&G 2391</SEOInternalLink>{' '}
           (Inspection and Testing), and the{' '}
@@ -446,7 +446,7 @@ export default function LearningVideosElectricianPage() {
       title="Learning Videos for Electricians | Video Training"
       description="Over 46 structured course videos for UK electricians. Practical demonstrations, theory explanations, and exam preparation for C&G 2382, 2391, and AM2."
       datePublished="2025-06-15"
-      dateModified="2026-05-18"
+      dateModified="2026-06-10"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Video Training Library"

@@ -699,7 +699,7 @@ const reviewerSchema = {
   '@type': 'Article',
   reviewedBy: {
     '@type': 'Person',
-    name: 'Elec-Mate Technical Team',
+    name: 'Andrew Moore',
     description:
       'Reviewed by NAPIT-registered electricians with 18th Edition (BS 7671:2018+A4:2026) qualifications and inspection and testing certification.',
   },
@@ -711,7 +711,7 @@ export default function NAPITRegistrationPage() {
       title="NAPIT Registration Guide | How to Join & What It Costs"
       description="Complete guide to NAPIT registration for UK electricians. Application process, on-site assessment, costs, schemes available, benefits…"
       datePublished="2024-07-01"
-      dateModified="2026-05-29"
+      dateModified="2026-06-10"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Registration Guide"

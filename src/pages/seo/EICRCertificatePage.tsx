@@ -339,8 +339,8 @@ export default function EICRCertificatePage() {
       { name: 'EICR Certificate', url: '/tools/eicr-certificate' },
     ],
     datePublished: '2024-09-15',
-    dateModified: '2026-05-18',
-    author: 'Elec-Mate Technical Team',
+    dateModified: '2026-06-10',
+    author: 'Andrew Moore',
   });
 
   return (
@@ -448,7 +448,7 @@ export default function EICRCertificatePage() {
             (the IET Wiring Regulations, 18th Edition) and follows the model forms published in
             Appendix 6 of the standard. It records the extent of the installation inspected, the
             supply characteristics, details of the{' '}
-            <SEOInternalLink href="/earthing-arrangements">earthing arrangements</SEOInternalLink>,
+            <SEOInternalLink href="/guides/earthing-arrangements">earthing arrangements</SEOInternalLink>,
             the test results for every circuit, and any observations about departures from the
             current standard or defects that could pose a danger.
           </p>
@@ -844,7 +844,7 @@ export default function EICRCertificatePage() {
             >
               Try It Free for 7 Days <ArrowRight className="w-4 h-4" />
             </a>
-            <span className="text-sm text-white">No card required. Cancel anytime.</span>
+            <span className="text-sm text-white">No charge until day 8. Cancel anytime.</span>
           </div>
         </div>
       </section>
@@ -1009,7 +1009,7 @@ export default function EICRCertificatePage() {
           >
             Switch to Elec-Mate <ArrowRight className="w-4 h-4" />
           </a>
-          <span className="text-sm text-white">7-day free trial. No card required.</span>
+          <span className="text-sm text-white">7-day free trial. No charge until day 8.</span>
         </div>
       </section>
 

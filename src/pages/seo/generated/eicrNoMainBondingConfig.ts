@@ -4,7 +4,7 @@ import type { GeneratedGuideConfig } from '@/pages/seo/generated/GeneratedGuideP
 // (Inspection & Testing, 9th Edition) and the IET On-Site Guide.
 
 const published = '2026-05-17';
-const modified = '2026-05-18';
+const modified = '2026-06-10';
 
 export const eicrNoMainBondingConfig: GeneratedGuideConfig = {
   pagePath: '/guides/eicr-no-main-protective-bonding',
@@ -260,7 +260,7 @@ export const eicrNoMainBondingConfig: GeneratedGuideConfig = {
       category: 'Tool',
     },
     {
-      href: '/minor-works-certificate',
+      href: '/tools/minor-works-certificate',
       title: 'Minor Works Certificate Tool',
       description: 'Issue the MEIWC for the bonding remedial work in minutes.',
       icon: 'FileCheck2',

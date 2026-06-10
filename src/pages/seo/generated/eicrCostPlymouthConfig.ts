@@ -21,6 +21,7 @@ export const eicrCostPlymouthConfig: GeneratedGuideConfig = {
   badge: 'Cost Guide',
   badgeIcon: 'PoundSterling',
   breadcrumbLabel: 'EICR Cost in Plymouth',
+  breadcrumbParent: { label: 'EICR Cost UK', href: '/guides/eicr-cost-uk' },
   heroPrefix: 'EICR Cost in Plymouth:',
   heroHighlight: '2026 Pricing Guide',
   heroSuffix: '— Domestic & Commercial',
@@ -209,6 +210,27 @@ export const eicrCostPlymouthConfig: GeneratedGuideConfig = {
     },
   ],
   relatedPages: [
+    {
+      href: '/guides/eicr-cost-uk',
+      title: 'EICR Cost UK — National Guide',
+      description: 'UK-wide EICR prices by property type, what affects cost, and remedial pricing.',
+      icon: 'PoundSterling',
+      category: 'Guide',
+    },
+    {
+      href: '/guides/eicr-cost-exeter',
+      title: 'EICR cost in Exeter',
+      description: 'Local price bands and labour rates for Exeter.',
+      icon: 'MapPin',
+      category: 'Guide',
+    },
+    {
+      href: '/guides/eicr-cost-bristol',
+      title: 'EICR cost in Bristol',
+      description: 'Local price bands and labour rates for Bristol.',
+      icon: 'MapPin',
+      category: 'Guide',
+    },
     {
       href: '/electricians/plymouth',
       title: 'Find an Electrician in Plymouth',

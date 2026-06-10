@@ -468,7 +468,7 @@ const sections = [
                 <p className="text-white text-sm leading-relaxed">
                   Basement projects have higher material costs due to IP-rated accessories, conduit,
                   emergency luminaires, and sump pump circuits. Use the{' '}
-                  <SEOInternalLink href="/electrical-quoting-app">
+                  <SEOInternalLink href="/tools/electrical-quoting-app">
                     quoting app
                   </SEOInternalLink>{' '}
                   to itemise all elements so clients understand exactly what they are paying for.

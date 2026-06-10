@@ -124,7 +124,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Certificate',
   },
   {
-    href: '/guides/consumer-unit-regulations',
+    href: '/consumer-unit-regulations',
     title: 'Consumer Unit Regulations',
     description:
       'Consumer unit upgrade requirements — often needed when adding a 32A EV charger circuit.',
@@ -452,7 +452,7 @@ const sections = [
                   Factor in Liverpool day rates (£280 to £380), cable run lengths in Victorian
                   terraces, PME earthing requirements, and board upgrades on pre-RCD consumer units.
                   Use Elec-Mate's{' '}
-                  <SEOInternalLink href="/electrical-quoting-app">quoting app</SEOInternalLink> to
+                  <SEOInternalLink href="/tools/electrical-quoting-app">quoting app</SEOInternalLink> to
                   build itemised quotes on site.
                 </p>
               </div>
@@ -495,7 +495,7 @@ export default function EVChargerInstallationLiverpoolPage() {
       title="EV Charger Installation Liverpool 2026 | Costs, DNO, and"
       description="How much does EV charger installation cost in Liverpool in 2026? Local costs, Electricity North West DNO notification, OZEV grant…"
       datePublished="2026-03-27"
-      dateModified="2026-05-18"
+      dateModified="2026-06-10"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Liverpool Guide"

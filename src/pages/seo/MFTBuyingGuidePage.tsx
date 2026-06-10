@@ -95,7 +95,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Guide',
   },
   {
-    href: '/how-to-test-insulation-resistance',
+    href: '/guides/insulation-resistance-testing-bs7671',
     title: 'How to Test Insulation Resistance',
     description: 'Step-by-step insulation resistance testing procedure for fixed wiring.',
     icon: ShieldCheck,
@@ -548,7 +548,7 @@ export default function MFTBuyingGuidePage() {
       title="Multifunction Tester Buying Guide UK 2026 | Best MFTs for"
       description="Complete guide to choosing a multifunction tester (MFT) for UK electricians. What an MFT measures, CAT IV rating requirements, key features…"
       datePublished="2026-03-27"
-      dateModified="2026-05-18"
+      dateModified="2026-06-10"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Tools & Equipment Guide"

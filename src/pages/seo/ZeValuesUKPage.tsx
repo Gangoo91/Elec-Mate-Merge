@@ -651,7 +651,7 @@ export default function ZeValuesUKPage() {
       title="Max Ze Values: TN-S 0.80Ω, TN-C-S 0.35Ω, TT 21Ω"
       description="Maximum Ze (external earth fault loop impedance) per BS 7671: TN-S 0.80Ω, TN-C-S (PME) 0.35Ω, TT 21Ω. How to measure Ze and when to query the DNO."
       datePublished="2025-08-01"
-      dateModified="2026-05-22"
+      dateModified="2026-06-10"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Testing Guide"

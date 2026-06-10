@@ -563,7 +563,7 @@ const relatedPages = [
     category: 'Troubleshooting',
   },
   {
-    href: '/earthing-arrangements',
+    href: '/guides/earthing-arrangements',
     title: 'Earthing Arrangements',
     description: 'TN-S, TN-C-S, and TT earthing systems explained — how they affect Zs values.',
     icon: Globe,
@@ -596,7 +596,7 @@ export default function EarthFaultLoopTooHighPage() {
       title={PAGE_TITLE}
       description={PAGE_DESCRIPTION}
       datePublished="2025-09-20"
-      dateModified="2026-05-23"
+      dateModified="2026-06-10"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Troubleshooting"

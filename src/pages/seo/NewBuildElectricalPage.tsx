@@ -82,7 +82,7 @@ const faqs = [
 
 const relatedPages: RelatedPage[] = [
   {
-    href: '/tools/ai-circuit-designer',
+    href: '/ai-circuit-designer',
     title: 'AI Circuit Designer',
     description:
       'Design complete new build electrical installations with AI-assisted circuit allocation, cable sizing, and board schedules.',
@@ -488,7 +488,7 @@ const sections = [
           Both AFDDs and SPDs add cost to the consumer unit — budget an additional £30-£50 per
           circuit for AFDDs and £50-£100 for an SPD module. Include these in the initial quote to
           avoid surprises. Use Elec-Mate's{' '}
-          <SEOInternalLink href="/electrical-quoting-app">quoting app</SEOInternalLink> to price the
+          <SEOInternalLink href="/tools/electrical-quoting-app">quoting app</SEOInternalLink> to price the
           full new build installation including all protective devices.
         </p>
       </>
@@ -572,7 +572,7 @@ export default function NewBuildElectricalPage() {
       title="New Build Electrical Installation | Requirements UK"
       description="Complete guide to new build electrical installation requirements in the UK. Building Regulations Parts P, L, B, M, and S, EV charging 2022…"
       datePublished="2025-08-01"
-      dateModified="2026-05-18"
+      dateModified="2026-06-10"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Installation Guide"

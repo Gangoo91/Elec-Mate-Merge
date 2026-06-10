@@ -116,7 +116,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Guide',
   },
   {
-    href: '/electrical-quoting-app',
+    href: '/tools/electrical-quoting-app',
     title: 'Quoting App',
     description:
       'Quote Canterbury electrical jobs at accurate South East rates — send professional quotes on site.',
@@ -449,7 +449,7 @@ const sections = [
                 <h4 className="font-bold text-white mb-1">Quote Heritage and Standard Jobs</h4>
                 <p className="text-white text-sm leading-relaxed">
                   Use the{' '}
-                  <SEOInternalLink href="/electrical-quoting-app">quoting app</SEOInternalLink> to
+                  <SEOInternalLink href="/tools/electrical-quoting-app">quoting app</SEOInternalLink> to
                   send professional PDF quotes from Canterbury surveys. Quote heritage property
                   rewires at the appropriate premium, and standard domestic work at South East
                   rates. Send quotes before you leave site.
@@ -480,7 +480,7 @@ export default function ElectricianCanterburyPage() {
       title="Electrician in Canterbury | Local Electricians 2026"
       description="Find qualified electricians in Canterbury. NICEIC and NAPIT registered, Part P compliant. South East rates, listed building work, student HMO EICRs…"
       datePublished="2026-03-27"
-      dateModified="2026-05-18"
+      dateModified="2026-06-10"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Canterbury"

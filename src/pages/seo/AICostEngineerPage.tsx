@@ -143,10 +143,10 @@ export default function AICostEngineerPage() {
     description: PAGE_DESCRIPTION,
     breadcrumbs: [
       { name: 'Home', url: '/' },
-      { name: 'AI Cost Engineer', url: '/ai-cost-engineer' },
+      { name: 'AI Cost Engineer', url: '/tools/ai-cost-engineer' },
     ],
     dateModified: '2026-05-18',
-    author: 'Elec-Mate Technical Team',
+    author: 'Andrew Moore',
   });
 
   return (
@@ -408,14 +408,14 @@ export default function AICostEngineerPage() {
           <div className="space-y-4 text-white leading-relaxed">
             <p>
               The estimate is only the first step. Use the{' '}
-              <SEOInternalLink href="/electrical-quoting-app">electrical quoting app</SEOInternalLink>{' '}
+              <SEOInternalLink href="/tools/electrical-quoting-app">electrical quoting app</SEOInternalLink>{' '}
               to package the output professionally, sanity-check your floor price with the{' '}
               <SEOInternalLink href="/tools/minimum-charge-calculator">
                 minimum charge calculator
               </SEOInternalLink>{' '}
               and the <SEOInternalLink href="/tools/break-even-calculator">break-even calculator</SEOInternalLink>,
               then move the accepted job into the{' '}
-              <SEOInternalLink href="/electrician-invoice-app">invoice workflow</SEOInternalLink>.
+              <SEOInternalLink href="/tools/electrician-invoice-app">invoice workflow</SEOInternalLink>.
             </p>
             <p>
               That cluster is where Elec-Mate becomes more than an AI demo page. It becomes a full
@@ -465,7 +465,7 @@ export default function AICostEngineerPage() {
           />
           <p className="text-white mt-4 text-sm">
             Want a complete quoting workflow?{' '}
-            <SEOInternalLink href="/electrical-quoting-app">
+            <SEOInternalLink href="/tools/electrical-quoting-app">
               See the electrical quoting app
             </SEOInternalLink>{' '}
             for job management, invoicing, and client communication.

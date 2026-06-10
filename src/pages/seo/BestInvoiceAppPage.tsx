@@ -24,7 +24,7 @@ export default function BestInvoiceAppPage() {
       title="Best Invoice App for Electricians 2026 | Compared"
       description="Compare the best invoicing apps for UK electricians in 2026. Elec-Mate vs QuickBooks vs Xero vs FreeAgent — certificate integration, AI pricing…"
       datePublished="2026-02-10"
-      dateModified="2026-05-18"
+      dateModified="2026-06-10"
       breadcrumbs={[
         { label: 'Comparisons', href: '/compare' },
         {
@@ -99,7 +99,7 @@ export default function BestInvoiceAppPage() {
                 complete an EICR or EIC, hand it to the client, and then need to invoice for the
                 work. If your invoicing app and your certificate app are separate, you are doubling
                 the admin. See our{' '}
-                <SEOInternalLink href="/electrician-invoice-app">
+                <SEOInternalLink href="/tools/electrician-invoice-app">
                   electrician invoice app guide
                 </SEOInternalLink>{' '}
                 for more on streamlining this workflow.
@@ -175,8 +175,8 @@ export default function BestInvoiceAppPage() {
               </p>
               <p>
                 If you want the strongest version of that workflow, pair the invoice flow with the{' '}
-                <SEOInternalLink href="/electrical-quoting-app">quoting app</SEOInternalLink>, the{' '}
-                <SEOInternalLink href="/ai-cost-engineer">AI Cost Engineer</SEOInternalLink>, and
+                <SEOInternalLink href="/tools/electrical-quoting-app">quoting app</SEOInternalLink>, the{' '}
+                <SEOInternalLink href="/tools/ai-cost-engineer">AI Cost Engineer</SEOInternalLink>, and
                 the{' '}
                 <SEOInternalLink href="/tools/minimum-charge-calculator">
                   minimum charge calculator
@@ -289,7 +289,7 @@ export default function BestInvoiceAppPage() {
       ]}
       relatedPages={[
         {
-          href: '/electrician-invoice-app',
+          href: '/tools/electrician-invoice-app',
           title: 'Electrician Invoice App',
           description:
             'Professional invoicing, Stripe payments, and Xero integration built for UK electricians.',
@@ -313,7 +313,7 @@ export default function BestInvoiceAppPage() {
           category: 'Comparison',
         },
         {
-          href: '/electrical-quoting-app',
+          href: '/tools/electrical-quoting-app',
           title: 'Electrical Quoting App',
           description:
             'Create the quote first, then convert accepted work into invoices without duplicate entry.',
@@ -321,7 +321,7 @@ export default function BestInvoiceAppPage() {
           category: 'Business',
         },
         {
-          href: '/ai-cost-engineer',
+          href: '/tools/ai-cost-engineer',
           title: 'AI Cost Engineer',
           description:
             'Use AI job estimating and remedial pricing before the invoice stage to protect margin.',

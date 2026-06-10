@@ -8,7 +8,29 @@ const NotFound = () => {
   const location = useLocation();
 
   useEffect(() => {
-    // 404 — route not found
+    // 404 — route not found. The SPA fallback serves this with HTTP 200, so
+    // tell crawlers explicitly not to index unknown URLs (soft-404 mitigation).
+    const previousTitle = document.title;
+    document.title = '404 — Page Not Found | Elec-Mate';
+
+    let robots = document.querySelector<HTMLMetaElement>('meta[name="robots"]');
+    const createdRobots = !robots;
+    if (!robots) {
+      robots = document.createElement('meta');
+      robots.setAttribute('name', 'robots');
+      document.head.appendChild(robots);
+    }
+    const previousRobots = robots.getAttribute('content');
+    robots.setAttribute('content', 'noindex, nofollow');
+
+    return () => {
+      document.title = previousTitle;
+      if (createdRobots) {
+        robots?.remove();
+      } else if (previousRobots !== null) {
+        robots?.setAttribute('content', previousRobots);
+      }
+    };
   }, [location.pathname, location]);
 
   // Check if this looks like an apprentice route that's missing the prefix

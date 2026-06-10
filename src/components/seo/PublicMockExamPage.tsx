@@ -268,7 +268,7 @@ export function PublicMockExamPage({
             signupCta={{
               label: 'Start Free Trial',
               href: `/auth/signup?ref=mock-exam-${slug.replace(/\//g, '-')}`,
-              subline: 'Free trial · no card required · cancel anytime',
+              subline: 'Free trial · no charge until day 8 · cancel anytime',
             }}
           />
 

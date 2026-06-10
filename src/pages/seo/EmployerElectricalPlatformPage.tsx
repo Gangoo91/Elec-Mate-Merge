@@ -88,7 +88,7 @@ export default function EmployerElectricalPlatformPage() {
                   completing certificates
                 </SEOInternalLink>
                 ,{' '}
-                <SEOInternalLink href="/electrical-testing-calculators">
+                <SEOInternalLink href="/tools/electrical-testing-calculators">
                   using calculators
                 </SEOInternalLink>
                 , and{' '}
@@ -150,11 +150,11 @@ export default function EmployerElectricalPlatformPage() {
                 spreadsheets, email check-ins, and guesswork with real-time data. You know exactly
                 where each apprentice stands without having to ask them. For more on apprentice
                 training, see our{' '}
-                <SEOInternalLink href="/apprentice-training">
+                <SEOInternalLink href="/training/electrical-apprentice">
                   apprentice training guide
                 </SEOInternalLink>{' '}
                 and{' '}
-                <SEOInternalLink href="/epa-preparation">
+                <SEOInternalLink href="/training/epa-preparation">
                   EPA preparation guide
                 </SEOInternalLink>
                 .
@@ -240,8 +240,8 @@ export default function EmployerElectricalPlatformPage() {
               <p>
                 For companies trying to tighten commercial control as well as technical control,
                 certificate oversight works best when paired with the{' '}
-                <SEOInternalLink href="/electrical-quoting-app">quoting workflow</SEOInternalLink>{' '}
-                and the <SEOInternalLink href="/electrician-invoice-app">invoice workflow</SEOInternalLink>.
+                <SEOInternalLink href="/tools/electrical-quoting-app">quoting workflow</SEOInternalLink>{' '}
+                and the <SEOInternalLink href="/tools/electrician-invoice-app">invoice workflow</SEOInternalLink>.
                 That way managers can see not just what was certified, but how that work turned into
                 revenue and whether follow-on remedials were actually quoted and billed.
               </p>
@@ -455,7 +455,7 @@ export default function EmployerElectricalPlatformPage() {
           category: 'AI Tools',
         },
         {
-          href: '/electrical-quoting-app',
+          href: '/tools/electrical-quoting-app',
           title: 'Electrical Quoting App',
           description:
             'Extend employer oversight beyond certificates into pricing consistency, quotes, and commercial workflow.',
@@ -479,7 +479,7 @@ export default function EmployerElectricalPlatformPage() {
           category: 'Tools',
         },
         {
-          href: '/electrical-testing-calculators',
+          href: '/tools/electrical-testing-calculators',
           title: 'Electrical Calculators',
           description:
             '70+ BS 7671 calculators available to your entire team — cable sizing, voltage drop, and more.',

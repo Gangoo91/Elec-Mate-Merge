@@ -165,7 +165,7 @@ export const eicDigitalVsPaperConfig: GeneratedGuideConfig = {
       category: 'Certificate',
     },
     {
-      href: '/electrical-quoting-app',
+      href: '/tools/electrical-quoting-app',
       title: 'Electrical Quoting App',
       description: 'Turn inspection findings into a quote without starting over.',
       icon: 'Calculator',

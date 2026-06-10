@@ -735,7 +735,7 @@ export default function StartingElectricalBusinessPage() {
           category: 'Business Guides',
         },
         {
-          href: '/electrical-quoting-app',
+          href: '/tools/electrical-quoting-app',
           title: 'Electrical Quoting App',
           description:
             'Professional PDF quotes with AI cost estimation. Win more work with faster, more accurate, better-presented quotes.',
@@ -743,7 +743,7 @@ export default function StartingElectricalBusinessPage() {
           category: 'Business Tools',
         },
         {
-          href: '/electrician-invoice-app',
+          href: '/tools/electrician-invoice-app',
           title: 'Electrician Invoice App',
           description:
             'Create and send invoices from site. Track payments, chase overdue invoices, sync with Xero and QuickBooks.',

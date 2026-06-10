@@ -125,7 +125,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Guide',
   },
   {
-    href: '/eighteenth-edition-course',
+    href: '/training/18th-edition-course',
     title: '18th Edition Course',
     description:
       'Study BS 7671:2018+A4:2026 with structured training modules on the Elec-Mate platform.',
@@ -353,7 +353,7 @@ const sections = [
         <p>
           When quoting an LED retrofit, include a detailed cost-benefit analysis showing the energy
           savings, maintenance savings, and payback period. Elec-Mate's{' '}
-          <SEOInternalLink href="/electrical-quoting-app">quoting app</SEOInternalLink> lets you
+          <SEOInternalLink href="/tools/electrical-quoting-app">quoting app</SEOInternalLink> lets you
           build a professional quote with materials, labour, and projected savings — and send it to
           the client from your phone.
         </p>
@@ -597,7 +597,7 @@ const sections = [
                 <h4 className="font-bold text-white mb-1">Professional Quoting</h4>
                 <p className="text-white text-sm leading-relaxed">
                   Build detailed commercial lighting quotes with Elec-Mate's{' '}
-                  <SEOInternalLink href="/electrical-quoting-app">quoting app</SEOInternalLink>.
+                  <SEOInternalLink href="/tools/electrical-quoting-app">quoting app</SEOInternalLink>.
                   Itemise luminaires, cables, controls, labour, and projected energy savings. Send
                   professional PDF quotes from site.
                 </p>
@@ -625,7 +625,7 @@ export default function CommercialLightingGuidePage() {
       title="Commercial Lighting Installation | Design & Compliance"
       description="Complete guide to commercial lighting installation for UK electricians. CIBSE LG7 lux levels, emergency lighting BS 5266, LED retrofit projects…"
       datePublished="2025-09-05"
-      dateModified="2026-05-18"
+      dateModified="2026-06-10"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Installation Guide"

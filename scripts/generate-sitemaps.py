@@ -14,7 +14,8 @@ with open('/tmp/seo-route-registry.txt') as f:
             routes.append(parts[1])
 
 # Static pages
-static = ['/', '/auth/signin', '/auth/signup', '/privacy-policy', '/terms-of-service', '/cookie-policy']
+# Real routes only — /auth/*, /privacy-policy etc. were phantom URLs (no routes -> soft-404s), fixed 2026-06-10
+static = ['/', '/guides', '/tools', '/training', '/compare', '/connect-ai', '/privacy', '/terms', '/cookies']
 
 # Categorize
 pages = sorted(set(static))
@@ -56,7 +57,7 @@ def make_index(sitemaps):
 
 
 # Generate sitemaps
-page_priorities = {'/': '1.0', '/auth/signin': '0.8', '/auth/signup': '0.8'}
+page_priorities = {'/': '1.0', '/guides': '0.9', '/tools': '0.9', '/training': '0.9', '/compare': '0.9', '/connect-ai': '0.9'}
 outdir = 'public'
 
 with open(f'{outdir}/sitemap-pages.xml', 'w') as f:

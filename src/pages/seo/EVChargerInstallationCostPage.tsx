@@ -118,7 +118,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Certificate',
   },
   {
-    href: '/guides/consumer-unit-regulations',
+    href: '/consumer-unit-regulations',
     title: 'Consumer Unit Regulations',
     description:
       'May need a consumer unit upgrade to add the EV charger circuit — check the requirements.',
@@ -521,7 +521,7 @@ const sections = [
                 <h4 className="font-bold text-white mb-1">AI-Powered Quoting</h4>
                 <p className="text-white text-sm leading-relaxed">
                   Use Elec-Mate's{' '}
-                  <SEOInternalLink href="/electrical-quoting-app">quoting app</SEOInternalLink> to
+                  <SEOInternalLink href="/tools/electrical-quoting-app">quoting app</SEOInternalLink> to
                   build itemised EV installation quotes. Charger unit, cable (auto-sized for the run
                   length), RCBO, earth rod if needed, labour, testing, and DNO notification — all
                   itemised with your margins. Professional PDF sent to the customer from site.
@@ -583,7 +583,7 @@ export default function EVChargerInstallationCostPage() {
       title="EV Charger Installation Cost UK 2026 | Complete Price Guide"
       description="How much does EV charger installation cost in the UK in 2026? Complete price guide covering 7kW home chargers, 22kW commercial units…"
       datePublished="2026-03-27"
-      dateModified="2026-05-18"
+      dateModified="2026-06-10"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Cost Guide"

@@ -123,7 +123,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Tool',
   },
   {
-    href: '/electrical-quoting-app',
+    href: '/tools/electrical-quoting-app',
     title: 'Electrical Quoting App',
     description: 'Create professional quotes with accurate pricing for Manchester customers.',
     icon: PoundSterling,
@@ -559,7 +559,7 @@ export default function ElectricianManchesterPage() {
       title="Electrician in Manchester | Qualified Electricians 2026"
       description="Find qualified, registered electricians in Manchester. 2026 pricing guide, how to verify NICEIC/NAPIT registration, terraced house rewiring…"
       datePublished="2026-03-27"
-      dateModified="2026-05-18"
+      dateModified="2026-06-10"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Find an Electrician"

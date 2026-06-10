@@ -261,11 +261,11 @@ export default function InspectionTestingCoursePage() {
             <p>
               For working electricians, the 2391 is one of the most important qualifications after
               the{' '}
-              <SEOInternalLink href="/eighteenth-edition-course">
+              <SEOInternalLink href="/training/18th-edition-course">
                 18th Edition (C&G 2382)
               </SEOInternalLink>{' '}
               and the{' '}
-              <SEOInternalLink href="/level3-electrical">Level 3 NVQ</SEOInternalLink>.
+              <SEOInternalLink href="/training/level-3-electrical">Level 3 NVQ</SEOInternalLink>.
               Without it, you cannot join a competent person scheme (NICEIC, NAPIT, ELECSA) as a
               qualified supervisor, and you cannot independently sign off{' '}
               <SEOInternalLink href="/eic-certificate">

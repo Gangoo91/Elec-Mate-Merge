@@ -114,7 +114,7 @@ const relatedPages: RelatedPage[] = [
     category: 'AI Tool',
   },
   {
-    href: '/rams-generator',
+    href: '/tools/rams-generator',
     title: 'RAMS Generator',
     description:
       'Generate site-specific risk assessments and method statements for your team. Consistent H&S documentation across all sites.',
@@ -122,7 +122,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Health & Safety',
   },
   {
-    href: '/apprentice-portfolio-guide',
+    href: '/training/apprentice-portfolio',
     title: 'Apprentice Portfolio Guide',
     description:
       'Guide to building an apprentice evidence portfolio. Help your apprentices meet their qualification requirements.',
@@ -654,7 +654,7 @@ const sections = [
               <span>
                 <strong>Health and safety documentation</strong> — generate RAMS for every job.
                 Elec-Mate's{' '}
-                <SEOInternalLink href="/rams-generator">RAMS Generator</SEOInternalLink>{' '}
+                <SEOInternalLink href="/tools/rams-generator">RAMS Generator</SEOInternalLink>{' '}
                 produces site-specific risk assessments from a job description, ensuring your team
                 has compliant H&S documentation on every site.
               </span>

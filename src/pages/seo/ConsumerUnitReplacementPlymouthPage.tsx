@@ -85,6 +85,13 @@ const faqs = [
 
 const relatedPages: RelatedPage[] = [
   {
+    href: '/guides/consumer-unit-replacement-cost-plymouth',
+    title: 'Consumer Unit Replacement Cost in Plymouth',
+    description: 'Local price bands and labour rates for consumer unit replacement in Plymouth.',
+    icon: Wrench,
+    category: 'Guide',
+  },
+  {
     href: '/guides/consumer-unit-replacement-cost',
     title: 'Consumer Unit Replacement Guide',
     description: 'Complete UK guide to fuse box upgrades — costs, regulations, and process.',
@@ -480,7 +487,7 @@ const sections = [
                 <p className="text-white text-sm leading-relaxed">
                   When an EICR reveals C2 consumer unit deficiencies, quote the replacement using
                   the{' '}
-                  <SEOInternalLink href="/electrical-quoting-app">
+                  <SEOInternalLink href="/tools/electrical-quoting-app">
                     Elec-Mate quoting app
                   </SEOInternalLink>{' '}
                   on the same day. Plymouth landlords must act within 28 days — quote first, win the

@@ -107,7 +107,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Guide',
   },
   {
-    href: '/electrical-quoting-app',
+    href: '/tools/electrical-quoting-app',
     title: 'Electrical Quoting App',
     description: 'Create professional outbuilding electrical quotes from your phone.',
     icon: FileCheck2,
@@ -473,7 +473,7 @@ const sections = [
                   Always offer to pull a Cat6 data cable in the same trench as the armoured power
                   cable. The materials cost is minimal, the trench is already open, and the customer
                   saves significant money versus having it done separately. Use the{' '}
-                  <SEOInternalLink href="/electrical-quoting-app">
+                  <SEOInternalLink href="/tools/electrical-quoting-app">
                     quoting app
                   </SEOInternalLink>{' '}
                   to add it as an optional extra.

@@ -122,7 +122,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Guide',
   },
   {
-    href: '/rams-generator',
+    href: '/tools/rams-generator',
     title: 'RAMS Generator Tool',
     description:
       'AI-powered RAMS generator. Describe your job and get a complete risk assessment and method statement in minutes.',
@@ -768,7 +768,7 @@ const sections = [
                   working at height
                 </SEOInternalLink>
                 ,{' '}
-                <SEOInternalLink href="/manual-handling-course">manual handling</SEOInternalLink>,
+                <SEOInternalLink href="/training/manual-handling">manual handling</SEOInternalLink>,
                 asbestos awareness, and site safety — all of which contribute to the competence
                 needed to carry out safe isolation and LOTO procedures.
               </span>
@@ -776,7 +776,7 @@ const sections = [
           </ul>
         </div>
         <p>
-          The <SEOInternalLink href="/rams-generator">RAMS generator tool</SEOInternalLink>{' '}
+          The <SEOInternalLink href="/tools/rams-generator">RAMS generator tool</SEOInternalLink>{' '}
           combines the{' '}
           <SEOInternalLink href="/guides/method-statement-electricians">
             method statement

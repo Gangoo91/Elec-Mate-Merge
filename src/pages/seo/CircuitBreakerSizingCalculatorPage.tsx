@@ -23,7 +23,7 @@ export default function CircuitBreakerSizingCalculatorPage() {
       title="Circuit Breaker Sizing Calculator | MCB Selection"
       description="Calculate the correct circuit breaker size for any circuit to BS 7671. Verify the Ib ≤ In ≤ Iz relationship, select the right MCB type (B, C, or D)…"
       datePublished="2026-01-25"
-      dateModified="2026-05-18"
+      dateModified="2026-06-10"
       breadcrumbs={[
         { label: 'Tools', href: '/tools' },
         {
@@ -467,7 +467,7 @@ export default function CircuitBreakerSizingCalculatorPage() {
           category: 'Calculators',
         },
         {
-          href: '/guides/consumer-unit-regulations',
+          href: '/consumer-unit-regulations',
           title: 'Consumer Unit Regulations',
           description:
             'Complete guide to consumer unit requirements under BS 7671 and Part P building regulations.',

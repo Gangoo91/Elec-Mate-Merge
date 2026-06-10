@@ -165,7 +165,7 @@ const sections = [
           causes of house fires in the UK. This guide covers the causes, the immediate actions you
           should take, the fire risk, and when to call an electrician. If you are an electrician,
           the later sections cover thermal imaging techniques and the relevant{' '}
-          <SEOInternalLink href="/guides/consumer-unit-regulations">
+          <SEOInternalLink href="/consumer-unit-regulations">
             BS 7671 regulations
           </SEOInternalLink>{' '}
           for fire protection.

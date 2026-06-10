@@ -106,7 +106,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Certificate',
   },
   {
-    href: '/electrical-quoting-app',
+    href: '/tools/electrical-quoting-app',
     title: 'Electrical Quoting App',
     description: 'Quote off-grid system installations accurately with AI-assisted pricing.',
     icon: PoundSterling,
@@ -507,7 +507,7 @@ const sections = [
                 <p className="text-white text-sm leading-relaxed">
                   Off-grid installations are high-value jobs where accurate quoting is essential.
                   Use the{' '}
-                  <SEOInternalLink href="/electrical-quoting-app">
+                  <SEOInternalLink href="/tools/electrical-quoting-app">
                     quoting app
                   </SEOInternalLink>{' '}
                   to build detailed proposals with equipment itemisation, labour, and commissioning

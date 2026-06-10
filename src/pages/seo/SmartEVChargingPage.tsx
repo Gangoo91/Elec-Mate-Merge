@@ -514,7 +514,7 @@ const sections = [
                 <p className="text-white text-sm leading-relaxed">
                   Customers with solar PV are prime candidates for solar-integrated chargers and CT
                   clamp upgrades. Use the{' '}
-                  <SEOInternalLink href="/electrical-quoting-app">
+                  <SEOInternalLink href="/tools/electrical-quoting-app">
                     Elec-Mate quoting app
                   </SEOInternalLink>{' '}
                   to quote CT clamp supply and fit, Zappi charger supply and install, and app

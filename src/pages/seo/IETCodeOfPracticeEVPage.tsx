@@ -128,7 +128,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Guide',
   },
   {
-    href: '/earthing-arrangements',
+    href: '/guides/earthing-arrangements',
     title: 'Earthing Arrangements Guide',
     description:
       'TN-C-S, TN-S, and TT earthing systems explained with diagrams and practical guidance for UK electricians.',
@@ -144,7 +144,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Guide',
   },
   {
-    href: '/eighteenth-edition-course',
+    href: '/training/18th-edition-course',
     title: '18th Edition Course',
     description:
       'Study for C&G 2382 with structured training modules covering all aspects of BS 7671.',
@@ -347,7 +347,7 @@ const sections = [
         <p>
           For TN-S earthing systems (where the earth and neutral are separate throughout), the open
           PEN risk does not exist, and the{' '}
-          <SEOInternalLink href="/earthing-arrangements">earthing arrangement</SEOInternalLink> can
+          <SEOInternalLink href="/guides/earthing-arrangements">earthing arrangement</SEOInternalLink> can
           be used directly for EV charging without additional measures. However, TN-S supplies are
           less common in the UK — most domestic supplies are TN-C-S (PME).
         </p>
@@ -682,7 +682,7 @@ export default function IETCodeOfPracticeEVPage() {
       title="IET Code of Practice for EV Charging: Every UK Install Rule"
       description="IET Code of Practice for EV Charging Equipment Installation: PME/O-PEN protection, load management, smart charging, BS 7671 Section 722 + Building Regs Part S."
       datePublished="2025-04-20"
-      dateModified="2026-05-22"
+      dateModified="2026-06-10"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="EV Charging Guide"

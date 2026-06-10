@@ -347,7 +347,7 @@ export default function PASMATrainingPage() {
               PASMA Towers for Users syllabus. Each module includes detailed study material,
               diagrams, and AI-powered practice questions to test your understanding before moving
               on. It pairs well with our{' '}
-              <SEOInternalLink href="/manual-handling-course">
+              <SEOInternalLink href="/training/manual-handling">
                 manual handling course
               </SEOInternalLink>{' '}
               and{' '}

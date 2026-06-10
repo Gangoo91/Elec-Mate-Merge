@@ -5,7 +5,7 @@ import type { GeneratedGuideConfig } from '@/pages/seo/generated/GeneratedGuideP
 // and BS EN 61643 (Low-voltage surge protective devices).
 
 const published = '2026-05-17';
-const modified = '2026-05-18';
+const modified = '2026-06-10';
 
 export const spdChapter443A4Config: GeneratedGuideConfig = {
   pagePath: '/guides/spd-chapter-443-a4-2026',

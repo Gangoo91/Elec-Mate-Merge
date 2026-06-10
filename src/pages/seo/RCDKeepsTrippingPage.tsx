@@ -681,7 +681,7 @@ export default function RCDKeepsTrippingPage() {
           category: 'Certification',
         },
         {
-          href: '/testing-sequence-guide',
+          href: '/guides/testing-sequence-guide',
           title: 'Testing Sequence Guide',
           description: 'The correct order of electrical tests for inspection and testing.',
           icon: ClipboardCheck,

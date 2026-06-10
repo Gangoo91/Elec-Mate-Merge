@@ -251,7 +251,7 @@ export default function HowToTestInsulationResistancePage() {
               important given that cables may have been pulled through tight spaces, bent around
               corners, or clipped to surfaces where nails or screws could have penetrated the
               sheathing. Always perform{' '}
-              <SEOInternalLink href="/how-to-do-safe-isolation">
+              <SEOInternalLink href="/guides/how-to-do-safe-isolation">
                 safe isolation
               </SEOInternalLink>{' '}
               before commencing any insulation resistance test.

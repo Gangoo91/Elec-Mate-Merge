@@ -6,7 +6,7 @@ import type { GeneratedGuideConfig } from '@/pages/seo/generated/GeneratedGuideP
 // the Electric Vehicles (Smart Charge Points) Regulations 2021.
 
 const published = '2026-05-17';
-const modified = '2026-05-18';
+const modified = '2026-06-10';
 
 export const v2hBidirectionalEvChargingConfig: GeneratedGuideConfig = {
   pagePath: '/guides/v2h-bidirectional-ev-charging',

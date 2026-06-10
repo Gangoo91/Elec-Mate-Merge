@@ -25,7 +25,7 @@ import {
 // -------------------------------------------------------------------
 
 const breadcrumbs = [
-  { label: 'AI Tools', href: '/ai-electrician-tools' },
+  { label: 'AI Tools', href: '/tools/ai-electrician' },
   { label: 'AI Diagram Builder', href: '/tools/ai-diagram-builder' },
 ];
 
@@ -84,7 +84,7 @@ const faqs = [
 
 const relatedPages: RelatedPage[] = [
   {
-    href: '/tools/ai-circuit-designer',
+    href: '/ai-circuit-designer',
     title: 'AI Circuit Designer',
     description:
       'Design complete electrical circuits with automatic cable sizing, protection device selection, and voltage drop verification.',
@@ -222,7 +222,7 @@ const sections = [
         </p>
         <p>
           The tool integrates with other Elec-Mate agents. Circuit designs from the{' '}
-          <SEOInternalLink href="/tools/ai-circuit-designer">AI Circuit Designer</SEOInternalLink>{' '}
+          <SEOInternalLink href="/ai-circuit-designer">AI Circuit Designer</SEOInternalLink>{' '}
           can be imported directly to generate diagrams that match the design specification. The{' '}
           <SEOInternalLink href="/tools/ai-wiring-instructions">
             Wiring Instructions tool
@@ -421,7 +421,7 @@ export default function AIDiagramBuilderPage() {
       title="AI Diagram Builder | Circuit & Wiring Diagrams"
       description="Generate professional electrical diagrams with AI. Circuit schematics, distribution board layouts, cable routing diagrams…"
       datePublished="2025-08-01"
-      dateModified="2026-05-18"
+      dateModified="2026-06-10"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="AI Diagram Tool"

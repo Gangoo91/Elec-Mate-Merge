@@ -21,7 +21,7 @@ export default function CableSizingGuideBS7671Page() {
       title="Cable Sizing Guide BS 7671 | How to Size Cables | Elec-Mate"
       description="Complete cable sizing guide to BS 7671:2018+A4:2026. Master the 5-step process: design current, correction factors, Appendix 4 tables, and voltage drop — with worked examples."
       datePublished="2025-06-20"
-      dateModified="2026-05-18"
+      dateModified="2026-06-10"
       breadcrumbs={[
         { label: 'Guides', href: '/guides' },
         { label: 'Cable Sizing Guide BS 7671', href: '/guides/cable-sizing-guide-bs-7671' },
@@ -863,7 +863,7 @@ export default function CableSizingGuideBS7671Page() {
           category: 'Regulations',
         },
         {
-          href: '/testing-sequence-guide',
+          href: '/guides/testing-sequence-guide',
           title: 'Testing Sequence Guide',
           description: 'The correct order of tests for initial verification.',
           icon: ClipboardCheck,

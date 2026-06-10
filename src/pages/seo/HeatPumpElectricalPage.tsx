@@ -111,7 +111,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Certificate',
   },
   {
-    href: '/guides/consumer-unit-regulations',
+    href: '/consumer-unit-regulations',
     title: 'Consumer Unit Regulations',
     description: 'MCB, RCBO, and SPD requirements for adding new circuits to the consumer unit.',
     icon: ShieldCheck,
@@ -401,7 +401,7 @@ const sections = [
                 protective conductor for the external section, it must be terminated correctly at
                 both ends. Some installations use a separate earth electrode at the outdoor unit for
                 additional protection — check the manufacturer requirements and the{' '}
-                <SEOInternalLink href="/earthing-arrangements">
+                <SEOInternalLink href="/guides/earthing-arrangements">
                   earthing arrangement
                 </SEOInternalLink>{' '}
                 of the supply.
@@ -622,7 +622,7 @@ export default function HeatPumpElectricalPage() {
       title="Heat Pump Electrical Requirements | Supply & Circuit Guide"
       description="Complete guide to heat pump electrical requirements for UK electricians. Single phase vs three phase supply, cable sizing, MCB rating…"
       datePublished="2025-08-10"
-      dateModified="2026-05-18"
+      dateModified="2026-06-10"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Installation Guide"

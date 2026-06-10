@@ -116,7 +116,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Guide',
   },
   {
-    href: '/electrical-quoting-app',
+    href: '/tools/electrical-quoting-app',
     title: 'Quoting App',
     description:
       'Quote Basingstoke electrical jobs with South East pricing — send professional quotes on site.',
@@ -435,7 +435,7 @@ const sections = [
                 <h4 className="font-bold text-white mb-1">Quote and Win South East Jobs</h4>
                 <p className="text-white text-sm leading-relaxed">
                   Use the{' '}
-                  <SEOInternalLink href="/electrical-quoting-app">quoting app</SEOInternalLink> to
+                  <SEOInternalLink href="/tools/electrical-quoting-app">quoting app</SEOInternalLink> to
                   produce professional PDF quotes for Basingstoke customers. Quote accurately at
                   South East rates and send quotes before you leave the survey.
                 </p>
@@ -465,7 +465,7 @@ export default function ElectricianBasingstokePage() {
       title="Electrician in Basingstoke | Local Electricians 2026"
       description="Find qualified electricians in Basingstoke. NICEIC and NAPIT registered, Part P compliant. South East rates, EICRs, consumer unit upgrades, EV chargers…"
       datePublished="2026-03-27"
-      dateModified="2026-05-18"
+      dateModified="2026-06-10"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Basingstoke"

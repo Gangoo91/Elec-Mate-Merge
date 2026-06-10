@@ -129,7 +129,7 @@ export default function ElectricalTestCertificatePage() {
                   </div>
                   <p className="text-white text-sm leading-relaxed">
                     The{' '}
-                    <SEOInternalLink href="/minor-works-certificate">
+                    <SEOInternalLink href="/tools/minor-works-certificate">
                       Minor Works Certificate
                     </SEOInternalLink>{' '}
                     is a simplified certificate for small additions or alterations to an existing
@@ -432,7 +432,7 @@ export default function ElectricalTestCertificatePage() {
                     Leaving boxes blank, writing "N/A" where a test should have been done, or
                     recording unrealistic values (e.g., insulation resistance of 999 MO on every
                     circuit) are all red flags. The{' '}
-                    <SEOInternalLink href="/testing-sequence-guide">
+                    <SEOInternalLink href="/guides/testing-sequence-guide">
                       correct testing sequence
                     </SEOInternalLink>{' '}
                     must be followed and genuine readings recorded.
@@ -580,7 +580,7 @@ export default function ElectricalTestCertificatePage() {
           category: 'Certification',
         },
         {
-          href: '/minor-works-certificate',
+          href: '/tools/minor-works-certificate',
           title: 'Minor Works Certificate',
           description: 'When and how to issue a Minor Works Certificate.',
           icon: FileCheck2,
@@ -594,7 +594,7 @@ export default function ElectricalTestCertificatePage() {
           category: 'Guide',
         },
         {
-          href: '/testing-sequence-guide',
+          href: '/guides/testing-sequence-guide',
           title: 'Testing Sequence Guide',
           description: 'The correct order of electrical tests for certification.',
           icon: Zap,

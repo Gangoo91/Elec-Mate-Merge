@@ -373,7 +373,7 @@ const sections = [
         <p>
           For practising electricians, the most significant practical impact of Amendment 2 was the
           clarification of requirements around{' '}
-          <SEOInternalLink href="/guides/consumer-unit-regulations">consumer unit</SEOInternalLink>{' '}
+          <SEOInternalLink href="/consumer-unit-regulations">consumer unit</SEOInternalLink>{' '}
           design for installations with solar PV and battery storage. The amendment recognised that
           these installations require specific consideration of reverse power flow, anti-islanding
           protection, and the interaction between the DNO supply and the local generation source.
@@ -544,7 +544,7 @@ const sections = [
               <Scale className="w-5 h-5 text-yellow-400 mt-0.5 shrink-0" />
               <div>
                 <h3 className="font-bold text-white mb-1">
-                  <SEOInternalLink href="/guides/bs7671-observation-codes">
+                  <SEOInternalLink href="/bs7671-observation-codes">
                     Observation Codes
                   </SEOInternalLink>{' '}
                   and Condition Reporting
@@ -580,7 +580,7 @@ const relatedPages = [
     category: 'Guide',
   },
   {
-    href: '/eighteenth-edition-course',
+    href: '/training/18th-edition-course',
     title: '18th Edition Course',
     description:
       'Study for the C&G 2382-22 exam with 2,000+ practice questions and AI study assistant.',
@@ -609,7 +609,7 @@ const relatedPages = [
     category: 'Guide',
   },
   {
-    href: '/guides/consumer-unit-regulations',
+    href: '/consumer-unit-regulations',
     title: 'Consumer Unit Regulations',
     description: 'Metal CU requirements, RCD protection, RCBO selection, and SPD requirements.',
     icon: Layers,
@@ -627,7 +627,7 @@ export default function BS7671EighteenthEditionGuidePage() {
       title={PAGE_TITLE}
       description={PAGE_DESCRIPTION}
       datePublished="2024-09-01"
-      dateModified="2026-05-18"
+      dateModified="2026-06-10"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="BS 7671 Hub"

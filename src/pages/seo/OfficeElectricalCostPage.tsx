@@ -109,7 +109,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Cost Guide',
   },
   {
-    href: '/electrical-quoting-app',
+    href: '/tools/electrical-quoting-app',
     title: 'Electrical Quoting App',
     description: 'Create professional commercial electrical fit-out quotes from your phone.',
     icon: FileCheck2,
@@ -485,7 +485,7 @@ const sections = [
                   Data cabling is often underquoted in commercial fit-outs. Count every data point,
                   measure every cable run, and price the patch panel, comms cabinet, and termination
                   time separately. Use the{' '}
-                  <SEOInternalLink href="/electrical-quoting-app">
+                  <SEOInternalLink href="/tools/electrical-quoting-app">
                     quoting app
                   </SEOInternalLink>{' '}
                   to build an itemised BOM that captures every element.

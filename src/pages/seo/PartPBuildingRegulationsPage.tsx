@@ -105,7 +105,7 @@ const articleSchema = {
   headline: PAGE_TITLE,
   description: PAGE_DESCRIPTION,
   datePublished: '2025-03-10',
-  dateModified: '2026-05-18',
+  dateModified: '2026-06-10',
   author: {
     '@type': 'Organization',
     name: 'Elec-Mate',
@@ -638,7 +638,7 @@ export default function PartPBuildingRegulationsPage() {
               work, ensures all mandatory fields are completed, and validates test results against
               BS 7671 limits. This reduces the risk of certification errors that could lead to
               building regulations queries or enforcement issues. See also our guide on{' '}
-              <SEOInternalLink href="/minor-works-certificate">
+              <SEOInternalLink href="/tools/minor-works-certificate">
                 Minor Works certificates
               </SEOInternalLink>{' '}
               and the difference between a{' '}

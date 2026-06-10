@@ -116,7 +116,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Guide',
   },
   {
-    href: '/electrical-quoting-app',
+    href: '/tools/electrical-quoting-app',
     title: 'Quoting App',
     description:
       'Quote premium Guildford electrical jobs at South East rates — send professional quotes on site.',
@@ -440,7 +440,7 @@ const sections = [
                 <h4 className="font-bold text-white mb-1">Win Premium Surrey Jobs</h4>
                 <p className="text-white text-sm leading-relaxed">
                   Use the{' '}
-                  <SEOInternalLink href="/electrical-quoting-app">quoting app</SEOInternalLink> to
+                  <SEOInternalLink href="/tools/electrical-quoting-app">quoting app</SEOInternalLink> to
                   produce professional PDF quotes at Surrey premium rates. Quote large house
                   rewires, EV chargers, and solar PV installations — send the quote before leaving
                   the survey and close jobs faster.
@@ -471,7 +471,7 @@ export default function ElectricianGuildfordPage() {
       title="Electrician in Guildford | Local Electricians 2026"
       description="Find qualified electricians in Guildford. NICEIC and NAPIT registered, Part P compliant. Premium Surrey rates, large house rewires, EICRs, HMO work…"
       datePublished="2026-03-27"
-      dateModified="2026-05-18"
+      dateModified="2026-06-10"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Guildford"

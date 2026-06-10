@@ -99,7 +99,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Certificate',
   },
   {
-    href: '/emergency-lighting-certificate',
+    href: '/tools/emergency-lighting-certificate',
     title: 'Emergency Lighting Certificate',
     description:
       'Guide to emergency lighting testing, certification, and BS 5266 compliance for commercial premises.',
@@ -131,7 +131,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Guide',
   },
   {
-    href: '/eighteenth-edition-course',
+    href: '/training/18th-edition-course',
     title: '18th Edition Course',
     description:
       'Study for C&G 2382 with 50+ structured training modules on the Elec-Mate platform.',
@@ -304,7 +304,7 @@ const sections = [
           Emergency lighting must be tested monthly (short functional test) and annually (full
           3-hour duration test). All test results must be recorded and available for inspection by
           the fire authority. Elec-Mate's{' '}
-          <SEOInternalLink href="/emergency-lighting-certificate">
+          <SEOInternalLink href="/tools/emergency-lighting-certificate">
             emergency lighting certificate
           </SEOInternalLink>{' '}
           template is designed for exactly this purpose.
@@ -641,7 +641,7 @@ const sections = [
                 <h4 className="font-bold text-white mb-1">Multiple Certificate Types</h4>
                 <p className="text-white text-sm leading-relaxed">
                   Complete EIC, EICR,{' '}
-                  <SEOInternalLink href="/emergency-lighting-certificate">
+                  <SEOInternalLink href="/tools/emergency-lighting-certificate">
                     emergency lighting
                   </SEOInternalLink>
                   , and{' '}
@@ -680,7 +680,7 @@ export default function RetailInstallationGuidePage() {
       title="Retail Electrical Installation | Shop Fit-Out Guide"
       description="Complete guide to retail electrical installation and shop fit-out. Lighting design, emergency lighting (BS 5266), fire alarm integration (BS 5839)…"
       datePublished="2025-10-01"
-      dateModified="2026-05-18"
+      dateModified="2026-06-10"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Retail Guide"

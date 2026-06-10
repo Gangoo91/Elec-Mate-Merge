@@ -18,7 +18,7 @@ export default function AIToolsForElectriciansPage() {
       title="AI for Electricians: 7 Tools 2026"
       description="AI for electricians reduces data entry and admin time on site. Board scanning, fault diagnosis, cost estimation. See which tools pass accuracy tests and protect your data."
       datePublished="2026-01-15"
-      dateModified="2026-05-18"
+      dateModified="2026-06-10"
       breadcrumbs={[
         { label: 'Guides', href: '/guides' },
         { label: 'AI Tools for Electricians', href: '/guides/ai-tools-for-electricians' },
@@ -321,7 +321,7 @@ export default function AIToolsForElectriciansPage() {
               </p>
               <p>
                 Elec-Mate's{' '}
-                <SEOInternalLink href="/tools/ai-circuit-designer">
+                <SEOInternalLink href="/ai-circuit-designer">
                   AI Circuit Designer
                 </SEOInternalLink>{' '}
                 goes further by applying diversity calculations, checking that RCD protection is
@@ -379,7 +379,7 @@ export default function AIToolsForElectriciansPage() {
                 </SEOInternalLink>{' '}
                 generates risk assessments, method statements, COSHH assessments, and toolbox talk
                 documents. The{' '}
-                <SEOInternalLink href="/rams-generator">RAMS Generator</SEOInternalLink> exports
+                <SEOInternalLink href="/tools/rams-generator">RAMS Generator</SEOInternalLink> exports
                 professional PDF documents ready for submission. Documents reference the Health and
                 Safety at Work Act 1974, the Management of Health and Safety at Work Regulations
                 1999, the CDM Regulations 2015, and the Electricity at Work Regulations 1989 where
@@ -622,7 +622,7 @@ export default function AIToolsForElectriciansPage() {
           category: 'AI Tools',
         },
         {
-          href: '/tools/ai-circuit-designer',
+          href: '/ai-circuit-designer',
           title: 'AI Circuit Designer',
           description:
             'Complete consumer unit schedules with cable sizes, protective devices, and diversity calculations to BS 7671.',
@@ -646,7 +646,7 @@ export default function AIToolsForElectriciansPage() {
           category: 'AI Tools',
         },
         {
-          href: '/rams-generator',
+          href: '/tools/rams-generator',
           title: 'RAMS Generator',
           description:
             'Professional risk assessment and method statement documents with all relevant hazards, control measures, and legal references.',
@@ -654,7 +654,7 @@ export default function AIToolsForElectriciansPage() {
           category: 'Health & Safety',
         },
         {
-          href: '/best-electrician-app',
+          href: '/tools/best-electrician-app-uk',
           title: 'Best Electrician App UK',
           description:
             'Compare electrician apps for certificates, testing, AI tools, quoting, and business management.',
@@ -663,7 +663,7 @@ export default function AIToolsForElectriciansPage() {
         },
       ]}
       ctaHeading="Try Elec-Mate's AI Tools Free for 7 Days"
-      ctaSubheading="8 AI agents, 12 AI tools, certificates, calculators, quoting, invoicing — everything an electrician needs in one app. No card required to start."
+      ctaSubheading="8 AI agents, 12 AI tools, certificates, calculators, quoting, invoicing — everything an electrician needs in one app. No charge until day 8."
     />
   );
 }

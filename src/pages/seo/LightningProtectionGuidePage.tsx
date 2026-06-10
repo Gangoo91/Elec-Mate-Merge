@@ -89,7 +89,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Guide',
   },
   {
-    href: '/earthing-arrangements',
+    href: '/guides/earthing-arrangements',
     title: 'Earthing Arrangements',
     description: 'TN-S, TN-C-S, and TT earthing systems explained.',
     icon: Cable,
@@ -522,7 +522,7 @@ export default function LightningProtectionGuidePage() {
       title="Lightning Protection Guide | BS EN 62305 and SPDs UK"
       description="Complete guide to lightning protection for buildings in the UK. BS EN 62305 standard, risk assessment, surge protection devices (SPDs)…"
       datePublished="2026-03-27"
-      dateModified="2026-05-18"
+      dateModified="2026-06-10"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Technical Guide"

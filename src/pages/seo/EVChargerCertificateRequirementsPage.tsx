@@ -133,7 +133,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Tool',
   },
   {
-    href: '/solar-pv-certificate',
+    href: '/tools/solar-pv-certificate',
     title: 'Solar PV Certificate',
     description:
       'Certification requirements for solar PV installations — often combined with EV charging.',
@@ -663,7 +663,7 @@ export default function EVChargerCertificateRequirementsPage() {
       title="EV Charger Certificate Requirements UK | What to Issue"
       description="Complete guide to EV charger certification in the UK. EIC required, IET Code of Practice compliance, Part P notification, load assessment, PME earthing…"
       datePublished="2025-05-01"
-      dateModified="2026-05-18"
+      dateModified="2026-06-10"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Certificate Guide"

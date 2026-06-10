@@ -802,7 +802,7 @@ export default function GeneratorInstallationGuidePage() {
       title="Generator Installation Guide UK | Standby Generator"
       description="Complete guide to standby generator installation in the UK. ATS and manual changeover switches, G99 DNO requirements, generator earthing…"
       datePublished="2026-03-27"
-      dateModified="2026-05-18"
+      dateModified="2026-06-10"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Industrial Guide"

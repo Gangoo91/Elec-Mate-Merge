@@ -21,6 +21,7 @@ export const eicrCostNorwichConfig: GeneratedGuideConfig = {
   badge: 'Cost Guide',
   badgeIcon: 'PoundSterling',
   breadcrumbLabel: 'EICR Cost in Norwich',
+  breadcrumbParent: { label: 'EICR Cost UK', href: '/guides/eicr-cost-uk' },
   heroPrefix: 'EICR Cost in Norwich:',
   heroHighlight: '2026 Pricing Guide',
   heroSuffix: '— Domestic & Commercial',
@@ -209,6 +210,27 @@ export const eicrCostNorwichConfig: GeneratedGuideConfig = {
     },
   ],
   relatedPages: [
+    {
+      href: '/guides/eicr-cost-uk',
+      title: 'EICR Cost UK — National Guide',
+      description: 'UK-wide EICR prices by property type, what affects cost, and remedial pricing.',
+      icon: 'PoundSterling',
+      category: 'Guide',
+    },
+    {
+      href: '/guides/eicr-cost-cambridge',
+      title: 'EICR cost in Cambridge',
+      description: 'Local price bands and labour rates for Cambridge.',
+      icon: 'MapPin',
+      category: 'Guide',
+    },
+    {
+      href: '/guides/eicr-cost-hull',
+      title: 'EICR cost in Hull',
+      description: 'Local price bands and labour rates for Hull.',
+      icon: 'MapPin',
+      category: 'Guide',
+    },
     {
       href: '/electricians/norwich',
       title: 'Find an Electrician in Norwich',

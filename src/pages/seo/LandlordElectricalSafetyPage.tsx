@@ -765,7 +765,7 @@ export default function LandlordElectricalSafetyPage() {
           category: 'Guide',
         },
         {
-          href: '/guides/consumer-unit-regulations',
+          href: '/consumer-unit-regulations',
           title: 'Consumer Unit Regulations',
           description: 'Metal CU, RCD protection, and board requirements.',
           icon: ShieldCheck,

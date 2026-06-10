@@ -6,7 +6,7 @@ import type { GeneratedGuideConfig } from '@/pages/seo/generated/GeneratedGuideP
 // Association — guidelines for supporting PoE).
 
 const published = '2026-05-17';
-const modified = '2026-05-18';
+const modified = '2026-06-10';
 
 export const cat6Cat6aCurrentRatingPoeConfig: GeneratedGuideConfig = {
   pagePath: '/guides/cat6-cat6a-current-rating-poe',

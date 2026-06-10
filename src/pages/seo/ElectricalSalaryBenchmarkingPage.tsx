@@ -502,7 +502,7 @@ const sections = [
           For self-employed electricians and business owners, understanding market rates is only
           half the story — your effective hourly rate depends on how efficiently you quote, invoice,
           and recover costs. Elec-Mate's{' '}
-          <SEOInternalLink href="/electrical-quoting-app">quoting tools</SEOInternalLink> help you
+          <SEOInternalLink href="/tools/electrical-quoting-app">quoting tools</SEOInternalLink> help you
           price jobs correctly from day one.
         </p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-6 my-4">
@@ -549,7 +549,7 @@ const sections = [
                 <h4 className="font-bold text-white mb-1">Quote Your True Hourly Rate</h4>
                 <p className="text-white text-sm leading-relaxed">
                   Use the{' '}
-                  <SEOInternalLink href="/electrical-quoting-app">
+                  <SEOInternalLink href="/tools/electrical-quoting-app">
                     Elec-Mate quoting app
                   </SEOInternalLink>{' '}
                   to build quotes that reflect your actual costs — materials, labour at your target
@@ -592,7 +592,7 @@ export default function ElectricalSalaryBenchmarkingPage() {
       title="UK Electrician Salary 2026 | JIB Rates + Regional Pay"
       description="UK electrician pay in 2026: JIB grade rates (Apprentice Yrs 1-4, Electrician, Approved, Technician), London weighting + employed vs self-employed split."
       datePublished="2026-03-27"
-      dateModified="2026-05-18"
+      dateModified="2026-06-10"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Pay Guide"

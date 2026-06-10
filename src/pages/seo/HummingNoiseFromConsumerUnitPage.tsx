@@ -91,7 +91,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Guide',
   },
   {
-    href: '/guides/consumer-unit-regulations',
+    href: '/consumer-unit-regulations',
     title: 'Consumer Unit Regulations',
     description:
       'Current regulations for consumer units including RCBO, AFDD, and metal enclosure requirements.',
@@ -155,7 +155,7 @@ const sections = [
           whether what you are hearing is normal or a warning sign, and tells you when to call an
           electrician. If you are an electrician, the later sections cover the diagnostic approach
           for consumer unit noise complaints and the relevant{' '}
-          <SEOInternalLink href="/guides/consumer-unit-regulations">
+          <SEOInternalLink href="/consumer-unit-regulations">
             consumer unit regulations
           </SEOInternalLink>
           .
@@ -663,7 +663,7 @@ export default function HummingNoiseFromConsumerUnitPage() {
       title="Humming Noise From Consumer Unit | What It Means"
       description="Why is your consumer unit humming? Learn the difference between normal MCB buzz and dangerous loose connections, what thermal effects look like…"
       datePublished="2026-03-27"
-      dateModified="2026-05-29"
+      dateModified="2026-06-10"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Safety Guide"

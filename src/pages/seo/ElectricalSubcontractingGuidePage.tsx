@@ -496,7 +496,7 @@ export default function ElectricalSubcontractingGuidePage() {
                       <strong className="text-yellow-400">Health and safety</strong> — Compliance
                       with the contractor's health and safety policy, RAMS requirements, site
                       induction, PPE standards. See the{' '}
-                      <SEOInternalLink href="/rams-generator">
+                      <SEOInternalLink href="/tools/rams-generator">
                         RAMS generator guide
                       </SEOInternalLink>{' '}
                       for creating compliant method statements.
@@ -688,14 +688,14 @@ export default function ElectricalSubcontractingGuidePage() {
           category: 'Business',
         },
         {
-          href: '/rams-generator',
+          href: '/tools/rams-generator',
           title: 'RAMS Generator',
           description: 'Create compliant risk assessments for main contractors.',
           icon: ClipboardCheck,
           category: 'Safety',
         },
         {
-          href: '/electrician-invoice-app',
+          href: '/tools/electrician-invoice-app',
           title: 'Electrician Invoice App',
           description: 'Professional invoicing from the job site.',
           icon: FileText,

@@ -469,7 +469,7 @@ const sections = [
         </p>
         <p>
           The testing phase requires qualified testers (holding{' '}
-          <SEOInternalLink href="/city-guilds2391">City & Guilds 2391</SEOInternalLink> or
+          <SEOInternalLink href="/training/city-guilds-2391">City & Guilds 2391</SEOInternalLink> or
           equivalent), calibrated test instruments, completed installation work (testing incomplete
           circuits is pointless), and adequate time in the programme. On larger projects, a
           dedicated testing team is engaged, and their access must be coordinated so they can test
@@ -477,7 +477,7 @@ const sections = [
         </p>
         <p>
           The testing sequence follows the requirements of{' '}
-          <SEOInternalLink href="/testing-sequence-guide">BS 7671 Chapter 64</SEOInternalLink>:
+          <SEOInternalLink href="/guides/testing-sequence-guide">BS 7671 Chapter 64</SEOInternalLink>:
           continuity of protective conductors, continuity of ring final circuit conductors,
           insulation resistance, polarity, earth fault loop impedance, prospective fault current,
           and RCD operation. Every test result must be recorded on the schedule of test results and
@@ -588,7 +588,7 @@ const relatedPages = [
     category: 'Guide',
   },
   {
-    href: '/testing-sequence-guide',
+    href: '/guides/testing-sequence-guide',
     title: 'Testing Sequence Guide',
     description: 'The correct BS 7671 testing sequence from continuity to RCD testing.',
     icon: ClipboardCheck,
@@ -602,7 +602,7 @@ const relatedPages = [
     category: 'Guide',
   },
   {
-    href: '/rams-generator',
+    href: '/tools/rams-generator',
     title: 'AI RAMS Generator',
     description: 'Generate CDM-compliant risk assessments and method statements.',
     icon: Brain,

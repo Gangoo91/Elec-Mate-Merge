@@ -106,7 +106,7 @@ const articleSchema = {
   headline: PAGE_TITLE,
   description: PAGE_DESCRIPTION,
   datePublished: '2024-08-01',
-  dateModified: '2026-05-18',
+  dateModified: '2026-06-10',
   author: {
     '@type': 'Person',
     name: 'Elec-Mate Editorial Team',
@@ -899,7 +899,7 @@ export default function ConsumerUnitRegulationsPage() {
               these forms digitally, validates test results against BS 7671 limits, and produces
               professional PDF output ready to hand to the client. For a full understanding of
               Amendment 4 requirements, see the{' '}
-              <SEOInternalLink href="/eighteenth-edition-course">
+              <SEOInternalLink href="/training/18th-edition-course">
                 18th Edition training course
               </SEOInternalLink>
               .

@@ -667,7 +667,7 @@ export default function CookerCircuitGuidePage() {
       title="Cooker Circuit Guide | Cable Size, Fuse & Wiring UK"
       description="Complete guide to cooker circuit design and installation in the UK. Cable sizing with diversity factor, cooker control unit positioning…"
       datePublished="2025-08-01"
-      dateModified="2026-05-18"
+      dateModified="2026-06-10"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Installation Guide"

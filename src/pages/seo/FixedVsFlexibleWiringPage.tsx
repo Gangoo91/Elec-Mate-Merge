@@ -470,7 +470,7 @@ export default function FixedVsFlexibleWiringPage() {
       title="Fixed Wiring vs Flexible Wiring Standards | BS 7671 UK Guide"
       description="Complete guide to fixed wiring vs flexible wiring standards for UK electricians. BS 7671 Regulation 521.9.1 requirements…"
       datePublished="2026-03-27"
-      dateModified="2026-05-18"
+      dateModified="2026-06-10"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Wiring Standards Guide"

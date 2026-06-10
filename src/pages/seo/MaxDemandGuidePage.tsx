@@ -9,7 +9,7 @@ import { Calculator, Zap, Activity, BookOpen, FileText, BarChart3 } from 'lucide
 // -------------------------------------------------------------------
 
 const breadcrumbs = [
-  { label: 'Calculators', href: '/electrical-testing-calculators' },
+  { label: 'Calculators', href: '/tools/electrical-testing-calculators' },
   { label: 'Max Demand Guide', href: '/guides/max-demand-calculation-guide' },
 ];
 
@@ -611,7 +611,7 @@ export default function MaxDemandGuidePage() {
       title="How to Calculate Max Demand: BS 7671 Diversity Table + ADMD"
       description="How to calculate max demand for UK installations: BS 7671 diversity factors, ADMD method, worked examples for domestic, commercial + three-phase. Free guide."
       datePublished="2025-03-15"
-      dateModified="2026-05-24"
+      dateModified="2026-06-10"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Technical Guide"

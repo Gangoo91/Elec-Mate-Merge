@@ -18,7 +18,7 @@ export default function AIvsManualDesignPage() {
       title="AI vs Manual Electrical Design | Comparison | Elec-Mate"
       description="Compare AI-powered and manual electrical design for speed, accuracy, BS 7671 compliance, cost savings, and practical application."
       datePublished="2026-01-25"
-      dateModified="2026-05-29"
+      dateModified="2026-06-10"
       breadcrumbs={[
         { label: 'Guides', href: '/guides' },
         {
@@ -116,7 +116,7 @@ export default function AIvsManualDesignPage() {
                 <li>
                   <span className="font-semibold text-white">AI design</span> — under 60 seconds.
                   You describe the installation in plain English and the{' '}
-                  <SEOInternalLink href="/tools/ai-circuit-designer">
+                  <SEOInternalLink href="/ai-circuit-designer">
                     AI Circuit Designer
                   </SEOInternalLink>{' '}
                   produces the complete schedule with all calculations performed and verified.
@@ -504,7 +504,7 @@ export default function AIvsManualDesignPage() {
       faqHeading="AI vs Manual Design FAQs"
       relatedPages={[
         {
-          href: '/tools/ai-circuit-designer',
+          href: '/ai-circuit-designer',
           title: 'AI Circuit Designer',
           description:
             'Design complete consumer unit schedules with cable sizes, protective devices, and verification to BS 7671.',

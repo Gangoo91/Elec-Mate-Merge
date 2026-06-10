@@ -747,7 +747,7 @@ export default function AM2ExamPreparationPage() {
           />
           <p className="text-white mt-4 text-sm">
             Studying for the 18th Edition exam?{' '}
-            <SEOInternalLink href="/apprentice-training">
+            <SEOInternalLink href="/training/electrical-apprentice">
               Access the full apprentice training centre
             </SEOInternalLink>{' '}
             with BS 7671 courses, flashcards, and AI tutoring.

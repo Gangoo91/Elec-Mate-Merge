@@ -621,7 +621,7 @@ export default function MinorWorksVsEICPage() {
       title="Minor Works vs EIC | Which Certificate Do I Need?"
       description="When to use a Minor Works certificate and when a full EIC is required. Practical examples, Part P requirements, common mistakes, and edge cases."
       datePublished="2025-05-08"
-      dateModified="2026-05-18"
+      dateModified="2026-06-10"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Guide"

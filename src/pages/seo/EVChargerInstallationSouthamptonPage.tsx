@@ -117,7 +117,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Certificate',
   },
   {
-    href: '/guides/consumer-unit-regulations',
+    href: '/consumer-unit-regulations',
     title: 'Consumer Unit Regulations',
     description: 'Consumer unit upgrade requirements when adding a 32A EV charger circuit.',
     icon: ShieldCheck,
@@ -470,7 +470,7 @@ const sections = [
                   Factor in South Coast labour rates (£42 to £55/hour), earth rod costs, SSEN G98
                   notification, EIC certification, and coastal corrosion-resistant components where
                   relevant. Use Elec-Mate's{' '}
-                  <SEOInternalLink href="/electrical-quoting-app">quoting app</SEOInternalLink> to
+                  <SEOInternalLink href="/tools/electrical-quoting-app">quoting app</SEOInternalLink> to
                   build itemised, professional quotes that cover all job-specific variables.
                 </p>
               </div>
@@ -514,7 +514,7 @@ export default function EVChargerInstallationSouthamptonPage() {
       title="EV Charger Installation Southampton | Home EV Charging"
       description="EV charger installation costs in Southampton 2026: 7kW charger £850-1,300 installed, OZEV grants up to £350, SSEN DNO notification…"
       datePublished="2026-03-27"
-      dateModified="2026-05-18"
+      dateModified="2026-06-10"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Southampton Guide"

@@ -104,7 +104,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Guide',
   },
   {
-    href: '/rams-generator',
+    href: '/tools/rams-generator',
     title: 'RAMS Generator',
     description: 'Generate site-specific risk assessments and method statements instantly.',
     icon: FileCheck2,
@@ -716,7 +716,7 @@ const sections = [
       <>
         <p className="text-xs text-white/50 mb-4">
           This guide is written and reviewed by City &amp; Guilds 2382-18 qualified electricians on
-          the Elec-Mate technical team, cross-referenced against BS 7671:2018+A4:2026, IET Guidance
+          the Andrew Moore, founder of Elec-Mate,, cross-referenced against BS 7671:2018+A4:2026, IET Guidance
           Note 3 (9th edition, 2022), and HSG85. Last reviewed May 2026.
         </p>
         <p>
@@ -732,7 +732,7 @@ const sections = [
               <h4 className="font-bold text-white mb-1">Generate Live Work RAMS Instantly</h4>
               <p className="text-white text-sm leading-relaxed">
                 Use the{' '}
-                <SEOInternalLink href="/rams-generator">Elec-Mate RAMS generator</SEOInternalLink>{' '}
+                <SEOInternalLink href="/tools/rams-generator">Elec-Mate RAMS generator</SEOInternalLink>{' '}
                 to create comprehensive risk assessments and method statements for live electrical
                 work, including IEC 60900 tool requirements, PPE specifications, and rescue plan
                 documentation. Ready to share with clients and principal contractors.
@@ -760,7 +760,7 @@ export default function InsulatedToolsGuidePage() {
       title="Insulated Tools for Electricians UK | 1000V Rated Tools"
       description="Complete UK guide to IEC 60900 insulated tools for electricians. VDE-rated tools explained, when insulated tools are legally required under the Electricity at Work Regulations 1989, plus top brands and inspection schedules for UK electricians."
       datePublished="2026-03-27"
-      dateModified="2026-05-18"
+      dateModified="2026-06-10"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Tools Guide"

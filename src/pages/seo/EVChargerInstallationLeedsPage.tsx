@@ -120,7 +120,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Certificate',
   },
   {
-    href: '/guides/consumer-unit-regulations',
+    href: '/consumer-unit-regulations',
     title: 'Consumer Unit Regulations',
     description:
       'Consumer unit upgrade requirements — often needed when adding a 32A EV charger circuit.',
@@ -527,7 +527,7 @@ const sections = [
                   Factor in Yorkshire day rates (£300 to £400), cable run lengths in older terraced
                   stock, potential board upgrades on pre-2000 consumer units, and parking
                   considerations in inner-city Leeds streets. Use Elec-Mate's{' '}
-                  <SEOInternalLink href="/electrical-quoting-app">quoting app</SEOInternalLink> to
+                  <SEOInternalLink href="/tools/electrical-quoting-app">quoting app</SEOInternalLink> to
                   build itemised quotes on site.
                 </p>
               </div>
@@ -578,7 +578,7 @@ export default function EVChargerInstallationLeedsPage() {
       title="EV Charger Installation Leeds 2026 | Costs, Grants, and DNO"
       description="How much does EV charger installation cost in Leeds in 2026? Local costs, Northern Powergrid DNO notification, OZEV grant, 7kW vs 22kW chargers…"
       datePublished="2026-03-27"
-      dateModified="2026-05-18"
+      dateModified="2026-06-10"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Leeds Guide"

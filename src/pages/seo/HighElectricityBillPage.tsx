@@ -115,7 +115,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Certificate',
   },
   {
-    href: '/electrical-testing-calculators',
+    href: '/tools/electrical-testing-calculators',
     title: 'Electrical Testing Calculators',
     description:
       'Cable sizing, maximum demand, voltage drop, and earth loop impedance calculators.',
@@ -595,7 +595,7 @@ const sections = [
         </div>
         <p>
           Elec-Mate's{' '}
-          <SEOInternalLink href="/eighteenth-edition-course">training courses</SEOInternalLink>{' '}
+          <SEOInternalLink href="/training/18th-edition-course">training courses</SEOInternalLink>{' '}
           cover energy efficiency guidance and the relevant{' '}
           <SEOInternalLink href="/guides/bs-7671-18th-edition-guide">
             BS 7671 requirements
@@ -617,7 +617,7 @@ export default function HighElectricityBillPage() {
       title="High Electricity Bill | Electrical Causes & Fixes"
       description="Unexpectedly high electricity bill? Expert guide to electrical causes including earth leakage, faulty immersion heater thermostats…"
       datePublished="2025-09-05"
-      dateModified="2026-05-18"
+      dateModified="2026-06-10"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Troubleshooting Guide"

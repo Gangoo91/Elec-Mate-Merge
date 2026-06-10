@@ -730,7 +730,7 @@ export default function RAMSTemplateGuidePage() {
       title="RAMS Template for Electricians | Free Guide"
       description="Complete guide to writing RAMS (Risk Assessment and Method Statement) for electrical work. Risk assessment structure, method statement sections…"
       datePublished="2025-03-18"
-      dateModified="2026-05-18"
+      dateModified="2026-06-10"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Safety Guide"

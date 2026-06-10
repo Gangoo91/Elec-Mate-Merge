@@ -61,7 +61,7 @@ const comparisonCollections = [
   {
     heading: 'Core competitor pages',
     links: [
-      { href: '/compare/elec-mate-vs-icertifi', label: 'Elec-Mate vs iCertifi' },
+      { href: '/elec-mate-vs-i-certifi', label: 'Elec-Mate vs iCertifi' },
       { href: '/compare/elec-mate-vs-certsapp', label: 'Elec-Mate vs CertsApp' },
       { href: '/compare/elec-mate-vs-simply-eicr', label: 'Elec-Mate vs Simply EICR' },
       { href: '/compare/elec-mate-vs-electrical-om', label: 'Elec-Mate vs Electrical OM' },
@@ -70,7 +70,7 @@ const comparisonCollections = [
   {
     heading: 'Best-of comparison pages',
     links: [
-      { href: '/best-electrician-app', label: 'Best Electrician App' },
+      { href: '/tools/best-electrician-app-uk', label: 'Best Electrician App' },
       { href: '/compare/best-invoice-app-electricians', label: 'Best Invoice App for Electricians' },
       { href: '/compare/best-ai-tool-electricians', label: 'Best AI Tool for Electricians' },
       { href: '/tools/digital-certificates-app', label: 'Digital Certificates App' },
@@ -122,7 +122,7 @@ export default function CompareHubPage() {
       { name: 'Compare', url: '/compare' },
     ],
     dateModified: '2026-05-18',
-    author: 'Elec-Mate Technical Team',
+    author: 'Andrew Moore',
   });
 
   return (
@@ -163,10 +163,10 @@ export default function CompareHubPage() {
           <p className="text-white leading-relaxed mb-8 max-w-4xl">
             If you are already weighing up options, this page brings the main comparisons together
             in one place. Start with{' '}
-            <SEOInternalLink href="/compare/elec-mate-vs-icertifi">Elec-Mate vs iCertifi</SEOInternalLink>{' '}
+            <SEOInternalLink href="/elec-mate-vs-i-certifi">Elec-Mate vs iCertifi</SEOInternalLink>{' '}
             and <SEOInternalLink href="/compare/elec-mate-vs-certsapp">Elec-Mate vs CertsApp</SEOInternalLink>{' '}
             or jump into broader pages like{' '}
-            <SEOInternalLink href="/best-electrician-app">Best Electrician App</SEOInternalLink> and{' '}
+            <SEOInternalLink href="/tools/best-electrician-app-uk">Best Electrician App</SEOInternalLink> and{' '}
             <SEOInternalLink href="/tools/digital-certificates-app">Digital Certificates</SEOInternalLink>.
           </p>
           <SEOFeatureGrid features={features} />

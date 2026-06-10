@@ -634,7 +634,7 @@ export default function RewireCostSheffieldPage() {
       description="House rewire cost in Sheffield 2025: 2-bed £2,100–£3,400, 3-bed £3,100–£5,000, 4-bed £4,400–£7,200. Part P notification + EIC certificate included."
       answerBox={answerBox}
       datePublished="2025-01-01"
-      dateModified="2026-05-18"
+      dateModified="2026-06-10"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Cost Guide"

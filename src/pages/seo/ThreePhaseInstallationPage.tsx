@@ -114,7 +114,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Certificate',
   },
   {
-    href: '/guides/consumer-unit-regulations',
+    href: '/consumer-unit-regulations',
     title: 'Consumer Unit Regulations',
     description:
       'Requirements for consumer units and distribution boards including TPN boards under BS 7671.',
@@ -294,7 +294,7 @@ const sections = [
         </div>
         <p>
           Elec-Mate's{' '}
-          <SEOInternalLink href="/tools/ai-circuit-designer">AI circuit designer</SEOInternalLink>{' '}
+          <SEOInternalLink href="/ai-circuit-designer">AI circuit designer</SEOInternalLink>{' '}
           can assist with phase allocation by analysing the connected load on each phase and
           suggesting redistribution to minimise imbalance. This is particularly useful on complex
           commercial installations with dozens of circuits.
@@ -368,7 +368,7 @@ const sections = [
           Labelling is essential on TPN boards. Every circuit must be clearly labelled with its
           function, phase allocation, and protective device rating. The circuit chart must show
           which phase each circuit is connected to. Under{' '}
-          <SEOInternalLink href="/guides/consumer-unit-regulations">
+          <SEOInternalLink href="/consumer-unit-regulations">
             BS 7671 Regulation 514.9
           </SEOInternalLink>
           , the circuit chart must be fixed inside or adjacent to the distribution board and kept up
@@ -553,7 +553,7 @@ const sections = [
         </div>
         <p>
           For detailed guidance on{' '}
-          <SEOInternalLink href="/earthing-arrangements">earthing arrangements</SEOInternalLink>{' '}
+          <SEOInternalLink href="/guides/earthing-arrangements">earthing arrangements</SEOInternalLink>{' '}
           including TN-S, TN-C-S, and TT systems, see our dedicated guide.
         </p>
       </>
@@ -623,7 +623,7 @@ export default function ThreePhaseInstallationPage() {
       title="Three Phase Installation Guide | BS 7671 UK"
       description="Complete guide to three phase electrical installations in the UK. Covers when three phase is needed, load balancing, TPN distribution boards…"
       datePublished="2025-06-15"
-      dateModified="2026-05-18"
+      dateModified="2026-06-10"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Installation Guide"

@@ -643,7 +643,7 @@ export default function HowToSizeCablesPage() {
             <SEOInternalLink href="/guides/how-electricity-works">
               How Electricity Works
             </SEOInternalLink>
-            <SEOInternalLink href="/guides/how-to-become-electrician">
+            <SEOInternalLink href="/guides/how-to-become-an-electrician">
               How to Become an Electrician UK 2026
             </SEOInternalLink>
             <SEOInternalLink href="/guides/how-to-find-electrician-uk">

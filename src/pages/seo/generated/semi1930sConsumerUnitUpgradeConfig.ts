@@ -187,7 +187,7 @@ export const semi1930sConsumerUnitUpgradeConfig: GeneratedGuideConfig = {
       category: 'Certificate',
     },
     {
-      href: '/electrical-quoting-app',
+      href: '/tools/electrical-quoting-app',
       title: 'Electrical Quoting App',
       description: 'Turn the scope into a clear quote without starting over.',
       icon: 'Calculator',

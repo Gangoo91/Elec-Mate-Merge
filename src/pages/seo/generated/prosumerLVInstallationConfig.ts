@@ -5,7 +5,7 @@ import type { GeneratedGuideConfig } from '@/pages/seo/generated/GeneratedGuideP
 // On-Site Guide Chapter 12 (Reg 12.1).
 
 const published = '2026-05-17';
-const modified = '2026-05-29';
+const modified = '2026-06-10';
 
 export const prosumerLVInstallationConfig: GeneratedGuideConfig = {
   pagePath: '/guides/prosumer-low-voltage-electrical-installation',
@@ -229,7 +229,7 @@ export const prosumerLVInstallationConfig: GeneratedGuideConfig = {
       category: 'Guide',
     },
     {
-      href: '/solar-pv-certificate',
+      href: '/tools/solar-pv-certificate',
       title: 'Solar PV Certificate',
       description: 'Digital certificate for the AC side of a solar PV prosumer installation.',
       icon: 'FileCheck2',

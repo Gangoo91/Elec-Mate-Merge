@@ -119,7 +119,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Certificate',
   },
   {
-    href: '/guides/consumer-unit-regulations',
+    href: '/consumer-unit-regulations',
     title: 'Consumer Unit Regulations',
     description:
       'Consumer unit upgrade requirements — often needed when adding a 32A EV charger circuit.',
@@ -441,7 +441,7 @@ const sections = [
                   Factor in Bristol day rates (£300 to £420), long cable runs in Victorian terraces,
                   steep site access, PME earthing requirements, and conservation area constraints.
                   Use Elec-Mate's{' '}
-                  <SEOInternalLink href="/electrical-quoting-app">quoting app</SEOInternalLink> to
+                  <SEOInternalLink href="/tools/electrical-quoting-app">quoting app</SEOInternalLink> to
                   build itemised quotes on site.
                 </p>
               </div>
@@ -484,7 +484,7 @@ export default function EVChargerInstallationBristolPage() {
       title="EV Charger Installation Bristol 2026 | Costs, DNO, and"
       description="How much does EV charger installation cost in Bristol in 2026? Local costs, National Grid DNO notification, OZEV grant, Clean Air Zone…"
       datePublished="2026-03-27"
-      dateModified="2026-05-18"
+      dateModified="2026-06-10"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Bristol Guide"

@@ -480,7 +480,7 @@ const sections = [
         </div>
         <p>
           All outdoor electrical work is notifiable under{' '}
-          <SEOInternalLink href="/part-p-building-regulations">
+          <SEOInternalLink href="/guides/part-p-building-regulations">
             Part P of the Building Regulations
           </SEOInternalLink>
           . This means the electrician must be registered with a competent person scheme to
@@ -656,7 +656,7 @@ export default function ElectricalWorkPricingPage() {
       title="Electrical Work Pricing Guide | Jobs & Costs UK 2026"
       description="Complete guide to UK electrical work prices in 2026. Socket installation, consumer unit change, full rewire, EV charger, lighting…"
       datePublished="2026-01-20"
-      dateModified="2026-05-18"
+      dateModified="2026-06-10"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Pricing Guide"

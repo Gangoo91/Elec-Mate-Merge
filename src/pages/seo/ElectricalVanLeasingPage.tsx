@@ -104,7 +104,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Guide',
   },
   {
-    href: '/electrical-quoting-app',
+    href: '/tools/electrical-quoting-app',
     title: 'Electrical Quoting App',
     description: 'Quote jobs quickly including van costs and travel time in your pricing.',
     icon: FileCheck2,
@@ -483,7 +483,7 @@ const sections = [
           Your van is one of your biggest business costs — making sure it earns its keep means
           keeping it fully utilised and factoring its cost correctly into every job quote.
           Elec-Mate's{' '}
-          <SEOInternalLink href="/electrical-quoting-app">quoting tools</SEOInternalLink> let
+          <SEOInternalLink href="/tools/electrical-quoting-app">quoting tools</SEOInternalLink> let
           you include van costs, fuel, and travel time automatically in every estimate.
         </p>
         <div className="space-y-4 my-4">
@@ -494,7 +494,7 @@ const sections = [
                 <h4 className="font-bold text-white mb-1">Include Van Costs in Every Quote</h4>
                 <p className="text-white text-sm leading-relaxed">
                   Use the{' '}
-                  <SEOInternalLink href="/electrical-quoting-app">
+                  <SEOInternalLink href="/tools/electrical-quoting-app">
                     Elec-Mate quoting app
                   </SEOInternalLink>{' '}
                   to include your daily van cost (lease ÷ working days) and mileage allowance in

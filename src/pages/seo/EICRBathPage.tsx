@@ -555,7 +555,7 @@ const sections = [
                 <p className="text-white text-sm leading-relaxed">
                   When the EICR identifies C1 or C2 observations, quote the remedial work on the day
                   using the{' '}
-                  <SEOInternalLink href="/electrical-quoting-app">quoting app</SEOInternalLink>.
+                  <SEOInternalLink href="/tools/electrical-quoting-app">quoting app</SEOInternalLink>.
                   Bath landlords face a 28-day deadline — quoting immediately gives you the best
                   chance of winning the follow-on work.
                 </p>
@@ -583,7 +583,7 @@ export default function EICRBathPage() {
       title="EICR Bath | Electrical Safety Certificate Cost 2026"
       description="EICR costs in Bath for 2026. Landlord legal requirements, Bath & North East Somerset Council enforcement, Georgian listed building challenges…"
       datePublished="2026-03-27"
-      dateModified="2026-05-18"
+      dateModified="2026-06-10"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="EICR Guide"

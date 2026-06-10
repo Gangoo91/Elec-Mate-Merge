@@ -116,7 +116,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Guide',
   },
   {
-    href: '/electrical-quoting-app',
+    href: '/tools/electrical-quoting-app',
     title: 'Quoting App',
     description:
       'Quote Slough commercial and residential electrical jobs with South East pricing built in.',
@@ -441,7 +441,7 @@ const sections = [
                 <h4 className="font-bold text-white mb-1">Quote South East Jobs Accurately</h4>
                 <p className="text-white text-sm leading-relaxed">
                   Use the{' '}
-                  <SEOInternalLink href="/electrical-quoting-app">quoting app</SEOInternalLink> to
+                  <SEOInternalLink href="/tools/electrical-quoting-app">quoting app</SEOInternalLink> to
                   produce professional PDF quotes for Slough customers. South East pricing built in
                   — present quotes on site and win more jobs.
                 </p>
@@ -471,7 +471,7 @@ export default function ElectricianSloughPage() {
       title="Electrician in Slough | Local Electricians 2026"
       description="Find qualified electricians in Slough. NICEIC and NAPIT registered, Part P compliant. South East rates, EICRs, consumer unit upgrades…"
       datePublished="2026-03-27"
-      dateModified="2026-05-18"
+      dateModified="2026-06-10"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Slough"

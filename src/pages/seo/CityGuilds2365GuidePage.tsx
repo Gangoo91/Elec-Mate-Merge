@@ -118,7 +118,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Guide',
   },
   {
-    href: '/am2-exam-preparation',
+    href: '/training/am2-exam-preparation',
     title: 'AM2 Exam Preparation',
     description: 'The practical assessment you take after completing the 2365 and NVQ.',
     icon: Target,
@@ -153,7 +153,7 @@ const sections = [
         <p>
           The 2365 is one of three components needed to become a qualified electrician. The other
           two are the NVQ (proving you can do the work in a real workplace) and the{' '}
-          <SEOInternalLink href="/am2-exam-preparation">AM2</SEOInternalLink> (a practical assessment
+          <SEOInternalLink href="/training/am2-exam-preparation">AM2</SEOInternalLink> (a practical assessment
           of your installation, testing, and fault diagnosis skills). Together, these three
           components — plus the End-Point Assessment — form the Level 3 Electrotechnical
           Apprenticeship. See the full{' '}
@@ -732,7 +732,7 @@ export default function CityGuilds2365GuidePage() {
       title="City & Guilds 2365 Diploma 2026 | Level 2 + 3 Guide"
       description="C&G 2365 Diploma in Electrical Installations: Level 2 vs 3 structure, unit list, exams + practicals, college routes + how it feeds NVQ + AM2."
       datePublished="2026-03-27"
-      dateModified="2026-05-18"
+      dateModified="2026-06-10"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Course Guide"

@@ -453,7 +453,7 @@ const sections = [
                 <h4 className="font-bold text-white mb-1">Win with Professional Quotes</h4>
                 <p className="text-white text-sm leading-relaxed">
                   Use the{' '}
-                  <SEOInternalLink href="/electrical-quoting-app">
+                  <SEOInternalLink href="/tools/electrical-quoting-app">
                     quoting app
                   </SEOInternalLink>{' '}
                   to produce a detailed, itemised quote for the conversion electrical works. Include

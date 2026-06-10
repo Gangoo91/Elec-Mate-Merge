@@ -564,7 +564,7 @@ export default function OutbuildingElectricalSupplyPage() {
       title="Overhead Cable to Outbuilding: 3.5m Min Height"
       description="Overhead cable installation for garages, sheds, workshops. BS 7671:2018+A4:2026 clearance rules, SWA vs overhead, RCD protection, TT earthing setup."
       datePublished="2026-03-27"
-      dateModified="2026-05-29"
+      dateModified="2026-06-10"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Outbuilding Supply Guide"

@@ -171,7 +171,7 @@ const sections = [
         </p>
         <p>
           The external earth return path differs depending on the{' '}
-          <SEOInternalLink href="/earthing-arrangements">earthing system</SEOInternalLink>:
+          <SEOInternalLink href="/guides/earthing-arrangements">earthing system</SEOInternalLink>:
         </p>
         <div className="rounded-2xl bg-white/[0.04] border border-white/10 p-5 my-4">
           <h3 className="font-bold text-white text-lg mb-4">
@@ -685,7 +685,7 @@ const relatedPages = [
     category: 'Certificate',
   },
   {
-    href: '/electrical-testing-calculators',
+    href: '/tools/electrical-testing-calculators',
     title: '70+ Electrical Calculators',
     description: 'Zs lookup, R1+R2, cable sizing, voltage drop, PFC, earth electrode, and more.',
     icon: Calculator,
@@ -703,7 +703,7 @@ export default function EarthFaultLoopExplainedPage() {
       title={PAGE_TITLE}
       description={PAGE_DESCRIPTION}
       datePublished="2024-11-05"
-      dateModified="2026-05-18"
+      dateModified="2026-06-10"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Testing Guide"

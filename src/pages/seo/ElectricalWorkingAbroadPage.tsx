@@ -175,7 +175,7 @@ const sections = [
             <p className="text-white text-sm leading-relaxed">
               Australia has a formal skills assessment process through Trades Recognition Australia
               (TRA). You submit your UK qualifications (typically{' '}
-              <SEOInternalLink href="/level3-electrical">
+              <SEOInternalLink href="/training/level-3-electrical">
                 Level 3 NVQ/Diploma
               </SEOInternalLink>
               , City & Guilds 2365/2357, and BS 7671) along with evidence of work experience. TRA
@@ -226,7 +226,7 @@ const sections = [
               recognition assessments, particularly for positions with international contractors on
               large projects. Employers typically verify your qualifications directly and may
               require{' '}
-              <SEOInternalLink href="/city-guilds2391">City & Guilds 2391</SEOInternalLink>{' '}
+              <SEOInternalLink href="/training/city-guilds-2391">City & Guilds 2391</SEOInternalLink>{' '}
               or equivalent inspection and testing qualifications. The JIB grading (approved
               electrician or technician) is well-understood by Middle Eastern employers. Local
               municipality regulations (such as DEWA in Dubai or Kahramaa in Qatar) apply on site
@@ -597,13 +597,13 @@ const sections = [
         <p>
           If you let your registrations lapse while abroad, the return process is more involved. You
           may need to re-sit the{' '}
-          <SEOInternalLink href="/eighteenth-edition-course">18th Edition course</SEOInternalLink>{' '}
+          <SEOInternalLink href="/training/18th-edition-course">18th Edition course</SEOInternalLink>{' '}
           and potentially the{' '}
-          <SEOInternalLink href="/inspection-testing-course">
+          <SEOInternalLink href="/training/inspection-and-testing">
             2391 inspection and testing examination
           </SEOInternalLink>
           . Elec-Mate's study tools and{' '}
-          <SEOInternalLink href="/am2-exam-preparation">
+          <SEOInternalLink href="/training/am2-exam-preparation">
             AM2 preparation resources
           </SEOInternalLink>{' '}
           help you get back up to speed quickly.
@@ -670,7 +670,7 @@ export default function ElectricalWorkingAbroadPage() {
       title={PAGE_TITLE}
       description={PAGE_DESCRIPTION}
       datePublished="2025-06-10"
-      dateModified="2026-05-18"
+      dateModified="2026-06-10"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Career Guide"

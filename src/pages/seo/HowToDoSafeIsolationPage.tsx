@@ -253,11 +253,11 @@ export default function HowToDoSafeIsolationPage() {
               (Regulation 462, which covers isolation and switching). HSE Guidance Note GS38 sets
               out the requirements for the test equipment used during safe isolation. After
               completing the work, you will need to carry out{' '}
-              <SEOInternalLink href="/how-to-test-insulation-resistance">
+              <SEOInternalLink href="/guides/insulation-resistance-testing-bs7671">
                 insulation resistance testing
               </SEOInternalLink>{' '}
               and issue the appropriate certificate — whether that is a{' '}
-              <SEOInternalLink href="/minor-works-certificate">
+              <SEOInternalLink href="/tools/minor-works-certificate">
                 Minor Works Certificate
               </SEOInternalLink>{' '}
               or a full{' '}
@@ -575,7 +575,7 @@ export default function HowToDoSafeIsolationPage() {
             <SEOInternalLink href="/guides/safe-isolation-procedure-electricians">Safe Isolation Procedure for Electricians</SEOInternalLink>
             <SEOInternalLink href="/guides/how-ai-helps-electricians">How AI Helps Electricians</SEOInternalLink>
             <SEOInternalLink href="/guides/how-electricity-works">How Electricity Works</SEOInternalLink>
-            <SEOInternalLink href="/guides/how-to-become-electrician">How to Become an Electrician UK 2026</SEOInternalLink>
+            <SEOInternalLink href="/guides/how-to-become-an-electrician">How to Become an Electrician UK 2026</SEOInternalLink>
             <SEOInternalLink href="/guides/how-to-find-electrician-uk">How to Find a Good Electrician UK</SEOInternalLink>
             <SEOInternalLink href="/guides/how-to-wire-a-plug">How to Wire a Plug</SEOInternalLink>
             <SEOInternalLink href="/guides/how-to-fill-in-minor-works">How to Fill In a Minor Works Certificate</SEOInternalLink>

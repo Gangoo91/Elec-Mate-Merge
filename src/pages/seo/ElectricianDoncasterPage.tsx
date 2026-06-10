@@ -114,7 +114,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Guide',
   },
   {
-    href: '/electrical-quoting-app',
+    href: '/tools/electrical-quoting-app',
     title: 'Quoting App',
     description:
       'Quote rewires, consumer unit upgrades, and EV charger installations with Doncaster pricing.',
@@ -441,7 +441,7 @@ const sections = [
                 <h4 className="font-bold text-white mb-1">Professional Quoting</h4>
                 <p className="text-white text-sm leading-relaxed">
                   Use the{' '}
-                  <SEOInternalLink href="/electrical-quoting-app">quoting app</SEOInternalLink> to
+                  <SEOInternalLink href="/tools/electrical-quoting-app">quoting app</SEOInternalLink> to
                   send professional quotes. In Doncaster's competitive market, clear and detailed
                   quotes that include compliance documentation stand out.
                 </p>
@@ -471,7 +471,7 @@ export default function ElectricianDoncasterPage() {
       title="Electrician in Doncaster | Local Electricians 2026"
       description="Find qualified electricians in Doncaster. Part P compliance, NICEIC registered, EICR for landlords, consumer unit replacement, house rewiring…"
       datePublished="2026-03-27"
-      dateModified="2026-05-18"
+      dateModified="2026-06-10"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Doncaster"

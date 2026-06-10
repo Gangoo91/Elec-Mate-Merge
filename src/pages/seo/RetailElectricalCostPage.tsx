@@ -107,7 +107,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Cost Guide',
   },
   {
-    href: '/electrical-quoting-app',
+    href: '/tools/electrical-quoting-app',
     title: 'Electrical Quoting App',
     description: 'Create professional retail electrical fit-out quotes from your phone.',
     icon: FileCheck2,
@@ -491,7 +491,7 @@ const sections = [
                   Retail clients often have a clear idea of the lighting effect they want but no
                   idea what it costs. Build a detailed lighting schedule — number of tracks, number
                   of spot heads per track, driver specifications — and price it accurately using the{' '}
-                  <SEOInternalLink href="/electrical-quoting-app">
+                  <SEOInternalLink href="/tools/electrical-quoting-app">
                     quoting app
                   </SEOInternalLink>
                   . A detailed quote wins trust and avoids scope creep disputes.

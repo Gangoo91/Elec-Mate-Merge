@@ -588,7 +588,7 @@ const sections = [
                 <h4 className="font-bold text-white mb-1">Quote EV Jobs in Minutes</h4>
                 <p className="text-white text-sm leading-relaxed">
                   Generate professional, itemised EV charger installation quotes using the{' '}
-                  <SEOInternalLink href="/electrical-quoting-app">
+                  <SEOInternalLink href="/tools/electrical-quoting-app">
                     Elec-Mate quoting app
                   </SEOInternalLink>
                   . Include OZEV grant deductions, consumer unit upgrades, and earth electrode
@@ -618,7 +618,7 @@ export default function EVChargerInstallationWolverhamptonPage() {
       title="EV Charger Installation Wolverhampton | Home EV Charging"
       description="EV charger installation in Wolverhampton. OZEV grants up to £350, installation costs £750–£1,050 for 7kW, West Midlands Clean Air Zone context…"
       datePublished="2026-03-27"
-      dateModified="2026-05-18"
+      dateModified="2026-06-10"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="EV Charging Guide"

@@ -118,7 +118,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Certificate',
   },
   {
-    href: '/electrical-quoting-app',
+    href: '/tools/electrical-quoting-app',
     title: 'Quoting App',
     description: 'Price garage conversion electrical packages with itemised materials and labour.',
     icon: Wrench,
@@ -723,7 +723,7 @@ const sections = [
                 <h4 className="font-bold text-white mb-1">Professional Quoting</h4>
                 <p className="text-white text-sm leading-relaxed">
                   Price the complete electrical package with Elec-Mate's{' '}
-                  <SEOInternalLink href="/electrical-quoting-app">quoting app</SEOInternalLink>.
+                  <SEOInternalLink href="/tools/electrical-quoting-app">quoting app</SEOInternalLink>.
                   First fix, second fix, consumer unit, lighting, sockets, heating, smoke detection,
                   testing — all itemised. Send a professional PDF quote that wins work.
                 </p>
@@ -764,7 +764,7 @@ export default function GarageConversionElectricsPage() {
       title="Garage Conversion Electrics | Electrical Guide UK 2026"
       description="Complete guide to garage conversion electrics in the UK. Building regulations, consumer unit design, lighting, socket layout, heating circuits…"
       datePublished="2026-03-27"
-      dateModified="2026-05-18"
+      dateModified="2026-06-10"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Installation Guide"

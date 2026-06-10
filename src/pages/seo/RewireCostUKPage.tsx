@@ -731,7 +731,7 @@ const relatedPages = [
     category: 'Guide',
   },
   {
-    href: '/guides/consumer-unit-regulations',
+    href: '/consumer-unit-regulations',
     title: 'Consumer Unit Regulations',
     description: 'Current BS 7671 requirements for consumer units including Amendment 4.',
     icon: ShieldCheck,
@@ -761,7 +761,7 @@ const relatedPages = [
     category: 'Regulations',
   },
   {
-    href: '/electrical-quoting-app',
+    href: '/tools/electrical-quoting-app',
     title: 'Electrical Quoting App',
     description: 'Generate professional, detailed quotes for rewires and other electrical work.',
     icon: Receipt,
@@ -775,7 +775,7 @@ export default function RewireCostUKPage() {
       title="Rewire Cost UK 2026 | How Much Does a House Rewire Cost?"
       description="Complete guide to house rewire costs in the UK for 2026. Average prices by property size (1-bed flat to 5-bed house), what affects the cost…"
       datePublished="2024-07-01"
-      dateModified="2026-05-18"
+      dateModified="2026-06-10"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Cost Guide"

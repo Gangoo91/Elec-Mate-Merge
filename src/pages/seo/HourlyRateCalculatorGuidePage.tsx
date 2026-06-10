@@ -121,7 +121,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Guide',
   },
   {
-    href: '/electrical-quoting-app',
+    href: '/tools/electrical-quoting-app',
     title: 'AI Cost Engineer',
     description:
       'Generate accurate, profitable quotes using AI-powered cost estimation with real trade pricing data.',
@@ -611,7 +611,7 @@ export default function HourlyRateCalculatorGuidePage() {
       title="Hourly Rate Calculator for Electricians | Set Your Rate"
       description="Calculate your true hourly rate as a UK electrician. Covers overheads, billable hours, profit margin, and pricing methods — so you charge enough to cover every cost and earn the income you deserve."
       datePublished="2026-01-22"
-      dateModified="2026-05-18"
+      dateModified="2026-06-10"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Pricing Guide"

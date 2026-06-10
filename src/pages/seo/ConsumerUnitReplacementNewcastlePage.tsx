@@ -86,6 +86,13 @@ const faqs = [
 
 const relatedPages: RelatedPage[] = [
   {
+    href: '/guides/consumer-unit-replacement-cost-newcastle',
+    title: 'Consumer Unit Replacement Cost in Newcastle',
+    description: 'Local price bands and labour rates for consumer unit replacement in Newcastle.',
+    icon: Home,
+    category: 'Guide',
+  },
+  {
     href: '/guides/consumer-unit-replacement-cost',
     title: 'Consumer Unit Replacement Guide',
     description:
@@ -569,7 +576,7 @@ const sections = [
                 <p className="text-white text-sm leading-relaxed">
                   When you find earthing deficiencies, defective wiring, or additional circuits
                   needed, quote them immediately using the{' '}
-                  <SEOInternalLink href="/electrical-quoting-app">
+                  <SEOInternalLink href="/tools/electrical-quoting-app">
                     Elec-Mate quoting tool
                   </SEOInternalLink>
                   . Customers are most likely to approve additional work while you are on site and

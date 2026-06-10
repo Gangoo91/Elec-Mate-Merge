@@ -594,7 +594,7 @@ const sections = [
                 <h4 className="font-bold text-white mb-1">Quoting App</h4>
                 <p className="text-white text-sm leading-relaxed">
                   Price V2G installations accurately with Elec-Mate's{' '}
-                  <SEOInternalLink href="/electrical-quoting-app">quoting app</SEOInternalLink>.
+                  <SEOInternalLink href="/tools/electrical-quoting-app">quoting app</SEOInternalLink>.
                   Charger unit, dedicated circuit, CT clamp, commissioning, DNO application, and
                   certification — all itemised with your margins.
                 </p>
@@ -634,7 +634,7 @@ export default function V2GInstallationGuidePage() {
       title="Vehicle to Grid (V2G) Installation | UK Electrician Guide"
       description="Complete guide to Vehicle to Grid (V2G) installation in the UK. Bidirectional chargers, BS 7671 regulations, G99 DNO application, compatible vehicles…"
       datePublished="2026-03-27"
-      dateModified="2026-05-18"
+      dateModified="2026-06-10"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Emerging Technology"

@@ -114,7 +114,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Certificate',
   },
   {
-    href: '/electrical-quoting-app',
+    href: '/tools/electrical-quoting-app',
     title: 'Electrical Quoting App',
     description: 'Quote factory and industrial electrical projects with instant PDF proposals.',
     icon: PoundSterling,
@@ -609,7 +609,7 @@ export default function FactoryElectricalInstallationPage() {
       title="Factory Electrical Installation UK | Industrial Wiring Guide"
       description="Complete guide to factory electrical installation in the UK. Three-phase supplies, motor control centres, power factor correction, HRC fuses, IP ratings…"
       datePublished="2026-03-27"
-      dateModified="2026-05-18"
+      dateModified="2026-06-10"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Industrial Electrical Guide"

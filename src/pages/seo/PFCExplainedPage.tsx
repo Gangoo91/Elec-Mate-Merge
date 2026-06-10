@@ -22,7 +22,7 @@ import {
 // -------------------------------------------------------------------
 
 const breadcrumbs = [
-  { label: 'Calculators', href: '/electrical-testing-calculators' },
+  { label: 'Calculators', href: '/tools/electrical-testing-calculators' },
   { label: 'PFC Explained', href: '/guides/prospective-fault-current-explained' },
 ];
 
@@ -584,7 +584,7 @@ export default function PFCExplainedPage() {
       title="Prospective Fault Current Explained | PFC Guide"
       description="Complete guide to prospective fault current (PFC) for UK electricians. What PFC is, why it matters, how to measure it on site…"
       datePublished="2025-05-01"
-      dateModified="2026-05-18"
+      dateModified="2026-06-10"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Technical Guide"

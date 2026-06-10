@@ -98,7 +98,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Certificate',
   },
   {
-    href: '/tools/fire-alarm-certificate',
+    href: '/fire-alarm-certificate',
     title: 'Fire Alarm Certificate',
     description:
       'BS 5839-1 compliant fire alarm certificates for restaurants and commercial premises. Digital completion and instant delivery.',
@@ -470,7 +470,7 @@ const sections = [
           The Regulatory Reform (Fire Safety) Order 2005 requires the responsible person (typically
           the restaurant owner or operator) to ensure that appropriate fire detection and alarm
           systems are in place. The fire alarm system must be designed, installed, and maintained to{' '}
-          <SEOInternalLink href="/tools/fire-alarm-certificate">BS 5839-1:2025</SEOInternalLink>.
+          <SEOInternalLink href="/fire-alarm-certificate">BS 5839-1:2025</SEOInternalLink>.
         </p>
         <p>
           The system category depends on the fire risk assessment. Common categories for restaurants
@@ -772,7 +772,7 @@ export default function RestaurantElectricalRequirementsPage() {
       title="Restaurant Electrics UK | Commercial Kitchen + EICR Rules"
       description="Restaurant electrical guide: 3-phase supply sizing, extract fan interlocks, emergency lighting (BS 5266-1), EICR frequency + commercial kitchen kit."
       datePublished="2025-06-15"
-      dateModified="2026-05-18"
+      dateModified="2026-06-10"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Commercial Guide"

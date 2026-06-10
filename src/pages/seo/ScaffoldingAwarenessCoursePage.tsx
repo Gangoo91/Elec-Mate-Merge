@@ -500,7 +500,7 @@ const relatedPages = [
     category: 'Training' as const,
   },
   {
-    href: '/training/ipaf-training',
+    href: '/ipaf-training',
     title: 'IPAF Training Guide',
     description:
       'IPAF operator training for mobile elevated work platforms — an alternative to scaffolding for many tasks.',
@@ -532,7 +532,7 @@ const relatedPages = [
     category: 'Guide' as const,
   },
   {
-    href: '/manual-handling-course',
+    href: '/training/manual-handling',
     title: 'Manual Handling Course',
     description:
       'Safe lifting and carrying techniques — essential when transporting tools and materials onto scaffolding.',

@@ -22,7 +22,7 @@ export default function ElectricalExtensionGuidePage() {
       title="House Extension Electrics | Wiring & Regulations Guide"
       description="Complete guide to electrical wiring for house extensions in the UK. Covers new circuit design, connecting to existing distribution boards…"
       datePublished="2026-01-12"
-      dateModified="2026-05-18"
+      dateModified="2026-06-10"
       breadcrumbs={[
         { label: 'Installation', href: '/guides' },
         { label: 'Extension Electrics', href: '/guides/house-extension-electrics' },

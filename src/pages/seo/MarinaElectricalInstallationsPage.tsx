@@ -92,7 +92,7 @@ const faqs = [
 
 const relatedPages: RelatedPage[] = [
   {
-    href: '/earthing-arrangements',
+    href: '/guides/earthing-arrangements',
     title: 'Earthing Arrangements Explained',
     description:
       'TN-S, TN-C-S, and TT earthing — understanding why TT is required for marina installations.',
@@ -878,7 +878,7 @@ export default function MarinaElectricalInstallationsPage() {
       title="Marina Electrical Installations | BS 7671 Section 709"
       description="Complete guide to marina electrical installations under BS 7671 Section 709. Covers shore supply distribution, TT earthing requirements…"
       datePublished="2025-07-15"
-      dateModified="2026-05-18"
+      dateModified="2026-06-10"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Special Installation"

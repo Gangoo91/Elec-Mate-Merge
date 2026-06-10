@@ -104,7 +104,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Certificate',
   },
   {
-    href: '/electrical-quoting-app',
+    href: '/tools/electrical-quoting-app',
     title: 'Electrical Quoting App',
     description:
       'Price swimming pool electrical packages including bonding, SELV lighting, and filtration circuits.',
@@ -512,7 +512,7 @@ export default function SwimmingPoolElectricalCostPage() {
       title="Swimming Pool Electrical Installation UK | BS 7671 Section"
       description="Complete guide to swimming pool electrical installation in the UK. BS 7671 Section 702 zones, SELV lighting, supplementary bonding, RCD protection…"
       datePublished="2026-03-27"
-      dateModified="2026-05-18"
+      dateModified="2026-06-10"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Installation Guide"

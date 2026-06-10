@@ -21,6 +21,7 @@ export const eicrCostLiverpoolConfig: GeneratedGuideConfig = {
   badge: 'Cost Guide',
   badgeIcon: 'PoundSterling',
   breadcrumbLabel: 'EICR Cost in Liverpool',
+  breadcrumbParent: { label: 'EICR Cost UK', href: '/guides/eicr-cost-uk' },
   heroPrefix: 'EICR Cost in Liverpool:',
   heroHighlight: '2026 Pricing Guide',
   heroSuffix: '— Domestic & Commercial',
@@ -209,6 +210,27 @@ export const eicrCostLiverpoolConfig: GeneratedGuideConfig = {
     },
   ],
   relatedPages: [
+    {
+      href: '/guides/eicr-cost-uk',
+      title: 'EICR Cost UK — National Guide',
+      description: 'UK-wide EICR prices by property type, what affects cost, and remedial pricing.',
+      icon: 'PoundSterling',
+      category: 'Guide',
+    },
+    {
+      href: '/guides/eicr-cost-manchester',
+      title: 'EICR cost in Manchester',
+      description: 'Local price bands and labour rates for Manchester.',
+      icon: 'MapPin',
+      category: 'Guide',
+    },
+    {
+      href: '/guides/eicr-cost-stoke',
+      title: 'EICR cost in Stoke-on-Trent',
+      description: 'Local price bands and labour rates for Stoke-on-Trent.',
+      icon: 'MapPin',
+      category: 'Guide',
+    },
     {
       href: '/electricians/liverpool',
       title: 'Find an Electrician in Liverpool',

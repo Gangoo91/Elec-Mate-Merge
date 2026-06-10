@@ -648,7 +648,7 @@ export default function Section722EVChargingGuidePage() {
       title="EV Charger Install Rules UK: BS 7671 Section 722"
       description="BS 7671 Section 722 for UK EV charger installs: PME earthing restriction, Type A RCD + 6mA DC leakage, dedicated circuit, cable sizing, earth electrode option."
       datePublished="2026-03-27"
-      dateModified="2026-05-22"
+      dateModified="2026-06-10"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Regulation Guide"

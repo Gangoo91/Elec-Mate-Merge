@@ -7,7 +7,7 @@ import type { GeneratedGuideConfig } from '@/pages/seo/generated/GeneratedGuideP
 // (Inspection & Testing, 9th Edition) and the IET On-Site Guide.
 
 const published = '2026-05-17';
-const modified = '2026-05-18';
+const modified = '2026-06-10';
 
 export const a4TnCsPnbEarthingConfig: GeneratedGuideConfig = {
   pagePath: '/guides/bs-7671-a4-2026-tn-cs-pnb-earthing',

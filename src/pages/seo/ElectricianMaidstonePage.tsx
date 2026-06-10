@@ -116,7 +116,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Guide',
   },
   {
-    href: '/electrical-quoting-app',
+    href: '/tools/electrical-quoting-app',
     title: 'Quoting App',
     description:
       'Quote Maidstone electrical jobs at South East rates — send professional quotes on site.',
@@ -414,7 +414,7 @@ const sections = [
                 <h4 className="font-bold text-white mb-1">Quote and Win Kent Jobs</h4>
                 <p className="text-white text-sm leading-relaxed">
                   Use the{' '}
-                  <SEOInternalLink href="/electrical-quoting-app">quoting app</SEOInternalLink> to
+                  <SEOInternalLink href="/tools/electrical-quoting-app">quoting app</SEOInternalLink> to
                   produce professional PDF quotes for Maidstone and surrounding Kent customers at
                   accurate South East rates. Quote on site and close more jobs.
                 </p>
@@ -444,7 +444,7 @@ export default function ElectricianMaidstonePage() {
       title="Electrician in Maidstone | Local Electricians 2026"
       description="Find qualified electricians in Maidstone. NICEIC and NAPIT registered, Part P compliant. South East rates, EICRs, consumer unit upgrades, EV chargers…"
       datePublished="2026-03-27"
-      dateModified="2026-05-18"
+      dateModified="2026-06-10"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Maidstone"

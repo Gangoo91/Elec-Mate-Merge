@@ -115,7 +115,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Guide',
   },
   {
-    href: '/electrical-quoting-app',
+    href: '/tools/electrical-quoting-app',
     title: 'Quoting App',
     description:
       'Send professional PDF quotes for rewires, EICRs, and EV charger installations in Lincoln.',
@@ -450,7 +450,7 @@ const sections = [
                 <h4 className="font-bold text-white mb-1">Professional Quoting</h4>
                 <p className="text-white text-sm leading-relaxed">
                   Win Lincoln jobs with the{' '}
-                  <SEOInternalLink href="/electrical-quoting-app">quoting app</SEOInternalLink>.
+                  <SEOInternalLink href="/tools/electrical-quoting-app">quoting app</SEOInternalLink>.
                   Send professional PDF quotes on survey day.
                 </p>
               </div>
@@ -479,7 +479,7 @@ export default function ElectricianLincolnPage() {
       title="Electrician in Lincoln | Local Electricians 2026"
       description="Find qualified electricians in Lincoln. Part P compliance, Northern Powergrid DNO, NICEIC and NAPIT registered electricians…"
       datePublished="2026-03-27"
-      dateModified="2026-05-18"
+      dateModified="2026-06-10"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Lincoln"

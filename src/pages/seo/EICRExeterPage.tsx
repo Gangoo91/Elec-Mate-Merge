@@ -87,6 +87,13 @@ const faqs = [
 
 const relatedPages: RelatedPage[] = [
   {
+    href: '/guides/eicr-cost-exeter',
+    title: 'EICR Cost in Exeter',
+    description: 'Local EICR price bands by property size, hourly rates, and remedial costs for Exeter.',
+    icon: Home,
+    category: 'Guide',
+  },
+  {
     href: '/guides/eicr-for-landlords',
     title: 'EICR for Landlords',
     description:
@@ -563,7 +570,7 @@ const sections = [
                 <p className="text-white text-sm leading-relaxed">
                   When the EICR identifies C1 or C2 observations, quote the remedial work on the day
                   using the{' '}
-                  <SEOInternalLink href="/electrical-quoting-app">quoting app</SEOInternalLink>.
+                  <SEOInternalLink href="/tools/electrical-quoting-app">quoting app</SEOInternalLink>.
                   Exeter landlords face a 28-day deadline and are under pressure to comply before
                   students arrive — quoting immediately gives you the best chance of winning the
                   remedial work.
@@ -592,7 +599,7 @@ export default function EICRExeterPage() {
       title="EICR Exeter | Electrical Installation Condition Report"
       description="EICR Exeter — costs, legal requirements, and what to expect from an Electrical Installation Condition Report in Exeter."
       datePublished="2026-03-27"
-      dateModified="2026-05-18"
+      dateModified="2026-06-10"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="EICR Guide"

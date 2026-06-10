@@ -105,7 +105,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Guide',
   },
   {
-    href: '/electrical-quoting-app',
+    href: '/tools/electrical-quoting-app',
     title: 'Electrical Quoting App',
     description: 'Quote jobs quickly on site and send professional PDFs to clients.',
     icon: FileCheck2,
@@ -512,7 +512,7 @@ const sections = [
           Once the partnership is up and running, shared visibility of jobs, certificates, and
           finances is essential. Elec-Mate's{' '}
           <SEOInternalLink href="/tools/schedule-manager-electrician">job scheduling</SEOInternalLink>,{' '}
-          <SEOInternalLink href="/electrical-quoting-app">quoting</SEOInternalLink>, and
+          <SEOInternalLink href="/tools/electrical-quoting-app">quoting</SEOInternalLink>, and
           certificate tools give both partners real-time visibility of the business from their own
           phones.
         </p>

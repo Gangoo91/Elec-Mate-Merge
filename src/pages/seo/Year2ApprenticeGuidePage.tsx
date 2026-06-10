@@ -91,7 +91,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Guide',
   },
   {
-    href: '/am2-exam-preparation',
+    href: '/training/am2-exam-preparation',
     title: 'AM2 Exam Preparation',
     description: 'Everything you need to know about the AM2 practical assessment.',
     icon: Award,
@@ -119,7 +119,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Guide',
   },
   {
-    href: '/apprentice-portfolio-guide',
+    href: '/training/apprentice-portfolio',
     title: 'Apprentice Portfolio Guide',
     description: 'Digital evidence tracking and AI-powered criteria mapping.',
     icon: FolderOpen,
@@ -152,7 +152,7 @@ const sections = [
         </p>
         <p>
           Year 2 is also when many apprentices begin thinking seriously about the{' '}
-          <SEOInternalLink href="/am2-exam-preparation">AM2 assessment</SEOInternalLink> and the{' '}
+          <SEOInternalLink href="/training/am2-exam-preparation">AM2 assessment</SEOInternalLink> and the{' '}
           <SEOInternalLink href="/guides/epa-what-to-expect">End Point Assessment</SEOInternalLink>.
           Both are still a year or more away, but the skills tested in those assessments are
           developed in Year 2. Starting preparation early gives you a significant advantage.
@@ -296,7 +296,7 @@ const sections = [
               <CheckCircle className="w-5 h-5 text-green-400 mt-0.5 shrink-0" />
               <span>
                 <strong>
-                  <SEOInternalLink href="/rcd-testing-guide">RCD operation</SEOInternalLink>:
+                  <SEOInternalLink href="/tools/rcd-testing-guide">RCD operation</SEOInternalLink>:
                 </strong>{' '}
                 Testing that RCDs trip within the required time at the rated residual current. Both
                 general RCDs and RCBOs are tested.
@@ -489,7 +489,7 @@ const sections = [
     content: (
       <>
         <p>
-          The <SEOInternalLink href="/am2-exam-preparation">AM2</SEOInternalLink> (Achievement
+          The <SEOInternalLink href="/training/am2-exam-preparation">AM2</SEOInternalLink> (Achievement
           Measurement 2) is the practical assessment that demonstrates your competence as an
           installation electrician. It is typically sat at the end of Year 3 or during Year 4, but
           the skills it tests are developed throughout Years 2 and 3.
@@ -530,7 +530,7 @@ const sections = [
       <>
         <p>
           By the end of Year 2, you should have a substantial body of evidence in your{' '}
-          <SEOInternalLink href="/apprentice-portfolio-guide">portfolio</SEOInternalLink> and be
+          <SEOInternalLink href="/training/apprentice-portfolio">portfolio</SEOInternalLink> and be
           well on your way to meeting the{' '}
           <SEOInternalLink href="/guides/off-job-training-hours">
             off-the-job training hours
@@ -657,7 +657,7 @@ export default function Year2ApprenticeGuidePage() {
       title="Year 2 Electrical Apprentice | Skills & Progression"
       description="Complete guide to Year 2 of your electrical apprenticeship. More responsibility on site, introduction to testing, circuit installation, Level 3 theory…"
       datePublished="2025-11-20"
-      dateModified="2026-05-18"
+      dateModified="2026-06-10"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Apprentice Guide"

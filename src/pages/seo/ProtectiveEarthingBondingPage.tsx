@@ -90,7 +90,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Guide',
   },
   {
-    href: '/earthing-arrangements',
+    href: '/guides/earthing-arrangements',
     title: 'Earthing Arrangements Explained',
     description:
       'TN-S, TN-C-S, and TT systems — how each earthing arrangement works and testing requirements.',
@@ -243,7 +243,7 @@ const sections = [
         </div>
         <p>
           Identifying the{' '}
-          <SEOInternalLink href="/earthing-arrangements">earthing arrangement</SEOInternalLink> is
+          <SEOInternalLink href="/guides/earthing-arrangements">earthing arrangement</SEOInternalLink> is
           one of the first steps in any inspection. It determines the expected earth fault loop
           impedance values, the bonding requirements, and the type of fault protection that should
           be in place. Record the earthing arrangement on the EICR and verify it by measuring Ze at
@@ -642,7 +642,7 @@ export default function ProtectiveEarthingBondingPage() {
       title="Protective Earthing + Bonding | BS 7671 Chapter 54"
       description="Protective earthing + main bonding under BS 7671:2018+A4:2026 Chapter 54. MET sizing, 10mm/6mm rules, water/gas/oil bonds + when supplementary applies."
       datePublished="2025-05-20"
-      dateModified="2026-05-18"
+      dateModified="2026-06-10"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Regulations Guide"

@@ -178,10 +178,10 @@ export default function BestElectricianAppPage() {
     schema: softwareAppSchema,
     breadcrumbs: [
       { name: 'Home', url: '/' },
-      { name: 'Best Electrician App', url: '/best-electrician-app' },
+      { name: 'Best Electrician App', url: '/tools/best-electrician-app-uk' },
     ],
     dateModified: '2026-05-18',
-    author: 'Elec-Mate Technical Team',
+    author: 'Andrew Moore',
   });
 
   return (
@@ -734,9 +734,9 @@ export default function BestElectricianAppPage() {
               If you are comparing electrician apps seriously, do not stop at the feature list. The
               real test is whether the tools connect together once the job starts. Elec-Mate's
               strongest pages to review next are the{' '}
-              <SEOInternalLink href="/electrical-quoting-app">quoting app</SEOInternalLink>, the{' '}
-              <SEOInternalLink href="/electrician-invoice-app">invoice app</SEOInternalLink>, the{' '}
-              <SEOInternalLink href="/ai-cost-engineer">AI Cost Engineer</SEOInternalLink>, and the{' '}
+              <SEOInternalLink href="/tools/electrical-quoting-app">quoting app</SEOInternalLink>, the{' '}
+              <SEOInternalLink href="/tools/electrician-invoice-app">invoice app</SEOInternalLink>, the{' '}
+              <SEOInternalLink href="/tools/ai-cost-engineer">AI Cost Engineer</SEOInternalLink>, and the{' '}
               <SEOInternalLink href="/tools/eicr-certificate">EICR certificate workflow</SEOInternalLink>.
             </p>
             <p>

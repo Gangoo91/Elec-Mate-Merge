@@ -123,7 +123,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Guide',
   },
   {
-    href: '/rams-generator',
+    href: '/tools/rams-generator',
     title: 'RAMS Generator Tool',
     description:
       'AI-powered RAMS generator. Describe your job and get a complete risk assessment and method statement in minutes.',
@@ -807,7 +807,7 @@ export default function ArcFlashProtectionPage() {
       title="Arc Flash Protection | Risk Assessment & PPE Guide"
       description="Complete guide to arc flash protection for electricians. What causes arc flash, incident energy levels (cal/cm²), PPE categories (Category 1–4), boundary distances, UK legal requirements, and BS 7671:2018+A4:2026 Reg 421.1.7 AFDD guidance."
       datePublished="2025-04-15"
-      dateModified="2026-05-18"
+      dateModified="2026-06-10"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Safety Guide"

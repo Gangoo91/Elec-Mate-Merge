@@ -104,7 +104,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Guide',
   },
   {
-    href: '/electrical-quoting-app',
+    href: '/tools/electrical-quoting-app',
     title: 'Electrical Quoting App',
     description: 'Quote PAT testing jobs with professional PDF output.',
     icon: Calculator,
@@ -499,7 +499,7 @@ const sections = [
                   Charge £1.50 to £3 per appliance with a minimum of £80. A 100-appliance office at
                   £1.50 each gives £150 for approximately 3 hours of work — £50/hour before
                   overheads. Target annual contracts for recurring revenue. Use the{' '}
-                  <SEOInternalLink href="/electrical-quoting-app">
+                  <SEOInternalLink href="/tools/electrical-quoting-app">
                     quoting app
                   </SEOInternalLink>{' '}
                   for professional quotes.

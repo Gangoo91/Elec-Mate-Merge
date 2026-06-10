@@ -128,7 +128,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Guide',
   },
   {
-    href: '/electrical-quoting-app',
+    href: '/tools/electrical-quoting-app',
     title: 'Quoting App',
     description:
       'Price barn conversion electrical packages with itemised materials, labour, and heritage accessories.',
@@ -714,7 +714,7 @@ const sections = [
                 <h4 className="font-bold text-white mb-1">Detailed Quoting</h4>
                 <p className="text-white text-sm leading-relaxed">
                   Price the complete barn conversion electrical package with Elec-Mate's{' '}
-                  <SEOInternalLink href="/electrical-quoting-app">quoting app</SEOInternalLink>.
+                  <SEOInternalLink href="/tools/electrical-quoting-app">quoting app</SEOInternalLink>.
                   Every circuit, every accessory, every metre of cable — itemised with your margins.
                   A detailed, professional quote differentiates you from competitors who submit a
                   one-line price.
@@ -774,7 +774,7 @@ export default function BarnConversionElectricsPage() {
       title="Barn Conversion Electrical Installation | Guide UK"
       description="Complete guide to barn conversion electrical installation in the UK. Heritage constraints, long cable runs, voltage drop, three-phase supply…"
       datePublished="2026-03-27"
-      dateModified="2026-05-18"
+      dateModified="2026-06-10"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Installation Guide"

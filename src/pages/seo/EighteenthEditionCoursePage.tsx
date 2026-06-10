@@ -250,7 +250,7 @@ export default function EighteenthEditionCoursePage() {
                 Electrical Installation Certificates
               </SEOInternalLink>{' '}
               and preparing for the{' '}
-              <SEOInternalLink href="/city-guilds2391">
+              <SEOInternalLink href="/training/city-guilds-2391">
                 City &amp; Guilds 2391 Inspection &amp; Testing
               </SEOInternalLink>{' '}
               qualification.

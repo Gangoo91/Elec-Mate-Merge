@@ -723,7 +723,7 @@ const sections = [
                 <h4 className="font-bold text-white mb-1">Quoting App</h4>
                 <p className="text-white text-sm leading-relaxed">
                   Price the battery storage installation with Elec-Mate's{' '}
-                  <SEOInternalLink href="/electrical-quoting-app">quoting app</SEOInternalLink>.
+                  <SEOInternalLink href="/tools/electrical-quoting-app">quoting app</SEOInternalLink>.
                   Battery unit, inverter, cables, accessories, labour, testing, commissioning, and
                   DNO notification — all itemised with your margins. Professional PDF quote sent to
                   the customer from the survey.
@@ -765,7 +765,7 @@ export default function BatteryStorageGuidePage() {
       title="Battery Storage Installation | Home Battery Guide UK"
       description="Complete guide to home battery storage installation in the UK. AC-coupled vs DC-coupled, battery sizing, inverter selection, safety requirements…"
       datePublished="2025-09-01"
-      dateModified="2026-05-18"
+      dateModified="2026-06-10"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Installation Guide"

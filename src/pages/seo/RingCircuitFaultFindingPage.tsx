@@ -615,7 +615,7 @@ export default function RingCircuitFaultFindingPage() {
       title="Ring Circuit Fault Finding | R1+R2 + Borrowed Neutral"
       description="Ring final circuit faults: open + bridged rings, borrowed neutrals, interconnected rings. How to read R1, R2, Rn results + diagnose using continuity."
       datePublished="2025-10-01"
-      dateModified="2026-05-29"
+      dateModified="2026-06-10"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Testing Guide"

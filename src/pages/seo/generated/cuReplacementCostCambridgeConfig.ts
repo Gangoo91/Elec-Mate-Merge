@@ -20,6 +20,7 @@ export const cuReplacementCostCambridgeConfig: GeneratedGuideConfig = {
   badge: 'Cost Guide',
   badgeIcon: 'PoundSterling',
   breadcrumbLabel: 'Consumer Unit Replacement Cost in Cambridge',
+  breadcrumbParent: { label: 'Consumer Unit Replacement Cost', href: '/guides/consumer-unit-replacement-cost' },
   heroPrefix: 'Consumer Unit Replacement Cost in Cambridge:',
   heroHighlight: '2026 Full Pricing Guide',
   heroSuffix: '— RCBO Boards & BS 7671:2018+A4:2026',
@@ -226,6 +227,27 @@ export const cuReplacementCostCambridgeConfig: GeneratedGuideConfig = {
     },
   ],
   relatedPages: [
+    {
+      href: '/guides/consumer-unit-replacement-cost',
+      title: 'Consumer Unit Replacement Cost UK',
+      description: 'National consumer unit replacement prices, what is included, and regulations.',
+      icon: 'PoundSterling',
+      category: 'Guide',
+    },
+    {
+      href: '/guides/consumer-unit-replacement-cost-norwich',
+      title: 'Consumer unit replacement cost in Norwich',
+      description: 'Local price bands and labour rates for Norwich.',
+      icon: 'MapPin',
+      category: 'Guide',
+    },
+    {
+      href: '/guides/consumer-unit-replacement-cost-luton',
+      title: 'Consumer unit replacement cost in Luton',
+      description: 'Local price bands and labour rates for Luton.',
+      icon: 'MapPin',
+      category: 'Guide',
+    },
     {
       href: '/guides/how-to-price-consumer-unit-replacement-as-an-electrician',
       title: 'How to Price CU Replacement as an Electrician',

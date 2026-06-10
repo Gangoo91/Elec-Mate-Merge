@@ -86,7 +86,7 @@ const faqs = [
 
 const relatedPages: RelatedPage[] = [
   {
-    href: '/tools/fire-alarm-certificate',
+    href: '/fire-alarm-certificate',
     title: 'Fire Alarm Certificate App',
     description:
       'Create digital fire alarm certificates on your phone with BS 5839 compliance and professional PDF export.',
@@ -646,7 +646,7 @@ const sections = [
         </div>
         <p>
           The{' '}
-          <SEOInternalLink href="/tools/fire-alarm-certificate">
+          <SEOInternalLink href="/fire-alarm-certificate">
             fire alarm certificate app
           </SEOInternalLink>{' '}
           in Elec-Mate allows you to create and store all service records digitally. Each visit
@@ -798,7 +798,7 @@ export default function FireAlarmCertificateRequirementsPage() {
       title="Fire Alarm Certificate Requirements | BS 5839 UK"
       description="Complete guide to fire alarm certificate requirements under BS 5839-1. Design, commissioning, and annual service records explained. Who can issue and how long to keep them."
       datePublished="2026-02-01"
-      dateModified="2026-05-18"
+      dateModified="2026-06-10"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Certificates"

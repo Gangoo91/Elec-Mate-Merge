@@ -615,7 +615,7 @@ export default function MCBTypesBCDPage() {
       title="MCB Types B, C and D Explained | Trip Characteristics"
       description="Complete guide to MCB types B, C, and D for UK electricians. Magnetic trip characteristics (Type B 3-5x, Type C 5-10x, Type D 10-20x)…"
       datePublished="2025-06-01"
-      dateModified="2026-05-18"
+      dateModified="2026-06-10"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Protection Devices"

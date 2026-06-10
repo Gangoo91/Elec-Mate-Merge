@@ -705,7 +705,7 @@ const relatedPages = [
     category: 'Certificate',
   },
   {
-    href: '/electrical-testing-calculators',
+    href: '/tools/electrical-testing-calculators',
     title: '70+ Electrical Calculators',
     description: 'R1+R2 calculator, Zs lookup, cable sizing, voltage drop, PFC, and dozens more.',
     icon: Calculator,
@@ -723,7 +723,7 @@ export default function ContinuityTestingR1R2Page() {
       title={PAGE_TITLE}
       description={PAGE_DESCRIPTION}
       datePublished="2024-10-25"
-      dateModified="2026-05-18"
+      dateModified="2026-06-10"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Testing Guide"

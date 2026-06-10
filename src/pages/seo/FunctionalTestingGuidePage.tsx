@@ -411,7 +411,7 @@ const sections = [
         <p>
           For an EICR, any unsatisfactory functional test results are recorded as observations with
           the appropriate{' '}
-          <SEOInternalLink href="/guides/bs7671-observation-codes">
+          <SEOInternalLink href="/bs7671-observation-codes">
             observation code
           </SEOInternalLink>
           . For example, a non-functional RCD test button might be C1 (danger present), missing
@@ -446,7 +446,7 @@ const sections = [
         />
         <p>
           The app also auto-generates the circuit schedule from the{' '}
-          <SEOInternalLink href="/electrical-testing-calculators">
+          <SEOInternalLink href="/tools/electrical-testing-calculators">
             board scanner
           </SEOInternalLink>
           , so your functional test checklist is already populated with the correct circuit
@@ -476,7 +476,7 @@ const relatedPages = [
     category: 'Guide',
   },
   {
-    href: '/guides/bs7671-observation-codes',
+    href: '/bs7671-observation-codes',
     title: 'BS 7671 Observation Codes',
     description:
       'C1, C2, C3, FI codes explained. How to classify functional testing deficiencies on an EICR.',
@@ -500,7 +500,7 @@ const relatedPages = [
     category: 'Guide',
   },
   {
-    href: '/electrical-testing-calculators',
+    href: '/tools/electrical-testing-calculators',
     title: '70+ Electrical Calculators',
     description:
       'Zs verification, cable sizing, voltage drop, PFC, and dozens more. All built to BS 7671.',

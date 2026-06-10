@@ -91,7 +91,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Guide',
   },
   {
-    href: '/electrical-quoting-app',
+    href: '/tools/electrical-quoting-app',
     title: 'Electrical Quoting App',
     description:
       'Send professional PDF quotes from your phone. Win more jobs with itemised, clear pricing.',
@@ -158,8 +158,8 @@ const sections = [
           informed decision about where to invest your marketing budget.
         </p>
         <p className="text-white/60 text-sm border-l-2 border-yellow-500/40 pl-3 mt-2">
-          Reviewed by the Elec-Mate Technical Team — qualified electricians and JIB card holders
-          with hands-on experience of running electrical businesses and using each platform.
+          Reviewed by Andrew Moore, founder of Elec-Mate, with hands-on experience of running an
+          electrical platform business and working with electricians who use each platform.
         </p>
       </>
     ),
@@ -642,7 +642,7 @@ export default function CheckatradeVsMyBuilderPage() {
       title="Checkatrade vs MyBuilder vs Bark 2026: Real Cost Compared"
       description="Bark vs Checkatrade vs MyBuilder 2026 for UK electricians: real cost per lead, lead quality, vetting + review rules. Which trade platform actually pays back."
       datePublished="2026-03-27"
-      dateModified="2026-05-23"
+      dateModified="2026-06-10"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Comparison"

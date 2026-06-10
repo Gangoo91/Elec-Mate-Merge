@@ -24,7 +24,7 @@ export default function BestAIToolElectriciansPage() {
       title="Best AI Tools for UK Electricians 2026 (Compared)"
       description="Best AI tools for UK electricians 2026: Elec-Mate AI vs ChatGPT vs Gemini compared — circuit design, BS 7671 compliance, costing + estimating. Real-world time savings tested."
       datePublished="2026-02-10"
-      dateModified="2026-05-22"
+      dateModified="2026-06-10"
       breadcrumbs={[
         { label: 'Comparisons', href: '/compare' },
         {
@@ -113,7 +113,7 @@ export default function BestAIToolElectriciansPage() {
                 exclusively for UK electricians. Trained on BS 7671:2018+A4:2026, GN3, On-Site
                 Guide, and real UK trade pricing data. Integrated with certificates, calculators,
                 and business tools. Includes a dedicated{' '}
-                <SEOInternalLink href="/tools/ai-circuit-designer">
+                <SEOInternalLink href="/ai-circuit-designer">
                   AI Circuit Designer
                 </SEOInternalLink>{' '}
                 and{' '}
@@ -313,7 +313,7 @@ export default function BestAIToolElectriciansPage() {
           category: 'AI Tools',
         },
         {
-          href: '/tools/ai-circuit-designer',
+          href: '/ai-circuit-designer',
           title: 'AI Circuit Designer',
           description:
             'AI-powered circuit design with BS 7671 compliance checking and cable sizing.',
@@ -345,7 +345,7 @@ export default function BestAIToolElectriciansPage() {
           category: 'Comparison',
         },
         {
-          href: '/rams-generator',
+          href: '/tools/rams-generator',
           title: 'RAMS Generator',
           description:
             'AI-powered risk assessments and method statements tailored to electrical work.',

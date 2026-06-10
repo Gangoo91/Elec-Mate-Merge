@@ -96,7 +96,7 @@ const relatedPages: RelatedPage[] = [
     category: 'Guide',
   },
   {
-    href: '/how-to-test-insulation-resistance',
+    href: '/guides/insulation-resistance-testing-bs7671',
     title: 'Insulation Resistance Testing',
     description: 'Step-by-step guide to performing insulation resistance tests correctly.',
     icon: Zap,
@@ -563,7 +563,7 @@ export default function CityGuilds2391ExamTipsPage() {
       title="2391 Exam Tips | Inspection & Testing Exam Guide"
       description="How to pass the C&G 2391 Inspection and Testing exam. Covers written exam format, practical assessment, test sequence, common pitfalls…"
       datePublished="2025-04-01"
-      dateModified="2026-05-18"
+      dateModified="2026-06-10"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Exam Guide"

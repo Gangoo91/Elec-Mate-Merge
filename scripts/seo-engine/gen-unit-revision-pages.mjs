@@ -58,7 +58,8 @@ const QUAL_META = {
   '8202': { display: 'City & Guilds 8202', body: 'T Level in Building Services Engineering — Electrical Installation', year: 'T Level students taking the electrical installation specialism' },
   '610/3907/X': { display: 'EAL Level 3', body: 'EAL Level 3 Electrotechnical Technical Occupational Entry qualification', year: 'EAL Level 3 apprentices' },
   '2346-03': { display: 'City & Guilds 2346-03', body: 'Electrotechnical Experienced Worker Qualification', year: 'experienced workers consolidating skills outside a formal apprenticeship' },
-  'EAL-NETP3': { display: 'EAL NETP3', body: 'EAL Level 3 NVQ in Electrotechnical Practice', year: 'apprentices and adult learners on the EAL NVQ pathway' },
+  '601/7345/2': { display: 'EAL Level 3 Electrotechnical Qualification', body: 'EAL Level 3 Electrotechnical Qualification (601/7345/2)', year: 'apprentices and adult learners on the EAL electrotechnical pathway' },
+  '610/1335/3': { display: 'EAL Level 3 Electrotechnical in Dwellings', body: 'EAL Level 3 Electrotechnical Qualification in Dwellings (610/1335/3)', year: 'learners on the EAL dwellings pathway' },
 };
 
 // Group curriculum rows by (qual, unit)

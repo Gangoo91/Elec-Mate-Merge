@@ -617,7 +617,7 @@ const sections = [
                 <h4 className="font-bold text-white mb-1">Instant Certification</h4>
                 <p className="text-white text-sm leading-relaxed">
                   Fixed the fault? Generate a{' '}
-                  <SEOInternalLink href="/minor-works-certificate">
+                  <SEOInternalLink href="/tools/minor-works-certificate">
                     Minor Works Certificate
                   </SEOInternalLink>{' '}
                   on site with voice-dictated test results. Send it to the customer by email or

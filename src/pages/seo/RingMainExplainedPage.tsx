@@ -452,7 +452,7 @@ const sections = [
         </p>
         <p>
           Elec-Mate's{' '}
-          <SEOInternalLink href="/tools/ai-circuit-designer">AI circuit designer</SEOInternalLink>{' '}
+          <SEOInternalLink href="/ai-circuit-designer">AI circuit designer</SEOInternalLink>{' '}
           can recommend ring or radial for each room based on the floor area, socket count, and
           expected loading — helping you make the right choice for each circuit.
         </p>
@@ -594,7 +594,7 @@ export default function RingMainExplainedPage() {
       title="Ring Main Explained | Ring Final Circuit Guide UK"
       description="Complete guide to ring final circuits (ring mains) in the UK. How rings work, testing with R1, R2, and R1+R2, max demand, common faults, spurs…"
       datePublished="2025-09-01"
-      dateModified="2026-05-18"
+      dateModified="2026-06-10"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Installation Guide"

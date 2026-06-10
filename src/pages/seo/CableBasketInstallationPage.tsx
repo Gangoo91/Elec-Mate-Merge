@@ -695,7 +695,7 @@ export default function CableBasketInstallationPage() {
       title="Wire Cable Basket Installation UK | Wiremesh Tray Guide"
       description="Complete UK guide to wire cable basket installation (Cablofil type). Advantages, sizes, support requirements, earthing, data centre and commercial use…"
       datePublished="2026-03-27"
-      dateModified="2026-05-18"
+      dateModified="2026-06-10"
       breadcrumbs={breadcrumbs}
       tocItems={tocItems}
       badge="Installation Guide"

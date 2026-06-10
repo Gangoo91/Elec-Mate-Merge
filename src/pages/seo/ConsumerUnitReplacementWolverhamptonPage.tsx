@@ -510,7 +510,7 @@ const sections = [
                 <p className="text-white text-sm leading-relaxed">
                   When an EICR identifies C2 observations requiring a consumer unit replacement,
                   quote the work immediately using the{' '}
-                  <SEOInternalLink href="/electrical-quoting-app">
+                  <SEOInternalLink href="/tools/electrical-quoting-app">
                     Elec-Mate quoting app
                   </SEOInternalLink>
                   . Landlords must act within 28 days — the electrician who quotes on the day of the

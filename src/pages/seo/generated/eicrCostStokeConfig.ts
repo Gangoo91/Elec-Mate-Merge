@@ -21,6 +21,7 @@ export const eicrCostStokeConfig: GeneratedGuideConfig = {
   badge: 'Cost Guide',
   badgeIcon: 'PoundSterling',
   breadcrumbLabel: 'EICR Cost in Stoke-on-Trent',
+  breadcrumbParent: { label: 'EICR Cost UK', href: '/guides/eicr-cost-uk' },
   heroPrefix: 'EICR Cost in Stoke-on-Trent:',
   heroHighlight: '2026 Pricing Guide',
   heroSuffix: '— Domestic & Commercial',
@@ -209,6 +210,27 @@ export const eicrCostStokeConfig: GeneratedGuideConfig = {
     },
   ],
   relatedPages: [
+    {
+      href: '/guides/eicr-cost-uk',
+      title: 'EICR Cost UK — National Guide',
+      description: 'UK-wide EICR prices by property type, what affects cost, and remedial pricing.',
+      icon: 'PoundSterling',
+      category: 'Guide',
+    },
+    {
+      href: '/guides/eicr-cost-manchester',
+      title: 'EICR cost in Manchester',
+      description: 'Local price bands and labour rates for Manchester.',
+      icon: 'MapPin',
+      category: 'Guide',
+    },
+    {
+      href: '/guides/eicr-cost-birmingham',
+      title: 'EICR cost in Birmingham',
+      description: 'Local price bands and labour rates for Birmingham.',
+      icon: 'MapPin',
+      category: 'Guide',
+    },
     {
       href: '/electricians/stoke',
       title: 'Find an Electrician in Stoke-on-Trent',

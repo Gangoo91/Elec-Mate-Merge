@@ -219,7 +219,7 @@ export default function TrunkingFillCalculatorPage() {
       <section className="px-5 pb-0">
         <div className="max-w-4xl mx-auto">
           <p className="text-xs text-white text-center">
-            Reviewed by the Elec-Mate technical team — IET Wiring Regulations (BS 7671) specialists
+            Reviewed by the Andrew Moore, founder of Elec-Mate, — IET Wiring Regulations (BS 7671) specialists
             and C&amp;G 2382 qualified assessors.
           </p>
         </div>
@@ -719,7 +719,7 @@ export default function TrunkingFillCalculatorPage() {
             <SEOInternalLink href="/guides/trunking-installation-guide">
               Trunking Installation Guide
             </SEOInternalLink>
-            <SEOInternalLink href="/how-to-fill-in-eicr">
+            <SEOInternalLink href="/guides/how-to-fill-in-eicr">
               How to Fill In an EICR Form
             </SEOInternalLink>
             <SEOInternalLink href="/guides/how-to-fill-in-minor-works">

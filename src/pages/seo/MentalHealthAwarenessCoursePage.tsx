@@ -348,7 +348,7 @@ const relatedPages = [
     category: 'Training',
   },
   {
-    href: '/manual-handling-course',
+    href: '/training/manual-handling',
     title: 'Manual Handling Course',
     description: 'Physical wellbeing and injury prevention contribute to overall mental health.',
     icon: GraduationCap,
@@ -378,7 +378,7 @@ const relatedPages = [
     category: 'Guide',
   },
   {
-    href: '/guides/how-to-become-electrician',
+    href: '/guides/how-to-become-an-electrician',
     title: 'How to Become an Electrician',
     description:
       'Understanding the career path helps manage expectations and reduce career-related anxiety.',

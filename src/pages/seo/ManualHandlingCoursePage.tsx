@@ -252,7 +252,7 @@ export default function ManualHandlingCoursePage() {
               and manoeuvre lengths of conduit and trunking through corridors and ceiling voids.
               Each of these tasks presents a genuine risk of musculoskeletal injury if performed
               incorrectly. Proper{' '}
-              <SEOInternalLink href="/rams-generator">RAMS documentation</SEOInternalLink>{' '}
+              <SEOInternalLink href="/tools/rams-generator">RAMS documentation</SEOInternalLink>{' '}
               should always include manual handling risk assessments for these activities.
             </p>
             <p>
