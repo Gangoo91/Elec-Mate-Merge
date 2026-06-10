@@ -146,12 +146,24 @@ export const draftStorage = {
       if (!draft) return false;
 
       // Check if draft has meaningful data
+      const d = draft.data as Record<string, unknown>;
+      const nonEmptyArr = (v: unknown): v is unknown[] => Array.isArray(v) && v.length > 0;
       const hasData =
-        draft.data?.clientName ||
-        draft.data?.installationAddress ||
-        draft.data?.propertyAddress ||
-        (draft.data?.circuits && draft.data.circuits.length > 0) ||
-        (draft.data?.scheduleOfTests && draft.data.scheduleOfTests.length > 0);
+        d?.clientName ||
+        d?.installationAddress ||
+        d?.propertyAddress ||
+        nonEmptyArr(d?.circuits) ||
+        nonEmptyArr(d?.scheduleOfTests) ||
+        // Drafts staged by the Renewable Design Suite handoffs: quote drafts
+        // carry items/jobDetails; cert drafts carry kit details but no client.
+        nonEmptyArr(d?.items) ||
+        (d?.jobDetails as { title?: string } | undefined)?.title ||
+        (Array.isArray(d?.arrays) &&
+          (d.arrays as { panelMake?: string }[]).some((a) => a?.panelMake)) ||
+        (Array.isArray(d?.inverters) &&
+          (d.inverters as { make?: string }[]).some((i) => i?.make)) ||
+        d?.batteryManufacturer ||
+        d?.chargerMake;
 
       // Check if draft is recent (within DRAFT_EXPIRY_DAYS)
       const isRecent = Date.now() - draft.lastModified < DRAFT_EXPIRY_DAYS * 24 * 60 * 60 * 1000;

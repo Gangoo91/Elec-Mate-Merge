@@ -10,6 +10,13 @@ const RenewableCalculators = lazy(
   () => import('@/pages/electrician/renewables/RenewableCalculators')
 );
 const RenewableCalc = lazy(() => import('@/pages/electrician/renewables/RenewableCalc'));
+const DesignSuite = lazy(() => import('@/pages/electrician/renewables/design/DesignSuite'));
+const SolarDesigner = lazy(() => import('@/pages/electrician/renewables/design/SolarDesigner'));
+const BatteryDesigner = lazy(() => import('@/pages/electrician/renewables/design/BatteryDesigner'));
+const EVDesigner = lazy(() => import('@/pages/electrician/renewables/design/EVDesigner'));
+const HeatPumpDesigner = lazy(
+  () => import('@/pages/electrician/renewables/design/HeatPumpDesigner')
+);
 const ProjectsPage = lazy(() => import('@/pages/electrician/ProjectsPage'));
 const ProjectDetailPage = lazy(() => import('@/pages/electrician/ProjectDetailPage'));
 const BusinessAdmin = lazy(() => import('@/pages/electrician/BusinessAdmin'));
@@ -430,6 +437,46 @@ const ElectricianHubRoutes = () => (
       element={
         <LazyRoute>
           <RenewableCertificates />
+        </LazyRoute>
+      }
+    />
+    <Route
+      path="renewables/design"
+      element={
+        <LazyRoute>
+          <DesignSuite />
+        </LazyRoute>
+      }
+    />
+    <Route
+      path="renewables/design/solar"
+      element={
+        <LazyRoute>
+          <SolarDesigner />
+        </LazyRoute>
+      }
+    />
+    <Route
+      path="renewables/design/battery"
+      element={
+        <LazyRoute>
+          <BatteryDesigner />
+        </LazyRoute>
+      }
+    />
+    <Route
+      path="renewables/design/ev"
+      element={
+        <LazyRoute>
+          <EVDesigner />
+        </LazyRoute>
+      }
+    />
+    <Route
+      path="renewables/design/heat-pump"
+      element={
+        <LazyRoute>
+          <HeatPumpDesigner />
         </LazyRoute>
       }
     />

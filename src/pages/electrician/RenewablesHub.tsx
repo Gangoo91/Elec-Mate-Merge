@@ -28,11 +28,11 @@ const HUB_CARDS: HubCard[] = [
   {
     id: 'design',
     eyebrow: 'Design',
-    title: 'Solar Design Suite',
+    title: 'Renewable Design Suite',
     description:
-      'Roof planner, system sizing and single-line diagrams — pre-fills the certificate and a quote.',
-    meta: 'Coming soon',
-    comingSoon: true,
+      'Solar PV, battery, EV and heat pump — real kit to a compliant plan, single-line diagram and a pre-filled certificate.',
+    to: '/electrician/renewables/design',
+    meta: '4 designers',
   },
   {
     id: 'certificates',
@@ -75,10 +75,7 @@ export default function RenewablesHub() {
 
   const open = (card: HubCard) => {
     if (card.comingSoon || !card.to) {
-      toast('Solar Design Suite is coming soon', {
-        description:
-          'Design from panel data, auto single-line diagrams, then pre-fill the MCS cert.',
-      });
+      toast(`${card.title} is coming soon`);
       return;
     }
     navigate(card.to);

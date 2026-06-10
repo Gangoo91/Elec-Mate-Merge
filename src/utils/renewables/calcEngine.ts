@@ -293,7 +293,7 @@ export const RENEWABLE_CALCS: CalcDef[] = [
       const ok = pct <= 1;
       return {
         headline: `${r2(pct)} %`,
-        ok: v.csa > 0,
+        ok: v.csa > 0 && ok,
         takeaway: `${r2(pct)}% drop over a ${v.length} m run on ${v.csa} mm² is ${ok ? 'within the 1% DC target — this CSA is fine' : 'over the 1% DC target — go up at least one cable size or shorten the run'}.`,
         outputs: [
           { label: 'Voltage drop', value: `${r2(vdrop)} V` },
@@ -341,7 +341,7 @@ export const RENEWABLE_CALCS: CalcDef[] = [
       }
       return {
         headline: `${r2(pct)} %`,
-        ok: v.csa > 0,
+        ok: v.csa > 0 && pct <= 3,
         takeaway: `${r2(pct)}% on this ${three ? '3-phase' : 'single-phase'} run is ${verdict}. Keeping it low also stops the inverter nuisance-tripping on over-voltage.`,
         outputs: [
           { label: 'Voltage drop', value: `${r2(vdrop)} V` },
