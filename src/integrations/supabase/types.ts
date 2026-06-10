@@ -38124,6 +38124,44 @@ export type Database = {
         }[]
       }
       accept_college_invite: { Args: { p_invite_code: string }; Returns: Json }
+      college_portfolio_summaries: {
+        Args: never
+        Returns: {
+          assignment_id: string
+          student_id: string
+          qualification_id: string
+          total_entries: number
+          completed_entries: number
+          draft_entries: number
+          reviewed_entries: number
+          awaiting_review: number
+          feedback_given: number
+          signed_off: number
+          categories_complete: number
+          categories_total: number
+          ojt_hours_completed: number
+          ojt_hours_required: number
+          gateway_passed: boolean
+          ksbs_total: number
+        }[]
+      }
+      college_student_summaries: {
+        Args: { p_college_id: string }
+        Returns: {
+          student_id: string
+          user_id: string
+          otj_verified_minutes: number
+          otj_pending_minutes: number
+          portfolio_total: number
+          portfolio_completed: number
+          submissions_pending: number
+          ac_total: number
+          ac_assessed: number
+          attendance_present: number
+          attendance_total: number
+          risk_level: string
+        }[]
+      }
       accept_quote_by_token: {
         Args: {
           accepted_email: string
@@ -38733,6 +38771,10 @@ export type Database = {
         }[]
       }
       get_profile_count: { Args: never; Returns: number }
+      get_public_stats: {
+        Args: never
+        Returns: { profiles_count: number; reports_count: number }[]
+      }
       get_public_quote_for_booking: {
         Args: { quote_id_param: string }
         Returns: {

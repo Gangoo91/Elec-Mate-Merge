@@ -2,6 +2,9 @@ import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { supabase } from '@/integrations/supabase/client';
 import { useAuth } from '@/contexts/AuthContext';
 import { useToast } from '@/hooks/use-toast';
+import type { Database } from '@/integrations/supabase/types';
+
+type GatewayRow = Database['public']['Tables']['epa_gateway_checklist']['Row'];
 
 // Types
 export interface GatewayStatus {
@@ -88,31 +91,16 @@ export function useEPAGateway(studentId?: string, qualificationId?: string) {
     enabled: !!user?.id
   });
 
-  async function fetchSingleGateway(studentId: string, qualificationId: string): Promise<GatewayStatus | null> {
-    const { data: gateway, error } = await supabase
-      .from('epa_gateway_checklist')
-      .select('*')
-      .eq('user_id', studentId)
-      .eq('qualification_id', qualificationId)
-      .single();
-
-    if (error && error.code !== 'PGRST116') throw error;
-
-    // Get student profile
-    const { data: profile } = await supabase
-      .from('profiles')
-      .select('id, full_name')
-      .eq('id', studentId)
-      .single();
-
-    // Get qualification
-    const { data: qualification } = await supabase
-      .from('qualifications')
-      .select('id, title')
-      .eq('id', qualificationId)
-      .single();
-
-    // Calculate progress
+  // Pure builder — assembles a GatewayStatus from an already-fetched gateway row
+  // plus resolved name/title. No queries, so it works for both the single-student
+  // path and the batched cohort path.
+  function buildGatewayStatus(
+    gateway: GatewayRow | null,
+    studentId: string,
+    studentName: string,
+    qualificationId: string,
+    qualificationTitle: string
+  ): GatewayStatus {
     const checklistItems = getChecklistItems(gateway);
     const completedItems = checklistItems.filter(item => item.completed && item.required);
     const requiredItems = checklistItems.filter(item => item.required);
@@ -120,7 +108,6 @@ export function useEPAGateway(studentId?: string, qualificationId?: string) {
       ? Math.round((completedItems.length / requiredItems.length) * 100)
       : 0;
 
-    // Determine readiness status
     let readinessStatus: GatewayStatus['readinessStatus'] = 'not_ready';
     if (gateway?.gateway_passed) readinessStatus = 'gateway_passed';
     else if (progress >= 100) readinessStatus = 'ready';
@@ -128,9 +115,9 @@ export function useEPAGateway(studentId?: string, qualificationId?: string) {
 
     return {
       studentId,
-      studentName: profile?.full_name || 'Unknown',
+      studentName: studentName || 'Unknown',
       qualificationId,
-      qualificationTitle: qualification?.title || '',
+      qualificationTitle: qualificationTitle || '',
 
       portfolioComplete: gateway?.portfolio_complete || false,
       portfolioSignedOff: gateway?.portfolio_signed_off || false,
@@ -167,8 +154,25 @@ export function useEPAGateway(studentId?: string, qualificationId?: string) {
     };
   }
 
+  async function fetchSingleGateway(studentId: string, qualificationId: string): Promise<GatewayStatus | null> {
+    const [{ data: gateway, error }, { data: profile }, { data: qualification }] = await Promise.all([
+      supabase.from('epa_gateway_checklist').select('*')
+        .eq('user_id', studentId).eq('qualification_id', qualificationId).maybeSingle(),
+      supabase.from('profiles').select('id, full_name').eq('id', studentId).maybeSingle(),
+      supabase.from('qualifications').select('id, title').eq('id', qualificationId).maybeSingle(),
+    ]);
+    if (error && error.code !== 'PGRST116') throw error;
+
+    return buildGatewayStatus(
+      gateway,
+      studentId,
+      profile?.full_name || 'Unknown',
+      qualificationId,
+      qualification?.title || ''
+    );
+  }
+
   async function fetchAllGateways(): Promise<GatewayStatus[]> {
-    // Get assigned students
     const { data: assignments } = await supabase
       .from('college_student_assignments')
       .select('student_id, qualification_id')
@@ -177,16 +181,45 @@ export function useEPAGateway(studentId?: string, qualificationId?: string) {
 
     if (!assignments?.length) return [];
 
-    const gateways: GatewayStatus[] = [];
-    for (const assignment of assignments) {
-      const gateway = await fetchSingleGateway(assignment.student_id, assignment.qualification_id);
-      if (gateway) gateways.push(gateway);
-    }
+    const studentIds = [...new Set(assignments.map(a => a.student_id).filter(Boolean))];
+    const qualIds = [...new Set(assignments.map(a => a.qualification_id).filter(Boolean))];
 
-    return gateways;
+    // Batch: 3 set-based queries total (gateways + names + titles) instead of
+    // 3 queries PER student. epa_gateway_checklist(user_id, qualification_id) and
+    // the profiles/qualifications PKs are all indexed, so this stays flat as the
+    // cohort grows (was ~600 queries at 200 learners; now 3).
+    const [gatewaysRes, profilesRes, qualsRes] = await Promise.all([
+      supabase.from('epa_gateway_checklist').select('*').in('user_id', studentIds),
+      supabase.from('profiles').select('id, full_name').in('id', studentIds),
+      supabase.from('qualifications').select('id, title').in('id', qualIds),
+    ]);
+
+    // Surface a real query failure instead of silently rendering every student
+    // as "not ready" (the gateways result is the data-bearing one; names/titles
+    // are best-effort, matching the original per-student behaviour).
+    if (gatewaysRes.error) throw gatewaysRes.error;
+
+    const gatewayByKey = new Map<string, GatewayRow>();
+    for (const g of gatewaysRes.data ?? []) {
+      gatewayByKey.set(`${g.user_id}:${g.qualification_id}`, g);
+    }
+    const nameById = new Map<string, string>();
+    for (const p of profilesRes.data ?? []) nameById.set(p.id, p.full_name || 'Unknown');
+    const titleById = new Map<string, string>();
+    for (const q of qualsRes.data ?? []) titleById.set(q.id, q.title || '');
+
+    return assignments
+      .filter(a => a.student_id && a.qualification_id)
+      .map(a => buildGatewayStatus(
+        gatewayByKey.get(`${a.student_id}:${a.qualification_id}`) ?? null,
+        a.student_id,
+        nameById.get(a.student_id) ?? 'Unknown',
+        a.qualification_id,
+        titleById.get(a.qualification_id) ?? ''
+      ));
   }
 
-  function getChecklistItems(gateway: any): GatewayChecklistItem[] {
+  function getChecklistItems(gateway: GatewayRow | null): GatewayChecklistItem[] {
     return [
       {
         key: 'portfolio_complete',
@@ -278,7 +311,7 @@ export function useEPAGateway(studentId?: string, qualificationId?: string) {
         .eq('qualification_id', qualificationId)
         .single();
 
-      const updates: any = {
+      const updates: Record<string, unknown> = {
         [field]: value
       };
 
@@ -332,10 +365,10 @@ export function useEPAGateway(studentId?: string, qualificationId?: string) {
       queryClient.invalidateQueries({ queryKey: ['epa-gateway'] });
       queryClient.invalidateQueries({ queryKey: ['college-portfolios'] });
     },
-    onError: (error: any) => {
+    onError: (error: unknown) => {
       toast({
         title: 'Update Failed',
-        description: error.message,
+        description: (error as Error).message,
         variant: 'destructive'
       });
     }

@@ -202,39 +202,20 @@ export function useCollegePortfolios() {
       if (assignError) throw assignError;
       if (!assignments?.length) return [];
 
-      // Get portfolio stats for each student
       const studentIds = assignments.map(a => a.student_id);
-
-      // Get portfolio items count by status
-      const { data: portfolioStats } = await supabase
-        .from('portfolio_items')
-        .select('user_id, status')
-        .in('user_id', studentIds);
-
-      // Get submissions
-      const { data: submissionStats } = await supabase
-        .from('portfolio_submissions')
-        .select('user_id, status, iqa_sampled')
-        .in('user_id', studentIds);
-
-      // Get coverage matrix
-      const { data: coverageStats } = await supabase
-        .from('unit_coverage_matrix')
-        .select('user_id, status, completion_percentage')
-        .in('user_id', studentIds);
-
-      // Get gateway info
-      const { data: gatewayStats } = await supabase
-        .from('epa_gateway_checklist')
-        .select('user_id, ojt_hours_completed, ojt_hours_required, gateway_passed')
-        .in('user_id', studentIds);
-
-      // Get KSB counts per qualification
       const qualificationIds = [...new Set(assignments.map(a => a.qualification_id))];
-      const { data: ksbCounts } = await supabase
-        .from('apprenticeship_ksbs')
-        .select('qualification_id')
-        .in('qualification_id', qualificationIds);
+
+      // Server-side aggregation: one RPC returns per-assignment counts, replacing
+      // four unbounded .in('user_id', studentIds) fetches (portfolio_items,
+      // submissions, coverage, gateway) + a KSB count that shipped 10K-35K rows
+      // to the browser and were aggregated in JavaScript. The RPC mirrors the
+      // exact status vocabulary used below, so displayed numbers are unchanged.
+      const { data: summaryRows, error: summaryError } = await supabase
+        .rpc('college_portfolio_summaries');
+      if (summaryError) throw summaryError;
+      const summaryByAssignment = new Map(
+        (summaryRows ?? []).map(s => [s.assignment_id, s])
+      );
 
       // Fetch student profiles + qualifications separately (embedding them in
       // the assignments query trips a PostgREST relationship-resolution 400).
@@ -249,38 +230,31 @@ export function useCollegePortfolios() {
       const portfolios: StudentPortfolio[] = assignments.map(assignment => {
         const profile = profileById.get(assignment.student_id) as any;
         const qualification = qualificationById.get(assignment.qualification_id) as any;
+        const s = summaryByAssignment.get(assignment.id);
 
-        // Calculate portfolio stats
-        const studentPortfolioItems = portfolioStats?.filter(p => p.user_id === assignment.student_id) || [];
-        const totalEntries = studentPortfolioItems.length;
-        const completedEntries = studentPortfolioItems.filter(p => p.status === 'completed').length;
-        const draftEntries = studentPortfolioItems.filter(p => p.status === 'draft').length;
-        const reviewedEntries = studentPortfolioItems.filter(p => p.status === 'reviewed').length;
+        // Portfolio stats (server-aggregated; same status definitions as before)
+        const totalEntries = Number(s?.total_entries ?? 0);
+        const completedEntries = Number(s?.completed_entries ?? 0);
+        const draftEntries = Number(s?.draft_entries ?? 0);
+        const reviewedEntries = Number(s?.reviewed_entries ?? 0);
 
-        // Calculate submission stats
-        const studentSubmissions = submissionStats?.filter(s => s.user_id === assignment.student_id) || [];
-        const submissionsAwaitingReview = studentSubmissions.filter(s =>
-          ['submitted', 'under_review', 'resubmitted'].includes(s.status)
-        ).length;
-        const submissionsFeedbackGiven = studentSubmissions.filter(s => s.status === 'feedback_given').length;
-        const submissionsSignedOff = studentSubmissions.filter(s =>
-          ['signed_off', 'iqa_sampled', 'iqa_verified'].includes(s.status)
-        ).length;
+        // Submission stats
+        const submissionsAwaitingReview = Number(s?.awaiting_review ?? 0);
+        const submissionsFeedbackGiven = Number(s?.feedback_given ?? 0);
+        const submissionsSignedOff = Number(s?.signed_off ?? 0);
 
-        // Calculate coverage stats
-        const studentCoverage = coverageStats?.filter(c => c.user_id === assignment.student_id) || [];
-        const categoriesComplete = studentCoverage.filter(c => c.status === 'complete').length;
-        const categoriesTotal = studentCoverage.length;
+        // Coverage stats
+        const categoriesComplete = Number(s?.categories_complete ?? 0);
+        const categoriesTotal = Number(s?.categories_total ?? 0);
 
-        // Calculate KSB coverage (simplified - would need more complex query in production)
-        const ksbsTotal = ksbCounts?.filter(k => k.qualification_id === assignment.qualification_id).length || 35;
-        const ksbsCovered = Math.floor((completedEntries / Math.max(totalEntries, 1)) * ksbsTotal * 0.7); // Estimate
+        // KSB coverage (same estimate as before, kept client-side)
+        const ksbsTotal = Number(s?.ksbs_total ?? 0) || 35;
+        const ksbsCovered = Math.floor((completedEntries / Math.max(totalEntries, 1)) * ksbsTotal * 0.7);
 
-        // Get gateway info
-        const gateway = gatewayStats?.find(g => g.user_id === assignment.student_id);
-        const ojtHoursCompleted = gateway?.ojt_hours_completed || 0;
-        const ojtHoursRequired = gateway?.ojt_hours_required || 400;
-        const gatewayProgress = gateway?.gateway_passed ? 100 :
+        // Gateway info
+        const ojtHoursCompleted = Number(s?.ojt_hours_completed ?? 0);
+        const ojtHoursRequired = Number(s?.ojt_hours_required ?? 400);
+        const gatewayProgress = s?.gateway_passed ? 100 :
           Math.floor((ojtHoursCompleted / ojtHoursRequired) * 50 + (completedEntries / Math.max(totalEntries, 1)) * 50);
 
         return {

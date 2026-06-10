@@ -5,6 +5,7 @@ import { HubHero } from '@/components/apprentice-hub/college-hub/HubHero';
 import { HubHeadlineStrip } from '@/components/apprentice-hub/college-hub/HubHeadlineStrip';
 import { HubActionRequired } from '@/components/apprentice-hub/college-hub/HubActionRequired';
 import { HubGrid } from '@/components/apprentice-hub/college-hub/HubGrid';
+import { JoinCollegeCard } from '@/components/apprentice-hub/JoinCollegeCard';
 
 /* ==========================================================================
    MyCollegePlanPage — /apprentice/college-plan
@@ -42,6 +43,10 @@ export default function MyCollegePlanPage() {
           latestVerdict={null}
           latestGrade={null}
         />
+
+        {!overview.loading && !overview.hasCollegeLink && (
+          <JoinCollegeCard onJoined={overview.refresh} />
+        )}
 
         {overview.hasCollegeLink && (
           <motion.div

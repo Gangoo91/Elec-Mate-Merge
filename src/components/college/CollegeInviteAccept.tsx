@@ -27,6 +27,8 @@ export function CollegeInviteAccept({ onSuccess }: CollegeInviteAcceptProps) {
     invite_type?: string;
     role?: string;
     error?: string;
+    message?: string;
+    linked?: boolean;
   } | null>(null);
 
   const handleSubmit = async () => {
@@ -49,17 +51,30 @@ export function CollegeInviteAccept({ onSuccess }: CollegeInviteAcceptProps) {
       const response = data as {
         success?: boolean;
         error?: string;
+        message?: string;
+        linked?: boolean;
         college_name?: string;
         invite_type?: string;
         role?: string;
       };
 
       if (response.error) {
-        setResult({ error: response.error });
-        toast.error(response.error);
+        // Prefer the human-readable message the RPC supplies (e.g. the
+        // "choose your qualification first" guidance) over the machine code.
+        const friendly =
+          response.message ||
+          (response.error === 'no_qualification_selected'
+            ? 'Choose your qualification before joining a college.'
+            : response.error);
+        setResult({ error: friendly });
+        toast.error(friendly);
       } else {
         setResult(response);
-        toast.success(`Linked to ${response.college_name}`);
+        toast.success(
+          response.linked
+            ? `Welcome back — linked to ${response.college_name}`
+            : `Joined ${response.college_name}`
+        );
 
         if (fetchProfile && user?.id) {
           await fetchProfile(user.id);

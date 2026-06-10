@@ -13,6 +13,8 @@ import { AddStudentDialog } from '@/components/college/dialogs/AddStudentDialog'
 import { BulkAddStudentsSheet } from '@/components/college/dialogs/BulkAddStudentsSheet';
 import { StudentDetailSheet } from '@/components/college/sheets/StudentDetailSheet';
 import { EditStudentSheet } from '@/components/college/sheets/EditStudentSheet';
+import { AssignStaffSheet } from '@/components/college/sheets/AssignStaffSheet';
+import { CreateInviteSheet } from '@/components/college/sheets/CreateInviteSheet';
 import { WithdrawStudentDialog } from '@/components/college/dialogs/WithdrawStudentDialog';
 import { PullToRefresh } from '@/components/college/ui/PullToRefresh';
 import { StudentCardSkeletonList } from '@/components/college/ui/StudentCardSkeleton';
@@ -44,9 +46,11 @@ export function StudentsSection() {
   const [filterCohort, setFilterCohort] = useState<string>('all');
   const [addStudentOpen, setAddStudentOpen] = useState(false);
   const [bulkAddOpen, setBulkAddOpen] = useState(false);
+  const [inviteOpen, setInviteOpen] = useState(false);
   const [selectedStudent, setSelectedStudent] = useState<CollegeStudent | null>(null);
   const [detailOpen, setDetailOpen] = useState(false);
   const [editOpen, setEditOpen] = useState(false);
+  const [assignOpen, setAssignOpen] = useState(false);
   const [withdrawOpen, setWithdrawOpen] = useState(false);
   const [batchMode, setBatchMode] = useState(false);
   const [selectedIds, setSelectedIds] = useState<Set<string>>(new Set());
@@ -99,6 +103,11 @@ export function StudentsSection() {
     setSelectedStudent(student);
     setDetailOpen(false);
     setWithdrawOpen(true);
+  };
+  const handleAssignStaff = (student: CollegeStudent) => {
+    setSelectedStudent(student);
+    setDetailOpen(false);
+    setAssignOpen(true);
   };
   const toggleSelection = (id: string) => {
     setSelectedIds((prev) => {
@@ -166,6 +175,13 @@ export function StudentsSection() {
           tone="yellow"
           actions={
             <div className="flex items-center gap-3 flex-wrap justify-end">
+              <button
+                onClick={() => setInviteOpen(true)}
+                className="text-[12px] font-medium text-white hover:text-white transition-colors touch-manipulation whitespace-nowrap"
+                title="Generate a code for a learner or staff member to join"
+              >
+                Invite
+              </button>
               <button
                 onClick={() => setBulkAddOpen(true)}
                 className="text-[12px] font-medium text-white hover:text-white transition-colors touch-manipulation whitespace-nowrap"
@@ -457,6 +473,14 @@ export function StudentsSection() {
                                 Flag as at risk
                               </DropdownMenuItem>
                             )}
+                            {student.user_id && (
+                              <DropdownMenuItem
+                                onClick={() => handleAssignStaff(student)}
+                                className="text-[13px]"
+                              >
+                                Assign staff
+                              </DropdownMenuItem>
+                            )}
                             <DropdownMenuItem
                               onClick={() => handleEditStudent(student)}
                               className="text-[13px]"
@@ -524,6 +548,7 @@ export function StudentsSection() {
 
       <AddStudentDialog open={addStudentOpen} onOpenChange={setAddStudentOpen} />
       <BulkAddStudentsSheet open={bulkAddOpen} onOpenChange={setBulkAddOpen} />
+      <CreateInviteSheet open={inviteOpen} onOpenChange={setInviteOpen} />
       <StudentDetailSheet
         student={selectedStudent}
         open={detailOpen}
@@ -532,6 +557,15 @@ export function StudentsSection() {
         onWithdraw={handleWithdrawStudent}
       />
       <EditStudentSheet student={selectedStudent} open={editOpen} onOpenChange={setEditOpen} />
+      {selectedStudent?.user_id && selectedStudent?.college_id && (
+        <AssignStaffSheet
+          open={assignOpen}
+          onOpenChange={setAssignOpen}
+          studentUserId={selectedStudent.user_id}
+          studentName={selectedStudent.name}
+          collegeId={selectedStudent.college_id}
+        />
+      )}
       <WithdrawStudentDialog
         student={selectedStudent}
         open={withdrawOpen}
