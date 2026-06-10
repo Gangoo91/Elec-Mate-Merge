@@ -67,7 +67,7 @@ async function getPDFMonkeyDocument(documentId: string): Promise<PDFMonkeyDocume
 
 async function waitForPDFGeneration(
   documentId: string,
-  maxAttempts = 30
+  maxAttempts = 60
 ): Promise<PDFMonkeyDocument> {
   for (let attempt = 0; attempt < maxAttempts; attempt++) {
     const document = await getPDFMonkeyDocument(documentId);

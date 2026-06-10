@@ -425,11 +425,20 @@ const EICRSummary = ({ formData: propFormData, onUpdate: propOnUpdate }: EICRSum
       // Check for errors - either from Supabase or from our edge function response
       if (error) {
         console.error('[PDF Generation] Edge function invocation error:', error);
-        // Try to get more details from the error context
-        const errorDetail = error.context?.body
-          ? JSON.stringify(error.context.body)
-          : error.message;
-        throw new Error(`Edge function error: ${errorDetail}`);
+        // Read the real message from the function's JSON body. error.context is a
+        // Response whose body is an unread stream — JSON.stringify on it gives "{}",
+        // which is why failures showed an empty error. Parse it instead.
+        let errorDetail = error.message || 'Unknown error';
+        try {
+          const body = await error.context?.json?.();
+          if (body?.error) errorDetail = body.error;
+        } catch {
+          /* body unreadable — keep error.message */
+        }
+        const friendly = /timed out/i.test(errorDetail)
+          ? 'The certificate took too long to generate (large photos). Please try again — it usually works on retry.'
+          : errorDetail;
+        throw new Error(friendly);
       }
 
       // Check if the edge function returned an error in the response

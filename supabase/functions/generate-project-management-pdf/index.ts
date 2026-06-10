@@ -48,7 +48,7 @@ Deno.serve(async (req) => {
     console.log('📄 Document created:', documentId);
 
     // Poll for completion (max 60 seconds)
-    const maxAttempts = 30;
+    const maxAttempts = 60;
     const pollInterval = 2000; // 2 seconds
     let attempts = 0;
     let downloadUrl = null;

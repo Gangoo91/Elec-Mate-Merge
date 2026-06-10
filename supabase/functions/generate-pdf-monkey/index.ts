@@ -1531,7 +1531,7 @@ serve(async (req) => {
     // Poll for document completion (PDF Monkey processes async)
     const createdDocumentId = pdfData.document?.id;
     let attempts = 0;
-    const maxAttempts = 30; // 30 attempts * 2 seconds = 60 seconds max wait
+    const maxAttempts = 60; // 30 attempts * 2 seconds = 60 seconds max wait
     let documentStatus = pdfData.document?.status;
 
     while (documentStatus !== 'success' && documentStatus !== 'failure' && attempts < maxAttempts) {

@@ -350,7 +350,7 @@ serve(async (req) => {
 
     // Poll for completion with exponential backoff
     if (status === 'draft' || status === 'pending' || status === 'generating') {
-      const maxAttempts = 30;
+      const maxAttempts = 60;
       const delays = [1000, 2000, 4000, 8000, 16000];
 
       for (let i = 0; i < maxAttempts; i++) {

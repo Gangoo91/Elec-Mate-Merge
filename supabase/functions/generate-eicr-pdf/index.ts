@@ -67,7 +67,10 @@ async function getPDFMonkeyDocument(documentId: string): Promise<PDFMonkeyDocume
 
 async function waitForPDFGeneration(
   documentId: string,
-  maxAttempts = 30
+  // ~120s of headroom (60 polls × ~2s) — well under the edge wall-clock limit, but
+  // enough for image-heavy EICRs. The real speed fix is resized photos in the
+  // formatter; this just stops a slow render dying at the old 30-poll (~57s) ceiling.
+  maxAttempts = 60
 ): Promise<PDFMonkeyDocument> {
   for (let attempt = 0; attempt < maxAttempts; attempt++) {
     const document = await getPDFMonkeyDocument(documentId);

@@ -107,7 +107,7 @@ serve(async (req) => {
     // Poll for document completion
     const documentId = pdfData.document?.id;
     let attempts = 0;
-    const maxAttempts = 30; // 60 seconds max wait
+    const maxAttempts = 60; // 60 seconds max wait
     let documentStatus = pdfData.document?.status;
 
     while (documentStatus !== 'success' && documentStatus !== 'failure' && attempts < maxAttempts) {

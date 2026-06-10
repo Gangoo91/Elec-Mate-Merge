@@ -265,9 +265,10 @@ const fetchObservationPhotos = async (observationId: string): Promise<string[]> 
 
     const photoUrls = await Promise.all(
       (data || []).map(async (photo) => {
+        // Resized via image transform — keeps PDF render fast (no multi-MB originals).
         const { data: urlData } = supabase.storage
           .from('inspection-photos')
-          .getPublicUrl(photo.file_path);
+          .getPublicUrl(photo.file_path, { transform: { width: 1400, quality: 70 } });
         return urlData.publicUrl;
       })
     );

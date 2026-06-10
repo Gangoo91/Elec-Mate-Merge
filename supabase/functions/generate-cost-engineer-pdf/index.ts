@@ -109,7 +109,7 @@ serve(async (req) => {
     console.log('[COST-PDF] PDF document created, ID:', documentId);
 
     // Poll for PDF generation completion (max 30 seconds)
-    const maxAttempts = 30;
+    const maxAttempts = 60;
     const pollInterval = 1000; // 1 second
 
     for (let attempt = 0; attempt < maxAttempts; attempt++) {

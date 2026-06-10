@@ -813,11 +813,16 @@ export const formatEICRJson = async (formData: any, reportId: string): Promise<E
         `[formatDefects] Defect ${defect.id}: found ${observationPhotos.length} matching photos`
       );
 
-      // Get public URLs for the photos
+      // Get public URLs for the photos — RESIZED via Supabase image transform so
+      // PDFMonkey downloads ~150KB thumbnails, not multi-MB phone originals. Full-res
+      // originals made the EICR render take 45-57s (PDF generation timed out); 1400px
+      // is sharp enough for the certificate and keeps render time in seconds.
       const photoUrls = observationPhotos.map((photo) => {
         const {
           data: { publicUrl },
-        } = supabase.storage.from('inspection-photos').getPublicUrl(photo.file_path);
+        } = supabase.storage
+          .from('inspection-photos')
+          .getPublicUrl(photo.file_path, { transform: { width: 1400, quality: 70 } });
         return publicUrl;
       });
 

@@ -106,10 +106,14 @@ async function formatObservationsWithPhotos(observations: any[], reportId: strin
   return observations.map((obs: any) => {
     const observationPhotos = photos?.filter((p) => p.observation_id === obs.id) || [];
 
+    // Resized via Supabase image transform so PDFMonkey downloads ~150KB thumbnails,
+    // not multi-MB phone originals (keeps PDF render time in seconds).
     const photoUrls = observationPhotos.map((photo) => {
       const {
         data: { publicUrl },
-      } = supabase.storage.from('inspection-photos').getPublicUrl(photo.file_path);
+      } = supabase.storage
+        .from('inspection-photos')
+        .getPublicUrl(photo.file_path, { transform: { width: 1400, quality: 70 } });
       return publicUrl;
     });
 

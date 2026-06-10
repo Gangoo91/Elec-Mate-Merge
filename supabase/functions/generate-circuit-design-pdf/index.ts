@@ -580,7 +580,7 @@ serve(async (req) => {
     // Poll for completion
     const documentId = pdfData.document?.id;
     let attempts = 0;
-    const maxAttempts = 30;
+    const maxAttempts = 60;
 
     while (attempts < maxAttempts) {
       await new Promise((resolve) => setTimeout(resolve, 2000));
