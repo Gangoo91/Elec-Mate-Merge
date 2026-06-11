@@ -281,18 +281,13 @@ interface HubDef {
   title: string;
   description: string;
   meta: string;
-  section: CollegeSection;
-  /** When there's a pressing item, jump straight to it instead of the hub grid. */
-  deepSection?: CollegeSection;
+  /** What opening the card does — a route push or a section switch. */
+  onOpen: () => void;
+  /** Amber cue + meta highlight when there's something pressing inside. */
+  urgent?: boolean;
 }
 
-function CollegeHubs({
-  hubs,
-  onNavigate,
-}: {
-  hubs: HubDef[];
-  onNavigate: (section: CollegeSection) => void;
-}) {
+function CollegeHubs({ hubs }: { hubs: HubDef[] }) {
   return (
     <motion.section
       variants={containerVariants}
@@ -301,20 +296,20 @@ function CollegeHubs({
       className="space-y-4"
     >
       <motion.div variants={itemVariants} className="flex items-baseline justify-between gap-3">
-        <Eyebrow>03 · YOUR HUBS</Eyebrow>
-        <span className="text-[11px] text-white/50 tabular-nums">{hubs.length} hubs</span>
+        <Eyebrow>GET AROUND</Eyebrow>
+        <span className="text-[11px] text-white/50 tabular-nums">{hubs.length} areas</span>
       </motion.div>
       <motion.div
         variants={itemVariants}
-        className="relative grid gap-px bg-white/[0.06] border border-white/[0.08] rounded-2xl overflow-hidden grid-cols-1 sm:grid-cols-2 lg:grid-cols-4"
+        className="relative grid gap-px bg-white/[0.06] border border-white/[0.08] rounded-2xl overflow-hidden grid-cols-1 sm:grid-cols-2 lg:grid-cols-3"
       >
         <div className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-elec-yellow/0 via-elec-yellow/60 to-elec-yellow/0 pointer-events-none z-10" />
         {hubs.map((hub, i) => (
           <button
             key={hub.title}
             type="button"
-            onClick={() => onNavigate(hub.deepSection ?? hub.section)}
-            className="group relative bg-[hsl(0_0%_10%)] hover:bg-elec-yellow/[0.04] active:scale-[0.99] transition-all p-5 sm:p-7 lg:p-8 text-left touch-manipulation flex flex-col min-h-[170px] sm:min-h-[240px]"
+            onClick={hub.onOpen}
+            className="group relative bg-[hsl(0_0%_10%)] hover:bg-elec-yellow/[0.04] active:scale-[0.99] transition-all p-5 sm:p-7 text-left touch-manipulation flex flex-col min-h-[160px] sm:min-h-[200px]"
           >
             <div className="flex items-baseline gap-2">
               <span className="text-[10.5px] font-semibold uppercase tracking-[0.18em] text-elec-yellow tabular-nums">
@@ -323,6 +318,9 @@ function CollegeHubs({
               <span className="text-[10.5px] font-semibold uppercase tracking-[0.18em] text-white/75">
                 · {hub.eyebrow}
               </span>
+              {hub.urgent && (
+                <span className="ml-auto h-2 w-2 rounded-full bg-amber-400 shrink-0" aria-hidden />
+              )}
             </div>
             <h3 className="mt-3 sm:mt-5 text-[22px] sm:text-[26px] lg:text-[30px] font-semibold tracking-tight leading-[1.1] text-white group-hover:text-elec-yellow transition-colors">
               {hub.title}
@@ -332,7 +330,14 @@ function CollegeHubs({
             </p>
             <div className="flex-grow" />
             <div className="mt-4 sm:mt-6 flex items-center justify-between gap-3 pt-3 sm:pt-4 border-t border-white/[0.08]">
-              <span className="text-[11.5px] text-white/85 truncate tabular-nums">{hub.meta}</span>
+              <span
+                className={cn(
+                  'text-[11.5px] truncate tabular-nums',
+                  hub.urgent ? 'text-amber-300 font-medium' : 'text-white/85'
+                )}
+              >
+                {hub.meta}
+              </span>
               <span className="inline-flex items-center gap-1.5 text-[12.5px] font-semibold text-elec-yellow shrink-0">
                 Open
                 <ArrowRight className="h-3.5 w-3.5 group-hover:translate-x-0.5 transition-transform" />
@@ -366,9 +371,7 @@ function NumberedHeader({
 }) {
   const inner = (
     <div className="flex items-baseline justify-between gap-3">
-      <Eyebrow>
-        {number} · {label}
-      </Eyebrow>
+      <Eyebrow>{number ? `${number} · ${label}` : label}</Eyebrow>
       <div className="flex items-center gap-3 shrink-0">
         {action && onAction && !isCollapsed && (
           <button
@@ -465,36 +468,57 @@ export function CollegeOverviewSection({ onNavigate }: CollegeOverviewSectionPro
     );
   }
 
+  const inboxTotal =
+    (today?.counts.otj_awaiting ?? 0) +
+    (today?.counts.comments_action_required ?? 0) +
+    (today?.counts.iqa_awaiting ?? 0);
+
+  // The six job-based areas. Every College Hub feature lives under exactly one
+  // of these — no orphans, nothing more than two clicks from here.
   const hubs: HubDef[] = [
+    {
+      eyebrow: 'Your day',
+      title: 'My Work',
+      description: "Today's classes, your inbox, marking and OTJ to verify.",
+      meta: inboxTotal > 0 ? `${inboxTotal} waiting on you` : 'Inbox clear',
+      urgent: inboxTotal > 0,
+      onOpen: () => navigate('/college/today'),
+    },
     {
       eyebrow: 'Students & staff',
       title: 'People',
-      description: 'Students, tutors, cohorts, support staff.',
+      description: 'Learners (Student 360), tutors, cohorts, support staff.',
       meta: `${activeStudents} active learners`,
-      section: 'peoplehub',
+      onOpen: () => onNavigate('peoplehub'),
     },
     {
-      eyebrow: 'Courses & lessons',
-      title: 'Curriculum',
-      description: 'Lesson plans, courses, teaching resources, notebook.',
+      eyebrow: 'Plan & deliver',
+      title: 'Teaching',
+      description: 'Lesson plans, schemes of work, resources, curriculum, notebook.',
       meta: 'Lesson planner ready',
-      section: 'curriculumhub',
+      onOpen: () => onNavigate('curriculumhub'),
     },
     {
-      eyebrow: 'Grading & progress',
+      eyebrow: 'Grade & track',
       title: 'Assessment',
-      description: 'Grades, ILPs, EPA gateway, portfolio review, work queue.',
-      meta: pendingAssessments > 0 ? `${pendingAssessments} pending` : 'All caught up',
-      section: 'assessmenthub',
-      // When grades are waiting, the card takes you straight to grading.
-      deepSection: pendingAssessments > 0 ? 'grading' : undefined,
+      description: 'Grading, attendance, ILPs, EPA & gateway, portfolio, OTJ.',
+      meta: pendingAssessments > 0 ? `${pendingAssessments} to mark` : 'All caught up',
+      urgent: pendingAssessments > 0,
+      onOpen: () => onNavigate(pendingAssessments > 0 ? 'grading' : 'assessmenthub'),
     },
     {
-      eyebrow: 'Docs & settings',
-      title: 'Resources',
-      description: 'Compliance docs, LTI, college configuration.',
-      meta: 'Settings & admin',
-      section: 'resourceshub',
+      eyebrow: 'IQA & Ofsted',
+      title: 'Quality & Compliance',
+      description: 'IQA sampling, reports, Ofsted EIF, SAR, QIP, audit pack, policies.',
+      meta: 'Inspection-ready',
+      onOpen: () => onNavigate('qualityhub'),
+    },
+    {
+      eyebrow: 'Configure',
+      title: 'Settings',
+      description: 'Curriculum & operational settings, integrations, staff roles.',
+      meta: 'Admin & config',
+      onOpen: () => onNavigate('collegesettings'),
     },
   ];
 
@@ -512,28 +536,19 @@ export function CollegeOverviewSection({ onNavigate }: CollegeOverviewSectionPro
         cta={{ label: "View today's queue", onClick: () => navigate('/college/today') }}
       />
 
-      {/* 00 · JUMP TO A LEARNER — Student 360 was buried 3–4 levels deep; bring
-          the most-used destination to the top of the dashboard. */}
+      {/* GET AROUND — the six areas first: the clear answer to "where do I go?" */}
+      <CollegeHubs hubs={hubs} />
+
+      {/* JUMP TO A LEARNER — Student 360, the most-used destination. */}
       <motion.div variants={itemVariants}>
         <LearnerQuickJump />
       </motion.div>
 
-      {/* 01 · THIS MONTH */}
-      <CollegeStats
-        activeStudents={activeStudents}
-        activeTutors={activeTutors}
-        pendingAssessments={pendingAssessments}
-        atRisk={atRiskCount}
-        onOpenPeople={() => onNavigate('peoplehub')}
-        onOpenAssessment={() => onNavigate('assessmenthub')}
-      />
-
-      {/* 02 · TODAY — lead with the actionable daily view (classes, inbox,
-          at-risk) before the navigation hubs. TutorTodayBody in bare embed mode
-          (no greeting; the editorial hero above already renders one). */}
+      {/* TODAY — the actionable daily view (its own KPI strip, classes, inbox,
+          at-risk). TutorTodayBody in bare embed mode (the hero above greets). */}
       <motion.section variants={itemVariants} className="space-y-4">
         <NumberedHeader
-          number="02"
+          number=""
           label="TODAY"
           action="Open full view"
           onAction={() => navigate('/college/today')}
@@ -541,12 +556,9 @@ export function CollegeOverviewSection({ onNavigate }: CollegeOverviewSectionPro
         <TutorTodayBody mode="embed-bare" />
       </motion.section>
 
-      {/* 03 · YOUR HUBS — navigation, below the daily action. */}
-      <CollegeHubs hubs={hubs} onNavigate={onNavigate} />
-
-      {/* 04 · MOMENTUM */}
+      {/* MOMENTUM */}
       <motion.section variants={itemVariants} className="space-y-4">
-        <NumberedHeader number="04" label="MOMENTUM" />
+        <NumberedHeader number="" label="MOMENTUM" />
         <div className="grid grid-cols-1 md:grid-cols-2 gap-3 sm:gap-4">
           <AtRiskPredictor onNavigate={onNavigate} compact />
           <EPACountdown onNavigate={onNavigate} compact />
@@ -557,7 +569,7 @@ export function CollegeOverviewSection({ onNavigate }: CollegeOverviewSectionPro
       {/* COMPLIANCE — collapsible below-the-fold detail */}
       <motion.section variants={itemVariants} className="space-y-4">
         <NumberedHeader
-          number="05"
+          number=""
           label="COMPLIANCE"
           action="Open hub"
           onAction={() => onNavigate('compliancedocs')}
@@ -580,49 +592,6 @@ export function CollegeOverviewSection({ onNavigate }: CollegeOverviewSectionPro
         )}
       </motion.section>
 
-      {/* TOOLS — collapsible workflow utilities */}
-      <motion.section variants={itemVariants} className="space-y-4">
-        <NumberedHeader
-          number="06"
-          label="TOOLS"
-          collapsible
-          isCollapsed={collapsed.has('tools')}
-          onToggle={() => toggle('tools')}
-        />
-        {!collapsed.has('tools') && (
-          <div className="grid gap-px bg-white/[0.06] border border-white/[0.08] rounded-2xl overflow-hidden grid-cols-2 sm:grid-cols-3">
-            {(
-              [
-                { eyebrow: 'Profiles', title: 'Student 360', section: 'students' },
-                { eyebrow: 'OTJ', title: 'Off-the-job tracker', section: 'otjtraining' },
-                { eyebrow: 'Quality', title: 'Quality dashboard', section: 'qualitydashboard' },
-                { eyebrow: 'AI', title: 'AI ILP generator', section: 'aiilpgenerator' },
-                { eyebrow: 'Schedule', title: 'Timetable', section: 'timetable' },
-                { eyebrow: 'Live', title: 'Live lesson', section: 'livelesson' },
-                { eyebrow: 'Batch', title: 'Batch operations', section: 'batchoperations' },
-              ] as Array<{ eyebrow: string; title: string; section: CollegeSection }>
-            ).map((tool) => (
-              <button
-                key={tool.title}
-                type="button"
-                onClick={() => onNavigate(tool.section)}
-                className="group bg-[hsl(0_0%_10%)] hover:bg-elec-yellow/[0.04] active:scale-[0.99] transition-all p-4 sm:p-5 text-left touch-manipulation flex flex-col"
-              >
-                <span className="text-[10.5px] font-semibold uppercase tracking-[0.18em] text-white/75">
-                  {tool.eyebrow}
-                </span>
-                <span className="mt-1.5 text-[15px] sm:text-base font-semibold tracking-tight text-white group-hover:text-elec-yellow transition-colors">
-                  {tool.title}
-                </span>
-                <span className="mt-2 inline-flex items-center gap-1 text-[11.5px] font-semibold text-elec-yellow">
-                  Open
-                  <ArrowRight className="h-3 w-3 group-hover:translate-x-0.5 transition-transform" />
-                </span>
-              </button>
-            ))}
-          </div>
-        )}
-      </motion.section>
     </motion.div>
   );
 }

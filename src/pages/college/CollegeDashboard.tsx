@@ -1,5 +1,6 @@
-import { useState, useCallback, useEffect, lazy, Suspense } from 'react';
+import { useState, useCallback, lazy, Suspense } from 'react';
 import { useNavigate, useSearchParams } from 'react-router-dom';
+import { Search } from 'lucide-react';
 import { CollegeSupabaseProvider } from '@/contexts/CollegeSupabaseContext';
 import { useAuth } from '@/contexts/AuthContext';
 import { CommandPalette } from '@/components/college/CommandPalette';
@@ -210,6 +211,11 @@ const CurriculumHub = lazy(() =>
 const AssessmentHub = lazy(() =>
   import('@/components/college/hubs/AssessmentHub').then((m) => ({ default: m.AssessmentHub }))
 );
+const QualityComplianceHub = lazy(() =>
+  import('@/components/college/hubs/QualityComplianceHub').then((m) => ({
+    default: m.QualityComplianceHub,
+  }))
+);
 const ResourcesHub = lazy(() =>
   import('@/components/college/hubs/ResourcesHub').then((m) => ({ default: m.ResourcesHub }))
 );
@@ -224,6 +230,7 @@ export type CollegeSection =
   | 'curriculumhub'
   | 'assessmenthub'
   | 'resourceshub'
+  | 'qualityhub'
   // People Hub sections
   | 'tutors'
   | 'students'
@@ -274,6 +281,7 @@ const sectionTitles: Record<CollegeSection, string> = {
   curriculumhub: 'Curriculum Hub',
   assessmenthub: 'Assessment Hub',
   resourceshub: 'Resources Hub',
+  qualityhub: 'Quality & Compliance',
   tutors: 'Tutors',
   students: 'Students',
   cohorts: 'Cohorts',
@@ -321,17 +329,10 @@ const CollegeDashboard = () => {
     setSearchParams({ section }, { replace: false });
   const [commandPaletteOpen, setCommandPaletteOpen] = useState(false);
 
-  // Tutor daily-driver: when a tutor / assessor / IQA lands on /college with
-  // no section param, redirect to /college/today. Admin / HoD see the
-  // editorial overview which has hub cards + compliance widget — better for
-  // their cross-cutting role.
-  useEffect(() => {
-    if (searchParams.get('section')) return;
-    if (!profile?.college_role) return;
-    if (['tutor', 'assessor', 'iqa', 'support'].includes(profile.college_role)) {
-      navigate('/college/today', { replace: true });
-    }
-  }, [profile?.college_role, searchParams, navigate]);
+  // The home (six-area overview) is the front door for EVERY role — it embeds
+  // the daily "Today" view and the nav on one page, so tutors get their
+  // daily-driver without being trapped on /college/today (which had no way back
+  // to the hub). /college/today stays reachable via the "My Work" area card.
 
   // Keyboard shortcuts
   useKeyboardShortcuts([
@@ -516,7 +517,9 @@ const CollegeDashboard = () => {
     } else if (resourcesSubSections.includes(activeSection)) {
       setActiveSection('resourceshub');
     } else if (
-      ['peoplehub', 'curriculumhub', 'assessmenthub', 'resourceshub'].includes(activeSection)
+      ['peoplehub', 'curriculumhub', 'assessmenthub', 'resourceshub', 'qualityhub'].includes(
+        activeSection
+      )
     ) {
       setActiveSection('overview');
     } else {
@@ -543,6 +546,8 @@ const CollegeDashboard = () => {
         return <AssessmentHub onNavigate={handleNavigate} />;
       case 'resourceshub':
         return <ResourcesHub onNavigate={handleNavigate} />;
+      case 'qualityhub':
+        return <QualityComplianceHub onNavigate={handleNavigate} />;
 
       // People Hub sections
       case 'tutors':
@@ -673,9 +678,14 @@ const CollegeDashboard = () => {
               <div className="flex items-center gap-3 sm:gap-4 shrink-0">
                 <button
                   onClick={() => setCommandPaletteOpen(true)}
-                  className="text-[12.5px] font-medium text-white hover:text-white transition-colors touch-manipulation"
+                  aria-label="Search learners"
+                  className="flex items-center gap-2 h-8 px-2.5 sm:px-3 rounded-full border border-white/[0.12] bg-white/[0.04] hover:bg-white/[0.08] hover:border-white/25 text-white/65 hover:text-white transition-colors touch-manipulation"
                 >
-                  Search
+                  <Search className="h-3.5 w-3.5 shrink-0" />
+                  <span className="text-[12px] font-medium hidden sm:inline">Search learners</span>
+                  <kbd className="hidden lg:inline text-[10px] font-medium text-white/40 border border-white/15 rounded px-1 ml-0.5">
+                    ⌘K
+                  </kbd>
                 </button>
                 <NotificationCenter onNavigate={handleNavigate} />
                 <button

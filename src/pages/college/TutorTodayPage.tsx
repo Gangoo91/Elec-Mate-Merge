@@ -123,18 +123,9 @@ export function TutorTodayBody({ mode = 'page' }: { mode?: 'page' | 'embed' | 'e
             {greeting()}
             {firstName ? `, ${firstName}` : ''}.
           </h1>
-          <p className="mt-2 text-[13px] sm:text-[14px] text-white leading-snug max-w-2xl">
-            Here's your day in one screen — classes, inbox, at-risk learners and what's due this
-            week. Type any inspector question into the search bar to land on the evidence chain in
-            seconds.
+          <p className="mt-2 text-[13px] sm:text-[14px] text-white/80 leading-snug max-w-2xl">
+            Your day at a glance — classes, inbox, at-risk learners and what's due this week.
           </p>
-        </motion.div>
-      )}
-      {/* Student 360 brought to the top of the tutor's daily view — one tap to
-          any learner's profile (the embedded overview has its own copy). */}
-      {mode === 'page' && (
-        <motion.div variants={itemVariants}>
-          <LearnerQuickJump />
         </motion.div>
       )}
       {mode === 'embed' && (
@@ -213,6 +204,14 @@ export function TutorTodayBody({ mode = 'page' }: { mode?: 'page' | 'embed' | 'e
           />
         </div>
       </motion.div>
+
+      {/* Jump to any learner — Student 360, one tap. Below the day's numbers
+          so the headline stats lead. */}
+      {mode === 'page' && (
+        <motion.div variants={itemVariants}>
+          <LearnerQuickJump />
+        </motion.div>
+      )}
 
       {/* Action callouts — Inbox + Marking when there's pending work.
           Side-by-side on desktop, stacked on mobile. */}

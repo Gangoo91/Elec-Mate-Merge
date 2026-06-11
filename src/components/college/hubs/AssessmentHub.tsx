@@ -187,6 +187,15 @@ export function AssessmentHub({ onNavigate }: AssessmentHubProps) {
               badge={<Pill tone="yellow">AI</Pill>}
               onClick={() => onNavigate('masteryqueue')}
             />
+            <HubCard
+              number="07"
+              eyebrow="Bulk actions"
+              title="Batch Operations"
+              description="Apply grades, attendance or status to many learners in one pass."
+              tone="blue"
+              meta="Many at once"
+              onClick={() => onNavigate('batchoperations')}
+            />
           </HubGrid>
         </motion.section>
 
