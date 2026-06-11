@@ -278,12 +278,14 @@ export const SiteVisitSignOffStep = ({
           </div>
 
           {/* Signature capture — 280px: gloved fingers need room (audit P1) */}
-          <SignatureCapture
-            onCapture={handleSignatureCapture}
-            variant="dark"
-            showActions={false}
-            height={280}
-          />
+          <div className="w-full overflow-hidden rounded-xl">
+            <SignatureCapture
+              onCapture={handleSignatureCapture}
+              variant="dark"
+              showActions={false}
+              height={280}
+            />
+          </div>
 
           {/* Confirm & Sign button */}
           <Button

@@ -318,7 +318,7 @@ export const SiteVisitScopePriceStep = ({
                 className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-elec-yellow/0 via-elec-yellow/60 to-elec-yellow/0 opacity-80"
               />
             )}
-            <div className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+            <div className="w-full truncate text-[10px] font-medium uppercase tracking-[0.12em] text-white/55 sm:tracking-[0.18em]">
               {stat.label}
             </div>
             <p className="mt-1.5 text-[20px] font-semibold tabular-nums leading-none tracking-tight text-white sm:text-[24px]">
