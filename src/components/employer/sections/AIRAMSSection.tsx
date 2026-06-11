@@ -2,7 +2,6 @@ import { useState, useEffect } from 'react';
 import { JobPackSelector } from '@/components/employer/smart-docs/JobPackSelector';
 import { useJobPacks, useUpdateJobPack } from '@/hooks/useJobPacks';
 import { supabase } from '@/integrations/supabase/client';
-import { realtimeChannelName } from '@/lib/realtimeChannel';
 import { useToast } from '@/hooks/use-toast';
 import type { Section } from '@/pages/employer/EmployerDashboard';
 import { RefreshCw, Sparkles, Download } from 'lucide-react';
@@ -65,62 +64,62 @@ export function AIRAMSSection({ onNavigate }: AIRAMSSectionProps) {
   useEffect(() => {
     if (!generationJobId || !isGenerating) return;
 
-    const channel = supabase
-      .channel(realtimeChannelName(`rams-job-${generationJobId}`))
-      .on(
-        'postgres_changes',
-        {
-          event: 'UPDATE',
-          schema: 'public',
-          table: 'rams_generation_jobs',
-          filter: `id=eq.${generationJobId}`,
-        },
-        (payload) => {
-          const job = payload.new as any;
-          setProgress(job.progress || 0);
-          setCurrentStep(job.current_step || '');
+    // rams_generation_jobs is NOT in the realtime publication — poll like
+    // the electrician generator does
+    let cancelled = false;
+    const interval = setInterval(async () => {
+      const { data: job } = await supabase
+        .from('rams_generation_jobs')
+        .select('id, status, progress, current_step, rams_data, method_data, error_message')
+        .eq('id', generationJobId)
+        .maybeSingle();
+      if (cancelled || !job) return;
 
-          if (job.status === 'complete') {
-            setIsGenerating(false);
-            setResult({
-              ramsData: job.rams_data,
-              methodData: job.method_data,
-            });
-            setHistory((prev) => [
-              {
-                id: job.id,
-                title: selectedJobPack?.title || 'Untitled RAMS',
-                createdAt: new Date().toISOString(),
-                hazards: job.rams_data?.risks?.length || 0,
-              },
-              ...prev,
-            ]);
-            toast({
-              title: 'RAMS Generated',
-              description: 'Your risk assessment has been created successfully.',
-            });
+      setProgress(job.progress || 0);
+      setCurrentStep(job.current_step || '');
 
-            if (selectedJobPackId) {
-              updateJobPack.mutate({
-                id: selectedJobPackId,
-                data: { rams_generated: true },
-              });
-            }
-          } else if (job.status === 'failed') {
-            setIsGenerating(false);
-            setError(job.error_message || 'Generation failed');
-            toast({
-              title: 'Generation Failed',
-              description: job.error_message || 'Something went wrong.',
-              variant: 'destructive',
-            });
-          }
+      if (job.status === 'complete') {
+        clearInterval(interval);
+        setIsGenerating(false);
+        setResult({
+          ramsData: job.rams_data,
+          methodData: job.method_data,
+        });
+        setHistory((prev) => [
+          {
+            id: job.id,
+            title: selectedJobPack?.title || 'Untitled RAMS',
+            createdAt: new Date().toISOString(),
+            // eslint-disable-next-line @typescript-eslint/no-explicit-any
+            hazards: (job.rams_data as any)?.risks?.length || 0,
+          },
+          ...prev,
+        ]);
+        toast({
+          title: 'RAMS Generated',
+          description: 'Your risk assessment has been created successfully.',
+        });
+        if (selectedJobPackId) {
+          updateJobPack.mutate({
+            id: selectedJobPackId,
+            updates: { rams_generated: true },
+          });
         }
-      )
-      .subscribe();
+      } else if (job.status === 'failed') {
+        clearInterval(interval);
+        setIsGenerating(false);
+        setError(job.error_message || 'Generation failed');
+        toast({
+          title: 'Generation Failed',
+          description: job.error_message || 'Something went wrong.',
+          variant: 'destructive',
+        });
+      }
+    }, 3000);
 
     return () => {
-      supabase.removeChannel(channel);
+      cancelled = true;
+      clearInterval(interval);
     };
   }, [generationJobId, isGenerating, selectedJobPackId]);
 
@@ -170,6 +169,7 @@ export function AIRAMSSection({ onNavigate }: AIRAMSSectionProps) {
       }
 
       setGenerationJobId(data.jobId);
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     } catch (err: any) {
       setIsGenerating(false);
       setError(err.message);

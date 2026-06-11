@@ -1,0 +1,9 @@
+-- Operations sweep DB fixes (applied as ops_audit_db_fixes):
+-- job_tests.verified_by + job_issues.resolved_by FKs repointed
+-- employer_employees(id) → auth.users(id) (id-mapping trap: verify/resolve
+-- always 23503'd). signature_requests anon policies dropped (anon could read
+-- ALL signer PII and forge Signed on any row) — replaced with token-keyed
+-- definer RPCs get_signature_request_by_token / sign_signature_request.
+-- (signature_rpc_enrich): get RPC stamps Viewed; sign RPC takes notes and the
+-- signature as a data URL (anon storage uploads never passed the own-folder
+-- policy — old public signing was broken at upload too).

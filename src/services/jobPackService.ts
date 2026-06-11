@@ -82,7 +82,7 @@ export const updateJobPack = async (
 
   if (error) {
     console.error('Error updating job pack:', error);
-    return null;
+    throw error;
   }
 
   return data as JobPack;

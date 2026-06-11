@@ -46,7 +46,6 @@ export interface Incident {
   follow_up_notes?: string;
   created_at: string;
   updated_at: string;
-  submitted_at?: string;
   resolved_at?: string;
 }
 
@@ -194,7 +193,7 @@ export function useIncidentStats() {
 
         const { data, error } = await supabase
           .from('employer_incidents')
-          .select('status, severity')
+          .select('status, severity, incident_type')
           .eq('employer_id', user.id);
 
         // Table may not exist or user may not have access - return empty stats
@@ -214,7 +213,7 @@ export function useIncidentStats() {
           open: data.filter((i) => !['resolved', 'closed'].includes(i.status)).length,
           resolved: data.filter((i) => i.status === 'resolved').length,
           closed: data.filter((i) => i.status === 'closed').length,
-          nearMisses: data.filter((i) => i.status === 'near_miss').length,
+          nearMisses: data.filter((i) => (i.incident_type || '').toLowerCase().replace(' ', '_') === 'near_miss').length,
           critical: data.filter((i) => i.severity === 'critical').length,
           high: data.filter((i) => i.severity === 'high').length,
         };
@@ -332,13 +331,6 @@ export function useUpdateIncidentStatus() {
         status,
         updated_at: new Date().toISOString(),
       };
-
-      // Set timestamps for specific status changes
-      if (status === 'submitted') {
-        updates.submitted_at = new Date().toISOString();
-      } else if (status === 'resolved' || status === 'closed') {
-        updates.resolved_at = new Date().toISOString();
-      }
 
       const { data, error } = await supabase
         .from('employer_incidents')

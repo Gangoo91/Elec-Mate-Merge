@@ -1,0 +1,5 @@
+-- Full-hub sweep DB fixes (applied as full_sweep_db_fixes):
+-- per-tenant order numbering; employer_company_tools.user_id default;
+-- job_financials auto-create trigger + backfill (status 'On Budget');
+-- briefing guests allowed + forge-any-sign-off policy killed (worker-scoped);
+-- Elec-ID employer blanket scoped to own roster.

@@ -227,10 +227,10 @@ export async function updateInvoice(id: string, updates: Partial<Invoice>): Prom
 }
 
 export async function markInvoicePaid(id: string): Promise<Invoice> {
-  // Get invoice details for notification
+  // employer_invoices carries employer_id (no created_by column)
   const { data: invoice } = await supabase
     .from('employer_invoices')
-    .select('invoice_number, client, amount, created_by')
+    .select('invoice_number, client, amount, employer_id')
     .eq('id', id)
     .single();
 
@@ -240,9 +240,9 @@ export async function markInvoicePaid(id: string): Promise<Invoice> {
   });
 
   // Send push notification
-  if (invoice?.created_by) {
+  if (invoice?.employer_id) {
     sendPushNotification(
-      invoice.created_by,
+      invoice.employer_id,
       '💰 Invoice Paid!',
       `Invoice #${invoice.invoice_number} for £${invoice.amount.toFixed(2)} has been paid`,
       'job',
@@ -292,8 +292,11 @@ export async function sendInvoice(id: string): Promise<{ portalUrl: string; acce
   });
 
   if (sendError) {
+    // The portal link exists, but the client was NOT emailed — say so
     console.error('Failed to send invoice email:', sendError);
-    // Don't throw - the link was still generated successfully
+    throw new Error(
+      'Invoice link created, but the email could not be sent — copy the link and send it yourself.'
+    );
   }
 
   // Update invoice status to Sent/Pending

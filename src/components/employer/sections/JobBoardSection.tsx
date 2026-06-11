@@ -80,6 +80,22 @@ const stageToStatusMap: Record<string, { status: string; progress: number }> = {
   Complete: { status: 'Completed', progress: 100 },
 };
 
+// Moving columns must not destroy real progress: keep the job's own number
+// when it already satisfies the target column, only nudge to the boundary
+// when it doesn't.
+const progressForStage = (stageId: string, current: number): number => {
+  switch (stageId) {
+    case 'In Progress':
+      return current > 0 && current < 90 ? current : 25;
+    case 'Testing':
+      return current >= 90 && current < 100 ? current : 90;
+    case 'Complete':
+      return 100;
+    default:
+      return 0;
+  }
+};
+
 const getStageFromJob = (job: { status: string; progress: number }): string => {
   if (job.status === 'Completed') return 'Complete';
   if (job.status === 'Pending') return 'Quoted';
@@ -174,7 +190,9 @@ export function JobBoardSection() {
       return;
     }
 
-    const { status, progress } = stageToStatusMap[stageId];
+    const { status } = stageToStatusMap[stageId];
+    const draggedJobRow = jobs.find((j) => j.id === draggedJob);
+    const progress = progressForStage(stageId, draggedJobRow?.progress ?? 0);
 
     try {
       await updateJob.mutateAsync({
@@ -260,7 +278,9 @@ export function JobBoardSection() {
   };
 
   const handleMoveJob = async (jobId: string, stageId: string) => {
-    const { status, progress } = stageToStatusMap[stageId];
+    const { status } = stageToStatusMap[stageId];
+    const movingJob = jobs.find((j) => j.id === jobId);
+    const progress = progressForStage(stageId, movingJob?.progress ?? 0);
     try {
       await updateJob.mutateAsync({
         id: jobId,
@@ -461,7 +481,7 @@ export function JobBoardSection() {
               onQuickAdd={handleMobileQuickAdd}
             />
           </PullToRefresh>
-        ) : filteredJobs.length === 0 ? (
+        ) : filteredJobs.length === 0 && quickAddStage === null ? (
           <EmptyState
             title="No jobs yet"
             description="Add your first job to start populating the board."

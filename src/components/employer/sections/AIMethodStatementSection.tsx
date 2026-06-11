@@ -111,7 +111,7 @@ export function AIMethodStatementSection({ onNavigate }: AIMethodStatementSectio
       if (selectedJobPackId) {
         updateJobPack.mutate({
           id: selectedJobPackId,
-          data: { method_statement_generated: true },
+          updates: { method_statement_generated: true },
         });
       }
     } catch (err: any) {

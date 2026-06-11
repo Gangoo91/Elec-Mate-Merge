@@ -150,6 +150,8 @@ export function RAMSSection({ onNavigate }: RAMSSectionProps) {
   const handleCreateRAMS = async () => {
     await createRAMS.mutateAsync({
       ...formData,
+      // job_scale has a CHECK (domestic/commercial/industrial) — omit if unset
+      job_scale: formData.job_scale || undefined,
       status: 'draft',
     });
     setShowCreateSheet(false);
@@ -404,10 +406,9 @@ export function RAMSSection({ onNavigate }: RAMSSectionProps) {
                       <SelectValue placeholder="Select scale" />
                     </SelectTrigger>
                     <SelectContent className={selectContentClass}>
-                      <SelectItem value="small">Small (1-2 days)</SelectItem>
-                      <SelectItem value="medium">Medium (3-5 days)</SelectItem>
-                      <SelectItem value="large">Large (1-2 weeks)</SelectItem>
-                      <SelectItem value="major">Major (2+ weeks)</SelectItem>
+                      <SelectItem value="domestic">Domestic</SelectItem>
+                      <SelectItem value="commercial">Commercial</SelectItem>
+                      <SelectItem value="industrial">Industrial</SelectItem>
                     </SelectContent>
                   </Select>
                 </Field>

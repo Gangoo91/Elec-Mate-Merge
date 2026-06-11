@@ -109,7 +109,7 @@ export function useBriefings() {
         .select(
           `
           *,
-          job:jobs(id, title)
+          job:employer_jobs(id, title)
         `
         )
         .eq('user_id', user.id)
@@ -164,7 +164,7 @@ export function useUpcomingBriefings() {
         .select(
           `
           *,
-          job:jobs(id, title)
+          job:employer_jobs(id, title)
         `
         )
         .eq('user_id', user.id)
@@ -190,7 +190,7 @@ export function useBriefingWithAttendees(briefingId: string | undefined) {
         .select(
           `
           *,
-          job:jobs(id, title)
+          job:employer_jobs(id, title)
         `
         )
         .eq('id', briefingId)
@@ -302,7 +302,7 @@ export function useCreateBriefing() {
         .select(
           `
           *,
-          job:jobs(id, title)
+          job:employer_jobs(id, title)
         `
         )
         .single();
@@ -344,7 +344,7 @@ export function useUpdateBriefing() {
         .select(
           `
           *,
-          job:jobs(id, title)
+          job:employer_jobs(id, title)
         `
         )
         .single();
@@ -386,7 +386,7 @@ export function useCompleteBriefing() {
         .select(
           `
           *,
-          job:jobs(id, title)
+          job:employer_jobs(id, title)
         `
         )
         .single();
@@ -660,7 +660,7 @@ export function useCreateBriefingFromTemplate() {
         .select(
           `
           *,
-          job:jobs(id, title)
+          job:employer_jobs(id, title)
         `
         )
         .single();
@@ -716,7 +716,7 @@ export function useAddPresenterSignature() {
         .select(
           `
           *,
-          job:jobs(id, title)
+          job:employer_jobs(id, title)
         `
         )
         .single();
@@ -758,7 +758,7 @@ export function useUpdateBriefingContent() {
         .select(
           `
           *,
-          job:jobs(id, title)
+          job:employer_jobs(id, title)
         `
         )
         .single();
@@ -812,7 +812,7 @@ export function useAddBriefingPhoto() {
         .select(
           `
           *,
-          job:jobs(id, title)
+          job:employer_jobs(id, title)
         `
         )
         .single();

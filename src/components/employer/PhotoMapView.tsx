@@ -210,9 +210,12 @@ export const PhotoMapView = ({
             <Card className="p-0 border-0 shadow-none bg-transparent min-w-[180px]">
               <div className="space-y-2">
                 {/* Photo thumbnail */}
-                <div className="w-full h-20 rounded-md overflow-hidden bg-gradient-to-br from-muted/50 to-muted/30 flex items-center justify-center">
+                {selectedPhoto?.filename?.startsWith('http') ? (
+              <img src={selectedPhoto.filename} alt="Job photo" className="h-24 w-full object-cover rounded" />
+            ) : (
+              <div className="w-full h-20 rounded-md overflow-hidden bg-gradient-to-br from-muted/50 to-muted/30 flex items-center justify-center">
                   <Camera className="h-6 w-6 text-white" />
-                </div>
+                </div>)}
 
                 {/* Info */}
                 <div>

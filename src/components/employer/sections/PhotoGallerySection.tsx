@@ -461,9 +461,18 @@ export function PhotoGallerySection() {
                   onClick={() => handlePhotoClick(index)}
                   className="group relative aspect-square rounded-xl overflow-hidden bg-[hsl(0_0%_10%)] border border-white/[0.06] hover:border-white/[0.12] transition-colors touch-manipulation focus:outline-none focus-visible:ring-2 focus-visible:ring-elec-yellow/60"
                 >
-                  <div className="absolute inset-0 flex items-center justify-center">
-                    <Camera className="h-7 w-7 text-white" />
-                  </div>
+                  {photo.filename?.startsWith('http') ? (
+                    <img
+                      src={photo.filename}
+                      alt={photo.caption || 'Job photo'}
+                      loading="lazy"
+                      className="absolute inset-0 h-full w-full object-cover"
+                    />
+                  ) : (
+                    <div className="absolute inset-0 flex items-center justify-center">
+                      <Camera className="h-7 w-7 text-white" />
+                    </div>
+                  )}
                   <div className="absolute top-2 left-2">
                     <Dot tone={categoryTone[photo.category]} />
                   </div>

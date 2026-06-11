@@ -164,7 +164,16 @@ export const PhotoTimeline = ({
                           <div className="flex gap-3 p-3">
                             {/* Photo thumbnail */}
                             <div className="relative w-16 h-16 flex-shrink-0 rounded-md overflow-hidden bg-gradient-to-br from-muted/50 to-muted/30 flex items-center justify-center">
-                              <Camera className="h-6 w-6 text-white" />
+                              {photo.filename?.startsWith('http') ? (
+                                <img
+                                  src={photo.filename}
+                                  alt={photo.jobTitle || 'Job photo'}
+                                  loading="lazy"
+                                  className="absolute inset-0 h-full w-full object-cover"
+                                />
+                              ) : (
+                                <Camera className="h-6 w-6 text-white" />
+                              )}
                             </div>
 
                             {/* Photo details */}

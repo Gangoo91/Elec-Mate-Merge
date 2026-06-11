@@ -105,16 +105,32 @@ export const PhotoCompareSlider = ({
     setSliderPosition(50);
   };
 
-  // Photo placeholder component
-  const PhotoPlaceholder = ({ label, category }: { label: string; category: string }) => (
-    <div className="absolute inset-0 bg-gradient-to-br from-slate-700 to-slate-900 flex flex-col items-center justify-center">
-      <Camera className="h-16 w-16 text-slate-400 mb-2" />
-      <span className="text-slate-300 font-medium">{label}</span>
-      <Badge variant="outline" className="mt-2 text-xs capitalize">
-        {category}
-      </Badge>
-    </div>
-  );
+  // Renders the real photo when the record carries a URL
+  const PhotoPlaceholder = ({
+    label,
+    category,
+    src,
+  }: {
+    label: string;
+    category: string;
+    src?: string;
+  }) =>
+    src?.startsWith('http') ? (
+      <div className="absolute inset-0 bg-black">
+        <img src={src} alt={label} className="absolute inset-0 h-full w-full object-cover" draggable={false} />
+        <Badge variant="outline" className="absolute top-2 left-2 text-xs capitalize bg-black/60">
+          {label}
+        </Badge>
+      </div>
+    ) : (
+      <div className="absolute inset-0 bg-gradient-to-br from-slate-700 to-slate-900 flex flex-col items-center justify-center">
+        <Camera className="h-16 w-16 text-slate-400 mb-2" />
+        <span className="text-slate-300 font-medium">{label}</span>
+        <Badge variant="outline" className="mt-2 text-xs capitalize">
+          {category}
+        </Badge>
+      </div>
+    );
 
   return (
     <Dialog open={isOpen} onOpenChange={onClose}>
@@ -171,7 +187,7 @@ export const PhotoCompareSlider = ({
         >
           {/* After photo (full, underneath) */}
           <div className="absolute inset-0">
-            <PhotoPlaceholder label="After" category={afterPhoto.category} />
+            <PhotoPlaceholder label="After" category={afterPhoto.category} src={afterPhoto.filename} />
           </div>
 
           {/* Before photo (clipped) */}
@@ -183,7 +199,7 @@ export const PhotoCompareSlider = ({
                 : { clipPath: `inset(0 ${100 - sliderPosition}% 0 0)` }
             }
           >
-            <PhotoPlaceholder label="Before" category={beforePhoto.category} />
+            <PhotoPlaceholder label="Before" category={beforePhoto.category} src={beforePhoto.filename} />
           </div>
 
           {/* Slider line and handle */}

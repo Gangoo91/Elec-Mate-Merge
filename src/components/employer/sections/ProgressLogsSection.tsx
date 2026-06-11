@@ -175,7 +175,36 @@ export function ProgressLogsSection() {
     }
 
     try {
-      await createProgressLog.mutateAsync(formData as CreateProgressLogInput);
+      // Map the form onto the real progress_logs columns: the itemised list
+      // joins into work_completed; hours fold into the text (no column);
+      // materials items join into the text materials_used column
+      const workCompleted = [
+        formData.work_description,
+        (formData.work_items || []).length > 0
+          ? 'Completed items:\n' + (formData.work_items || []).map((w) => `• ${w}`).join('\n')
+          : null,
+        formData.hours_worked ? `Hours worked: ${formData.hours_worked}` : null,
+      ]
+        .filter(Boolean)
+        .join('\n\n');
+
+      const materialsText = Array.isArray(formData.materials_used)
+        ? (formData.materials_used as { item: string; quantity: number; cost: number }[])
+            .map((m) => `${m.item} ×${m.quantity}${m.cost ? ` (£${m.cost})` : ''}`)
+            .join(', ')
+        : formData.materials_used || null;
+
+      await createProgressLog.mutateAsync({
+        job_id: formData.job_id,
+        date: formData.date,
+        weather: formData.weather,
+        workers_on_site: formData.workers_on_site,
+        work_completed: workCompleted,
+        work_planned: formData.work_planned || null,
+        materials_used: materialsText,
+        issues_encountered: formData.issues_encountered || null,
+        delays: formData.delays || null,
+      } as CreateProgressLogInput);
       setShowCreateSheet(false);
       resetForm();
     } catch (error) {
@@ -211,7 +240,7 @@ export function ProgressLogsSection() {
       const q = searchQuery.toLowerCase();
       const matchesSearch =
         !q ||
-        log.work_description?.toLowerCase().includes(q) ||
+        log.work_completed?.toLowerCase().includes(q) ||
         log.job?.title?.toLowerCase().includes(q) ||
         log.job?.client?.toLowerCase().includes(q);
 
@@ -229,7 +258,7 @@ export function ProgressLogsSection() {
   const todaysLogs = progressLogs.filter((l) => isToday(new Date(l.date)));
   const totalPhotos = progressLogs.reduce((acc, l) => acc + (l.photos?.length || 0), 0);
   const jobsCovered = new Set(progressLogs.map((l) => l.job_id)).size;
-  const hoursLogged = stats?.totalHours ?? 0;
+  const workersLogged = stats?.totalWorkers ?? 0;
   const logsTodayCount = todaysLogs.length;
 
   const tabs = [
@@ -313,7 +342,7 @@ export function ProgressLogsSection() {
         stats={[
           { label: 'Logs today', value: logsTodayCount, tone: 'emerald' },
           { label: 'Photos', value: totalPhotos, tone: 'blue' },
-          { label: 'Hours logged', value: `${hoursLogged}h`, tone: 'amber' },
+          { label: 'Workers logged', value: workersLogged, tone: 'amber' },
           { label: 'Jobs covered', value: jobsCovered },
         ]}
       />
@@ -346,13 +375,13 @@ export function ProgressLogsSection() {
           <ListBody>
             {filteredLogs.map((log) => {
               const photosCount = log.photos?.length ?? 0;
-              const summary = log.work_description || 'No description';
+              const summary = log.work_completed || 'No description';
               return (
                 <ListRow
                   key={log.id}
                   lead={<Avatar initials={getInitials(log.job?.title)} />}
                   title={log.job?.title || 'Unknown job'}
-                  subtitle={`${summary} · ${photosCount} photo${photosCount === 1 ? '' : 's'} · ${log.hours_worked}h`}
+                  subtitle={`${summary} · ${photosCount} photo${photosCount === 1 ? '' : 's'} · ${log.workers_on_site ?? '—'} on site`}
                   trailing={
                     <>
                       {log.signed_off ? (
@@ -664,7 +693,7 @@ className={`${textareaClass} min-h-[80px]`}
                         </span>
                       ),
                     },
-                    { label: 'Hours', value: `${selectedLog.hours_worked}h`, tone: 'amber' },
+                    { label: 'Workers', value: String(selectedLog.workers_on_site ?? '—'), tone: 'amber' },
                     {
                       label: 'Workers',
                       value: selectedLog.workers_on_site ?? 0,
@@ -694,66 +723,30 @@ className={`${textareaClass} min-h-[80px]`}
                   </ListCard>
                 )}
 
-                <ListCard>
-                  <ListCardHeader
-                    tone="emerald"
-                    title="Work description"
-                    meta={<Hammer className="h-3.5 w-3.5 text-elec-yellow" />}
-                  />
-                  <div className="px-5 py-4">
-                    <p className="text-[13px] text-white leading-relaxed whitespace-pre-wrap">
-                      {selectedLog.work_description}
-                    </p>
-                  </div>
-                </ListCard>
-
-                {selectedLog.work_items.length > 0 && (
+                {selectedLog.work_completed && (
                   <ListCard>
                     <ListCardHeader
-                      title="Work items"
-                      meta={<Pill tone="emerald">{selectedLog.work_items.length}</Pill>}
+                      tone="emerald"
+                      title="Work completed"
+                      meta={<Hammer className="h-3.5 w-3.5 text-elec-yellow" />}
                     />
-                    <ListBody>
-                      {selectedLog.work_items.map((item, i) => (
-                        <ListRow
-                          key={i}
-                          lead={
-                            <CheckCircle className="h-4 w-4 text-emerald-400 shrink-0" />
-                          }
-                          title={item}
-                        />
-                      ))}
-                    </ListBody>
+                    <div className="px-5 py-4">
+                      <p className="text-[13px] text-white leading-relaxed whitespace-pre-wrap">
+                        {selectedLog.work_completed}
+                      </p>
+                    </div>
                   </ListCard>
                 )}
 
-                {selectedLog.materials_used.length > 0 && (
-                  <ListCard>
-                    <ListCardHeader
-                      tone="amber"
-                      title="Materials used"
-                      meta={
-                        <span className="text-[11px] text-elec-yellow tabular-nums font-semibold">
-                          £{selectedLog.materials_used.reduce((s, m) => s + m.cost, 0)}
-                        </span>
-                      }
-                    />
-                    <ListBody>
-                      {selectedLog.materials_used.map((material, i) => (
-                        <ListRow
-                          key={i}
-                          lead={<Package className="h-4 w-4 text-elec-yellow shrink-0" />}
-                          title={material.item}
-                          subtitle={material.quantity}
-                          trailing={
-                            <span className="text-[12px] font-semibold text-white tabular-nums">
-                              £{material.cost}
-                            </span>
-                          }
-                        />
-                      ))}
-                    </ListBody>
-                  </ListCard>
+                {selectedLog.materials_used && (
+                  <div className="rounded-xl bg-[hsl(0_0%_11%)] border border-white/[0.06] p-4">
+                    <p className="text-[10px] uppercase tracking-[0.18em] text-white/40 font-medium mb-2">
+                      Materials used
+                    </p>
+                    <p className="text-[13px] text-white/80 whitespace-pre-wrap">
+                      {String(selectedLog.materials_used)}
+                    </p>
+                  </div>
                 )}
 
                 {selectedLog.photos && selectedLog.photos.length > 0 && (
@@ -766,6 +759,7 @@ className={`${textareaClass} min-h-[80px]`}
                     <div className="px-5 py-4">
                       <div className="grid grid-cols-2 sm:grid-cols-3 gap-2">
                         {selectedLog.photos.map((photo, i) => {
+                          // eslint-disable-next-line @typescript-eslint/no-explicit-any
                           const url = typeof photo === 'string' ? photo : (photo as any)?.url;
                           if (!url) return null;
                           return (
@@ -817,7 +811,9 @@ className={`${textareaClass} min-h-[80px]`}
                   </SecondaryButton>
                   <span className="text-[11px] text-white sm:ml-auto self-center tabular-nums">
                     Created {format(new Date(selectedLog.date), 'dd MMM yyyy')}
+                    // eslint-disable-next-line @typescript-eslint/no-explicit-any
                     {(selectedLog as any).created_at &&
+                      // eslint-disable-next-line @typescript-eslint/no-explicit-any
                       ` at ${format(new Date((selectedLog as any).created_at), 'HH:mm')}`}
                   </span>
                 </div>

@@ -380,32 +380,31 @@ export function PhotoViewer({
               transform: `scale(${scale}) translate(${position.x / scale}px, ${position.y / scale}px)`,
             }}
           >
-            {/* CompanyCam-style photo placeholder with gradient background */}
-            <div
-              className={cn(
-                'w-full h-full flex flex-col items-center justify-center relative',
-                'bg-gradient-to-br from-primary/20 via-primary/10 to-secondary/20'
-              )}
-            >
-              {/* Photo icon with glow effect */}
-              <div className="relative mb-4">
-                <div className="absolute inset-0 bg-elec-yellow/20 blur-xl rounded-full scale-150" />
-                <div className="relative h-20 w-20 rounded-2xl bg-[hsl(0_0%_12%)]/80 backdrop-blur border border-white/[0.08] flex items-center justify-center">
-                  <Camera className="h-10 w-10 text-elec-yellow" />
+            {photo.filename?.startsWith('http') ? (
+              <div className="w-full h-full relative flex items-center justify-center bg-black">
+                <img
+                  src={photo.filename}
+                  alt={photo.jobTitle || 'Job photo'}
+                  className="max-w-full max-h-full object-contain"
+                  draggable={false}
+                />
+                <div className="absolute bottom-6 left-1/2 -translate-x-1/2">
+                  <Badge className={cn('text-sm px-4 py-1', categoryColors[photo.category])}>
+                    {photo.category} Photo
+                  </Badge>
                 </div>
               </div>
-
-              {/* Photo info */}
-              <p className="text-white font-semibold text-lg mb-1">{photo.filename}</p>
-              <p className="text-white text-sm">{photo.jobTitle}</p>
-
-              {/* Category indicator at bottom */}
-              <div className="absolute bottom-6 left-1/2 -translate-x-1/2">
-                <Badge className={cn('text-sm px-4 py-1', categoryColors[photo.category])}>
-                  {photo.category} Photo
-                </Badge>
+            ) : (
+              <div
+                className={cn(
+                  'w-full h-full flex flex-col items-center justify-center relative',
+                  'bg-gradient-to-br from-primary/20 via-primary/10 to-secondary/20'
+                )}
+              >
+                <Camera className="h-10 w-10 text-elec-yellow mb-3" />
+                <p className="text-white text-sm">{photo.jobTitle}</p>
               </div>
-            </div>
+            )}
           </div>
 
           {/* Zoom level indicator - Mobile */}

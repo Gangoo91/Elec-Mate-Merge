@@ -137,7 +137,7 @@ export function AIBriefingPackSection({ onNavigate }: AIBriefingPackSectionProps
       if (selectedJobPackId) {
         updateJobPack.mutate({
           id: selectedJobPackId,
-          data: { briefing_pack_generated: true },
+          updates: { briefing_pack_generated: true },
         });
       }
     } catch (err: any) {

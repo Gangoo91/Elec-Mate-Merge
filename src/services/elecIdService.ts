@@ -93,14 +93,22 @@ export interface ElecIdQualification {
 
 // Fetch all Elec-ID profiles with related data
 export const getElecIdProfiles = async (): Promise<ElecIdProfile[]> => {
+  // Inner join scopes to MY roster (RLS now also enforces this — belt and
+  // braces against the public verification SELECT policy)
+  const {
+    data: { user },
+  } = await supabase.auth.getUser();
+  if (!user) return [];
+
   const { data: profiles, error: profileError } = await supabase
     .from('employer_elec_id_profiles')
     .select(
       `
       *,
-      employee:employer_employees(id, name, role, photo_url, email, phone)
+      employee:employer_employees!inner(id, name, role, photo_url, email, phone, employer_id)
     `
     )
+    .eq('employee.employer_id', user.id)
     .order('created_at', { ascending: false });
 
   if (profileError) throw profileError;

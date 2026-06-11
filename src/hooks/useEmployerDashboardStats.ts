@@ -94,13 +94,13 @@ export function useEmployerDashboardStats(): UseEmployerDashboardStatsReturn {
         invoicesResult,
       ] = await Promise.all([
         // Active employees count
-        supabase.from('employer_employees').select('id, status').eq('status', 'Active'),
+        supabase.from('employer_employees').select('id, status').ilike('status', 'active'),
 
         // Active jobs count
         supabase
           .from('employer_jobs')
           .select('id, status, value, title, client, end_date')
-          .eq('status', 'Active'),
+          .ilike('status', 'active'),
 
         // Certifications with expiry status
         supabase

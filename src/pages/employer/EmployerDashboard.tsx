@@ -727,7 +727,7 @@ const EmployerDashboard = () => {
       case 'clientportal':
         return <ClientPortalSection />;
       case 'rams':
-        return <RAMSSection />;
+        return <RAMSSection onNavigate={handleNavigate} />;
       case 'incidents':
         return <IncidentsSection />;
       case 'policies':

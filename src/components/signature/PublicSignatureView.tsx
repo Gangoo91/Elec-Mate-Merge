@@ -55,26 +55,18 @@ const PublicSignatureView = () => {
     try {
       setLoading(true);
 
-      const { data, error } = await supabase
-        .from('signature_requests')
-        .select('*')
-        .eq('access_token', token)
-        .single();
-
-      if (error || !data) {
+      // Token-keyed definer RPC (no anon table access; stamps Viewed itself)
+      const { data, error } = await supabase.rpc('get_signature_request_by_token', {
+        p_token: token,
+      });
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      const row = data as any;
+      if (error || !row || row.error) {
         throw new Error('Signature request not found or expired');
       }
 
-      setRequest(data as SignatureRequestData);
-      setSignerName(data.signer_name);
-
-      // Update status to Viewed if still Pending or Sent
-      if (['Pending', 'Sent'].includes(data.status)) {
-        await supabase
-          .from('signature_requests')
-          .update({ status: 'Viewed', updated_at: new Date().toISOString() })
-          .eq('id', data.id);
-      }
+      setRequest(row as SignatureRequestData);
+      setSignerName(row.signer_name);
     } catch (error) {
       console.error('Error loading signature request:', error);
       toast({
@@ -99,34 +91,18 @@ const PublicSignatureView = () => {
 
     setSubmitting(true);
     try {
-      // Upload signature to storage
-      const signatureBlob = dataURLtoBlob(signatureData);
-      const signatureFileName = `signatures/${request.user_id}/sig-${request.id}-${Date.now()}.png`;
-
-      const { error: uploadError } = await supabase.storage
-        .from('visual-uploads')
-        .upload(signatureFileName, signatureBlob, { upsert: true });
-
-      if (uploadError) throw uploadError;
-
-      const {
-        data: { publicUrl },
-      } = supabase.storage.from('visual-uploads').getPublicUrl(signatureFileName);
-
-      // Update signature request
-      const { error: updateError } = await supabase
-        .from('signature_requests')
-        .update({
-          status: 'Signed',
-          signed_at: new Date().toISOString(),
-          signature_url: publicUrl,
-          ip_address: await getUserIP(),
-          message: notes.trim() || request.message,
-          updated_at: new Date().toISOString(),
-        })
-        .eq('id', request.id);
-
-      if (updateError) throw updateError;
+      // Signature travels as a data URL inside the token-keyed RPC — anon
+      // storage uploads could never pass the own-folder policy
+      const { data: signed, error: updateError } = await supabase.rpc('sign_signature_request', {
+        p_token: token!,
+        p_signature_url: signatureData,
+        p_ip: await getUserIP(),
+        p_notes: notes.trim() || null,
+      });
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      if (updateError || (signed as any)?.error) {
+        throw new Error('Could not record your signature');
+      }
 
       toast({
         title: 'Document Signed',
@@ -181,17 +157,7 @@ const PublicSignatureView = () => {
     }
   };
 
-  const dataURLtoBlob = (dataURL: string) => {
-    const arr = dataURL.split(',');
-    const mime = arr[0].match(/:(.*?);/)![1];
-    const bstr = atob(arr[1]);
-    let n = bstr.length;
-    const u8arr = new Uint8Array(n);
-    while (n--) {
-      u8arr[n] = bstr.charCodeAt(n);
-    }
-    return new Blob([u8arr], { type: mime });
-  };
+
 
   const getUserIP = async () => {
     try {
