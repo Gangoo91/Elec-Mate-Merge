@@ -17,7 +17,6 @@ import { SiteVisitSignOffStep } from './steps/SiteVisitSignOffStep';
 import { GoogleMapsProvider } from '@/contexts/GoogleMapsContext';
 import { supabase } from '@/integrations/supabase/client';
 import type { SiteVisit } from '@/types/siteVisit';
-import { Eyebrow } from '@/components/college/primitives';
 
 type RecoveredDraft = Partial<SiteVisit> & {
   currentStep?: number;
@@ -29,10 +28,10 @@ type RecoveredDraft = Partial<SiteVisit> & {
 // Review+Scope+Generate (the AI pricing runs there, the finalise pipeline is
 // inline plumbing); Sign-off closes it out.
 const STEPS = [
-  { id: 0, title: 'Job', shortTitle: 'Job' },
-  { id: 1, title: 'Capture', shortTitle: 'Capture' },
-  { id: 2, title: 'Scope & Price', shortTitle: 'Scope' },
-  { id: 3, title: 'Sign-off', shortTitle: 'Sign' },
+  { id: 0, title: 'Job', shortTitle: 'Job', sub: "Who it's for and where it is" },
+  { id: 1, title: 'Capture', shortTitle: 'Capture', sub: 'Walk the site — rooms, items, photos' },
+  { id: 2, title: 'Scope & Price', shortTitle: 'Scope', sub: 'AI-priced scope, ready to send' },
+  { id: 3, title: 'Sign-off', shortTitle: 'Sign', sub: 'Signature on the spot or by link' },
 ];
 
 interface SiteVisitWizardProps {
@@ -186,14 +185,13 @@ export const SiteVisitWizard = ({ initialVisit, onComplete }: SiteVisitWizardPro
   };
 
   const currentStepTitle = STEPS[sv.currentStep]?.title || '';
-  const currentStepNumber = String(sv.currentStep + 1).padStart(2, '0');
 
   return (
     <GoogleMapsProvider>
-      <div className="space-y-5 md:grid md:grid-cols-[230px_minmax(0,1fr)] md:items-start md:gap-6 md:space-y-0">
+      <div className="space-y-5">
         {/* Draft recovery banner */}
         {showRecoveryBanner && (
-          <div className="flex flex-col gap-3 rounded-2xl border border-amber-500/30 bg-gradient-to-r from-amber-500/[0.08] to-transparent p-4 sm:flex-row sm:items-center sm:justify-between sm:p-5 md:col-span-2">
+          <div className="flex flex-col gap-3 rounded-2xl border border-amber-500/30 bg-gradient-to-r from-amber-500/[0.08] to-transparent p-4 sm:flex-row sm:items-center sm:justify-between sm:p-5">
             <div>
               <div className="text-[10px] font-medium uppercase tracking-[0.18em] text-amber-400">
                 Unsaved draft found
@@ -224,116 +222,80 @@ export const SiteVisitWizard = ({ initialVisit, onComplete }: SiteVisitWizardPro
           </div>
         )}
 
-        {/* md+ — sticky step rail (sidebar) */}
-        <aside className="hidden md:block md:sticky md:top-16">
-          <div className="space-y-4 rounded-2xl border border-white/[0.06] bg-[hsl(0_0%_12%)] p-4">
-            <Eyebrow>SITE VISIT</Eyebrow>
-            <nav className="space-y-1">
-              {STEPS.map((step) => {
-                const isActive = sv.currentStep === step.id;
-                const isComplete = sv.currentStep > step.id;
-                const accessible = step.id <= sv.currentStep;
-                return (
+        {/* === STEP RAIL — numbered circles with connectors (quotes pattern) === */}
+        <div className="pb-1 pt-1">
+          <div className="flex items-center">
+            {STEPS.map((step, i) => {
+              const isActive = sv.currentStep === step.id;
+              const isComplete = sv.currentStep > step.id;
+              const accessible = step.id <= sv.currentStep;
+              return (
+                <React.Fragment key={step.id}>
+                  {i > 0 && (
+                    <div
+                      className={cn(
+                        'mx-2 h-[2px] min-w-3 flex-1 rounded-full sm:mx-3',
+                        step.id <= sv.currentStep ? 'bg-elec-yellow/50' : 'bg-white/[0.10]'
+                      )}
+                    />
+                  )}
                   <button
-                    key={step.id}
+                    type="button"
                     onClick={() => {
                       if (accessible) sv.setStep(step.id);
                     }}
                     disabled={!accessible}
-                    className={cn(
-                      'flex h-11 w-full items-center gap-3 rounded-xl px-3 text-left text-[13px] font-medium transition-colors touch-manipulation',
-                      isActive
-                        ? 'bg-elec-yellow text-black'
-                        : isComplete
-                          ? 'text-emerald-400 hover:bg-white/[0.04]'
-                          : 'text-white/40'
-                    )}
+                    className="flex flex-shrink-0 select-none items-center gap-2 py-1 touch-manipulation"
                   >
-                    <span className="tabular-nums text-[11px] opacity-60">
-                      {String(step.id + 1).padStart(2, '0')}
+                    <span
+                      className={cn(
+                        'flex h-8 w-8 items-center justify-center rounded-full text-[12px] font-bold tabular-nums transition-all',
+                        isActive
+                          ? 'bg-elec-yellow text-black shadow-[0_0_0_4px_rgba(250,204,21,0.12)]'
+                          : isComplete
+                            ? 'border border-emerald-500/30 bg-emerald-500/15 text-emerald-400'
+                            : 'border border-white/[0.10] bg-white/[0.06] text-white/55'
+                      )}
+                    >
+                      {isComplete ? '✓' : step.id + 1}
                     </span>
-                    <span className="flex-1">{step.title}</span>
-                    {isComplete && <span aria-hidden>✓</span>}
+                    <span
+                      className={cn(
+                        'hidden text-[12px] font-medium leading-none sm:block',
+                        isActive ? 'text-white' : isComplete ? 'text-white/80' : 'text-white/50'
+                      )}
+                    >
+                      {step.shortTitle}
+                    </span>
                   </button>
-                );
-              })}
-            </nav>
-            <div className="border-t border-white/[0.06] pt-3">
+                </React.Fragment>
+              );
+            })}
+          </div>
+        </div>
+
+        {/* === STEP PANEL — flat on mobile, elevated card on sm+ (quotes pattern) === */}
+        <div className="sm:rounded-2xl sm:border sm:border-white/[0.10] sm:bg-gradient-to-b sm:from-white/[0.05] sm:to-white/[0.02] sm:p-6 sm:shadow-[0_8px_24px_rgba(0,0,0,0.35)] lg:p-8">
+          <div className="mb-5 flex items-start justify-between gap-3 border-b border-white/[0.08] pb-4">
+            <div>
+              <h2 className="text-[20px] font-bold leading-tight text-white">{currentStepTitle}</h2>
+              <p className="mt-1 text-[12px] text-white/60">{STEPS[sv.currentStep]?.sub}</p>
+            </div>
+            <div className="flex flex-col items-end gap-1">
               <AutoSaveIndicator
                 lastSaved={cloud.lastCloudSync ?? sv.lastSaved}
                 isSaving={sv.isSaving || cloud.cloudStatus === 'syncing'}
               />
               {cloud.cloudStatus === 'offline' && (
-                <span className="mt-2 inline-block rounded-full border border-amber-500/30 bg-amber-500/10 px-2 py-0.5 text-[10px] font-medium text-amber-300">
-                  Offline — will sync
+                <span className="rounded-full border border-amber-500/30 bg-amber-500/10 px-2 py-0.5 text-[10px] font-medium text-amber-300">
+                  Offline — saved on this device, will sync
                 </span>
               )}
-            </div>
-          </div>
-        </aside>
-
-        {/* Main column */}
-        <div className="space-y-5 md:min-w-0">
-          {/* Editorial step header — phones; the sidebar covers md+ */}
-          <div className="rounded-2xl border border-white/[0.06] bg-[hsl(0_0%_12%)] p-4 sm:p-5 md:hidden">
-            <div className="flex items-center justify-between gap-3">
-              <div>
-                <Eyebrow>
-                  STEP {currentStepNumber} OF {String(STEPS.length).padStart(2, '0')} ·{' '}
-                  {currentStepTitle.toUpperCase()}
-                </Eyebrow>
-                <h2 className="mt-1.5 text-[20px] font-semibold leading-tight tracking-tight text-white sm:text-[22px]">
-                  {currentStepTitle}
-                </h2>
-              </div>
-              <div className="flex flex-col items-end gap-1">
-                <AutoSaveIndicator
-                  lastSaved={cloud.lastCloudSync ?? sv.lastSaved}
-                  isSaving={sv.isSaving || cloud.cloudStatus === 'syncing'}
-                />
-                {cloud.cloudStatus === 'offline' && (
-                  <span className="rounded-full border border-amber-500/30 bg-amber-500/10 px-2 py-0.5 text-[10px] font-medium text-amber-300">
-                    Offline — saved on this device, will sync
-                  </span>
-                )}
-                {cloud.cloudStatus === 'error' && (
-                  <span className="rounded-full border border-red-500/30 bg-red-500/10 px-2 py-0.5 text-[10px] font-medium text-red-300">
-                    Cloud save failed — retrying
-                  </span>
-                )}
-              </div>
-            </div>
-
-            {/* Numbered step pills */}
-            <div className="mt-4 flex gap-1.5 overflow-x-auto scrollbar-hide">
-              {STEPS.map((step) => {
-                const isActive = sv.currentStep === step.id;
-                const isComplete = sv.currentStep > step.id;
-                const accessible = step.id <= sv.currentStep;
-                return (
-                  <button
-                    key={step.id}
-                    onClick={() => {
-                      if (accessible) sv.setStep(step.id);
-                    }}
-                    disabled={!accessible}
-                    className={cn(
-                      'flex h-8 shrink-0 items-center gap-1.5 rounded-full px-3 text-[11px] font-medium transition-colors touch-manipulation',
-                      isActive
-                        ? 'bg-elec-yellow text-black'
-                        : isComplete
-                          ? 'border border-emerald-500/30 bg-emerald-500/[0.08] text-emerald-400 hover:bg-emerald-500/[0.14]'
-                          : 'border border-white/[0.08] bg-white/[0.04] text-white/45'
-                    )}
-                  >
-                    <span className="tabular-nums opacity-60">
-                      {String(step.id + 1).padStart(2, '0')}
-                    </span>
-                    <span>{step.shortTitle}</span>
-                    {isComplete && <span aria-hidden>✓</span>}
-                  </button>
-                );
-              })}
+              {cloud.cloudStatus === 'error' && (
+                <span className="rounded-full border border-red-500/30 bg-red-500/10 px-2 py-0.5 text-[10px] font-medium text-red-300">
+                  Cloud save failed — retrying
+                </span>
+              )}
             </div>
           </div>
 
