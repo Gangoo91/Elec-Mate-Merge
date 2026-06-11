@@ -34,6 +34,12 @@ export interface LogActivityParams {
   actualMinutes?: number;
   /** Extra metadata */
   metadata?: Record<string, unknown>;
+  /**
+   * Skip inserting the learning_activity_log row — for activities whose log
+   * entry is written by a trusted server path (e.g. log_study_activity RPC).
+   * XP summary, streak and the activity event still update as normal.
+   */
+  skipLogRow?: boolean;
 }
 
 interface XPSummary {
@@ -146,17 +152,19 @@ export function useLearningXP() {
       });
 
       try {
-        // 1. Insert activity log entry
-        await supabase.from('learning_activity_log' as any).insert({
-          user_id: user.id,
-          activity_type: params.activityType,
-          source_id: params.sourceId ?? null,
-          source_title: params.sourceTitle ?? null,
-          xp_earned: xpEarned,
-          duration_minutes: durationMinutes,
-          metadata: params.metadata ?? {},
-          counted_as_ojt: false,
-        } as any);
+        // 1. Insert activity log entry (unless a trusted server path already did)
+        if (!params.skipLogRow) {
+          await supabase.from('learning_activity_log' as any).insert({
+            user_id: user.id,
+            activity_type: params.activityType,
+            source_id: params.sourceId ?? null,
+            source_title: params.sourceTitle ?? null,
+            xp_earned: xpEarned,
+            duration_minutes: durationMinutes,
+            metadata: params.metadata ?? {},
+            counted_as_ojt: false,
+          } as any);
+        }
 
         // 2. Upsert XP summary
         const today = new Date().toLocaleDateString('en-CA');

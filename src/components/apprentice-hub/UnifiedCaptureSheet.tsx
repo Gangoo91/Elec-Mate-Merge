@@ -394,17 +394,24 @@ export function UnifiedCaptureSheet({
     const selected = Array.from(e.target.files || []);
     if (!selected.length) return;
 
-    const oversize = selected.find((f) => f.size > 10 * 1024 * 1024);
-    if (oversize) {
+    // Drop only the oversize files, keep the rest — and say which were dropped.
+    const oversize = selected.filter((f) => f.size > 10 * 1024 * 1024);
+    const valid = selected.filter((f) => f.size <= 10 * 1024 * 1024);
+    if (oversize.length) {
       toast({
-        title: 'File too large',
-        description: 'Maximum file size is 10MB',
+        title: oversize.length === 1 ? 'File too large' : `${oversize.length} files too large`,
+        description: `Maximum file size is 10MB. Not added: ${oversize
+          .map((f) => f.name)
+          .join(', ')}`,
         variant: 'destructive',
       });
+    }
+    if (!valid.length) {
+      if (e.target) e.target.value = '';
       return;
     }
 
-    const newFiles: UploadedFile[] = selected.map((f) => ({
+    const newFiles: UploadedFile[] = valid.map((f) => ({
       id: `f-${Date.now()}-${Math.random().toString(36).slice(2, 8)}`,
       file: f,
       previewUrl: f.type.startsWith('image/') ? URL.createObjectURL(f) : '',
@@ -417,15 +424,66 @@ export function UnifiedCaptureSheet({
     // Reset the input so the same file can be selected again later
     if (e.target) e.target.value = '';
 
-    // Upload each file in parallel
-    await Promise.all(
+    // Upload each file in parallel; failures are surfaced on the chip — a
+    // file without a storageUrl must never be saved (a blob: preview URL
+    // dies with the session and would leave the evidence permanently broken).
+    const results = await Promise.all(
       newFiles.map(async (uf) => {
         const url = await uploadFile(uf.file);
         setFiles((prev) =>
-          prev.map((f) => (f.id === uf.id ? { ...f, storageUrl: url || undefined, uploading: false } : f))
+          prev.map((f) =>
+            f.id === uf.id
+              ? {
+                  ...f,
+                  storageUrl: url || undefined,
+                  uploading: false,
+                  error: url ? undefined : 'Upload failed',
+                }
+              : f
+          )
         );
+        return url;
       })
     );
+
+    const failedCount = results.filter((u) => !u).length;
+    if (failedCount > 0) {
+      haptic.warning();
+      toast({
+        title: failedCount === 1 ? 'Upload failed' : `${failedCount} uploads failed`,
+        description: 'Check your signal, then tap Retry on the file.',
+        variant: 'destructive',
+      });
+    }
+  };
+
+  /* ─── Retry a failed upload ──────────────────────────────────────── */
+  const retryUpload = async (id: string) => {
+    const target = files.find((f) => f.id === id);
+    if (!target || target.uploading) return;
+    setFiles((prev) =>
+      prev.map((f) => (f.id === id ? { ...f, uploading: true, error: undefined } : f))
+    );
+    const url = await uploadFile(target.file);
+    setFiles((prev) =>
+      prev.map((f) =>
+        f.id === id
+          ? {
+              ...f,
+              storageUrl: url || undefined,
+              uploading: false,
+              error: url ? undefined : 'Upload failed',
+            }
+          : f
+      )
+    );
+    if (!url) {
+      toast({
+        title: 'Upload failed again',
+        description: 'Still no luck — check your signal or remove the file.',
+        variant: 'destructive',
+      });
+    }
   };
 
   /* ─── Run streaming analysis ─────────────────────────────────────── */
@@ -515,6 +573,28 @@ export function UnifiedCaptureSheet({
       return;
     }
 
+    // Files must be safely in storage before saving. A blob: preview URL is
+    // session-scoped — persisting it would file evidence that can never be
+    // opened again.
+    if (files.some((f) => f.uploading)) {
+      haptic.warning();
+      toast({
+        title: 'Files still uploading',
+        description: 'Give it a second, then save.',
+      });
+      return;
+    }
+    const failedFiles = files.filter((f) => !f.storageUrl);
+    if (failedFiles.length > 0) {
+      haptic.warning();
+      toast({
+        title: failedFiles.length === 1 ? 'A file failed to upload' : `${failedFiles.length} files failed to upload`,
+        description: 'Retry or remove the failed files before saving.',
+        variant: 'destructive',
+      });
+      return;
+    }
+
     // Soft assessor-ready nudge — shown once. Never blocks; "Save anyway"
     // sets the ack and re-enters this function.
     if (!readiness.ready && !readinessAck.current) {
@@ -527,11 +607,13 @@ export function UnifiedCaptureSheet({
       title,
       description,
       selectedACs: [...selectedACs],
-      files: files.map((f) => ({
-        name: f.file.name,
-        type: f.file.type,
-        url: f.storageUrl || f.previewUrl,
-      })),
+      files: files
+        .filter((f) => f.storageUrl)
+        .map((f) => ({
+          name: f.file.name,
+          type: f.file.type,
+          url: f.storageUrl!,
+        })),
       reflectionText,
       workDate,
       siteRef,
@@ -825,7 +907,13 @@ export function UnifiedCaptureSheet({
                                 </span>
                               )}
                               {f.error && (
-                                <span className="text-[10px] text-red-300">Error</span>
+                                <button
+                                  onClick={() => retryUpload(f.id)}
+                                  className="text-[10px] text-red-300 underline underline-offset-2 touch-manipulation"
+                                  aria-label={`Retry upload of ${f.file.name}`}
+                                >
+                                  Failed — retry
+                                </button>
                               )}
                             </div>
                           </div>

@@ -27,6 +27,13 @@ import { Button } from '@/components/ui/button';
    and timer, persists answers + score to tutor_quiz_attempts on submit.
 
    Resumes an in-progress attempt if one exists (started_at set, no completed_at).
+
+   Dual-mode grading: when the server-grading RPCs exist
+   (get_quiz_questions_for_learner / reveal_quiz_answer / submit_quiz_attempt /
+   get_attempt_review) the page runs in serverMode — questions arrive WITHOUT
+   answer keys, each committed answer is locked + revealed via RPC, and the
+   submit is graded server-side. If the RPCs aren't deployed yet (PGRST202 /
+   42883) it falls back to the original client-side path unchanged.
    ========================================================================== */
 
 interface QuizMeta {
@@ -68,6 +75,53 @@ interface QuizQuestion {
   points: number | null;
   sort_order: number | null;
   bs7671_citations: Array<{ ref: string; regulation_id?: string; snippet?: string }> | null;
+  /** serverMode only — from get_quiz_questions_for_learner. False means the
+   *  question has no usable answer key (ungradeable). Absent in fallback mode. */
+  has_answer_key?: boolean;
+}
+
+/** Key data returned by reveal_quiz_answer / get_attempt_review once an
+ *  answer is locked. Merged over the sanitised question via effQ(). */
+interface RevealedKey {
+  verdict: Verdict;
+  correct_answer_index: number | null;
+  expected_answer: Record<string, unknown> | null;
+  explanation: string | null;
+  marking_guidance: string | null;
+}
+
+/** Row shape from get_quiz_questions_for_learner (sanitised — no keys). */
+interface ServerQuestionRow {
+  id: string;
+  question_kind: QuestionKind;
+  question_text: string;
+  options: string[] | null;
+  category: string | null;
+  difficulty: string | null;
+  ac_ref: string | null;
+  points: number | null;
+  sort_order: number | null;
+  bs7671_citations: Array<{ ref: string; regulation_id?: string; snippet?: string }> | null;
+  has_answer_key: boolean;
+  expected_units: string | null;
+}
+
+/** Response from submit_quiz_attempt. */
+interface SubmitResult {
+  score: number;
+  total_points: number;
+  percentage: number;
+  ungradeable_count: number;
+  completed_at: string | null;
+  verdicts: Array<{ question_id: string; verdict: Verdict }>;
+}
+
+/** Response from get_attempt_review. */
+interface AttemptReview {
+  score: number | null;
+  total_points: number | null;
+  completed_at: string | null;
+  items: Array<{ question_id: string; verdict: Verdict } & Omit<RevealedKey, 'verdict'>>;
 }
 
 /** A learner's answer for any question kind. Stored as jsonb keyed by question_id
@@ -115,7 +169,17 @@ export default function TakeQuizPage() {
   const [submitting, setSubmitting] = useState(false);
   const [resultPct, setResultPct] = useState<number | null>(null);
 
+  // Server-grading mode (true when the grading RPCs are deployed).
+  const [serverMode, setServerMode] = useState(false);
+  // Keys revealed per question once its answer is locked server-side.
+  const [revealed, setRevealed] = useState<Record<string, RevealedKey>>({});
+  // Questions locked server-side WITHOUT key data (resumed attempts).
+  const [lockedQids, setLockedQids] = useState<Record<string, true>>({});
+  // Server verdicts (from submit_quiz_attempt / get_attempt_review).
+  const [verdictById, setVerdictById] = useState<Record<string, Verdict> | null>(null);
+
   const startedAtRef = useRef<Date | null>(null);
+  const currentQidRef = useRef<string | null>(null);
 
   // Load quiz + questions + attempt
   useEffect(() => {
@@ -124,31 +188,25 @@ export default function TakeQuizPage() {
     (async () => {
       setPhase('loading');
       try {
-        const [{ data: q, error: qErr }, { data: qs, error: qsErr }, { data: existingAttempt }] =
-          await Promise.all([
-            supabase
-              .from('tutor_quizzes')
-              .select(
-                'id, title, description, topic, difficulty, time_limit_minutes, pass_mark, qualification_code, is_homework, due_date, source'
-              )
-              .eq('id', id)
-              .maybeSingle(),
-            supabase
-              .from('tutor_quiz_questions')
-              .select(
-                'id, question_kind, question_text, options, correct_answer_index, expected_answer, marking_guidance, explanation, category, difficulty, ac_ref, points, sort_order, bs7671_citations'
-              )
-              .eq('quiz_id', id)
-              .order('sort_order', { ascending: true, nullsFirst: false }),
-            supabase
-              .from('tutor_quiz_attempts')
-              .select('*')
-              .eq('quiz_id', id)
-              .eq('student_id', user.id)
-              .order('started_at', { ascending: false })
-              .limit(1)
-              .maybeSingle(),
-          ]);
+        const [{ data: q, error: qErr }, qsRpc, { data: existingAttempt }] = await Promise.all([
+          supabase
+            .from('tutor_quizzes')
+            .select(
+              'id, title, description, topic, difficulty, time_limit_minutes, pass_mark, qualification_code, is_homework, due_date, source'
+            )
+            .eq('id', id)
+            .maybeSingle(),
+          // Server-grading path: sanitised questions (no answer keys).
+          supabase.rpc('get_quiz_questions_for_learner' as never, { p_quiz_id: id } as never),
+          supabase
+            .from('tutor_quiz_attempts')
+            .select('*')
+            .eq('quiz_id', id)
+            .eq('student_id', user.id)
+            .order('started_at', { ascending: false })
+            .limit(1)
+            .maybeSingle(),
+        ]);
 
         if (cancelled) return;
         if (qErr || !q) {
@@ -156,13 +214,58 @@ export default function TakeQuizPage() {
           setPhase('error');
           return;
         }
-        if (qsErr) {
-          setError(qsErr.message);
-          setPhase('error');
-          return;
+
+        let isServer = true;
+        let qRows: QuizQuestion[] = [];
+        const rpcErr = qsRpc.error as { code?: string; message: string } | null;
+        if (rpcErr) {
+          if (rpcErr.code === 'PGRST202' || rpcErr.code === '42883') {
+            // RPC not deployed yet — original direct read (keys client-side).
+            isServer = false;
+            const { data: qs, error: qsErr } = await supabase
+              .from('tutor_quiz_questions')
+              .select(
+                'id, question_kind, question_text, options, correct_answer_index, expected_answer, marking_guidance, explanation, category, difficulty, ac_ref, points, sort_order, bs7671_citations'
+              )
+              .eq('quiz_id', id)
+              .order('sort_order', { ascending: true, nullsFirst: false });
+            if (cancelled) return;
+            if (qsErr) {
+              setError(qsErr.message);
+              setPhase('error');
+              return;
+            }
+            qRows = (qs ?? []) as QuizQuestion[];
+          } else {
+            setError(rpcErr.message);
+            setPhase('error');
+            return;
+          }
+        } else {
+          const rows = (qsRpc.data ?? []) as unknown as ServerQuestionRow[];
+          qRows = rows.map((r) => ({
+            id: r.id,
+            question_kind: r.question_kind,
+            question_text: r.question_text,
+            options: r.options,
+            // Keys arrive via reveal_quiz_answer once the answer is locked.
+            correct_answer_index: null,
+            expected_answer: r.expected_units ? { units: r.expected_units } : null,
+            marking_guidance: null,
+            explanation: null,
+            category: r.category,
+            difficulty: r.difficulty,
+            ac_ref: r.ac_ref,
+            points: r.points,
+            sort_order: r.sort_order,
+            bs7671_citations: r.bs7671_citations,
+            has_answer_key: r.has_answer_key,
+          }));
         }
+
+        setServerMode(isServer);
         setQuiz(q as QuizMeta);
-        setQuestions((qs ?? []) as QuizQuestion[]);
+        setQuestions(qRows);
         const att = (existingAttempt as AttemptRow | null) ?? null;
         setAttempt(att);
         if (att && att.completed_at) {
@@ -171,10 +274,56 @@ export default function TakeQuizPage() {
           if (att.score != null && att.total_points != null && att.total_points > 0) {
             setResultPct(Math.round((att.score / att.total_points) * 100));
           }
+          if (isServer) {
+            // Reload of a completed attempt — pull verdicts + keys so the
+            // recap can show explanations and correct answers. One retry,
+            // then say so: rendering the recap without this data mislabels
+            // every question as "no answer key".
+            let { data: rev, error: revErr } = await supabase.rpc('get_attempt_review' as never, {
+              p_attempt_id: att.id,
+            } as never);
+            if (revErr) {
+              ({ data: rev, error: revErr } = await supabase.rpc('get_attempt_review' as never, {
+                p_attempt_id: att.id,
+              } as never));
+            }
+            if (cancelled) return;
+            if (revErr) {
+              toast({
+                title: "Couldn't load your full results",
+                description: 'Your score is shown — pull down to refresh for the question breakdown.',
+              });
+            }
+            const review = rev as unknown as AttemptReview | null;
+            if (review?.items) {
+              const vMap: Record<string, Verdict> = {};
+              const rMap: Record<string, RevealedKey> = {};
+              for (const item of review.items) {
+                vMap[item.question_id] = item.verdict;
+                rMap[item.question_id] = {
+                  verdict: item.verdict,
+                  correct_answer_index: item.correct_answer_index,
+                  expected_answer: item.expected_answer,
+                  explanation: item.explanation,
+                  marking_guidance: item.marking_guidance,
+                };
+              }
+              setVerdictById(vMap);
+              setRevealed(rMap);
+            }
+          }
           setPhase('submitted');
         } else if (att && att.started_at && !att.completed_at) {
           // Resuming — restore answers + start timer
           setAnswers(att.answers ?? {});
+          if (isServer) {
+            // Already-answered questions are locked server-side; their keys
+            // can't be re-fetched pre-submit, so lock them in the UI without
+            // highlight/explanation. Full verdicts come back at submit.
+            const lockedInit: Record<string, true> = {};
+            for (const qid of Object.keys(att.answers ?? {})) lockedInit[qid] = true;
+            setLockedQids(lockedInit);
+          }
           startedAtRef.current = new Date(att.started_at);
           setPhase('in_progress');
         } else {
@@ -189,7 +338,8 @@ export default function TakeQuizPage() {
     return () => {
       cancelled = true;
     };
-  }, [id, user]);
+    // shadcn's toast is a stable module-level dispatcher — safe in deps.
+  }, [id, user, toast]);
 
   // Realtime: lift the displayed score when AI grading lands on the attempt
   useEffect(() => {
@@ -241,7 +391,19 @@ export default function TakeQuizPage() {
     [questions]
   );
   const currentQ = questions[stepIdx];
+  currentQidRef.current = currentQ?.id ?? null;
   const answeredCount = Object.keys(answers).length;
+
+  /** Effective question: once a key has been revealed (serverMode), renderers
+   *  see a QuizQuestion with the key fields filled in. Identity in fallback
+   *  mode (revealed stays empty there). */
+  const effQ = (q: QuizQuestion): QuizQuestion =>
+    revealed[q.id] ? { ...q, ...revealed[q.id] } : q;
+
+  /** True when this question's answer is locked server-side (revealed this
+   *  session, or stored on a resumed/loaded attempt). */
+  const isServerLocked = (qid: string): boolean =>
+    serverMode && (revealed[qid] != null || lockedQids[qid] === true);
 
   const handleStart = async () => {
     if (!user || !id) return;
@@ -268,12 +430,15 @@ export default function TakeQuizPage() {
           (newRow as AttemptRow).started_at ?? new Date().toISOString()
         );
       } else if (!attempt?.started_at) {
+        // Legacy rows only (the insert above always sets started_at). After
+        // the stage-2 lockdown this direct update is guarded — never let it
+        // block starting the quiz.
         const startedAt = new Date().toISOString();
         const { error: updErr } = await supabase
           .from('tutor_quiz_attempts')
           .update({ started_at: startedAt })
           .eq('id', attemptId);
-        if (updErr) throw new Error(updErr.message);
+        if (updErr) console.warn('[TakeQuizPage] started_at backfill skipped:', updErr.message);
         startedAtRef.current = new Date(startedAt);
       }
       setPhase('in_progress');
@@ -286,7 +451,63 @@ export default function TakeQuizPage() {
     }
   };
 
+  /** serverMode commit: lock the answer server-side, then reveal the key.
+   *  Nothing locks or highlights until the server responds. */
+  const commitAnswer = async (qid: string, value: LearnerAnswer) => {
+    if (!attempt) return;
+    const prev = answers[qid];
+    // Optimistic local selection (no lock, no reveal yet).
+    setAnswers((cur) => ({ ...cur, [qid]: value }));
+    const { data, error: revealErr } = await supabase.rpc('reveal_quiz_answer' as never, {
+      p_attempt_id: attempt.id,
+      p_question_id: qid,
+      p_answer: value,
+    } as never);
+    if (revealErr) {
+      if ((revealErr.message ?? '').includes('already answered')) {
+        // Server already holds a locked answer for this question (e.g. a
+        // resumed attempt) — keep the previously stored answer and lock.
+        if (prev != null) setAnswers((cur) => ({ ...cur, [qid]: prev }));
+        setLockedQids((cur) => ({ ...cur, [qid]: true }));
+        return;
+      }
+      // Network/other failure: don't lock, don't reveal — let them retry.
+      toast({
+        title: "Couldn't check that answer — try again",
+        variant: 'destructive',
+      });
+      return;
+    }
+    const key = data as unknown as RevealedKey | null;
+    if (key) setRevealed((cur) => ({ ...cur, [qid]: key }));
+    setLockedQids((cur) => ({ ...cur, [qid]: true }));
+    if (currentQidRef.current === qid) setShowExplanation(true);
+  };
+
+  /** Free-response "Lock answer & continue" — the commit moment for kinds
+   *  that don't commit on tap. */
+  const handleLockAnswer = (qid: string) => {
+    if (serverMode) {
+      const a = answers[qid];
+      if (a == null) return;
+      void commitAnswer(qid, a);
+    } else {
+      setShowExplanation(true);
+    }
+  };
+
   const setAnswer = (qid: string, value: LearnerAnswer, revealExplanation = true) => {
+    if (serverMode) {
+      if (isServerLocked(qid)) return; // locked server-side — can't change
+      if (revealExplanation) {
+        // Commit moment (deterministic kinds commit on tap).
+        void commitAnswer(qid, value);
+      } else {
+        // Typing/drafting — local only; stored server-side on commit/submit.
+        setAnswers((cur) => ({ ...cur, [qid]: value }));
+      }
+      return;
+    }
     const next = { ...answers, [qid]: value };
     setAnswers(next);
     if (revealExplanation) setShowExplanation(true);
@@ -305,6 +526,112 @@ export default function TakeQuizPage() {
     if (!attempt || submitting) return;
     setSubmitting(true);
     try {
+      if (serverMode) {
+        // Sync any typed-but-uncommitted answers (calculation / free-response
+        // the learner skipped past via the progress strip) so the server
+        // grades them too. 'question already answered' is fine (the server
+        // has it) — any OTHER failure must ABORT the submit: completing the
+        // attempt without these answers would silently grade them unanswered
+        // on a now-immutable attempt.
+        const unsynced = Object.entries(answers).filter(([qid]) => !isServerLocked(qid));
+        if (unsynced.length > 0) {
+          const results = await Promise.all(
+            unsynced.map(async ([qid, a]) => {
+              const { data, error: revealErr } = await supabase.rpc('reveal_quiz_answer' as never, {
+                p_attempt_id: attempt.id,
+                p_question_id: qid,
+                p_answer: a,
+              } as never);
+              return [qid, data as unknown as RevealedKey | null, revealErr] as const;
+            })
+          );
+          const realFailure = results.find(
+            ([, , revealErr]) =>
+              revealErr && !`${revealErr.message ?? ''}`.includes('already answered')
+          );
+          if (realFailure) {
+            toast({
+              title: 'Could not save all your answers',
+              description: 'Check your signal and submit again — nothing has been lost.',
+              variant: 'destructive',
+            });
+            setSubmitting(false);
+            return;
+          }
+          const merged: Record<string, RevealedKey> = {};
+          for (const [qid, key] of results) if (key) merged[qid] = key;
+          if (Object.keys(merged).length > 0) setRevealed((cur) => ({ ...cur, ...merged }));
+        }
+
+        // Server grades its own stored answers — no payload from the client.
+        const { data, error: subErr } = await supabase.rpc('submit_quiz_attempt' as never, {
+          p_attempt_id: attempt.id,
+        } as never);
+        if (subErr) throw new Error(subErr.message);
+        const res = data as unknown as SubmitResult;
+
+        const vMap: Record<string, Verdict> = {};
+        for (const v of res.verdicts ?? []) vMap[v.question_id] = v.verdict;
+        setVerdictById(vMap);
+
+        const pct = Math.round(res.percentage ?? 0);
+        const completedAt = res.completed_at ?? new Date().toISOString();
+        const startedAt = startedAtRef.current?.toISOString() ?? completedAt;
+        const timeTaken = Math.max(
+          0,
+          Math.round((new Date(completedAt).getTime() - new Date(startedAt).getTime()) / 1000)
+        );
+        const hasFreeResponse = questions.some(
+          (q) => isFreeResponseKind(q.question_kind) && answers[q.id] != null
+        );
+
+        // OTJ: log this completed quiz as off-the-job structured learning so
+        // it feeds the OTJ gauge, the EPA verdict, and ESFA exports.
+        // Best-effort — don't fail the submit if this insert errors.
+        if (user && quiz) {
+          try {
+            const minutes = Math.max(1, Math.round(timeTaken / 60));
+            const xp = Math.round((pct / 100) * 30) + 5; // 5–35 XP based on score
+            await supabase.from('learning_activity_log').insert({
+              user_id: user.id,
+              activity_type: 'tutor_quiz',
+              source_id: attempt.id,
+              source_title: quiz.title,
+              xp_earned: xp,
+              duration_minutes: minutes,
+              counted_as_ojt: true,
+              metadata: {
+                quiz_id: quiz.id,
+                score: res.score,
+                total_points: res.total_points,
+                percentage: pct,
+                passed: quiz.pass_mark != null ? pct >= quiz.pass_mark : null,
+                qualification_code: quiz.qualification_code,
+                difficulty: quiz.difficulty,
+                ungradeable_questions: res.ungradeable_count,
+              },
+            });
+          } catch {
+            /* best-effort */
+          }
+        }
+        setResultPct(pct);
+        setPhase('submitted');
+        toast({
+          title: autoSubmitted ? 'Time up — submitted' : 'Quiz submitted',
+          description: `You scored ${res.score}/${res.total_points} (${pct}%).`,
+        });
+
+        // Fire AI grading for any free-response questions (the RPC queued the
+        // grade rows). Non-blocking — realtime subscription lifts the score.
+        if (hasFreeResponse) {
+          void supabase.functions
+            .invoke('ai-grade-free-response', { body: { attempt_id: attempt.id } })
+            .catch(() => undefined);
+        }
+        return;
+      }
+
       // Single source of truth: scoreVerdict. Refuses to count questions that
       // have no usable answer key (a 5/5 honesty bug we hit on AI-authored
       // quizzes where the model didn't supply correct_answer_index).
@@ -553,13 +880,15 @@ export default function TakeQuizPage() {
 
           {phase === 'in_progress' && currentQ && (
             <QuestionStep
-              q={currentQ}
+              q={effQ(currentQ)}
               index={stepIdx}
               total={questions.length}
               answer={answers[currentQ.id]}
               showExplanation={showExplanation}
+              locked={showExplanation || isServerLocked(currentQ.id)}
+              serverVerdict={revealed[currentQ.id]?.verdict}
               onAnswer={setAnswer}
-              onReveal={() => setShowExplanation(true)}
+              onReveal={() => handleLockAnswer(currentQ.id)}
               onNext={handleNext}
               onPrev={() => stepIdx > 0 && (setShowExplanation(false), setStepIdx(stepIdx - 1))}
               onJumpTo={(i) => (setShowExplanation(false), setStepIdx(i))}
@@ -569,7 +898,7 @@ export default function TakeQuizPage() {
 
           {phase === 'review' && (
             <ReviewState
-              questions={questions}
+              questions={questions.map(effQ)}
               answers={answers}
               answeredCount={answeredCount}
               onJumpTo={(i) => {
@@ -585,9 +914,10 @@ export default function TakeQuizPage() {
           {phase === 'submitted' && (
             <SubmittedState
               quiz={quiz}
-              questions={questions}
+              questions={questions.map(effQ)}
               answers={answers}
               resultPct={resultPct}
+              verdictById={serverMode ? verdictById : null}
               onBack={() => navigate('/apprentice/college-plan')}
             />
           )}
@@ -666,6 +996,8 @@ function QuestionStep({
   total,
   answer,
   showExplanation,
+  locked,
+  serverVerdict,
   onAnswer,
   onReveal,
   onNext,
@@ -678,6 +1010,10 @@ function QuestionStep({
   total: number;
   answer: LearnerAnswer | undefined;
   showExplanation: boolean;
+  /** Answer can no longer change — explanation shown OR locked server-side. */
+  locked: boolean;
+  /** Authoritative verdict from reveal_quiz_answer (serverMode only). */
+  serverVerdict?: Verdict;
   onAnswer: (qid: string, value: LearnerAnswer, revealExplanation?: boolean) => void;
   onReveal: () => void;
   onNext: () => void;
@@ -750,11 +1086,11 @@ function QuestionStep({
         <h2 className="text-[15px] font-medium text-white leading-snug">{q.question_text}</h2>
 
         <div className="mt-4">
-          <AnswerInput q={q} answer={answer} locked={showExplanation} onAnswer={onAnswer} />
+          <AnswerInput q={q} answer={answer} locked={locked} onAnswer={onAnswer} />
         </div>
 
         {/* Reveal-result button for free-response (no auto-reveal) */}
-        {!showExplanation && isFreeResponseKind(q.question_kind) && answer != null && (
+        {!locked && isFreeResponseKind(q.question_kind) && answer != null && (
           <button
             type="button"
             onClick={onReveal}
@@ -774,7 +1110,7 @@ function QuestionStep({
               transition={{ duration: 0.2 }}
               className="mt-4 pt-4 border-t border-white/[0.06] overflow-hidden"
             >
-              <FeedbackBadge q={q} answer={answer} />
+              <FeedbackBadge q={q} answer={answer} verdictOverride={serverVerdict} />
               {q.explanation && (
                 <p className="mt-2 text-[12px] text-white leading-relaxed">{q.explanation}</p>
               )}
@@ -811,7 +1147,7 @@ function QuestionStep({
           <ChevronLeft className="h-4 w-4 mr-1" />
           Previous
         </Button>
-        <Button onClick={onNext} disabled={!showExplanation} className="flex-1">
+        <Button onClick={onNext} disabled={!locked} className="flex-1">
           {index === total - 1 ? 'Review answers' : 'Next'}
           <ChevronRight className="h-4 w-4 ml-1" />
         </Button>
@@ -836,11 +1172,14 @@ function AnswerInput({
   if (q.question_kind === 'multi_choice') {
     const opts = q.options ?? [];
     const selected = answer?.kind === 'multi_choice' ? answer.index : null;
+    // Guard: highlight only when the key is known (serverMode pre-reveal —
+    // e.g. a resumed locked answer — has no key, so stay neutral).
+    const keyKnown = q.correct_answer_index != null;
     return (
       <ul className="space-y-2">
         {opts.map((opt, j) => {
           const isSelected = selected === j;
-          const correct = j === q.correct_answer_index;
+          const correct = keyKnown && j === q.correct_answer_index;
           return (
             <li key={j}>
               <button
@@ -851,7 +1190,7 @@ function AnswerInput({
                   'w-full flex items-center gap-3 rounded-xl px-4 py-3 text-left transition-colors touch-manipulation border',
                   locked && correct
                     ? 'bg-emerald-500/[0.10] border-emerald-400/40 text-emerald-100'
-                    : locked && isSelected && !correct
+                    : locked && keyKnown && isSelected && !correct
                       ? 'bg-red-500/[0.08] border-red-400/40 text-red-100'
                       : isSelected
                         ? 'bg-elec-yellow/[0.10] border-elec-yellow/40 text-white'
@@ -863,7 +1202,7 @@ function AnswerInput({
                     'inline-flex items-center justify-center h-7 w-7 rounded-full border text-[12px] font-bold tabular-nums flex-shrink-0',
                     locked && correct
                       ? 'bg-emerald-500/30 border-emerald-400 text-emerald-100'
-                      : locked && isSelected && !correct
+                      : locked && keyKnown && isSelected && !correct
                         ? 'bg-red-500/30 border-red-400 text-red-100'
                         : isSelected
                           ? 'bg-elec-yellow text-black border-elec-yellow'
@@ -876,7 +1215,7 @@ function AnswerInput({
                 {locked && correct && (
                   <Check className="h-4 w-4 text-emerald-300 flex-shrink-0" strokeWidth={3} />
                 )}
-                {locked && isSelected && !correct && (
+                {locked && keyKnown && isSelected && !correct && (
                   <X className="h-4 w-4 text-red-300 flex-shrink-0" />
                 )}
               </button>
@@ -889,6 +1228,8 @@ function AnswerInput({
 
   if (q.question_kind === 'true_false') {
     const selected = answer?.kind === 'true_false' ? answer.value : null;
+    // Guard: highlight only when the key is known (serverMode pre-reveal).
+    const keyKnown = q.correct_answer_index != null;
     const expectedTrue = q.correct_answer_index === 0;
     const choices: { label: string; value: boolean }[] = [
       { label: 'True', value: true },
@@ -898,7 +1239,7 @@ function AnswerInput({
       <ul className="grid grid-cols-2 gap-2">
         {choices.map((c) => {
           const isSelected = selected === c.value;
-          const correct = c.value === expectedTrue;
+          const correct = keyKnown && c.value === expectedTrue;
           return (
             <li key={c.label}>
               <button
@@ -909,7 +1250,7 @@ function AnswerInput({
                   'w-full h-12 rounded-xl text-[14px] font-semibold transition-colors touch-manipulation border',
                   locked && correct
                     ? 'bg-emerald-500/[0.10] border-emerald-400/40 text-emerald-100'
-                    : locked && isSelected && !correct
+                    : locked && keyKnown && isSelected && !correct
                       ? 'bg-red-500/[0.08] border-red-400/40 text-red-100'
                       : isSelected
                         ? 'bg-elec-yellow/[0.10] border-elec-yellow/40 text-white'
@@ -980,6 +1321,9 @@ function AnswerInput({
       units?: string;
       working_required?: boolean;
     };
+    // Guard: red/green border only when the key is known (serverMode
+    // pre-reveal only carries units).
+    const keyKnown = expected.numeric_value != null;
     const correct =
       locked &&
       expected.numeric_value != null &&
@@ -1014,9 +1358,11 @@ function AnswerInput({
               className={cn(
                 'w-full h-12 rounded-xl bg-[hsl(0_0%_15%)] border text-[15px] font-semibold tabular-nums text-white placeholder:text-white/35 px-4 touch-manipulation',
                 locked
-                  ? correct
-                    ? 'border-emerald-400/40'
-                    : 'border-red-400/40'
+                  ? keyKnown
+                    ? correct
+                      ? 'border-emerald-400/40'
+                      : 'border-red-400/40'
+                    : 'border-white/[0.10]'
                   : 'border-white/[0.10] focus:border-elec-yellow focus:ring-1 focus:ring-elec-yellow'
               )}
             />
@@ -1237,8 +1583,17 @@ function MediaAnswerInput({
   );
 }
 
-function FeedbackBadge({ q, answer }: { q: QuizQuestion; answer: LearnerAnswer | undefined }) {
-  const verdict = scoreVerdict(q, answer);
+function FeedbackBadge({
+  q,
+  answer,
+  verdictOverride,
+}: {
+  q: QuizQuestion;
+  answer: LearnerAnswer | undefined;
+  /** Authoritative server verdict (serverMode); falls back to local scoring. */
+  verdictOverride?: Verdict;
+}) {
+  const verdict = verdictOverride ?? scoreVerdict(q, answer);
   if (verdict === 'correct') {
     return (
       <div className="flex items-center gap-1.5 text-[10px] font-semibold uppercase tracking-[0.18em]">
@@ -1344,17 +1699,20 @@ function SubmittedState({
   questions,
   answers,
   resultPct,
+  verdictById,
   onBack,
 }: {
   quiz: QuizMeta;
   questions: QuizQuestion[];
   answers: Record<string, LearnerAnswer>;
   resultPct: number | null;
+  /** Server verdicts (serverMode). Null in fallback — local scoring applies. */
+  verdictById: Record<string, Verdict> | null;
   onBack: () => void;
 }) {
-  // Recompute verdict-counts from the canonical scoreVerdict so the recap and
-  // the headline never disagree.
-  const verdicts = questions.map((q) => scoreVerdict(q, answers[q.id]));
+  // serverMode: the server's verdicts are authoritative. Fallback: recompute
+  // from the canonical scoreVerdict so the recap and headline never disagree.
+  const verdicts = questions.map((q) => verdictById?.[q.id] ?? scoreVerdict(q, answers[q.id]));
   const correctCount = verdicts.filter((v) => v === 'correct').length;
   const incorrectCount = verdicts.filter((v) => v === 'incorrect').length;
   const pendingCount = verdicts.filter((v) => v === 'pending').length;
@@ -1535,6 +1893,9 @@ type Verdict = 'correct' | 'incorrect' | 'pending' | 'unanswered' | 'no_key';
  *  failed to supply correct_answer_index (multi_choice / true_false) or a
  *  numeric_value (calculation). We refuse to grade it rather than guess. */
 function isUngradeable(q: QuizQuestion): boolean {
+  // serverMode: the sanitised payload tells us directly (keys aren't
+  // client-side pre-reveal, so the checks below can't be trusted there).
+  if (q.has_answer_key === false) return true;
   if (q.question_kind === 'multi_choice') return q.correct_answer_index == null;
   if (q.question_kind === 'true_false') return q.correct_answer_index == null;
   if (q.question_kind === 'calculation') {

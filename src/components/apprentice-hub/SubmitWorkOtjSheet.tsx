@@ -160,12 +160,31 @@ export function SubmitWorkOtjSheet({ open, onOpenChange, onSubmitted, prefill }:
   const addFiles = (files: FileList | null) => {
     if (!files) return;
     const next = [...photos];
+    const oversize: string[] = [];
+    let overCount = 0;
     for (const f of Array.from(files)) {
-      if (next.length >= 4) break;
-      if (f.size > 8 * 1024 * 1024) continue; // 8MB cap
+      if (f.size > 8 * 1024 * 1024) {
+        oversize.push(f.name);
+        continue; // 8MB cap
+      }
+      if (next.length >= 4) {
+        overCount += 1;
+        continue; // 4-photo cap
+      }
       next.push(f);
     }
     setPhotos(next);
+    // Never drop a photo silently — the apprentice thinks it's attached.
+    if (oversize.length || overCount) {
+      const parts: string[] = [];
+      if (oversize.length) parts.push(`over 8MB: ${oversize.join(', ')}`);
+      if (overCount) parts.push(`max 4 photos (${overCount} not added)`);
+      toast({
+        title: oversize.length + overCount === 1 ? 'Photo not added' : 'Some photos not added',
+        description: parts.join(' · '),
+        variant: 'destructive',
+      });
+    }
   };
 
   const handleSubmit = async () => {

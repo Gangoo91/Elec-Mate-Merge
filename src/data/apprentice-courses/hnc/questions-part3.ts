@@ -460,14 +460,14 @@ export const questionsPart3 = [
     question:
       'In a TN-C-S system, what is the maximum earth fault loop impedance for a 32A Type B MCB to achieve 0.4s disconnection?',
     options: [
-      '1.15Ω',
+      '1.37Ω',
       '1.44Ω',
       '2.30Ω',
       '0.72Ω',
     ],
-    correctAnswer: 1,
+    correctAnswer: 0,
     explanation:
-      'For a Type B MCB, the instantaneous trip current is 5 × In = 160A. Zs = Uo/Ia = 230/160 = 1.44Ω maximum to ensure 0.4s disconnection.',
+      'For a Type B MCB, the instantaneous trip current is 5 × In = 160A. Zs = (Cmin × Uo)/Ia = (0.95 × 230)/160 = 1.37Ω maximum per Table 41.3. 1.44Ω is the old pre-Cmin figure.',
     section: 'Fault Protection',
     difficulty: 'advanced',
     topic: 'Earth Fault Loop Impedance',

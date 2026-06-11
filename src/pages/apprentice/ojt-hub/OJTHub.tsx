@@ -8,6 +8,8 @@
  * proof chain visible:
  *
  *   • In-app auto-tracked          (system-attested — videos, study sessions)
+ *   • Site diary / manual log      (self-reported time_entries — defensible
+ *                                   only once supervisor-verified)
  *   • Apprentice-submitted (pending) → tutor verifies in college hub
  *   • Apprentice-submitted (verified) → counts for gateway
  *   • Tutor-recorded                (pre-verified by college)
@@ -172,15 +174,29 @@ export default function OJTHub() {
     // activity, since there is no dedup key tying the two representations.
     const autoTrackedMin = inAppMinutes;
 
-    return { byKind, autoTrackedMin };
-  }, [verificationRows, inAppMinutes]);
+    // Manual time_entries (site diary / legacy time tracker) are SELF-REPORTED,
+    // not system-attested, so they never join autoTrackedMin (that bucket is
+    // treated as defensible by definition). Supervisor-verified manual hours
+    // count as defensible; unverified ones sit with the pending total.
+    let manualVerifiedMin = 0;
+    let manualUnverifiedMin = 0;
+    for (const e of otjEntries) {
+      if (e.source !== 'time_entry') continue;
+      if (e.verified_at) manualVerifiedMin += e.duration_minutes;
+      else manualUnverifiedMin += e.duration_minutes;
+    }
+
+    return { byKind, autoTrackedMin, manualVerifiedMin, manualUnverifiedMin };
+  }, [verificationRows, inAppMinutes, otjEntries]);
 
   const totalDefensibleMin =
     sourceBreakdown.autoTrackedMin +
+    sourceBreakdown.manualVerifiedMin +
     sourceBreakdown.byKind.apprentice_submitted.verifiedMin +
     sourceBreakdown.byKind.tutor_recorded.verifiedMin +
     sourceBreakdown.byKind.employer_attested.verifiedMin;
   const totalPendingMin =
+    sourceBreakdown.manualUnverifiedMin +
     sourceBreakdown.byKind.in_app.pendingMin +
     sourceBreakdown.byKind.apprentice_submitted.pendingMin +
     sourceBreakdown.byKind.tutor_recorded.pendingMin +
@@ -217,9 +233,15 @@ export default function OJTHub() {
     const since30 = new Date(Date.now() - 30 * 86_400_000).toISOString();
     let weekMin = 0;
     let last30Min = 0;
-    // In-app auto-tracked (defensible, system-attested)
+    // In-app auto-tracked (defensible, system-attested) plus manual site-diary
+    // time entries — pacing reflects all logged work, not just attested hours.
     for (const e of otjEntries) {
-      if (e.source !== 'learning_activity' && e.source !== 'study_session') continue;
+      if (
+        e.source !== 'learning_activity' &&
+        e.source !== 'study_session' &&
+        e.source !== 'time_entry'
+      )
+        continue;
       if (e.occurred_at >= sinceWeek) weekMin += e.duration_minutes;
       if (e.occurred_at >= since30) last30Min += e.duration_minutes;
     }
@@ -335,6 +357,21 @@ export default function OJTHub() {
         evidenceCount: 0,
       }));
 
+    // Manual site-diary / time-tracker entries (self-reported; defensible only
+    // once a supervisor has verified them)
+    const manualEntries: OtjExportEntry[] = otjEntries
+      .filter((e) => e.source === 'time_entry')
+      .map((e) => ({
+        date: e.occurred_at.slice(0, 10),
+        title: e.title,
+        activityType: prettify(e.category ?? 'Manual'),
+        source: 'Site diary / manual log',
+        status: e.verified_at ? 'Verified' : 'Self-logged',
+        durationMinutes: e.duration_minutes,
+        verifier: e.verified_at ? 'Supervisor' : '—',
+        evidenceCount: 0,
+      }));
+
     // College / submitted / attested entries
     const collegeEntries: OtjExportEntry[] = verificationRows.map((r) => ({
       date: r.activity_date,
@@ -347,7 +384,7 @@ export default function OJTHub() {
       evidenceCount: r.evidence_urls?.length ?? (r.evidence_url ? 1 : 0),
     }));
 
-    const entries = [...collegeEntries, ...inAppEntries].sort((a, b) =>
+    const entries = [...collegeEntries, ...inAppEntries, ...manualEntries].sort((a, b) =>
       a.date < b.date ? 1 : -1
     );
 
@@ -480,7 +517,8 @@ export default function OJTHub() {
     })();
   }, [buildExportData, toast]);
 
-  const canExport = verificationRows.length > 0 || yearHours > 0;
+  const canExport =
+    verificationRows.length > 0 || yearHours > 0 || yearPendingHours > 0;
 
   /* ─── Render ──────────────────────────────────────────────────── */
   return (
@@ -583,6 +621,8 @@ export default function OJTHub() {
         {/* Source mix bar */}
         <SourceMixBar
           autoTrackedMin={sourceBreakdown.autoTrackedMin}
+          manualVerifiedMin={sourceBreakdown.manualVerifiedMin}
+          manualUnverifiedMin={sourceBreakdown.manualUnverifiedMin}
           byKind={sourceBreakdown.byKind}
           totalAllMin={totalAllMin + sourceBreakdown.autoTrackedMin}
         />
@@ -711,14 +751,18 @@ function KpiCell({
 
 function SourceMixBar({
   autoTrackedMin,
+  manualVerifiedMin,
+  manualUnverifiedMin,
   byKind,
   totalAllMin,
 }: {
   autoTrackedMin: number;
+  manualVerifiedMin: number;
+  manualUnverifiedMin: number;
   byKind: Record<SourceKind, { verifiedMin: number; pendingMin: number; rejectedMin: number }>;
   totalAllMin: number;
 }) {
-  // Build segments — 5 stacked
+  // Build segments — stacked
   const segments: Array<{ label: string; minutes: number; tone: string }> = [
     {
       label: 'In-app auto-tracked',
@@ -741,6 +785,11 @@ function SourceMixBar({
       tone: 'bg-elec-yellow/55',
     },
     {
+      label: 'Site diary (verified)',
+      minutes: manualVerifiedMin,
+      tone: 'bg-elec-yellow/40',
+    },
+    {
       label: 'Pending sign-off',
       minutes:
         byKind.in_app.pendingMin +
@@ -748,6 +797,11 @@ function SourceMixBar({
         byKind.tutor_recorded.pendingMin +
         byKind.employer_attested.pendingMin,
       tone: 'bg-white/35',
+    },
+    {
+      label: 'Site diary (self-logged)',
+      minutes: manualUnverifiedMin,
+      tone: 'bg-white/25',
     },
   ];
   const total = totalAllMin || segments.reduce((s, x) => s + x.minutes, 0);

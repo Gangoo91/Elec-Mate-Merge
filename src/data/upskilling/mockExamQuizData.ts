@@ -58,16 +58,16 @@ export const mockExamQuestions: QuizQuestion[] = [
   {
     id: 5,
     question:
-      'According to BS 7671, what is the required earth fault loop impedance for a B32 MCB?',
+      'According to BS 7671, what is the maximum earth fault loop impedance (Zs) for a 32A Type B MCB?',
     options: [
-      '0.72Ω',
+      '1.10Ω',
+      '1.37Ω',
       '1.44Ω',
-      '2.30Ω',
-      '3.68Ω',
+      '2.19Ω',
     ],
     correctAnswer: 1,
     explanation:
-      'For a B32 MCB, the maximum Zs value is 1.44Ω to ensure disconnection within required time.',
+      'Table 41.3 gives a maximum Zs of 1.37Ω for a 32A Type B MCB at 230V (includes the Cmin factor of 0.95). 1.44Ω is the old pre-Cmin figure; 1.10Ω is the cold-measured site limit after applying the 0.80 rule-of-thumb factor.',
   },
 
   // Testing Procedures
@@ -538,15 +538,16 @@ export const mockExamQuestions: QuizQuestion[] = [
   // Advanced Regulatory Knowledge
   {
     id: 41,
-    question: 'According to BS 7671, what is the maximum Zs for a B20 MCB?',
+    question: 'According to BS 7671, what is the maximum Zs for a 20A Type B MCB?',
     options: [
-      '1.15Ω',
+      '1.75Ω',
+      '2.19Ω',
       '2.30Ω',
-      '1.44Ω',
-      '0.86Ω',
+      '1.37Ω',
     ],
     correctAnswer: 1,
-    explanation: 'For a B20 MCB, the maximum earth fault loop impedance is 2.30Ω.',
+    explanation:
+      'Table 41.3 gives a maximum Zs of 2.19Ω for a 20A Type B MCB at 230V (includes the Cmin factor of 0.95). 2.30Ω is the old pre-Cmin figure.',
   },
   {
     id: 42,
@@ -1189,16 +1190,16 @@ export const mockExamQuestions: QuizQuestion[] = [
   {
     id: 91,
     question:
-      'What is the maximum earth fault loop impedance for a lighting circuit protected by a B6 MCB?',
+      'What is the maximum earth fault loop impedance for a lighting circuit protected by a 6A Type B MCB?',
     options: [
       '15.3Ω',
-      '9.6Ω',
-      '11.5Ω',
       '7.67Ω',
+      '11.5Ω',
+      '7.28Ω',
     ],
     correctAnswer: 3,
     explanation:
-      'For a B6 MCB, the maximum Zs is 7.67Ω to ensure disconnection within required time.',
+      'Table 41.3 gives a maximum Zs of 7.28Ω for a 6A Type B MCB at 230V (includes the Cmin factor of 0.95). 7.67Ω is the old pre-Cmin figure.',
   },
   {
     id: 92,
@@ -1419,12 +1420,12 @@ export const mockExamQuestions: QuizQuestion[] = [
     options: [
       '2.87Ω',
       '2.30Ω',
-      '1.15Ω',
+      '1.37Ω',
       '1.44Ω',
     ],
-    correctAnswer: 0,
+    correctAnswer: 2,
     explanation:
-      'For a C16 MCB, the maximum earth fault loop impedance is 2.87Ω to ensure disconnection within 0.4 seconds.',
+      'A Type C MCB trips at 10×In, so for a C16: Zs = (Cmin × Uo)/Ia = (0.95 × 230)/160 = 1.37Ω per Table 41.3.',
   },
   {
     id: 109,

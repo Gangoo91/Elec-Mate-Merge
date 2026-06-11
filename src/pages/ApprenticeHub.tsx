@@ -385,6 +385,24 @@ const EditorialToolGrid = ({
 // Main page
 // ─────────────────────────────────────────────────────────────────────────
 
+const TOUR_STEPS = [
+  {
+    to: '/study-centre',
+    title: 'Start a course in the Study Centre',
+    sub: 'Your study time counts towards your off-the-job hours automatically.',
+  },
+  {
+    to: '/apprentice/ojt-hub',
+    title: 'Log your first work hours',
+    sub: 'Track what you did on site — your supervisor can sign it off from a link.',
+  },
+  {
+    to: '/apprentice/hub',
+    title: 'Capture your first piece of evidence',
+    sub: 'Photos from the job build your portfolio — get them verified as you go.',
+  },
+] as const;
+
 export default function ApprenticeHub() {
   useSEO({
     title: 'Apprentice Hub | Level 2 & 3 Electrical Training',
@@ -419,6 +437,26 @@ export default function ApprenticeHub() {
   const [progressOpen, setProgressOpen] = useState(false);
   const [videosOpen, setVideosOpen] = useState(false);
   const [diaryOpen, setDiaryOpen] = useState(false);
+
+  // Solo mode — the apprentice has said "no college for now". Collapses the
+  // college cell to a single quiet row; never blocks linking later (the row
+  // still opens the college plan, where the invite-code card lives).
+  const [soloMode, setSoloMode] = useState(
+    () => localStorage.getItem('elecmate_solo_apprentice') === '1'
+  );
+  const dismissCollegeCard = () => {
+    localStorage.setItem('elecmate_solo_apprentice', '1');
+    setSoloMode(true);
+  };
+
+  // First-run tour — three steps for a brand-new account, dismissable forever.
+  const [tourDismissed, setTourDismissed] = useState(
+    () => localStorage.getItem('elecmate_apprentice_tour_done') === '1'
+  );
+  const dismissTour = () => {
+    localStorage.setItem('elecmate_apprentice_tour_done', '1');
+    setTourDismissed(true);
+  };
 
   const pendingQuizzes = quizzes.filter((q) => q.status !== 'completed');
   const overdueQuizzes = pendingQuizzes.filter((q) => q.status === 'overdue');
@@ -491,8 +529,16 @@ export default function ApprenticeHub() {
   ];
 
   // ── College plan card ────────────────────────────────────────────────
+  // Brand-new account → show the three-step start-here strip until dismissed.
+  const isBrandNew =
+    stats.learning.currentStreak === 0 &&
+    stats.portfolio.evidenceCount === 0 &&
+    entries.length === 0 &&
+    pendingQuizzes.length === 0;
+  const showTour = !tourDismissed && !heroLoading && isBrandNew;
+
   const collegeDescription = !hasCollegeLink
-    ? 'Connect with your college to see goals from your tutor and tick them off here.'
+    ? 'Everything here works without a college. Got an invite code from your tutor? Tap to enter it — your hours and portfolio link up automatically.'
     : pendingQuizzes.length > 0
       ? overdueQuizzes.length > 0
         ? `${overdueQuizzes.length} overdue · ${notStartedQuizzes.length + inProgressQuizzes.length} more pending`
@@ -705,6 +751,51 @@ export default function ApprenticeHub() {
 
         <ApprenticeHeadlineStats stats={statCells} loading={statsLoading} />
 
+        {/* FIRST WEEK — three-step start-here strip for brand-new accounts */}
+        {showTour && (
+          <motion.section
+            variants={containerVariants}
+            initial="hidden"
+            animate="visible"
+            className="space-y-4"
+          >
+            <motion.div variants={itemVariants} className="flex items-baseline justify-between">
+              <Eyebrow>YOUR FIRST WEEK · START HERE</Eyebrow>
+              <button
+                type="button"
+                onClick={dismissTour}
+                className="text-[11px] text-white/45 hover:text-white/70 touch-manipulation transition-colors"
+              >
+                Got it — hide
+              </button>
+            </motion.div>
+            <motion.div
+              variants={itemVariants}
+              className="bg-[hsl(0_0%_10%)] border border-white/[0.08] rounded-2xl overflow-hidden divide-y divide-white/[0.05]"
+            >
+              {TOUR_STEPS.map((step, i) => (
+                <button
+                  key={step.to}
+                  type="button"
+                  onClick={() => navigate(step.to)}
+                  className="group w-full flex items-center gap-4 p-4 sm:p-5 text-left touch-manipulation hover:bg-elec-yellow/[0.04] transition-colors"
+                >
+                  <span className="w-5 shrink-0 text-[13px] font-mono text-elec-yellow/80">
+                    {i + 1}
+                  </span>
+                  <span className="flex-1 min-w-0">
+                    <span className="block text-[14px] font-medium text-white group-hover:text-elec-yellow transition-colors">
+                      {step.title}
+                    </span>
+                    <span className="mt-0.5 block text-[12px] text-white/55">{step.sub}</span>
+                  </span>
+                  <ArrowRight className="h-4 w-4 shrink-0 text-white/40 group-hover:translate-x-0.5 transition-transform" />
+                </button>
+              ))}
+            </motion.div>
+          </motion.section>
+        )}
+
         {/* 02 · FROM YOUR COLLEGE — single hairline cell */}
         <motion.section
           variants={containerVariants}
@@ -712,10 +803,33 @@ export default function ApprenticeHub() {
           animate="visible"
           className="space-y-4"
         >
-          <motion.div variants={itemVariants}>
+          <motion.div variants={itemVariants} className="flex items-baseline justify-between">
             <Eyebrow>02 · FROM YOUR COLLEGE</Eyebrow>
+            {!hasCollegeLink && !soloMode && !ilpLoading && (
+              <button
+                type="button"
+                onClick={dismissCollegeCard}
+                className="text-[11px] text-white/45 hover:text-white/70 touch-manipulation transition-colors"
+              >
+                Not now
+              </button>
+            )}
           </motion.div>
 
+          {!hasCollegeLink && soloMode ? (
+            <motion.div variants={itemVariants}>
+              <button
+                type="button"
+                onClick={() => navigate('/apprentice/college-plan')}
+                className="group w-full flex items-center justify-between gap-3 rounded-xl border border-white/[0.06] bg-[hsl(0_0%_10%)] px-4 py-3 text-left touch-manipulation hover:bg-white/[0.04] transition-colors"
+              >
+                <span className="text-[12px] text-white/55">
+                  Working solo — got a college invite code? Link up any time.
+                </span>
+                <ArrowRight className="h-3.5 w-3.5 shrink-0 text-white/40 group-hover:translate-x-0.5 transition-transform" />
+              </button>
+            </motion.div>
+          ) : (
           <motion.div
             variants={itemVariants}
             className="relative bg-[hsl(0_0%_10%)] border border-white/[0.08] rounded-2xl overflow-hidden"
@@ -745,7 +859,7 @@ export default function ApprenticeHub() {
               <h3 className="text-[20px] sm:text-[22px] lg:text-[24px] font-semibold tracking-tight leading-[1.15] text-white group-hover:text-elec-yellow transition-colors">
                 {hasCollegeLink
                   ? 'Your goals & quizzes from college'
-                  : 'Connect with your college'}
+                  : 'Link your college — optional'}
               </h3>
               <p className="text-[13px] text-white/60">{collegeDescription}</p>
               <div className="mt-2 flex items-center justify-between pt-3 border-t border-white/[0.05]">
@@ -759,6 +873,7 @@ export default function ApprenticeHub() {
               </div>
             </button>
           </motion.div>
+          )}
         </motion.section>
 
         <EditorialToolGrid number="03" label="CORE LEARNING" cards={coreLearning} columns="two" />

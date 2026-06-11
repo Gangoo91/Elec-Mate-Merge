@@ -3275,12 +3275,13 @@ export const inspectionTestingQuestionBank: StandardMockQuestion[] = [
     question: 'What is the maximum Zs for a 6A Type B MCB?',
     options: [
       '7.67Ω',
-      '3.83Ω',
+      '7.28Ω',
       '1.92Ω',
       '0.96Ω',
     ],
-    correctAnswer: 0,
-    explanation: 'For a 6A Type B MCB, maximum Zs is 7.67Ω to achieve 0.4 second disconnection.',
+    correctAnswer: 1,
+    explanation:
+      'For a 6A Type B MCB, maximum Zs is 7.28Ω per Table 41.3 (includes the Cmin factor of 0.95). 7.67Ω is the old pre-Cmin figure.',
     section: 'Earth Fault Loop Impedance',
     difficulty: 'advanced',
     topic: 'Maximum Values',
@@ -3510,12 +3511,13 @@ export const inspectionTestingQuestionBank: StandardMockQuestion[] = [
     question: 'What is the maximum Zs for a 40A Type B MCB?',
     options: [
       '2.30Ω',
-      '0.72Ω',
+      '1.09Ω',
       '1.15Ω',
       '0.57Ω',
     ],
-    correctAnswer: 2,
-    explanation: 'For a 40A Type B MCB, maximum Zs is 1.15Ω to achieve 0.4 second disconnection.',
+    correctAnswer: 1,
+    explanation:
+      'For a 40A Type B MCB, maximum Zs is 1.09Ω per Table 41.3 (includes the Cmin factor of 0.95). 1.15Ω is the old pre-Cmin figure.',
     section: 'Earth Fault Loop Impedance',
     difficulty: 'advanced',
     topic: 'Maximum Values',

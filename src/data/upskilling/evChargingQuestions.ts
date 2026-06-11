@@ -149,12 +149,12 @@ export const evChargingQuestions: QuizQuestion[] = [
     question: "What is the maximum loop impedance for a 32A Type B RCD protecting an EV charger?",
     options: [
       "1.44Ω",
-      "1.15Ω",
+      "1.37Ω",
       "0.87Ω",
       "0.35Ω",
     ],
-    correctAnswer: 0,
-    explanation: "For 32A Type B RCD, maximum Zs is 1.44Ω to ensure disconnection within required time limits.",
+    correctAnswer: 1,
+    explanation: "For a 32A Type B device, maximum Zs is 1.37Ω per Table 41.3 (includes the Cmin factor of 0.95). 1.44Ω is the old pre-Cmin figure.",
     moduleId: 4
   }
 ];

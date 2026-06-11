@@ -91,17 +91,52 @@ export function useOtjProgramme(): OtjProgramme {
   const [loading, setLoading] = useState(true);
   const [self, setSelf] = useState<SelfProgramme | null>(null);
 
-  // Load any locally-stored self-set programme.
+  // Load the self-set programme. DB row wins (durable across devices); a
+  // legacy localStorage copy is used as fallback and migrated up to the DB
+  // the first time we see it. Tolerates the table not existing yet — the
+  // localStorage path keeps working until the migration lands.
   useEffect(() => {
     if (!uid) return;
-    const raw = storageGetSync(selfKey(uid));
-    if (raw) {
+    let active = true;
+
+    const local: SelfProgramme | null = (() => {
+      const raw = storageGetSync(selfKey(uid));
+      if (!raw) return null;
       try {
-        setSelf(JSON.parse(raw) as SelfProgramme);
+        return JSON.parse(raw) as SelfProgramme;
       } catch {
-        /* ignore corrupt */
+        return null;
       }
-    }
+    })();
+    if (local) setSelf(local);
+
+    (async () => {
+      try {
+        const { data, error } = await supabase
+          .from('user_otj_programmes' as never)
+          .select('start_date, end_date, total_hours, standard_code')
+          .eq('user_id', uid)
+          .maybeSingle();
+        if (!active || error) return;
+        const row = data as unknown as SelfProgramme | null;
+        if (row && row.start_date && row.end_date && row.total_hours > 0) {
+          setSelf(row);
+          // Keep the local copy in step for offline reads.
+          storageSetSync(selfKey(uid), JSON.stringify(row));
+        } else if (local) {
+          // Legacy local-only programme — migrate it up so it survives the device.
+          void supabase
+            .from('user_otj_programmes' as never)
+            .upsert({ user_id: uid, ...local } as never, { onConflict: 'user_id' });
+        }
+      } catch {
+        /* table may not exist yet — localStorage fallback already applied */
+      }
+    })();
+
+    return () => {
+      active = false;
+    };
   }, [uid]);
 
   // Load the college-side programme if the apprentice is linked.
@@ -138,14 +173,21 @@ export function useOtjProgramme(): OtjProgramme {
   const setSelfProgramme = useCallback(
     (p: SelfProgramme) => {
       setSelf(p);
-      if (uid) storageSetSync(selfKey(uid), JSON.stringify(p));
+      if (!uid) return;
+      storageSetSync(selfKey(uid), JSON.stringify(p));
+      // Durable copy — best-effort so the sheet stays snappy offline.
+      void supabase
+        .from('user_otj_programmes' as never)
+        .upsert({ user_id: uid, ...p } as never, { onConflict: 'user_id' });
     },
     [uid]
   );
 
   const clearSelfProgramme = useCallback(() => {
     setSelf(null);
-    if (uid) storageSetSync(selfKey(uid), '');
+    if (!uid) return;
+    storageSetSync(selfKey(uid), '');
+    void supabase.from('user_otj_programmes' as never).delete().eq('user_id', uid);
   }, [uid]);
 
   return useMemo<OtjProgramme>(() => {

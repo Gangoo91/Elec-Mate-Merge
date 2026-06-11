@@ -19,7 +19,8 @@ export type OtjSource =
   | 'learning_activity'
   | 'study_session'
   | 'video_watch'
-  | 'college';
+  | 'college'
+  | 'time_entry';
 
 export interface OtjEntry {
   id: string;
@@ -64,6 +65,7 @@ const ZERO_BREAKDOWN: OtjBreakdown = {
     study_session: { minutes: 0, entries: 0 },
     video_watch: { minutes: 0, entries: 0 },
     college: { minutes: 0, entries: 0 },
+    time_entry: { minutes: 0, entries: 0 },
   },
   last_7_days_minutes: 0,
   last_30_days_minutes: 0,
@@ -115,7 +117,7 @@ export function useApprenticeOtj(
     setError(null);
 
     try {
-      const [activityRes, sessionRes, watchRes, collegeRes] = await Promise.all([
+      const [activityRes, sessionRes, watchRes, collegeRes, timeRes] = await Promise.all([
         supabase
           .from('learning_activity_log')
           .select(
@@ -144,6 +146,18 @@ export function useApprenticeOtj(
           )
           .eq('student_id', userId)
           .order('activity_date', { ascending: false })
+          .limit(200),
+        supabase
+          .from('time_entries')
+          .select(
+            'id, activity, date, duration, notes, compliance_category, is_supervisor_verified, created_at'
+          )
+          .eq('user_id', userId)
+          // NULL is_automatic must count as manual; is_automatic=true rows are
+          // trigger-copies of learning_activity_log and MUST stay excluded —
+          // including them would double-count the same activity.
+          .or('is_automatic.is.null,is_automatic.eq.false')
+          .order('date', { ascending: false })
           .limit(200),
       ]);
 
@@ -262,6 +276,41 @@ export function useApprenticeOtj(
         }
       }
 
+      // Manual time_entries — written by the live site diary
+      // (useSiteDiaryEntries inserts is_automatic:false) and the old
+      // time-tracking UI. duration is already in MINUTES (do NOT divide by
+      // 60 — the seconds quirk belongs to study_sessions only).
+      if (!timeRes.error && timeRes.data) {
+        for (const row of timeRes.data as Array<{
+          id: string;
+          activity: string | null;
+          date: string | null;
+          duration: number | null;
+          notes: string | null;
+          compliance_category: string | null;
+          is_supervisor_verified: boolean | null;
+          created_at: string | null;
+        }>) {
+          merged.push({
+            id: `te_${row.id}`,
+            source: 'time_entry',
+            occurred_at: row.date
+              ? `${row.date}T12:00:00Z`
+              : (row.created_at ?? new Date().toISOString()),
+            duration_minutes: row.duration ?? 0,
+            title: row.activity || 'Logged time',
+            category: row.compliance_category ?? 'manual',
+            description: row.notes,
+            unit_codes: [],
+            evidence_url: null,
+            recorded_by_name: null,
+            verified_at: row.is_supervisor_verified
+              ? (row.created_at ?? row.date)
+              : null,
+          });
+        }
+      }
+
       merged.sort((a, b) => (a.occurred_at < b.occurred_at ? 1 : -1));
       setEntries(merged);
     } catch (e) {
@@ -314,6 +363,7 @@ export function useApprenticeOtj(
       study_session: { minutes: 0, entries: 0 },
       video_watch: { minutes: 0, entries: 0 },
       college: { minutes: 0, entries: 0 },
+      time_entry: { minutes: 0, entries: 0 },
     };
     let total = 0;
     let last7 = 0;

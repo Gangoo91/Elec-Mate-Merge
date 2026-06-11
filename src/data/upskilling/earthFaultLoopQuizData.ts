@@ -33,12 +33,12 @@ export const earthFaultLoopQuizQuestions: QuizQuestion[] = [
     options: [
       '2.30Ω',
       '0.87Ω',
-      '1.15Ω',
+      '1.37Ω',
       '1.44Ω',
     ],
-    correctAnswer: 3,
+    correctAnswer: 2,
     explanation:
-      'For a 32A Type B MCB, the maximum Zs value is typically 1.44Ω to ensure disconnection within the required time.',
+      'For a 32A Type B MCB, the maximum Zs is 1.37Ω per Table 41.3 (includes the Cmin factor of 0.95). 1.44Ω is the old pre-Cmin figure.',
   },
   {
     id: 4,

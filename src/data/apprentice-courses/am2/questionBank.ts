@@ -1493,12 +1493,13 @@ export const am2QuestionBank: AM2Question[] = [
     question: 'What is the maximum Zs for a 32A Type B MCB in a 0.4 second circuit?',
     options: [
       '0.86Ω',
-      '1.09Ω',
+      '1.37Ω',
       '1.44Ω',
       '2.30Ω',
     ],
-    correctAnswer: 2,
-    explanation: 'For 32A Type B MCB (trips at 5×In = 160A), Zs max = 230V/160A = 1.44Ω.',
+    correctAnswer: 1,
+    explanation:
+      'For a 32A Type B MCB (trips at 5×In = 160A), Zs max = (Cmin × Uo)/Ia = (0.95 × 230)/160 = 1.37Ω per Table 41.3. 1.44Ω is the old pre-Cmin figure.',
     section: 'Loop Impedance',
     difficulty: 'intermediate',
     topic: 'Zs Values',

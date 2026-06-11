@@ -18,6 +18,7 @@ const SOURCE_LABEL: Record<OtjSource, string> = {
   study_session: 'Study session',
   video_watch: 'Video',
   college: 'College-led',
+  time_entry: 'Site diary',
 };
 
 const SOURCE_TONE: Record<OtjSource, Tone> = {
@@ -25,6 +26,7 @@ const SOURCE_TONE: Record<OtjSource, Tone> = {
   study_session: 'purple',
   video_watch: 'cyan',
   college: 'amber',
+  time_entry: 'emerald',
 };
 
 const SOURCE_DOT: Record<OtjSource, string> = {
@@ -32,6 +34,7 @@ const SOURCE_DOT: Record<OtjSource, string> = {
   study_session: 'bg-purple-400/85',
   video_watch: 'bg-white/40',
   college: 'bg-elec-yellow/85',
+  time_entry: 'bg-emerald-400/85',
 };
 
 function formatRelativeOrDate(iso: string): string {

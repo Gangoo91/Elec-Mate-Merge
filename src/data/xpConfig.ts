@@ -69,7 +69,11 @@ export const XP_RULES: Record<ActivityType, XPRule> = {
   },
   study_module: {
     baseXP: 25,
-    defaultDurationMinutes: 15,
+    // Duration MUST be measured by the caller (StudyCentreTracker) — a flat
+    // estimate must never reach OTJ. With no actualMinutes this logs 0 min,
+    // which still awards XP but never counts as off-the-job time.
+    defaultDurationMinutes: 0,
+    usesActualDuration: true,
     complianceCategory: 'Online Learning',
   },
 };
