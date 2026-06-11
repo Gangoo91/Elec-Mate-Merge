@@ -314,7 +314,9 @@ const ElectricalHubInner = () => {
       return {
         profile: row,
         email: user.email,
-        hasCompanyProfile: Boolean(companyRow?.company_name),
+        // Row existence, not company_name — a partially-saved profile (e.g.
+        // empty-string name) still means they've been through the wizard.
+        hasCompanyProfile: Boolean(companyRow),
       };
     },
   });
@@ -350,10 +352,12 @@ const ElectricalHubInner = () => {
       if (!hasAccess) return;
     }
 
-    const hasSeenWizard = sessionStorage.getItem('setup_wizard_shown');
+    // localStorage, not sessionStorage — "Skip for now" must survive
+    // re-login, otherwise the wizard re-prompts on every session.
+    const hasSeenWizard = localStorage.getItem('setup_wizard_shown');
     if (!hasSeenWizard) {
       setShowSetupWizard(true);
-      sessionStorage.setItem('setup_wizard_shown', 'true');
+      localStorage.setItem('setup_wizard_shown', 'true');
     }
   }, [onboardingProfile, profileData?.hasCompanyProfile]);
 
