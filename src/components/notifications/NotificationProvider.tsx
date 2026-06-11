@@ -47,13 +47,15 @@ const mapPushLog = (row: {
   id: row.id,
   title: row.title,
   message: row.body,
-  type: (row.type === 'invoice' || row.type === 'overdue'
-    ? 'warning'
-    : row.type === 'payment'
-      ? 'success'
-      : row.type === 'error'
-        ? 'error'
-        : 'info') as Notification['type'],
+  type: (row.type?.startsWith('safeguarding')
+    ? 'warning' // safeguarding alerts must stand out, never look like routine info
+    : row.type === 'invoice' || row.type === 'overdue'
+      ? 'warning'
+      : row.type === 'payment'
+        ? 'success'
+        : row.type === 'error'
+          ? 'error'
+          : 'info') as Notification['type'],
   read: !!row.read_at,
   createdAt: row.sent_at,
 });

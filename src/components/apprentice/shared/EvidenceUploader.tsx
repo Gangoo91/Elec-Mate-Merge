@@ -1,5 +1,6 @@
 import { useState, useRef, useCallback } from 'react';
 import { Capacitor } from '@capacitor/core';
+import { EvidenceImage } from '@/components/shared/EvidenceImage';
 import { Camera as CapCamera, CameraResultType, CameraSource } from '@capacitor/camera';
 import { Button } from '@/components/ui/button';
 import { Progress } from '@/components/ui/progress';
@@ -396,7 +397,7 @@ export const EvidenceUploader = ({
                 <div className="flex items-center gap-3">
                   {file.type.startsWith('image/') && file.url ? (
                     <div className="w-10 h-10 rounded overflow-hidden bg-white/[0.03] shrink-0">
-                      <img src={file.url} alt={file.name} className="w-full h-full object-cover" />
+                      <EvidenceImage src={file.url} alt={file.name} className="w-full h-full object-cover" />
                     </div>
                   ) : (
                     <div className="w-10 h-10 rounded bg-white/[0.03] flex items-center justify-center shrink-0">

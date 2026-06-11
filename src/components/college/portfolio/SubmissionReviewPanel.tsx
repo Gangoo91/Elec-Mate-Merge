@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { motion } from 'framer-motion';
+import { openEvidence } from '@/lib/evidenceUrl';
 import { Textarea } from '@/components/ui/textarea';
 import { Avatar, AvatarFallback } from '@/components/ui/avatar';
 import {
@@ -445,7 +446,7 @@ const SubmissionReviewPanel: React.FC<SubmissionReviewPanelProps> = ({
                     </div>
                   </div>
                   <button
-                    onClick={() => window.open(file.fileUrl, '_blank')}
+                    onClick={() => void openEvidence(file.fileUrl)}
                     className="text-[12.5px] font-medium text-elec-yellow/90 hover:text-elec-yellow transition-colors touch-manipulation shrink-0"
                   >
                     Download →

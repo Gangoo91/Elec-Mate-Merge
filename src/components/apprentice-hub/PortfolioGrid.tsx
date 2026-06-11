@@ -6,6 +6,7 @@
  */
 
 import { useState, useMemo } from 'react';
+import { EvidenceImage } from '@/components/shared/EvidenceImage';
 import {
   Search,
   Grid3X3,
@@ -500,7 +501,7 @@ function GridCard({
       {/* Media */}
       <div className="relative aspect-[4/3] bg-muted overflow-hidden">
         {hasImage && entry.evidenceFiles?.[0]?.url ? (
-          <img
+          <EvidenceImage
             src={entry.evidenceFiles[0].url}
             alt={entry.title}
             className="absolute inset-0 w-full h-full object-cover transition-transform duration-300 group-hover:scale-[1.03]"
@@ -601,7 +602,7 @@ function ListItem({
       {/* Thumbnail */}
       <div className="h-14 w-14 rounded-lg bg-muted flex items-center justify-center shrink-0 overflow-hidden">
         {entry.evidenceFiles?.[0]?.url ? (
-          <img src={entry.evidenceFiles[0].url} alt="" className="w-full h-full object-cover" />
+          <EvidenceImage src={entry.evidenceFiles[0].url} alt="" className="w-full h-full object-cover" />
         ) : (
           <FileText className="h-6 w-6 text-white" />
         )}

@@ -1,6 +1,7 @@
 import { useState, useCallback } from 'react';
 import { supabase } from '@/integrations/supabase/client';
 import { useToast } from '@/hooks/use-toast';
+import { resolveEvidenceUrl } from '@/lib/evidenceUrl';
 
 /**
  * AI Evidence Tagger Hook
@@ -116,11 +117,14 @@ export function useAIEvidenceTagger(): UseAIEvidenceTaggerReturn {
       setError(null);
 
       try {
+        // Sign the URL so the edge function can still fetch the image once the
+        // bucket is private (it does a plain fetch on whatever URL we send).
+        const signedEvidenceUrl = await resolveEvidenceUrl(params.evidenceUrl);
         const { data, error: fnError } = await supabase.functions.invoke(
           'analyze-portfolio-evidence',
           {
             body: {
-              evidence_url: params.evidenceUrl,
+              evidence_url: signedEvidenceUrl ?? params.evidenceUrl,
               evidence_type: params.evidenceType,
               title: params.title,
               description: params.description,

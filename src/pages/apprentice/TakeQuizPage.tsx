@@ -1,5 +1,6 @@
 import { useEffect, useMemo, useRef, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
+import { openEvidence } from '@/lib/evidenceUrl';
 import { motion, AnimatePresence } from 'framer-motion';
 import {
   Brain,
@@ -1177,6 +1178,10 @@ function MediaAnswerInput({
                 <div className="text-[12px] text-white truncate">{f.name}</div>
                 <a
                   href={f.url}
+                  onClick={(e) => {
+                    e.preventDefault();
+                    void openEvidence(f.url);
+                  }}
                   target="_blank"
                   rel="noreferrer"
                   className="text-[10.5px] text-blue-300 hover:underline"

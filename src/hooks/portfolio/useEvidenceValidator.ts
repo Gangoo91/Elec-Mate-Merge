@@ -9,6 +9,7 @@ import { useState, useCallback } from 'react';
 import { supabase } from '@/integrations/supabase/client';
 import { toast } from 'sonner';
 import { storageGetJSONSync, storageSetJSONSync } from '@/utils/storage';
+import { resolveEvidenceUrls } from '@/lib/evidenceUrl';
 
 export interface ACValidation {
   acCode: string;
@@ -76,11 +77,18 @@ export function useEvidenceValidator() {
           throw new Error('Not authenticated');
         }
 
+        // Sign the URLs (batched) so the edge function can still fetch them once
+        // the bucket is private.
+        const signedMap = await resolveEvidenceUrls(options.evidenceUrls ?? []);
+        const signedEvidenceUrls = (options.evidenceUrls ?? []).map(
+          (u) => signedMap.get(u) ?? u
+        );
+
         const response = await supabase.functions.invoke('validate-evidence-quality', {
           body: {
             portfolio_item_id: options.portfolioItemId,
             evidence_text: options.evidenceText,
-            evidence_urls: options.evidenceUrls,
+            evidence_urls: signedEvidenceUrls,
             claimed_acs: options.claimedACs,
             qualification_code: options.qualificationCode,
           },

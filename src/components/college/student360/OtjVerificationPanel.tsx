@@ -1,6 +1,8 @@
 import { useEffect, useState } from 'react';
 import { cn } from '@/lib/utils';
 import { supabase } from '@/integrations/supabase/client';
+import { EvidenceImage } from '@/components/shared/EvidenceImage';
+import { openEvidence } from '@/lib/evidenceUrl';
 import { fmtHours, fmtRel } from '@/lib/format';
 import {
   useStudentOtjVerification,
@@ -428,12 +430,16 @@ function PendingRow({
             <a
               key={`${url}-${i}`}
               href={url}
+              onClick={(e) => {
+                e.preventDefault();
+                void openEvidence(url);
+              }}
               target="_blank"
               rel="noopener noreferrer"
               className="block h-16 w-16 rounded-lg overflow-hidden border border-white/[0.08] hover:border-white/[0.22] transition-colors touch-manipulation"
             >
               {/* eslint-disable-next-line jsx-a11y/img-redundant-alt */}
-              <img src={url} alt={`Evidence ${i + 1}`} className="h-full w-full object-cover" />
+              <EvidenceImage src={url} alt={`Evidence ${i + 1}`} className="h-full w-full object-cover" />
             </a>
           ))}
         </div>

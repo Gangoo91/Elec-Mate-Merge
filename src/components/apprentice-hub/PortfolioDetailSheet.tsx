@@ -6,6 +6,8 @@
  */
 
 import { useState, useEffect } from 'react';
+import { EvidenceImage } from '@/components/shared/EvidenceImage';
+import { openEvidence } from '@/lib/evidenceUrl';
 import {
   Sheet,
   SheetContent,
@@ -373,7 +375,7 @@ export function PortfolioDetailSheet({
           {/* Header with image/preview */}
           <div className="relative h-48 bg-muted shrink-0">
             {entry.evidenceFiles?.[0]?.url ? (
-              <img
+              <EvidenceImage
                 src={entry.evidenceFiles[0].url}
                 alt={entry.title}
                 className="w-full h-full object-cover"
@@ -908,6 +910,10 @@ export function PortfolioDetailSheet({
                         <a
                           key={i}
                           href={file.url}
+                          onClick={(e) => {
+                            e.preventDefault();
+                            void openEvidence(file.url);
+                          }}
                           target="_blank"
                           rel="noopener noreferrer"
                           className="flex items-center gap-3 p-3 rounded-lg bg-muted/50 hover:bg-muted transition-colors touch-manipulation min-h-[48px]"

@@ -6,6 +6,7 @@
 
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { resolveEvidenceUrl } from '@/lib/evidenceUrl';
 import { supabase } from '@/integrations/supabase/client';
 import {
   buildPortfolioPackData,
@@ -210,7 +211,8 @@ export function ProfileSection() {
           for (const file of entry.evidenceFiles) {
             if (file.url && !file.url.startsWith('blob:')) {
               try {
-                const response = await fetch(file.url);
+                const signedUrl = await resolveEvidenceUrl(file.url);
+                const response = await fetch(signedUrl ?? file.url);
                 if (response.ok) {
                   const blob = await response.blob();
                   const fileName = file.name || `evidence_${fileCount + 1}`;
