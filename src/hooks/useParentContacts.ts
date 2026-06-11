@@ -10,7 +10,13 @@ import { supabase } from '@/integrations/supabase/client';
    surface at /p/:token consume the same rows.
    ========================================================================== */
 
-export type ParentRelationship = 'parent' | 'guardian' | 'carer' | 'other';
+export type ParentRelationship =
+  | 'parent'
+  | 'guardian'
+  | 'carer'
+  | 'next_of_kin'
+  | 'emergency_contact'
+  | 'other';
 export type DigestFrequency = 'weekly' | 'fortnightly' | 'monthly' | 'never';
 
 export interface ParentContact {

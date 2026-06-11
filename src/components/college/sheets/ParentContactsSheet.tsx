@@ -279,6 +279,8 @@ export function ParentContactsSheet({
                         <SelectItem value="parent">Parent</SelectItem>
                         <SelectItem value="guardian">Guardian</SelectItem>
                         <SelectItem value="carer">Carer</SelectItem>
+                        <SelectItem value="next_of_kin">Next of kin</SelectItem>
+                        <SelectItem value="emergency_contact">Emergency contact</SelectItem>
                         <SelectItem value="other">Other</SelectItem>
                       </SelectContent>
                     </Select>

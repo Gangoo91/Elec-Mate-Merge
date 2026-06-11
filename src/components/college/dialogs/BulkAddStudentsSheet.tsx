@@ -193,12 +193,14 @@ function parseBlock(text: string, defaultCohort: string): ParsedRow[] {
 }
 
 export function BulkAddStudentsSheet({ open, onOpenChange, defaultCohortId }: Props) {
-  const { cohorts, addStudent, students } = useCollegeSupabase();
+  const { cohorts, courses, addStudent, students } = useCollegeSupabase();
   const { toast } = useToast();
   const activeCohorts = cohorts.filter((c) => c.status === 'Active');
+  const activeCourses = courses.filter((c) => c.status === 'Active');
 
   const [paste, setPaste] = useState('');
   const [defaultCohort, setDefaultCohort] = useState(defaultCohortId ?? '');
+  const [defaultCourse, setDefaultCourse] = useState('');
   const [defaultEnd, setDefaultEnd] = useState('');
   const [submitting, setSubmitting] = useState(false);
   const [result, setResult] = useState<RunResult | null>(null);
@@ -209,6 +211,7 @@ export function BulkAddStudentsSheet({ open, onOpenChange, defaultCohortId }: Pr
     if (open) {
       setPaste('');
       setDefaultCohort(defaultCohortId ?? '');
+      setDefaultCourse('');
       setDefaultEnd('');
       setResult(null);
       setProgress({ done: 0, total: 0 });
@@ -262,6 +265,23 @@ export function BulkAddStudentsSheet({ open, onOpenChange, defaultCohortId }: Pr
     setPaste(text);
   };
 
+  // A self-serve structuring aid: the college fills this and re-uploads it
+  // themselves — sensitive learner data never leaves their control / never
+  // emails to us. SEND/EHCP are deliberately NOT here; those are enriched
+  // per-learner in Student 360 by the support team, not bulk-pasted.
+  const downloadTemplate = () => {
+    const csv =
+      'name,email,phone,uln,cohort,expected end date\n' +
+      'Jane Smith,jane.smith@example.com,07700900000,1234567890,Electrical L3 — 2026 intake,2028-07-31\n';
+    const blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = 'elec-mate-learner-import-template.csv';
+    a.click();
+    URL.revokeObjectURL(url);
+  };
+
   const handleSubmit = async () => {
     if (submitting || validRows.length === 0) return;
     setSubmitting(true);
@@ -286,7 +306,7 @@ export function BulkAddStudentsSheet({ open, onOpenChange, defaultCohortId }: Pr
           college_id: null,
           user_id: null,
           employer_id: null,
-          course_id: null,
+          course_id: defaultCourse || null,
           start_date: startDate,
           status: 'Active',
           progress_percent: 0,
@@ -384,6 +404,13 @@ export function BulkAddStudentsSheet({ open, onOpenChange, defaultCohortId }: Pr
                     />
                     Drop CSV file…
                   </label>
+                  <button
+                    type="button"
+                    onClick={downloadTemplate}
+                    className="inline-flex items-center h-9 px-3 rounded-lg border border-white/[0.10] bg-white/[0.02] hover:bg-white/[0.04] text-[12px] font-medium text-white touch-manipulation"
+                  >
+                    Download template
+                  </button>
                   {paste && (
                     <button
                       type="button"
@@ -394,6 +421,30 @@ export function BulkAddStudentsSheet({ open, onOpenChange, defaultCohortId }: Pr
                     </button>
                   )}
                 </div>
+
+                {/* Course — all learners enrol onto this; setting it seeds each
+                    learner's AC coverage so progress tracking works from day one. */}
+                <Field
+                  label="Course"
+                  hint="All learners enrol onto this course — seeds their AC coverage"
+                >
+                  <Select
+                    value={defaultCourse}
+                    onValueChange={(v) => setDefaultCourse(v === '__none' ? '' : v)}
+                  >
+                    <SelectTrigger className="h-11 bg-white/[0.03] border-white/[0.08] text-white">
+                      <SelectValue placeholder="Select a course" />
+                    </SelectTrigger>
+                    <SelectContent className="bg-[hsl(0_0%_10%)] border-white/[0.08] text-white max-h-72">
+                      <SelectItem value="__none">No course (set later)</SelectItem>
+                      {activeCourses.map((c) => (
+                        <SelectItem key={c.id} value={c.id}>
+                          {c.title}
+                        </SelectItem>
+                      ))}
+                    </SelectContent>
+                  </Select>
+                </Field>
 
                 {/* Defaults */}
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
