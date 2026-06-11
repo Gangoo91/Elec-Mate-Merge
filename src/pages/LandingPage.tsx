@@ -8,8 +8,6 @@ import { ArrowRight, Check, ChevronDown, Menu, X } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { StoreBadges } from '@/components/seo/StoreBadges';
 import { useAuth } from '@/contexts/AuthContext';
-import { trackLandingCtaClicked } from '@/lib/analytics-events';
-import { usePublicStats } from '@/hooks/usePublicStats';
 import { useUserCount } from '@/hooks/useUserCount';
 import { LeadMagnetSection } from '@/components/landing/LeadMagnetSection';
 import { ExitIntentModal } from '@/components/landing/ExitIntentModal';
@@ -55,7 +53,7 @@ const workflowSteps: {
   {
     eyebrow: 'CERTIFY',
     title: 'Every BS 7671 cert',
-    description: '19 cert types, A4:2026 ready, signed in minutes.',
+    description: '18 cert types, A4:2026 ready, signed in minutes.',
     replaces: 'iCertifi',
   },
   {
@@ -73,7 +71,7 @@ const workflowSteps: {
   {
     eyebrow: 'TRAIN',
     title: 'L2/L3 · AM2 · EPA',
-    description: '46+ courses, 6,000+ questions, EPA simulator, digital portfolio.',
+    description: '30+ courses, 700+ modules, EPA simulator, digital portfolio.',
     replaces: 'Logic4Training',
   },
 ];
@@ -94,10 +92,10 @@ const getAudienceCards = (
     title: 'Pass AM2 first time.',
     body: 'The complete path from Level 2 to qualified — theory courses, the practical simulator, OJT hours, digital portfolio and an AI mentor that knows BS 7671. Built around the AM2.',
     features: [
-      '46+ courses · 700+ lessons · 6,000+ exam questions (L2 · L3 · AM2)',
+      '46 courses · 106 lessons · 1,750+ exam questions (L2 · L3 · AM2)',
       'AM2 Testing Simulator — Megger MFT dial + EIC schedule sign-off',
       'Digital portfolio · OJT hours · tutor sign-off · AC coverage',
-      '"Ask Dave" AI mentor · 60+ on-job calculators · flashcards',
+      '"Ask Dave" AI mentor · 22+ on-job calculators · flashcards',
     ],
     price: apprenticePrice,
   },
@@ -106,7 +104,7 @@ const getAudienceCards = (
     title: 'Quote, certify, invoice, get paid.',
     body: 'Everything you actually use on the tools, all in one app. Certificates, RAMS, calculators, AI agents — plus an AI Assistant in the sidebar that answers anything BS 7671 and Business Mate that does the admin for you.',
     features: [
-      '19 BS 7671 cert types · A4:2026 ready · works offline',
+      '18 BS 7671 cert types · A4:2026 ready · works offline',
       'AI Assistant in the sidebar — ask anything, every answer cites BS 7671',
       'Business Mate — creates projects, snags, quotes & emails on command',
       'AI agents — Cost Engineer · Circuit Designer · Maintenance · Installer · H&S',
@@ -116,41 +114,6 @@ const getAudienceCards = (
     ],
     price: electricianPrice,
     featured: true,
-  },
-];
-
-const appScreens = [
-  {
-    src: '/images/landing/screen-dashboard.webp',
-    alt: 'Elec-Mate dashboard — quotes, certificates and hubs at a glance',
-  },
-  {
-    src: '/images/landing/screen-certs.webp',
-    alt: 'BS 7671 certificates — new certificate picker and in-progress reports',
-  },
-  {
-    src: '/images/landing/screen-quotes.webp',
-    alt: 'Quoting — AI cost engineer and quote pipeline',
-  },
-  {
-    src: '/images/landing/screen-ai.webp',
-    alt: 'AI assistant — BS 7671 answers with cited regulations',
-  },
-  {
-    src: '/images/landing/screen-calculators.webp',
-    alt: 'Trade calculators — voltage drop, Zs, cable sizing and more',
-  },
-  {
-    src: '/images/landing/screen-designer.webp',
-    alt: 'Circuit designer — cable sizing, breakers and earthing by AI',
-  },
-  {
-    src: '/images/landing/screen-rams.webp',
-    alt: 'RAMS — risk assessments and method statements in minutes',
-  },
-  {
-    src: '/images/landing/screen-study.webp',
-    alt: 'Study centre — courses, mock exams and the AM2 simulator',
   },
 ];
 
@@ -171,7 +134,7 @@ const sitePhotos = [
     src: '/images/site-photos/macbook-cert-types.jpg',
     alt: 'MacBook showing Elec-Mate certificate selector with Megger MFT',
     title: 'Every cert. One click.',
-    subtitle: 'EICR · EIC · Minor Works · Testing Only · plus 15 more.',
+    subtitle: 'EICR · EIC · Minor Works · Testing Only · plus 14 more.',
   },
   {
     src: '/images/site-photos/macbook-workshop-a4.jpg',
@@ -235,7 +198,7 @@ const featurePillars: {
     title: 'Sign BS 7671 certs in minutes.',
     body: 'Every cert, signed on site. AI board scanner reads the panel for you, guided test sequences keep results clean, client handouts print themselves.',
     bullets: [
-      '19 cert types — EIC · EICR · PAT · Solar PV · EV · Fire Alarm',
+      '18 cert types — EIC · EICR · PAT · Solar PV · EV · Fire Alarm',
       'AI Board Scanner — photo in, circuits & ratings out',
       'Guided dead & live test sequences with confidence scoring',
       'A4:2026 ready · works offline · syncs when back online',
@@ -259,9 +222,9 @@ const featurePillars: {
     body: 'Courses, mock exams, the AM2 simulator, OJT hours and a digital portfolio — plus an AI mentor on tap. Every step from Level 2 to qualified.',
     bullets: [
       'AM2 Testing Simulator — real MFT dial, EIC schedule, scoring',
-      '46+ courses · 6,000+ quiz questions (L2 · L3 · AM2 & upskilling)',
+      '8 courses · 106 lessons · 1,750+ quiz questions (L2 · L3 · AM2)',
       'Digital portfolio + OJT hours with tutor sign-off',
-      '"Ask Dave" AI mentor · 60+ calculators · flashcard streaks',
+      '"Ask Dave" AI mentor · 22+ calculators · flashcard streaks',
     ],
   },
 ];
@@ -355,8 +318,6 @@ const getPricingPlans = (isNative: boolean) => [
   {
     name: 'Apprentice',
     price: isNative ? '£6.99' : '£5.99',
-    yearly: isNative ? '£69.99' : '£59.99',
-    yearlySaving: isNative ? '£13.89' : '£11.89',
     description: 'Everything to ace your training.',
     features: [
       '46+ courses (Level 2, 3, AM2 & upskilling)',
@@ -370,19 +331,17 @@ const getPricingPlans = (isNative: boolean) => [
   {
     name: 'Electrician',
     price: isNative ? '£14.99' : '£12.99',
-    yearly: isNative ? '£149.99' : '£129.99',
-    yearlySaving: isNative ? '£29.89' : '£25.89',
     description: 'Your complete site companion.',
     features: [
       'Everything in Apprentice',
       '5 AI specialists',
       'Voice quotes & invoices',
-      '19 certificate types',
+      '17+ certificate types',
       'Pre & post site visit reports',
       'Photo documentation per job',
       'Expenses & materials tracking',
       'Elec-ID digital professional card',
-      '70+ electrical calculators',
+      '50+ electrical calculators',
       'Stripe payments & Xero sync',
     ],
     featured: true,
@@ -399,15 +358,7 @@ const LandingPage = () => {
   const [isNavOpen, setIsNavOpen] = useState(false);
   const [openFaqIndex, setOpenFaqIndex] = useState<number | null>(0);
   const userCount = useUserCount();
-  const publicStats = usePublicStats();
   const navigate = useNavigate();
-  const goToSignup = (
-    section: 'nav' | 'nav_mobile' | 'hero' | 'workflow' | 'final_cta',
-    label?: string
-  ) => {
-    trackLandingCtaClicked({ section, label });
-    navigate('/auth/signup');
-  };
   const isNative = Capacitor.isNativePlatform();
   const pricingPlans = useMemo(() => getPricingPlans(isNative), [isNative]);
   const apprenticePrice = isNative ? '£6.99' : '£5.99';
@@ -580,12 +531,7 @@ const LandingPage = () => {
                   size="sm"
                   className="h-10 touch-manipulation rounded-xl bg-yellow-500 px-5 font-semibold text-black hover:bg-yellow-400"
                 >
-                  <Link
-                    to="/auth/signup"
-                    onClick={() => trackLandingCtaClicked({ section: 'nav' })}
-                  >
-                    Start free trial
-                  </Link>
+                  <Link to="/auth/signup">Start free trial</Link>
                 </Button>
               </>
             )}
@@ -637,12 +583,7 @@ const LandingPage = () => {
                     asChild
                     className="h-12 w-full touch-manipulation rounded-xl bg-yellow-500 text-base font-semibold text-black hover:bg-yellow-400"
                   >
-                    <Link
-                      to="/auth/signup"
-                      onClick={() => trackLandingCtaClicked({ section: 'nav_mobile' })}
-                    >
-                      Start 7-day free trial
-                    </Link>
+                    <Link to="/auth/signup">Start 7-day free trial</Link>
                   </Button>
                   <Button
                     asChild
@@ -660,10 +601,9 @@ const LandingPage = () => {
 
       {/* ========== HERO ========== */}
       <section className="relative px-5 pb-14 pt-[calc(env(safe-area-inset-top)+4rem)] sm:pb-20 sm:pt-28 lg:px-8 lg:pb-24 lg:pt-36">
-        {/* initial={false} — hero must paint immediately (LCP); no hidden-until-JS flash */}
         <motion.div
           variants={fadeUp}
-          initial={false}
+          initial="hidden"
           animate="visible"
           transition={{ duration: 0.55 }}
           className="relative z-10 mx-auto max-w-[80rem] text-center lg:text-left"
@@ -682,18 +622,17 @@ const LandingPage = () => {
           <div className="mt-7 flex flex-wrap items-center justify-center gap-2 lg:justify-start">
             <Pill tone="yellow">
               <Dot tone="yellow" className="mr-1.5" />
-              {userCount} UK sparks
+              {userCount} paying
             </Pill>
-            <Pill tone="yellow">{publicStats.certs} certs issued</Pill>
+            <Pill tone="yellow">738 certs issued</Pill>
             <Pill tone="yellow">£307k invoiced</Pill>
-            <Pill tone="yellow">★★★★★ on the App Store</Pill>
           </div>
 
           <div className="mt-9 flex flex-col items-stretch gap-3 sm:flex-row sm:items-center sm:justify-center lg:justify-start">
             <PrimaryButton
               size="lg"
               fullWidth
-              onClick={() => goToSignup('hero')}
+              onClick={() => navigate('/auth/signup')}
               className="sm:w-auto sm:px-8"
             >
               Start 7-day free trial →
@@ -721,38 +660,14 @@ const LandingPage = () => {
           </p>
 
           <p className="mt-2 text-[13px] text-white/65">
-            From <span className="font-medium text-white">{apprenticePrice}/mo</span> · 7 days free
-            · no charge until day 8 · cancel anytime
+            From <span className="font-medium text-white">{apprenticePrice}/mo</span> · cancel
+            anytime · no card for 7 days
           </p>
 
           <div className="mt-10 flex justify-center lg:justify-start">
             <StoreBadges className="justify-center lg:justify-start" size="md" />
           </div>
-
-          {/* Mobile/tablet — the app itself, below the CTA block */}
-          <div className="mt-12 flex justify-center xl:hidden">
-            <img
-              src="/images/landing/hero-dashboard.webp"
-              alt="Elec-Mate dashboard on iPhone — live quotes, certificates and hubs"
-              width={720}
-              height={1013}
-              loading="lazy"
-              className="w-[260px] rounded-[1.8rem] border border-white/[0.08] shadow-[0_24px_80px_rgba(0,0,0,0.45)] sm:w-[300px]"
-            />
-          </div>
         </motion.div>
-
-        {/* Desktop — app preview in the hero's right column */}
-        <div className="pointer-events-none absolute inset-y-0 right-8 z-0 hidden items-center xl:flex 2xl:right-16">
-          <img
-            src="/images/landing/hero-dashboard.webp"
-            alt="Elec-Mate dashboard on iPhone — live quotes, certificates and hubs"
-            width={720}
-            height={1013}
-            fetchPriority="high"
-            className="w-[330px] rounded-[2rem] border border-white/[0.08] shadow-[0_32px_120px_rgba(0,0,0,0.55)]"
-          />
-        </div>
       </section>
 
       {/* ========== WORKFLOW ========== */}
@@ -780,7 +695,7 @@ const LandingPage = () => {
                   tone="yellow"
                   size="sm"
                   cta="Try free"
-                  onClick={() => goToSignup('workflow', step.eyebrow)}
+                  onClick={() => navigate('/auth/signup')}
                 />
               ))}
             </div>
@@ -938,23 +853,6 @@ const LandingPage = () => {
             ))}
           </div>
 
-          {/* App screenshot gallery — swipe like the App Store */}
-          <div className="mt-12 -mx-5 lg:mt-16 lg:-mx-8">
-            <div className="flex snap-x snap-mandatory gap-4 overflow-x-auto px-5 pb-4 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden lg:px-8">
-              {appScreens.map((screen) => (
-                <img
-                  key={screen.src}
-                  src={screen.src}
-                  alt={screen.alt}
-                  width={560}
-                  height={1212}
-                  loading="lazy"
-                  className="w-[220px] flex-none snap-start rounded-[1.4rem] border border-white/[0.08] sm:w-[250px]"
-                />
-              ))}
-            </div>
-          </div>
-
           <div className="mt-12 flex flex-wrap items-center justify-center gap-x-12 gap-y-6 opacity-90">
             <img
               src="/logos/stripe.svg"
@@ -1098,7 +996,7 @@ const LandingPage = () => {
               <PrimaryButton
                 size="lg"
                 fullWidth
-                onClick={() => goToSignup('final_cta')}
+                onClick={() => navigate('/auth/signup')}
                 className="sm:w-auto sm:px-8"
               >
                 Start 7-day free trial →
@@ -1262,10 +1160,7 @@ const LandingPage = () => {
       {/* ========== STICKY MOBILE CTA ========== */}
       {!user && (
         <div className="fixed bottom-0 left-0 right-0 z-50 border-t border-white/[0.08] bg-black/85 px-4 pb-[max(1rem,env(safe-area-inset-bottom))] pt-4 backdrop-blur-xl sm:hidden">
-          <Link
-            to="/auth/signup"
-            onClick={() => trackLandingCtaClicked({ section: 'sticky_mobile' })}
-          >
+          <Link to="/auth/signup">
             <Button className="h-12 w-full touch-manipulation rounded-xl bg-yellow-500 text-base font-semibold text-black hover:bg-yellow-400">
               Start 7-day free trial
               <ArrowRight className="ml-2 h-4 w-4" />
@@ -1357,13 +1252,7 @@ const AudienceCard = ({
             </span>
             <span className="text-[12px] text-white/55">/mo</span>
           </div>
-          <PrimaryButton
-            size="sm"
-            onClick={() => {
-              trackLandingCtaClicked({ section: 'audience', label: eyebrow });
-              navigate('/auth/signup');
-            }}
-          >
+          <PrimaryButton size="sm" onClick={() => navigate('/auth/signup')}>
             Start free trial →
           </PrimaryButton>
         </div>
@@ -1378,16 +1267,12 @@ const AudienceCard = ({
 const PricingCard = ({
   name,
   price,
-  yearly,
-  yearlySaving,
   description,
   features,
   featured,
 }: {
   name: string;
   price: string;
-  yearly?: string;
-  yearlySaving?: string;
   description: string;
   features: string[];
   featured?: boolean;
@@ -1412,19 +1297,9 @@ const PricingCard = ({
       </span>
       <span className="text-sm text-white">/ month</span>
     </div>
-    {yearly && (
-      <p className="mt-2 text-[13px] text-white/65">
-        or <span className="font-medium text-white">{yearly}/yr</span>
-        {yearlySaving ? ` — save ${yearlySaving}` : ''}
-      </p>
-    )}
     <p className="mt-3 text-[15px] leading-[1.7] text-white">{description}</p>
 
-    <Link
-      to="/auth/signup"
-      className="mt-7"
-      onClick={() => trackLandingCtaClicked({ section: 'pricing', label: name })}
-    >
+    <Link to="/auth/signup" className="mt-7">
       <Button
         className={`h-12 w-full touch-manipulation rounded-xl font-semibold ${
           featured
