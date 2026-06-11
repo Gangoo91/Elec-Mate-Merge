@@ -46,6 +46,7 @@ import {
 } from '@/hooks/useSparkProjects';
 import { supabase } from '@/integrations/supabase/client';
 import { cn } from '@/lib/utils';
+import { PANEL } from '@/components/electrician/shared/surfaces';
 
 const containerVariants = {
   hidden: { opacity: 0 },
@@ -282,7 +283,7 @@ const ProjectsPage = () => {
     <div className="-mt-3 sm:-mt-4 md:-mt-6 bg-background pb-24 min-h-screen">
       {/* Sticky compact header — matches Tasks/Calendar/Time-Tracker pattern */}
       <div className="sticky top-0 z-50 bg-background/95 backdrop-blur-sm border-b border-white/10">
-        <div className="px-4 lg:px-8 py-2 lg:max-w-[1200px] lg:mx-auto">
+        <div className="px-4 lg:px-6 py-2">
           <div className="flex items-center justify-between h-11">
             <div className="flex items-center gap-2">
               <Button
@@ -293,12 +294,21 @@ const ProjectsPage = () => {
               >
                 <ArrowLeft className="h-5 w-5" />
               </Button>
-              <h1 className="text-lg font-bold text-white">Projects</h1>
-              {counts[view] > 0 && (
-                <span className="text-[11px] font-bold bg-white/[0.08] text-white/70 px-2 py-0.5 rounded-full">
-                  {counts[view]}
-                </span>
-              )}
+              <div className="min-w-0">
+                <h1 className="text-lg font-bold text-white leading-tight">Projects</h1>
+                <p className="text-[11px] text-white/60 leading-tight truncate">
+                  <span className="font-semibold text-elec-yellow tabular-nums">
+                    {formatCurrency(metrics.activeValue)}
+                  </span>{' '}
+                  active
+                  {metrics.toBillCount > 0 && (
+                    <>
+                      <span className="mx-1 text-white/30">·</span>
+                      <span className="font-semibold text-white tabular-nums">{metrics.toBillCount}</span> to bill
+                    </>
+                  )}
+                </p>
+              </div>
             </div>
             <Button
               variant="ghost"
@@ -313,80 +323,87 @@ const ProjectsPage = () => {
         </div>
       </div>
 
-      {/* Hero metrics — three tiles, like Time Tracker */}
-      <div className="px-4 lg:px-8 pt-4 lg:max-w-[1200px] lg:mx-auto">
-        <div className="grid grid-cols-3 gap-2 sm:gap-3">
-          <div className="rounded-xl bg-white/[0.03] border border-white/[0.06] px-3 py-3 sm:px-4 sm:py-3.5">
-            <p className="text-[10px] font-semibold uppercase tracking-[0.16em] text-white/45">
-              Active
-            </p>
-            <p className="mt-1 text-[18px] sm:text-[20px] font-bold text-white tabular-nums leading-none">
-              {formatCurrency(metrics.activeValue)}
-            </p>
-            <p className="mt-1 text-[11.5px] text-white/45 tabular-nums">
-              {metrics.activeCount} project{metrics.activeCount === 1 ? '' : 's'}
-            </p>
-          </div>
-          <button
-            type="button"
-            onClick={() => setView('completed')}
-            className={cn(
-              'rounded-xl border px-3 py-3 sm:px-4 sm:py-3.5 text-left touch-manipulation transition-colors',
-              metrics.toBillCount > 0
-                ? 'bg-elec-yellow/[0.06] border-elec-yellow/25 hover:bg-elec-yellow/[0.10]'
-                : 'bg-white/[0.03] border-white/[0.06]'
-            )}
-          >
-            <p
-              className={cn(
-                'text-[10px] font-semibold uppercase tracking-[0.16em]',
-                metrics.toBillCount > 0 ? 'text-elec-yellow' : 'text-white/45'
-              )}
+      {/* 01 · WORKLOAD — elevated panel, mirrors the quotes pipeline */}
+      <div className="px-4 lg:px-6 pt-4 space-y-2.5">
+        <div className="flex items-baseline gap-2">
+          <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-elec-yellow/80 tabular-nums">01</span>
+          <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/65">· Workload</span>
+        </div>
+        <div className={cn(PANEL, 'overflow-hidden')}>
+          <div className="grid grid-cols-3 divide-x divide-white/[0.06]">
+            <div className="px-3.5 py-3.5 sm:px-5">
+              <p className="text-[20px] sm:text-[22px] font-bold text-white tabular-nums leading-none tracking-tight">
+                {formatCurrency(metrics.activeValue)}
+              </p>
+              <p className="text-[11px] text-white/80 mt-1.5">
+                Active · <span className="text-white tabular-nums">{metrics.activeCount}</span>
+              </p>
+            </div>
+            <button
+              type="button"
+              onClick={() => setView('completed')}
+              className="px-3.5 py-3.5 sm:px-5 text-left touch-manipulation active:bg-white/[0.03] transition-colors"
             >
-              To bill {metrics.toBillCount > 0 ? `· ${metrics.toBillCount}` : ''}
-            </p>
-            <p className="mt-1 text-[18px] sm:text-[20px] font-bold text-white tabular-nums leading-none">
-              {formatCurrency(metrics.toBillValue)}
-            </p>
-            <p className="mt-1 text-[11.5px] text-white/45 tabular-nums">completed jobs</p>
-          </button>
-          <div className="rounded-xl bg-white/[0.03] border border-white/[0.06] px-3 py-3 sm:px-4 sm:py-3.5">
-            <p className="text-[10px] font-semibold uppercase tracking-[0.16em] text-white/45">
-              Won this month
-            </p>
-            <p className="mt-1 text-[18px] sm:text-[20px] font-bold text-white tabular-nums leading-none">
-              {formatCurrency(metrics.wonThisMonthValue)}
-            </p>
-            <p className="mt-1 text-[11.5px] text-emerald-400 tabular-nums">
-              {metrics.wonThisMonthCount} job{metrics.wonThisMonthCount === 1 ? '' : 's'}
-            </p>
+              <p
+                className={cn(
+                  'text-[20px] sm:text-[22px] font-bold tabular-nums leading-none tracking-tight',
+                  metrics.toBillCount > 0 ? 'text-elec-yellow' : 'text-white'
+                )}
+              >
+                {formatCurrency(metrics.toBillValue)}
+              </p>
+              <p className="text-[11px] text-white/80 mt-1.5">
+                To bill · <span className="text-white tabular-nums">{metrics.toBillCount}</span>
+              </p>
+            </button>
+            <div className="px-3.5 py-3.5 sm:px-5">
+              <p className="text-[20px] sm:text-[22px] font-bold text-emerald-400 tabular-nums leading-none tracking-tight">
+                {formatCurrency(metrics.wonThisMonthValue)}
+              </p>
+              <p className="text-[11px] text-white/80 mt-1.5">
+                Won this month · <span className="text-white tabular-nums">{metrics.wonThisMonthCount}</span>
+              </p>
+            </div>
           </div>
+          {metrics.toBillCount > 0 && (
+            <button
+              type="button"
+              onClick={() => setView('completed')}
+              className="w-full flex items-center justify-between px-3.5 sm:px-5 py-2.5 border-t border-white/[0.06] touch-manipulation active:bg-white/[0.03] transition-colors"
+            >
+              <span className="text-[12px] text-white/80">
+                <span className="font-semibold text-elec-yellow tabular-nums">{formatCurrency(metrics.toBillValue)}</span>{' '}
+                of finished work hasn\u2019t been invoiced yet
+              </span>
+              <ChevronRight className="h-4 w-4 text-white/40" />
+            </button>
+          )}
         </div>
       </div>
 
       {/* View tabs — slimmed to match the rest of the app */}
-      <div className="px-4 lg:px-8 pt-4 pb-2 lg:max-w-[1200px] lg:mx-auto">
-        <div className="flex gap-1">
+      <div className="px-4 lg:px-6 pt-3">
+        <div className="flex gap-5 border-b border-white/[0.06]">
           {VIEWS.map((v) => (
             <button
               key={v.key}
               onClick={() => setView(v.key)}
-              className={cn(
-                'flex items-center gap-1.5 px-2.5 h-7 rounded-full text-[12px] font-medium transition-colors touch-manipulation',
-                view === v.key
-                  ? 'bg-white/[0.10] text-white'
-                  : 'text-white/45 hover:text-white hover:bg-white/[0.05]'
-              )}
+              className="relative flex-shrink-0 pb-2.5 pt-1 text-[13px] font-medium whitespace-nowrap touch-manipulation select-none"
             >
-              {v.label}
-              <span
-                className={cn(
-                  'text-[10px] font-semibold tabular-nums',
-                  view === v.key ? 'text-white/60' : 'text-white/35'
-                )}
-              >
-                {counts[v.key]}
-              </span>
+              <span className={view === v.key ? 'text-white' : 'text-white/80'}>{v.label}</span>
+              {counts[v.key] > 0 && (
+                <span
+                  className={cn(
+                    'ml-1.5 text-[11px] tabular-nums',
+                    view === v.key ? 'text-elec-yellow' : 'text-white/60'
+                  )}
+                >
+                  {counts[v.key]}
+                </span>
+              )}
+              {view === v.key && (
+                <span className="absolute bottom-0 left-0 right-0 h-[2px] rounded-full bg-elec-yellow" />
+              )}
             </button>
           ))}
         </div>
@@ -394,7 +411,7 @@ const ProjectsPage = () => {
 
       {/* Content */}
       <PullToRefresh onRefresh={refreshProjects}>
-        <div className="px-4 lg:px-8 py-2 lg:max-w-[1200px] lg:mx-auto">
+        <div className="px-4 lg:px-6 py-2">
           {isLoading ? (
             <div className="flex justify-center py-16">
               <Loader2 className="h-6 w-6 animate-spin text-white" />
@@ -440,7 +457,7 @@ const ProjectsPage = () => {
               variants={containerVariants}
               initial="hidden"
               animate="visible"
-              className="grid grid-cols-1 md:grid-cols-2 gap-3"
+              className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-3"
             >
               <AnimatePresence mode="popLayout">
                 {projects.map((project) => {
@@ -451,13 +468,25 @@ const ProjectsPage = () => {
                       variants={itemVariants}
                       layout
                       exit={{ opacity: 0, scale: 0.97 }}
-                      className="group rounded-xl bg-white/[0.06] border border-white/[0.12] hover:border-white/[0.22] hover:bg-white/[0.08] transition-colors overflow-hidden touch-manipulation shadow-sm shadow-black/20"
+                      className={cn(PANEL, 'group relative overflow-hidden touch-manipulation')}
                     >
+                      <div
+                        className={cn(
+                          'absolute inset-x-0 top-0 h-14 bg-gradient-to-b to-transparent pointer-events-none',
+                          isCompleted
+                            ? 'from-emerald-500/[0.07]'
+                            : project.priority === 'urgent'
+                              ? 'from-red-500/[0.08]'
+                              : project.priority === 'high'
+                                ? 'from-orange-500/[0.07]'
+                                : 'from-white/[0.04]'
+                        )}
+                      />
                       {/* Tappable body — opens the project detail */}
                       <button
                         type="button"
                         onClick={() => navigate(`/electrician/projects/${project.id}`)}
-                        className="w-full text-left p-4 active:bg-white/[0.06] transition-colors"
+                        className="relative w-full text-left p-4 active:bg-white/[0.04] transition-colors"
                       >
                         {/* Title row — priority dot · title · value */}
                         <div className="flex items-start gap-3">
@@ -488,8 +517,8 @@ const ProjectsPage = () => {
                           {project.estimatedValue ? (
                             <span
                               className={cn(
-                                'text-[14px] font-bold tabular-nums shrink-0 pt-0.5',
-                                isCompleted ? 'text-white/50' : 'text-emerald-400'
+                                'text-[15px] font-bold tabular-nums shrink-0 pt-0.5 tracking-tight',
+                                isCompleted ? 'text-white/50' : 'text-elec-yellow'
                               )}
                             >
                               {formatCurrency(project.estimatedValue)}
@@ -686,35 +715,33 @@ const ProjectsPage = () => {
             <div className="flex-1 overflow-y-auto px-4 py-4 space-y-5">
               {/* ── Job Details ── */}
               <div className="space-y-3">
-                <div className="flex items-center gap-2 mb-1">
-                  <div className="w-1.5 h-1.5 rounded-full bg-elec-yellow" />
-                  <span className="text-xs font-semibold text-white uppercase tracking-wider">
-                    Job Details
-                  </span>
+                <div className="flex items-baseline gap-2 mb-1">
+                  <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-elec-yellow/80 tabular-nums">01</span>
+                  <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/80">· Job details</span>
                 </div>
 
                 <div>
-                  <label className="text-sm font-medium text-white mb-1.5 block">Title</label>
+                  <label className="text-[11px] font-medium uppercase tracking-wider text-white/65 mb-1.5 block">Title</label>
                   <Input
                     value={newTitle}
                     onChange={(e) => setNewTitle(e.target.value)}
                     placeholder="e.g. Henderson Full Rewire"
-                    className="h-11 text-base touch-manipulation border-white/30 focus:border-yellow-500 focus:ring-yellow-500"
+                    className="h-12 text-base rounded-xl bg-white/[0.05] border-white/[0.10] touch-manipulation focus:border-elec-yellow focus:ring-elec-yellow/15 placeholder:text-white/40"
                   />
                 </div>
 
                 <div>
-                  <label className="text-sm font-medium text-white mb-1.5 block">Description</label>
+                  <label className="text-[11px] font-medium uppercase tracking-wider text-white/65 mb-1.5 block">Description</label>
                   <Input
                     value={newDescription}
                     onChange={(e) => setNewDescription(e.target.value)}
                     placeholder="Brief project description"
-                    className="h-11 text-base touch-manipulation border-white/30 focus:border-yellow-500 focus:ring-yellow-500"
+                    className="h-12 text-base rounded-xl bg-white/[0.05] border-white/[0.10] touch-manipulation focus:border-elec-yellow focus:ring-elec-yellow/15 placeholder:text-white/40"
                   />
                 </div>
 
                 <div>
-                  <label className="text-sm font-medium text-white mb-2 block">Type</label>
+                  <label className="text-[11px] font-medium uppercase tracking-wider text-white/65 mb-2 block">Type</label>
                   <div className="grid grid-cols-3 gap-2">
                     {PROJECT_TYPES.map(({ key, label }) => (
                       <button
@@ -736,16 +763,14 @@ const ProjectsPage = () => {
 
               {/* ── Customer & Location ── */}
               <div className="space-y-3">
-                <div className="flex items-center gap-2 mb-1">
-                  <div className="w-1.5 h-1.5 rounded-full bg-elec-yellow" />
-                  <span className="text-xs font-semibold text-white uppercase tracking-wider">
-                    Customer & Location
-                  </span>
+                <div className="flex items-baseline gap-2 mb-1">
+                  <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-elec-yellow/80 tabular-nums">02</span>
+                  <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/80">· Customer & Location</span>
                 </div>
 
                 {customers.length > 0 && (
                   <div>
-                    <label className="text-sm font-medium text-white mb-1.5 block">Customer</label>
+                    <label className="text-[11px] font-medium uppercase tracking-wider text-white/65 mb-1.5 block">Customer</label>
                     <select
                       value={newCustomerId}
                       onChange={(e) => setNewCustomerId(e.target.value)}
@@ -762,27 +787,25 @@ const ProjectsPage = () => {
                 )}
 
                 <div>
-                  <label className="text-sm font-medium text-white mb-1.5 block">Location</label>
+                  <label className="text-[11px] font-medium uppercase tracking-wider text-white/65 mb-1.5 block">Location</label>
                   <Input
                     value={newLocation}
                     onChange={(e) => setNewLocation(e.target.value)}
                     placeholder="Job site address"
-                    className="h-11 text-base touch-manipulation border-white/30 focus:border-yellow-500 focus:ring-yellow-500"
+                    className="h-12 text-base rounded-xl bg-white/[0.05] border-white/[0.10] touch-manipulation focus:border-elec-yellow focus:ring-elec-yellow/15 placeholder:text-white/40"
                   />
                 </div>
               </div>
 
               {/* ── Priority & Schedule ── */}
               <div className="space-y-3">
-                <div className="flex items-center gap-2 mb-1">
-                  <div className="w-1.5 h-1.5 rounded-full bg-elec-yellow" />
-                  <span className="text-xs font-semibold text-white uppercase tracking-wider">
-                    Priority & Schedule
-                  </span>
+                <div className="flex items-baseline gap-2 mb-1">
+                  <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-elec-yellow/80 tabular-nums">03</span>
+                  <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/80">· Priority & Schedule</span>
                 </div>
 
                 <div>
-                  <label className="text-sm font-medium text-white mb-2 block">Priority</label>
+                  <label className="text-[11px] font-medium uppercase tracking-wider text-white/65 mb-2 block">Priority</label>
                   <div className="grid grid-cols-4 gap-2">
                     {(['low', 'normal', 'high', 'urgent'] as ProjectPriority[]).map((p) => (
                       <button
@@ -804,17 +827,17 @@ const ProjectsPage = () => {
 
                 <div className="grid grid-cols-2 gap-3">
                   <div>
-                    <label className="text-sm font-medium text-white mb-1.5 block">Due Date</label>
+                    <label className="text-[11px] font-medium uppercase tracking-wider text-white/65 mb-1.5 block">Due Date</label>
                     <Input
                       type="date"
                       value={newDueDate}
                       onChange={(e) => setNewDueDate(e.target.value)}
-                      className="h-11 text-base touch-manipulation border-white/30 focus:border-yellow-500 focus:ring-yellow-500"
+                      className="h-12 text-base rounded-xl bg-white/[0.05] border-white/[0.10] touch-manipulation focus:border-elec-yellow focus:ring-elec-yellow/15 placeholder:text-white/40"
                     />
                   </div>
 
                   <div>
-                    <label className="text-sm font-medium text-white mb-1.5 block">
+                    <label className="text-[11px] font-medium uppercase tracking-wider text-white/65 mb-1.5 block">
                       Est. Value
                     </label>
                     <div className="relative">

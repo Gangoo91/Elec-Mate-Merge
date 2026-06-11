@@ -958,8 +958,17 @@ export const InvoiceItemsStep = ({
                     <Zap className="h-3 w-3" /> Live supplier prices
                     {isSearchingLive && <Loader2 className="h-3 w-3 animate-spin text-white/40" />}
                   </p>
-                  {liveResults.slice(0, 8).map((m: any, idx: number) => {
-                    const price = Number(m.price) || 0;
+                  {liveResults
+                    .filter((m: any) => {
+                      const pm = String(m.price ?? '').replace(/,/g, '').match(/£?(\d+\.?\d*)/);
+                      return (Number(m.priceValue) || (pm ? parseFloat(pm[1]) : 0)) > 0;
+                    })
+                    .slice(0, 8)
+                    .map((m: any, idx: number) => {
+                    // API returns price as a display string ("£14.99") — ELE-1074.
+                    // Prefer the numeric field; fall back to comma-safe parsing.
+                    const priceMatch = String(m.price ?? '').replace(/,/g, '').match(/£?(\d+\.?\d*)/);
+                    const price = Number(m.priceValue) || (priceMatch ? parseFloat(priceMatch[1]) : 0);
                     const days = m.scrapedAt
                       ? Math.max(0, Math.floor((Date.now() - new Date(m.scrapedAt).getTime()) / 86400000))
                       : null;

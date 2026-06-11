@@ -1,7 +1,7 @@
 import { useParams, useNavigate } from 'react-router-dom';
 import { Helmet } from 'react-helmet';
 import { cn } from '@/lib/utils';
-import { Loader2, ArrowLeft, MoreHorizontal, Mail, Phone, Pencil, Copy, Download, Check, Bell, RefreshCw, Trash2, Send } from 'lucide-react';
+import { Loader2, ArrowLeft, MoreHorizontal, Mail, Phone, Pencil, Copy, Download, Check, Bell, RefreshCw, Trash2, Send, CreditCard } from 'lucide-react';
 import { Sheet, SheetContent } from '@/components/ui/sheet';
 import { useEffect, useState, useMemo, Fragment } from 'react';
 import { supabase } from '@/integrations/supabase/client';
@@ -239,6 +239,48 @@ const InvoiceViewPage = () => {
       toast({ title: 'Error', description: 'Failed to generate invoice PDF.', variant: 'destructive' });
     } finally {
       setIsDownloading(false);
+    }
+  };
+
+  // Copy the Stripe pay-by-card link — creates it on first use. The
+  // ClipboardItem promise payload keeps the iOS user gesture alive across
+  // the network call (same pattern as the quote client link).
+  const handleCopyPaymentLink = async () => {
+    if (!invoice) return;
+    const buildLink = async (): Promise<string> => {
+      const { data: session } = await supabase.auth.getSession();
+      if (!session.session) throw new Error('Please log in');
+      const res = await supabase.functions.invoke('create-invoice-payment-link', {
+        headers: { Authorization: `Bearer ${session.session.access_token}` },
+        body: { invoiceId: invoice.id },
+      });
+      if (res.data?.error === 'stripe_not_connected') {
+        throw new Error('connect_first');
+      }
+      const url = res.data?.url || res.data?.paymentUrl || (invoice as { stripe_payment_link_url?: string }).stripe_payment_link_url;
+      if (res.error || !url) throw new Error(res.error?.message || 'No payment link returned');
+      return url as string;
+    };
+    try {
+      if (typeof ClipboardItem !== 'undefined' && navigator.clipboard?.write) {
+        await navigator.clipboard.write([
+          new ClipboardItem({ 'text/plain': buildLink().then((u) => new Blob([u], { type: 'text/plain' })) }),
+        ]);
+      } else {
+        const url = await buildLink();
+        await navigator.clipboard.writeText(url);
+      }
+      toast({ title: 'Payment link copied', description: 'Paste it into WhatsApp or a text — your client can pay by card or Apple Pay' });
+    } catch (err) {
+      if (err instanceof Error && err.message === 'connect_first') {
+        toast({
+          title: 'Connect Stripe first',
+          description: 'Set up card payments in Settings → Payments, then this link is one tap.',
+          variant: 'destructive',
+        });
+      } else {
+        toast({ title: 'Couldn\u2019t create the payment link', variant: 'destructive' });
+      }
     }
   };
 
@@ -942,6 +984,21 @@ const InvoiceViewPage = () => {
                   <span className="block text-[11px] text-white/55 mt-0.5">New invoice from this one</span>
                 </span>
               </button>
+
+              {invoice.invoice_status !== 'paid' && (
+                <button
+                  onClick={() => { setShowActionsSheet(false); handleCopyPaymentLink(); }}
+                  className="flex flex-col items-start gap-2.5 p-3.5 rounded-xl border touch-manipulation active:scale-[0.98] transition-all text-left select-none bg-elec-yellow/[0.06] border-elec-yellow/[0.15] hover:bg-elec-yellow/[0.1]"
+                >
+                  <span className="h-10 w-10 rounded-xl flex items-center justify-center bg-elec-yellow/[0.1] border border-elec-yellow/[0.15]">
+                    <CreditCard className="h-4 w-4 text-elec-yellow" />
+                  </span>
+                  <span>
+                    <span className="block text-[13px] font-semibold text-white">Copy payment link</span>
+                    <span className="block text-[11px] text-white/55 mt-0.5">Client pays by card or Apple Pay</span>
+                  </span>
+                </button>
+              )}
 
               <button
                 onClick={() => { setShowActionsSheet(false); handleDownloadPDF(); }}

@@ -7,7 +7,6 @@ import {
   ClipboardCheck,
   Loader2,
   AlertTriangle,
-  Flame,
   Sparkles,
 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
@@ -222,32 +221,29 @@ const TasksPage = () => {
     <div className="-mt-3 sm:-mt-4 md:-mt-6 bg-background pb-24 min-h-screen">
       {/* Sticky compact bar — back, title, add */}
       <div className="sticky top-0 z-50 bg-background/95 backdrop-blur-sm border-b border-white/10">
-        <div className="px-4 lg:px-8 py-2 lg:max-w-[1200px] lg:mx-auto">
+        <div className="px-4 lg:px-6 py-2">
           <div className="flex items-center justify-between h-11">
-            <div className="flex items-center gap-2">
+            <div className="flex items-center gap-2 min-w-0">
               <Button
                 variant="ghost"
                 size="icon"
                 onClick={() => navigate('/electrician/business')}
-                className="text-white hover:text-white hover:bg-white/10 rounded-xl h-11 w-11 touch-manipulation active:scale-[0.98]"
+                className="text-white hover:text-white hover:bg-white/10 rounded-xl h-11 w-11 touch-manipulation active:scale-[0.98] flex-shrink-0"
               >
                 <ArrowLeft className="h-5 w-5" />
               </Button>
-              <h1 className="text-lg font-bold text-white">Tasks</h1>
-              {counts[activeView] > 0 && (
-                <span
-                  className={cn(
-                    'text-[11px] font-bold px-2.5 py-0.5 rounded-full min-w-[24px] text-center shadow-sm',
-                    activeView === 'completed'
-                      ? 'bg-emerald-500/20 text-emerald-400 ring-1 ring-emerald-500/20'
-                      : (counts.overdue ?? 0) > 0 && activeView === 'all'
-                        ? 'bg-gradient-to-r from-red-500 to-orange-500 text-white shadow-red-500/25'
-                        : 'bg-gradient-to-r from-yellow-400/90 to-amber-500/90 text-black shadow-yellow-500/20'
+              <div className="min-w-0">
+                <h1 className="text-lg font-bold text-white leading-tight">Tasks</h1>
+                <p className="text-[11px] text-white/60 leading-tight truncate">
+                  <span className="font-semibold text-white tabular-nums">{counts.all ?? 0}</span> open
+                  {(counts.overdue ?? 0) > 0 && (
+                    <>
+                      <span className="mx-1 text-white/30">·</span>
+                      <span className="font-semibold text-red-400 tabular-nums">{counts.overdue}</span> overdue
+                    </>
                   )}
-                >
-                  {counts[activeView]}
-                </span>
-              )}
+                </p>
+              </div>
             </div>
             <Button
               variant="ghost"
@@ -264,64 +260,46 @@ const TasksPage = () => {
         {/* Filter tabs — single source of truth for what's on screen.
             "Overdue" leads when count > 0 with a red tint so the eye lands
             on what's pressing without needing a separate stat grid. */}
-        <div className="px-4 lg:px-8 pb-2 lg:max-w-[1200px] lg:mx-auto">
+        <div className="px-4 lg:px-6 lg:mx-auto">
           <div className="relative">
-            <div className="flex gap-1 overflow-x-auto scrollbar-hide">
-              {counts.overdue > 0 && (
-                <button
-                  type="button"
-                  onClick={() => setActiveView('all')}
-                  className={cn(
-                    'relative flex items-center gap-1.5 px-3 py-1.5 rounded-full text-[13px] font-medium whitespace-nowrap transition-colors touch-manipulation',
-                    'bg-red-500/15 text-red-300 border border-red-500/30 active:bg-red-500/25'
-                  )}
-                >
-                  <Flame className="h-3 w-3" />
-                  Overdue
-                  <span className="text-[10px] font-bold px-1.5 py-0.5 rounded-full min-w-[18px] text-center bg-red-500/30 text-red-200">
-                    {counts.overdue}
-                  </span>
-                </button>
-              )}
+            <div className="flex gap-5 overflow-x-auto scrollbar-hide">
               {VIEWS.map((v) => (
                 <button
                   key={v.key}
                   type="button"
                   onClick={() => setActiveView(v.key)}
-                  className={cn(
-                    'relative flex items-center gap-1.5 px-3 py-1.5 rounded-full text-[13px] font-medium whitespace-nowrap transition-colors touch-manipulation',
-                    activeView === v.key
-                      ? 'bg-elec-yellow text-black'
-                      : 'bg-white/[0.06] text-white active:bg-white/10'
-                  )}
+                  className="relative flex-shrink-0 pb-2.5 pt-1 text-[13px] font-medium whitespace-nowrap touch-manipulation select-none"
                 >
-                  {v.icon && <v.icon className="h-3 w-3" />}
-                  {v.label}
+                  <span className={activeView === v.key ? 'text-white' : 'text-white/80'}>
+                    {v.label}
+                  </span>
                   {counts[v.key] > 0 && (
                     <span
                       className={cn(
-                        'text-[10px] font-bold px-1.5 py-0.5 rounded-full min-w-[18px] text-center',
-                        activeView === v.key
-                          ? 'bg-black/20 text-black'
-                          : v.key === 'snagging'
-                            ? 'bg-orange-500/20 text-orange-400'
-                            : 'bg-white/10 text-white'
+                        'ml-1.5 text-[11px] tabular-nums',
+                        v.key === 'snagging' && counts.snagging > 0
+                          ? 'text-orange-400'
+                          : activeView === v.key
+                            ? 'text-elec-yellow'
+                            : 'text-white/60'
                       )}
                     >
                       {counts[v.key]}
                     </span>
                   )}
+                  {activeView === v.key && (
+                    <span className="absolute bottom-0 left-0 right-0 h-[2px] rounded-full bg-elec-yellow" />
+                  )}
                 </button>
               ))}
             </div>
-            {/* Right fade */}
             <div className="absolute right-0 top-0 bottom-0 w-8 bg-gradient-to-l from-background to-transparent pointer-events-none" />
           </div>
         </div>
       </div>
 
       {/* ─── Quick-add bar — straight to action, no editorial chrome ─── */}
-      <div className="px-4 lg:px-8 pt-4 lg:max-w-[1200px] lg:mx-auto">
+      <div className="px-4 lg:px-6 pt-4">
         <TaskQuickAdd
           onQuickSave={handleQuickSave}
           onExpandForm={() => handleOpenForm()}
@@ -339,24 +317,24 @@ const TasksPage = () => {
 
       {/* Task list */}
       <PullToRefresh onRefresh={refreshTasks} isRefreshing={isLoading}>
-        <div className="px-4 lg:px-8 py-4 lg:max-w-[1200px] lg:mx-auto">
+        <div className="px-4 lg:px-6 py-4">
           {isLoading && tasks.length === 0 ? (
             <div className="flex flex-col items-center justify-center py-16">
               <Loader2 className="h-8 w-8 text-white animate-spin" />
               <p className="text-sm text-white mt-3">Loading tasks...</p>
             </div>
           ) : tasks.length === 0 ? (
-            <div className="flex flex-col items-center justify-center py-12">
-              <div className="p-4 rounded-2xl bg-white/[0.04] mb-4">
-                <ClipboardCheck className="h-10 w-10 text-white" />
+            <div className="rounded-2xl border border-white/[0.10] bg-gradient-to-b from-white/[0.06] to-white/[0.03] shadow-[0_8px_24px_rgba(0,0,0,0.35)] flex flex-col items-center justify-center text-center py-10 px-4">
+              <div className="h-12 w-12 rounded-2xl bg-white/[0.05] border border-white/[0.08] flex items-center justify-center mb-3.5">
+                <ClipboardCheck className="h-6 w-6 text-white/70" />
               </div>
-              <h3 className="text-base font-bold text-white mb-1">{empty.title}</h3>
-              <p className="text-sm text-white mb-5">{empty.subtitle}</p>
+              <h3 className="text-[15px] font-semibold text-white mb-1">{empty.title}</h3>
+              <p className="text-[13px] text-white/60 mb-4">{empty.subtitle}</p>
               {activeView !== 'completed' && (
                 <button
                   type="button"
                   onClick={() => setTemplatesOpen(true)}
-                  className="px-5 py-2.5 rounded-xl bg-purple-500/20 text-purple-400 text-sm font-semibold touch-manipulation active:bg-purple-500/30 transition-colors"
+                  className="px-5 h-11 rounded-xl bg-elec-yellow text-black text-[13px] font-semibold touch-manipulation active:scale-[0.97] transition-all"
                 >
                   Browse templates
                 </button>
@@ -373,18 +351,21 @@ const TasksPage = () => {
               {groups.map((group) => (
                 <motion.div key={group.key} variants={itemVariants}>
                   {/* Subtle group label — small caps, count inline, no badges */}
-                  <div className="flex items-baseline gap-2 px-4 lg:px-0 mb-1">
+                  <div className="flex items-baseline gap-2 mb-1.5">
+                    <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-elec-yellow/80 tabular-nums">
+                      0{groups.indexOf(group) + 1}
+                    </span>
                     <span
                       className={cn(
-                        'text-[11px] font-semibold uppercase tracking-[0.18em]',
+                        'text-[10px] font-medium uppercase tracking-[0.18em]',
                         group.key === 'overdue'
                           ? 'text-red-400'
                           : group.key === 'today'
                             ? 'text-amber-400'
-                            : 'text-white/45'
+                            : 'text-white/65'
                       )}
                     >
-                      {group.label}
+                      · {group.label}
                     </span>
                     <span className="text-[11px] font-medium text-white/35 tabular-nums">
                       {group.tasks.length}

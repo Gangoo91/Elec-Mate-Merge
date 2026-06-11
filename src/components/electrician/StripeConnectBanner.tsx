@@ -9,9 +9,11 @@ import { storageGetSync, storageSetSync } from '@/utils/storage';
 interface StripeConnectBannerProps {
   className?: string;
   refreshKey?: number;
+  /** Total unpaid £ across invoices — makes the pitch concrete. */
+  outstandingAmount?: number;
 }
 
-const StripeConnectBanner: React.FC<StripeConnectBannerProps> = ({ className, refreshKey = 0 }) => {
+const StripeConnectBanner: React.FC<StripeConnectBannerProps> = ({ className, refreshKey = 0, outstandingAmount = 0 }) => {
   const [status, setStatus] = useState<
     'loading' | 'not_connected' | 'pending' | 'active' | 'dismissed'
   >('loading');
@@ -22,9 +24,10 @@ const StripeConnectBanner: React.FC<StripeConnectBannerProps> = ({ className, re
   }, [refreshKey]);
 
   const checkStatus = async () => {
-    // Check if user dismissed the banner
-    const dismissed = storageGetSync('stripe_connect_banner_dismissed');
-    if (dismissed) {
+    // Dismiss = snooze, not kill. (The old permanent-dismiss key is retired
+    // deliberately — one X months ago shouldn't hide card payments forever.)
+    const snoozedUntil = storageGetSync('stripe_connect_banner_snooze_until');
+    if (snoozedUntil && new Date(snoozedUntil) > new Date()) {
       setStatus('dismissed');
       return;
     }
@@ -135,7 +138,7 @@ const StripeConnectBanner: React.FC<StripeConnectBannerProps> = ({ className, re
       });
 
       if (response.error) {
-        let errorDetails = response.error.message || 'Failed to connect Stripe';
+        const errorDetails = response.error.message || 'Failed to connect Stripe';
         throw new Error(errorDetails);
       }
 
@@ -161,7 +164,8 @@ const StripeConnectBanner: React.FC<StripeConnectBannerProps> = ({ className, re
   const handleConnect = handleConnectOAuth; // Default to OAuth for existing accounts
 
   const handleDismiss = () => {
-    storageSetSync('stripe_connect_banner_dismissed', 'true');
+    const until = new Date(Date.now() + 14 * 24 * 60 * 60 * 1000).toISOString();
+    storageSetSync('stripe_connect_banner_snooze_until', until);
     setStatus('dismissed');
   };
 
@@ -170,36 +174,49 @@ const StripeConnectBanner: React.FC<StripeConnectBannerProps> = ({ className, re
     return null;
   }
 
+  const hasOutstanding = outstandingAmount > 0;
+  const fmtMoney = (n: number) =>
+    `£${n.toLocaleString('en-GB', { minimumFractionDigits: 0, maximumFractionDigits: 0 })}`;
+
   return (
     <div
       className={cn(
-        'relative rounded-xl overflow-hidden',
-        status === 'pending'
-          ? 'bg-gradient-to-r from-amber-500/15 to-orange-500/10 border border-amber-500/20'
-          : 'bg-gradient-to-r from-indigo-500/15 to-purple-500/10 border border-indigo-500/20',
+        'relative rounded-2xl border border-white/[0.10] bg-gradient-to-b from-white/[0.06] to-white/[0.03] shadow-[0_8px_24px_rgba(0,0,0,0.35)] overflow-hidden',
         className
       )}
     >
-      <div className="flex items-center gap-3 p-3 pr-10">
+      <div
+        className={cn(
+          'absolute inset-x-0 top-0 h-14 bg-gradient-to-b to-transparent pointer-events-none',
+          status === 'pending' ? 'from-amber-500/[0.10]' : 'from-elec-yellow/[0.08]'
+        )}
+      />
+      <div className="relative flex items-center gap-3 p-3.5 pr-10">
         <div
           className={cn(
-            'h-10 w-10 rounded-xl flex items-center justify-center flex-shrink-0',
-            status === 'pending' ? 'bg-amber-500/20' : 'bg-indigo-500/20'
+            'h-11 w-11 rounded-xl flex items-center justify-center flex-shrink-0 border',
+            status === 'pending'
+              ? 'bg-amber-500/[0.12] border-amber-500/[0.2]'
+              : 'bg-elec-yellow/[0.12] border-elec-yellow/[0.2]'
           )}
         >
           <CreditCard
-            className={cn('h-5 w-5', status === 'pending' ? 'text-amber-400' : 'text-indigo-400')}
+            className={cn('h-5 w-5', status === 'pending' ? 'text-amber-400' : 'text-elec-yellow')}
           />
         </div>
 
         <div className="flex-1 min-w-0">
-          <p className="text-sm font-medium text-foreground truncate">
-            {status === 'pending' ? 'Finish Stripe setup' : 'Enable card payments'}
-          </p>
-          <p className="text-xs text-white truncate">
+          <p className="text-[14px] font-semibold text-white">
             {status === 'pending'
-              ? 'Complete setup to accept payments'
-              : 'Let clients pay invoices online'}
+              ? 'Finish Stripe setup — you\u2019re minutes away'
+              : hasOutstanding
+                ? `${fmtMoney(outstandingAmount)} waiting to be paid`
+                : 'Get paid by card'}
+          </p>
+          <p className="text-[12px] text-white/60 mt-0.5">
+            {status === 'pending'
+              ? 'Complete setup and every invoice gets a Pay now button'
+              : 'Card and Apple Pay on every invoice — clients pay the same day'}
           </p>
         </div>
 
@@ -207,29 +224,30 @@ const StripeConnectBanner: React.FC<StripeConnectBannerProps> = ({ className, re
           onClick={handleConnect}
           disabled={connecting}
           className={cn(
-            'flex items-center gap-1.5 px-3 py-2 rounded-lg text-sm font-semibold transition-all active:scale-[0.98] touch-manipulation whitespace-nowrap',
+            'flex items-center gap-1.5 px-4 h-11 rounded-xl text-[13px] font-semibold transition-all active:scale-[0.97] touch-manipulation whitespace-nowrap',
             status === 'pending'
-              ? 'bg-amber-500 hover:bg-amber-600 text-white'
-              : 'bg-indigo-500 hover:bg-indigo-600 text-white'
+              ? 'bg-amber-500 hover:bg-amber-400 text-black'
+              : 'bg-elec-yellow hover:bg-elec-yellow/90 text-black'
           )}
         >
           {connecting ? (
             <Loader2 className="h-4 w-4 animate-spin" />
           ) : (
             <>
-              {status === 'pending' ? 'Continue' : 'Enable'}
+              {status === 'pending' ? 'Continue' : 'Set up'}
               <ArrowRight className="h-3.5 w-3.5" />
             </>
           )}
         </button>
       </div>
 
-      {/* Dismiss button */}
+      {/* Snooze (14 days) */}
       <button
         onClick={handleDismiss}
-        className="absolute top-2 right-2 h-6 w-6 flex items-center justify-center rounded-full hover:bg-white/10 transition-colors"
+        aria-label="Hide for two weeks"
+        className="absolute top-2 right-2 h-7 w-7 flex items-center justify-center rounded-full hover:bg-white/10 transition-colors"
       >
-        <X className="h-3.5 w-3.5 text-white" />
+        <X className="h-3.5 w-3.5 text-white/60" />
       </button>
     </div>
   );

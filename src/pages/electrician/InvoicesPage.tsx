@@ -645,7 +645,7 @@ const InvoicesPage = () => {
       {/* Content */}
       <main className="px-4 py-4 space-y-6 pb-24">
         {/* Stripe Connect Banner */}
-        <StripeConnectBanner refreshKey={stripeRefreshKey} />
+        <StripeConnectBanner refreshKey={stripeRefreshKey} outstandingAmount={stats.outstandingValue} />
 
         {/* 01 · REVENUE — panel, mirrors QuotesPage pipeline */}
         <div className="space-y-3">
