@@ -172,7 +172,9 @@ export function useCreateSignatureRequest() {
           body: { signatureRequestId: data.id },
         });
         if (emailError) {
-          // The request row exists, the email did not go — say so
+          // The request row EXISTS — refresh the list so the user sees it,
+          // then explain (otherwise they retry and create a duplicate)
+          queryClient.invalidateQueries({ queryKey: ['signatureRequests'] });
           throw new Error(
             'Request created, but the email failed to send — use Copy link and send it yourself.'
           );
