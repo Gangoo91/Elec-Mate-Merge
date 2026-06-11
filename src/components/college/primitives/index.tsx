@@ -451,7 +451,7 @@ export function HubCard({
     <button
       onClick={onClick}
       className={cn(
-        'group relative bg-[hsl(0_0%_12%)] hover:bg-[hsl(0_0%_15%)] transition-colors p-6 sm:p-7 lg:p-8 text-left touch-manipulation flex flex-col',
+        'group relative bg-[hsl(0_0%_12%)] hover:bg-[hsl(0_0%_15%)] active:bg-[hsl(0_0%_16%)] active:scale-[0.99] transition-[background-color,transform] p-6 sm:p-7 lg:p-8 text-left touch-manipulation flex flex-col',
         minH
       )}
     >

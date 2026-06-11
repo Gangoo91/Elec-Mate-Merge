@@ -140,7 +140,7 @@ export const LandingHero = () => {
             <div className="flex items-center gap-2 shrink-0">
               <Zap className="w-4 h-4 sm:w-5 sm:h-5 text-yellow-400/80" />
               <span className="text-xs sm:text-sm font-medium whitespace-nowrap">
-                No Card Required
+                No Charge Until Day 8
               </span>
             </div>
             <div className="w-px h-4 bg-white/10 shrink-0 hidden sm:block" />

@@ -88,7 +88,7 @@ export const FinalCTA = () => {
           </div>
 
           <p className="text-white text-sm mt-6">
-            7-day free trial. No card required. Cancel anytime.
+            7-day free trial. No charge until day 8. Cancel anytime.
           </p>
         </motion.div>
       </div>

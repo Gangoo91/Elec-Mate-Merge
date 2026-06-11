@@ -266,7 +266,7 @@ const Index = () => {
           >
             <span className="flex items-center gap-1.5">
               <CheckCircle2 className="h-4 w-4 text-green-500" />
-              No card required
+              No charge until day 8
             </span>
             <span className="flex items-center gap-1.5">
               <CheckCircle2 className="h-4 w-4 text-green-500" />
@@ -649,7 +649,7 @@ const Index = () => {
           </motion.div>
 
           <div className="flex justify-center gap-4 text-ios-caption-1 text-white">
-            <span>No card</span>
+            <span>No charge until day 8</span>
             <span className="w-1 h-1 rounded-full bg-white/20 self-center" />
             <span>7 days free</span>
             <span className="w-1 h-1 rounded-full bg-white/20 self-center" />

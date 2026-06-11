@@ -614,7 +614,7 @@ export default function ElectricianHourlyRatePage() {
       faqHeading="Frequently Asked Questions About Electrician Hourly Rates"
       relatedPages={relatedPages}
       ctaHeading="Quote and Invoice Like a Professional with Elec-Mate"
-      ctaSubheading="Join 1,000+ UK electricians using Elec-Mate to produce professional quotes, certificates, and invoices on site. 7-day free trial, no credit card required."
+      ctaSubheading="Join 1,000+ UK electricians using Elec-Mate to produce professional quotes, certificates, and invoices on site. 7-day free trial, no charge until day 8."
     />
   );
 }

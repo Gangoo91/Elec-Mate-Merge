@@ -365,7 +365,7 @@ export function BusinessAISalesView() {
             <div className="flex flex-col items-center gap-3.5">
               <PrimaryCta size="lg" />
               <p className="text-[12px] sm:text-[13px] text-white/55 text-center">
-                No card needed today · 3 days totally free · cancel any time
+                3 days totally free · no charge until day 4 · cancel any time
                 {hasFounderSlots && (
                   <>
                     {' · '}then £39.99 after first {slotsCap}

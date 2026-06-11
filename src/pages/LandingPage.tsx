@@ -1,4 +1,4 @@
-import { useMemo, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import { Helmet } from 'react-helmet';
 import { Link, useNavigate } from 'react-router-dom';
 import { Capacitor } from '@capacitor/core';
@@ -8,6 +8,8 @@ import { ArrowRight, Check, ChevronDown, Menu, X } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { StoreBadges } from '@/components/seo/StoreBadges';
 import { useAuth } from '@/contexts/AuthContext';
+import { trackLandingCtaClicked } from '@/lib/analytics-events';
+import { usePublicStats } from '@/hooks/usePublicStats';
 import { useUserCount } from '@/hooks/useUserCount';
 import { LeadMagnetSection } from '@/components/landing/LeadMagnetSection';
 import { ExitIntentModal } from '@/components/landing/ExitIntentModal';
@@ -53,7 +55,7 @@ const workflowSteps: {
   {
     eyebrow: 'CERTIFY',
     title: 'Every BS 7671 cert',
-    description: '18 cert types, A4:2026 ready, signed in minutes.',
+    description: '19 cert types, A4:2026 ready, signed in minutes.',
     replaces: 'iCertifi',
   },
   {
@@ -71,7 +73,7 @@ const workflowSteps: {
   {
     eyebrow: 'TRAIN',
     title: 'L2/L3 · AM2 · EPA',
-    description: '30+ courses, 700+ modules, EPA simulator, digital portfolio.',
+    description: '46+ courses, 6,000+ questions, EPA simulator, digital portfolio.',
     replaces: 'Logic4Training',
   },
 ];
@@ -92,10 +94,10 @@ const getAudienceCards = (
     title: 'Pass AM2 first time.',
     body: 'The complete path from Level 2 to qualified — theory courses, the practical simulator, OJT hours, digital portfolio and an AI mentor that knows BS 7671. Built around the AM2.',
     features: [
-      '46 courses · 106 lessons · 1,750+ exam questions (L2 · L3 · AM2)',
+      '46+ courses · 700+ lessons · 6,000+ exam questions (L2 · L3 · AM2)',
       'AM2 Testing Simulator — Megger MFT dial + EIC schedule sign-off',
       'Digital portfolio · OJT hours · tutor sign-off · AC coverage',
-      '"Ask Dave" AI mentor · 22+ on-job calculators · flashcards',
+      '"Ask Dave" AI mentor · 60+ on-job calculators · flashcards',
     ],
     price: apprenticePrice,
   },
@@ -104,7 +106,7 @@ const getAudienceCards = (
     title: 'Quote, certify, invoice, get paid.',
     body: 'Everything you actually use on the tools, all in one app. Certificates, RAMS, calculators, AI agents — plus an AI Assistant in the sidebar that answers anything BS 7671 and Business Mate that does the admin for you.',
     features: [
-      '18 BS 7671 cert types · A4:2026 ready · works offline',
+      '19 BS 7671 cert types · A4:2026 ready · works offline',
       'AI Assistant in the sidebar — ask anything, every answer cites BS 7671',
       'Business Mate — creates projects, snags, quotes & emails on command',
       'AI agents — Cost Engineer · Circuit Designer · Maintenance · Installer · H&S',
@@ -114,6 +116,50 @@ const getAudienceCards = (
     ],
     price: electricianPrice,
     featured: true,
+  },
+];
+
+// 24px blur-up placeholder for the hero phone shot (~190 bytes inline) — paints
+// instantly behind the real image so it fades in rather than popping from nothing
+const HERO_THUMB =
+  'data:image/webp;base64,UklGRoQAAABXRUJQVlA4IHgAAAAwBACdASoYACUAPxF8uFGsKCWiqqoBgCIJaQAAPY72bxHAu9Qezf3RUSAA/u6SKVZF3sMr2B0Dq/NNvud70W9+z3aSH4DEaHjddF56Jtdc2FTmKzdCcSzMkF314SZoG0ck/dpQzR0XClNeFrRYJBc25Tkyi8bAAAA=';
+const heroThumbStyle = {
+  backgroundImage: `url(${HERO_THUMB})`,
+  backgroundSize: 'cover',
+} as const;
+
+const appScreens = [
+  {
+    src: '/images/landing/screen-dashboard.webp',
+    alt: 'Elec-Mate dashboard — quote pipeline, certificates and overdue invoices at a glance',
+  },
+  {
+    src: '/images/landing/screen-certs.webp',
+    alt: 'BS 7671 certificates in minutes — EICR, EIC and Minor Works pickers',
+  },
+  {
+    src: '/images/landing/screen-business.webp',
+    alt: 'Business Hub — paid, outstanding and overdue invoices in one place',
+  },
+  {
+    src: '/images/landing/screen-rams.webp',
+    alt: 'RAMS generated in 2 minutes — AI handles the boilerplate',
+  },
+  {
+    src: '/images/landing/screen-design.webp',
+    alt: 'AI design consultation — circuit designer with cable sizing and CU layouts',
+  },
+  {
+    src: '/images/landing/screen-calculators.webp',
+    alt: 'Built-in electrical calculators — BS 7671 compliant professional tools',
+  },
+  {
+    src: '/images/landing/screen-ai.webp',
+    alt: 'AI that understands electrical work — every answer cites the exact regulation',
+  },
+  {
+    src: '/images/landing/screen-study.webp',
+    alt: 'Learn when and where you want — courses, quizzes and streaks',
   },
 ];
 
@@ -134,7 +180,7 @@ const sitePhotos = [
     src: '/images/site-photos/macbook-cert-types.jpg',
     alt: 'MacBook showing Elec-Mate certificate selector with Megger MFT',
     title: 'Every cert. One click.',
-    subtitle: 'EICR · EIC · Minor Works · Testing Only · plus 14 more.',
+    subtitle: 'EICR · EIC · Minor Works · Testing Only · plus 15 more.',
   },
   {
     src: '/images/site-photos/macbook-workshop-a4.jpg',
@@ -198,7 +244,7 @@ const featurePillars: {
     title: 'Sign BS 7671 certs in minutes.',
     body: 'Every cert, signed on site. AI board scanner reads the panel for you, guided test sequences keep results clean, client handouts print themselves.',
     bullets: [
-      '18 cert types — EIC · EICR · PAT · Solar PV · EV · Fire Alarm',
+      '19 cert types — EIC · EICR · PAT · Solar PV · EV · Fire Alarm',
       'AI Board Scanner — photo in, circuits & ratings out',
       'Guided dead & live test sequences with confidence scoring',
       'A4:2026 ready · works offline · syncs when back online',
@@ -222,9 +268,9 @@ const featurePillars: {
     body: 'Courses, mock exams, the AM2 simulator, OJT hours and a digital portfolio — plus an AI mentor on tap. Every step from Level 2 to qualified.',
     bullets: [
       'AM2 Testing Simulator — real MFT dial, EIC schedule, scoring',
-      '8 courses · 106 lessons · 1,750+ quiz questions (L2 · L3 · AM2)',
+      '46+ courses · 6,000+ quiz questions (L2 · L3 · AM2 & upskilling)',
       'Digital portfolio + OJT hours with tutor sign-off',
-      '"Ask Dave" AI mentor · 22+ calculators · flashcard streaks',
+      '"Ask Dave" AI mentor · 60+ calculators · flashcard streaks',
     ],
   },
 ];
@@ -264,11 +310,11 @@ const exploreTools = [
   { to: '/training/electrical-apprentice', label: 'Apprentice Training', desc: 'Level 2, 3 & AM2' },
 ];
 
-const mentalHealthTags = [
-  'Mood Tracking',
-  'Breathing Exercises',
-  'Crisis Resources',
-  'Peer Support',
+const mentalHealthFeatures = [
+  { title: 'Mood tracking', desc: 'Check in daily, spot the bad patches early.' },
+  { title: 'Breathing exercises', desc: 'Two minutes to reset, even on site.' },
+  { title: 'Crisis resources', desc: 'The right help, one tap away — 24/7.' },
+  { title: 'Peer support', desc: 'Sparks who get it, not strangers.' },
 ];
 
 const faqs = [
@@ -318,6 +364,8 @@ const getPricingPlans = (isNative: boolean) => [
   {
     name: 'Apprentice',
     price: isNative ? '£6.99' : '£5.99',
+    yearly: isNative ? '£69.99' : '£59.99',
+    yearlySaving: isNative ? '£13.89' : '£11.89',
     description: 'Everything to ace your training.',
     features: [
       '46+ courses (Level 2, 3, AM2 & upskilling)',
@@ -331,17 +379,19 @@ const getPricingPlans = (isNative: boolean) => [
   {
     name: 'Electrician',
     price: isNative ? '£14.99' : '£12.99',
+    yearly: isNative ? '£149.99' : '£129.99',
+    yearlySaving: isNative ? '£29.89' : '£25.89',
     description: 'Your complete site companion.',
     features: [
       'Everything in Apprentice',
       '5 AI specialists',
       'Voice quotes & invoices',
-      '17+ certificate types',
+      '19 certificate types',
       'Pre & post site visit reports',
       'Photo documentation per job',
       'Expenses & materials tracking',
       'Elec-ID digital professional card',
-      '50+ electrical calculators',
+      '70+ electrical calculators',
       'Stripe payments & Xero sync',
     ],
     featured: true,
@@ -357,8 +407,25 @@ const LandingPage = () => {
   const { user } = useAuth();
   const [isNavOpen, setIsNavOpen] = useState(false);
   const [openFaqIndex, setOpenFaqIndex] = useState<number | null>(0);
-  const userCount = useUserCount();
+  // Sticky CTA only appears once the hero (and its own CTA) is scrolled away
+  const [stickyVisible, setStickyVisible] = useState(false);
+  useEffect(() => {
+    const onScroll = () => setStickyVisible(window.scrollY > 500);
+    onScroll();
+    window.addEventListener('scroll', onScroll, { passive: true });
+    return () => window.removeEventListener('scroll', onScroll);
+  }, []);
+  // realtime off — no point holding a websocket open on a public marketing page
+  const userCount = useUserCount({ realtime: false });
+  const publicStats = usePublicStats();
   const navigate = useNavigate();
+  const goToSignup = (
+    section: 'nav' | 'nav_mobile' | 'hero' | 'workflow' | 'final_cta',
+    label?: string
+  ) => {
+    trackLandingCtaClicked({ section, label });
+    navigate('/auth/signup');
+  };
   const isNative = Capacitor.isNativePlatform();
   const pricingPlans = useMemo(() => getPricingPlans(isNative), [isNative]);
   const apprenticePrice = isNative ? '£6.99' : '£5.99';
@@ -484,7 +551,7 @@ const LandingPage = () => {
         className="fixed inset-x-0 top-0 z-50"
         style={{ paddingTop: 'env(safe-area-inset-top, 0px)' }}
       >
-        <div className="absolute inset-0 bg-black/80 backdrop-blur-xl" />
+        <div className="absolute inset-0 bg-black/90 backdrop-blur-md" />
         <div className="absolute inset-x-0 bottom-0 h-px bg-white/[0.06]" />
         <div className="relative mx-auto flex h-12 max-w-[80rem] items-center justify-between px-4 sm:px-5 lg:h-16 lg:px-8">
           <Link to="/" className="flex items-center gap-3">
@@ -514,7 +581,7 @@ const LandingPage = () => {
               <Button
                 asChild
                 size="sm"
-                className="h-10 touch-manipulation rounded-xl bg-yellow-500 px-5 font-semibold text-black hover:bg-yellow-400"
+                className="h-10 touch-manipulation rounded-xl bg-yellow-500 px-5 font-semibold text-black transition-transform hover:bg-yellow-400 active:scale-[0.98]"
               >
                 <Link to="/dashboard">Dashboard</Link>
               </Button>
@@ -529,9 +596,14 @@ const LandingPage = () => {
                 <Button
                   asChild
                   size="sm"
-                  className="h-10 touch-manipulation rounded-xl bg-yellow-500 px-5 font-semibold text-black hover:bg-yellow-400"
+                  className="h-10 touch-manipulation rounded-xl bg-yellow-500 px-5 font-semibold text-black transition-transform hover:bg-yellow-400 active:scale-[0.98]"
                 >
-                  <Link to="/auth/signup">Start free trial</Link>
+                  <Link
+                    to="/auth/signup"
+                    onClick={() => trackLandingCtaClicked({ section: 'nav' })}
+                  >
+                    Start free trial
+                  </Link>
                 </Button>
               </>
             )}
@@ -546,132 +618,178 @@ const LandingPage = () => {
           </button>
         </div>
 
-        {isNavOpen && (
-          <div className="border-t border-white/[0.08] bg-black/95 px-5 py-5 backdrop-blur-xl sm:hidden">
-            <div className="space-y-4">
-              <a
-                href="#workflow"
-                onClick={() => setIsNavOpen(false)}
-                className="block text-base text-white"
-              >
-                Workflow
-              </a>
-              <a
-                href="#features"
-                onClick={() => setIsNavOpen(false)}
-                className="block text-base text-white"
-              >
-                Platform
-              </a>
-              <a
-                href="#pricing"
-                onClick={() => setIsNavOpen(false)}
-                className="block text-base text-white"
-              >
-                Pricing
-              </a>
-              <Link
-                to="/guides"
-                onClick={() => setIsNavOpen(false)}
-                className="block text-base text-white"
-              >
-                Guides
-              </Link>
-              {!user && (
-                <div className="space-y-3 pt-3">
-                  <Button
-                    asChild
-                    className="h-12 w-full touch-manipulation rounded-xl bg-yellow-500 text-base font-semibold text-black hover:bg-yellow-400"
-                  >
-                    <Link to="/auth/signup">Start 7-day free trial</Link>
-                  </Button>
-                  <Button
-                    asChild
-                    variant="outline"
-                    className="h-12 w-full touch-manipulation rounded-xl border-white/15 bg-transparent text-white"
-                  >
-                    <Link to="/auth/signin">Sign in</Link>
-                  </Button>
-                </div>
-              )}
+        {/* Always mounted; grid-rows animates the menu open/closed like a native sheet */}
+        <div
+          className={`grid transition-[grid-template-rows] duration-300 ease-out sm:hidden ${
+            isNavOpen ? 'grid-rows-[1fr]' : 'grid-rows-[0fr]'
+          }`}
+        >
+          <div className="overflow-hidden">
+            <div className="border-t border-white/[0.08] bg-[#0a0a0a] px-5 py-5">
+              <div className="space-y-4">
+                <a
+                  href="#workflow"
+                  onClick={() => setIsNavOpen(false)}
+                  className="block select-none touch-manipulation py-1 text-base text-white"
+                >
+                  Workflow
+                </a>
+                <a
+                  href="#features"
+                  onClick={() => setIsNavOpen(false)}
+                  className="block select-none touch-manipulation py-1 text-base text-white"
+                >
+                  Platform
+                </a>
+                <a
+                  href="#pricing"
+                  onClick={() => setIsNavOpen(false)}
+                  className="block select-none touch-manipulation py-1 text-base text-white"
+                >
+                  Pricing
+                </a>
+                <Link
+                  to="/guides"
+                  onClick={() => setIsNavOpen(false)}
+                  className="block select-none touch-manipulation py-1 text-base text-white"
+                >
+                  Guides
+                </Link>
+                {!user && (
+                  <div className="space-y-3 pt-3">
+                    <Button
+                      asChild
+                      className="h-12 w-full touch-manipulation rounded-xl bg-yellow-500 text-base font-semibold text-black transition-transform hover:bg-yellow-400 active:scale-[0.98]"
+                    >
+                      <Link
+                        to="/auth/signup"
+                        onClick={() => trackLandingCtaClicked({ section: 'nav_mobile' })}
+                      >
+                        Start 7-day free trial
+                      </Link>
+                    </Button>
+                    <Button
+                      asChild
+                      variant="outline"
+                      className="h-12 w-full touch-manipulation rounded-xl border-white/15 bg-transparent text-white transition-transform active:scale-[0.98]"
+                    >
+                      <Link to="/auth/signin">Sign in</Link>
+                    </Button>
+                  </div>
+                )}
+              </div>
             </div>
           </div>
-        )}
+        </div>
       </nav>
 
       {/* ========== HERO ========== */}
       <section className="relative px-5 pb-14 pt-[calc(env(safe-area-inset-top)+4rem)] sm:pb-20 sm:pt-28 lg:px-8 lg:pb-24 lg:pt-36">
+        {/* initial={false} — hero must paint immediately (LCP); no hidden-until-JS flash */}
         <motion.div
           variants={fadeUp}
-          initial="hidden"
+          initial={false}
           animate="visible"
           transition={{ duration: 0.55 }}
-          className="relative z-10 mx-auto max-w-[80rem] text-center lg:text-left"
+          className="relative z-10 mx-auto max-w-[80rem] xl:grid xl:grid-cols-[minmax(0,1fr)_350px] xl:items-center xl:gap-20"
         >
-          <Eyebrow>01 · YOUR TRADE. YOUR APP.</Eyebrow>
+          <div className="text-center lg:text-left">
+            <Eyebrow>01 · YOUR TRADE. YOUR APP.</Eyebrow>
 
-          <h1 className="mx-auto mt-4 max-w-[22ch] text-[2.25rem] font-semibold leading-[1.05] tracking-tight text-white sm:text-[3.5rem] lg:mx-0 lg:max-w-[26ch] lg:text-[4.5rem]">
-            Quote. Design. Certify. Invoice. Get paid. Train. One app.
-          </h1>
+            <h1 className="mx-auto mt-4 max-w-[22ch] text-[2.25rem] font-semibold leading-[1.05] tracking-tight text-white sm:text-[3.5rem] lg:mx-0 lg:max-w-[26ch] lg:text-[4.5rem]">
+              Quote. Design. Certify. Invoice. Get paid. Train. One app.
+            </h1>
 
-          <p className="mx-auto mt-6 max-w-[44rem] text-base leading-[1.65] text-white/75 sm:mt-7 sm:text-lg lg:mx-0 lg:text-xl">
-            The UK electrical industry runs on paperwork, WhatsApp and 4–5 disconnected apps.
-            Elec-Mate replaces all of it.
-          </p>
+            <p className="mx-auto mt-6 max-w-[44rem] text-base leading-[1.65] text-white/75 sm:mt-7 sm:text-lg lg:mx-0 lg:text-xl">
+              The UK electrical industry runs on paperwork, WhatsApp and 4–5 disconnected apps.
+              Elec-Mate replaces all of it.
+            </p>
 
-          <div className="mt-7 flex flex-wrap items-center justify-center gap-2 lg:justify-start">
-            <Pill tone="yellow">
-              <Dot tone="yellow" className="mr-1.5" />
-              {userCount} paying
-            </Pill>
-            <Pill tone="yellow">738 certs issued</Pill>
-            <Pill tone="yellow">£307k invoiced</Pill>
+            <div className="mt-7 flex flex-wrap items-center justify-center gap-2 lg:justify-start">
+              <Pill tone="yellow">
+                <Dot tone="yellow" className="mr-1.5" />
+                {userCount} UK sparks
+              </Pill>
+              <Pill tone="yellow">{publicStats.certs} certs issued</Pill>
+              <Pill tone="yellow">£307k invoiced</Pill>
+              <Pill tone="yellow">★★★★★ on the App Store</Pill>
+            </div>
+
+            <div className="mt-9 flex flex-col items-stretch gap-3 sm:flex-row sm:items-center sm:justify-center lg:justify-start">
+              <PrimaryButton
+                size="lg"
+                fullWidth
+                onClick={() => goToSignup('hero')}
+                className="sm:w-auto sm:px-8"
+              >
+                Start 7-day free trial →
+              </PrimaryButton>
+              <SecondaryButton
+                size="lg"
+                fullWidth
+                onClick={() =>
+                  document.getElementById('workflow')?.scrollIntoView({ behavior: 'smooth' })
+                }
+                className="sm:w-auto sm:px-8"
+              >
+                See the workflow
+              </SecondaryButton>
+            </div>
+
+            <p className="mt-4 text-[13px] text-white/65">
+              Already a member?{' '}
+              <Link
+                to="/auth/signin"
+                className="font-medium text-elec-yellow/90 hover:text-elec-yellow transition-colors"
+              >
+                Sign in →
+              </Link>
+            </p>
+
+            <p className="mt-2 text-[13px] text-white/65">
+              From <span className="font-medium text-white">{apprenticePrice}/mo</span> · 7 days
+              free · no charge until day 8 · cancel anytime
+            </p>
+
+            <div className="mt-10 flex justify-center lg:justify-start">
+              <StoreBadges className="justify-center lg:justify-start" size="md" />
+            </div>
+
+            {/* Mobile/tablet — the app itself, below the CTA block */}
+            <div className="mt-12 flex justify-center xl:hidden">
+              <img
+                src="/images/landing/hero-dashboard.webp"
+                alt="Elec-Mate dashboard on iPhone — live quotes, certificates and hubs"
+                width={720}
+                height={1092}
+                loading="lazy"
+                decoding="async"
+                style={heroThumbStyle}
+                className="w-[260px] rounded-[1.8rem] border border-white/[0.08] shadow-[0_24px_80px_rgba(0,0,0,0.45)] sm:w-[300px]"
+              />
+            </div>
           </div>
 
-          <div className="mt-9 flex flex-col items-stretch gap-3 sm:flex-row sm:items-center sm:justify-center lg:justify-start">
-            <PrimaryButton
-              size="lg"
-              fullWidth
-              onClick={() => navigate('/auth/signup')}
-              className="sm:w-auto sm:px-8"
-            >
-              Start 7-day free trial →
-            </PrimaryButton>
-            <SecondaryButton
-              size="lg"
-              fullWidth
-              onClick={() =>
-                document.getElementById('workflow')?.scrollIntoView({ behavior: 'smooth' })
-              }
-              className="sm:w-auto sm:px-8"
-            >
-              See the workflow
-            </SecondaryButton>
-          </div>
-
-          <p className="mt-4 text-[13px] text-white/65">
-            Already a member?{' '}
-            <Link
-              to="/auth/signin"
-              className="font-medium text-elec-yellow/90 hover:text-elec-yellow transition-colors"
-            >
-              Sign in →
-            </Link>
-          </p>
-
-          <p className="mt-2 text-[13px] text-white/65">
-            From <span className="font-medium text-white">{apprenticePrice}/mo</span> · cancel
-            anytime · no card for 7 days
-          </p>
-
-          <div className="mt-10 flex justify-center lg:justify-start">
-            <StoreBadges className="justify-center lg:justify-start" size="md" />
+          {/* Desktop — app preview, second grid column so it never overlaps the copy */}
+          <div className="hidden xl:block">
+            <img
+              src="/images/landing/hero-dashboard.webp"
+              alt="Elec-Mate dashboard on iPhone — live quotes, certificates and hubs"
+              width={720}
+              height={1092}
+              fetchpriority="high"
+              style={heroThumbStyle}
+              className="w-full rounded-[2rem] border border-white/[0.08] shadow-[0_32px_120px_rgba(0,0,0,0.55)]"
+            />
           </div>
         </motion.div>
       </section>
 
       {/* ========== WORKFLOW ========== */}
-      <section id="workflow" className="scroll-mt-24 px-5 py-12 sm:py-16 lg:px-8 lg:py-20">
+      <section
+        id="workflow"
+        className="[content-visibility:auto] [contain-intrinsic-size:auto_700px] scroll-mt-24 px-5 py-12 sm:py-16 lg:px-8 lg:py-20"
+      >
         <div className="mx-auto max-w-[80rem] text-center lg:text-left">
           <Eyebrow>02 · ONE WORKFLOW</Eyebrow>
           <h2 className="mx-auto mt-3 max-w-[20ch] text-[2rem] font-semibold leading-[1.05] tracking-tight text-white sm:text-[3rem] lg:mx-0 lg:text-[3.5rem]">
@@ -695,7 +813,7 @@ const LandingPage = () => {
                   tone="yellow"
                   size="sm"
                   cta="Try free"
-                  onClick={() => navigate('/auth/signup')}
+                  onClick={() => goToSignup('workflow', step.eyebrow)}
                 />
               ))}
             </div>
@@ -703,64 +821,8 @@ const LandingPage = () => {
         </div>
       </section>
 
-      {/* ========== WHO IT IS FOR ========== */}
-      <section id="features" className="scroll-mt-24 px-5 py-14 sm:py-20 lg:px-8 lg:py-24">
-        <div className="mx-auto max-w-[80rem] text-center lg:text-left">
-          <h2 className="mx-auto max-w-[22ch] text-[2.25rem] font-bold leading-[1.05] tracking-[-0.04em] text-white sm:text-[3rem] lg:mx-0 lg:text-[3.5rem]">
-            One platform,
-            <br />
-            <span className="text-yellow-400">every stage</span> of your career.
-          </h2>
-          <p className="mx-auto mt-6 max-w-[40rem] text-lg leading-[1.7] text-white lg:mx-0 lg:text-xl">
-            Whether you're studying for AM2 or running your own jobs, Elec-Mate grows with you —
-            from your first module to signing off your hundredth cert.
-          </p>
-
-          <div className="mx-auto mt-12 grid max-w-[60rem] grid-cols-1 gap-5 lg:mx-0 lg:mt-16 lg:max-w-none lg:grid-cols-2 lg:gap-6">
-            {audienceCards.map((item, idx) => (
-              <AudienceCard key={item.title} index={idx} {...item} />
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* ========== IN ACTION — SITE PHOTOS ========== */}
-      <section className="px-5 py-14 sm:py-20 lg:px-8 lg:py-24">
-        <div className="mx-auto max-w-[80rem] text-center lg:text-left">
-          <Eyebrow>IN THE TRADE</Eyebrow>
-          <h2 className="mx-auto mt-3 max-w-[22ch] text-[2.25rem] font-semibold leading-[1.05] tracking-tight text-white sm:text-[3rem] lg:mx-0 lg:text-[3.5rem]">
-            Real sparks. <span className="text-elec-yellow">Real sites.</span>
-          </h2>
-          <p className="mx-auto mt-4 max-w-[42rem] text-[14px] leading-relaxed text-white/65 sm:text-[15px] lg:mx-0">
-            On site every day — scanning boards, logging tests, signing off certificates, keeping
-            the job flowing.
-          </p>
-
-          <div className="mt-14 grid grid-cols-2 gap-3 sm:gap-4 lg:mt-20 lg:grid-cols-4">
-            {sitePhotos.map((photo) => (
-              <div
-                key={photo.title}
-                className="group relative overflow-hidden rounded-[1.4rem] border border-white/[0.08]"
-              >
-                <img
-                  src={photo.src}
-                  alt={photo.alt}
-                  loading="lazy"
-                  className="aspect-[3/4] w-full object-cover transition-transform duration-500 group-hover:scale-[1.03]"
-                />
-                <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/25 to-transparent" />
-                <div className="absolute inset-x-0 bottom-0 p-4 sm:p-5">
-                  <p className="text-[15px] font-semibold text-white">{photo.title}</p>
-                  <p className="mt-1 text-[12px] text-white">{photo.subtitle}</p>
-                </div>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
       {/* ========== TESTIMONIALS ========== */}
-      <section className="px-5 py-14 sm:py-20 lg:px-8 lg:py-24">
+      <section className="[content-visibility:auto] [contain-intrinsic-size:auto_700px] px-5 py-14 sm:py-20 lg:px-8 lg:py-24">
         <div className="mx-auto max-w-[80rem] text-center lg:text-left">
           <Eyebrow>VERIFIED ON THE UK APP STORE</Eyebrow>
           <h2 className="mx-auto mt-3 max-w-[22ch] text-[2.25rem] font-semibold leading-[1.05] tracking-tight text-white sm:text-[3rem] lg:mx-0 lg:text-[3.5rem]">
@@ -804,8 +866,69 @@ const LandingPage = () => {
         </div>
       </section>
 
+      {/* ========== WHO IT IS FOR ========== */}
+      <section
+        id="features"
+        className="[content-visibility:auto] [contain-intrinsic-size:auto_700px] scroll-mt-24 px-5 py-14 sm:py-20 lg:px-8 lg:py-24"
+      >
+        <div className="mx-auto max-w-[80rem] text-center lg:text-left">
+          <h2 className="mx-auto max-w-[22ch] text-[2.25rem] font-bold leading-[1.05] tracking-[-0.04em] text-white sm:text-[3rem] lg:mx-0 lg:text-[3.5rem]">
+            One platform,
+            <br />
+            <span className="text-yellow-400">every stage</span> of your career.
+          </h2>
+          <p className="mx-auto mt-6 max-w-[40rem] text-lg leading-[1.7] text-white lg:mx-0 lg:text-xl">
+            Whether you're studying for AM2 or running your own jobs, Elec-Mate grows with you —
+            from your first module to signing off your hundredth cert.
+          </p>
+
+          <div className="mx-auto mt-12 grid max-w-[60rem] grid-cols-1 gap-5 lg:mx-0 lg:mt-16 lg:max-w-none lg:grid-cols-2 lg:gap-6">
+            {audienceCards.map((item, idx) => (
+              <AudienceCard key={item.title} index={idx} {...item} />
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* ========== IN ACTION — SITE PHOTOS ========== */}
+      <section className="[content-visibility:auto] [contain-intrinsic-size:auto_700px] px-5 py-14 sm:py-20 lg:px-8 lg:py-24">
+        <div className="mx-auto max-w-[80rem] text-center lg:text-left">
+          <Eyebrow>IN THE TRADE</Eyebrow>
+          <h2 className="mx-auto mt-3 max-w-[22ch] text-[2.25rem] font-semibold leading-[1.05] tracking-tight text-white sm:text-[3rem] lg:mx-0 lg:text-[3.5rem]">
+            Real sparks. <span className="text-elec-yellow">Real sites.</span>
+          </h2>
+          <p className="mx-auto mt-4 max-w-[42rem] text-[14px] leading-relaxed text-white/65 sm:text-[15px] lg:mx-0">
+            On site every day — scanning boards, logging tests, signing off certificates, keeping
+            the job flowing.
+          </p>
+
+          <div className="mt-14 grid grid-cols-2 gap-3 sm:gap-4 lg:mt-20 lg:grid-cols-4">
+            {sitePhotos.map((photo) => (
+              <div
+                key={photo.title}
+                className="group relative overflow-hidden rounded-[1.4rem] border border-white/[0.08]"
+              >
+                <img
+                  src={photo.src}
+                  alt={photo.alt}
+                  loading="lazy"
+                  decoding="async"
+                  decoding="async"
+                  className="aspect-[3/4] w-full bg-white/[0.04] object-cover transition-transform duration-500 group-hover:scale-[1.03]"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/25 to-transparent" />
+                <div className="absolute inset-x-0 bottom-0 p-4 sm:p-5">
+                  <p className="text-[15px] font-semibold text-white">{photo.title}</p>
+                  <p className="mt-1 text-[12px] text-white">{photo.subtitle}</p>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
       {/* ========== INSIDE THE APP ========== */}
-      <section className="px-5 py-14 sm:py-20 lg:px-8 lg:py-24">
+      <section className="[content-visibility:auto] [contain-intrinsic-size:auto_700px] px-5 py-14 sm:py-20 lg:px-8 lg:py-24">
         <div className="mx-auto max-w-[80rem] text-center lg:text-left">
           <h2 className="mx-auto max-w-[22ch] text-[2.25rem] font-bold leading-[1.05] tracking-[-0.04em] text-white sm:text-[3rem] lg:mx-0 lg:text-[3.5rem]">
             Inside <span className="text-yellow-400">the app.</span>
@@ -853,11 +976,31 @@ const LandingPage = () => {
             ))}
           </div>
 
+          {/* App screenshot gallery — swipe like the App Store */}
+          <div className="mt-12 -mx-5 lg:mt-16 lg:-mx-8">
+            <div className="flex snap-x snap-mandatory gap-4 overflow-x-auto overscroll-x-contain px-5 pb-4 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden lg:px-8">
+              {appScreens.map((screen) => (
+                <img
+                  key={screen.src}
+                  src={screen.src}
+                  alt={screen.alt}
+                  width={560}
+                  height={1212}
+                  loading="lazy"
+                  decoding="async"
+                  decoding="async"
+                  className="w-[220px] flex-none snap-start rounded-[1.4rem] border border-white/[0.08] bg-white/[0.04] sm:w-[250px]"
+                />
+              ))}
+            </div>
+          </div>
+
           <div className="mt-12 flex flex-wrap items-center justify-center gap-x-12 gap-y-6 opacity-90">
             <img
               src="/logos/stripe.svg"
               alt="Stripe"
               loading="lazy"
+              decoding="async"
               className="h-7 w-auto lg:h-8"
             />
             <img src="/logos/xero.svg" alt="Xero" loading="lazy" className="h-7 w-auto lg:h-8" />
@@ -865,6 +1008,7 @@ const LandingPage = () => {
               src="/logos/quickbooks.svg"
               alt="QuickBooks"
               loading="lazy"
+              decoding="async"
               className="h-7 w-auto lg:h-8"
             />
           </div>
@@ -872,7 +1016,10 @@ const LandingPage = () => {
       </section>
 
       {/* ========== PRICING ========== */}
-      <section id="pricing" className="scroll-mt-24 px-5 py-14 sm:py-20 lg:px-8 lg:py-24">
+      <section
+        id="pricing"
+        className="[content-visibility:auto] [contain-intrinsic-size:auto_700px] scroll-mt-24 px-5 py-14 sm:py-20 lg:px-8 lg:py-24"
+      >
         <div className="mx-auto max-w-[80rem]">
           <div className="mx-auto max-w-2xl text-center">
             <Eyebrow>PRICING</Eyebrow>
@@ -897,7 +1044,7 @@ const LandingPage = () => {
       </section>
 
       {/* ========== FAQ ========== */}
-      <section className="px-5 py-14 sm:py-20 lg:px-8 lg:py-24">
+      <section className="[content-visibility:auto] [contain-intrinsic-size:auto_700px] px-5 py-14 sm:py-20 lg:px-8 lg:py-24">
         <div className="mx-auto max-w-[52rem] text-center lg:text-left">
           <Eyebrow>FAQ</Eyebrow>
           <h2 className="mx-auto mt-3 max-w-[22ch] text-[2.25rem] font-semibold leading-[1.05] tracking-tight text-white sm:text-[3rem] lg:mx-0 lg:text-[3.5rem]">
@@ -919,22 +1066,29 @@ const LandingPage = () => {
                 >
                   <button
                     onClick={() => setOpenFaqIndex(open ? null : index)}
-                    className="flex w-full touch-manipulation items-center justify-between gap-4 px-5 py-5 text-left sm:px-7 sm:py-6"
+                    className="flex w-full touch-manipulation select-none items-center justify-between gap-4 px-5 py-5 text-left active:bg-white/[0.03] sm:px-7 sm:py-6"
                   >
                     <span className="text-[15px] font-medium text-white sm:text-[16px]">
                       {faq.question}
                     </span>
                     <ChevronDown
-                      className={`h-5 w-5 flex-shrink-0 text-elec-yellow/80 transition-transform ${open ? 'rotate-180' : ''}`}
+                      className={`h-5 w-5 flex-shrink-0 text-elec-yellow/80 transition-transform duration-300 ${open ? 'rotate-180' : ''}`}
                     />
                   </button>
-                  {open && (
-                    <div className="px-5 pb-6 pt-1 sm:px-7">
-                      <p className="max-w-[60ch] text-[13.5px] leading-[1.7] text-white/75 sm:text-[14.5px]">
-                        {faq.answer}
-                      </p>
+                  {/* Always mounted; grid-rows animates height smoothly without JS measuring */}
+                  <div
+                    className={`grid transition-[grid-template-rows] duration-300 ease-out ${
+                      open ? 'grid-rows-[1fr]' : 'grid-rows-[0fr]'
+                    }`}
+                  >
+                    <div className="overflow-hidden">
+                      <div className="px-5 pb-6 pt-1 sm:px-7">
+                        <p className="max-w-[60ch] text-[13.5px] leading-[1.7] text-white/75 sm:text-[14.5px]">
+                          {faq.answer}
+                        </p>
+                      </div>
                     </div>
-                  )}
+                  </div>
                 </div>
               );
             })}
@@ -945,38 +1099,50 @@ const LandingPage = () => {
       {/* ========== LEAD MAGNET — BS 7671 A4:2026 cheat sheet ========== */}
       <LeadMagnetSection />
 
-      {/* ========== FREE GUIDES (SEO LANDING PAGES) ========== */}
-      <section className="px-5 py-14 sm:py-20 lg:px-8 lg:py-24">
-        <div className="mx-auto max-w-[80rem] text-center lg:text-left">
-          <Eyebrow>FREE GUIDES</Eyebrow>
-          <h2 className="mx-auto mt-3 max-w-[22ch] text-[2.25rem] font-semibold leading-[1.05] tracking-tight text-white sm:text-[3rem] lg:mx-0 lg:text-[3.5rem]">
-            Browse the guides. <span className="text-elec-yellow">No sign-up.</span>
-          </h2>
-          <p className="mx-auto mt-4 max-w-[42rem] text-[14px] leading-relaxed text-white/65 sm:text-[15px] lg:mx-0">
-            Quick-reference guides for UK electricians — bookmark them now, come back when you need
-            them.
-          </p>
-
-          <div className="mt-14 grid gap-3 sm:grid-cols-2 lg:mt-16 lg:grid-cols-4 lg:gap-4">
-            {exploreTools.map((link) => (
-              <Link
-                key={link.to}
-                to={link.to}
-                className="group touch-manipulation rounded-[1.4rem] border border-white/[0.08] bg-white/[0.03] p-5 transition-colors hover:border-yellow-500/30 hover:bg-yellow-500/[0.04] lg:p-6"
-              >
-                <p className="text-[15px] font-semibold text-white transition-colors group-hover:text-yellow-400">
-                  {link.label}
+      {/* ========== MENTAL HEALTH MATES ========== */}
+      <section className="[content-visibility:auto] [contain-intrinsic-size:auto_700px] px-5 pb-14 sm:pb-20 lg:px-8 lg:pb-24">
+        <div className="mx-auto max-w-[80rem]">
+          <div className="relative overflow-hidden rounded-[1.8rem] border border-white/[0.08] bg-gradient-to-b from-white/[0.04] to-white/[0.01] p-7 text-center sm:p-10 lg:p-12 lg:text-left">
+            <div
+              aria-hidden
+              className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-elec-yellow/0 via-elec-yellow/40 to-elec-yellow/0 opacity-70"
+            />
+            <div className="grid gap-8 lg:grid-cols-[0.9fr_1.1fr] lg:items-center lg:gap-14">
+              <div>
+                <Eyebrow>BEYOND THE TOOLS</Eyebrow>
+                <h3 className="mt-3 text-[1.75rem] font-semibold leading-[1.1] tracking-tight text-white sm:text-[2.25rem]">
+                  Mental Health Mates.
+                </h3>
+                <p className="mx-auto mt-4 max-w-[44ch] text-[14px] leading-[1.7] text-white/75 sm:text-[15px] lg:mx-0">
+                  Construction has the highest suicide rate of any sector. We built a safe space
+                  inside Elec-Mate — because looking after yourself should be part of the trade.
                 </p>
-                <p className="mt-1.5 text-[13px] text-white">{link.desc}</p>
-                <ArrowRight className="mt-5 h-4 w-4 text-white transition-colors group-hover:text-yellow-400" />
-              </Link>
-            ))}
+                <p className="mx-auto mt-4 max-w-[44ch] text-[13px] text-white/55 lg:mx-0">
+                  Included in every plan. No extra charge, no judgement.
+                </p>
+              </div>
+              <div className="grid grid-cols-1 gap-px overflow-hidden rounded-2xl border border-white/[0.06] bg-white/[0.06] text-left sm:grid-cols-2">
+                {mentalHealthFeatures.map((feature) => (
+                  <div key={feature.title} className="bg-[hsl(0_0%_9%)] p-5 sm:p-6">
+                    <div className="flex items-center gap-2.5">
+                      <Dot tone="yellow" />
+                      <span className="text-[14px] font-semibold text-white sm:text-[15px]">
+                        {feature.title}
+                      </span>
+                    </div>
+                    <p className="mt-2 text-[12.5px] leading-[1.6] text-white/65 sm:text-[13px]">
+                      {feature.desc}
+                    </p>
+                  </div>
+                ))}
+              </div>
+            </div>
           </div>
         </div>
       </section>
 
       {/* ========== FINAL CTA ========== */}
-      <section className="px-5 py-14 sm:py-20 lg:px-8 lg:py-24">
+      <section className="[content-visibility:auto] [contain-intrinsic-size:auto_700px] px-5 py-14 sm:py-20 lg:px-8 lg:py-24">
         <div className="mx-auto max-w-[80rem]">
           <div className="relative overflow-hidden rounded-[2rem] border border-white/[0.08] bg-gradient-to-b from-elec-yellow/[0.04] to-white/[0.01] px-6 py-16 text-center sm:px-12 sm:py-20 lg:rounded-[2.5rem] lg:px-16 lg:py-24">
             <div
@@ -996,7 +1162,7 @@ const LandingPage = () => {
               <PrimaryButton
                 size="lg"
                 fullWidth
-                onClick={() => navigate('/auth/signup')}
+                onClick={() => goToSignup('final_cta')}
                 className="sm:w-auto sm:px-8"
               >
                 Start 7-day free trial →
@@ -1030,40 +1196,38 @@ const LandingPage = () => {
         </div>
       </section>
 
-      {/* ========== MENTAL HEALTH MATES ========== */}
-      <section className="px-5 pb-14 sm:pb-20 lg:px-8 lg:pb-24">
-        <div className="mx-auto max-w-[80rem]">
-          <div className="relative overflow-hidden rounded-[1.8rem] border border-white/[0.08] bg-gradient-to-b from-white/[0.04] to-white/[0.01] p-7 text-center sm:p-10 lg:p-12 lg:text-left">
-            <div
-              aria-hidden
-              className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-elec-yellow/0 via-elec-yellow/40 to-elec-yellow/0 opacity-70"
-            />
-            <div className="grid gap-8 lg:grid-cols-[0.9fr_1.1fr] lg:items-center lg:gap-12">
-              <div>
-                <Eyebrow>BEYOND THE TOOLS</Eyebrow>
-                <h3 className="mt-3 text-[1.75rem] font-semibold leading-[1.1] tracking-tight text-white sm:text-[2.25rem]">
-                  Mental Health Mates.
-                </h3>
-                <p className="mt-4 max-w-[44ch] text-[14px] leading-[1.7] text-white/75 sm:text-[15px]">
-                  Construction has the highest suicide rate of any sector. We built a safe space
-                  inside Elec-Mate — mood tracking, breathing exercises, journals and crisis
-                  resources. Because looking after yourself should be part of the trade.
+      {/* ========== FREE GUIDES (SEO LANDING PAGES) ========== */}
+      <section className="[content-visibility:auto] [contain-intrinsic-size:auto_700px] px-5 py-14 sm:py-20 lg:px-8 lg:py-24">
+        <div className="mx-auto max-w-[80rem] text-center lg:text-left">
+          <Eyebrow>FREE GUIDES</Eyebrow>
+          <h2 className="mx-auto mt-3 max-w-[22ch] text-[2.25rem] font-semibold leading-[1.05] tracking-tight text-white sm:text-[3rem] lg:mx-0 lg:text-[3.5rem]">
+            Browse the guides. <span className="text-elec-yellow">No sign-up.</span>
+          </h2>
+          <p className="mx-auto mt-4 max-w-[42rem] text-[14px] leading-relaxed text-white/65 sm:text-[15px] lg:mx-0">
+            Quick-reference guides for UK electricians — bookmark them now, come back when you need
+            them.
+          </p>
+
+          <div className="mt-14 grid gap-3 sm:grid-cols-2 lg:mt-16 lg:grid-cols-4 lg:gap-4">
+            {exploreTools.map((link) => (
+              <Link
+                key={link.to}
+                to={link.to}
+                className="group touch-manipulation rounded-[1.4rem] border border-white/[0.08] bg-white/[0.03] p-5 transition-colors hover:border-yellow-500/30 hover:bg-yellow-500/[0.04] lg:p-6"
+              >
+                <p className="text-[15px] font-semibold text-white transition-colors group-hover:text-yellow-400">
+                  {link.label}
                 </p>
-              </div>
-              <div className="flex flex-wrap justify-center gap-2 lg:justify-start">
-                {mentalHealthTags.map((tag) => (
-                  <Pill key={tag} tone="yellow" className="!text-[12px]">
-                    {tag}
-                  </Pill>
-                ))}
-              </div>
-            </div>
+                <p className="mt-1.5 text-[13px] text-white">{link.desc}</p>
+                <ArrowRight className="mt-5 h-4 w-4 text-white transition-colors group-hover:text-yellow-400" />
+              </Link>
+            ))}
           </div>
         </div>
       </section>
 
       {/* ========== FOOTER ========== */}
-      <footer className="px-5 pb-32 pt-8 sm:pb-12 lg:px-8">
+      <footer className="[content-visibility:auto] [contain-intrinsic-size:auto_700px] px-5 pb-32 pt-8 sm:pb-12 lg:px-8">
         <div className="mx-auto max-w-[80rem] border-t border-white/[0.08] pt-12">
           <div className="grid gap-10 text-center sm:grid-cols-2 sm:text-left lg:grid-cols-[1.4fr_0.9fr_0.9fr_0.8fr]">
             <div>
@@ -1073,6 +1237,8 @@ const LandingPage = () => {
                   alt="Elec-Mate"
                   className="h-10 w-10 rounded-2xl"
                   loading="lazy"
+                  decoding="async"
+                  decoding="async"
                 />
                 <div>
                   <p className="text-lg font-semibold tracking-[-0.02em] text-white">
@@ -1159,9 +1325,16 @@ const LandingPage = () => {
 
       {/* ========== STICKY MOBILE CTA ========== */}
       {!user && (
-        <div className="fixed bottom-0 left-0 right-0 z-50 border-t border-white/[0.08] bg-black/85 px-4 pb-[max(1rem,env(safe-area-inset-bottom))] pt-4 backdrop-blur-xl sm:hidden">
-          <Link to="/auth/signup">
-            <Button className="h-12 w-full touch-manipulation rounded-xl bg-yellow-500 text-base font-semibold text-black hover:bg-yellow-400">
+        <div
+          className={`fixed bottom-0 left-0 right-0 z-50 border-t border-white/[0.08] bg-black/90 px-4 pb-[max(1rem,env(safe-area-inset-bottom))] pt-4 backdrop-blur-md transition-transform duration-300 sm:hidden ${
+            stickyVisible ? 'translate-y-0' : 'translate-y-full'
+          }`}
+        >
+          <Link
+            to="/auth/signup"
+            onClick={() => trackLandingCtaClicked({ section: 'sticky_mobile' })}
+          >
+            <Button className="h-12 w-full touch-manipulation rounded-xl bg-yellow-500 text-base font-semibold text-black transition-transform hover:bg-yellow-400 active:scale-[0.98]">
               Start 7-day free trial
               <ArrowRight className="ml-2 h-4 w-4" />
             </Button>
@@ -1252,7 +1425,13 @@ const AudienceCard = ({
             </span>
             <span className="text-[12px] text-white/55">/mo</span>
           </div>
-          <PrimaryButton size="sm" onClick={() => navigate('/auth/signup')}>
+          <PrimaryButton
+            size="sm"
+            onClick={() => {
+              trackLandingCtaClicked({ section: 'audience', label: eyebrow });
+              navigate('/auth/signup');
+            }}
+          >
             Start free trial →
           </PrimaryButton>
         </div>
@@ -1267,12 +1446,16 @@ const AudienceCard = ({
 const PricingCard = ({
   name,
   price,
+  yearly,
+  yearlySaving,
   description,
   features,
   featured,
 }: {
   name: string;
   price: string;
+  yearly?: string;
+  yearlySaving?: string;
   description: string;
   features: string[];
   featured?: boolean;
@@ -1297,11 +1480,21 @@ const PricingCard = ({
       </span>
       <span className="text-sm text-white">/ month</span>
     </div>
+    {yearly && (
+      <p className="mt-2 text-[13px] text-white/65">
+        or <span className="font-medium text-white">{yearly}/yr</span>
+        {yearlySaving ? ` — save ${yearlySaving}` : ''}
+      </p>
+    )}
     <p className="mt-3 text-[15px] leading-[1.7] text-white">{description}</p>
 
-    <Link to="/auth/signup" className="mt-7">
+    <Link
+      to="/auth/signup"
+      className="mt-7"
+      onClick={() => trackLandingCtaClicked({ section: 'pricing', label: name })}
+    >
       <Button
-        className={`h-12 w-full touch-manipulation rounded-xl font-semibold ${
+        className={`h-12 w-full touch-manipulation rounded-xl font-semibold transition-transform active:scale-[0.98] ${
           featured
             ? 'bg-yellow-500 text-black hover:bg-yellow-400'
             : 'border border-white/15 bg-white/[0.06] text-white hover:bg-white/[0.12]'

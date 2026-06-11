@@ -908,7 +908,7 @@ export default function ElectricalEngineeringDegreePage() {
         faqHeading="Frequently Asked Questions About Electrical Engineering Degrees"
         relatedPages={relatedPages}
         ctaHeading="Manage Your Electrical Career with Elec-Mate"
-        ctaSubheading="Join 1,000+ UK electricians and engineers using Elec-Mate to certify, quote, and manage their electrical business. 7-day free trial — no credit card required."
+        ctaSubheading="Join 1,000+ UK electricians and engineers using Elec-Mate to certify, quote, and manage their electrical business. 7-day free trial — no charge until day 8."
       />
     </>
   );

@@ -95,6 +95,21 @@ export function trackEmailCaptured(props: {
   send('email_captured', props);
 }
 
+export function trackLandingCtaClicked(props: {
+  section:
+    | 'nav'
+    | 'nav_mobile'
+    | 'hero'
+    | 'workflow'
+    | 'audience'
+    | 'pricing'
+    | 'final_cta'
+    | 'sticky_mobile';
+  label?: string;
+}): void {
+  send('landing_cta_clicked', props);
+}
+
 // ─── AI usage ──────────────────────────────────────────────────────
 export function trackAiChatOpened(props: { agent: string; entrypoint?: string }): void {
   send('ai_chat_opened', props);

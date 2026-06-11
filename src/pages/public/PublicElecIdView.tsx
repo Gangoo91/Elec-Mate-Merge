@@ -888,7 +888,7 @@ export default function PublicElecIdView() {
               <h3 className="mt-1 font-semibold text-white text-lg">Build your own Elec-ID</h3>
               <p className="text-white text-sm leading-relaxed mt-2 mb-4">
                 Share your credentials with employers and homeowners in seconds. 7-day free trial,
-                no card required.
+                no charge until day 8.
               </p>
               <a
                 href="https://www.elec-mate.com"

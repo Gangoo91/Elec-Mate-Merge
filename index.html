@@ -135,6 +135,10 @@
     <link rel="dns-prefetch" href="https://o4508788935344128.ingest.de.sentry.io" />
 
     <!-- Inter Font — self-hosted for instant rendering on native (no CDN dependency) -->
+    <!-- Preload the two weights used above the fold (600 = headlines, 400 = body)
+         so the hero text never reflows when the font swaps in -->
+    <link rel="preload" href="/fonts/inter-600.woff2" as="font" type="font/woff2" crossorigin />
+    <link rel="preload" href="/fonts/inter-400.woff2" as="font" type="font/woff2" crossorigin />
     <style>
       @font-face {
         font-family: 'Inter';
@@ -305,17 +309,110 @@
           <p style="font-size: 16px; margin: 0">Loading Elec-Mate...</p>
         </div>
       </div>
+      <!-- Static landing hero — painted instantly on "/" before any JS loads.
+           Mirrors the React hero (same copy, same look) so the swap on mount is
+           seamless. The CTA is a real link, so it works even pre-hydration. -->
+      <div
+        id="landing-shell"
+        style="
+          display: none;
+          min-height: 100vh;
+          background: #0a0a0a;
+          color: #fff;
+          font-family: Inter, system-ui, sans-serif;
+          flex-direction: column;
+          align-items: center;
+          text-align: center;
+          padding: calc(env(safe-area-inset-top) + 7rem) 20px 56px;
+        "
+      >
+        <div style="font-size: 11px; letter-spacing: 0.18em; color: rgba(255, 255, 255, 0.55)">
+          01 · YOUR TRADE. YOUR APP.
+        </div>
+        <h1
+          style="
+            margin: 16px auto 0;
+            max-width: 22ch;
+            font-size: clamp(2.25rem, 6vw, 4.5rem);
+            font-weight: 600;
+            line-height: 1.05;
+            letter-spacing: -0.02em;
+          "
+        >
+          Quote. Design. Certify. Invoice. Get paid. Train. One app.
+        </h1>
+        <p
+          style="
+            margin: 24px auto 0;
+            max-width: 44rem;
+            font-size: 16px;
+            line-height: 1.65;
+            color: rgba(255, 255, 255, 0.75);
+          "
+        >
+          The UK electrical industry runs on paperwork, WhatsApp and 4–5 disconnected apps.
+          Elec-Mate replaces all of it.
+        </p>
+        <div
+          style="
+            margin-top: 28px;
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 8px;
+            font-size: 12px;
+            color: #fde68a;
+          "
+        >
+          <span style="border: 1px solid rgba(250, 204, 21, 0.25); background: rgba(250, 204, 21, 0.08); border-radius: 999px; padding: 5px 12px">1,040+ UK sparks</span>
+          <span style="border: 1px solid rgba(250, 204, 21, 0.25); background: rgba(250, 204, 21, 0.08); border-radius: 999px; padding: 5px 12px">970+ certs issued</span>
+          <span style="border: 1px solid rgba(250, 204, 21, 0.25); background: rgba(250, 204, 21, 0.08); border-radius: 999px; padding: 5px 12px">£307k invoiced</span>
+          <span style="border: 1px solid rgba(250, 204, 21, 0.25); background: rgba(250, 204, 21, 0.08); border-radius: 999px; padding: 5px 12px">★★★★★ on the App Store</span>
+        </div>
+        <a
+          href="/auth/signup"
+          style="
+            margin-top: 36px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            height: 48px;
+            padding: 0 32px;
+            border-radius: 999px;
+            background: #eab308;
+            color: #000;
+            font-size: 16px;
+            font-weight: 600;
+            text-decoration: none;
+            width: 100%;
+            max-width: 360px;
+          "
+        >
+          Start 7-day free trial →
+        </a>
+        <p style="margin-top: 16px; font-size: 13px; color: rgba(255, 255, 255, 0.65)">
+          From <strong style="color: #fff; font-weight: 500">£5.99/mo</strong> · 7 days free · no
+          charge until day 8 · cancel anytime
+        </p>
+      </div>
       <script>
-        // On native (Capacitor), the native splash screen covers the loading period,
-        // so hide the HTML spinner to prevent a flash between splash → spinner → app.
-        if (
-          window.Capacitor &&
-          window.Capacitor.isNativePlatform &&
-          window.Capacitor.isNativePlatform()
-        ) {
+        // On native (Capacitor), the splash screen covers loading — hide both shells.
+        // On the web landing route "/", swap the spinner for the static hero so the
+        // first paint is real content, not a loader.
+        (function () {
+          var native =
+            window.Capacitor &&
+            window.Capacitor.isNativePlatform &&
+            window.Capacitor.isNativePlatform();
           var il = document.getElementById('initial-loading');
-          if (il) il.style.display = 'none';
-        }
+          var ls = document.getElementById('landing-shell');
+          if (native) {
+            if (il) il.style.display = 'none';
+          } else if (location.pathname === '/' && ls) {
+            if (il) il.style.display = 'none';
+            ls.style.display = 'flex';
+          }
+        })();
       </script>
       <style>
         @keyframes spin {

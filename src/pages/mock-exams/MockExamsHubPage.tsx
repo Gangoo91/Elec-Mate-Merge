@@ -304,7 +304,7 @@ export default function MockExamsHubPage() {
             Free mock exams above pull 25 questions at random. Inside the Elec-Mate app you get the
             full banks (200-300 questions each), category breakdowns, weak-area alerts, AI
             explanations on every question, the AM2 simulator, EPA simulator, and study tracking
-            across all your courses. Free to sign up, no card.
+            across all your courses. Free to sign up — no charge until day 8.
           </p>
           <Link
             to="/auth/signup?ref=mock-exams-hub"

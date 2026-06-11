@@ -94,7 +94,7 @@ export const PricingSection = () => {
             Simple, Transparent Pricing
           </h2>
           <p className="text-white max-w-lg mx-auto text-sm sm:text-base">
-            All plans include a 7-day free trial. No card required.
+            All plans include a 7-day free trial. No charge until day 8.
           </p>
         </motion.div>
 
