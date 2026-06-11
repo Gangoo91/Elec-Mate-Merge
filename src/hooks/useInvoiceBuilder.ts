@@ -182,12 +182,21 @@ export const useInvoiceBuilder = (sourceQuote?: Quote, existingInvoice?: Partial
 
         // Always populate from company profile if not already set
         if (!hasBankDetails && companyProfile.bank_details) {
+          // ELE-1078 — the initial value is a truthy '30 days', so
+          // `prev || profile` meant the saved preference could never apply.
+          // On hydration the profile's terms win; the due date follows.
+          const terms =
+            companyProfile.payment_terms || prev.settings?.paymentTerms || '30 days';
+          const daysMatch = /(\d+)/.exec(terms);
+          const termDays = /receipt/i.test(terms) ? 0 : daysMatch ? parseInt(daysMatch[1], 10) : 30;
+          const termDueDate = new Date(Date.now() + termDays * 86400000);
           return {
             ...prev,
+            invoice_due_date: termDueDate,
             settings: {
               ...prev.settings!,
-              paymentTerms:
-                prev.settings?.paymentTerms || companyProfile.payment_terms || '30 days',
+              paymentTerms: terms,
+              dueDate: termDueDate,
               bankDetails: companyProfile.bank_details,
             },
           };

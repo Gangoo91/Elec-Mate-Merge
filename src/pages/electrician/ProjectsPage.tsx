@@ -468,7 +468,7 @@ const ProjectsPage = () => {
                       variants={itemVariants}
                       layout
                       exit={{ opacity: 0, scale: 0.97 }}
-                      className={cn(PANEL, 'group relative overflow-hidden touch-manipulation')}
+                      className={cn(PANEL, 'group relative overflow-hidden touch-manipulation h-full flex flex-col')}
                     >
                       <div
                         className={cn(
@@ -486,7 +486,7 @@ const ProjectsPage = () => {
                       <button
                         type="button"
                         onClick={() => navigate(`/electrician/projects/${project.id}`)}
-                        className="relative w-full text-left p-4 active:bg-white/[0.04] transition-colors"
+                        className="relative w-full flex-1 flex flex-col text-left p-4 active:bg-white/[0.04] transition-colors"
                       >
                         {/* Title row — priority dot · title · value */}
                         <div className="flex items-start gap-3">
@@ -543,7 +543,7 @@ const ProjectsPage = () => {
 
                         {/* Progress — only render if there are tasks */}
                         {project.totalTasks > 0 ? (
-                          <div className="mt-3 ml-5">
+                          <div className="mt-auto pt-3 ml-5">
                             <div className="flex items-center justify-between mb-1">
                               <span className="text-[11px] text-white/45 tabular-nums">
                                 {project.completedTasks}/{project.totalTasks} tasks
@@ -567,7 +567,7 @@ const ProjectsPage = () => {
                             </div>
                           </div>
                         ) : (
-                          <p className="mt-3 ml-5 text-[11px] text-white/35">No tasks yet</p>
+                          <p className="mt-auto pt-3 ml-5 text-[11px] text-white/35">No tasks yet</p>
                         )}
                       </button>
 

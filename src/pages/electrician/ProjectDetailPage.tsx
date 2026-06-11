@@ -63,8 +63,10 @@ import { ProjectDocumentSheet } from '@/components/project-management/ProjectDoc
 import { useProjectDocuments } from '@/hooks/useProjectDocuments';
 import { ProjectAINotes } from '@/components/project-management/ProjectAINotes';
 import { ProjectSafetyPack } from '@/components/electrician/project-detail/ProjectSafetyPack';
+import { ProjectSuggestedLinks } from '@/components/project-management/ProjectSuggestedLinks';
 import { supabase } from '@/integrations/supabase/client';
 import { cn } from '@/lib/utils';
+import { PANEL } from '@/components/electrician/shared/surfaces';
 
 const containerVariants = {
   hidden: { opacity: 0 },
@@ -634,10 +636,22 @@ const ProjectDetailPage = () => {
         {/* ── Smart hero — title · subtitle · 3 metrics · action row ── */}
         <motion.div
           variants={itemVariants}
-          className="rounded-2xl bg-white/[0.06] border border-white/[0.12] overflow-hidden shadow-sm shadow-black/20"
+          className={cn(PANEL, 'relative overflow-hidden')}
         >
+          <div
+            className={cn(
+              'absolute inset-x-0 top-0 h-20 bg-gradient-to-b to-transparent pointer-events-none',
+              project.status === 'completed'
+                ? 'from-emerald-500/[0.08]'
+                : project.priority === 'urgent'
+                  ? 'from-red-500/[0.08]'
+                  : project.priority === 'high'
+                    ? 'from-orange-500/[0.07]'
+                    : 'from-elec-yellow/[0.05]'
+            )}
+          />
           {/* Header — priority dot · title · status · edit */}
-          <div className="p-4">
+          <div className="relative p-4 sm:p-5">
             <div className="flex items-start gap-3">
               <span
                 aria-hidden="true"
@@ -647,7 +661,7 @@ const ProjectDetailPage = () => {
                 )}
               />
               <div className="flex-1 min-w-0">
-                <h1 className="text-[20px] sm:text-[22px] font-semibold text-white leading-tight">
+                <h1 className="text-[20px] sm:text-[24px] font-bold text-white leading-tight tracking-tight">
                   {project.title}
                 </h1>
                 {(project.customer_name || project.location) && (
@@ -716,7 +730,7 @@ const ProjectDetailPage = () => {
               <p className="text-[10px] font-semibold uppercase tracking-[0.16em] text-white/45">
                 Tasks
               </p>
-              <p className="mt-1 text-[17px] sm:text-[18px] font-bold text-white tabular-nums leading-none">
+              <p className="mt-1 text-[18px] sm:text-[20px] font-bold text-white tabular-nums leading-none tracking-tight">
                 {totalTasks > 0 ? `${progress}%` : '—'}
               </p>
               <p className="mt-1 text-[11.5px] text-white/45 tabular-nums">
@@ -727,7 +741,7 @@ const ProjectDetailPage = () => {
               <p className="text-[10px] font-semibold uppercase tracking-[0.16em] text-white/45">
                 Time logged
               </p>
-              <p className="mt-1 text-[17px] sm:text-[18px] font-bold text-white tabular-nums leading-none">
+              <p className="mt-1 text-[18px] sm:text-[20px] font-bold text-white tabular-nums leading-none tracking-tight">
                 {formatHoursMinutes(timeSummary.totalSec)}
               </p>
               <p className="mt-1 text-[11.5px] text-white/45 tabular-nums">
@@ -810,21 +824,40 @@ const ProjectDetailPage = () => {
           </motion.div>
         )}
 
+        {/* ── Mate auto-link suggestions — unlinked items matching this job ── */}
+        <motion.div variants={itemVariants}>
+          <ProjectSuggestedLinks
+            projectId={project.id}
+            customerName={project.customer_name}
+            location={project.location}
+            linkQuote={async (lid) => { await linkQuote(lid); refresh(); }}
+            linkInvoice={async (lid) => { await linkInvoice(lid); refresh(); }}
+            linkCertificate={async (lid) => { await linkCertificate(lid); refresh(); }}
+            linkSiteVisit={async (lid) => { await linkSiteVisit(lid); refresh(); }}
+          />
+        </motion.div>
+
+        {/* ── Sections grid — 2-up on md+, cards expand independently ── */}
+        <div className="grid md:grid-cols-2 gap-3 items-start">
+
         {/* ── Site Visits Section ── */}
         <motion.div variants={itemVariants}>
-          <Collapsible
+          <Collapsible className={cn(PANEL, 'overflow-hidden')}
             open={openSections.has('siteVisits')}
             onOpenChange={() => toggleSection('siteVisits')}
           >
             <CollapsibleTrigger asChild>
-              <button className="w-full flex items-center justify-between px-3.5 rounded-xl bg-white/[0.05] border border-white/[0.10] hover:bg-white/[0.08] hover:border-white/[0.18] touch-manipulation h-12 active:bg-white/[0.10] transition-colors group">
+              <button className="w-full flex items-center justify-between gap-3 px-3.5 sm:px-4 py-3 min-h-[60px] touch-manipulation hover:bg-white/[0.03] active:bg-white/[0.04] transition-colors group text-left">
                 <div className="flex items-center gap-3">
-                  <HardHat className="h-5 w-5 text-sky-400" />
-                  <span className="text-[14px] font-semibold text-white">Site Visits</span>
+                  <span className="h-9 w-9 rounded-xl bg-white/[0.05] border border-white/[0.08] flex items-center justify-center flex-shrink-0"><HardHat className="h-4 w-4 text-sky-400" /></span>
+                  <span className="min-w-0">
+                    <span className="block text-[14px] font-semibold text-white leading-tight">Site Visits</span>
+                    <span className="block text-[11px] text-white/55 truncate leading-tight mt-0.5">{siteVisits.length > 0 ? `${siteVisits.length} visit${siteVisits.length === 1 ? '' : 's'} · last ${formatShortDate(siteVisits[0].created_at)}` : 'Record what you find on site'}</span>
+                  </span>
                 </div>
                 <div className="flex items-center gap-2">
                   {siteVisits.length > 0 && (
-                    <span className="text-[11px] font-semibold text-white/70 bg-white/[0.10] px-2 py-0.5 rounded-full tabular-nums">
+                    <span className="text-[11px] font-semibold text-white/55 tabular-nums">
                       {siteVisits.length}
                     </span>
                   )}
@@ -846,7 +879,7 @@ const ProjectDetailPage = () => {
                 </div>
               </button>
             </CollapsibleTrigger>
-            <CollapsibleContent className="mt-2 space-y-2">
+            <CollapsibleContent className="px-3.5 sm:px-4 pb-3.5 pt-2.5 space-y-2 border-t border-white/[0.06]">
               {siteVisits.length === 0 ? (
                 <div className="flex flex-col items-center py-6 text-center">
                   <p className="text-sm text-white mb-3">No site visits linked yet</p>
@@ -913,16 +946,19 @@ const ProjectDetailPage = () => {
 
         {/* ── Tasks Section ── */}
         <motion.div variants={itemVariants}>
-          <Collapsible open={openSections.has('tasks')} onOpenChange={() => toggleSection('tasks')}>
+          <Collapsible className={cn(PANEL, 'overflow-hidden')} open={openSections.has('tasks')} onOpenChange={() => toggleSection('tasks')}>
             <CollapsibleTrigger asChild>
-              <button className="w-full flex items-center justify-between px-3.5 rounded-xl bg-white/[0.05] border border-white/[0.10] hover:bg-white/[0.08] hover:border-white/[0.18] touch-manipulation h-12 active:bg-white/[0.10] transition-colors group">
+              <button className="w-full flex items-center justify-between gap-3 px-3.5 sm:px-4 py-3 min-h-[60px] touch-manipulation hover:bg-white/[0.03] active:bg-white/[0.04] transition-colors group text-left">
                 <div className="flex items-center gap-3">
-                  <ClipboardCheck className="h-5 w-5 text-amber-400" />
-                  <span className="text-[14px] font-semibold text-white">Tasks</span>
+                  <span className="h-9 w-9 rounded-xl bg-white/[0.05] border border-white/[0.08] flex items-center justify-center flex-shrink-0"><ClipboardCheck className="h-4 w-4 text-amber-400" /></span>
+                  <span className="min-w-0">
+                    <span className="block text-[14px] font-semibold text-white leading-tight">Tasks</span>
+                    <span className="block text-[11px] text-white/55 truncate leading-tight mt-0.5">{totalTasks > 0 ? `${doneTasks} of ${totalTasks} done` : 'Plan the work'}</span>
+                  </span>
                 </div>
                 <div className="flex items-center gap-2">
                   {regularTasks.length > 0 && (
-                    <span className="text-[11px] font-semibold text-white/70 bg-white/[0.10] px-2 py-0.5 rounded-full tabular-nums">
+                    <span className="text-[11px] font-semibold text-white/55 tabular-nums">
                       {regularTasks.length}
                     </span>
                   )}
@@ -934,7 +970,7 @@ const ProjectDetailPage = () => {
                 </div>
               </button>
             </CollapsibleTrigger>
-            <CollapsibleContent className="mt-2 space-y-2">
+            <CollapsibleContent className="px-3.5 sm:px-4 pb-3.5 pt-2.5 space-y-2 border-t border-white/[0.06]">
               {regularTasks.length === 0 ? (
                 <div className="flex flex-col items-center py-8 text-center">
                   <ClipboardList className="h-7 w-7 text-white mb-2" />
@@ -1026,19 +1062,22 @@ const ProjectDetailPage = () => {
 
         {/* ── Quotes Section ── */}
         <motion.div variants={itemVariants}>
-          <Collapsible
+          <Collapsible className={cn(PANEL, 'overflow-hidden')}
             open={openSections.has('quotes')}
             onOpenChange={() => toggleSection('quotes')}
           >
             <CollapsibleTrigger asChild>
-              <button className="w-full flex items-center justify-between px-3.5 rounded-xl bg-white/[0.05] border border-white/[0.10] hover:bg-white/[0.08] hover:border-white/[0.18] touch-manipulation h-12 active:bg-white/[0.10] transition-colors group">
+              <button className="w-full flex items-center justify-between gap-3 px-3.5 sm:px-4 py-3 min-h-[60px] touch-manipulation hover:bg-white/[0.03] active:bg-white/[0.04] transition-colors group text-left">
                 <div className="flex items-center gap-3">
-                  <FileText className="h-5 w-5 text-emerald-400" />
-                  <span className="text-[14px] font-semibold text-white">Quotes</span>
+                  <span className="h-9 w-9 rounded-xl bg-white/[0.05] border border-white/[0.08] flex items-center justify-center flex-shrink-0"><FileText className="h-4 w-4 text-emerald-400" /></span>
+                  <span className="min-w-0">
+                    <span className="block text-[14px] font-semibold text-white leading-tight">Quotes</span>
+                    <span className="block text-[11px] text-white/55 truncate leading-tight mt-0.5">{quotes.length > 0 ? `${quotes.length} quote${quotes.length === 1 ? '' : 's'} · ${formatGBP(quoteTotal)}` : 'Price the job'}</span>
+                  </span>
                 </div>
                 <div className="flex items-center gap-2">
                   {quotes.length > 0 && (
-                    <span className="text-[11px] font-semibold text-white/70 bg-white/[0.10] px-2 py-0.5 rounded-full tabular-nums">
+                    <span className="text-[11px] font-semibold text-white/55 tabular-nums">
                       {quotes.length}
                     </span>
                   )}
@@ -1060,7 +1099,7 @@ const ProjectDetailPage = () => {
                 </div>
               </button>
             </CollapsibleTrigger>
-            <CollapsibleContent className="mt-2 space-y-2">
+            <CollapsibleContent className="px-3.5 sm:px-4 pb-3.5 pt-2.5 space-y-2 border-t border-white/[0.06]">
               {quotes.length === 0 ? (
                 <div className="flex flex-col items-center py-6 text-center">
                   <p className="text-sm text-white mb-3">
@@ -1087,10 +1126,24 @@ const ProjectDetailPage = () => {
                         <p className="text-sm font-medium text-white">
                           {q.quote_number ? `#${q.quote_number}` : 'Quote'}
                         </p>
-                        <p className="text-[11px] text-white capitalize">{q.status}</p>
+                        <p className="text-[11px] capitalize flex items-center gap-1.5">
+                          <span
+                            className={cn(
+                              'h-1.5 w-1.5 rounded-full',
+                              q.status === 'approved' || q.acceptance_status === 'accepted'
+                                ? 'bg-emerald-400'
+                                : q.status === 'rejected' || q.acceptance_status === 'rejected'
+                                  ? 'bg-red-400'
+                                  : q.status === 'sent' || q.status === 'pending'
+                                    ? 'bg-blue-400'
+                                    : 'bg-white/50'
+                            )}
+                          />
+                          <span className="text-white/65">{q.status}</span>
+                        </p>
                       </div>
                       <div className="flex items-center gap-2 flex-shrink-0">
-                        <span className="text-sm font-medium text-white">
+                        <span className="text-[14px] font-bold text-elec-yellow tabular-nums">
                           £{q.total.toLocaleString()}
                         </span>
                         <ChevronRight className="h-4 w-4 text-white" />
@@ -1098,8 +1151,8 @@ const ProjectDetailPage = () => {
                     </button>
                   ))}
                   {quoteTotal > 0 && (
-                    <p className="text-[12px] text-white text-right pr-2">
-                      Total: £{quoteTotal.toLocaleString()}
+                    <p className="text-[12px] text-white/60 text-right pr-1 pt-1">
+                      Total <span className="font-semibold text-elec-yellow tabular-nums">£{quoteTotal.toLocaleString()}</span>
                     </p>
                   )}
                 </>
@@ -1110,19 +1163,22 @@ const ProjectDetailPage = () => {
 
         {/* ── Invoices Section ── */}
         <motion.div variants={itemVariants}>
-          <Collapsible
+          <Collapsible className={cn(PANEL, 'overflow-hidden')}
             open={openSections.has('invoices')}
             onOpenChange={() => toggleSection('invoices')}
           >
             <CollapsibleTrigger asChild>
-              <button className="w-full flex items-center justify-between px-3.5 rounded-xl bg-white/[0.05] border border-white/[0.10] hover:bg-white/[0.08] hover:border-white/[0.18] touch-manipulation h-12 active:bg-white/[0.10] transition-colors group">
+              <button className="w-full flex items-center justify-between gap-3 px-3.5 sm:px-4 py-3 min-h-[60px] touch-manipulation hover:bg-white/[0.03] active:bg-white/[0.04] transition-colors group text-left">
                 <div className="flex items-center gap-3">
-                  <PoundSterling className="h-5 w-5 text-blue-400" />
-                  <span className="text-[14px] font-semibold text-white">Invoices</span>
+                  <span className="h-9 w-9 rounded-xl bg-white/[0.05] border border-white/[0.08] flex items-center justify-center flex-shrink-0"><PoundSterling className="h-4 w-4 text-blue-400" /></span>
+                  <span className="min-w-0">
+                    <span className="block text-[14px] font-semibold text-white leading-tight">Invoices</span>
+                    <span className="block text-[11px] text-white/55 truncate leading-tight mt-0.5">{invoices.length > 0 ? `${invoices.length} invoice${invoices.length === 1 ? '' : 's'} · ${formatGBP(invoiceTotal)}${paidInvoices > 0 ? ` · ${paidInvoices} paid` : ''}` : 'Bill the work'}</span>
+                  </span>
                 </div>
                 <div className="flex items-center gap-2">
                   {invoices.length > 0 && (
-                    <span className="text-[11px] font-semibold text-white/70 bg-white/[0.10] px-2 py-0.5 rounded-full tabular-nums">
+                    <span className="text-[11px] font-semibold text-white/55 tabular-nums">
                       {invoices.length}
                     </span>
                   )}
@@ -1144,7 +1200,7 @@ const ProjectDetailPage = () => {
                 </div>
               </button>
             </CollapsibleTrigger>
-            <CollapsibleContent className="mt-2 space-y-2">
+            <CollapsibleContent className="px-3.5 sm:px-4 pb-3.5 pt-2.5 space-y-2 border-t border-white/[0.06]">
               {invoices.length === 0 ? (
                 <div className="flex flex-col items-center py-6 text-center">
                   <p className="text-sm text-white mb-3">
@@ -1174,7 +1230,7 @@ const ProjectDetailPage = () => {
                         <p className="text-[11px] text-white capitalize">{inv.payment_status}</p>
                       </div>
                       <div className="flex items-center gap-2 flex-shrink-0">
-                        <span className="text-sm font-medium text-white">
+                        <span className="text-[14px] font-bold text-elec-yellow tabular-nums">
                           £{inv.total.toLocaleString()}
                         </span>
                         <ChevronRight className="h-4 w-4 text-white" />
@@ -1183,7 +1239,7 @@ const ProjectDetailPage = () => {
                   ))}
                   {invoiceTotal > 0 && (
                     <p className="text-[12px] text-white text-right pr-2">
-                      Total: £{invoiceTotal.toLocaleString()} ({paidInvoices} paid)
+                      Total <span className="font-semibold text-elec-yellow tabular-nums">£{invoiceTotal.toLocaleString()}</span>{paidInvoices > 0 ? ` · ${paidInvoices} paid` : ''}
                     </p>
                   )}
                 </>
@@ -1194,19 +1250,22 @@ const ProjectDetailPage = () => {
 
         {/* ── Certificates Section ── */}
         <motion.div variants={itemVariants}>
-          <Collapsible
+          <Collapsible className={cn(PANEL, 'overflow-hidden')}
             open={openSections.has('certificates')}
             onOpenChange={() => toggleSection('certificates')}
           >
             <CollapsibleTrigger asChild>
-              <button className="w-full flex items-center justify-between px-3.5 rounded-xl bg-white/[0.05] border border-white/[0.10] hover:bg-white/[0.08] hover:border-white/[0.18] touch-manipulation h-12 active:bg-white/[0.10] transition-colors group">
+              <button className="w-full flex items-center justify-between gap-3 px-3.5 sm:px-4 py-3 min-h-[60px] touch-manipulation hover:bg-white/[0.03] active:bg-white/[0.04] transition-colors group text-left">
                 <div className="flex items-center gap-3">
-                  <Shield className="h-5 w-5 text-amber-400" />
-                  <span className="text-[14px] font-semibold text-white">Certificates</span>
+                  <span className="h-9 w-9 rounded-xl bg-white/[0.05] border border-white/[0.08] flex items-center justify-center flex-shrink-0"><Shield className="h-4 w-4 text-amber-400" /></span>
+                  <span className="min-w-0">
+                    <span className="block text-[14px] font-semibold text-white leading-tight">Certificates</span>
+                    <span className="block text-[11px] text-white/55 truncate leading-tight mt-0.5">{certificates.length > 0 ? `${certificates.length} linked` : 'EICR, EIC, Minor Works'}</span>
+                  </span>
                 </div>
                 <div className="flex items-center gap-2">
                   {certificates.length > 0 && (
-                    <span className="text-[11px] font-semibold text-white/70 bg-white/[0.10] px-2 py-0.5 rounded-full tabular-nums">
+                    <span className="text-[11px] font-semibold text-white/55 tabular-nums">
                       {certificates.length}
                     </span>
                   )}
@@ -1228,7 +1287,7 @@ const ProjectDetailPage = () => {
                 </div>
               </button>
             </CollapsibleTrigger>
-            <CollapsibleContent className="mt-2 space-y-2">
+            <CollapsibleContent className="px-3.5 sm:px-4 pb-3.5 pt-2.5 space-y-2 border-t border-white/[0.06]">
               {certificates.length === 0 ? (
                 <div className="flex flex-col items-center py-6 text-center">
                   <p className="text-sm text-white mb-3">
@@ -1274,16 +1333,19 @@ const ProjectDetailPage = () => {
 
         {/* ── RAMS Section ── */}
         <motion.div variants={itemVariants}>
-          <Collapsible open={openSections.has('rams')} onOpenChange={() => toggleSection('rams')}>
+          <Collapsible className={cn(PANEL, 'overflow-hidden')} open={openSections.has('rams')} onOpenChange={() => toggleSection('rams')}>
             <CollapsibleTrigger asChild>
-              <button className="w-full flex items-center justify-between px-3.5 rounded-xl bg-white/[0.05] border border-white/[0.10] hover:bg-white/[0.08] hover:border-white/[0.18] touch-manipulation h-12 active:bg-white/[0.10] transition-colors group">
+              <button className="w-full flex items-center justify-between gap-3 px-3.5 sm:px-4 py-3 min-h-[60px] touch-manipulation hover:bg-white/[0.03] active:bg-white/[0.04] transition-colors group text-left">
                 <div className="flex items-center gap-3">
-                  <Zap className="h-5 w-5 text-purple-400" />
-                  <span className="text-[14px] font-semibold text-white">RAMS</span>
+                  <span className="h-9 w-9 rounded-xl bg-white/[0.05] border border-white/[0.08] flex items-center justify-center flex-shrink-0"><Zap className="h-4 w-4 text-purple-400" /></span>
+                  <span className="min-w-0">
+                    <span className="block text-[14px] font-semibold text-white leading-tight">RAMS</span>
+                    <span className="block text-[11px] text-white/55 truncate leading-tight mt-0.5">{rams.length > 0 ? `${rams.length} document${rams.length === 1 ? '' : 's'}` : 'Risk assessments & method statements'}</span>
+                  </span>
                 </div>
                 <div className="flex items-center gap-2">
                   {rams.length > 0 && (
-                    <span className="text-[11px] font-semibold text-white/70 bg-white/[0.10] px-2 py-0.5 rounded-full tabular-nums">
+                    <span className="text-[11px] font-semibold text-white/55 tabular-nums">
                       {rams.length}
                     </span>
                   )}
@@ -1305,7 +1367,7 @@ const ProjectDetailPage = () => {
                 </div>
               </button>
             </CollapsibleTrigger>
-            <CollapsibleContent className="mt-2 space-y-2">
+            <CollapsibleContent className="px-3.5 sm:px-4 pb-3.5 pt-2.5 space-y-2 border-t border-white/[0.06]">
               {rams.length === 0 ? (
                 <div className="flex flex-col items-center py-6 text-center">
                   <p className="text-sm text-white mb-3">
@@ -1348,19 +1410,22 @@ const ProjectDetailPage = () => {
 
         {/* ── Circuit Design Section ── */}
         <motion.div variants={itemVariants}>
-          <Collapsible
+          <Collapsible className={cn(PANEL, 'overflow-hidden')}
             open={openSections.has('circuitDesign')}
             onOpenChange={() => toggleSection('circuitDesign')}
           >
             <CollapsibleTrigger asChild>
-              <button className="w-full flex items-center justify-between px-3.5 rounded-xl bg-white/[0.05] border border-white/[0.10] hover:bg-white/[0.08] hover:border-white/[0.18] touch-manipulation h-12 active:bg-white/[0.10] transition-colors group">
+              <button className="w-full flex items-center justify-between gap-3 px-3.5 sm:px-4 py-3 min-h-[60px] touch-manipulation hover:bg-white/[0.03] active:bg-white/[0.04] transition-colors group text-left">
                 <div className="flex items-center gap-3">
-                  <Zap className="h-5 w-5 text-purple-400" />
-                  <span className="text-[14px] font-semibold text-white">Circuit Design</span>
+                  <span className="h-9 w-9 rounded-xl bg-white/[0.05] border border-white/[0.08] flex items-center justify-center flex-shrink-0"><Zap className="h-4 w-4 text-purple-400" /></span>
+                  <span className="min-w-0">
+                    <span className="block text-[14px] font-semibold text-white leading-tight">Circuit Design</span>
+                    <span className="block text-[11px] text-white/55 truncate leading-tight mt-0.5">{circuitDesigns.length > 0 ? `${circuitDesigns.length} design${circuitDesigns.length === 1 ? '' : 's'}` : 'AI circuit designer'}</span>
+                  </span>
                 </div>
                 <div className="flex items-center gap-2">
                   {circuitDesigns.length > 0 && (
-                    <span className="text-[11px] font-semibold text-white/70 bg-white/[0.10] px-2 py-0.5 rounded-full tabular-nums">
+                    <span className="text-[11px] font-semibold text-white/55 tabular-nums">
                       {circuitDesigns.length}
                     </span>
                   )}
@@ -1382,7 +1447,7 @@ const ProjectDetailPage = () => {
                 </div>
               </button>
             </CollapsibleTrigger>
-            <CollapsibleContent className="mt-2 space-y-2">
+            <CollapsibleContent className="px-3.5 sm:px-4 pb-3.5 pt-2.5 space-y-2 border-t border-white/[0.06]">
               {circuitDesigns.length === 0 ? (
                 <div className="flex flex-col items-center py-6 text-center">
                   <p className="text-sm text-white mb-3">
@@ -1422,19 +1487,22 @@ const ProjectDetailPage = () => {
 
         {/* ── Cost Estimates Section ── */}
         <motion.div variants={itemVariants}>
-          <Collapsible
+          <Collapsible className={cn(PANEL, 'overflow-hidden')}
             open={openSections.has('costEstimate')}
             onOpenChange={() => toggleSection('costEstimate')}
           >
             <CollapsibleTrigger asChild>
-              <button className="w-full flex items-center justify-between px-3.5 rounded-xl bg-white/[0.05] border border-white/[0.10] hover:bg-white/[0.08] hover:border-white/[0.18] touch-manipulation h-12 active:bg-white/[0.10] transition-colors group">
+              <button className="w-full flex items-center justify-between gap-3 px-3.5 sm:px-4 py-3 min-h-[60px] touch-manipulation hover:bg-white/[0.03] active:bg-white/[0.04] transition-colors group text-left">
                 <div className="flex items-center gap-3">
-                  <PoundSterling className="h-5 w-5 text-green-400" />
-                  <span className="text-[14px] font-semibold text-white">Cost Estimates</span>
+                  <span className="h-9 w-9 rounded-xl bg-white/[0.05] border border-white/[0.08] flex items-center justify-center flex-shrink-0"><PoundSterling className="h-4 w-4 text-green-400" /></span>
+                  <span className="min-w-0">
+                    <span className="block text-[14px] font-semibold text-white leading-tight">Cost Estimates</span>
+                    <span className="block text-[11px] text-white/55 truncate leading-tight mt-0.5">{costEstimates.length > 0 ? `${costEstimates.length} estimate${costEstimates.length === 1 ? '' : 's'}` : 'AI cost engineer'}</span>
+                  </span>
                 </div>
                 <div className="flex items-center gap-2">
                   {costEstimates.length > 0 && (
-                    <span className="text-[11px] font-semibold text-white/70 bg-white/[0.10] px-2 py-0.5 rounded-full tabular-nums">
+                    <span className="text-[11px] font-semibold text-white/55 tabular-nums">
                       {costEstimates.length}
                     </span>
                   )}
@@ -1456,7 +1524,7 @@ const ProjectDetailPage = () => {
                 </div>
               </button>
             </CollapsibleTrigger>
-            <CollapsibleContent className="mt-2 space-y-2">
+            <CollapsibleContent className="px-3.5 sm:px-4 pb-3.5 pt-2.5 space-y-2 border-t border-white/[0.06]">
               {costEstimates.length === 0 ? (
                 <div className="flex flex-col items-center py-6 text-center">
                   <p className="text-sm text-white mb-3">
@@ -1494,19 +1562,22 @@ const ProjectDetailPage = () => {
 
         {/* ── Floor Plans Section ── */}
         <motion.div variants={itemVariants}>
-          <Collapsible
+          <Collapsible className={cn(PANEL, 'overflow-hidden')}
             open={openSections.has('floorPlan')}
             onOpenChange={() => toggleSection('floorPlan')}
           >
             <CollapsibleTrigger asChild>
-              <button className="w-full flex items-center justify-between px-3.5 rounded-xl bg-white/[0.05] border border-white/[0.10] hover:bg-white/[0.08] hover:border-white/[0.18] touch-manipulation h-12 active:bg-white/[0.10] transition-colors group">
+              <button className="w-full flex items-center justify-between gap-3 px-3.5 sm:px-4 py-3 min-h-[60px] touch-manipulation hover:bg-white/[0.03] active:bg-white/[0.04] transition-colors group text-left">
                 <div className="flex items-center gap-3">
-                  <LayoutGrid className="h-5 w-5 text-cyan-400" />
-                  <span className="text-[14px] font-semibold text-white">Floor Plans</span>
+                  <span className="h-9 w-9 rounded-xl bg-white/[0.05] border border-white/[0.08] flex items-center justify-center flex-shrink-0"><LayoutGrid className="h-4 w-4 text-cyan-400" /></span>
+                  <span className="min-w-0">
+                    <span className="block text-[14px] font-semibold text-white leading-tight">Floor Plans</span>
+                    <span className="block text-[11px] text-white/55 truncate leading-tight mt-0.5">{floorPlans.length > 0 ? `${floorPlans.length} plan${floorPlans.length === 1 ? '' : 's'}` : 'Room planner layouts'}</span>
+                  </span>
                 </div>
                 <div className="flex items-center gap-2">
                   {floorPlans.length > 0 && (
-                    <span className="text-[11px] font-semibold text-white/70 bg-white/[0.10] px-2 py-0.5 rounded-full tabular-nums">
+                    <span className="text-[11px] font-semibold text-white/55 tabular-nums">
                       {floorPlans.length}
                     </span>
                   )}
@@ -1528,7 +1599,7 @@ const ProjectDetailPage = () => {
                 </div>
               </button>
             </CollapsibleTrigger>
-            <CollapsibleContent className="mt-2 space-y-2">
+            <CollapsibleContent className="px-3.5 sm:px-4 pb-3.5 pt-2.5 space-y-2 border-t border-white/[0.06]">
               {floorPlans.length === 0 ? (
                 <div className="flex flex-col items-center py-6 text-center">
                   <p className="text-sm text-white mb-3">
@@ -1569,15 +1640,18 @@ const ProjectDetailPage = () => {
         {/* ── Snagging Section (only when snags exist) ── */}
         {snaggingTasks.length > 0 && (
           <motion.div variants={itemVariants}>
-            <Collapsible
+            <Collapsible className={cn(PANEL, 'overflow-hidden')}
               open={openSections.has('snagging')}
               onOpenChange={() => toggleSection('snagging')}
             >
               <CollapsibleTrigger asChild>
                 <button className="w-full flex items-center justify-between p-4 rounded-xl bg-white/[0.04] border border-orange-500/20 touch-manipulation h-14 active:bg-white/[0.06] transition-colors">
                   <div className="flex items-center gap-3">
-                    <AlertTriangle className="h-5 w-5 text-orange-400" />
-                    <span className="text-[14px] font-semibold text-white">Snagging</span>
+                    <span className="h-9 w-9 rounded-xl bg-white/[0.05] border border-white/[0.08] flex items-center justify-center flex-shrink-0"><AlertTriangle className="h-4 w-4 text-orange-400" /></span>
+                    <span className="min-w-0">
+                    <span className="block text-[14px] font-semibold text-white leading-tight">Snagging</span>
+                    <span className="block text-[11px] text-white/55 truncate leading-tight mt-0.5">{`${snaggingTasks.filter((t) => t.status === 'open').length} open of ${snaggingTasks.length}`}</span>
+                  </span>
                     {openSnags > 0 && (
                       <span className="text-[11px] font-medium bg-orange-500/20 text-orange-400 px-2 py-0.5 rounded-full">
                         {openSnags} open
@@ -1585,7 +1659,7 @@ const ProjectDetailPage = () => {
                     )}
                   </div>
                   <div className="flex items-center gap-2">
-                    <span className="text-[11px] font-semibold text-white/70 bg-white/[0.10] px-2 py-0.5 rounded-full tabular-nums">
+                    <span className="text-[11px] font-semibold text-white/55 tabular-nums">
                       {snaggingTasks.length}
                     </span>
                     {openSections.has('snagging') ? (
@@ -1596,7 +1670,7 @@ const ProjectDetailPage = () => {
                   </div>
                 </button>
               </CollapsibleTrigger>
-              <CollapsibleContent className="mt-2 space-y-2">
+              <CollapsibleContent className="px-3.5 sm:px-4 pb-3.5 pt-2.5 space-y-2 border-t border-white/[0.06]">
                 {snaggingTasks.map((task) => (
                   <div
                     key={task.id}
@@ -1656,19 +1730,22 @@ const ProjectDetailPage = () => {
 
         {/* ── Photos Section ── */}
         <motion.div variants={itemVariants}>
-          <Collapsible
+          <Collapsible className={cn(PANEL, 'overflow-hidden')}
             open={openSections.has('photos')}
             onOpenChange={() => toggleSection('photos')}
           >
             <CollapsibleTrigger asChild>
-              <button className="w-full flex items-center justify-between px-3.5 rounded-xl bg-white/[0.05] border border-white/[0.10] hover:bg-white/[0.08] hover:border-white/[0.18] touch-manipulation h-12 active:bg-white/[0.10] transition-colors group">
+              <button className="w-full flex items-center justify-between gap-3 px-3.5 sm:px-4 py-3 min-h-[60px] touch-manipulation hover:bg-white/[0.03] active:bg-white/[0.04] transition-colors group text-left">
                 <div className="flex items-center gap-3">
-                  <Camera className="h-5 w-5 text-sky-400" />
-                  <span className="text-[14px] font-semibold text-white">Photos</span>
+                  <span className="h-9 w-9 rounded-xl bg-white/[0.05] border border-white/[0.08] flex items-center justify-center flex-shrink-0"><Camera className="h-4 w-4 text-sky-400" /></span>
+                  <span className="min-w-0">
+                    <span className="block text-[14px] font-semibold text-white leading-tight">Photos</span>
+                    <span className="block text-[11px] text-white/55 truncate leading-tight mt-0.5">{projectPhotos.length > 0 ? `${projectPhotos.length} photo${projectPhotos.length === 1 ? '' : 's'}` : 'Before, during & after shots'}</span>
+                  </span>
                 </div>
                 <div className="flex items-center gap-2">
                   {projectPhotos.length > 0 && (
-                    <span className="text-[11px] font-semibold text-white/70 bg-white/[0.10] px-2 py-0.5 rounded-full tabular-nums">
+                    <span className="text-[11px] font-semibold text-white/55 tabular-nums">
                       {projectPhotos.length}
                     </span>
                   )}
@@ -1690,7 +1767,7 @@ const ProjectDetailPage = () => {
                 </div>
               </button>
             </CollapsibleTrigger>
-            <CollapsibleContent className="mt-2 space-y-2">
+            <CollapsibleContent className="px-3.5 sm:px-4 pb-3.5 pt-2.5 space-y-2 border-t border-white/[0.06]">
               {projectPhotos.length === 0 ? (
                 <div className="flex flex-col items-center py-6 text-center">
                   <Camera className="h-7 w-7 text-white mb-2" />
@@ -1756,19 +1833,22 @@ const ProjectDetailPage = () => {
 
         {/* ── Documents Section ── */}
         <motion.div variants={itemVariants}>
-          <Collapsible
+          <Collapsible className={cn(PANEL, 'overflow-hidden')}
             open={openSections.has('documents')}
             onOpenChange={() => toggleSection('documents')}
           >
             <CollapsibleTrigger asChild>
-              <button className="w-full flex items-center justify-between px-3.5 rounded-xl bg-white/[0.05] border border-white/[0.10] hover:bg-white/[0.08] hover:border-white/[0.18] touch-manipulation h-12 active:bg-white/[0.10] transition-colors group">
+              <button className="w-full flex items-center justify-between gap-3 px-3.5 sm:px-4 py-3 min-h-[60px] touch-manipulation hover:bg-white/[0.03] active:bg-white/[0.04] transition-colors group text-left">
                 <div className="flex items-center gap-3">
-                  <FileText className="h-5 w-5 text-amber-400" />
-                  <span className="text-[14px] font-semibold text-white">Documents</span>
+                  <span className="h-9 w-9 rounded-xl bg-white/[0.05] border border-white/[0.08] flex items-center justify-center flex-shrink-0"><FileText className="h-4 w-4 text-amber-400" /></span>
+                  <span className="min-w-0">
+                    <span className="block text-[14px] font-semibold text-white leading-tight">Documents</span>
+                    <span className="block text-[11px] text-white/55 truncate leading-tight mt-0.5">{projectDocuments.length > 0 ? `${projectDocuments.length} file${projectDocuments.length === 1 ? '' : 's'}` : 'Drawings, specs & paperwork'}</span>
+                  </span>
                 </div>
                 <div className="flex items-center gap-2">
                   {projectDocuments.length > 0 && (
-                    <span className="text-[11px] font-semibold text-white/70 bg-white/[0.10] px-2 py-0.5 rounded-full tabular-nums">
+                    <span className="text-[11px] font-semibold text-white/55 tabular-nums">
                       {projectDocuments.length}
                     </span>
                   )}
@@ -1790,7 +1870,7 @@ const ProjectDetailPage = () => {
                 </div>
               </button>
             </CollapsibleTrigger>
-            <CollapsibleContent className="mt-2 space-y-2">
+            <CollapsibleContent className="px-3.5 sm:px-4 pb-3.5 pt-2.5 space-y-2 border-t border-white/[0.06]">
               {projectDocuments.length === 0 ? (
                 <div className="flex flex-col items-center py-6 text-center">
                   <FileText className="h-7 w-7 text-white mb-2" />
@@ -1866,6 +1946,8 @@ const ProjectDetailPage = () => {
             </CollapsibleContent>
           </Collapsible>
         </motion.div>
+
+        </div>
       </motion.div>
 
       {/* Edit Project Sheet */}

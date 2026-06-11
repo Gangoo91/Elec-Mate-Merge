@@ -1,6 +1,7 @@
 import { useState, useMemo, useEffect } from 'react';
 import { useQuoteStorage } from '@/hooks/useQuoteStorage';
 import { useInvoiceStorage } from '@/hooks/useInvoiceStorage';
+import { useCompanyProfile } from '@/hooks/useCompanyProfile';
 import { QuotesReadyPanel } from './QuotesReadyPanel';
 import { InvoiceStatusPanel } from './InvoiceStatusPanel';
 import { Quote } from '@/types/quote';
@@ -14,6 +15,7 @@ import { realtimeChannelName } from '@/lib/realtimeChannel';
 import { generateSequentialInvoiceNumber } from '@/utils/invoice-number-generator';
 
 export const QuoteInvoiceDashboard = () => {
+  const { companyProfile } = useCompanyProfile();
   const navigate = useNavigate();
   const { savedQuotes } = useQuoteStorage();
   const { invoices, saveInvoice, fetchInvoices } = useInvoiceStorage();
@@ -166,7 +168,9 @@ export const QuoteInvoiceDashboard = () => {
     setLoadingAction(true);
     try {
       const invoiceNumber = await generateSequentialInvoiceNumber();
-      const dueDate = new Date(Date.now() + 30 * 24 * 60 * 60 * 1000);
+      const termsStr = companyProfile?.payment_terms || '30 days';
+      const termsDays = /receipt/i.test(termsStr) ? 0 : parseInt((/(\d+)/.exec(termsStr) || ['','30'])[1], 10);
+      const dueDate = new Date(Date.now() + termsDays * 86400000);
       const invoiceData = {
         ...quoteForInvoice,
         id: quoteForInvoice.id,
@@ -177,7 +181,8 @@ export const QuoteInvoiceDashboard = () => {
         invoice_raised: true,
         settings: {
           ...quoteForInvoice.settings,
-          paymentTerms: '30 days',
+          // ELE-1078 — use the saved payment-terms preference, not a hardcoded 30.
+          paymentTerms: companyProfile?.payment_terms || '30 days',
           dueDate: dueDate,
         },
       };

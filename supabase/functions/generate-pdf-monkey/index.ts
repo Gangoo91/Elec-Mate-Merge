@@ -642,7 +642,20 @@ serve(async (req) => {
       ];
       const adjustedRawItems = invoiceItems.map((item: any) => {
         const a = applyItemAdjustment(item);
-        const qty = item.actualQuantity !== undefined ? item.actualQuantity : (parseFloat(item.quantity) || 0);
+        // ELE-1076 — actualQuantity only overrides for genuine PARTIAL
+        // completion. Completed items bill the full quoted quantity: Alex's
+        // £1,095 lump line carried a stray actualQuantity of 0.5 (from an
+        // hours edit) and the PDF halved it to £547.50 while the app showed
+        // the stored total.
+        const quotedQty = parseFloat(item.quantity) || 0;
+        const qty =
+          item.completionStatus === 'partial' && item.actualQuantity !== undefined
+            ? Number(item.actualQuantity) || 0
+            : item.completionStatus === 'completed'
+              ? quotedQty
+              : item.actualQuantity !== undefined
+                ? Number(item.actualQuantity) || 0
+                : quotedQty;
         return {
           raw: item,
           category: item.category || 'manual',
@@ -713,7 +726,14 @@ serve(async (req) => {
           name: it.description,
           description: it.raw.notes || '',
           quantity: it.quantity,
-          unit: it.raw.unit || 'each',
+          // ELE-1076 — old/AI-built rows can carry unit 'hour' on lump or
+          // materials lines (hours=0, no hourly rate). Printing that reads
+          // as nonsense ("Materials — 1 hour"); normalise to 'each'.
+          unit: (() => {
+            const u = String(it.raw.unit || 'each').toLowerCase();
+            const hourly = (parseFloat(it.raw.hours) > 0) || (parseFloat(it.raw.hourlyRate) > 0) || (parseFloat(it.raw.hourly_rate) > 0);
+            return ['hour', 'hours', 'day', 'days'].includes(u) && !hourly ? 'each' : (it.raw.unit || 'each');
+          })(),
           unitPrice: it.unitPrice,
           totalPrice: it.totalPrice,
           unitPriceFormatted: gbp(it.unitPrice),
@@ -1120,8 +1140,18 @@ serve(async (req) => {
         },
         // Branding settings for dynamic styling (same as quotes)
         branding: {
-          primaryColor: freshCompanyProfile?.primary_color || '#1e40af',
-          secondaryColor: freshCompanyProfile?.secondary_color || '#1F2937',
+          // ELE-1077 — both colours pure black is the broken legacy default,
+          // not a brand choice; treat as unset so PDFs aren't all-black.
+          primaryColor:
+            freshCompanyProfile?.primary_color &&
+            !(freshCompanyProfile.primary_color === '#000000' && freshCompanyProfile?.secondary_color === '#000000')
+              ? freshCompanyProfile.primary_color
+              : '#1e40af',
+          secondaryColor:
+            freshCompanyProfile?.secondary_color &&
+            !(freshCompanyProfile.primary_color === '#000000' && freshCompanyProfile?.secondary_color === '#000000')
+              ? freshCompanyProfile.secondary_color
+              : '#1F2937',
           accentColor: freshCompanyProfile?.accent_color || '#F59E0B',
         },
         // Professional credentials (scheme logo etc.)
@@ -1477,8 +1507,18 @@ serve(async (req) => {
         total: total,
         // Branding settings for dynamic styling
         branding: {
-          primaryColor: freshCompanyProfile?.primary_color || '#1e40af',
-          secondaryColor: freshCompanyProfile?.secondary_color || '#1F2937',
+          // ELE-1077 — both colours pure black is the broken legacy default,
+          // not a brand choice; treat as unset so PDFs aren't all-black.
+          primaryColor:
+            freshCompanyProfile?.primary_color &&
+            !(freshCompanyProfile.primary_color === '#000000' && freshCompanyProfile?.secondary_color === '#000000')
+              ? freshCompanyProfile.primary_color
+              : '#1e40af',
+          secondaryColor:
+            freshCompanyProfile?.secondary_color &&
+            !(freshCompanyProfile.primary_color === '#000000' && freshCompanyProfile?.secondary_color === '#000000')
+              ? freshCompanyProfile.secondary_color
+              : '#1F2937',
           accentColor: freshCompanyProfile?.accent_color || '#F59E0B',
         },
         // Business settings

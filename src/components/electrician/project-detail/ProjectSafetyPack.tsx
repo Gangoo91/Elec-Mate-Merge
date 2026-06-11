@@ -8,6 +8,7 @@
 import { useState } from 'react';
 import { ShieldCheck, ChevronUp, ChevronDown, ChevronRight, FileText } from 'lucide-react';
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '@/components/ui/collapsible';
+import { PANEL } from '@/components/electrician/shared/surfaces';
 import { cn } from '@/lib/utils';
 import { useSafetyPDFExport } from '@/hooks/useSafetyPDFExport';
 import { useProjectSafetyDocs } from '@/hooks/useProjectSafetyDocs';
@@ -58,12 +59,17 @@ export function ProjectSafetyPack({ projectId }: { projectId: string }) {
   const { exportPDF, isExporting, exportingId } = useSafetyPDFExport();
 
   return (
-    <Collapsible open={open} onOpenChange={setOpen}>
+    <Collapsible className={cn(PANEL, 'overflow-hidden')} open={open} onOpenChange={setOpen}>
       <CollapsibleTrigger asChild>
-        <button className="w-full flex items-center justify-between px-3.5 rounded-xl bg-white/[0.05] border border-white/[0.10] hover:bg-white/[0.08] hover:border-white/[0.18] touch-manipulation h-12 active:bg-white/[0.10] transition-colors group">
-          <div className="flex items-center gap-3">
-            <ShieldCheck className="h-5 w-5 text-emerald-400" />
-            <span className="text-[14px] font-semibold text-white">Safety Pack</span>
+        <button className="w-full flex items-center justify-between gap-3 px-3.5 sm:px-4 py-3 min-h-[60px] touch-manipulation hover:bg-white/[0.03] active:bg-white/[0.04] transition-colors group text-left">
+          <div className="flex items-center gap-3 min-w-0">
+            <span className="h-9 w-9 rounded-xl bg-white/[0.05] border border-white/[0.08] flex items-center justify-center flex-shrink-0">
+              <ShieldCheck className="h-4 w-4 text-emerald-400" />
+            </span>
+            <span className="min-w-0">
+              <span className="block text-[14px] font-semibold text-white leading-tight">Safety Pack</span>
+              <span className="block text-[11px] text-white/55 truncate leading-tight mt-0.5">Permits, isolations & safety records</span>
+            </span>
           </div>
           <div className="flex items-center gap-2">
             {docs.length > 0 && (
@@ -79,7 +85,7 @@ export function ProjectSafetyPack({ projectId }: { projectId: string }) {
           </div>
         </button>
       </CollapsibleTrigger>
-      <CollapsibleContent className="mt-2 space-y-2">
+      <CollapsibleContent className="px-3.5 sm:px-4 pb-3.5 pt-2.5 space-y-2 border-t border-white/[0.06]">
         {isLoading ? (
           <div className="py-6 text-center text-sm text-white/55">Loading safety documents…</div>
         ) : docs.length === 0 ? (

@@ -3,6 +3,7 @@ import { formatDistanceToNow } from 'date-fns';
 import { toast } from 'sonner';
 import { ChevronDown, ChevronUp, Sparkles, Trash2, Bot } from 'lucide-react';
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '@/components/ui/collapsible';
+import { PANEL } from '@/components/electrician/shared/surfaces';
 import {
   AlertDialog,
   AlertDialogAction,
@@ -103,9 +104,9 @@ export function ProjectAINotes({ projectId, isOpen, onToggle }: ProjectAINotesPr
 
   return (
     <>
-      <Collapsible open={isOpen} onOpenChange={onToggle}>
+      <Collapsible className={cn(PANEL, 'overflow-hidden')} open={isOpen} onOpenChange={onToggle}>
         <CollapsibleTrigger asChild>
-          <button className="w-full flex items-center justify-between p-4 rounded-xl bg-white/[0.04] border border-white/[0.08] touch-manipulation h-14 active:bg-white/[0.06] transition-colors">
+          <button className="w-full flex items-center justify-between gap-3 px-3.5 sm:px-4 py-3 min-h-[60px] touch-manipulation hover:bg-white/[0.03] active:bg-white/[0.04] transition-colors text-left">
             <div className="flex items-center gap-3">
               <Sparkles className="h-5 w-5 text-elec-yellow" />
               <span className="text-[15px] font-bold text-white">Elec-AI notes</span>
@@ -124,7 +125,7 @@ export function ProjectAINotes({ projectId, isOpen, onToggle }: ProjectAINotesPr
             </div>
           </button>
         </CollapsibleTrigger>
-        <CollapsibleContent className="mt-2 space-y-2">
+        <CollapsibleContent className="px-3.5 sm:px-4 pb-3.5 pt-2.5 space-y-2 border-t border-white/[0.06]">
           {isLoading && (
             <div className="space-y-2">
               {[0, 1].map((i) => (
