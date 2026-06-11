@@ -1,4 +1,4 @@
-import { useState, useMemo, useEffect } from 'react';
+import { useState, useMemo, useEffect, useRef } from 'react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { DecimalInput } from '@/components/ui/decimal-input';
@@ -19,6 +19,13 @@ import {
   Pencil,
   Check,
   Percent,
+  BookOpen,
+  PoundSterling,
+  Boxes,
+  LayoutTemplate,
+  ScanLine,
+  Loader2,
+  Zap,
 } from 'lucide-react';
 import { QuoteItem, JobTemplate } from '@/types/quote';
 import { JobTemplates } from '../JobTemplates';
@@ -34,6 +41,28 @@ import {
 // ELE-889 — common UK trade units. Anything outside this list is treated as
 // a "custom" unit and rendered through a free-text input. Kept in declaration
 // order so the Select dropdown matches.
+
+// Supplier feeds arrive ALL-CAPS — title-case for readability, preserving
+// trade acronyms and anything with digits (13A, 2.5mm², GU10, CAT6…).
+const PRODUCT_ACRONYMS = new Set([
+  'TV', 'FM', 'DAB', 'USB', 'LED', 'RCD', 'RCBO', 'MCB', 'MCCB', 'SPD', 'AFDD',
+  'SP', 'DP', 'TP', 'TPN', 'AC', 'DC', 'PVC', 'XLPE', 'SWA', 'LSF', 'IP', 'UK',
+  'CCTV', 'PIR', 'RJ45', 'HDMI', 'POE', 'EV', 'PME', 'BS', 'BG', 'MK', 'CEF',
+]);
+function titleCaseProduct(name: string): string {
+  if (!name || name !== name.toUpperCase()) return name; // only fix all-caps feeds
+  return name
+    .split(/\s+/)
+    .map((w) => {
+      const bare = w.replace(/[^A-Za-z0-9]/g, '');
+      if (/\d/.test(w)) return w; // sizes/ratings stay as-is (13A, 2G, GU10)
+      if (PRODUCT_ACRONYMS.has(bare.toUpperCase())) return w.toUpperCase();
+      if (w.length <= 2) return w;
+      return w.charAt(0).toUpperCase() + w.slice(1).toLowerCase();
+    })
+    .join(' ');
+}
+
 const UNIT_PRESETS = [
   'hour',
   'day',
@@ -51,10 +80,10 @@ import { useDebounce } from '@/hooks/useDebounce';
 import { toast } from '@/hooks/use-toast';
 import { useCompanyProfile } from '@/hooks/useCompanyProfile';
 import { useMaterialsLists, MaterialsListItem } from '@/hooks/useMaterialsLists';
-import { useInventoryStorage } from '@/hooks/useInventoryStorage';
 import { usePriceBookBundles } from '@/hooks/usePriceBookBundles';
 import { usePriceList } from '@/hooks/usePriceList';
 import { useInvoiceScanner } from '@/hooks/useInvoiceScanner';
+import { useMaterialsAutocomplete } from '@/hooks/useMaterialsAutocomplete';
 import { InvoiceScannerSheet } from '@/components/electrician/invoice-builder/InvoiceScannerSheet';
 import { InvoiceScanResults } from '@/components/electrician/invoice-builder/InvoiceScanResults';
 
@@ -66,6 +95,8 @@ interface EnhancedQuoteItemsStepProps {
   priceAdjustment?: number;
   setPriceAdjustment?: (adjustment: number) => void;
   calculateAdjustedPrice?: (basePrice: number) => number;
+  /** Personal inventory, fetched once by the wizard — avoids a duplicate full fetch + realtime channel here. */
+  stockItems?: { id: string; quantity: number; low_stock_threshold?: number | null }[];
 }
 
 export const EnhancedQuoteItemsStep = ({
@@ -76,13 +107,13 @@ export const EnhancedQuoteItemsStep = ({
   priceAdjustment = 0,
   setPriceAdjustment,
   calculateAdjustedPrice,
+  stockItems = [],
 }: EnhancedQuoteItemsStepProps) => {
   // Get user's company profile for custom worker rates
   const { companyProfile } = useCompanyProfile();
 
   // Price Book data
   const { lists: materialsLists } = useMaterialsLists();
-  const { items: stockItems } = useInventoryStorage();
   // Live stock for price-book items linked to a `personal_inventory` row (ELE-1014).
   const stockById = useMemo(() => new Map(stockItems.map((s) => [s.id, s])), [stockItems]);
   const [priceBookSearch, setPriceBookSearch] = useState('');
@@ -196,12 +227,19 @@ export const EnhancedQuoteItemsStep = ({
   const [materialSearch, setMaterialSearch] = useState('');
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const [ragResults, setRagResults] = useState<any[]>([]);
+  const [recentMaterials, setRecentMaterials] = useState<
+    { description: string; unitPrice: number; unit: string }[]
+  >([]);
   const [isSearchingRAG, setIsSearchingRAG] = useState(false);
   const [showTemplates, setShowTemplates] = useState(false);
   // String states for decimal input — prevents parseFloat stripping trailing dot
   const [quantityInput, setQuantityInput] = useState('1');
   const [unitPriceInput, setUnitPriceInput] = useState('');
   const debouncedSearch = useDebounce(materialSearch, 500);
+  const { suggestions: typeahead, clearSuggestions } = useMaterialsAutocomplete(materialSearch, {
+    minChars: 2,
+    maxSuggestions: 6,
+  });
 
   // Invoice Scanner State
   const [scannerSheetOpen, setScannerSheetOpen] = useState(false);
@@ -459,6 +497,57 @@ export const EnhancedQuoteItemsStep = ({
     return filtered;
   }, [materialSearch, newItem.subcategory]);
 
+  // Recently used materials — the user's last quotes, deduped.
+  // Fetched lazily the first time the Materials tab opens (this step stays
+  // mounted from wizard step 0, so an on-mount fetch would run on every
+  // wizard open whether or not materials are ever touched).
+  const recentsFetchedRef = useRef(false);
+  useEffect(() => {
+    if (newItem.category !== 'materials' || recentsFetchedRef.current) return;
+    recentsFetchedRef.current = true;
+    let cancelled = false;
+    (async () => {
+      try {
+        const {
+          data: { user },
+        } = await supabase.auth.getUser();
+        if (!user || cancelled) return;
+        const { data } = await supabase
+          .from('quotes')
+          .select('items')
+          .eq('user_id', user.id)
+          .order('updated_at', { ascending: false })
+          .limit(20);
+        if (cancelled || !data) return;
+        const seen = new Set<string>();
+        const recents: { description: string; unitPrice: number; unit: string }[] = [];
+        for (const row of data) {
+          const rowItems = typeof row.items === 'string' ? JSON.parse(row.items) : row.items;
+          if (!Array.isArray(rowItems)) continue;
+          for (const it of rowItems) {
+            if (it?.category !== 'materials' || !it?.description) continue;
+            const key = it.description.toLowerCase().trim();
+            if (seen.has(key)) continue;
+            seen.add(key);
+            recents.push({
+              description: it.description,
+              unitPrice: it.unitPrice || 0,
+              unit: it.unit || 'each',
+            });
+            if (recents.length >= 8) break;
+          }
+          if (recents.length >= 8) break;
+        }
+        setRecentMaterials(recents);
+      } catch {
+        /* non-fatal — recents are a convenience */
+      }
+    })();
+    return () => {
+      cancelled = true;
+    };
+  }, [newItem.category]);
+
   // RAG search effect
   useEffect(() => {
     const performRAGSearch = async () => {
@@ -539,31 +628,355 @@ export const EnhancedQuoteItemsStep = ({
 
   return (
     <div className="space-y-4">
-      {/* Running Total */}
-      {items.length > 0 && (
-        <div className="flex items-center justify-between">
-          <p className="text-[12px] text-white">{items.length} item{items.length !== 1 && 's'}</p>
-          <p className="text-[20px] font-bold text-elec-yellow">£{total.toFixed(2)}</p>
+      {/* === ADD FROM — sources === */}
+      <div>
+        <p className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/60 mb-2">Add from</p>
+        <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-2">
+          <button
+            type="button"
+            onClick={() => { const v = !showPriceBook; setShowPriceBook(v); setShowRateCard(false); setShowBundles(false); setShowTemplates(false); }}
+            className={cn(
+              'flex flex-col items-start gap-1.5 p-3 rounded-xl border text-left touch-manipulation active:scale-[0.98] transition-all select-none',
+              showPriceBook ? 'bg-elec-yellow/[0.08] border-elec-yellow/[0.25]' : 'bg-white/[0.04] border-white/[0.08]'
+            )}
+          >
+            <BookOpen className={cn('h-4 w-4', showPriceBook ? 'text-elec-yellow' : 'text-white/70')} />
+            <span>
+              <span className="block text-[12px] font-semibold text-white leading-tight">Price Book</span>
+              <span className="block text-[10px] text-white/55 mt-0.5">{pricedBookItems.length} priced items</span>
+            </span>
+          </button>
+
+          {rateCardItems.length > 0 && (
+            <button
+              type="button"
+              onClick={() => { const v = !showRateCard; setShowRateCard(v); setShowPriceBook(false); setShowBundles(false); setShowTemplates(false); }}
+              className={cn(
+                'flex flex-col items-start gap-1.5 p-3 rounded-xl border text-left touch-manipulation active:scale-[0.98] transition-all select-none',
+                showRateCard ? 'bg-elec-yellow/[0.08] border-elec-yellow/[0.25]' : 'bg-white/[0.04] border-white/[0.08]'
+              )}
+            >
+              <PoundSterling className={cn('h-4 w-4', showRateCard ? 'text-elec-yellow' : 'text-white/70')} />
+              <span>
+                <span className="block text-[12px] font-semibold text-white leading-tight">Rate Card</span>
+                <span className="block text-[10px] text-white/55 mt-0.5">{rateCardItems.length} rates</span>
+              </span>
+            </button>
+          )}
+
+          {bundles.length > 0 && (
+            <button
+              type="button"
+              onClick={() => { const v = !showBundles; setShowBundles(v); setShowPriceBook(false); setShowRateCard(false); setShowTemplates(false); }}
+              className={cn(
+                'flex flex-col items-start gap-1.5 p-3 rounded-xl border text-left touch-manipulation active:scale-[0.98] transition-all select-none',
+                showBundles ? 'bg-elec-yellow/[0.08] border-elec-yellow/[0.25]' : 'bg-white/[0.04] border-white/[0.08]'
+              )}
+            >
+              <Boxes className={cn('h-4 w-4', showBundles ? 'text-elec-yellow' : 'text-white/70')} />
+              <span>
+                <span className="block text-[12px] font-semibold text-white leading-tight">Bundles</span>
+                <span className="block text-[10px] text-white/55 mt-0.5">{bundles.length} assemblies</span>
+              </span>
+            </button>
+          )}
+
+          <button
+            type="button"
+            onClick={() => { const v = !showTemplates; setShowTemplates(v); setShowPriceBook(false); setShowRateCard(false); setShowBundles(false); }}
+            className={cn(
+              'flex flex-col items-start gap-1.5 p-3 rounded-xl border text-left touch-manipulation active:scale-[0.98] transition-all select-none',
+              showTemplates ? 'bg-elec-yellow/[0.08] border-elec-yellow/[0.25]' : 'bg-white/[0.04] border-white/[0.08]'
+            )}
+          >
+            <LayoutTemplate className={cn('h-4 w-4', showTemplates ? 'text-elec-yellow' : 'text-white/70')} />
+            <span>
+              <span className="block text-[12px] font-semibold text-white leading-tight">Templates</span>
+              <span className="block text-[10px] text-white/55 mt-0.5">Pre-built item sets</span>
+            </span>
+          </button>
+
+          <button
+            type="button"
+            onClick={() => setScannerSheetOpen(true)}
+            className="flex flex-col items-start gap-1.5 p-3 rounded-xl border border-white/[0.08] bg-white/[0.04] text-left touch-manipulation active:scale-[0.98] transition-all select-none"
+          >
+            <ScanLine className="h-4 w-4 text-white/70" />
+            <span>
+              <span className="block text-[12px] font-semibold text-white leading-tight">Scan Invoice</span>
+              <span className="block text-[10px] text-white/55 mt-0.5">Pull items from a photo</span>
+            </span>
+          </button>
+        </div>
+      </div>
+
+      {/* Job Templates */}
+      {showTemplates && (
+        <div>
+          <div className="flex items-center justify-between mb-3">
+            <h3 className="text-sm font-bold text-white uppercase tracking-wide">Job Templates</h3>
+            <button type="button" onClick={() => setShowTemplates(false)} className="text-[12px] text-elec-yellow font-medium touch-manipulation">
+              Close
+            </button>
+          </div>
+          <JobTemplates onSelectTemplate={handleTemplateSelect} />
         </div>
       )}
 
-      {/* Quick actions — prominent, own row */}
-      <div className="grid grid-cols-2 gap-2">
-        <button
-          type="button"
-          onClick={() => setScannerSheetOpen(true)}
-          className="h-12 rounded-xl bg-white/[0.06] border border-white/[0.1] text-[13px] font-medium text-white touch-manipulation active:scale-[0.97] active:bg-white/[0.1] transition-all"
-        >
-          Scan Invoice
-        </button>
-        <button
-          type="button"
-          onClick={() => setShowTemplates(true)}
-          className="h-12 rounded-xl bg-white/[0.06] border border-white/[0.1] text-[13px] font-medium text-white touch-manipulation active:scale-[0.97] active:bg-white/[0.1] transition-all"
-        >
-          Templates
-        </button>
-      </div>
+      {/* Price Book */}
+      {showPriceBook && (
+        <div className="rounded-2xl bg-white/[0.03] border border-white/[0.06] overflow-hidden">
+          <div className="flex items-center justify-between p-4 border-b border-white/[0.06]">
+            <h3 className="font-semibold text-white">My Price Book</h3>
+            <button
+              type="button"
+              onClick={() => setShowPriceBook(false)}
+              className="text-[14px] text-elec-yellow font-medium touch-manipulation"
+            >
+              Close
+            </button>
+          </div>
+          <div className="p-3">
+            <div className="relative mb-3">
+              <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-white" />
+              <input
+                type="text"
+                placeholder="Search price book..."
+                value={priceBookSearch}
+                onChange={(e) => setPriceBookSearch(e.target.value)}
+                className="w-full h-10 pl-10 pr-3 bg-white/[0.03] border border-white/[0.08] rounded-xl text-sm text-white placeholder:text-white/40 focus:outline-none focus:border-elec-yellow/50 touch-manipulation"
+              />
+            </div>
+            {pricedBookItems.length === 0 ? (
+              <p className="text-sm text-white text-center py-6">
+                {priceBookSearch ? 'No matching items' : 'No priced items in your lists yet.'}
+              </p>
+            ) : (
+              <div className="max-h-[420px] overflow-y-auto overscroll-contain grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-2">
+                {pricedBookItems.map((p) => (
+                  <button
+                    key={`pb-${p.item.id}`}
+                    type="button"
+                    onClick={() => {
+                      // estimated_price is ALREADY the sell price (PriceBook saves
+                      // it as calcSellPrice(cost, markup) and shows it as the price
+                      // here). Running calcSellPrice on it again applied markup a
+                      // second time — the price-book item quoted higher than shown.
+                      // Use it directly. (ELE-1010)
+                      const sellPrice = p.item.estimated_price || 0;
+                      onAdd({
+                        description: p.item.name,
+                        quantity: p.item.quantity || 1,
+                        unit: p.item.unit || 'each',
+                        unitPrice: Math.round(sellPrice * 100) / 100,
+                        category: 'materials',
+                        // Stamp the stock link so raising the invoice decrements it. (ELE-1014)
+                        inventoryItemId: p.item.personal_inventory_id,
+                        notes: p.item.supplier ? `Supplier: ${p.item.supplier}` : undefined,
+                      });
+                      toast({
+                        title: 'Added to quote',
+                        description: p.item.name,
+                      });
+                    }}
+                    className="flex flex-col text-left p-3 rounded-xl bg-white/[0.04] border border-white/[0.08] hover:bg-white/[0.06] active:bg-white/[0.08] transition-all touch-manipulation active:scale-[0.98] select-none"
+                  >
+                    <p className="font-medium text-[13px] text-white leading-snug line-clamp-2 min-h-[34px]">
+                      {p.item.name}
+                    </p>
+                    <p className="font-bold text-[16px] text-elec-yellow tabular-nums mt-1.5">
+                      £{p.item.estimated_price?.toFixed(2)}
+                      <span className="text-[11px] font-medium text-white/55 ml-1">/{p.item.unit || 'each'}</span>
+                    </p>
+                    <div className="flex items-center gap-1.5 mt-2 flex-wrap">
+                      {(() => {
+                        const stock = p.item.personal_inventory_id ? stockById.get(p.item.personal_inventory_id) : null;
+                        if (!stock) return null;
+                        const low = stock.low_stock_threshold != null && stock.quantity <= stock.low_stock_threshold;
+                        return (
+                          <span className={cn('px-1.5 py-0.5 rounded text-[10px] font-medium border', low ? 'bg-amber-500/10 text-amber-400 border-amber-500/20' : 'bg-emerald-500/10 text-emerald-400 border-emerald-500/20')}>
+                            {stock.quantity} in stock
+                          </span>
+                        );
+                      })()}
+                      {p.item.supplier && (
+                        <span className="text-[10px] text-white/55 truncate">{p.item.supplier}</span>
+                      )}
+                      <span className="text-[10px] text-white/40 ml-auto truncate">{p.listName}</span>
+                    </div>
+                  </button>
+                ))}
+              </div>
+            )}
+          </div>
+        </div>
+      )}
+
+      {/* Rate Card Section */}
+      {rateCardItems.length > 0 && showRateCard && (
+          <div>
+            <div className="flex items-center justify-between mb-3">
+              <h3 className="text-sm font-bold text-white uppercase tracking-wide">My Rate Card</h3>
+              <button
+                type="button"
+                onClick={() => setShowRateCard(false)}
+                className="text-[14px] text-elec-yellow font-medium touch-manipulation"
+              >
+                Close
+              </button>
+            </div>
+            <div className="p-3">
+              <div className="relative mb-3">
+                <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-white" />
+                <input
+                  type="text"
+                  placeholder="Search rates..."
+                  value={rateCardSearch}
+                  onChange={(e) => setRateCardSearch(e.target.value)}
+                  className="w-full h-10 pl-10 pr-3 bg-white/[0.03] border border-white/[0.08] rounded-xl text-sm text-white placeholder:text-white/40 focus:outline-none focus:border-elec-yellow/50 touch-manipulation"
+                />
+              </div>
+              <div className="max-h-[420px] overflow-y-auto overscroll-contain grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-2">
+                {rateCardItems
+                  .filter(item =>
+                    !rateCardSearch.trim() ||
+                    item.name.toLowerCase().includes(rateCardSearch.toLowerCase())
+                  )
+                  .map((item) => (
+                    <button
+                      key={item.id}
+                      type="button"
+                      onClick={() => {
+                        // Rate-card prices are the user's charge-out rates — exactly
+                        // what the picker shows (£{item.unit_price}). Don't re-apply
+                        // global markup on add or materials quote higher than shown. (ELE-1010)
+                        onAdd({
+                          description: item.name,
+                          quantity: 1,
+                          unit: item.unit,
+                          unitPrice: item.unit_price,
+                          category: item.category === 'labour' || item.category === 'call-out'
+                            ? 'labour'
+                            : item.category === 'materials'
+                              ? 'materials'
+                              : 'manual',
+                          notes: item.description || undefined,
+                        });
+                        toast({ title: 'Added to quote', description: item.name });
+                      }}
+                      className="flex flex-col text-left p-3 rounded-xl bg-white/[0.04] border border-white/[0.08] hover:bg-white/[0.06] active:bg-white/[0.08] transition-all touch-manipulation active:scale-[0.98] select-none"
+                    >
+                      <p className="font-medium text-[13px] text-white leading-snug line-clamp-2 min-h-[34px]">{item.name}</p>
+                      <p className="font-bold text-[16px] text-elec-yellow tabular-nums mt-1.5">
+                        £{item.unit_price.toFixed(2)}
+                        <span className="text-[11px] font-medium text-white/55 ml-1">/{item.unit}</span>
+                      </p>
+                      {item.description && (
+                        <p className="text-[10px] text-white/55 line-clamp-1 mt-2">{item.description}</p>
+                      )}
+                    </button>
+                  ))
+                }
+              </div>
+            </div>
+          </div>
+      )}
+
+      {/* Bundles Section */}
+      {bundles.length > 0 && showBundles && (
+          <div>
+            <div className="flex items-center justify-between mb-3">
+              <h3 className="text-sm font-bold text-white uppercase tracking-wide">My Bundles</h3>
+              <button
+                type="button"
+                onClick={() => setShowBundles(false)}
+                className="text-[14px] text-elec-yellow font-medium touch-manipulation"
+              >
+                Close
+              </button>
+            </div>
+            <div className="p-3 space-y-2">
+              {bundles.map((bundle) => {
+                const total = bundleTotal(bundle);
+                const expanded = expandedBundle === bundle.id;
+                return (
+                  <div key={bundle.id} className="rounded-xl overflow-hidden border border-white/[0.06] bg-white/[0.02]">
+                    <button
+                      type="button"
+                      onClick={() => setExpandedBundle(expanded ? null : bundle.id)}
+                      className="w-full p-3 text-left touch-manipulation"
+                    >
+                      <div className="flex items-center justify-between">
+                        <div className="flex-1 min-w-0">
+                          <p className="text-[14px] font-medium text-white line-clamp-1">{bundle.name}</p>
+                          {bundle.description && (
+                            <p className="text-[11px] text-white mt-0.5 line-clamp-1">{bundle.description}</p>
+                          )}
+                        </div>
+                        <div className="flex items-center gap-2 ml-2 flex-shrink-0">
+                          <span className="text-[14px] font-bold text-elec-yellow">£{total.toFixed(2)}</span>
+                          {expanded ? (
+                            <ChevronUp className="h-4 w-4 text-white" />
+                          ) : (
+                            <ChevronDown className="h-4 w-4 text-white" />
+                          )}
+                        </div>
+                      </div>
+                      <p className="text-[11px] text-white mt-0.5">{bundle.items.length} items</p>
+                    </button>
+
+                    {expanded && (
+                      <div className="border-t border-white/[0.05] px-3 pb-3">
+                        <div className="space-y-1 mt-2 mb-3">
+                          {bundle.items.map((item) => (
+                            <div key={item.id} className="flex items-center justify-between text-[12px]">
+                              <span className="text-white flex-1 min-w-0 line-clamp-1">{item.name}</span>
+                              <span className="text-white ml-2 flex-shrink-0">
+                                {item.quantity} × £{item.unitPrice.toFixed(2)}
+                              </span>
+                            </div>
+                          ))}
+                        </div>
+                        <button
+                          type="button"
+                          onClick={() => {
+                            let addedCount = 0;
+                            bundle.items.forEach((item) => {
+                              // Bundle unitPrice is already the sell price — it's what
+                              // the bundle total and expanded rows display. Re-applying
+                              // markup quoted bundle materials above the shown total.
+                              // Use it directly. (ELE-1010)
+                              onAdd({
+                                description: item.name,
+                                quantity: item.quantity,
+                                unit: item.unit,
+                                unitPrice: item.unitPrice,
+                                category: item.category === 'labour' ? 'labour' : item.category === 'equipment' ? 'equipment' : 'materials',
+                              });
+                              addedCount++;
+                            });
+                            toast({
+                              title: `${bundle.name} added`,
+                              description: `${addedCount} items added to quote`,
+                            });
+                            setExpandedBundle(null);
+                          }}
+                          className="w-full py-2.5 text-[13px] font-semibold text-black bg-elec-yellow rounded-lg touch-manipulation active:bg-elec-yellow/90"
+                        >
+                          Add all to quote
+                        </button>
+                      </div>
+                    )}
+                  </div>
+                );
+              })}
+            </div>
+          </div>
+      )}
+
+
+      {/* === OR BUILD MANUALLY === */}
+      <p className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/60 pt-2">Add manually</p>
 
       {/* Material markup */}
       {setPriceAdjustment && (
@@ -672,7 +1085,7 @@ export const EnhancedQuoteItemsStep = ({
                   placeholder={isDayMode ? '0.5' : '3.5'}
                   value={newItem.hours}
                   onChange={handleHoursChange}
-                  className="flex-1 h-12 px-4 rounded-xl bg-white/[0.08] border border-elec-yellow/40 text-[17px] font-medium text-white placeholder:text-white touch-manipulation focus:outline-none focus:border-elec-yellow focus:ring-2 focus:ring-elec-yellow/30 caret-elec-yellow"
+                  className="flex-1 h-12 px-4 rounded-xl bg-white/[0.08] border border-elec-yellow/40 text-[17px] font-medium text-white placeholder:text-white/40 touch-manipulation focus:outline-none focus:border-elec-yellow focus:ring-2 focus:ring-elec-yellow/30 caret-elec-yellow"
                 />
                 <span className="text-[13px] font-medium text-white">{isDayMode ? 'days' : 'hours'}</span>
               </div>
@@ -715,86 +1128,258 @@ export const EnhancedQuoteItemsStep = ({
                 placeholder="Search materials by name or code..."
                 value={materialSearch}
                 onChange={(e) => setMaterialSearch(e.target.value)}
-                className="h-12 pl-11 pr-4 bg-input border-white/[0.08] text-[15px] text-white placeholder:text-white focus:border-elec-yellow focus:ring-elec-yellow/20 rounded-xl"
+                className="h-12 pl-11 pr-4 bg-input border-white/[0.08] text-[15px] text-white placeholder:text-white/40 focus:border-elec-yellow focus:ring-elec-yellow/20 rounded-xl"
               />
             </div>
 
-            {/* Material Results */}
-            {materialSearch.length >= 2 &&
-              (filteredMaterials.length > 0 || ragResults.length > 0) && (
-                <div>
-                  <p className="text-[12px] text-white mb-2">
-                    {filteredMaterials.length + ragResults.length} results{' '}
-                    {isSearchingRAG && '• Searching...'}
+            {/* Recently used — zero-typing path for the usual stuff */}
+            {materialSearch.length < 2 && recentMaterials.length > 0 && (
+              <div>
+                <p className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/50 mb-2">
+                  Recently used
+                </p>
+                <div className="grid grid-cols-2 lg:grid-cols-4 gap-2">
+                  {recentMaterials.map((rm, i) => (
+                    <button
+                      key={`recent-${i}`}
+                      type="button"
+                      onClick={() => {
+                        setNewItem((prev) => ({
+                          ...prev,
+                          description: rm.description,
+                          unitPrice: rm.unitPrice,
+                          unit: rm.unit,
+                          materialCode: `recent-${i}`,
+                        }));
+                        toast({ title: 'Material Selected', description: rm.description });
+                      }}
+                      className="flex flex-col text-left p-3 rounded-xl bg-white/[0.04] border border-white/[0.08] hover:bg-white/[0.06] transition-all touch-manipulation active:scale-[0.98] select-none"
+                    >
+                      <p className="font-medium text-[13px] text-white leading-snug line-clamp-2 min-h-[34px]">
+                        {titleCaseProduct(rm.description)}
+                      </p>
+                      <p className="font-bold text-[15px] text-white/90 tabular-nums mt-1">
+                        £{rm.unitPrice.toFixed(2)}
+                        <span className="text-[11px] font-medium text-white/55 ml-1">/{rm.unit}</span>
+                      </p>
+                    </button>
+                  ))}
+                </div>
+              </div>
+            )}
+
+            {/* Type-ahead suggestions */}
+            {materialSearch.length >= 2 && typeahead.length > 0 && (
+              <div className="flex flex-wrap gap-1.5">
+                {typeahead.map((sug) => (
+                  <button
+                    key={sug.name}
+                    type="button"
+                    onClick={() => {
+                      setMaterialSearch(sug.name);
+                      clearSuggestions();
+                    }}
+                    className="h-8 px-3 rounded-lg bg-white/[0.05] border border-white/[0.10] text-[12px] text-white/80 touch-manipulation active:scale-[0.97] transition-all select-none"
+                  >
+                    {titleCaseProduct(sug.name)}
+                  </button>
+                ))}
+              </div>
+            )}
+
+            {/* Material Results — live supplier prices first, standard list after */}
+            {materialSearch.length >= 2 && (
+              <div>
+                <div className="flex items-center justify-between mb-2">
+                  <p className="text-[12px] text-white/65 tabular-nums">
+                    {filteredMaterials.length + ragResults.length} result
+                    {filteredMaterials.length + ragResults.length !== 1 ? 's' : ''}
                   </p>
-                  <div className="max-h-[300px] overflow-y-auto space-y-2">
-                    {filteredMaterials.slice(0, 5).map((material) => {
-                      const adjustedPrice = calculateAdjustedPrice
-                        ? calculateAdjustedPrice(material.defaultPrice)
-                        : material.defaultPrice;
-                      const isSelected = newItem.materialCode === material.id;
-                      return (
-                        <button
-                          key={material.id}
-                          type="button"
-                          onClick={() => handleMaterialSelect(material.id)}
-                          className={cn(
-                            'w-full p-3 rounded-xl text-left transition-all touch-manipulation active:scale-[0.99]',
-                            isSelected
-                              ? 'bg-elec-yellow/20 border border-elec-yellow/40'
-                              : 'bg-white/[0.03] border border-white/[0.06] active:bg-white/[0.06]'
-                          )}
-                        >
-                          <div className="flex justify-between items-start">
-                            <p className="font-medium text-[14px] text-white">{material.name}</p>
-                            <p
+                  {isSearchingRAG && (
+                    <span className="inline-flex items-center gap-1.5 text-[11px] text-elec-yellow/90">
+                      <Loader2 className="h-3 w-3 animate-spin" />
+                      Checking live supplier prices…
+                    </span>
+                  )}
+                </div>
+
+                <div className="max-h-[480px] overflow-y-auto overscroll-contain space-y-3 pr-1">
+                  {/* Live priced results — elec-pipeline (Screwfix, Toolstation, CEF…) */}
+                  {ragResults.filter((m) => m.source === 'live').length > 0 && (
+                    <div>
+                      <p className="flex items-center gap-1.5 text-[10px] font-medium uppercase tracking-[0.18em] text-emerald-400/90 mb-2">
+                        <Zap className="h-3 w-3" /> Live supplier prices
+                      </p>
+                      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-2">
+                        {ragResults.filter((m) => m.source === 'live').map((material, idx) => {
+                          const priceMatch = material.price?.replace(/,/g, '').match(/£?(\d+\.?\d*)/);
+                          const basePrice = priceMatch ? parseFloat(priceMatch[1]) : 0;
+                          const adjustedPrice = calculateAdjustedPrice
+                            ? calculateAdjustedPrice(basePrice)
+                            : basePrice;
+                          const isSelected = newItem.materialCode === `rag-${material.id}`;
+                          return (
+                            <button
+                              key={`rag-${idx}`}
+                              type="button"
+                              onClick={() => {
+                                setNewItem((prev) => ({
+                                  ...prev,
+                                  description: material.name,
+                                  unitPrice: adjustedPrice,
+                                  unit: 'each',
+                                  materialCode: `rag-${material.id}`,
+                                }));
+                                toast({ title: 'Material Selected', description: material.name });
+                              }}
                               className={cn(
-                                'font-bold text-[15px]',
-                                isSelected ? 'text-elec-yellow' : 'text-white'
+                                'flex flex-col text-left p-3 rounded-xl border transition-all touch-manipulation active:scale-[0.98] select-none',
+                                isSelected
+                                  ? 'bg-elec-yellow/[0.10] border-elec-yellow/[0.35]'
+                                  : 'bg-white/[0.04] border-white/[0.08] hover:bg-white/[0.06]',
+                                /out of stock/i.test(material.stockStatus || '') && 'opacity-55'
                               )}
                             >
-                              £{adjustedPrice.toFixed(2)}
-                            </p>
-                          </div>
-                          <p className="text-[12px] text-white mt-0.5">{material.category}</p>
-                        </button>
-                      );
-                    })}
-                    {ragResults.slice(0, 10).map((material, idx) => {
-                      const priceMatch = material.price?.match(/£?(\d+\.?\d*)/);
-                      const basePrice = priceMatch ? parseFloat(priceMatch[1]) : 0;
-                      const adjustedPrice = calculateAdjustedPrice
-                        ? calculateAdjustedPrice(basePrice)
-                        : basePrice;
-                      return (
-                        <button
-                          key={`rag-${idx}`}
-                          type="button"
-                          onClick={() => {
-                            setNewItem((prev) => ({
-                              ...prev,
-                              description: material.name,
-                              unitPrice: adjustedPrice,
-                              unit: 'each',
-                              materialCode: `rag-${material.id}`,
-                            }));
-                            toast({ title: 'Material Selected', description: material.name });
-                          }}
-                          className="w-full p-3 rounded-xl text-left bg-white/[0.02] border border-white/[0.04] active:bg-white/[0.05] transition-all touch-manipulation"
-                        >
-                          <div className="flex justify-between items-start">
-                            <p className="font-medium text-[14px] text-white">{material.name}</p>
-                            <p className="font-bold text-[15px] text-white">
-                              £{adjustedPrice.toFixed(2)}
-                            </p>
-                          </div>
-                          <p className="text-[12px] text-white mt-0.5">{material.supplier}</p>
-                        </button>
-                      );
-                    })}
-                  </div>
+                              <div className="flex items-start justify-between gap-1.5 w-full">
+                                <p className="font-medium text-[13px] text-white leading-snug line-clamp-2 min-h-[34px] flex-1">
+                                  {titleCaseProduct(material.name)}
+                                </p>
+                                {material.isOnSale && material.discountPercentage > 0 && (
+                                  <span className="flex-shrink-0 px-1.5 py-0.5 rounded text-[10px] font-bold bg-red-500/15 text-red-400 border border-red-500/25">
+                                    −{Math.round(material.discountPercentage)}%
+                                  </span>
+                                )}
+                              </div>
+                              <p className={cn('font-bold text-[16px] tabular-nums mt-1.5', isSelected ? 'text-elec-yellow' : 'text-elec-yellow/90')}>
+                                £{adjustedPrice.toFixed(2)}
+                              </p>
+                              {adjustedPrice !== basePrice && (
+                                <p className="text-[10px] text-white/50 tabular-nums">
+                                  cost £{basePrice.toFixed(2)} · your markup applied
+                                </p>
+                              )}
+                              {/out of stock/i.test(material.stockStatus || '') && (
+                                <p className="text-[10px] font-semibold text-red-400 mt-1">Out of stock</p>
+                              )}
+                              <p className="text-[10px] text-white/55 mt-1.5 truncate">
+                                {material.supplier}
+                                {material.scrapedAt && (
+                                  <span className="text-emerald-400/80">
+                                    {' '}· {(() => {
+                                      const d = Math.floor((Date.now() - new Date(material.scrapedAt).getTime()) / 86400000);
+                                      return d <= 0 ? 'priced today' : `priced ${d}d ago`;
+                                    })()}
+                                  </span>
+                                )}
+                              </p>
+                            </button>
+                          );
+                        })}
+                      </div>
+                    </div>
+                  )}
+
+                  {/* Trade catalogue — static reference prices */}
+                  {ragResults.filter((m) => m.source !== 'live').length > 0 && (
+                    <div>
+                      <p className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/50 mb-2">
+                        Trade catalogue
+                      </p>
+                      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-2">
+                        {ragResults.filter((m) => m.source !== 'live').map((material, idx) => {
+                          const priceMatch = material.price?.replace(/,/g, '').match(/£?(\d+\.?\d*)/);
+                          const basePrice = priceMatch ? parseFloat(priceMatch[1]) : 0;
+                          const adjustedPrice = calculateAdjustedPrice
+                            ? calculateAdjustedPrice(basePrice)
+                            : basePrice;
+                          const isSelected = newItem.materialCode === `rag-${material.id}`;
+                          return (
+                            <button
+                              key={`cat-${idx}`}
+                              type="button"
+                              onClick={() => {
+                                setNewItem((prev) => ({
+                                  ...prev,
+                                  description: material.name,
+                                  unitPrice: adjustedPrice,
+                                  unit: 'each',
+                                  materialCode: `rag-${material.id}`,
+                                }));
+                                toast({ title: 'Material Selected', description: material.name });
+                              }}
+                              className={cn(
+                                'flex flex-col text-left p-3 rounded-xl border transition-all touch-manipulation active:scale-[0.98] select-none',
+                                isSelected
+                                  ? 'bg-elec-yellow/[0.10] border-elec-yellow/[0.35]'
+                                  : 'bg-white/[0.04] border-white/[0.08] hover:bg-white/[0.06]'
+                              )}
+                            >
+                              <p className="font-medium text-[13px] text-white leading-snug line-clamp-2 min-h-[34px]">
+                                {titleCaseProduct(material.name)}
+                              </p>
+                              <p className={cn('font-bold text-[16px] tabular-nums mt-1.5', isSelected ? 'text-elec-yellow' : 'text-white/90')}>
+                                £{adjustedPrice.toFixed(2)}
+                              </p>
+                              {adjustedPrice !== basePrice && (
+                                <p className="text-[10px] text-white/50 tabular-nums">
+                                  cost £{basePrice.toFixed(2)} · your markup applied
+                                </p>
+                              )}
+                              <p className="text-[10px] text-white/55 mt-1.5 truncate">{material.supplier}</p>
+                            </button>
+                          );
+                        })}
+                      </div>
+                    </div>
+                  )}
+
+                  {/* Standard list */}
+                  {filteredMaterials.length > 0 && (
+                    <div>
+                      <p className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/50 mb-2">
+                        Standard list
+                      </p>
+                      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-2">
+                        {filteredMaterials.map((material) => {
+                          const adjustedPrice = calculateAdjustedPrice
+                            ? calculateAdjustedPrice(material.defaultPrice)
+                            : material.defaultPrice;
+                          const isSelected = newItem.materialCode === material.id;
+                          return (
+                            <button
+                              key={material.id}
+                              type="button"
+                              onClick={() => handleMaterialSelect(material.id)}
+                              className={cn(
+                                'flex flex-col text-left p-3 rounded-xl border transition-all touch-manipulation active:scale-[0.98] select-none',
+                                isSelected
+                                  ? 'bg-elec-yellow/[0.10] border-elec-yellow/[0.35]'
+                                  : 'bg-white/[0.04] border-white/[0.08] hover:bg-white/[0.06]'
+                              )}
+                            >
+                              <p className="font-medium text-[13px] text-white leading-snug line-clamp-2 min-h-[34px]">
+                                {titleCaseProduct(material.name)}
+                              </p>
+                              <p className={cn('font-bold text-[16px] tabular-nums mt-1.5', isSelected ? 'text-elec-yellow' : 'text-white/90')}>
+                                £{adjustedPrice.toFixed(2)}
+                              </p>
+                              <p className="text-[10px] text-white/55 mt-1.5 capitalize truncate">{material.category}</p>
+                            </button>
+                          );
+                        })}
+                      </div>
+                    </div>
+                  )}
+
+                  {/* No matches */}
+                  {!isSearchingRAG && filteredMaterials.length === 0 && ragResults.length === 0 && materialSearch.length >= 3 && (
+                    <p className="text-[12px] text-white/55 py-4 text-center">
+                      No matches — fill in the fields below to add it manually.
+                    </p>
+                  )}
                 </div>
-              )}
+              </div>
+            )}
           </div>
         )}
 
@@ -866,7 +1451,7 @@ export const EnhancedQuoteItemsStep = ({
                 placeholder="e.g., Site visit fee, Call-out charge"
                 value={newItem.description}
                 onChange={(e) => setNewItem((prev) => ({ ...prev, description: e.target.value }))}
-                className="min-h-[80px] px-3 py-2.5 rounded-xl text-base text-white bg-white/[0.06] border border-white/[0.08] focus:border-elec-yellow focus:ring-1 focus:ring-elec-yellow/20 placeholder:text-white resize-none"
+                className="min-h-[80px] px-3 py-2.5 rounded-xl text-base text-white bg-white/[0.06] border border-white/[0.08] focus:border-elec-yellow focus:ring-1 focus:ring-elec-yellow/20 placeholder:text-white/40 resize-none"
               />
             </div>
             {/* Quantity */}
@@ -896,7 +1481,7 @@ export const EnhancedQuoteItemsStep = ({
                   setQuantityInput(String(val));
                 }}
                 placeholder="1"
-                className="h-11 px-3 rounded-xl text-base text-white bg-white/[0.06] border border-white/[0.08] focus:border-elec-yellow placeholder:text-white"
+                className="h-11 px-3 rounded-xl text-base text-white bg-white/[0.06] border border-white/[0.08] focus:border-elec-yellow placeholder:text-white/40"
               />
             </div>
             {/* ELE-889 — Unit type selector. Common UK trade units + custom. */}
@@ -948,7 +1533,7 @@ export const EnhancedQuoteItemsStep = ({
                     setNewItem((prev) => ({ ...prev, unit: e.target.value }))
                   }
                   placeholder="e.g. per circuit, per spur"
-                  className="h-11 px-3 mt-2 rounded-xl text-base text-white bg-white/[0.06] border border-white/[0.08] focus:border-elec-yellow placeholder:text-white"
+                  className="h-11 px-3 mt-2 rounded-xl text-base text-white bg-white/[0.06] border border-white/[0.08] focus:border-elec-yellow placeholder:text-white/40"
                 />
               )}
             </div>
@@ -983,7 +1568,7 @@ export const EnhancedQuoteItemsStep = ({
                   if (val > 0) setUnitPriceInput(val.toFixed(2));
                 }}
                 placeholder="0.00"
-                className="h-11 px-3 rounded-xl text-base text-white bg-white/[0.06] border border-white/[0.08] focus:border-elec-yellow placeholder:text-white"
+                className="h-11 px-3 rounded-xl text-base text-white bg-white/[0.06] border border-white/[0.08] focus:border-elec-yellow placeholder:text-white/40"
               />
             </div>
             {/* Total Preview */}
@@ -1230,318 +1815,6 @@ export const EnhancedQuoteItemsStep = ({
             })}
           </div>
         </div>
-      )}
-
-      {/* Job Templates */}
-      {!showTemplates ? (
-        <button
-          type="button"
-          onClick={() => setShowTemplates(true)}
-          className="w-full h-12 flex items-center justify-between px-4 rounded-xl bg-white/[0.04] border border-white/[0.08] touch-manipulation active:scale-[0.98] active:bg-white/[0.07] transition-all"
-        >
-          <span className="text-[13px] font-medium text-white">Job Templates</span>
-          <span className="text-[11px] text-white">Pre-built item sets</span>
-        </button>
-      ) : (
-        <div>
-          <div className="flex items-center justify-between mb-3">
-            <h3 className="text-sm font-bold text-white uppercase tracking-wide">Job Templates</h3>
-            <button type="button" onClick={() => setShowTemplates(false)} className="text-[12px] text-elec-yellow font-medium touch-manipulation">
-              Close
-            </button>
-          </div>
-          <JobTemplates onSelectTemplate={handleTemplateSelect} />
-        </div>
-      )}
-
-      {/* Price Book */}
-      {!showPriceBook ? (
-        <button
-          type="button"
-          onClick={() => setShowPriceBook(true)}
-          className="w-full h-12 flex items-center justify-between px-4 rounded-xl bg-white/[0.04] border border-white/[0.08] touch-manipulation active:scale-[0.98] active:bg-white/[0.07] transition-all"
-        >
-          <span className="text-[13px] font-medium text-white">My Price Book</span>
-          <span className="text-[11px] text-white">{pricedBookItems.length} items</span>
-        </button>
-      ) : (
-        <div className="rounded-2xl bg-white/[0.03] border border-white/[0.06] overflow-hidden">
-          <div className="flex items-center justify-between p-4 border-b border-white/[0.06]">
-            <h3 className="font-semibold text-white">My Price Book</h3>
-            <button
-              type="button"
-              onClick={() => setShowPriceBook(false)}
-              className="text-[14px] text-elec-yellow font-medium touch-manipulation"
-            >
-              Close
-            </button>
-          </div>
-          <div className="p-3">
-            <div className="relative mb-3">
-              <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-white" />
-              <input
-                type="text"
-                placeholder="Search price book..."
-                value={priceBookSearch}
-                onChange={(e) => setPriceBookSearch(e.target.value)}
-                className="w-full h-10 pl-10 pr-3 bg-white/[0.03] border border-white/[0.08] rounded-xl text-sm text-white placeholder:text-white focus:outline-none focus:border-elec-yellow/50 touch-manipulation"
-              />
-            </div>
-            {pricedBookItems.length === 0 ? (
-              <p className="text-sm text-white text-center py-6">
-                {priceBookSearch ? 'No matching items' : 'No priced items in your lists yet.'}
-              </p>
-            ) : (
-              <div className="max-h-[300px] overflow-y-auto space-y-2">
-                {pricedBookItems.map((p) => (
-                  <button
-                    key={`pb-${p.item.id}`}
-                    type="button"
-                    onClick={() => {
-                      // estimated_price is ALREADY the sell price (PriceBook saves
-                      // it as calcSellPrice(cost, markup) and shows it as the price
-                      // here). Running calcSellPrice on it again applied markup a
-                      // second time — the price-book item quoted higher than shown.
-                      // Use it directly. (ELE-1010)
-                      const sellPrice = p.item.estimated_price || 0;
-                      onAdd({
-                        description: p.item.name,
-                        quantity: p.item.quantity || 1,
-                        unit: p.item.unit || 'each',
-                        unitPrice: Math.round(sellPrice * 100) / 100,
-                        category: 'materials',
-                        // Stamp the stock link so raising the invoice decrements it. (ELE-1014)
-                        inventoryItemId: p.item.personal_inventory_id,
-                        notes: p.item.supplier ? `Supplier: ${p.item.supplier}` : undefined,
-                      });
-                      toast({
-                        title: 'Added to quote',
-                        description: p.item.name,
-                      });
-                    }}
-                    className="w-full p-3 rounded-xl text-left bg-white/[0.02] border border-white/[0.04] active:bg-white/[0.06] transition-all touch-manipulation active:scale-[0.99]"
-                  >
-                    <div className="flex justify-between items-start">
-                      <p className="font-medium text-[14px] text-white line-clamp-1 flex-1 mr-2">
-                        {p.item.name}
-                      </p>
-                      <p className="font-bold text-[15px] text-elec-yellow whitespace-nowrap">
-                        £{p.item.estimated_price?.toFixed(2)}
-                      </p>
-                    </div>
-                    <div className="flex items-center gap-2 mt-0.5">
-                      <span className="text-[12px] text-white">
-                        per {p.item.unit || 'each'}
-                      </span>
-                      {p.item.supplier && (
-                        <span className="text-[12px] text-white">{p.item.supplier}</span>
-                      )}
-                      {(() => {
-                        const stock = p.item.personal_inventory_id ? stockById.get(p.item.personal_inventory_id) : null;
-                        if (!stock) return null;
-                        const low = stock.low_stock_threshold != null && stock.quantity <= stock.low_stock_threshold;
-                        return (
-                          <span className={cn('px-1.5 py-0.5 rounded text-[10px] font-medium border', low ? 'bg-amber-500/10 text-amber-400 border-amber-500/20' : 'bg-emerald-500/10 text-emerald-400 border-emerald-500/20')}>
-                            {stock.quantity} in stock
-                          </span>
-                        );
-                      })()}
-                      <span className="text-[10px] text-white ml-auto">{p.listName}</span>
-                    </div>
-                  </button>
-                ))}
-              </div>
-            )}
-          </div>
-        </div>
-      )}
-
-      {/* Rate Card Section */}
-      {rateCardItems.length > 0 && (
-        !showRateCard ? (
-          <button
-            type="button"
-            onClick={() => setShowRateCard(true)}
-            className="w-full h-12 flex items-center justify-between px-4 rounded-xl bg-white/[0.04] border border-white/[0.08] touch-manipulation active:scale-[0.98] active:bg-white/[0.07] transition-all"
-          >
-            <span className="text-[13px] font-medium text-white">My Rate Card</span>
-            <span className="text-[11px] text-white">{rateCardItems.length} rates</span>
-          </button>
-        ) : (
-          <div>
-            <div className="flex items-center justify-between mb-3">
-              <h3 className="text-sm font-bold text-white uppercase tracking-wide">My Rate Card</h3>
-              <button
-                type="button"
-                onClick={() => setShowRateCard(false)}
-                className="text-[14px] text-elec-yellow font-medium touch-manipulation"
-              >
-                Close
-              </button>
-            </div>
-            <div className="p-3">
-              <div className="relative mb-3">
-                <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-white" />
-                <input
-                  type="text"
-                  placeholder="Search rates..."
-                  value={rateCardSearch}
-                  onChange={(e) => setRateCardSearch(e.target.value)}
-                  className="w-full h-10 pl-10 pr-3 bg-white/[0.03] border border-white/[0.08] rounded-xl text-sm text-white placeholder:text-white focus:outline-none focus:border-elec-yellow/50 touch-manipulation"
-                />
-              </div>
-              <div className="max-h-[300px] overflow-y-auto space-y-2">
-                {rateCardItems
-                  .filter(item =>
-                    !rateCardSearch.trim() ||
-                    item.name.toLowerCase().includes(rateCardSearch.toLowerCase())
-                  )
-                  .map((item) => (
-                    <button
-                      key={item.id}
-                      type="button"
-                      onClick={() => {
-                        // Rate-card prices are the user's charge-out rates — exactly
-                        // what the picker shows (£{item.unit_price}). Don't re-apply
-                        // global markup on add or materials quote higher than shown. (ELE-1010)
-                        onAdd({
-                          description: item.name,
-                          quantity: 1,
-                          unit: item.unit,
-                          unitPrice: item.unit_price,
-                          category: item.category === 'labour' || item.category === 'call-out'
-                            ? 'labour'
-                            : item.category === 'materials'
-                              ? 'materials'
-                              : 'manual',
-                          notes: item.description || undefined,
-                        });
-                        toast({ title: 'Added to quote', description: item.name });
-                      }}
-                      className="w-full p-3 rounded-xl text-left bg-white/[0.02] border border-white/[0.04] active:bg-white/[0.06] transition-all touch-manipulation active:scale-[0.99]"
-                    >
-                      <div className="flex justify-between items-start">
-                        <div className="flex-1 min-w-0 mr-2">
-                          <p className="font-medium text-[14px] text-white line-clamp-1">{item.name}</p>
-                          {item.description && (
-                            <p className="text-[12px] text-white line-clamp-1 mt-0.5">{item.description}</p>
-                          )}
-                        </div>
-                        <p className="font-bold text-[15px] text-elec-yellow whitespace-nowrap flex-shrink-0">
-                          £{item.unit_price.toFixed(2)}
-                        </p>
-                      </div>
-                      <p className="text-[12px] text-white mt-0.5">per {item.unit}</p>
-                    </button>
-                  ))
-                }
-              </div>
-            </div>
-          </div>
-        )
-      )}
-
-      {/* Bundles Section */}
-      {bundles.length > 0 && (
-        !showBundles ? (
-          <button
-            type="button"
-            onClick={() => setShowBundles(true)}
-            className="w-full h-12 flex items-center justify-between px-4 rounded-xl bg-white/[0.04] border border-white/[0.08] touch-manipulation active:scale-[0.98] active:bg-white/[0.07] transition-all"
-          >
-            <span className="text-[13px] font-medium text-white">My Bundles</span>
-            <span className="text-[11px] text-white">{bundles.length} assemblies</span>
-          </button>
-        ) : (
-          <div>
-            <div className="flex items-center justify-between mb-3">
-              <h3 className="text-sm font-bold text-white uppercase tracking-wide">My Bundles</h3>
-              <button
-                type="button"
-                onClick={() => setShowBundles(false)}
-                className="text-[14px] text-elec-yellow font-medium touch-manipulation"
-              >
-                Close
-              </button>
-            </div>
-            <div className="p-3 space-y-2">
-              {bundles.map((bundle) => {
-                const total = bundleTotal(bundle);
-                const expanded = expandedBundle === bundle.id;
-                return (
-                  <div key={bundle.id} className="rounded-xl overflow-hidden border border-white/[0.06] bg-white/[0.02]">
-                    <button
-                      type="button"
-                      onClick={() => setExpandedBundle(expanded ? null : bundle.id)}
-                      className="w-full p-3 text-left touch-manipulation"
-                    >
-                      <div className="flex items-center justify-between">
-                        <div className="flex-1 min-w-0">
-                          <p className="text-[14px] font-medium text-white line-clamp-1">{bundle.name}</p>
-                          {bundle.description && (
-                            <p className="text-[11px] text-white mt-0.5 line-clamp-1">{bundle.description}</p>
-                          )}
-                        </div>
-                        <div className="flex items-center gap-2 ml-2 flex-shrink-0">
-                          <span className="text-[14px] font-bold text-elec-yellow">£{total.toFixed(2)}</span>
-                          {expanded ? (
-                            <ChevronUp className="h-4 w-4 text-white" />
-                          ) : (
-                            <ChevronDown className="h-4 w-4 text-white" />
-                          )}
-                        </div>
-                      </div>
-                      <p className="text-[11px] text-white mt-0.5">{bundle.items.length} items</p>
-                    </button>
-
-                    {expanded && (
-                      <div className="border-t border-white/[0.05] px-3 pb-3">
-                        <div className="space-y-1 mt-2 mb-3">
-                          {bundle.items.map((item) => (
-                            <div key={item.id} className="flex items-center justify-between text-[12px]">
-                              <span className="text-white flex-1 min-w-0 line-clamp-1">{item.name}</span>
-                              <span className="text-white ml-2 flex-shrink-0">
-                                {item.quantity} × £{item.unitPrice.toFixed(2)}
-                              </span>
-                            </div>
-                          ))}
-                        </div>
-                        <button
-                          type="button"
-                          onClick={() => {
-                            let addedCount = 0;
-                            bundle.items.forEach((item) => {
-                              // Bundle unitPrice is already the sell price — it's what
-                              // the bundle total and expanded rows display. Re-applying
-                              // markup quoted bundle materials above the shown total.
-                              // Use it directly. (ELE-1010)
-                              onAdd({
-                                description: item.name,
-                                quantity: item.quantity,
-                                unit: item.unit,
-                                unitPrice: item.unitPrice,
-                                category: item.category === 'labour' ? 'labour' : item.category === 'equipment' ? 'equipment' : 'materials',
-                              });
-                              addedCount++;
-                            });
-                            toast({
-                              title: `${bundle.name} added`,
-                              description: `${addedCount} items added to quote`,
-                            });
-                            setExpandedBundle(null);
-                          }}
-                          className="w-full py-2.5 text-[13px] font-semibold text-black bg-elec-yellow rounded-lg touch-manipulation active:bg-elec-yellow/90"
-                        >
-                          Add all to quote
-                        </button>
-                      </div>
-                    )}
-                  </div>
-                );
-              })}
-            </div>
-          </div>
-        )
       )}
 
       {/* Invoice Scanner Sheet */}

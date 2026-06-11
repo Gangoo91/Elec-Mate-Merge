@@ -6,7 +6,7 @@ import { Form, FormControl, FormField, FormItem, FormMessage } from '@/component
 import { UnifiedAddressFinder } from '@/components/ui/unified-address-finder';
 import { QuoteClient } from '@/types/quote';
 import { useEffect, useState, useCallback } from 'react';
-import { X } from 'lucide-react';
+import { cn } from '@/lib/utils';
 import ClientSelector from '@/components/ClientSelector';
 import { Customer } from '@/hooks/inspection/useCustomers';
 import { SaveCustomerPrompt } from '@/components/electrician/shared/SaveCustomerPrompt';
@@ -39,16 +39,18 @@ const extractPostcode = (address: string): { address: string; postcode: string }
   return { address: address.trim(), postcode: '' };
 };
 
-/** Section header with gradient line — matches certificate form pattern */
-const SectionHeader = ({ title }: { title: string }) => (
-  <div className="mb-3">
-    <div className="h-[2px] w-full rounded-full bg-gradient-to-r from-elec-yellow/40 to-elec-yellow/10 mb-2" />
-    <h2 className="text-sm font-bold text-white uppercase tracking-wide">{title}</h2>
+/** Numbered eyebrow — matches the quotes design language */
+const SectionHeader = ({ n, title }: { n: string; title: string }) => (
+  <div className="flex items-baseline gap-2 mb-3">
+    <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-elec-yellow/80 tabular-nums">{n}</span>
+    <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/80">· {title}</span>
   </div>
 );
 
 const inputClass =
-  'w-full h-11 px-3 rounded-xl text-base text-white bg-white/[0.06] border border-white/[0.08] focus:border-elec-yellow focus:ring-1 focus:ring-elec-yellow/20 outline-none touch-manipulation placeholder:text-white';
+  'w-full h-12 px-3.5 rounded-xl text-base text-white bg-white/[0.05] border border-white/[0.10] focus:border-elec-yellow focus:ring-2 focus:ring-elec-yellow/15 outline-none touch-manipulation placeholder:text-white/40 transition-colors';
+
+const labelClass = 'text-[11px] font-medium uppercase tracking-wider text-white/65 mb-1.5 block';
 
 export const ClientDetailsStep = ({ client, onUpdate, quoteId }: ClientDetailsStepProps) => {
   const [customerId, setCustomerId] = useState<string | undefined>(client?.customerId);
@@ -138,19 +140,24 @@ export const ClientDetailsStep = ({ client, onUpdate, quoteId }: ClientDetailsSt
       <div className="space-y-6 text-left">
         {/* Customer selector */}
         <div>
-          <SectionHeader title="Select Existing Customer" />
+          <SectionHeader n="01" title="Existing customer" />
           {selectedCustomer ? (
-            <div className="flex items-center justify-between p-3 rounded-xl bg-white/[0.04] border border-emerald-500/20">
-              <div className="min-w-0">
-                <p className="text-[14px] font-semibold text-white">{selectedCustomer.name}</p>
-                <p className="text-[12px] text-white truncate">
+            <div className="flex items-center gap-3 p-3.5 rounded-xl bg-emerald-500/[0.05] border border-emerald-500/20">
+              <div className="h-10 w-10 rounded-full bg-emerald-500/15 border border-emerald-500/25 flex items-center justify-center flex-shrink-0">
+                <span className="text-[13px] font-bold text-emerald-400">
+                  {selectedCustomer.name.split(' ').map((w) => w[0]).slice(0, 2).join('').toUpperCase()}
+                </span>
+              </div>
+              <div className="min-w-0 flex-1">
+                <p className="text-[14px] font-semibold text-white truncate">{selectedCustomer.name}</p>
+                <p className="text-[12px] text-white/60 truncate">
                   {selectedCustomer.email || selectedCustomer.phone || 'No contact details'}
                 </p>
               </div>
               <button
                 type="button"
                 onClick={handleClearCustomer}
-                className="text-[11px] font-medium text-red-400 touch-manipulation ml-3 flex-shrink-0"
+                className="h-9 px-3 rounded-lg text-[11px] font-semibold text-red-400 bg-red-500/[0.08] border border-red-500/[0.15] touch-manipulation active:scale-[0.97] transition-all flex-shrink-0"
               >
                 Clear
               </button>
@@ -164,13 +171,23 @@ export const ClientDetailsStep = ({ client, onUpdate, quoteId }: ClientDetailsSt
           {/* Previous quotes for this client */}
           {previousQuotes.length > 0 && (
             <div className="mt-3">
-              <p className="text-[11px] text-white font-medium mb-2">Previous Quotes</p>
+              <p className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/60 mb-2">Previous quotes</p>
               <div className="flex gap-2 overflow-x-auto scrollbar-hide -mx-3 px-3 pb-1">
                 {previousQuotes.map((pq) => (
-                  <div key={pq.id} className="flex-shrink-0 px-3 py-2 rounded-xl bg-white/[0.04] border border-white/[0.08]">
-                    <p className="text-[12px] font-medium text-white">{pq.quote_number}</p>
-                    <p className="text-[11px] text-elec-yellow font-bold">£{pq.total?.toFixed(2)}</p>
-                    <p className="text-[10px] text-white">{pq.status} · {new Date(pq.created_at).toLocaleDateString('en-GB', { day: 'numeric', month: 'short' })}</p>
+                  <div key={pq.id} className="flex-shrink-0 px-3 py-2.5 rounded-xl bg-white/[0.04] border border-white/[0.10]">
+                    <div className="flex items-center gap-1.5">
+                      <span
+                        className={cn(
+                          'h-1.5 w-1.5 rounded-full',
+                          pq.status === 'approved' ? 'bg-emerald-400' : pq.status === 'rejected' ? 'bg-red-400' : pq.status === 'sent' || pq.status === 'pending' ? 'bg-amber-400' : 'bg-white/60'
+                        )}
+                      />
+                      <p className="text-[11px] font-mono text-white/70">{pq.quote_number}</p>
+                    </div>
+                    <p className="text-[13px] text-elec-yellow font-bold tabular-nums mt-0.5">£{pq.total?.toFixed(2)}</p>
+                    <p className="text-[10px] text-white/55 mt-0.5">
+                      {new Date(pq.created_at).toLocaleDateString('en-GB', { day: 'numeric', month: 'short' })}
+                    </p>
                   </div>
                 ))}
               </div>
@@ -180,15 +197,14 @@ export const ClientDetailsStep = ({ client, onUpdate, quoteId }: ClientDetailsSt
 
         {/* Client information */}
         <div>
-          <SectionHeader title="Client Details" />
-          <div className="space-y-3">
-            {/* Name — full width */}
+          <SectionHeader n="02" title="Client details" />
+          <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 lg:gap-4">
             <FormField
               control={form.control}
               name="name"
               render={({ field }) => (
-                <FormItem>
-                  <label className="text-white text-xs font-medium mb-1.5 block">Client Name *</label>
+                <FormItem className="col-span-2">
+                  <label className={labelClass}>Client name <span className="text-elec-yellow">*</span></label>
                   <FormControl>
                     <input {...field} placeholder="Full name" className={inputClass} autoComplete="name" />
                   </FormControl>
@@ -196,41 +212,39 @@ export const ClientDetailsStep = ({ client, onUpdate, quoteId }: ClientDetailsSt
                 </FormItem>
               )}
             />
-            {/* Phone + Email — side by side */}
-            <div className="grid grid-cols-2 gap-3">
-              <FormField
-                control={form.control}
-                name="phone"
-                render={({ field }) => (
-                  <FormItem>
-                    <label className="text-white text-xs font-medium mb-1.5 block">Phone</label>
-                    <FormControl>
-                      <input {...field} type="tel" inputMode="tel" placeholder="Contact number" className={inputClass} autoComplete="tel" />
-                    </FormControl>
-                    <FormMessage className="text-[12px] text-red-400" />
-                  </FormItem>
-                )}
-              />
-              <FormField
-                control={form.control}
-                name="email"
-                render={({ field }) => (
-                  <FormItem>
-                    <label className="text-white text-xs font-medium mb-1.5 block">Email</label>
-                    <FormControl>
-                      <input {...field} type="email" inputMode="email" placeholder="Email address" className={inputClass} autoComplete="email" />
-                    </FormControl>
-                    <FormMessage className="text-[12px] text-red-400" />
-                  </FormItem>
-                )}
-              />
-            </div>
+            <FormField
+              control={form.control}
+              name="phone"
+              render={({ field }) => (
+                <FormItem>
+                  <label className={labelClass}>Phone</label>
+                  <FormControl>
+                    <input {...field} type="tel" inputMode="tel" placeholder="Contact number" className={inputClass} autoComplete="tel" />
+                  </FormControl>
+                  <FormMessage className="text-[12px] text-red-400" />
+                </FormItem>
+              )}
+            />
+            <FormField
+              control={form.control}
+              name="email"
+              render={({ field }) => (
+                <FormItem>
+                  <label className={labelClass}>Email</label>
+                  <FormControl>
+                    <input {...field} type="email" inputMode="email" placeholder="Email address" className={inputClass} autoComplete="email" />
+                  </FormControl>
+                  <FormMessage className="text-[12px] text-red-400" />
+                </FormItem>
+              )}
+            />
           </div>
         </div>
 
         {/* Address */}
         <div>
-          <SectionHeader title="Job Site Address (optional)" />
+          <SectionHeader n="03" title="Job site address" />
+          <div className="lg:max-w-2xl">
           <UnifiedAddressFinder
             key={addressKey}
             onAddressSelect={handleAddressSelect}
@@ -240,6 +254,7 @@ export const ClientDetailsStep = ({ client, onUpdate, quoteId }: ClientDetailsSt
                 : ''
             }
           />
+          </div>
         </div>
 
         {/* Save customer prompt */}

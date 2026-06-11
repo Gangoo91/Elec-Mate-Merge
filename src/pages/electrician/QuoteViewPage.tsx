@@ -1,8 +1,8 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useMemo, Fragment } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { Quote } from '@/types/quote';
 import { supabase } from '@/integrations/supabase/client';
-import { Loader2, ArrowLeft, MoreHorizontal } from 'lucide-react';
+import { Loader2, ArrowLeft, MoreHorizontal, Mail, Phone, Pencil, Copy, Download, Check, Bell, Undo2, Trash2, Receipt, Link2, XCircle, CalendarPlus, FolderPlus, Folder } from 'lucide-react';
 import { Sheet, SheetContent } from '@/components/ui/sheet';
 import { toast } from '@/hooks/use-toast';
 import CertificateGenerationDialog from '@/components/inspection/CertificateGenerationDialog';
@@ -20,15 +20,9 @@ import {
   AlertDialogTitle,
 } from '@/components/ui/alert-dialog';
 import { format, differenceInDays, isPast } from 'date-fns';
+import { createQuickTask } from '@/utils/createQuickTask';
+import { computeQuoteTotals } from '@/utils/quote-calculations';
 import { cn } from '@/lib/utils';
-
-/** Gradient section header — matches cert form pattern */
-const SectionHeader = ({ title }: { title: string }) => (
-  <div className="mb-3">
-    <div className="h-[2px] w-full rounded-full bg-gradient-to-r from-elec-yellow/40 to-elec-yellow/10 mb-2" />
-    <h2 className="text-[11px] font-bold text-white uppercase tracking-widest">{title}</h2>
-  </div>
-);
 
 const QuoteViewPage = () => {
   const { id } = useParams<{ id: string }>();
@@ -48,6 +42,12 @@ const QuoteViewPage = () => {
   const [isReverting, setIsReverting] = useState(false);
   const [showActionsSheet, setShowActionsSheet] = useState(false);
   const [showRevertDialog, setShowRevertDialog] = useState(false);
+  const [showProjectPicker, setShowProjectPicker] = useState(false);
+  const [projects, setProjects] = useState<
+    { id: string; title: string; status: string; customer?: string }[] | null
+  >(null);
+  const [linkedProject, setLinkedProject] = useState<{ id: string; title: string } | null>(null);
+  const [isLinkingProject, setIsLinkingProject] = useState(false);
   const [emailTracking, setEmailTracking] = useState<{
     email_opened_at?: string;
     email_open_count?: number;
@@ -93,6 +93,16 @@ const QuoteViewPage = () => {
         };
         setQuote(transformedQuote);
         setEmailTracking({ first_sent_at: data.first_sent_at, reminder_count: data.reminder_count || 0 });
+
+        if (data.project_id) {
+          // eslint-disable-next-line @typescript-eslint/no-explicit-any
+          const { data: proj } = await (supabase as any)
+            .from('spark_projects')
+            .select('id, title')
+            .eq('id', data.project_id)
+            .maybeSingle();
+          if (proj) setLinkedProject({ id: proj.id, title: proj.title });
+        }
 
         const { data: viewData } = await supabase.from('quote_views').select('email_opened_at, email_open_count').eq('quote_id', data.id).maybeSingle();
         if (viewData) {
@@ -236,6 +246,131 @@ const QuoteViewPage = () => {
     toast({ title: 'Duplicating quote', description: 'Edit the copy and save as new' });
   };
 
+  const handleMarkAsDeclined = async () => {
+    if (!quote) return;
+    const { error } = await supabase
+      .from('quotes')
+      .update({ acceptance_status: 'rejected' })
+      .eq('id', quote.id);
+    if (error) {
+      toast({ title: 'Failed', variant: 'destructive' });
+    } else {
+      setQuote((prev) => (prev ? { ...prev, acceptance_status: 'rejected' } : prev));
+      toast({ title: 'Marked as declined' });
+    }
+  };
+
+  const handleCopyClientLink = async () => {
+    if (!quote) return;
+    const buildLink = async (): Promise<string> => {
+      const { data: existingView } = await supabase
+        .from('quote_views')
+        .select('public_token')
+        .eq('quote_id', quote.id)
+        .eq('is_active', true)
+        .maybeSingle();
+      let token: string | undefined = existingView?.public_token ?? undefined;
+      if (!token) {
+        token = crypto.randomUUID();
+        const { error } = await supabase
+          .from('quote_views')
+          .insert({ quote_id: quote.id, public_token: token, is_active: true, view_count: 0 });
+        if (error) throw error;
+      }
+      return `${window.location.origin}/quote/${token}`;
+    };
+    try {
+      // iOS/Safari revoke clipboard access once the user gesture has passed —
+      // a plain writeText after two awaited round-trips always throws there.
+      // ClipboardItem accepts a promise payload, keeping the gesture alive.
+      if (typeof ClipboardItem !== 'undefined' && navigator.clipboard?.write) {
+        await navigator.clipboard.write([
+          new ClipboardItem({
+            'text/plain': buildLink().then((url) => new Blob([url], { type: 'text/plain' })),
+          }),
+        ]);
+      } else {
+        await navigator.clipboard.writeText(await buildLink());
+      }
+      toast({ title: 'Link copied', description: 'Send it to your client — they can view and accept online.' });
+    } catch {
+      toast({ title: 'Could not copy link', variant: 'destructive' });
+    }
+  };
+
+  const handleCreateFollowUpTask = async () => {
+    if (!quote) return;
+    const tomorrow = new Date();
+    tomorrow.setDate(tomorrow.getDate() + 1);
+    tomorrow.setHours(9, 0, 0, 0);
+    const taskId = await createQuickTask(
+      `Follow up: Quote ${quote.quoteNumber || ''}${quote.client?.name ? ` — ${quote.client.name}` : ''}`.trim(),
+      { priority: 'normal', dueAt: tomorrow.toISOString(), tags: ['follow-up', 'quote'] }
+    );
+    if (taskId) {
+      toast({ title: 'Task created', description: 'Follow-up set for tomorrow, 9am.' });
+    } else {
+      toast({ title: 'Failed to create task', variant: 'destructive' });
+    }
+  };
+
+  const openProjectPicker = async () => {
+    setShowActionsSheet(false);
+    setShowProjectPicker(true);
+    if (projects === null) {
+      try {
+        const {
+          data: { user },
+        } = await supabase.auth.getUser();
+        if (!user) throw new Error('Not signed in');
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        const { data, error } = await (supabase as any)
+          .from('spark_projects')
+          .select('id, title, status, customers(name)')
+          .eq('user_id', user.id)
+          .neq('status', 'cancelled')
+          .order('created_at', { ascending: false });
+        if (error) throw error;
+        setProjects(
+          // eslint-disable-next-line @typescript-eslint/no-explicit-any
+          (data || []).map((r: any) => ({
+            id: r.id,
+            title: r.title,
+            status: r.status,
+            customer: r.customers?.name,
+          }))
+        );
+      } catch {
+        // Leave projects null so reopening retries; tell the user why it's empty.
+        setShowProjectPicker(false);
+        toast({ title: 'Could not load projects', description: 'Check your connection and try again.', variant: 'destructive' });
+      }
+    }
+  };
+
+  const handleAssignProject = async (projectId: string | null, title?: string) => {
+    if (!quote) return;
+    setIsLinkingProject(true);
+    try {
+      const { error } = await supabase
+        .from('quotes')
+        .update({ project_id: projectId })
+        .eq('id', quote.id);
+      if (error) throw error;
+      setLinkedProject(projectId && title ? { id: projectId, title } : null);
+      toast(
+        projectId
+          ? { title: 'Added to project', description: title }
+          : { title: 'Removed from project' }
+      );
+      setShowProjectPicker(false);
+    } catch {
+      toast({ title: 'Failed to update project', variant: 'destructive' });
+    } finally {
+      setIsLinkingProject(false);
+    }
+  };
+
   // === DERIVED STATE ===
   const isExpired = quote?.expiryDate ? isPast(new Date(quote.expiryDate)) : false;
   const daysUntilExpiry = quote?.expiryDate ? differenceInDays(new Date(quote.expiryDate), new Date()) : null;
@@ -247,24 +382,33 @@ const QuoteViewPage = () => {
   const canAccept = !isAccepted && !isRejected && !quote?.invoice_raised;
   const canConvertToInvoice = !isRejected && !quote?.invoice_raised;
   const canRevert = isAccepted && !quote?.invoice_raised;
+  const canDecline = !isAccepted && !isRejected && !quote?.invoice_raised;
+  const canFollowUpTask =
+    (quote?.status === 'sent' || quote?.status === 'pending') && !isAccepted && !isRejected && !quote?.invoice_raised;
   const canSendReminder = (quote?.status === 'sent' || quote?.status === 'pending') && !isAccepted && (emailTracking?.reminder_count || 0) < 3 && !isExpired;
 
   const getStatusBadge = () => {
-    if (quote?.invoice_raised) return { label: 'Invoiced', style: 'bg-blue-500/15 text-blue-400 border border-blue-500/20' };
-    if (isAccepted) return { label: 'Accepted', style: 'bg-emerald-500/15 text-emerald-400 border border-emerald-500/20' };
-    if (quote?.acceptance_status === 'rejected') return { label: 'Declined', style: 'bg-red-500/15 text-red-400 border border-red-500/20' };
-    if (isExpired) return { label: 'Expired', style: 'bg-red-500/15 text-red-400 border border-red-500/20' };
-    if (quote?.status === 'sent' || quote?.status === 'pending') return { label: 'Sent', style: 'bg-amber-500/15 text-amber-400 border border-amber-500/20' };
-    return { label: 'Draft', style: 'bg-white/[0.08] text-white border border-white/[0.12]' };
+    if (quote?.invoice_raised)
+      return { label: 'Invoiced', dot: 'bg-blue-400', text: 'text-blue-400', pill: 'bg-blue-500/15 text-blue-400 border-blue-500/25', wash: 'from-blue-500/[0.14]' };
+    if (isAccepted)
+      return { label: 'Won', dot: 'bg-emerald-400', text: 'text-emerald-400', pill: 'bg-emerald-500/15 text-emerald-400 border-emerald-500/25', wash: 'from-emerald-500/[0.14]' };
+    if (quote?.acceptance_status === 'rejected')
+      return { label: 'Declined', dot: 'bg-red-400', text: 'text-red-400', pill: 'bg-red-500/15 text-red-400 border-red-500/25', wash: 'from-red-500/[0.12]' };
+    if (isExpired)
+      return { label: 'Expired', dot: 'bg-red-400', text: 'text-red-400', pill: 'bg-red-500/15 text-red-400 border-red-500/25', wash: 'from-red-500/[0.12]' };
+    if (quote?.status === 'sent' || quote?.status === 'pending')
+      return { label: 'Sent', dot: 'bg-amber-400', text: 'text-amber-400', pill: 'bg-amber-500/15 text-amber-400 border-amber-500/25', wash: 'from-amber-500/[0.14]' };
+    return { label: 'Draft', dot: 'bg-white/75', text: 'text-white/85', pill: 'bg-white/[0.08] text-white/85 border-white/[0.15]', wash: 'from-white/[0.06]' };
   };
 
-  const getGradient = () => {
-    if (quote?.invoice_raised) return 'from-blue-500 via-blue-400 to-cyan-400';
-    if (isAccepted) return 'from-emerald-500 via-emerald-400 to-green-400';
-    if (quote?.acceptance_status === 'rejected') return 'from-red-500 via-rose-400 to-pink-400';
-    if (quote?.status === 'sent' || quote?.status === 'pending') return 'from-amber-500 via-amber-400 to-yellow-400';
-    return 'from-elec-yellow/60 via-elec-yellow/40 to-amber-400/20';
-  };
+  // Shared elevated panel recipe — fintech surface architecture
+  const PANEL =
+    'rounded-2xl border border-white/[0.10] bg-gradient-to-b from-white/[0.06] to-white/[0.03] shadow-[0_8px_24px_rgba(0,0,0,0.35)]';
+
+  const liveTotals = useMemo(
+    () => (quote ? computeQuoteTotals(quote.items || [], quote.settings) : null),
+    [quote]
+  );
 
   // === LOADING / ERROR ===
   if (loading) {
@@ -315,15 +459,9 @@ const QuoteViewPage = () => {
   } else {
     timelineEvents.push({ label: 'Viewed', colour: 'bg-white/20', active: false });
   }
-  if ((emailTracking?.reminder_count ?? 0) > 0) {
-    timelineEvents.push({
-      label: `${emailTracking?.reminder_count} Reminder${(emailTracking?.reminder_count ?? 0) !== 1 ? 's' : ''}`,
-      colour: 'bg-purple-400', active: true,
-    });
-  }
   if (isAccepted) {
     timelineEvents.push({
-      label: 'Accepted',
+      label: 'Won',
       date: quote.accepted_at ? format(new Date(quote.accepted_at), 'd MMM') : undefined,
       colour: 'bg-emerald-400', active: true,
     });
@@ -336,6 +474,71 @@ const QuoteViewPage = () => {
     timelineEvents.push({ label: 'Invoiced', colour: 'bg-blue-400', active: true });
   }
 
+  // Intelligence strip facts
+  const sentAgo = emailTracking?.first_sent_at
+    ? differenceInDays(new Date(), new Date(emailTracking.first_sent_at))
+    : null;
+  const lastOpenedAgo = emailTracking?.email_opened_at
+    ? differenceInDays(new Date(), new Date(emailTracking.email_opened_at))
+    : null;
+  const openCount = emailTracking?.email_open_count ?? 0;
+  const intelFacts: string[] = [];
+  if (sentAgo !== null) intelFacts.push(`Sent ${sentAgo === 0 ? 'today' : `${sentAgo}d ago`}`);
+  if (openCount > 0) {
+    intelFacts.push(`Viewed ${openCount}×`);
+    if (lastOpenedAgo !== null)
+      intelFacts.push(`Last opened ${lastOpenedAgo === 0 ? 'today' : `${lastOpenedAgo}d ago`}`);
+  } else if (sentAgo !== null) {
+    intelFacts.push('Not opened yet');
+  }
+
+  // Next-step nudge — one contextual suggestion
+  let nudge:
+    | { text: string; cta: string; cls: string; dot: string; action: () => void; disabled?: boolean }
+    | null = null;
+  if (!quote.invoice_raised && !isAccepted) {
+    if (isRejected) {
+      nudge = {
+        text: 'Declined — tweak the price or scope and send a revised version',
+        cta: 'Duplicate & revise',
+        cls: 'text-elec-yellow',
+        dot: 'bg-red-400',
+        action: handleDuplicate,
+      };
+    } else if (isExpired) {
+      nudge = {
+        text: 'This quote has expired — re-issue it with a fresh expiry date',
+        cta: 'Re-issue',
+        cls: 'text-elec-yellow',
+        dot: 'bg-red-400',
+        action: handleDuplicate,
+      };
+    } else if (canSendReminder && openCount === 0 && (sentAgo ?? 0) >= 3) {
+      nudge = {
+        text: `Sent ${sentAgo}d ago and never opened — give it a nudge`,
+        cta: isSendingReminder ? 'Sending…' : 'Send reminder',
+        cls: 'text-blue-400',
+        dot: 'bg-amber-400',
+        action: handleSendReminder,
+        disabled: isSendingReminder,
+      };
+    } else if (canSendReminder && (sentAgo ?? 0) >= 7) {
+      nudge = {
+        text: `No decision after ${sentAgo}d — a polite reminder works`,
+        cta: isSendingReminder ? 'Sending…' : 'Send reminder',
+        cls: 'text-blue-400',
+        dot: 'bg-amber-400',
+        action: handleSendReminder,
+        disabled: isSendingReminder,
+      };
+    }
+  }
+
+  // Private margin maths
+  const exVatTotal =
+    (quote.subtotal || 0) + (quote.overhead || 0) + (quote.profit || 0) - (quote.discountAmount || 0);
+  const marginPct = exVatTotal > 0 ? Math.round(((quote.profit || 0) / exVatTotal) * 100) : 0;
+
   return (
     <div className="min-h-screen bg-background">
       <Helmet>
@@ -343,333 +546,703 @@ const QuoteViewPage = () => {
       </Helmet>
 
       {/* Sticky header */}
-      <header className="sticky top-0 z-40 bg-background/95 backdrop-blur-md">
-        <div className={cn('h-[2px] bg-gradient-to-r', getGradient())} />
-        <div className="flex items-center h-12 px-4 gap-3">
+      <header className="sticky top-0 z-40 bg-background/95 backdrop-blur-md border-b border-white/[0.06]">
+        <div className="flex items-center h-12 px-4 gap-3 max-w-6xl mx-auto">
           <button
             onClick={() => navigate('/electrician/quotes')}
-            className="h-9 w-9 -ml-1.5 flex items-center justify-center rounded-xl hover:bg-white/[0.05] active:scale-[0.95] touch-manipulation flex-shrink-0"
+            className="h-10 w-10 -ml-2 flex items-center justify-center rounded-xl hover:bg-white/[0.05] active:scale-[0.95] touch-manipulation flex-shrink-0"
           >
             <ArrowLeft className="h-5 w-5 text-white" />
           </button>
-          <span className="font-mono text-[13px] text-white flex-1 min-w-0 truncate">{quote.quoteNumber}</span>
-          <span className={cn('text-[11px] font-semibold px-2.5 py-1 rounded-lg', statusBadge.style)}>{statusBadge.label}</span>
+          <span className="font-mono text-[13px] text-white/85 flex-1 min-w-0 truncate">{quote.quoteNumber}</span>
+          <span className="flex items-center gap-1.5 flex-shrink-0">
+            <span className={cn('h-1.5 w-1.5 rounded-full', statusBadge.dot)} />
+            <span className={cn('text-[11px] font-semibold uppercase tracking-[0.08em]', statusBadge.text)}>
+              {statusBadge.label}
+            </span>
+          </span>
           <button
             onClick={() => setShowActionsSheet(true)}
-            className="h-9 w-9 flex items-center justify-center rounded-xl hover:bg-white/[0.05] active:scale-[0.95] touch-manipulation flex-shrink-0"
+            className="h-10 px-3.5 flex items-center gap-1.5 rounded-xl bg-white/[0.08] border border-white/[0.12] text-[12px] font-semibold text-white hover:bg-white/[0.12] active:scale-[0.97] transition-all touch-manipulation flex-shrink-0"
           >
-            <MoreHorizontal className="h-5 w-5 text-white" />
+            Actions
+            <MoreHorizontal className="h-4 w-4 text-white/80" />
           </button>
         </div>
       </header>
 
-      <div className="px-4 py-5 space-y-6 pb-8 max-w-3xl mx-auto lg:px-6">
+      <div className="px-4 py-5 pb-10 max-w-6xl mx-auto lg:px-6 space-y-4">
 
-        {/* === HERO === */}
-        <div className="relative rounded-2xl overflow-hidden">
-          <div className={cn('absolute inset-0 bg-gradient-to-br opacity-10', getGradient())} />
-          <div className={cn('absolute inset-x-0 top-0 h-[2px] bg-gradient-to-r', getGradient())} />
-          <div className="relative p-5">
-            <p className="text-[11px] text-white uppercase tracking-widest mb-3">Total</p>
-            <p className="text-[42px] font-bold text-elec-yellow leading-none tracking-tight">
+        {/* === HERO PANEL === */}
+        <div className={cn('relative overflow-hidden rounded-3xl border border-white/[0.10] bg-gradient-to-b from-white/[0.07] to-white/[0.03] shadow-[0_12px_32px_rgba(0,0,0,0.4)]')}>
+          <div className={cn('absolute inset-0 bg-gradient-to-br via-transparent to-transparent pointer-events-none', statusBadge.wash)} />
+          <div className="relative p-4 sm:p-6">
+            <div className="flex items-center justify-between gap-3">
+              <span className="font-mono text-[12px] text-white/75 px-2.5 py-1 rounded-lg bg-white/[0.06] border border-white/[0.08]">
+                {quote.quoteNumber}
+              </span>
+              <span className={cn('inline-flex items-center gap-1.5 text-[11px] font-semibold uppercase tracking-[0.06em] px-2.5 py-1 rounded-full border', statusBadge.pill)}>
+                <span className={cn('h-1.5 w-1.5 rounded-full', statusBadge.dot)} />
+                {statusBadge.label}
+              </span>
+            </div>
+
+            <p className="mt-4 text-[38px] sm:text-[46px] font-bold text-elec-yellow leading-none tracking-tight tabular-nums">
               {formatCurrency(quote.total)}
             </p>
-            <p className="text-[16px] font-semibold text-white mt-3">{quote.client?.name || 'No client'}</p>
+            <p className="text-[17px] font-semibold text-white mt-3">{quote.client?.name || 'No client'}</p>
             {quote.jobDetails?.title && (
-              <p className="text-[13px] text-white mt-0.5">{quote.jobDetails.title}</p>
+              <p className="text-[13px] text-white/70 mt-0.5">{quote.jobDetails.title}</p>
             )}
-            <div className="flex items-center gap-3 mt-3">
-              {quote.expiryDate && !quote.invoice_raised && (
-                <span className={cn('text-[11px] font-medium', isExpired ? 'text-red-400' : 'text-white')}>
-                  {isExpired ? 'Expired' : daysUntilExpiry !== null && daysUntilExpiry <= 7 ? `Expires in ${daysUntilExpiry}d` : `Expires ${format(new Date(quote.expiryDate), 'd MMM yyyy')}`}
+
+            {/* Fact chips */}
+            <div className="flex items-center gap-2 mt-4 flex-wrap">
+              {isAccepted && quote.accepted_at && (
+                <span className="text-[11px] font-medium text-emerald-400 px-2.5 py-1 rounded-lg bg-emerald-500/[0.08] border border-emerald-500/15">
+                  Accepted {format(new Date(quote.accepted_at), 'd MMM yyyy')}
                 </span>
               )}
               {quote.invoice_raised && quote.invoice_number && (
-                <span className="text-[11px] font-medium text-blue-400">Invoice {quote.invoice_number}</span>
+                <span className="text-[11px] font-medium text-blue-400 px-2.5 py-1 rounded-lg bg-blue-500/[0.08] border border-blue-500/15">
+                  Invoice {quote.invoice_number}
+                </span>
               )}
-            </div>
-          </div>
-        </div>
-
-        {/* === PRIMARY ACTIONS === */}
-        {(canAccept || canConvertToInvoice) && (
-          <div className="space-y-2">
-            {canAccept && (
-              <button
-                onClick={handleMarkAsAccepted}
-                className="w-full h-[52px] rounded-2xl bg-gradient-to-r from-emerald-500 to-emerald-600 text-white text-[15px] font-semibold touch-manipulation active:scale-[0.98] transition-all shadow-lg shadow-emerald-500/20"
-              >
-                Mark as Accepted
-              </button>
-            )}
-            {canConvertToInvoice && (
-              <button
-                onClick={handleConvertToInvoice}
-                disabled={isConverting}
-                className="w-full h-[52px] rounded-2xl bg-gradient-to-r from-elec-yellow to-amber-500 text-black text-[15px] font-semibold touch-manipulation active:scale-[0.98] transition-all shadow-lg shadow-elec-yellow/20"
-              >
-                Convert to Invoice
-              </button>
-            )}
-          </div>
-        )}
-
-        {/* === QUICK ACTIONS — inline primary only === */}
-        <div className="grid grid-cols-2 gap-2">
-          <QuoteSendDropdown
-            quote={quote}
-            onSent={() => setQuote((prev) => prev ? { ...prev, status: 'sent' } : prev)}
-          />
-          <button
-            onClick={handleDownloadPDF}
-            disabled={isDownloading}
-            className="h-11 rounded-xl bg-white/[0.06] border border-white/[0.08] text-[13px] font-medium text-white touch-manipulation active:scale-[0.97] active:bg-white/[0.1] transition-all disabled:opacity-50"
-          >
-            {isDownloading ? 'Generating...' : 'Download PDF'}
-          </button>
-        </div>
-
-        {/* === TIMELINE — vertical stepper === */}
-        <div>
-          <SectionHeader title="Timeline" />
-          <div className="space-y-0">
-            {timelineEvents.map((event, i) => (
-              <div key={i} className="flex items-stretch gap-3">
-                <div className="flex flex-col items-center w-4 flex-shrink-0">
-                  <div className={cn(
-                    'w-3 h-3 rounded-full flex-shrink-0 mt-0.5',
-                    event.active ? event.colour : 'bg-white/[0.12] border border-white/[0.15]'
-                  )} />
-                  {i < timelineEvents.length - 1 && (
-                    <div className={cn('w-[2px] flex-1 min-h-[20px] my-1', timelineEvents[i + 1].active ? 'bg-white/15' : 'bg-white/[0.08]')} />
-                  )}
-                </div>
-                <div className="flex items-baseline justify-between flex-1 pb-3">
-                  <p className={cn('text-[13px] font-medium', event.active ? 'text-white' : 'text-white/30')}>
-                    {event.label}
-                  </p>
-                  {event.date && (
-                    <p className="text-[12px] text-white/50 tabular-nums">{event.date}</p>
-                  )}
-                </div>
-              </div>
-            ))}
-          </div>
-        </div>
-
-        {/* === CLIENT === */}
-        <div>
-          <SectionHeader title="Client" />
-          <div className="space-y-1">
-            <p className="text-[16px] font-semibold text-white">{quote.client?.name || 'No client'}</p>
-            {quote.client?.email && (
-              <a href={`mailto:${quote.client.email}`} className="block text-[13px] text-elec-yellow touch-manipulation">
-                {quote.client.email}
-              </a>
-            )}
-            {quote.client?.phone && (
-              <a href={`tel:${quote.client.phone}`} className="block text-[13px] text-elec-yellow touch-manipulation">
-                {quote.client.phone}
-              </a>
-            )}
-            {(quote.client?.address || quote.client?.postcode) && (
-              <p className="text-[13px] text-white">
-                {[quote.client?.address, quote.client?.postcode].filter(Boolean).join(', ')}
-              </p>
-            )}
-          </div>
-        </div>
-
-        {/* === JOB === */}
-        {quote.jobDetails?.title && (
-          <div>
-            <SectionHeader title="Job" />
-            <p className="text-[15px] font-semibold text-white">{quote.jobDetails.title}</p>
-            {quote.jobDetails.description && (
-              <p className="text-[13px] text-white mt-1 whitespace-pre-line">{quote.jobDetails.description}</p>
-            )}
-            {quote.jobDetails.location && (
-              <p className="text-[13px] text-white mt-1">{quote.jobDetails.location}</p>
-            )}
-          </div>
-        )}
-
-        {/* === DATES === */}
-        <div>
-          <SectionHeader title="Dates" />
-          <div className="flex gap-8">
-            <div>
-              <p className="text-[10px] text-white uppercase tracking-widest mb-1">Created</p>
-              <p className="text-[14px] font-medium text-white">{format(new Date(quote.createdAt), 'd MMM yyyy')}</p>
-            </div>
-            <div>
-              <p className="text-[10px] text-white uppercase tracking-widest mb-1">Expires</p>
-              <p className={cn('text-[14px] font-medium', isExpired ? 'text-red-400' : 'text-white')}>
-                {format(new Date(quote.expiryDate), 'd MMM yyyy')}
-              </p>
-            </div>
-            {quote.accepted_at && (
-              <div>
-                <p className="text-[10px] text-white uppercase tracking-widest mb-1">Accepted</p>
-                <p className="text-[14px] font-medium text-emerald-400">{format(new Date(quote.accepted_at), 'd MMM yyyy')}</p>
-              </div>
-            )}
-          </div>
-        </div>
-
-        {/* === LINE ITEMS === */}
-        {quote.items && quote.items.length > 0 && (
-          <div>
-            <SectionHeader title={`Items (${quote.items.length})`} />
-            <div className="space-y-0 divide-y divide-white/[0.06]">
-              {quote.items.map((item) => (
-                <div key={item.id} className="flex items-start justify-between gap-4 py-3">
-                  <div className="flex items-start gap-3 flex-1 min-w-0">
-                    <div className={cn(
-                      'w-1.5 h-1.5 rounded-full mt-1.5 flex-shrink-0',
-                      item.category === 'labour' ? 'bg-blue-500' :
-                      item.category === 'materials' ? 'bg-green-500' :
-                      item.category === 'equipment' ? 'bg-purple-500' : 'bg-white'
-                    )} />
-                    <div className="flex-1 min-w-0">
-                      <p className="text-[14px] text-white font-medium">{item.description}</p>
-                      <p className="text-[12px] text-white mt-0.5">
-                        {item.quantity} {item.unit || 'units'} × {formatCurrency(item.unitPrice)}
-                      </p>
-                    </div>
-                  </div>
-                  <p className="text-[14px] font-semibold text-white flex-shrink-0 tabular-nums">
-                    {formatCurrency(item.totalPrice)}
-                  </p>
-                </div>
+              {!isAccepted && !quote.invoice_raised && quote.expiryDate && !isExpired && (
+                <span className={cn(
+                  'text-[11px] font-medium px-2.5 py-1 rounded-lg border',
+                  daysUntilExpiry !== null && daysUntilExpiry <= 7
+                    ? 'text-orange-400 bg-orange-500/[0.08] border-orange-500/20'
+                    : 'text-white/75 bg-white/[0.05] border-white/[0.08]'
+                )}>
+                  {daysUntilExpiry !== null && daysUntilExpiry <= 7
+                    ? `Expires in ${daysUntilExpiry}d`
+                    : `Expires ${format(new Date(quote.expiryDate), 'd MMM yyyy')}`}
+                </span>
+              )}
+              {intelFacts.map((fact) => (
+                <span key={fact} className="text-[11px] font-medium text-white/75 px-2.5 py-1 rounded-lg bg-white/[0.05] border border-white/[0.08]">
+                  {fact}
+                </span>
               ))}
             </div>
 
-            {/* Pricing breakdown */}
-            <div className="mt-4 pt-4 border-t border-white/[0.08] space-y-2">
-              <div className="flex justify-between text-[13px]">
-                <span className="text-white">Subtotal</span>
-                <span className="text-white tabular-nums">{formatCurrency(quote.subtotal)}</span>
+            {/* Progress stepper */}
+            <div className="mt-5 pt-5 border-t border-white/[0.08]">
+              <div className="flex items-start">
+                {timelineEvents.map((event, i) => (
+                  <Fragment key={i}>
+                    {i > 0 && (
+                      <div className={cn('flex-1 h-[2px] mt-[5px] min-w-3 rounded-full', event.active ? 'bg-white/30' : 'bg-white/[0.10]')} />
+                    )}
+                    <div className="flex flex-col items-center gap-1.5 flex-shrink-0 max-w-[72px] px-1">
+                      <span className={cn('h-3 w-3 rounded-full ring-4', event.active ? cn(event.colour, 'ring-white/[0.06]') : 'bg-white/[0.10] ring-transparent border border-white/[0.2]')} />
+                      <span className={cn('text-[10px] font-medium text-center leading-tight', event.active ? 'text-white/90' : 'text-white/45')}>
+                        {event.label}
+                      </span>
+                      {event.date && <span className="text-[9px] text-white/55 tabular-nums">{event.date}</span>}
+                    </div>
+                  </Fragment>
+                ))}
               </div>
-              {quote.overhead > 0 && (
-                <div className="flex justify-between text-[13px]">
-                  <span className="text-white">Overhead ({quote.settings?.overheadPercentage || 0}%)</span>
-                  <span className="text-white tabular-nums">{formatCurrency(quote.overhead)}</span>
-                </div>
+              {(emailTracking?.reminder_count ?? 0) > 0 && (
+                <p className="text-[10px] text-purple-400 mt-2.5">
+                  {emailTracking?.reminder_count} reminder{(emailTracking?.reminder_count ?? 0) !== 1 ? 's' : ''} sent
+                </p>
               )}
-              {quote.profit > 0 && (
-                <div className="flex justify-between text-[13px]">
-                  <span className="text-white">Profit ({quote.settings?.profitPercentage || 0}%)</span>
-                  <span className="text-white tabular-nums">{formatCurrency(quote.profit)}</span>
-                </div>
-              )}
-              {quote.discountAmount > 0 && (
-                <div className="flex justify-between text-[13px]">
-                  <span className="text-white">Discount</span>
-                  <span className="text-white tabular-nums">−{formatCurrency(quote.discountAmount)}</span>
-                </div>
-              )}
-              {quote.vatAmount > 0 && (
-                <div className="flex justify-between text-[13px]">
-                  <span className="text-white">VAT ({quote.settings?.vatRate || 20}%)</span>
-                  <span className="text-white tabular-nums">{formatCurrency(quote.vatAmount)}</span>
-                </div>
-              )}
-              <div className="flex justify-between items-baseline pt-3 border-t border-white/[0.08]">
-                <span className="text-[15px] font-bold text-white">Total</span>
-                <span className="text-[22px] font-bold text-elec-yellow tabular-nums">{formatCurrency(quote.total)}</span>
-              </div>
             </div>
           </div>
+        </div>
+
+        {/* === NEXT STEP BANNER === */}
+        {nudge && (
+          <button
+            onClick={nudge.action}
+            disabled={nudge.disabled}
+            className={cn(PANEL, 'w-full flex items-center justify-between gap-3 px-4 py-3.5 touch-manipulation active:scale-[0.99] transition-all text-left select-none disabled:opacity-50')}
+          >
+            <span className="flex items-center gap-2.5 min-w-0">
+              <span className={cn('h-1.5 w-1.5 rounded-full flex-shrink-0', nudge.dot)} />
+              <span className="text-[13px] text-white/90 leading-snug">{nudge.text}</span>
+            </span>
+            <span className={cn('text-[12px] font-semibold flex-shrink-0', nudge.cls)}>{nudge.cta} →</span>
+          </button>
         )}
 
-        {/* === NOTES === */}
-        {quote.notes && (
-          <div>
-            <SectionHeader title="Notes" />
-            <p className="text-[13px] text-white whitespace-pre-line leading-relaxed">{quote.notes}</p>
-          </div>
-        )}
-
-        {/* === SIGNATURE === */}
-        {isAccepted && quote.signature_url && (
-          <div>
-            <SectionHeader title="Signature" />
-            <img
-              src={quote.signature_url}
-              alt="Customer signature"
-              className="max-w-[220px] h-auto bg-white rounded-xl p-3"
-            />
-            {quote.accepted_by_name && (
-              <p className="text-[12px] text-white mt-2">Signed by {quote.accepted_by_name}</p>
+        {/* === CLIENT — full width === */}
+        <div className={cn(PANEL, 'p-4 sm:p-5')}>
+          <div className="flex flex-col sm:flex-row sm:items-center gap-4">
+            <div className="flex items-center gap-3 flex-1 min-w-0">
+              <div className="h-11 w-11 rounded-full bg-elec-yellow/15 border border-elec-yellow/20 flex items-center justify-center flex-shrink-0">
+                <span className="text-[14px] font-bold text-elec-yellow">
+                  {(quote.client?.name || '?').split(' ').map((w) => w[0]).slice(0, 2).join('').toUpperCase()}
+                </span>
+              </div>
+              <div className="flex-1 min-w-0">
+                <p className="text-[15px] font-semibold text-white truncate">{quote.client?.name || 'No client'}</p>
+                {(quote.client?.address || quote.client?.postcode) && (
+                  <p className="text-[12px] text-white/60 truncate">
+                    {[quote.client?.address, quote.client?.postcode].filter(Boolean).join(', ')}
+                  </p>
+                )}
+              </div>
+            </div>
+            {(quote.client?.email || quote.client?.phone) && (
+              <div className="flex gap-2 sm:flex-shrink-0">
+                {quote.client?.email && (
+                  <a
+                    href={`mailto:${quote.client.email}`}
+                    className="flex-1 sm:flex-initial h-10 sm:px-5 flex items-center justify-center gap-2 rounded-xl bg-white/[0.06] border border-white/[0.08] text-[12px] font-medium text-white touch-manipulation active:scale-[0.97] transition-all"
+                  >
+                    <Mail className="h-3.5 w-3.5 text-white/70" /> Email
+                  </a>
+                )}
+                {quote.client?.phone && (
+                  <a
+                    href={`tel:${quote.client.phone}`}
+                    className="flex-1 sm:flex-initial h-10 sm:px-5 flex items-center justify-center gap-2 rounded-xl bg-white/[0.06] border border-white/[0.08] text-[12px] font-medium text-white touch-manipulation active:scale-[0.97] transition-all"
+                  >
+                    <Phone className="h-3.5 w-3.5 text-white/70" /> Call
+                  </a>
+                )}
+              </div>
             )}
           </div>
-        )}
+        </div>
 
+        {/* === PANELS GRID === */}
+        <div className="lg:grid lg:grid-cols-[1fr_340px] lg:gap-4 lg:items-stretch space-y-4 lg:space-y-0">
+
+          {/* LEFT — job scope, line items, notes */}
+          <div className="flex flex-col gap-4">
+            {(quote.jobDetails?.description || quote.jobDetails?.location) && (
+              <div className={cn(PANEL, 'p-4 sm:p-5')}>
+                <h2 className="text-[14px] font-semibold text-white mb-2">
+                  {quote.jobDetails?.title || 'Job'}
+                </h2>
+                {quote.jobDetails?.description && (
+                  <p className="text-[13px] text-white/80 whitespace-pre-line leading-relaxed">
+                    {quote.jobDetails.description}
+                  </p>
+                )}
+                {quote.jobDetails?.location && (
+                  <p className="text-[12px] text-white/55 mt-2">{quote.jobDetails.location}</p>
+                )}
+              </div>
+            )}
+            {quote.items && quote.items.length > 0 && (
+              <div className={cn(PANEL, 'p-4 sm:p-5 flex-1 flex flex-col')}>
+                <div className="flex items-center justify-between mb-1">
+                  <h2 className="text-[14px] font-semibold text-white">Line items</h2>
+                  <span className="text-[11px] text-white/65 px-2 py-0.5 rounded-md bg-white/[0.06] tabular-nums">
+                    {quote.items.length}
+                  </span>
+                </div>
+                <div className="divide-y divide-white/[0.07]">
+                  {quote.items.map((item) => (
+                    <div key={item.id} className="flex items-start justify-between gap-4 py-3.5">
+                      <div className="flex items-start gap-3 flex-1 min-w-0">
+                        <div className={cn(
+                          'w-1.5 h-1.5 rounded-full mt-[7px] flex-shrink-0',
+                          item.category === 'labour' ? 'bg-blue-400' :
+                          item.category === 'materials' ? 'bg-emerald-400' :
+                          item.category === 'equipment' ? 'bg-purple-400' : 'bg-white/70'
+                        )} />
+                        <div className="flex-1 min-w-0">
+                          <p className="text-[14px] text-white font-medium leading-snug">{item.description}</p>
+                          <p className="text-[12px] text-white/60 mt-1 tabular-nums">
+                            {item.quantity} {item.unit || 'units'} × {formatCurrency(item.unitPrice)}
+                          </p>
+                        </div>
+                      </div>
+                      <p className="text-[14px] font-semibold text-white flex-shrink-0 tabular-nums">
+                        {formatCurrency(item.totalPrice)}
+                      </p>
+                    </div>
+                  ))}
+                </div>
+
+                {/* Totals */}
+                <div className="mt-auto pt-4 border-t border-white/[0.10] space-y-2">
+                  <div className="flex justify-between text-[13px]">
+                    <span className="text-white/65">Subtotal</span>
+                    <span className="text-white/90 tabular-nums">{formatCurrency(quote.subtotal)}</span>
+                  </div>
+                  {quote.overhead > 0 && (
+                    <div className="flex justify-between text-[13px]">
+                      <span className="text-white/65">Overhead ({quote.settings?.overheadPercentage || 0}%)</span>
+                      <span className="text-white/90 tabular-nums">{formatCurrency(quote.overhead)}</span>
+                    </div>
+                  )}
+                  {quote.profit > 0 && (
+                    <div className="flex justify-between text-[13px]">
+                      <span className="text-white/65">Profit ({quote.settings?.profitPercentage || 0}%)</span>
+                      <span className="text-white/90 tabular-nums">{formatCurrency(quote.profit)}</span>
+                    </div>
+                  )}
+                  {quote.discountAmount > 0 && (
+                    <div className="flex justify-between text-[13px]">
+                      <span className="text-white/65">Discount</span>
+                      <span className="text-emerald-400 tabular-nums">−{formatCurrency(quote.discountAmount)}</span>
+                    </div>
+                  )}
+                  {quote.vatAmount > 0 && (
+                    <div className="flex justify-between text-[13px]">
+                      <span className="text-white/65">VAT ({quote.settings?.vatRate || 20}%)</span>
+                      <span className="text-white/90 tabular-nums">{formatCurrency(quote.vatAmount)}</span>
+                    </div>
+                  )}
+                  {liveTotals?.reverseCharge && (
+                    <div className="flex justify-between text-[13px]">
+                      <span className="text-white/65">VAT — reverse charge</span>
+                      <span className="text-white/90 tabular-nums">£0.00</span>
+                    </div>
+                  )}
+                  <div className="flex justify-between items-center mt-3 px-3.5 py-3 rounded-xl bg-elec-yellow/[0.08] border border-elec-yellow/[0.15]">
+                    <span className="text-[14px] font-bold text-white">Total</span>
+                    <span className="text-[22px] font-bold text-elec-yellow tabular-nums tracking-tight">
+                      {formatCurrency(quote.total)}
+                    </span>
+                  </div>
+                  {liveTotals && liveTotals.cisAmount > 0 && (
+                    <div className="pt-1 space-y-1.5">
+                      <div className="flex justify-between text-[13px]">
+                        <span className="text-white/65">CIS deduction ({liveTotals.cisRate}% of labour)</span>
+                        <span className="text-red-400 tabular-nums">−{formatCurrency(liveTotals.cisAmount)}</span>
+                      </div>
+                      <div className="flex justify-between text-[13px]">
+                        <span className="text-white font-semibold">Net payable after CIS</span>
+                        <span className="text-white font-semibold tabular-nums">{formatCurrency(liveTotals.netPayable)}</span>
+                      </div>
+                    </div>
+                  )}
+                  {liveTotals?.reverseCharge && (
+                    <p className="text-[11px] text-white/55 pt-1 leading-relaxed">
+                      Reverse charge: customer to account to HMRC for the VAT — {formatCurrency(liveTotals.notionalVat)} @ {quote.settings?.vatRate ?? 20}%.
+                    </p>
+                  )}
+                </div>
+              </div>
+            )}
+
+            {quote.notes && (
+              <div className={cn(PANEL, 'p-4 sm:p-5')}>
+                <h2 className="text-[14px] font-semibold text-white mb-2">Notes</h2>
+                <p className="text-[13px] text-white/80 whitespace-pre-line leading-relaxed">{quote.notes}</p>
+              </div>
+            )}
+          </div>
+
+          {/* RIGHT — client, dates, your numbers, signature */}
+          <div className="space-y-4">
+
+            {/* Dates */}
+            <div className={cn(PANEL, 'p-4 sm:p-5')}>
+              <div className="grid grid-cols-3 gap-3">
+                <div>
+                  <p className="text-[10px] text-white/55 uppercase tracking-wider mb-1.5">Created</p>
+                  <p className="text-[13px] font-semibold text-white tabular-nums">
+                    {format(new Date(quote.createdAt), 'd MMM yy')}
+                  </p>
+                </div>
+                <div>
+                  <p className="text-[10px] text-white/55 uppercase tracking-wider mb-1.5">Expires</p>
+                  <p className={cn('text-[13px] font-semibold tabular-nums', isExpired ? 'text-red-400' : 'text-white')}>
+                    {format(new Date(quote.expiryDate), 'd MMM yy')}
+                  </p>
+                </div>
+                {quote.accepted_at ? (
+                  <div>
+                    <p className="text-[10px] text-white/55 uppercase tracking-wider mb-1.5">Accepted</p>
+                    <p className="text-[13px] font-semibold text-emerald-400 tabular-nums">
+                      {format(new Date(quote.accepted_at), 'd MMM yy')}
+                    </p>
+                  </div>
+                ) : (
+                  <div>
+                    <p className="text-[10px] text-white/55 uppercase tracking-wider mb-1.5">Job</p>
+                    <p className="text-[13px] font-semibold text-white truncate">
+                      {quote.jobDetails?.title || '—'}
+                    </p>
+                  </div>
+                )}
+              </div>
+            </div>
+
+            {/* Signature */}
+            {isAccepted && quote.signature_url && (
+              <div className={cn(PANEL, 'p-4 sm:p-5')}>
+                <h2 className="text-[14px] font-semibold text-white mb-3">Signature</h2>
+                <img
+                  src={quote.signature_url}
+                  alt="Customer signature"
+                  className="w-full h-28 object-contain bg-white rounded-xl p-3"
+                />
+                {quote.accepted_by_name && (
+                  <p className="text-[12px] text-white/65 mt-2">Signed by {quote.accepted_by_name}</p>
+                )}
+              </div>
+            )}
+
+            {/* Your numbers — private */}
+            {((quote.overhead || 0) > 0 || (quote.profit || 0) > 0) && (
+              <div className={cn(PANEL, 'p-4 sm:p-5')}>
+                <div className="flex items-center justify-between mb-3">
+                  <h2 className="text-[14px] font-semibold text-white">Your numbers</h2>
+                  <span className="text-[10px] text-white/50 px-2 py-0.5 rounded-md bg-white/[0.05] border border-white/[0.08]">
+                    Private
+                  </span>
+                </div>
+                <div className="space-y-2">
+                  {(quote.overhead || 0) > 0 && (
+                    <div className="flex justify-between text-[13px]">
+                      <span className="text-white/65">Overhead</span>
+                      <span className="text-white/90 tabular-nums">{formatCurrency(quote.overhead)}</span>
+                    </div>
+                  )}
+                  {(quote.profit || 0) > 0 && (
+                    <div className="flex justify-between text-[13px]">
+                      <span className="text-white/65">Profit</span>
+                      <span className="text-emerald-400 font-semibold tabular-nums">{formatCurrency(quote.profit)}</span>
+                    </div>
+                  )}
+                </div>
+                <div className="mt-4">
+                  <div className="flex justify-between text-[12px] mb-1.5">
+                    <span className="text-white/65">Margin</span>
+                    <span className={cn('font-bold tabular-nums', marginPct >= 20 ? 'text-emerald-400' : marginPct >= 10 ? 'text-amber-400' : 'text-red-400')}>
+                      {marginPct}%
+                    </span>
+                  </div>
+                  <div className="h-1.5 rounded-full bg-white/[0.07] overflow-hidden">
+                    <div
+                      className={cn('h-full rounded-full', marginPct >= 20 ? 'bg-emerald-400' : marginPct >= 10 ? 'bg-amber-400' : 'bg-red-400')}
+                      style={{ width: `${Math.min(Math.max(marginPct, 2), 100)}%` }}
+                    />
+                  </div>
+                </div>
+                <p className="text-[10px] text-white/45 mt-3">Never shown to the client</p>
+              </div>
+            )}
+          </div>
+        </div>
+
+      </div>
+
+      {/* === STICKY ACTION BAR — sticks inside the content column, respects sidebar === */}
+      <div className="sticky bottom-0 z-40 bg-background/95 backdrop-blur-md border-t border-white/[0.08]">
+        <div className="flex gap-2 p-3 pb-[max(12px,env(safe-area-inset-bottom))] max-w-6xl mx-auto lg:px-6">
+          <div className="flex-1">
+            <QuoteSendDropdown
+              quote={quote}
+              onSent={() => setQuote((prev) => (prev ? { ...prev, status: 'sent' } : prev))}
+            />
+          </div>
+          {canAccept ? (
+            <button
+              onClick={handleMarkAsAccepted}
+              className="flex-1 h-12 rounded-xl bg-emerald-500 text-white text-[14px] font-semibold touch-manipulation active:scale-[0.97] transition-all"
+            >
+              Mark Accepted
+            </button>
+          ) : canConvertToInvoice ? (
+            <button
+              onClick={handleConvertToInvoice}
+              disabled={isConverting}
+              className="flex-1 h-12 rounded-xl bg-elec-yellow text-black text-[14px] font-semibold touch-manipulation active:scale-[0.97] transition-all disabled:opacity-50"
+            >
+              Convert to Invoice
+            </button>
+          ) : (
+            <button
+              onClick={handleDownloadPDF}
+              disabled={isDownloading}
+              className="flex-1 h-12 rounded-xl bg-white/[0.08] border border-white/[0.12] text-white text-[14px] font-semibold touch-manipulation active:scale-[0.97] transition-all disabled:opacity-50"
+            >
+              {isDownloading ? 'Generating…' : 'Download PDF'}
+            </button>
+          )}
+        </div>
       </div>
 
       {/* === DIALOGS === */}
       {/* Actions Bottom Sheet */}
       <Sheet open={showActionsSheet} onOpenChange={setShowActionsSheet}>
-        <SheetContent side="bottom" className="rounded-t-2xl p-0 max-h-[60vh]">
-          <div className="p-5 space-y-1">
-            <p className="text-xs font-medium text-white uppercase tracking-wider mb-3 px-1">Actions</p>
-            <button
-              onClick={() => { setShowActionsSheet(false); navigate(`/electrician/quote-builder/${quote.id}`); }}
-              className="w-full flex items-center justify-between h-12 px-4 rounded-xl hover:bg-white/[0.04] touch-manipulation active:scale-[0.99] transition-all"
-            >
-              <span className="text-[15px] font-medium text-white">Edit Quote</span>
-              <span className="text-[12px] text-white">→</span>
-            </button>
-            <button
-              onClick={() => { setShowActionsSheet(false); handleDuplicate(); }}
-              className="w-full flex items-center justify-between h-12 px-4 rounded-xl hover:bg-white/[0.04] touch-manipulation active:scale-[0.99] transition-all"
-            >
-              <span className="text-[15px] font-medium text-white">Duplicate</span>
-              <span className="text-[12px] text-white">→</span>
-            </button>
-            {canAccept && (
+        <SheetContent
+          side="bottom"
+          className="rounded-t-2xl p-0 max-h-[85vh] overflow-y-auto overscroll-contain border-t border-white/[0.10]"
+        >
+          <div className="w-full px-4 sm:px-6 pt-3 pb-[max(20px,env(safe-area-inset-bottom))]">
+            {/* Grab handle */}
+            <div className="mx-auto h-1 w-10 rounded-full bg-white/[0.15] mb-4" />
+
+            {/* Context header */}
+            <div className="flex items-center justify-between gap-3 pb-3 mb-3 border-b border-white/[0.08]">
+              <div className="min-w-0">
+                <p className="text-[14px] font-semibold text-white truncate">{quote.client?.name || 'No client'}</p>
+                <p className="text-[11px] text-white/55 font-mono truncate">{quote.quoteNumber}</p>
+              </div>
+              <p className="text-[18px] font-bold text-elec-yellow tabular-nums flex-shrink-0">{formatCurrency(quote.total)}</p>
+            </div>
+
+            {/* Action tiles — 2-up, 4-up on desktop */}
+            <div className="grid grid-cols-2 lg:grid-cols-4 gap-2">
               <button
-                onClick={() => { setShowActionsSheet(false); handleMarkAsAccepted(); }}
-                className="w-full flex items-center justify-between h-12 px-4 rounded-xl hover:bg-white/[0.04] touch-manipulation active:scale-[0.99] transition-all"
+                onClick={() => { setShowActionsSheet(false); navigate(`/electrician/quote-builder/${quote.id}`); }}
+                className="flex flex-col items-start gap-2.5 p-3.5 rounded-xl bg-white/[0.04] border border-white/[0.08] hover:bg-white/[0.06] active:scale-[0.98] touch-manipulation transition-all text-left select-none"
               >
-                <span className="text-[15px] font-medium text-emerald-400">Mark as Accepted</span>
+                <span className="h-10 w-10 rounded-xl bg-white/[0.06] border border-white/[0.08] flex items-center justify-center">
+                  <Pencil className="h-4 w-4 text-white/85" />
+                </span>
+                <span>
+                  <span className="block text-[13px] font-semibold text-white">Edit quote</span>
+                  <span className="block text-[11px] text-white/55 mt-0.5">Items, prices and details</span>
+                </span>
               </button>
-            )}
-            {canConvertToInvoice && (
+
               <button
-                onClick={() => { setShowActionsSheet(false); handleConvertToInvoice(); }}
-                disabled={isConverting}
-                className="w-full flex items-center justify-between h-12 px-4 rounded-xl hover:bg-white/[0.04] touch-manipulation active:scale-[0.99] transition-all disabled:opacity-50"
+                onClick={() => { setShowActionsSheet(false); handleDuplicate(); }}
+                className="flex flex-col items-start gap-2.5 p-3.5 rounded-xl bg-white/[0.04] border border-white/[0.08] hover:bg-white/[0.06] active:scale-[0.98] touch-manipulation transition-all text-left select-none"
               >
-                <span className="text-[15px] font-medium text-elec-yellow">Convert to Invoice</span>
+                <span className="h-10 w-10 rounded-xl bg-white/[0.06] border border-white/[0.08] flex items-center justify-center">
+                  <Copy className="h-4 w-4 text-white/85" />
+                </span>
+                <span>
+                  <span className="block text-[13px] font-semibold text-white">Duplicate</span>
+                  <span className="block text-[11px] text-white/55 mt-0.5">New quote from this one</span>
+                </span>
               </button>
-            )}
-            {canSendReminder && (
+
               <button
-                onClick={() => { setShowActionsSheet(false); handleSendReminder(); }}
-                disabled={isSendingReminder}
-                className="w-full flex items-center justify-between h-12 px-4 rounded-xl hover:bg-white/[0.04] touch-manipulation active:scale-[0.99] transition-all disabled:opacity-50"
+                onClick={() => { setShowActionsSheet(false); handleDownloadPDF(); }}
+                className="flex flex-col items-start gap-2.5 p-3.5 rounded-xl bg-white/[0.04] border border-white/[0.08] hover:bg-white/[0.06] active:scale-[0.98] touch-manipulation transition-all text-left select-none"
               >
-                <span className="text-[15px] font-medium text-blue-400">{isSendingReminder ? 'Sending...' : 'Send Reminder'}</span>
+                <span className="h-10 w-10 rounded-xl bg-white/[0.06] border border-white/[0.08] flex items-center justify-center">
+                  <Download className="h-4 w-4 text-white/85" />
+                </span>
+                <span>
+                  <span className="block text-[13px] font-semibold text-white">Download PDF</span>
+                  <span className="block text-[11px] text-white/55 mt-0.5">Client-ready document</span>
+                </span>
               </button>
-            )}
-            {canRevert && (
+
               <button
-                onClick={() => { setShowActionsSheet(false); setShowRevertDialog(true); }}
-                className="w-full flex items-center justify-between h-12 px-4 rounded-xl hover:bg-white/[0.04] touch-manipulation active:scale-[0.99] transition-all"
+                onClick={() => { setShowActionsSheet(false); handleCopyClientLink(); }}
+                className="flex flex-col items-start gap-2.5 p-3.5 rounded-xl bg-white/[0.04] border border-white/[0.08] hover:bg-white/[0.06] active:scale-[0.98] touch-manipulation transition-all text-left select-none"
               >
-                <span className="text-[15px] font-medium text-amber-400">Revert to Draft</span>
+                <span className="h-10 w-10 rounded-xl bg-white/[0.06] border border-white/[0.08] flex items-center justify-center">
+                  <Link2 className="h-4 w-4 text-white/85" />
+                </span>
+                <span>
+                  <span className="block text-[13px] font-semibold text-white">Copy client link</span>
+                  <span className="block text-[11px] text-white/55 mt-0.5">They view and accept online</span>
+                </span>
               </button>
-            )}
-            <div className="border-t border-white/[0.06] mt-2 pt-2">
+
+              <button
+                onClick={openProjectPicker}
+                className="flex flex-col items-start gap-2.5 p-3.5 rounded-xl bg-white/[0.04] border border-white/[0.08] hover:bg-white/[0.06] active:scale-[0.98] touch-manipulation transition-all text-left select-none"
+              >
+                <span className="h-10 w-10 rounded-xl bg-white/[0.06] border border-white/[0.08] flex items-center justify-center">
+                  {linkedProject ? (
+                    <Folder className="h-4 w-4 text-elec-yellow" />
+                  ) : (
+                    <FolderPlus className="h-4 w-4 text-white/85" />
+                  )}
+                </span>
+                <span className="min-w-0">
+                  <span className="block text-[13px] font-semibold text-white truncate">
+                    {linkedProject ? linkedProject.title : 'Add to project'}
+                  </span>
+                  <span className="block text-[11px] text-white/55 mt-0.5">
+                    {linkedProject ? 'In project — tap to change' : 'Track it with tasks & costs'}
+                  </span>
+                </span>
+              </button>
+
+              {canAccept && (
+                <button
+                  onClick={() => { setShowActionsSheet(false); handleMarkAsAccepted(); }}
+                  className="flex flex-col items-start gap-2.5 p-3.5 rounded-xl bg-emerald-500/[0.06] border border-emerald-500/[0.15] hover:bg-emerald-500/[0.1] active:scale-[0.98] touch-manipulation transition-all text-left select-none"
+                >
+                  <span className="h-10 w-10 rounded-xl bg-emerald-500/15 border border-emerald-500/20 flex items-center justify-center">
+                    <Check className="h-4 w-4 text-emerald-400" />
+                  </span>
+                  <span>
+                    <span className="block text-[13px] font-semibold text-emerald-400">Mark accepted</span>
+                    <span className="block text-[11px] text-white/55 mt-0.5">Client said yes outside the app</span>
+                  </span>
+                </button>
+              )}
+
+              {canDecline && (
+                <button
+                  onClick={() => { setShowActionsSheet(false); handleMarkAsDeclined(); }}
+                  className="flex flex-col items-start gap-2.5 p-3.5 rounded-xl bg-white/[0.04] border border-white/[0.08] hover:bg-red-500/[0.06] active:scale-[0.98] touch-manipulation transition-all text-left select-none"
+                >
+                  <span className="h-10 w-10 rounded-xl bg-red-500/[0.10] border border-red-500/[0.15] flex items-center justify-center">
+                    <XCircle className="h-4 w-4 text-red-400" />
+                  </span>
+                  <span>
+                    <span className="block text-[13px] font-semibold text-white">Mark declined</span>
+                    <span className="block text-[11px] text-white/55 mt-0.5">Keep your win rate honest</span>
+                  </span>
+                </button>
+              )}
+
+              {canConvertToInvoice && (
+                <button
+                  onClick={() => { setShowActionsSheet(false); handleConvertToInvoice(); }}
+                  disabled={isConverting}
+                  className="flex flex-col items-start gap-2.5 p-3.5 rounded-xl bg-elec-yellow/[0.06] border border-elec-yellow/[0.15] hover:bg-elec-yellow/[0.1] active:scale-[0.98] touch-manipulation transition-all text-left select-none disabled:opacity-50"
+                >
+                  <span className="h-10 w-10 rounded-xl bg-elec-yellow/15 border border-elec-yellow/20 flex items-center justify-center">
+                    <Receipt className="h-4 w-4 text-elec-yellow" />
+                  </span>
+                  <span>
+                    <span className="block text-[13px] font-semibold text-elec-yellow">Convert to invoice</span>
+                    <span className="block text-[11px] text-white/55 mt-0.5">Everything carries across</span>
+                  </span>
+                </button>
+              )}
+
+              {canSendReminder && (
+                <button
+                  onClick={() => { setShowActionsSheet(false); handleSendReminder(); }}
+                  disabled={isSendingReminder}
+                  className="flex flex-col items-start gap-2.5 p-3.5 rounded-xl bg-white/[0.04] border border-white/[0.08] hover:bg-blue-500/[0.06] active:scale-[0.98] touch-manipulation transition-all text-left select-none disabled:opacity-50"
+                >
+                  <span className="h-10 w-10 rounded-xl bg-blue-500/15 border border-blue-500/20 flex items-center justify-center">
+                    <Bell className="h-4 w-4 text-blue-400" />
+                  </span>
+                  <span>
+                    <span className="block text-[13px] font-semibold text-white">{isSendingReminder ? 'Sending…' : 'Send reminder'}</span>
+                    <span className="block text-[11px] text-white/55 mt-0.5">{3 - (emailTracking?.reminder_count || 0)} of 3 left</span>
+                  </span>
+                </button>
+              )}
+
+              {canFollowUpTask && (
+                <button
+                  onClick={() => { setShowActionsSheet(false); handleCreateFollowUpTask(); }}
+                  className="flex flex-col items-start gap-2.5 p-3.5 rounded-xl bg-white/[0.04] border border-white/[0.08] hover:bg-white/[0.06] active:scale-[0.98] touch-manipulation transition-all text-left select-none"
+                >
+                  <span className="h-10 w-10 rounded-xl bg-white/[0.06] border border-white/[0.08] flex items-center justify-center">
+                    <CalendarPlus className="h-4 w-4 text-white/85" />
+                  </span>
+                  <span>
+                    <span className="block text-[13px] font-semibold text-white">Follow-up task</span>
+                    <span className="block text-[11px] text-white/55 mt-0.5">Reminds you tomorrow, 9am</span>
+                  </span>
+                </button>
+              )}
+
+              {canRevert && (
+                <button
+                  onClick={() => { setShowActionsSheet(false); setShowRevertDialog(true); }}
+                  className="flex flex-col items-start gap-2.5 p-3.5 rounded-xl bg-white/[0.04] border border-white/[0.08] hover:bg-amber-500/[0.06] active:scale-[0.98] touch-manipulation transition-all text-left select-none"
+                >
+                  <span className="h-10 w-10 rounded-xl bg-amber-500/15 border border-amber-500/20 flex items-center justify-center">
+                    <Undo2 className="h-4 w-4 text-amber-400" />
+                  </span>
+                  <span>
+                    <span className="block text-[13px] font-semibold text-white">Revert acceptance</span>
+                    <span className="block text-[11px] text-white/55 mt-0.5">Put it back to sent</span>
+                  </span>
+                </button>
+              )}
+            </div>
+
+            {/* Destructive — separated */}
+            <div className="border-t border-white/[0.08] mt-3 pt-3">
               <button
                 onClick={() => { setShowActionsSheet(false); setShowDeleteDialog(true); }}
-                className="w-full flex items-center h-12 px-4 rounded-xl hover:bg-red-500/[0.06] touch-manipulation active:scale-[0.99] transition-all"
+                className="w-full flex items-center gap-3 h-12 px-3 rounded-xl hover:bg-red-500/[0.06] active:bg-red-500/[0.1] touch-manipulation transition-all"
               >
-                <span className="text-[15px] font-medium text-red-400">Delete Quote</span>
+                <Trash2 className="h-4 w-4 text-red-400 flex-shrink-0" />
+                <span className="text-[13px] font-semibold text-red-400">Delete quote</span>
+                <span className="text-[11px] text-white/45 ml-auto">Permanent — cannot be undone</span>
               </button>
             </div>
+          </div>
+        </SheetContent>
+      </Sheet>
+
+      {/* Project picker */}
+      <Sheet open={showProjectPicker} onOpenChange={setShowProjectPicker}>
+        <SheetContent
+          side="bottom"
+          className="rounded-t-2xl p-0 max-h-[70vh] overflow-y-auto overscroll-contain border-t border-white/[0.10]"
+        >
+          <div className="w-full px-4 sm:px-6 pt-3 pb-[max(20px,env(safe-area-inset-bottom))]">
+            <div className="mx-auto h-1 w-10 rounded-full bg-white/[0.15] mb-4" />
+            <p className="text-[14px] font-semibold text-white px-1 mb-3">
+              {linkedProject ? 'Move to project' : 'Add to project'}
+            </p>
+
+            {projects === null ? (
+              <div className="flex items-center justify-center py-10">
+                <Loader2 className="h-5 w-5 animate-spin text-elec-yellow" />
+              </div>
+            ) : projects.length === 0 ? (
+              <p className="text-[13px] text-white/60 px-1 py-6 text-center">
+                No projects yet — create one in the Business Hub first.
+              </p>
+            ) : (
+              <>
+              <div className="grid grid-cols-2 lg:grid-cols-4 gap-2">
+                {projects.map((proj) => (
+                  <button
+                    key={proj.id}
+                    onClick={() => handleAssignProject(proj.id, proj.title)}
+                    disabled={isLinkingProject}
+                    className={cn(
+                      'flex flex-col items-start gap-2 p-3.5 rounded-xl border touch-manipulation transition-all text-left select-none active:scale-[0.98] disabled:opacity-50',
+                      linkedProject?.id === proj.id
+                        ? 'bg-elec-yellow/[0.06] border-elec-yellow/[0.2]'
+                        : 'bg-white/[0.04] border-white/[0.08] hover:bg-white/[0.06]'
+                    )}
+                  >
+                    <span className="flex items-center gap-1.5 w-full">
+                      <span
+                        className={cn(
+                          'h-1.5 w-1.5 rounded-full flex-shrink-0',
+                          proj.status === 'completed' || proj.status === 'done'
+                            ? 'bg-emerald-400'
+                            : proj.status === 'in_progress' || proj.status === 'active'
+                              ? 'bg-blue-400'
+                              : 'bg-white/50'
+                        )}
+                      />
+                      <span className="text-[10px] font-semibold uppercase tracking-[0.08em] text-white/55 truncate">
+                        {proj.status.replace(/_/g, ' ')}
+                      </span>
+                      {linkedProject?.id === proj.id && (
+                        <Check className="h-3.5 w-3.5 text-elec-yellow ml-auto flex-shrink-0" />
+                      )}
+                    </span>
+                    <span className="min-w-0 w-full">
+                      <span className="block text-[13px] font-semibold text-white truncate">{proj.title}</span>
+                      <span className="block text-[11px] text-white/55 truncate min-h-[14px]">
+                        {proj.customer || ' '}
+                      </span>
+                    </span>
+                  </button>
+                ))}
+              </div>
+              {linkedProject && (
+                <div className="border-t border-white/[0.08] mt-3 pt-3">
+                  <button
+                    onClick={() => handleAssignProject(null)}
+                    disabled={isLinkingProject}
+                    className="w-full flex items-center gap-3 h-12 px-3 rounded-xl hover:bg-red-500/[0.06] active:bg-red-500/[0.1] touch-manipulation transition-all disabled:opacity-50"
+                  >
+                    <XCircle className="h-4 w-4 text-red-400 flex-shrink-0" />
+                    <span className="text-[13px] font-semibold text-red-400">Remove from project</span>
+                  </button>
+                </div>
+              )}
+              </>
+            )}
           </div>
         </SheetContent>
       </Sheet>

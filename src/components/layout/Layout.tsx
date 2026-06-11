@@ -24,6 +24,18 @@ const Layout = () => {
     window.localStorage.setItem('sidebar-collapsed', desktopCollapsed ? '1' : '0');
   }, [desktopCollapsed]);
 
+  // Expose the live sidebar width as a CSS var on <html> so fixed/portaled
+  // elements (bottom sheets, wizard footers) can align to the content column
+  // without each one re-reading localStorage. lg-only consumers gate on the
+  // breakpoint; below lg the sidebar overlays, so the var is 0.
+  useEffect(() => {
+    if (typeof document === 'undefined') return;
+    document.documentElement.style.setProperty(
+      '--sidebar-width',
+      !isMobile && !desktopCollapsed ? '16rem' : '0px'
+    );
+  }, [isMobile, desktopCollapsed]);
+
   const toggleSidebar = () => {
     if (isMobile) {
       setSidebarOpen(!sidebarOpen);

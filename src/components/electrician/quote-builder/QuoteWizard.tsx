@@ -1,8 +1,10 @@
-import React, { useEffect, useCallback, useRef, useState } from 'react';
+import React, { useEffect, useCallback, useRef, useState, useMemo, Fragment } from 'react';
 import { Button } from '@/components/ui/button';
-import { Loader2 } from 'lucide-react';
+import { Loader2, Check, ChevronLeft } from 'lucide-react';
+import { cn } from '@/lib/utils';
 import { draftStorage } from '@/utils/draftStorage';
 import { useQuoteBuilder } from '@/hooks/useQuoteBuilder';
+import { useInventoryStorage } from '@/hooks/useInventoryStorage';
 import { ClientDetailsStep } from './steps/ClientDetailsStep';
 import { JobDetailsStep } from './steps/JobDetailsStep';
 import { EnhancedQuoteItemsStep } from './steps/EnhancedQuoteItemsStep';
@@ -13,23 +15,6 @@ import { FEATURES } from '@/config/features';
 import { transformCostOutputToQuoteItems } from '@/utils/cost-to-quote-transformer';
 import { useOptionalVoiceFormContext, FormField } from '@/contexts/VoiceFormContext';
 import type { Quote, QuoteClient, QuoteItem, JobDetails, QuoteSettings } from '@/types/quote';
-
-/**
- * Section header — gradient line + status dot + uppercase title.
- * Matches the InvoiceWizard pattern so quote/invoice creation reads as the
- * same product. `completed` toggles the dot from neutral to emerald.
- */
-const SectionHeader = ({ title, completed }: { title: string; completed?: boolean }) => (
-  <>
-    <div className="mb-3 flex items-center gap-2">
-      <div className="h-[2px] flex-1 rounded-full bg-gradient-to-r from-elec-yellow/40 to-elec-yellow/10" />
-      <div
-        className={`w-2 h-2 rounded-full flex-shrink-0 ${completed ? 'bg-emerald-400' : 'bg-white/20'}`}
-      />
-    </div>
-    <h2 className="text-sm font-bold text-white uppercase tracking-wide mb-3">{title}</h2>
-  </>
-);
 
 interface QuoteWizardProps {
   onQuoteGenerated?: () => void;
@@ -108,6 +93,14 @@ interface QuoteWizardProps {
   } | null;
 }
 
+const STEPS = [
+  { key: 'client', label: 'Client', title: 'Who’s the quote for?', sub: 'Pick an existing client or add new details' },
+  { key: 'job', label: 'Job', title: 'What’s the job?', sub: 'A clear title and description — your client sees this' },
+  { key: 'items', label: 'Items', title: 'Build the price', sub: 'Add labour, materials and equipment' },
+  { key: 'settings', label: 'Settings', title: 'Money settings', sub: 'VAT, CIS, discounts and presentation' },
+  { key: 'review', label: 'Review', title: 'Check and save', sub: 'Everything your client will see' },
+] as const;
+
 export const QuoteWizard = ({
   onQuoteGenerated,
   initialQuote,
@@ -120,6 +113,7 @@ export const QuoteWizard = ({
   const [showRecoveryBanner, setShowRecoveryBanner] = useState(false);
   const [recoveredDraft, setRecoveredDraft] = useState<Record<string, unknown> | null>(null);
   const quoteIdRef = useRef<string | null>(null);
+  const [step, setStep] = useState(0);
 
   const handleQuoteGenerated = useCallback(() => {
     draftStorage.clearDraft('quote', quoteIdRef.current);
@@ -291,12 +285,47 @@ export const QuoteWizard = ({
   }, [initialCostData]);
 
   const canSave = !!quote.client?.name;
+  const itemCount = quote.items?.length ?? 0;
+
+  // Live summary + stock check (quote lines linked to personal inventory)
+  const { items: stockItems } = useInventoryStorage();
+  const stockWarnings = useMemo(() => {
+    const byId = new Map(stockItems.map((st) => [st.id, st]));
+    // Aggregate demand per inventory item — two lines of 30 + 25 against 40
+    // in stock must warn even though each line passes individually.
+    const demand = new Map<string, number>();
+    for (const it of quote.items || []) {
+      if (!it.inventoryItemId) continue;
+      demand.set(it.inventoryItemId, (demand.get(it.inventoryItemId) || 0) + (it.quantity || 0));
+    }
+    return Array.from(demand.entries()).flatMap(([id, need]) => {
+      const stock = byId.get(id);
+      if (!stock || need <= stock.quantity) return [];
+      return [{ name: stock.name, need, have: stock.quantity }];
+    });
+  }, [quote.items, stockItems]);
+
+  // Per-step completion — drives the rail ticks
+  const completed: (boolean | null)[] = [
+    !!quote.client?.name,
+    !!quote.jobDetails?.title,
+    itemCount > 0,
+    null, // settings — optional, no tick
+    null, // review
+  ];
+
+  const goToStep = useCallback((next: number) => {
+    setStep(Math.max(0, Math.min(STEPS.length - 1, next)));
+    window.scrollTo({ top: 0 });
+  }, []);
+
+  const isLastStep = step === STEPS.length - 1;
 
   return (
-    <div ref={contentRef} className="space-y-8 pb-32 px-3 sm:px-4 lg:px-6">
+    <div ref={contentRef} className="pb-40 px-3 sm:px-4 lg:px-6">
       {/* Recovery Banner */}
       {showRecoveryBanner && recoveredDraft && (
-        <div className="flex items-center justify-between p-3 rounded-xl bg-amber-500/[0.06] border border-amber-500/15">
+        <div className="flex items-center justify-between p-3 mb-4 rounded-xl bg-amber-500/[0.06] border border-amber-500/15">
           <div>
             <p className="text-[13px] font-semibold text-amber-400">Recover unsaved quote?</p>
             <p className="text-[11px] text-white">
@@ -314,90 +343,184 @@ export const QuoteWizard = ({
 
       {FEATURES.EMAIL_INTEGRATION_ENABLED && <EmailStatusBanner />}
 
-      {/* Cloud save status */}
-      <div className="flex justify-end -mb-4">
-        <span className="text-[11px] text-white">
-          {cloudSaveStatus === 'saving' && 'Saving...'}
-          {cloudSaveStatus === 'saved' && 'Saved to cloud'}
-          {cloudSaveStatus === 'error' && 'Save failed — retrying'}
-        </span>
+      {/* === STEP RAIL — spans the column === */}
+      <div className="pt-3 pb-6">
+        <div className="flex items-center">
+          {STEPS.map((s, i) => (
+            <Fragment key={s.key}>
+              {i > 0 && (
+                <div
+                  className={cn(
+                    'flex-1 h-[2px] rounded-full mx-2 sm:mx-3 min-w-3',
+                    i <= step ? 'bg-elec-yellow/50' : 'bg-white/[0.10]'
+                  )}
+                />
+              )}
+              <button
+                type="button"
+                onClick={() => goToStep(i)}
+                className="flex items-center gap-2 flex-shrink-0 py-1 touch-manipulation select-none"
+              >
+                <span
+                  className={cn(
+                    'h-8 w-8 rounded-full flex items-center justify-center text-[12px] font-bold tabular-nums transition-all',
+                    i === step
+                      ? 'bg-elec-yellow text-black shadow-[0_0_0_4px_rgba(250,204,21,0.12)]'
+                      : completed[i]
+                        ? 'bg-emerald-500/15 text-emerald-400 border border-emerald-500/30'
+                        : 'bg-white/[0.06] text-white/55 border border-white/[0.10]'
+                  )}
+                >
+                  {completed[i] && i !== step ? <Check className="h-4 w-4" /> : i + 1}
+                </span>
+                <span
+                  className={cn(
+                    'text-[12px] font-medium leading-none hidden sm:block',
+                    i === step ? 'text-white' : completed[i] ? 'text-white/80' : 'text-white/50'
+                  )}
+                >
+                  {s.label}
+                </span>
+              </button>
+            </Fragment>
+          ))}
+        </div>
       </div>
 
-      {/* === ALL SECTIONS ON ONE PAGE === */}
+      {/* === STEP CONTENT — heading inside the panel === */}
+      {/* Mobile: flat + full width. sm+: elevated panel matching the quotes pages. */}
+      <div className="sm:rounded-2xl sm:border sm:border-white/[0.10] sm:bg-gradient-to-b sm:from-white/[0.05] sm:to-white/[0.02] sm:shadow-[0_8px_24px_rgba(0,0,0,0.35)] sm:p-6 lg:p-8">
+        <div className="mb-5 pb-4 border-b border-white/[0.08]">
+          <h2 className="text-[20px] font-bold text-white leading-tight">{STEPS[step].title}</h2>
+          <p className="text-[12px] text-white/60 mt-1">{STEPS[step].sub}</p>
+        </div>
+        <section className={cn(step !== 0 && 'hidden')}>
+          <ClientDetailsStep client={quote.client} onUpdate={updateClient} quoteId={quote.id} />
+        </section>
 
-      {/* 1. Client Details */}
-      <section>
-        <SectionHeader title="Client Details" completed={!!quote.client?.name} />
-        <ClientDetailsStep client={quote.client} onUpdate={updateClient} quoteId={quote.id} />
-      </section>
+        <section className={cn(step !== 1 && 'hidden')}>
+          <JobDetailsStep jobDetails={quote.jobDetails} onUpdate={updateJobDetails} />
+        </section>
 
-      {/* 2. Job Details */}
-      <section>
-        <SectionHeader title="Job Details" completed={!!quote.jobDetails?.title} />
-        <JobDetailsStep jobDetails={quote.jobDetails} onUpdate={updateJobDetails} />
-      </section>
+        <section className={cn(step !== 2 && 'hidden')}>
+          <EnhancedQuoteItemsStep
+            items={quote.items || []}
+            onAdd={addItem}
+            onUpdate={updateItem}
+            onRemove={removeItem}
+            priceAdjustment={priceAdjustment}
+            setPriceAdjustment={setPriceAdjustment}
+            calculateAdjustedPrice={calculateAdjustedPrice}
+            stockItems={stockItems}
+          />
+        </section>
 
-      {/* 3. Quote Items */}
-      <section>
-        <SectionHeader title="Quote Items" completed={(quote.items?.length ?? 0) > 0} />
-        <EnhancedQuoteItemsStep
-          items={quote.items || []}
-          onAdd={addItem}
-          onUpdate={updateItem}
-          onRemove={removeItem}
-          priceAdjustment={priceAdjustment}
-          setPriceAdjustment={setPriceAdjustment}
-          calculateAdjustedPrice={calculateAdjustedPrice}
-        />
-      </section>
+        <section className={cn(step !== 3 && 'hidden')}>
+          <QuoteSettingsStep settings={quote.settings} items={quote.items} onUpdate={updateSettings} />
+        </section>
 
-      {/* 4. Settings & Pricing */}
-      <section>
-        <SectionHeader title="Settings" completed />
-        <QuoteSettingsStep settings={quote.settings} items={quote.items} onUpdate={updateSettings} />
-      </section>
+        <section className={cn(step !== 4 && 'hidden')}>
+          <QuoteReviewStep quote={quote} />
+        </section>
+      </div>
 
-      {/* 5. Review */}
-      <section>
-        <SectionHeader title="Quote Summary" completed />
-        <QuoteReviewStep quote={quote} />
-      </section>
+      {/* === STICKY FOOTER — centred, symmetric === */}
+      <div className="fixed bottom-0 left-0 right-0 z-30 bg-background/95 backdrop-blur-md border-t border-white/[0.08] lg:left-[var(--sidebar-width,0px)]">
+        <div className="px-4 lg:px-6">
+          {/* Stock warning */}
+          {stockWarnings.length > 0 && (
+            <p className="pt-2 text-[11px] text-amber-400">
+              {stockWarnings.length} item{stockWarnings.length !== 1 ? 's' : ''} over your stock level — check before promising dates
+            </p>
+          )}
 
-      {/* Sticky footer — live total + save */}
-      <div className="fixed bottom-0 left-0 right-0 z-30 bg-background/95 backdrop-blur-md border-t border-white/[0.06] lg:left-64">
-        <div className="max-w-3xl mx-auto">
-          {/* Live total bar — always visible */}
-          <div className="flex items-center justify-between px-4 pt-3 pb-1">
-            <div className="flex items-center gap-3">
-              <span className="text-[12px] text-white">
-                {(quote.items?.length ?? 0) > 0
-                  ? `${quote.items?.length} item${(quote.items?.length ?? 0) !== 1 ? 's' : ''}`
-                  : 'No items yet'}
+          {/* Mobile strip — desktop folds this into the nav row */}
+          <div className="flex items-center justify-between pt-2.5 pb-1 sm:hidden">
+            <div className="flex items-center gap-2.5 min-w-0">
+              <span className="text-[11px] text-white/55 tabular-nums flex-shrink-0">
+                Step {step + 1} of {STEPS.length}
               </span>
-              {quote.settings?.vatRegistered && (quote.items?.length ?? 0) > 0 && (
-                <span className="text-[11px] text-white">inc. VAT</span>
+              <span className="text-white/20">·</span>
+              <span className="text-[11px] text-white/70 tabular-nums truncate">
+                {itemCount > 0 ? `${itemCount} item${itemCount !== 1 ? 's' : ''}` : 'No items yet'}
+                {quote.settings?.vatRegistered && itemCount > 0 ? ' · inc. VAT' : ''}
+              </span>
+              {cloudSaveStatus !== 'idle' && (
+                <span className="text-[11px] text-white/40 flex-shrink-0">
+                  {cloudSaveStatus === 'saving' ? '· Saving…' : cloudSaveStatus === 'saved' ? '· Saved' : '· Retrying'}
+                </span>
               )}
             </div>
-            <span className="text-[22px] font-bold text-elec-yellow tabular-nums">
+            <span className="text-[20px] font-bold text-elec-yellow tabular-nums tracking-tight">
               £{(quote.total || 0).toLocaleString('en-GB', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
             </span>
           </div>
-          {/* Save button */}
-          <div className="px-4 pb-4 pt-2">
-            <Button
-              onClick={generateQuote}
-              disabled={isGenerating || !canSave}
-              className="w-full h-[52px] bg-elec-yellow text-black hover:bg-elec-yellow/90 font-semibold text-[15px] rounded-xl touch-manipulation active:scale-[0.98] shadow-lg shadow-elec-yellow/20"
-            >
-              {isGenerating ? (
-                <>
-                  <Loader2 className="h-5 w-5 mr-2 animate-spin" />
-                  Saving...
-                </>
-              ) : (
-                'Save Quote'
+
+          {/* Navigation — one balanced row on sm+ */}
+          <div className="flex items-center gap-3 pb-[max(16px,env(safe-area-inset-bottom))] pt-1.5 sm:pt-3">
+            {step > 0 && (
+              <button
+                type="button"
+                onClick={() => goToStep(step - 1)}
+                className="h-12 w-12 flex items-center justify-center rounded-xl bg-white/[0.06] border border-white/[0.10] text-white touch-manipulation active:scale-[0.97] transition-all flex-shrink-0"
+                aria-label="Previous step"
+              >
+                <ChevronLeft className="h-5 w-5" />
+              </button>
+            )}
+            <div className="hidden sm:flex items-center gap-2.5 min-w-0 text-[11px] text-white/55 tabular-nums">
+              <span>Step {step + 1} of {STEPS.length}</span>
+              <span className="text-white/20">·</span>
+              <span className="text-white/70 truncate">
+                {itemCount > 0 ? `${itemCount} item${itemCount !== 1 ? 's' : ''}` : 'No items yet'}
+                {quote.settings?.vatRegistered && itemCount > 0 ? ' · inc. VAT' : ''}
+              </span>
+              {cloudSaveStatus !== 'idle' && (
+                <span className="text-white/40">
+                  {cloudSaveStatus === 'saving' ? '· Saving…' : cloudSaveStatus === 'saved' ? '· Saved' : '· Retrying'}
+                </span>
               )}
-            </Button>
+            </div>
+            <div className="hidden sm:block flex-1" />
+            <span className="hidden sm:inline text-[20px] font-bold text-elec-yellow tabular-nums tracking-tight">
+              £{(quote.total || 0).toLocaleString('en-GB', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
+            </span>
+            {!isLastStep && canSave && (
+              <button
+                type="button"
+                onClick={generateQuote}
+                disabled={isGenerating}
+                className="hidden sm:flex h-12 px-5 items-center justify-center rounded-xl bg-white/[0.06] border border-white/[0.10] text-[13px] font-semibold text-white touch-manipulation active:scale-[0.97] transition-all disabled:opacity-50"
+              >
+                {isGenerating ? 'Saving…' : 'Save'}
+              </button>
+            )}
+            {isLastStep ? (
+              <Button
+                onClick={generateQuote}
+                disabled={isGenerating || !canSave}
+                className="flex-1 sm:flex-none sm:px-10 h-12 bg-elec-yellow text-black hover:bg-elec-yellow/90 font-semibold text-[15px] rounded-xl touch-manipulation active:scale-[0.98]"
+              >
+                {isGenerating ? (
+                  <>
+                    <Loader2 className="h-5 w-5 mr-2 animate-spin" />
+                    Saving…
+                  </>
+                ) : canSave ? (
+                  'Save Quote'
+                ) : (
+                  'Add a client name to save'
+                )}
+              </Button>
+            ) : (
+              <button
+                type="button"
+                onClick={() => goToStep(step + 1)}
+                className="flex-1 sm:flex-none sm:px-10 h-12 rounded-xl bg-elec-yellow text-black font-semibold text-[15px] touch-manipulation active:scale-[0.98] transition-all"
+              >
+                Next · {STEPS[step + 1].label}
+              </button>
+            )}
           </div>
         </div>
       </div>

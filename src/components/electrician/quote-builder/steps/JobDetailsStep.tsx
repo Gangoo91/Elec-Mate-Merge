@@ -1,6 +1,10 @@
 import React, { useState } from 'react';
 import { JobDetails } from '@/types/quote';
 import { cn } from '@/lib/utils';
+import { format, parse, isValid } from 'date-fns';
+import { CalendarIcon } from 'lucide-react';
+import { Calendar } from '@/components/ui/calendar';
+import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover';
 import {
   Select,
   SelectContent,
@@ -27,44 +31,42 @@ const durationOptions = [
 ];
 
 const inputClass =
-  'w-full h-11 px-3 rounded-xl text-base text-white bg-white/[0.06] border border-white/[0.08] focus:border-elec-yellow focus:ring-1 focus:ring-elec-yellow/20 outline-none touch-manipulation placeholder:text-white';
+  'w-full h-12 px-3.5 rounded-xl text-base text-white bg-white/[0.05] border border-white/[0.10] focus:border-elec-yellow focus:ring-2 focus:ring-elec-yellow/15 outline-none touch-manipulation placeholder:text-white/40 transition-colors';
+
+const labelClass = 'text-[11px] font-medium uppercase tracking-wider text-white/65 mb-1.5 block';
 
 export const JobDetailsStep = ({ jobDetails, onUpdate }: JobDetailsStepProps) => {
   const [showOptional, setShowOptional] = useState(false);
+  const [dateOpen, setDateOpen] = useState(false);
 
   const handleChange = (field: keyof JobDetails, value: string) => {
     onUpdate({ ...(jobDetails || {}), [field]: value } as JobDetails);
   };
 
+  // workStartDate is stored as 'yyyy-MM-dd' (native date input format)
+  const startDate = jobDetails?.workStartDate
+    ? parse(jobDetails.workStartDate, 'yyyy-MM-dd', new Date())
+    : undefined;
+  const startDateValid = startDate && isValid(startDate) ? startDate : undefined;
+
   return (
-    <div className="space-y-4 text-left">
-      {/* Job Title */}
-      <div>
-        <label className="text-white text-xs mb-1.5 block">Job Title *</label>
-        <input
-          value={jobDetails?.title || ''}
-          onChange={(e) => handleChange('title', e.target.value)}
-          placeholder="e.g. Kitchen Rewire, Consumer Unit Upgrade"
-          className={inputClass}
-        />
-      </div>
+    <div className="space-y-5 text-left">
+      {/* Title · Duration · Start date — one row on desktop */}
+      <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 lg:gap-4">
+        <div className="col-span-2">
+          <label className={labelClass}>
+            Job title <span className="text-elec-yellow">*</span>
+          </label>
+          <input
+            value={jobDetails?.title || ''}
+            onChange={(e) => handleChange('title', e.target.value)}
+            placeholder="e.g. Kitchen Rewire, Consumer Unit Upgrade"
+            className={inputClass}
+          />
+        </div>
 
-      {/* Job Description */}
-      <div>
-        <label className="text-white text-xs mb-1.5 block">Job Description *</label>
-        <textarea
-          value={jobDetails?.description || ''}
-          onChange={(e) => handleChange('description', e.target.value)}
-          placeholder="Describe the scope of work..."
-          rows={3}
-          className="w-full px-3 py-2.5 rounded-xl text-base text-white bg-white/[0.06] border border-white/[0.08] focus:border-elec-yellow focus:ring-1 focus:ring-elec-yellow/20 outline-none touch-manipulation placeholder:text-white resize-none"
-        />
-      </div>
-
-      {/* Duration + Start Date — side by side */}
-      <div className="grid grid-cols-2 gap-3">
         <div>
-          <label className="text-white text-xs mb-1.5 block">Estimated Duration</label>
+          <label className={labelClass}>Estimated duration</label>
           {jobDetails?.estimatedDuration === 'Other' ? (
             <div className="flex gap-2">
               <input
@@ -86,12 +88,16 @@ export const JobDetailsStep = ({ jobDetails, onUpdate }: JobDetailsStepProps) =>
               value={jobDetails?.estimatedDuration || ''}
               onValueChange={(value) => handleChange('estimatedDuration', value)}
             >
-              <SelectTrigger className="h-11 touch-manipulation bg-white/[0.06] border-white/[0.08] focus:border-elec-yellow text-white">
+              <SelectTrigger className="h-12 rounded-xl touch-manipulation bg-white/[0.05] border-white/[0.10] focus:border-elec-yellow text-white data-[placeholder]:text-white/40">
                 <SelectValue placeholder="Select duration" />
               </SelectTrigger>
-              <SelectContent className="z-[100] bg-zinc-900 border-zinc-700 text-white">
+              <SelectContent className="z-[100] bg-elec-gray border-white/10 text-white">
                 {durationOptions.map((opt) => (
-                  <SelectItem key={opt.value} value={opt.value} className="text-white focus:bg-elec-yellow focus:text-black touch-manipulation">
+                  <SelectItem
+                    key={opt.value}
+                    value={opt.value}
+                    className="text-white focus:bg-elec-yellow focus:text-black touch-manipulation"
+                  >
                     {opt.label}
                   </SelectItem>
                 ))}
@@ -99,15 +105,53 @@ export const JobDetailsStep = ({ jobDetails, onUpdate }: JobDetailsStepProps) =>
             </Select>
           )}
         </div>
+
         <div>
-          <label className="text-white text-xs mb-1.5 block">Proposed Start Date</label>
-          <input
-            type="date"
-            value={jobDetails?.workStartDate || ''}
-            onChange={(e) => handleChange('workStartDate', e.target.value)}
-            className={cn(inputClass, '[color-scheme:dark]')}
-          />
+          <label className={labelClass}>Proposed start date</label>
+          <Popover open={dateOpen} onOpenChange={setDateOpen}>
+            <PopoverTrigger asChild>
+              <button
+                type="button"
+                className={cn(
+                  inputClass,
+                  'flex items-center justify-between text-left',
+                  !startDateValid && 'text-white/40'
+                )}
+              >
+                {startDateValid ? format(startDateValid, 'EEE d MMM yyyy') : 'Pick a date'}
+                <CalendarIcon className="h-4 w-4 text-white/50 flex-shrink-0 ml-2" />
+              </button>
+            </PopoverTrigger>
+            <PopoverContent
+              align="start"
+              className="w-auto p-0 z-[100] bg-elec-gray border-white/10"
+            >
+              <Calendar
+                mode="single"
+                selected={startDateValid}
+                onSelect={(date) => {
+                  handleChange('workStartDate', date ? format(date, 'yyyy-MM-dd') : '');
+                  setDateOpen(false);
+                }}
+                initialFocus
+              />
+            </PopoverContent>
+          </Popover>
         </div>
+      </div>
+
+      {/* Description — full width */}
+      <div>
+        <label className={labelClass}>
+          Job description <span className="text-elec-yellow">*</span>
+        </label>
+        <textarea
+          value={jobDetails?.description || ''}
+          onChange={(e) => handleChange('description', e.target.value)}
+          placeholder="Describe the scope of work — your client reads this on the quote"
+          rows={4}
+          className="w-full px-3.5 py-3 rounded-xl text-base text-white bg-white/[0.05] border border-white/[0.10] focus:border-elec-yellow focus:ring-2 focus:ring-elec-yellow/15 outline-none touch-manipulation placeholder:text-white/40 resize-none transition-colors"
+        />
       </div>
 
       {/* Optional fields toggle */}
@@ -120,9 +164,9 @@ export const JobDetailsStep = ({ jobDetails, onUpdate }: JobDetailsStepProps) =>
       </button>
 
       {showOptional && (
-        <div className="space-y-4">
+        <div className="grid lg:grid-cols-2 gap-4 space-y-0">
           <div>
-            <label className="text-white text-xs mb-1.5 block">Work Location</label>
+            <label className={labelClass}>Work location</label>
             <input
               value={jobDetails?.location || ''}
               onChange={(e) => handleChange('location', e.target.value)}
@@ -131,13 +175,13 @@ export const JobDetailsStep = ({ jobDetails, onUpdate }: JobDetailsStepProps) =>
             />
           </div>
           <div>
-            <label className="text-white text-xs mb-1.5 block">Special Requirements</label>
+            <label className={labelClass}>Special requirements</label>
             <textarea
               value={jobDetails?.specialRequirements || ''}
               onChange={(e) => handleChange('specialRequirements', e.target.value)}
               placeholder="Access, parking, isolation requirements..."
               rows={2}
-              className="w-full px-3 py-2.5 rounded-xl text-base text-white bg-white/[0.06] border border-white/[0.08] focus:border-elec-yellow focus:ring-1 focus:ring-elec-yellow/20 outline-none touch-manipulation placeholder:text-white resize-none"
+              className="w-full px-3.5 py-3 rounded-xl text-base text-white bg-white/[0.05] border border-white/[0.10] focus:border-elec-yellow focus:ring-2 focus:ring-elec-yellow/15 outline-none touch-manipulation placeholder:text-white/40 resize-none transition-colors"
             />
           </div>
         </div>

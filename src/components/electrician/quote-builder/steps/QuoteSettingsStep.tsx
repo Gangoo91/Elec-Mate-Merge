@@ -44,7 +44,39 @@ interface QuoteSettingsStepProps {
 }
 
 const inputClass =
-  'h-11 px-3 rounded-xl text-base text-white bg-white/[0.06] border border-white/[0.08] focus:border-elec-yellow focus:ring-1 focus:ring-elec-yellow/20 outline-none touch-manipulation placeholder:text-white';
+  'h-11 px-3 rounded-xl text-base text-white bg-white/[0.06] border border-white/[0.08] focus:border-elec-yellow focus:ring-1 focus:ring-elec-yellow/20 outline-none touch-manipulation placeholder:text-white/40';
+
+/** Group eyebrow — matches the quotes pages */
+const GroupHeader = ({ n, title, sub }: { n: string; title: string; sub?: string }) => (
+  <div className="mb-1">
+    <div className="flex items-baseline gap-2">
+      <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-elec-yellow/80 tabular-nums">{n}</span>
+      <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/80">· {title}</span>
+    </div>
+    {sub && <p className="text-[11px] text-white/50 mt-1">{sub}</p>}
+  </div>
+);
+
+/** Toggle row — label + description + switch */
+const ToggleRow = ({
+  label,
+  description,
+  children,
+  last,
+}: {
+  label: string;
+  description: string;
+  children: React.ReactNode;
+  last?: boolean;
+}) => (
+  <div className={cn('flex items-center justify-between py-3.5', !last && 'border-b border-white/[0.08]')}>
+    <div className="pr-3">
+      <p className="text-[14px] font-medium text-white">{label}</p>
+      <p className="text-[12px] text-white/60 mt-0.5">{description}</p>
+    </div>
+    {children}
+  </div>
+);
 
 export const QuoteSettingsStep = ({ settings, items, onUpdate }: QuoteSettingsStepProps) => {
   const form = useForm<QuoteSettings>({
@@ -79,102 +111,93 @@ export const QuoteSettingsStep = ({ settings, items, onUpdate }: QuoteSettingsSt
   // Live CIS preview — quotes don't apply O&P (see useQuoteBuilder), so match that.
   const cisPreview = useMemo(
     () =>
-      computeQuoteTotals((items || []) as QuoteItem[], { ...(settings as any), cisEnabled: isCisEnabled, cisRate: watchedCisRate }, { applyOverheadAndProfit: false }),
+      computeQuoteTotals(
+        (items || []) as QuoteItem[],
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        { ...(settings as any), cisEnabled: isCisEnabled, cisRate: watchedCisRate },
+        { applyOverheadAndProfit: false }
+      ),
     [items, settings, isCisEnabled, watchedCisRate]
+  );
+
+  const switchField = (name: keyof QuoteSettings, opts?: { onChange?: (checked: boolean) => void; defaultOn?: boolean }) => (
+    <FormField
+      control={form.control}
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      name={name as any}
+      render={({ field }) => (
+        <FormItem className="p-0 m-0 space-y-0">
+          <FormControl>
+            <Switch
+              checked={opts?.defaultOn ? field.value !== false : field.value === true}
+              onCheckedChange={(checked) => {
+                field.onChange(checked);
+                opts?.onChange?.(checked);
+              }}
+              className="data-[state=checked]:bg-elec-yellow data-[state=checked]:border-elec-yellow"
+            />
+          </FormControl>
+        </FormItem>
+      )}
+    />
   );
 
   return (
     <Form {...form}>
-      <div className="space-y-6 text-left">
-        {/* VAT — section divider pattern matches InvoiceSettingsStep */}
-        <div className="h-[2px] w-full rounded-full bg-gradient-to-r from-elec-yellow/30 to-elec-yellow/5" />
+      <div className="space-y-8 text-left">
+        {/* ============ 01 · TAX ============ */}
         <div>
-          <div className="flex items-center justify-between py-3 border-b border-white/[0.12]">
-            <div>
-              <p className="text-[14px] font-medium text-white">VAT Registered</p>
-              <p className="text-[12px] text-white mt-0.5">Add VAT to this quote</p>
+          <GroupHeader n="01" title="Tax" sub="VAT, reverse charge and CIS" />
+
+          <ToggleRow label="VAT registered" description="Add VAT to this quote">
+            {switchField('vatRegistered', {
+              onChange: (checked) => {
+                if (!checked) form.setValue('reverseCharge', false);
+              },
+            })}
+          </ToggleRow>
+
+          {isVatRegistered && (
+            <div className="py-3 border-b border-white/[0.08]">
+              <FormField
+                control={form.control}
+                name="vatRate"
+                render={({ field }) => (
+                  <FormItem>
+                    <label className="text-xs font-medium text-white mb-1.5 block">VAT rate (%)</label>
+                    <FormControl>
+                      <Input
+                        type="number"
+                        inputMode="decimal"
+                        step="0.1"
+                        placeholder="20"
+                        className={cn(inputClass, 'max-w-[120px]')}
+                        value={field.value}
+                        onChange={(e) => field.onChange(e.target.value === '' ? '' : parseFloat(e.target.value) || '')}
+                      />
+                    </FormControl>
+                    <FormMessage className="text-[12px] text-red-400" />
+                  </FormItem>
+                )}
+              />
             </div>
-            <FormField
-              control={form.control}
-              name="vatRegistered"
-              render={({ field }) => (
-                <FormItem className="p-0 m-0 space-y-0">
-                  <FormControl>
-                    <Switch
-                      checked={field.value}
-                      onCheckedChange={field.onChange}
-                      className="data-[state=checked]:bg-elec-yellow data-[state=checked]:border-elec-yellow"
-                    />
-                  </FormControl>
-                </FormItem>
-              )}
-            />
-          </div>
-        </div>
+          )}
 
-        {isVatRegistered && (
-          <FormField
-            control={form.control}
-            name="vatRate"
-            render={({ field }) => (
-              <FormItem>
-                <label className="text-xs font-medium text-white mb-1.5 block">VAT Rate (%)</label>
-                <FormControl>
-                  <Input
-                    type="number"
-                    inputMode="decimal"
-                    step="0.1"
-                    placeholder="20"
-                    className={cn(inputClass, 'max-w-[120px]')}
-                    value={field.value}
-                    onChange={(e) => field.onChange(e.target.value === '' ? '' : parseFloat(e.target.value) || '')}
-                  />
-                </FormControl>
-                <FormMessage className="text-[12px] text-red-400" />
-              </FormItem>
-            )}
-          />
-        )}
-
-        {/* Construction — CIS + VAT reverse charge (matches InvoiceSettingsStep) */}
-        <div className="h-[2px] w-full rounded-full bg-gradient-to-r from-elec-yellow/30 to-elec-yellow/5" />
-        <div>
-          <p className="text-[11px] text-white/60 uppercase tracking-wider mb-1">Construction (CIS &amp; VAT)</p>
-
-          {/* VAT reverse charge */}
-          <div className="flex items-center justify-between py-3 border-b border-white/[0.12]">
-            <div className="pr-3">
-              <p className="text-[14px] font-medium text-white">VAT reverse charge</p>
-              <p className="text-[12px] text-white/70 mt-0.5">CIS supplies — charge £0 VAT; customer accounts to HMRC</p>
-            </div>
-            <FormField
-              control={form.control}
-              name="reverseCharge"
-              render={({ field }) => (
-                <FormItem className="p-0 m-0 space-y-0">
-                  <FormControl>
-                    <Switch
-                      checked={field.value || false}
-                      onCheckedChange={field.onChange}
-                      className="data-[state=checked]:bg-elec-yellow data-[state=checked]:border-elec-yellow"
-                    />
-                  </FormControl>
-                </FormItem>
-              )}
-            />
-          </div>
+          <ToggleRow
+            label="VAT reverse charge"
+            description="CIS supplies — charge £0 VAT; customer accounts to HMRC"
+          >
+            {switchField('reverseCharge')}
+          </ToggleRow>
           {isReverseCharge && (
-            <p className="text-[11px] text-white/60 mt-2 leading-relaxed">
-              Invoice shows £0 VAT with the statement <span className="text-white/80">&ldquo;Reverse charge: customer to account to HMRC for the VAT&rdquo;</span> — the notional VAT is shown for their records.
+            <p className="text-[11px] text-white/60 py-2 leading-relaxed border-b border-white/[0.08]">
+              Invoice shows £0 VAT with the statement{' '}
+              <span className="text-white/80">&ldquo;Reverse charge: customer to account to HMRC for the VAT&rdquo;</span>{' '}
+              — the notional VAT is shown for their records.
             </p>
           )}
 
-          {/* CIS deduction */}
-          <div className="flex items-center justify-between py-3 border-b border-white/[0.12] mt-1">
-            <div className="pr-3">
-              <p className="text-[14px] font-medium text-white">CIS deduction</p>
-              <p className="text-[12px] text-white/70 mt-0.5">Deducted from labour only (ex-VAT)</p>
-            </div>
+          <ToggleRow label="CIS deduction" description="Deducted from labour only (ex-VAT)" last={!isCisEnabled}>
             <FormField
               control={form.control}
               name="cisEnabled"
@@ -193,7 +216,7 @@ export const QuoteSettingsStep = ({ settings, items, onUpdate }: QuoteSettingsSt
                 </FormItem>
               )}
             />
-          </div>
+          </ToggleRow>
           {isCisEnabled && (
             <div className="pt-3">
               <label className="text-xs font-medium text-white mb-1.5 block">CIS rate</label>
@@ -214,7 +237,9 @@ export const QuoteSettingsStep = ({ settings, items, onUpdate }: QuoteSettingsSt
                   </button>
                 ))}
               </div>
-              <p className="text-[11px] text-white/55 mt-2">Calculated on the Labour element only — categorise chargeable labour as Labour.</p>
+              <p className="text-[11px] text-white/55 mt-2">
+                Calculated on the Labour element only — categorise chargeable labour as Labour.
+              </p>
 
               {/* Live preview + guard — makes a silent £0 deduction impossible. */}
               {cisPreview.labourNet > 0 ? (
@@ -243,219 +268,134 @@ export const QuoteSettingsStep = ({ settings, items, onUpdate }: QuoteSettingsSt
           )}
         </div>
 
-        {/* Materials breakdown — section divider matches Invoice pattern */}
-        <div className="h-[2px] w-full rounded-full bg-gradient-to-r from-elec-yellow/30 to-elec-yellow/5" />
+        {/* ============ 02 · PRICING ============ */}
         <div>
-          <div className="flex items-center justify-between py-3 border-b border-white/[0.12]">
-            <div>
-              <p className="text-[14px] font-medium text-white">Show Materials Breakdown</p>
-              <p className="text-[12px] text-white mt-0.5">Display each material as a line item on PDF</p>
-            </div>
-            <FormField
-              control={form.control}
-              name="showMaterialsBreakdown"
-              render={({ field }) => (
-                <FormItem className="p-0 m-0 space-y-0">
-                  <FormControl>
-                    <Switch
-                      checked={field.value !== false}
-                      onCheckedChange={field.onChange}
-                      className="data-[state=checked]:bg-elec-yellow data-[state=checked]:border-elec-yellow"
-                    />
-                  </FormControl>
-                </FormItem>
-              )}
-            />
-          </div>
-        </div>
+          <GroupHeader n="02" title="Pricing" sub="Adjustments and discounts" />
 
-        {/* ELE-975 — Customer signature box on PDF */}
-        <div>
-          <div className="flex items-center justify-between py-3 border-b border-white/[0.12]">
-            <div>
-              <p className="text-[14px] font-medium text-white">Customer Signature Box</p>
-              <p className="text-[12px] text-white mt-0.5">
-                Add a signed-by / date area at the bottom of the PDF
-              </p>
-            </div>
-            <FormField
-              control={form.control}
-              name="showSignatureBox"
-              render={({ field }) => (
-                <FormItem className="p-0 m-0 space-y-0">
-                  <FormControl>
-                    <Switch
-                      checked={field.value === true}
-                      onCheckedChange={field.onChange}
-                      className="data-[state=checked]:bg-elec-yellow data-[state=checked]:border-elec-yellow"
-                    />
-                  </FormControl>
-                </FormItem>
-              )}
-            />
-          </div>
-        </div>
-
-        {/* Deductions — section divider matches Invoice pattern */}
-        <div className="h-[2px] w-full rounded-full bg-gradient-to-r from-elec-yellow/30 to-elec-yellow/5" />
-        <div>
-          <div className="flex items-center justify-between py-3 border-b border-white/[0.12]">
-            <div>
-              <p className="text-[14px] font-medium text-white">Apply Discount</p>
-              <p className="text-[12px] text-white mt-0.5">Goodwill, retention, early-payment, etc.</p>
-            </div>
-            <FormField
-              control={form.control}
-              name="discountEnabled"
-              render={({ field }) => (
-                <FormItem className="p-0 m-0 space-y-0">
-                  <FormControl>
-                    <Switch
-                      checked={field.value || false}
-                      onCheckedChange={field.onChange}
-                      className="data-[state=checked]:bg-elec-yellow data-[state=checked]:border-elec-yellow"
-                    />
-                  </FormControl>
-                </FormItem>
-              )}
-            />
-          </div>
-        </div>
-
-        {isDiscountEnabled && (
-          <div className="space-y-4">
-            {/* Type */}
-            <div className="flex gap-1.5">
-              {(['percentage', 'fixed'] as const).map((type) => (
-                <button
-                  key={type}
-                  type="button"
-                  onClick={() => form.setValue('discountType', type)}
-                  className={cn(
-                    'flex-1 h-11 rounded-xl text-[13px] font-medium transition-all touch-manipulation active:scale-[0.98]',
-                    discountType === type
-                      ? 'bg-elec-yellow text-black font-semibold'
-                      : 'bg-white/[0.04] text-white border border-white/[0.08]'
-                  )}
-                >
-                  {type === 'percentage' ? 'Percentage' : 'Fixed Amount'}
-                </button>
-              ))}
-            </div>
-
-            {/* Value + Label */}
-            <div className="grid grid-cols-2 gap-3">
-              <FormField
-                control={form.control}
-                name="discountValue"
-                render={({ field }) => (
-                  <FormItem>
-                    <label className="text-xs font-medium text-white mb-1.5 block">
-                      {discountType === 'percentage' ? 'Percentage (%)' : 'Amount (£)'}
-                    </label>
-                    <FormControl>
-                      <Input
-                        type="number"
-                        inputMode="decimal"
-                        placeholder={discountType === 'percentage' ? '20' : '50.00'}
-                        className={inputClass}
-                        value={field.value || ''}
-                        onChange={(e) => field.onChange(e.target.value === '' ? 0 : parseFloat(e.target.value) || 0)}
-                      />
-                    </FormControl>
-                  </FormItem>
-                )}
-              />
-              <FormField
-                control={form.control}
-                name="discountLabel"
-                render={({ field }) => (
-                  <FormItem>
-                    <label className="text-xs font-medium text-white mb-1.5 block">Label (optional)</label>
-                    <FormControl>
-                      <Input placeholder="e.g. Retention" className={inputClass} {...field} />
-                    </FormControl>
-                  </FormItem>
-                )}
-              />
-            </div>
-          </div>
-        )}
-
-        {/* ELE-891 — per-category adjustments */}
-        <div className="h-[2px] w-full rounded-full bg-gradient-to-r from-elec-yellow/30 to-elec-yellow/5" />
-        <div>
-          <div className="py-3 border-b border-white/[0.12]">
+          <div className="py-3.5 border-b border-white/[0.08]">
             <p className="text-[14px] font-medium text-white">Per-category adjustment</p>
-            <p className="text-[12px] text-white/70 mt-0.5">
+            <p className="text-[12px] text-white/60 mt-0.5">
               Signed %. Negative = discount, positive = markup. Applied before global discount.
             </p>
-          </div>
-          <div className="mt-4 grid grid-cols-1 sm:grid-cols-3 gap-3">
-            {(['labour', 'materials', 'equipment'] as const).map((cat) => (
-              <FormField
-                key={cat}
-                control={form.control}
-                name={`categoryAdjustments.${cat}` as const}
-                render={({ field }) => (
-                  <FormItem>
-                    <label className="text-xs font-medium text-white mb-1.5 block capitalize">
-                      {cat}
-                    </label>
-                    <FormControl>
-                      <div className="relative">
-                        <Input
-                          type="number"
-                          step="0.1"
-                          placeholder="0"
-                          className={cn(inputClass, 'pr-8')}
-                          value={field.value ?? ''}
-                          onChange={(e) => {
-                            const v = e.target.value;
-                            field.onChange(v === '' ? undefined : parseFloat(v));
-                          }}
-                        />
-                        <span className="absolute right-3 top-1/2 -translate-y-1/2 text-white/50 text-sm pointer-events-none">
-                          %
-                        </span>
-                      </div>
-                    </FormControl>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-            ))}
+            <div className="mt-3 grid grid-cols-3 gap-2">
+              {(['labour', 'materials', 'equipment'] as const).map((cat) => (
+                <FormField
+                  key={cat}
+                  control={form.control}
+                  name={`categoryAdjustments.${cat}` as const}
+                  render={({ field }) => (
+                    <FormItem>
+                      <label className="text-xs font-medium text-white mb-1.5 block capitalize">{cat}</label>
+                      <FormControl>
+                        <div className="relative">
+                          <Input
+                            type="number"
+                            step="0.1"
+                            placeholder="0"
+                            className={cn(inputClass, 'pr-8')}
+                            value={field.value ?? ''}
+                            onChange={(e) => {
+                              const v = e.target.value;
+                              field.onChange(v === '' ? undefined : parseFloat(v));
+                            }}
+                          />
+                          <span className="absolute right-3 top-1/2 -translate-y-1/2 text-white/50 text-sm pointer-events-none">
+                            %
+                          </span>
+                        </div>
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+              ))}
+            </div>
           </div>
 
-          {/* Customer-facing presentation toggle — bake markup into line
-              totals so the customer doesn't see a "+X% markup" row. The
-              app's own quote view (QuoteDetailView) still shows the
-              breakdown so you can see your margin. */}
-          <div className="mt-5 flex items-center justify-between py-3 border-t border-white/[0.08]">
-            <div className="pr-3">
-              <p className="text-[14px] font-medium text-white">Hide markup from customer</p>
-              <p className="text-[12px] text-white/70 mt-0.5">
-                Bake the per-category markup into the displayed line prices on the customer's
-                quote and PDF. They see one price per line, no separate markup row. You still
-                see the breakdown in the app.
-              </p>
+          <ToggleRow label="Apply discount" description="Goodwill, retention, early-payment, etc." last={!isDiscountEnabled}>
+            {switchField('discountEnabled')}
+          </ToggleRow>
+
+          {isDiscountEnabled && (
+            <div className="space-y-4 pt-3">
+              {/* Type */}
+              <div className="flex gap-1.5">
+                {(['percentage', 'fixed'] as const).map((type) => (
+                  <button
+                    key={type}
+                    type="button"
+                    onClick={() => form.setValue('discountType', type)}
+                    className={cn(
+                      'flex-1 h-11 rounded-xl text-[13px] font-medium transition-all touch-manipulation active:scale-[0.98]',
+                      discountType === type
+                        ? 'bg-elec-yellow text-black font-semibold'
+                        : 'bg-white/[0.04] text-white border border-white/[0.08]'
+                    )}
+                  >
+                    {type === 'percentage' ? 'Percentage' : 'Fixed Amount'}
+                  </button>
+                ))}
+              </div>
+
+              {/* Value + Label */}
+              <div className="grid grid-cols-2 gap-3">
+                <FormField
+                  control={form.control}
+                  name="discountValue"
+                  render={({ field }) => (
+                    <FormItem>
+                      <label className="text-xs font-medium text-white mb-1.5 block">
+                        {discountType === 'percentage' ? 'Percentage (%)' : 'Amount (£)'}
+                      </label>
+                      <FormControl>
+                        <Input
+                          type="number"
+                          inputMode="decimal"
+                          placeholder={discountType === 'percentage' ? '20' : '50.00'}
+                          className={inputClass}
+                          value={field.value || ''}
+                          onChange={(e) => field.onChange(e.target.value === '' ? 0 : parseFloat(e.target.value) || 0)}
+                        />
+                      </FormControl>
+                    </FormItem>
+                  )}
+                />
+                <FormField
+                  control={form.control}
+                  name="discountLabel"
+                  render={({ field }) => (
+                    <FormItem>
+                      <label className="text-xs font-medium text-white mb-1.5 block">Label (optional)</label>
+                      <FormControl>
+                        <Input placeholder="e.g. Retention" className={inputClass} {...field} />
+                      </FormControl>
+                    </FormItem>
+                  )}
+                />
+              </div>
             </div>
-            <FormField
-              control={form.control}
-              name="hideMarkupFromCustomer"
-              render={({ field }) => (
-                <FormItem className="p-0 m-0 space-y-0">
-                  <FormControl>
-                    <Switch
-                      checked={field.value === true}
-                      onCheckedChange={field.onChange}
-                      className="data-[state=checked]:bg-elec-yellow data-[state=checked]:border-elec-yellow"
-                    />
-                  </FormControl>
-                </FormItem>
-              )}
-            />
-          </div>
+          )}
+        </div>
+
+        {/* ============ 03 · PRESENTATION ============ */}
+        <div>
+          <GroupHeader n="03" title="Presentation" sub="What the client sees on the quote and PDF" />
+
+          <ToggleRow label="Materials breakdown" description="Show each material as a line item on the PDF">
+            {switchField('showMaterialsBreakdown', { defaultOn: true })}
+          </ToggleRow>
+
+          <ToggleRow label="Customer signature box" description="Signed-by / date area at the bottom of the PDF">
+            {switchField('showSignatureBox')}
+          </ToggleRow>
+
+          <ToggleRow
+            label="Hide markup from customer"
+            description="Bake category markup into line prices — one price per line, no markup row. You still see the breakdown."
+            last
+          >
+            {switchField('hideMarkupFromCustomer')}
+          </ToggleRow>
         </div>
       </div>
     </Form>

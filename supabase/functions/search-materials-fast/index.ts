@@ -2,6 +2,7 @@ import { serve, createClient, corsHeaders } from '../_shared/deps.ts';
 import { ValidationError, handleError } from '../_shared/errors.ts';
 import { createLogger, generateRequestId } from '../_shared/logger.ts';
 import { captureException } from '../_shared/sentry.ts';
+import { searchMaterials } from '../_shared/marketplace-pricing.ts';
 
 serve(async (req) => {
   if (req.method === 'OPTIONS') {
@@ -41,26 +42,60 @@ serve(async (req) => {
     const supabaseKey = Deno.env.get('SUPABASE_SERVICE_ROLE_KEY')!;
     const supabase = createClient(supabaseUrl, supabaseKey);
 
-    // Call the fuzzy search RPC function
-    const { data: results, error: searchError } = await logger.time(
-      'PostgreSQL fuzzy search',
+    // ── Live pipeline + trade catalogue, in parallel.
+    // Live prices go through the SAME tuned matcher as the AI cost engineer
+    // (cost_engineer_match_product RPC via _shared/marketplace-pricing):
+    // relevance-ranked, junk-name exclusion, cable boosts, category-aware
+    // with broad fallback — so wizard prices always agree with AI prices.
+    const liveCategory = categoryFilter && categoryFilter !== 'all' ? categoryFilter : null;
+    const [liveHits, catalogueResult] = await logger.time(
+      'live pipeline + catalogue search (parallel)',
       async () =>
-        await supabase.rpc('search_materials_fuzzy', {
-          search_query: query.trim(),
-          category_filter: categoryFilter && categoryFilter !== 'all' ? categoryFilter : null,
-          supplier_filter: supplierFilter && supplierFilter !== 'all' ? supplierFilter : null,
-          similarity_threshold: similarityThreshold,
-          result_limit: limit,
-        })
+        await Promise.all([
+          searchMaterials(supabase, {
+            query: query.trim(),
+            category: liveCategory,
+            limit: Math.min(16, limit),
+          }).catch((err) => {
+            logger.error('Live marketplace search failed', { error: err });
+            return [];
+          }),
+          supabase.rpc('search_materials_fuzzy', {
+            search_query: query.trim(),
+            category_filter: liveCategory,
+            supplier_filter: supplierFilter && supplierFilter !== 'all' ? supplierFilter : null,
+            similarity_threshold: similarityThreshold,
+            result_limit: limit,
+          }),
+        ])
     );
 
+    const liveMaterials = (liveHits || []).map((hit: any) => ({
+      id: hit.id,
+      name: hit.name,
+      category: hit.category || 'Materials',
+      price: `£${(hit.unitPrice || 0).toFixed(2)}`,
+      supplier: hit.supplier || hit.brand || 'Supplier',
+      image: hit.imageUrl || '/placeholder.svg',
+      stockStatus: hit.stockStatus || 'Unknown',
+      productUrl: hit.productUrl,
+      scrapedAt: hit.scrapedAt,
+      isOnSale: !!hit.isOnSale,
+      discountPercentage: hit.discountPercentage ? Number(hit.discountPercentage) : 0,
+      regularPrice: hit.regularPrice ? Number(hit.regularPrice) : null,
+      highlights: [],
+      similarity: 1,
+      isFuzzyMatch: false,
+      source: 'live',
+    }));
+
+    const { data: results, error: searchError } = catalogueResult;
     if (searchError) {
       logger.error('Fuzzy search failed', { error: searchError });
       throw new Error(`Database search failed: ${searchError.message}`);
     }
 
-    // Transform results to match expected format
-    const materials = (results || []).map((item: any) => ({
+    const catalogueMaterials = (results || []).map((item: any) => ({
       id: item.id,
       name: item.item_name,
       category: item.category || 'Materials',
@@ -72,7 +107,11 @@ serve(async (req) => {
       highlights: [],
       similarity: item.similarity_score,
       isFuzzyMatch: item.similarity_score < 0.8,
+      source: 'catalogue',
     }));
+
+    // Live pipeline prices lead; catalogue backfills.
+    const materials = [...liveMaterials, ...catalogueMaterials];
 
     // Get suggestions if no results found
     let suggestions: string[] = [];
@@ -103,7 +142,7 @@ serve(async (req) => {
         materials,
         query,
         resultsCount: materials.length,
-        searchMethod: 'fuzzy_trigram',
+        searchMethod: 'live_pipeline+fuzzy_trigram',
         suggestions,
         filters: {
           category: categoryFilter,

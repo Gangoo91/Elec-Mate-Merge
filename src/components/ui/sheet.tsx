@@ -73,7 +73,7 @@ const sheetVariants = cva(
           // pb is composed to MAX(default 1.5rem, env(safe-area-inset-bottom))
           // so bottom sheets always clear the Android 10+ gesture-nav pill
           // (~24px) without losing visual padding on devices without one.
-          'inset-x-0 bottom-0 border-t pb-[max(1.5rem,env(safe-area-inset-bottom))] data-[state=closed]:slide-out-to-bottom data-[state=open]:slide-in-from-bottom lg:left-64 lg:rounded-t-2xl',
+          'inset-x-0 bottom-0 border-t pb-[max(1.5rem,env(safe-area-inset-bottom))] data-[state=closed]:slide-out-to-bottom data-[state=open]:slide-in-from-bottom lg:left-[var(--sidebar-width,0px)] lg:rounded-t-2xl',
         left: 'inset-y-0 left-0 h-full w-3/4 border-r data-[state=closed]:slide-out-to-left data-[state=open]:slide-in-from-left sm:max-w-sm',
         right:
           'inset-y-0 right-0 h-full w-3/4  border-l data-[state=closed]:slide-out-to-right data-[state=open]:slide-in-from-right sm:max-w-sm',
