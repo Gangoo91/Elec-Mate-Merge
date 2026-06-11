@@ -1,0 +1,6 @@
+-- Public (token-keyed) access for employer quotes & invoices — definer RPCs
+-- get_employer_quote_by_token / decide_employer_quote (flips quote status +
+-- rings the employer bell) / get_employer_invoice_by_token (stamps viewed_at,
+-- returns company branding + bank details). Serves /employer-quote/:token and
+-- /employer-invoice/:token. No anon table policies anywhere. Full bodies in
+-- DB migration employer_public_doc_rpcs. Verified anon round-trip 6/6.

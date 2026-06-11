@@ -36,6 +36,8 @@ const MentalHealthHub = lazy(() => import('@/pages/MentalHealthHub'));
 const RightsAndPay = lazy(() => import('@/pages/apprentice/RightsAndPay'));
 const NotificationsPage = lazy(() => import('@/pages/NotificationsPage'));
 const PublicQuote = lazy(() => import('@/pages/PublicQuote'));
+const PublicEmployerQuote = lazy(() => import('@/pages/PublicEmployerQuote'));
+const PublicEmployerInvoice = lazy(() => import('@/pages/PublicEmployerInvoice'));
 const PublicSignature = lazy(() => import('@/pages/PublicSignature'));
 const BriefingSignOff = lazy(() => import('@/pages/BriefingSignOff'));
 const PublicBriefingSign = lazy(() => import('@/pages/PublicBriefingSign'));
@@ -475,6 +477,22 @@ const AppRouter = () => {
           element={
             <LazyRoute>
               <PublicQuote />
+            </LazyRoute>
+          }
+        />
+        <Route
+          path="/employer-quote/:token"
+          element={
+            <LazyRoute>
+              <PublicEmployerQuote />
+            </LazyRoute>
+          }
+        />
+        <Route
+          path="/employer-invoice/:token"
+          element={
+            <LazyRoute>
+              <PublicEmployerInvoice />
             </LazyRoute>
           }
         />

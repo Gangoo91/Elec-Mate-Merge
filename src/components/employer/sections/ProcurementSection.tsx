@@ -199,7 +199,7 @@ export function ProcurementSection() {
           stats={[
             { label: 'Open orders', value: stats.openOrders, tone: 'cyan' },
             { label: 'Arriving today', value: stats.arrivingToday, tone: 'blue' },
-            { label: 'Low stock', value: stats.lowStock, tone: 'orange' },
+            { label: 'PAT due', value: stats.lowStock, tone: 'orange' },
             { label: 'Spend 30d £', value: stats.spend30.toLocaleString(), accent: true },
           ]}
         />

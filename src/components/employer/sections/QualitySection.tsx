@@ -15,7 +15,6 @@ import { supabase } from '@/integrations/supabase/client';
 import { useToast } from '@/hooks/use-toast';
 import {
   useJobIssuesByType,
-  useJobIssueStats,
   useCreateJobIssue,
   useUpdateJobIssueStatus,
   type JobIssue,
@@ -120,9 +119,7 @@ export const QualitySection = () => {
     [snagIssues, searchQuery]
   );
 
-  const openSnags = filteredSnags.filter(
-    (s) => s.status === 'Open' || s.status === 'In Progress'
-  );
+  const openSnags = filteredSnags.filter((s) => s.status === 'Open' || s.status === 'open');
   const reviewSnags = filteredSnags.filter((s) => s.status === 'In Progress');
   const resolvedSnags = filteredSnags.filter(
     (s) => s.status === 'Resolved' || s.status === 'Closed'

@@ -129,6 +129,11 @@ function isThisMonth(iso: string | null | undefined) {
   return d.getFullYear() === now.getFullYear() && d.getMonth() === now.getMonth();
 }
 
+// Nothing ever writes status='Overdue' — derive it from due_date
+const isOverdueInvoice = (inv: { status?: string | null; due_date?: string | null }) =>
+  inv.status === 'Overdue' ||
+  (inv.status !== 'Paid' && !!inv.due_date && inv.due_date < new Date().toISOString().slice(0, 10));
+
 export function QuotesInvoicesSection() {
   const [showCreateQuote, setShowCreateQuote] = useState(false);
   const [showCreateInvoice, setShowCreateInvoice] = useState(false);
@@ -182,7 +187,7 @@ export function QuotesInvoicesSection() {
   );
 
   const overdueCount = useMemo(
-    () => invoices.filter((inv) => inv.status === 'Overdue').length,
+    () => invoices.filter(isOverdueInvoice).length,
     [invoices]
   );
 
@@ -224,7 +229,7 @@ export function QuotesInvoicesSection() {
     return combined.filter((row) => {
       if (activeTab === 'quotes' && row.kind !== 'quote') return false;
       if (activeTab === 'invoices' && row.kind !== 'invoice') return false;
-      if (activeTab === 'overdue' && row.status !== 'Overdue') return false;
+      if (activeTab === 'overdue' && !isOverdueInvoice(row)) return false;
       if (!needle) return true;
       return (
         row.client.toLowerCase().includes(needle) ||

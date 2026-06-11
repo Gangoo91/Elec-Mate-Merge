@@ -469,13 +469,16 @@ export function useUploadTenderDocument() {
 
       if (uploadError) throw uploadError;
 
-      // Get public URL
-      const { data: urlData } = supabase.storage.from('tender-documents').getPublicUrl(storagePath);
+      // The bucket is PRIVATE — store the storage path and sign on read
+      // (a public URL on a private bucket 400s forever)
+      const { data: signedData } = await supabase.storage
+        .from('tender-documents')
+        .createSignedUrl(storagePath, 60 * 60 * 24 * 365);
 
       const newDoc: TenderDocument = {
         id: `doc-${timestamp}`,
         name: file.name,
-        url: urlData.publicUrl,
+        url: signedData?.signedUrl || storagePath,
         size: file.size,
         uploaded_at: new Date().toISOString(),
       };

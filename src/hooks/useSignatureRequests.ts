@@ -168,13 +168,14 @@ export function useCreateSignatureRequest() {
 
       // If email provided, send signing request email
       if (input.signer_email && data) {
-        try {
-          await supabase.functions.invoke('send-signature-request', {
-            body: { signatureRequestId: data.id },
-          });
-        } catch (emailError) {
-          console.warn('Could not send signature request email:', emailError);
-          // Don't fail the overall operation
+        const { error: emailError } = await supabase.functions.invoke('send-signature-request', {
+          body: { signatureRequestId: data.id },
+        });
+        if (emailError) {
+          // The request row exists, the email did not go — say so
+          throw new Error(
+            'Request created, but the email failed to send — use Copy link and send it yourself.'
+          );
         }
       }
 
@@ -263,14 +264,14 @@ export function useResendSignatureRequest() {
 
       if (error) throw error;
 
-      // Send signing request email
+      // Send signing request email — invoke() reports failure via the
+      // return value, not by throwing
       if (data?.signer_email) {
-        try {
-          await supabase.functions.invoke('send-signature-request', {
-            body: { signatureRequestId: data.id },
-          });
-        } catch (emailError) {
-          console.warn('Could not send signature request email:', emailError);
+        const { error: emailError } = await supabase.functions.invoke('send-signature-request', {
+          body: { signatureRequestId: data.id },
+        });
+        if (emailError) {
+          throw new Error('Resend failed — use Copy link and send it yourself.');
         }
       }
 

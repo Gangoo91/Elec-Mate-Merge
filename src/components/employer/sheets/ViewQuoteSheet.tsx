@@ -608,28 +608,33 @@ export function ViewQuoteSheet({
               </SecondaryButton>
               <SecondaryButton
                 disabled={isGeneratingPdf}
-                onClick={async () => {
-                  setIsGeneratingPdf(true);
-                  try {
-                    const { data, error } = await supabase.functions.invoke(
-                      'generate-quote-pdf',
-                      {
-                        body: { quoteId: quote.id },
-                      }
-                    );
-                    if (error) throw error;
-
-                    const viewWindow = window.open('', '_blank');
-                    if (viewWindow) {
-                      viewWindow.document.write(data.html);
-                      viewWindow.document.close();
-                      viewWindow.focus();
-                    }
-                    toast.success('Quote opened - use the button to print/save as PDF');
-                  } catch (err: any) {
-                    toast.error(err.message || 'Failed to generate quote');
-                  } finally {
-                    setIsGeneratingPdf(false);
+                onClick={() => {
+                  // Render the printable quote locally — the deployed
+                  // generate-quote-pdf is the electrician template renderer
+                  // and knows nothing about employer quotes
+                  const items = Array.isArray(quote.line_items) ? quote.line_items : [];
+                  const money = (v: number) => `£${Number(v || 0).toFixed(2)}`;
+                  const rows = items
+                    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+                    .map(
+                      (i: { description?: string; quantity?: number; total?: number }) =>
+                        `<tr><td>${i.description || ''}</td><td>${i.quantity ?? 1}</td><td style="text-align:right">${money(i.total || 0)}</td></tr>`
+                    )
+                    .join('');
+                  const html = `<!DOCTYPE html><html><head><meta charset="UTF-8"><title>Quote ${quote.quote_number}</title>
+<style>body{font-family:-apple-system,'Segoe UI',Roboto,sans-serif;color:#0f172a;max-width:760px;margin:0 auto;padding:40px}h1{font-size:22px}table{width:100%;border-collapse:collapse;margin:20px 0}th,td{text-align:left;padding:10px 0;border-bottom:1px solid #e2e8f0;font-size:14px}th{font-size:11px;text-transform:uppercase;color:#64748b}.total{font-size:24px;font-weight:700;text-align:right;margin-top:16px}.actions{position:fixed;bottom:24px;right:24px}.actions button{padding:12px 24px;font-weight:600;border-radius:10px;border:none;cursor:pointer;background:#f59e0b}@media print{.actions{display:none}}</style></head>
+<body><h1>Quote ${quote.quote_number}</h1><p>${quote.client}${quote.description ? ` — ${quote.description}` : ''}</p>
+${rows ? `<table><thead><tr><th>Description</th><th>Qty</th><th style="text-align:right">Amount</th></tr></thead><tbody>${rows}</tbody></table>` : ''}
+<p class="total">Total: ${money(Number(quote.value))}</p>
+<div class="actions"><button onclick="window.print()">Print / Save as PDF</button></div></body></html>`;
+                  const viewWindow = window.open('', '_blank');
+                  if (viewWindow) {
+                    viewWindow.document.write(html);
+                    viewWindow.document.close();
+                    viewWindow.focus();
+                    toast.success('Quote opened — use the button to print or save as PDF');
+                  } else {
+                    toast.error('Pop-up blocked — allow pop-ups to view the quote');
                   }
                 }}
                 fullWidth

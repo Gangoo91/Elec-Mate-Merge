@@ -93,10 +93,6 @@ export function PriceBookSection() {
   const items = searchResults?.pages.flatMap((p) => p.items) || [];
   const totalFound = searchResults?.pages[0]?.total || 0;
 
-  const lastUpdatedDays = useMemo(() => {
-    return stats?.lowStock != null ? '0' : '—';
-  }, [stats]);
-
   const refresh = () => {
     refetchStats();
     refetchSearch();
@@ -207,8 +203,7 @@ export function PriceBookSection() {
           {
             label: 'Stock value',
             value: stats ? `£${stats.stockValue.toLocaleString()}` : '£0',
-            sub: `Updated ${lastUpdatedDays} days ago`,
-          },
+                      },
         ]}
       />
 

@@ -185,17 +185,17 @@ export function JobFinancialsSection() {
         columns={4}
         stats={[
           {
-            label: 'Revenue 30d £',
+            label: 'Budgeted £',
             value: formatK(stats.totalBudget),
             tone: 'emerald',
           },
           {
-            label: 'Cost 30d £',
+            label: 'Spent £',
             value: formatK(stats.totalActual),
             tone: 'amber',
           },
           {
-            label: 'Profit £',
+            label: 'Forecast margin £',
             value: formatK(profit),
             accent: true,
           },
@@ -292,7 +292,7 @@ export function JobFinancialsSection() {
                       tone: 'amber',
                     },
                     {
-                      label: 'Profit £',
+                      label: 'Forecast margin £',
                       value: formatK(
                         Number(openDetail.budget_total) - Number(openDetail.actual_total)
                       ),
@@ -486,9 +486,6 @@ export function JobFinancialsSection() {
                 </SecondaryButton>
                 <SecondaryButton onClick={() => setShowAddVariation(openDetail.job_id)}>
                   Add variation
-                </SecondaryButton>
-                <SecondaryButton>
-                  Generate invoice
                 </SecondaryButton>
               </div>
             </div>

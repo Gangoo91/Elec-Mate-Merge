@@ -259,7 +259,6 @@ export function SignaturesSection() {
             { label: 'Awaiting', value: isLoading ? '—' : counts.awaiting, tone: 'orange' },
             { label: 'Signed 30d', value: isLoading ? '—' : signed30d, tone: 'emerald' },
             { label: 'Declined', value: isLoading ? '—' : counts.declined, tone: 'red' },
-            { label: 'Signed value £', value: isLoading ? '—' : '—', accent: true },
           ]}
         />
 
@@ -602,10 +601,18 @@ className={inputClass}
                     </PrimaryButton>
                   </>
                 )}
-                {detailRequest.status === 'Signed' && (
-                  <PrimaryButton>
+                {detailRequest.status === 'Signed' && detailRequest.signature_url && (
+                  <PrimaryButton
+                    onClick={() => {
+                      // signature_url is a data URL (or legacy public URL)
+                      const a = document.createElement('a');
+                      a.href = detailRequest.signature_url!;
+                      a.download = `signature-${detailRequest.document_name || detailRequest.id}.png`;
+                      a.click();
+                    }}
+                  >
                     <Download className="h-4 w-4 mr-2" />
-                    Download
+                    Download signature
                   </PrimaryButton>
                 )}
                 <DestructiveButton

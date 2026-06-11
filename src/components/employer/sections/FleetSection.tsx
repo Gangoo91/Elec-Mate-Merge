@@ -1,3 +1,4 @@
+import { toast } from 'sonner';
 import { useState, useCallback, useMemo } from 'react';
 import { PullToRefresh } from '@/components/ui/pull-to-refresh';
 import { useIsMobile } from '@/hooks/use-mobile';
@@ -165,7 +166,6 @@ export function FleetSection() {
       });
   }, [vehicles, filter, searchQuery]);
 
-  const checksToday = 0;
   const servicesDue = useMemo(() => {
     if (!vehicles) return 0;
     const cutoff = new Date(Date.now() + 30 * 86400000).toISOString().split('T')[0];
@@ -216,8 +216,16 @@ export function FleetSection() {
   };
 
   const handleDelete = async (id: string) => {
-    await deleteVehicle.mutateAsync(id);
-    setShowDetail(false);
+    // Confirm — and surface the FK failure honestly when fuel logs exist
+    if (!window.confirm('Remove this vehicle? Fuel logs attached to it must be removed first.')) {
+      return;
+    }
+    try {
+      await deleteVehicle.mutateAsync(id);
+      setShowDetail(false);
+    } catch {
+      toast.error('Could not remove — delete its fuel logs first.');
+    }
   };
 
   const handleEditVehicle = (vehicle: Vehicle) => {
@@ -281,8 +289,7 @@ export function FleetSection() {
             tone: 'orange',
           },
           { label: 'Services due', value: isLoading ? '—' : servicesDue, tone: 'amber' },
-          { label: 'Checks today', value: isLoading ? '—' : checksToday, tone: 'emerald' },
-        ]}
+                  ]}
       />
 
       <FilterBar

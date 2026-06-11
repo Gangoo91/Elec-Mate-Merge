@@ -275,7 +275,7 @@ export async function sendInvoice(id: string): Promise<{ portalUrl: string; acce
 
   // Generate the invoice link
   const { data, error } = await supabase.functions.invoke('generate-invoice-link', {
-    body: { invoiceId: id },
+    body: { invoiceId: id, baseUrl: window.location.origin },
   });
 
   if (error) throw error;

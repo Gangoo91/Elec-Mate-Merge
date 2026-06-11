@@ -108,36 +108,52 @@ export function AIBriefingPackSection({ onNavigate }: AIBriefingPackSectionProps
     setResult(null);
 
     try {
+      // The deployed fn requires briefingContext.briefingTitle (the old
+      // payload 400'd every time); photos were shipped but never read — gone
       const { data, error: invokeError } = await supabase.functions.invoke(
         'generate-briefing-content',
         {
           body: {
-            jobPackId: selectedJobPackId,
-            projectInfo: {
-              projectName: selectedJobPack?.title,
-              location: selectedJobPack?.location,
-              scope: selectedJobPack?.scope,
+            briefingType: 'site-work',
+            briefingContext: {
+              briefingTitle: selectedJobPack?.title || 'Site briefing',
+              briefingContent: [selectedJobPack?.scope, additionalNotes]
+                .filter(Boolean)
+                .join('\n\n'),
+              location: selectedJobPack?.location || '',
             },
-            additionalNotes,
-            photos: photos.map((p) => ({ name: p.name, dataUrl: p.dataUrl })),
+            hazards: {
+              identified: selectedJobPack?.hazards || [],
+            },
           },
         }
       );
 
-      if (invokeError) throw invokeError;
+      if (invokeError || data?.error) throw new Error(data?.error || invokeError?.message);
 
       setResult(data);
       setIsGenerating(false);
 
       toast({
         title: 'Briefing pack generated',
-        description: 'Worker briefing has been created successfully.',
+        description: 'Saved to the job pack — workers see it when you send for sign-off.',
       });
 
       if (selectedJobPackId) {
+        // THE connection: the generated briefing lands on the pack itself,
+        // which is exactly what workers read (and sign) in SignOffsSheet
+        const generatedText =
+          typeof data?.content === 'string'
+            ? data.content
+            : typeof data?.briefingContent === 'string'
+              ? data.briefingContent
+              : JSON.stringify(data, null, 2);
         updateJobPack.mutate({
           id: selectedJobPackId,
-          updates: { briefing_pack_generated: true },
+          updates: {
+            briefing_pack_generated: true,
+            briefing_content: generatedText,
+          },
         });
       }
     } catch (err: any) {

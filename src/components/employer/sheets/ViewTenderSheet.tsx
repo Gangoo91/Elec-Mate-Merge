@@ -10,7 +10,7 @@ import {
   DialogTitle,
   DialogFooter,
 } from '@/components/ui/dialog';
-import {
+import { Sparkles,
   FileText,
   Send,
   Trash2,
@@ -70,6 +70,7 @@ interface ViewTenderSheetProps {
   onOpenChange: (open: boolean) => void;
   tender: Tender | null;
   onConvertToJob?: (tender: Tender) => void;
+  onAIEstimate?: (tender: Tender) => void;
 }
 
 interface TenderDocument {
@@ -85,6 +86,7 @@ export function ViewTenderSheet({
   onOpenChange,
   tender,
   onConvertToJob,
+  onAIEstimate,
 }: ViewTenderSheetProps) {
   const updateTenderMutation = useUpdateTender();
   const updateStatusMutation = useUpdateTenderStatus();
@@ -237,6 +239,18 @@ export function ViewTenderSheet({
             footer={
               tender.status === 'Open' ? (
                 <>
+                  {onAIEstimate && (
+                    <SecondaryButton
+                      onClick={() => {
+                        onAIEstimate(tender);
+                        onOpenChange(false);
+                      }}
+                      fullWidth
+                    >
+                      <Sparkles className="h-4 w-4 mr-2" />
+                      AI estimate
+                    </SecondaryButton>
+                  )}
                   <SecondaryButton onClick={handleWithdraw} fullWidth>
                     Withdraw
                   </SecondaryButton>

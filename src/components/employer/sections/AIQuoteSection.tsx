@@ -146,6 +146,11 @@ export function AIQuoteSection({ onNavigate }: AIQuoteSectionProps) {
       if (invokeError) {
         throw invokeError;
       }
+      // generate-quote-pdf is a TEMPLATE RENDERER — success:false with
+      // useFallback means nothing was generated. Don't celebrate it.
+      if (data && data.success === false) {
+        throw new Error(data.message || 'No quote template configured for your account yet.');
+      }
 
       setProgress(100);
       setResult(data);
@@ -164,7 +169,7 @@ export function AIQuoteSection({ onNavigate }: AIQuoteSectionProps) {
 
       toast({
         title: 'Quote generated',
-        description: 'Your professional quote draft is ready.',
+        description: 'Your quote draft is ready.',
       });
     } catch (err: any) {
       clearInterval(progressInterval);
@@ -215,7 +220,7 @@ export function AIQuoteSection({ onNavigate }: AIQuoteSectionProps) {
       <PageHero
         eyebrow="Smart Docs"
         title="AI Quote Generator"
-        description="Photograph a job, get a priced quote draft back."
+        description="Draft a quote from your line items — AI pricing is coming."
         tone="yellow"
         actions={
           <IconButton onClick={handleRefresh} aria-label="Reset form">
@@ -268,18 +273,6 @@ className={inputClass}
 className={inputClass}
               />
             </div>
-          </div>
-
-          <div className="space-y-2">
-            <label className="text-[10px] uppercase tracking-[0.18em] font-medium text-white">
-              Photograph the job
-            </label>
-            <label className="flex flex-col items-center justify-center gap-2 rounded-2xl border border-dashed border-white/[0.12] bg-[hsl(0_0%_10%)] px-6 py-10 cursor-pointer hover:border-elec-yellow/40 hover:bg-[hsl(0_0%_14%)] transition-colors touch-manipulation">
-              <span className="text-2xl text-white">+</span>
-              <span className="text-[13px] font-medium text-white">Upload or drop photos</span>
-              <span className="text-[11px] text-white">PNG, JPG up to 10MB</span>
-              <input type="file" accept="image/*" multiple className="hidden" disabled={isGenerating} />
-            </label>
           </div>
 
           <div className="space-y-2">

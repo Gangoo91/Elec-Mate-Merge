@@ -318,8 +318,7 @@ export function TenderSection() {
         <StatStrip
           columns={4}
           stats={[
-            { label: 'Matching', value: stats.open, tone: 'purple' },
-            { label: 'Shortlisted', value: stats.open, tone: 'yellow' },
+            { label: 'Open', value: stats.open, tone: 'purple' },
             { label: 'Bidding', value: stats.submitted, tone: 'blue' },
             {
               label: 'Won this year £',
@@ -331,8 +330,7 @@ export function TenderSection() {
 
         <FilterBar
           tabs={[
-            { value: 'matching', label: 'Matching', count: tabCounts.matching },
-            { value: 'shortlisted', label: 'Shortlisted', count: tabCounts.shortlisted },
+            { value: 'matching', label: 'Open', count: tabCounts.matching },
             { value: 'bidding', label: 'Bidding', count: tabCounts.bidding },
             { value: 'closed', label: 'Closed', count: tabCounts.closed },
           ]}
@@ -465,6 +463,7 @@ export function TenderSection() {
         onOpenChange={setShowViewSheet}
         tender={selectedTender}
         onConvertToJob={handleConvertToJob}
+        onAIEstimate={handleOpenEstimator}
       />
 
       <ConvertTenderToJobDialog

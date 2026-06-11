@@ -166,10 +166,6 @@ export function AIDesignSpecSection({ onNavigate }: AIDesignSpecSectionProps) {
     URL.revokeObjectURL(url);
   };
 
-  const generated30d = '12';
-  const hoursSaved = '34';
-  const templateCount = '6';
-
   const history: Array<{
     id: string;
     title: string;
@@ -203,15 +199,6 @@ export function AIDesignSpecSection({ onNavigate }: AIDesignSpecSectionProps) {
           </>
         }
         meta={<Pill tone="purple">AI</Pill>}
-      />
-
-      <StatStrip
-        columns={3}
-        stats={[
-          { label: 'Generated 30d', value: generated30d, tone: 'indigo' },
-          { label: 'Hours saved', value: hoursSaved, tone: 'emerald', accent: true },
-          { label: 'Templates', value: templateCount, tone: 'blue' },
-        ]}
       />
 
       <FilterBar

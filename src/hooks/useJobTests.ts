@@ -242,14 +242,11 @@ export function useJobTestStats() {
         fail: data.filter((t) => t.result === 'Fail').length,
         na: data.filter((t) => t.result === 'N/A').length,
         uniqueJobs: new Set(data.map((t) => t.job_id)).size,
-        passRate:
-          data.length > 0
-            ? Math.round(
-                (data.filter((t) => t.result === 'Pass').length /
-                  data.filter((t) => t.result !== 'Pending' && t.result !== 'N/A').length) *
-                  100
-              )
-            : 0,
+        passRate: (() => {
+          const concluded = data.filter((t) => t.result !== 'Pending' && t.result !== 'N/A').length;
+          if (concluded === 0) return 0; // no NaN when everything is pending
+          return Math.round((data.filter((t) => t.result === 'Pass').length / concluded) * 100);
+        })(),
       };
 
       return stats;
