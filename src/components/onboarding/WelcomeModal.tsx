@@ -1,12 +1,7 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { storageSetSync } from '@/utils/storage';
-import {
-  Dialog,
-  DialogContent,
-  DialogDescription,
-  DialogTitle,
-} from '@/components/ui/dialog';
+import { Dialog, DialogContent, DialogDescription, DialogTitle } from '@/components/ui/dialog';
 import { VisuallyHidden } from '@radix-ui/react-visually-hidden';
 import { Button } from '@/components/ui/button';
 import { useAuth } from '@/contexts/AuthContext';
@@ -40,8 +35,8 @@ const roleContent = {
     bgColor: 'bg-blue-500/20',
     borderColor: 'border-blue-500/30',
     features: [
-      { icon: BookOpen, text: '2,000+ Practice Questions', desc: 'Master your theory exams' },
-      { icon: Calculator, text: '50+ Calculators', desc: 'Cable sizing, Zs, voltage drop & more' },
+      { icon: BookOpen, text: '6,000+ Practice Questions', desc: 'Master your theory exams' },
+      { icon: Calculator, text: '60+ Calculators', desc: 'Cable sizing, Zs, voltage drop & more' },
       { icon: FileCheck, text: 'AM2 Preparation', desc: 'Mock tests and practical guides' },
       { icon: Clock, text: 'OJT Tracking', desc: 'Log your on-the-job training hours' },
     ],
@@ -56,7 +51,11 @@ const roleContent = {
     bgColor: 'bg-elec-yellow/20',
     borderColor: 'border-elec-yellow/30',
     features: [
-      { icon: Bot, text: '8 AI Specialist Agents', desc: 'BS7671, solar, EV charging & more' },
+      {
+        icon: Bot,
+        text: '5 AI Specialist Agents',
+        desc: 'Cost, design, installs, maintenance & H&S',
+      },
       { icon: FileCheck, text: 'Inspection Suite', desc: 'EICR, EIC, Minor Works certificates' },
       { icon: Calculator, text: 'Pro Calculators', desc: 'All calculations at your fingertips' },
       { icon: Sparkles, text: 'RAMS Generator', desc: 'AI-powered risk assessments' },
@@ -191,7 +190,7 @@ const WelcomeModal = ({ isOpen, onClose }: WelcomeModalProps) => {
         <div className="px-6 md:px-8 py-3 md:py-4 bg-green-500/10 border-t border-b border-green-500/20">
           <div className="flex items-center justify-center gap-2 text-sm md:text-base text-green-400">
             <Sparkles className="h-4 w-4 md:h-5 md:w-5" />
-            <span>7-day free trial active - No credit card required</span>
+            <span>7-day free trial active — no charge until day 8</span>
           </div>
         </div>
 

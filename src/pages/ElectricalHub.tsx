@@ -20,7 +20,11 @@ import { motion } from 'framer-motion';
 import { ArrowRight } from 'lucide-react';
 import useSEO from '@/hooks/useSEO';
 import { cn } from '@/lib/utils';
-import { useDashboardData, DashboardDataProvider, useSharedDashboardData } from '@/hooks/useDashboardData';
+import {
+  useDashboardData,
+  DashboardDataProvider,
+  useSharedDashboardData,
+} from '@/hooks/useDashboardData';
 import { useAuth } from '@/contexts/AuthContext';
 import { Eyebrow, containerVariants, itemVariants } from '@/components/college/primitives';
 import { HeadlineStats } from '@/components/dashboard/editorial/HeadlineStats';
@@ -168,9 +172,7 @@ const EditorialToolGrid = ({
   if (cards.length === 0) return null;
 
   const colClass =
-    columns === 'two'
-      ? 'grid-cols-1 sm:grid-cols-2'
-      : 'grid-cols-1 sm:grid-cols-2 lg:grid-cols-3';
+    columns === 'two' ? 'grid-cols-1 sm:grid-cols-2' : 'grid-cols-1 sm:grid-cols-2 lg:grid-cols-3';
 
   return (
     <motion.section
@@ -297,12 +299,23 @@ const ElectricalHubInner = () => {
       if (!user) return null;
       const { data: row } = await supabase
         .from('profiles')
-        .select(
-          'onboarding_completed, subscribed, free_access_granted, role, apprentice_course'
-        )
+        .select('onboarding_completed, subscribed, free_access_granted, role, apprentice_course')
         .eq('id', user.id)
         .single();
-      return { profile: row, email: user.email };
+      // Wizard gate is data-based: has this user ever saved company details?
+      // (profiles.onboarding_completed can't be used — the dashboard
+      // WelcomeModal sets it on dismiss, which used to suppress this wizard
+      // for everyone.)
+      const { data: companyRow } = await supabase
+        .from('company_profiles')
+        .select('id, company_name')
+        .eq('user_id', user.id)
+        .maybeSingle();
+      return {
+        profile: row,
+        email: user.email,
+        hasCompanyProfile: Boolean(companyRow?.company_name),
+      };
     },
   });
 
@@ -327,12 +340,13 @@ const ElectricalHubInner = () => {
     if (isApprentice) {
       if (onboardingProfile.apprentice_course) return;
     } else {
-      // Business roles: keep the existing gate — only fire after they're
-      // on trial / subscribed, so we're not asking for VAT/banking from a
-      // window-shopper.
-      if (onboardingProfile.onboarding_completed) return;
-      const hasAccess =
-        onboardingProfile.subscribed || onboardingProfile.free_access_granted;
+      // Business roles: fire only after they're on trial / subscribed (no
+      // VAT/banking questions for window-shoppers), and only while they have
+      // no saved company details. Gating on data instead of
+      // onboarding_completed — the WelcomeModal sets that flag on dismiss,
+      // which used to permanently suppress this wizard.
+      if (profileData?.hasCompanyProfile) return;
+      const hasAccess = onboardingProfile.subscribed || onboardingProfile.free_access_granted;
       if (!hasAccess) return;
     }
 
@@ -341,7 +355,7 @@ const ElectricalHubInner = () => {
       setShowSetupWizard(true);
       sessionStorage.setItem('setup_wizard_shown', 'true');
     }
-  }, [onboardingProfile]);
+  }, [onboardingProfile, profileData?.hasCompanyProfile]);
 
   // Renewables is in private preview — only visible to Andrew Moore and Alex Gibbons.
   const RENEWABLES_ALLOWLIST = [
@@ -464,12 +478,7 @@ const ElectricalHubInner = () => {
 
         <EditorialToolGrid number="02" label="CORE TOOLS" cards={coreTools} />
 
-        <EditorialToolGrid
-          number="03"
-          label="IDENTITY"
-          cards={identityTools}
-          columns="two"
-        />
+        <EditorialToolGrid number="03" label="IDENTITY" cards={identityTools} columns="two" />
 
         <EditorialToolGrid number="04" label="STAY CURRENT" cards={moreTools} columns="two" />
 

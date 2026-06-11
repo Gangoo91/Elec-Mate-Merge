@@ -149,6 +149,44 @@ serve(async (req) => {
       logger.info('New customer created', { customerId });
     }
 
+    // Guard against double-checkout: if this customer already has a live
+    // subscription for the SAME product (e.g. payment just succeeded but the
+    // webhook hasn't updated profiles.subscribed yet, and they retried from
+    // the paywall), a second session risks a double-charge. Same-product
+    // only — buying Mate (business-ai) on top of an Electrician sub is a
+    // legitimate second subscription and must pass through.
+    const [existingSubs, requestedPrice] = await Promise.all([
+      withTimeout(
+        withRetry(
+          () => stripe.subscriptions.list({ customer: customerId, status: 'all', limit: 10 }),
+          RetryPresets.FAST
+        ),
+        Timeouts.STANDARD,
+        'Stripe subscription lookup'
+      ),
+      withTimeout(
+        withRetry(() => stripe.prices.retrieve(priceId), RetryPresets.FAST),
+        Timeouts.STANDARD,
+        'Stripe price lookup'
+      ),
+    ]);
+    const liveSameProductSub = existingSubs.data.find(
+      (s) =>
+        (s.status === 'active' || s.status === 'trialing') &&
+        s.items.data.some((it) => it.price.product === requestedPrice.product)
+    );
+    if (liveSameProductSub) {
+      logger.info('Customer already has a live subscription for this product — skipping checkout', {
+        customerId,
+        subscriptionId: liveSameProductSub.id,
+        status: liveSameProductSub.status,
+      });
+      return new Response(JSON.stringify({ already_subscribed: true }), {
+        headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+        status: 200,
+      });
+    }
+
     // Store stripe_customer_id in profile for reliable webhook linking
     try {
       const supabaseServiceKey = Deno.env.get('SUPABASE_SERVICE_ROLE_KEY');

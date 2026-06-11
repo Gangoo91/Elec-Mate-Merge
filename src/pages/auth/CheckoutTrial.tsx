@@ -149,6 +149,12 @@ const CheckoutTrial = () => {
 
       if (fnError) throw new Error(fnError.message);
 
+      // Payment already went through (webhook still syncing) — go straight in
+      if (data?.already_subscribed) {
+        navigate('/dashboard');
+        return;
+      }
+
       if (data?.url) {
         if (offerCode) storageRemoveSync('elec-mate-offer-code');
         if (referralCode) storageRemoveSync('elec-mate-referral-code');

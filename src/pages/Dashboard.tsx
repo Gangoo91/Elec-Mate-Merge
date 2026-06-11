@@ -68,7 +68,10 @@ const Dashboard = () => {
       ? { cta: 'Open Study Centre', href: '/study-centre/apprentice' }
       : profile?.role === 'employer'
         ? { cta: 'Open Employer Hub', href: '/employer' }
-        : { cta: 'Open Certificates', href: '/electrician/inspection-testing' };
+        : // Electrical Hub, not certificates directly — the hub runs the
+          // company-details SetupWizard on first visit, so quotes/invoices/
+          // certs are pre-filled before they make their first one.
+          { cta: 'Open Electrical Hub', href: '/electrician' };
 
   const dismissFirstStop = () => {
     storageSetSync(FIRST_STOP_DISMISSED_KEY, '1');

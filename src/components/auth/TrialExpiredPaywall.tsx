@@ -89,6 +89,11 @@ const TrialExpiredPaywall = () => {
       });
 
       if (fnErr) throw new Error(fnErr.message);
+      // Payment already went through (webhook still syncing) — go straight in
+      if (data?.already_subscribed) {
+        window.location.assign('/dashboard');
+        return;
+      }
       if (!data?.url) throw new Error('No checkout URL returned');
 
       const checkoutValue = priceInfo.planId.startsWith('apprentice') ? 5.99 : 12.99;

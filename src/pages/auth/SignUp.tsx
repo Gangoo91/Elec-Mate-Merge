@@ -238,6 +238,9 @@ const ReferralCodeField = ({ onApply }: { onApply: (code: string) => void }) => 
 
 const SignUp = () => {
   const [step, setStep] = useState<OnboardingStep>('account');
+  // Set when signup fails because the email already has a real account —
+  // renders a direct "Sign in instead" escape next to the error
+  const [existingAccount, setExistingAccount] = useState(false);
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
@@ -386,6 +389,14 @@ const SignUp = () => {
             "This password cannot be used — please choose a different one that you haven't used on other sites."
           );
           setStep('account');
+        } else if (
+          lowerMsg.includes('already registered') ||
+          lowerMsg.includes('already been registered')
+        ) {
+          // Real existing account (zombie cleanup already tried) — give them
+          // a direct way out instead of a dead-end error after 3 steps
+          setError('Looks like you already have an account with this email.');
+          setExistingAccount(true);
         } else {
           setError(error.message);
         }
@@ -581,6 +592,7 @@ const SignUp = () => {
 
   const goBack = () => {
     setError(null);
+    setExistingAccount(false);
     if (step === 'profile') setStep('account');
     else if (step === 'consent') setStep('profile');
   };
@@ -949,7 +961,7 @@ const SignUp = () => {
                               <div className="flex items-center gap-2">
                                 <Gift className="h-4 w-4 text-yellow-400 flex-shrink-0" />
                                 <span className="text-[13px] font-semibold text-white">
-                                  Free for 7 days · No card required
+                                  7 days free · no charge until day 8 · cancel anytime
                                 </span>
                               </div>
                               <div className="grid grid-cols-2 gap-2">
@@ -1024,7 +1036,8 @@ const SignUp = () => {
                         One last <span className="text-yellow-400">thing.</span>
                       </h1>
                       <p className="text-[15px] leading-[1.7] text-white">
-                        Confirm the essentials, then we'll take you to checkout.
+                        Confirm the essentials, then add a card to start your free week — you won't
+                        be charged until day 8, and you can cancel any time before that.
                       </p>
                     </div>
 
@@ -1036,9 +1049,17 @@ const SignUp = () => {
                           exit={{ opacity: 0, height: 0 }}
                           className="mb-4 overflow-hidden"
                         >
-                          <p className="rounded-2xl border border-red-500/25 bg-red-500/[0.08] px-4 py-3 text-[13px] text-red-400">
-                            {error}
-                          </p>
+                          <div className="rounded-2xl border border-red-500/25 bg-red-500/[0.08] px-4 py-3">
+                            <p className="text-[13px] text-red-400">{error}</p>
+                            {existingAccount && (
+                              <Link
+                                to={`/auth/signin?email=${encodeURIComponent(email)}`}
+                                className="mt-2 inline-block text-[13px] font-semibold text-elec-yellow"
+                              >
+                                Sign in instead →
+                              </Link>
+                            )}
+                          </div>
                         </motion.div>
                       )}
                     </AnimatePresence>

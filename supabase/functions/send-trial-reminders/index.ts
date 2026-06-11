@@ -1,9 +1,17 @@
 /**
  * Send Trial Reminder Emails
- * Runs daily via pg_cron to send:
- * - 24 hour welcome email (launch price)
- * - Day 5 reminder (2 days left)
- * - Day 7 trial ended email
+ * Runs daily via pg_cron to send, to REAL trialists (card on file,
+ * profiles.subscribed=true, trial_end set by the Stripe webhook):
+ * - 24 hour activation email ("ship your first cert")
+ *
+ * The end-of-trial conversion warning was removed 2026-06-11 (Andrew's
+ * call) — trial terms are stated clearly at signup and checkout.
+ *
+ * RETARGETED 2026-06-11. The previous version selected subscribed=false
+ * users — checkout ABANDONERS, who are covered by auto-reengage-trial's
+ * 3-touch sequence — and told them their "trial" was ending when they'd
+ * never started one. Meanwhile actual trialists got no warning before the
+ * day-8 charge. (The cron had also been silently 401ing since 14 Apr.)
  */
 
 import { serve } from 'https://deno.land/std@0.168.0/http/server.ts';
@@ -48,7 +56,8 @@ interface EmailTemplate {
 function getWelcome24hEmail(firstName: string): EmailTemplate {
   // NB: ampersands are escaped (&amp;) when inlined into href attributes
   // below — raw & between query params makes Gmail strip the link.
-  const ctaUrl = 'https://www.elec-mate.com/electrician/inspection-testing?utm_source=email&utm_medium=lifecycle&utm_campaign=day1_activation';
+  const ctaUrl =
+    'https://www.elec-mate.com/electrician/inspection-testing?utm_source=email&utm_medium=lifecycle&utm_campaign=day1_activation';
   const ctaHref = ctaUrl.replace(/&/g, '&amp;');
   const safeName = firstName?.trim() || 'mate';
 
@@ -67,10 +76,10 @@ function getWelcome24hEmail(firstName: string): EmailTemplate {
       '',
       "If something's confusing or broken, just hit reply on this email. It goes straight to me. I read every one and usually reply the same day.",
       '',
-      "Andrew",
-      "Founder, Elec-Mate",
+      'Andrew',
+      'Founder, Elec-Mate',
       '',
-      "P.S. Most sparks who do their first cert in the first 48 hours stick around. The trick is getting that first one shipped before the trial ends — the rest takes care of itself.",
+      'P.S. Most sparks who do their first cert in the first 48 hours stick around. The trick is getting that first one shipped before the trial ends — the rest takes care of itself.',
     ].join('\n'),
     html: `
 <!DOCTYPE html>
@@ -166,177 +175,6 @@ function getWelcome24hEmail(firstName: string): EmailTemplate {
   };
 }
 
-function getDay5ReminderEmail(firstName: string): EmailTemplate {
-  return {
-    subject: '⏰ Your Elec-Mate trial ends in 2 days',
-    html: `
-<!DOCTYPE html>
-<html>
-<head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-</head>
-<body style="margin: 0; padding: 0; background-color: #0a0a0a; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;">
-  <table role="presentation" width="100%" cellspacing="0" cellpadding="0" style="background-color: #0a0a0a;">
-    <tr>
-      <td align="center" style="padding: 40px 20px;">
-        <table role="presentation" width="100%" cellspacing="0" cellpadding="0" style="max-width: 600px; background: linear-gradient(135deg, #1a1a1a 0%, #0d0d0d 100%); border-radius: 16px; overflow: hidden; border: 1px solid #333;">
-
-          <!-- Header -->
-          <tr>
-            <td style="padding: 32px 24px; text-align: center; border-bottom: 1px solid #333;">
-              <h1 style="margin: 0; font-size: 28px; font-weight: 700; color: #facc15;">⚡ Elec-Mate</h1>
-            </td>
-          </tr>
-
-          <!-- Urgency Banner -->
-          <tr>
-            <td style="padding: 16px 24px; background: linear-gradient(135deg, #f97316 0%, #ea580c 100%); text-align: center;">
-              <p style="margin: 0; font-size: 16px; font-weight: 600; color: #ffffff;">⏰ Only 2 Days Left!</p>
-            </td>
-          </tr>
-
-          <!-- Content -->
-          <tr>
-            <td style="padding: 32px 24px;">
-              <h2 style="margin: 0 0 16px; font-size: 24px; font-weight: 600; color: #ffffff;">Hey ${firstName},</h2>
-
-              <p style="margin: 0 0 20px; font-size: 16px; line-height: 1.6; color: #a1a1aa;">
-                Your free trial ends in <strong style="color: #f97316;">2 days</strong>. After that, you'll lose access to:
-              </p>
-
-              <table role="presentation" width="100%" cellspacing="0" cellpadding="0" style="margin-bottom: 24px;">
-                <tr>
-                  <td style="padding: 12px 16px; background: rgba(249, 115, 22, 0.1); border-radius: 8px; border-left: 3px solid #f97316;">
-                    <p style="margin: 0; font-size: 14px; color: #ffffff;">
-                      🔒 All your saved certificates & reports<br>
-                      🔒 AI tools & calculators<br>
-                      🔒 Quote & invoice templates<br>
-                      🔒 Study materials & training
-                    </p>
-                  </td>
-                </tr>
-              </table>
-
-              <p style="margin: 0 0 24px; font-size: 16px; line-height: 1.6; color: #a1a1aa;">
-                Don't let your work disappear. Subscribe now and keep everything.
-              </p>
-
-              <div style="padding: 20px; background: linear-gradient(135deg, #facc15 0%, #f59e0b 100%); border-radius: 12px; text-align: center; margin-bottom: 24px;">
-                <p style="margin: 0 0 8px; font-size: 14px; font-weight: 600; color: #000000;">Launch Price</p>
-                <p style="margin: 0; font-size: 32px; font-weight: 700; color: #000000;">£6.99<span style="font-size: 16px; font-weight: 400;">/month</span></p>
-              </div>
-
-              <table role="presentation" width="100%" cellspacing="0" cellpadding="0">
-                <tr>
-                  <td align="center">
-                    <a href="https://elec-mate.com/subscriptions" style="display: inline-block; padding: 16px 32px; background: linear-gradient(135deg, #f97316 0%, #ea580c 100%); color: #ffffff; text-decoration: none; font-weight: 600; font-size: 16px; border-radius: 10px;">
-                      Upgrade Now - Keep Access
-                    </a>
-                  </td>
-                </tr>
-              </table>
-            </td>
-          </tr>
-
-          <!-- Footer -->
-          <tr>
-            <td style="padding: 24px; border-top: 1px solid #333; text-align: center;">
-              <p style="margin: 0; font-size: 13px; color: #71717a;">
-                Cancel anytime. 30-day money back guarantee.<br>
-                <a href="https://elec-mate.com" style="color: #facc15; text-decoration: none;">elec-mate.com</a>
-              </p>
-            </td>
-          </tr>
-
-        </table>
-      </td>
-    </tr>
-  </table>
-</body>
-</html>
-    `,
-  };
-}
-
-function getTrialEndedEmail(firstName: string): EmailTemplate {
-  return {
-    subject: 'Your Elec-Mate trial has ended',
-    html: `
-<!DOCTYPE html>
-<html>
-<head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-</head>
-<body style="margin: 0; padding: 0; background-color: #0a0a0a; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;">
-  <table role="presentation" width="100%" cellspacing="0" cellpadding="0" style="background-color: #0a0a0a;">
-    <tr>
-      <td align="center" style="padding: 40px 20px;">
-        <table role="presentation" width="100%" cellspacing="0" cellpadding="0" style="max-width: 600px; background: linear-gradient(135deg, #1a1a1a 0%, #0d0d0d 100%); border-radius: 16px; overflow: hidden; border: 1px solid #333;">
-
-          <!-- Header -->
-          <tr>
-            <td style="padding: 32px 24px; text-align: center; border-bottom: 1px solid #333;">
-              <h1 style="margin: 0; font-size: 28px; font-weight: 700; color: #facc15;">⚡ Elec-Mate</h1>
-            </td>
-          </tr>
-
-          <!-- Content -->
-          <tr>
-            <td style="padding: 32px 24px;">
-              <h2 style="margin: 0 0 16px; font-size: 24px; font-weight: 600; color: #ffffff;">Your trial has ended, ${firstName}</h2>
-
-              <p style="margin: 0 0 20px; font-size: 16px; line-height: 1.6; color: #a1a1aa;">
-                Your 7-day free trial is now over. Your account is currently locked, but all your data is safe and waiting for you.
-              </p>
-
-              <p style="margin: 0 0 24px; font-size: 16px; line-height: 1.6; color: #a1a1aa;">
-                Subscribe today to instantly restore access to everything you created during your trial.
-              </p>
-
-              <div style="padding: 20px; background: linear-gradient(135deg, #facc15 0%, #f59e0b 100%); border-radius: 12px; text-align: center; margin-bottom: 24px;">
-                <p style="margin: 0 0 8px; font-size: 14px; font-weight: 600; color: #000000;">Reactivate Your Account</p>
-                <p style="margin: 0; font-size: 32px; font-weight: 700; color: #000000;">£6.99<span style="font-size: 16px; font-weight: 400;">/month</span></p>
-                <p style="margin: 8px 0 0; font-size: 13px; color: #000000;">Cancel anytime</p>
-              </div>
-
-              <table role="presentation" width="100%" cellspacing="0" cellpadding="0">
-                <tr>
-                  <td align="center">
-                    <a href="https://elec-mate.com/subscriptions" style="display: inline-block; padding: 16px 32px; background: linear-gradient(135deg, #facc15 0%, #f59e0b 100%); color: #000000; text-decoration: none; font-weight: 600; font-size: 16px; border-radius: 10px;">
-                      Reactivate My Account
-                    </a>
-                  </td>
-                </tr>
-              </table>
-
-              <p style="margin: 24px 0 0; font-size: 14px; color: #71717a; text-align: center;">
-                Need help? Just reply to this email and we'll sort you out.
-              </p>
-            </td>
-          </tr>
-
-          <!-- Footer -->
-          <tr>
-            <td style="padding: 24px; border-top: 1px solid #333; text-align: center;">
-              <p style="margin: 0; font-size: 13px; color: #71717a;">
-                We'd hate to see you go. Let us know if there's anything we can do.<br>
-                <a href="https://elec-mate.com" style="color: #facc15; text-decoration: none;">elec-mate.com</a>
-              </p>
-            </td>
-          </tr>
-
-        </table>
-      </td>
-    </tr>
-  </table>
-</body>
-</html>
-    `,
-  };
-}
-
 async function sendEmail(to: string, template: EmailTemplate): Promise<boolean> {
   // Brevo via _shared/mailer.ts shim. Resend was banned at domain level —
   // Brevo is the sole supported provider. Per-template from/replyTo still
@@ -371,133 +209,66 @@ serve(async (req) => {
     const now = new Date();
     const stats = {
       welcome24h: { found: 0, sent: 0 },
-      day5Reminder: { found: 0, sent: 0 },
-      trialEnded: { found: 0, sent: 0 },
     };
 
-    // Helper to get unsubscribed users with emails within a date range
-    async function getUnsubscribedUsersWithEmails(startDate: Date, endDate: Date) {
-      const { data: profiles } = await supabase
-        .from('profiles')
-        .select('id, full_name, created_at, subscribed')
-        .gte('created_at', startDate.toISOString())
-        .lte('created_at', endDate.toISOString())
-        .eq('subscribed', false);
-
-      if (!profiles || profiles.length === 0) return [];
-
-      // Get emails from auth.users for each profile
-      const usersWithEmails = [];
+    // Resolve auth emails for a list of profiles (profiles has no email column)
+    async function withEmails(
+      profiles: {
+        id: string;
+        full_name: string | null;
+        trial_end: string | null;
+        subscription_tier: string | null;
+        subscription_source: string | null;
+      }[]
+    ) {
+      const out = [];
       for (const profile of profiles) {
         try {
           const { data: authUser } = await supabase.auth.admin.getUserById(profile.id);
-          if (authUser?.user?.email) {
-            usersWithEmails.push({
-              ...profile,
-              email: authUser.user.email,
-            });
-          }
+          if (authUser?.user?.email) out.push({ ...profile, email: authUser.user.email });
         } catch (e) {
           console.error(`Failed to get email for user ${profile.id}:`, e);
         }
       }
-      return usersWithEmails;
+      return out;
     }
 
-    // 1. Find users who signed up ~24 hours ago (18-30 hours window for daily job)
-    // This gives us a 12-hour buffer on each side to ensure no one is missed
+    async function alreadySent(userId: string, emailType: string): Promise<boolean> {
+      const { data } = await supabase
+        .from('trial_emails_sent')
+        .select('id')
+        .eq('user_id', userId)
+        .eq('email_type', emailType)
+        .maybeSingle();
+      return Boolean(data);
+    }
+
+    const PROFILE_COLS = 'id, full_name, trial_end, subscription_tier, subscription_source';
+
+    // 1. Activation email — REAL trialists (card on file) who signed up
+    //    ~24h ago (18-30h window gives 12h of slack for a daily job).
     const welcome24hStart = new Date(now.getTime() - 30 * 60 * 60 * 1000);
     const welcome24hEnd = new Date(now.getTime() - 18 * 60 * 60 * 1000);
-    const welcomeUsers = await getUnsubscribedUsersWithEmails(welcome24hStart, welcome24hEnd);
+    const { data: welcomeProfiles } = await supabase
+      .from('profiles')
+      .select(PROFILE_COLS)
+      .eq('subscribed', true)
+      .gt('trial_end', now.toISOString())
+      .gte('created_at', welcome24hStart.toISOString())
+      .lte('created_at', welcome24hEnd.toISOString());
 
-    if (welcomeUsers.length > 0) {
-      stats.welcome24h.found = welcomeUsers.length;
-      for (const user of welcomeUsers) {
-        // Check if already sent
-        const { data: existing } = await supabase
-          .from('trial_emails_sent')
-          .select('id')
-          .eq('user_id', user.id)
-          .eq('email_type', 'welcome_24h')
-          .single();
-
-        if (!existing && user.email) {
-          const firstName = user.full_name?.split(' ')[0] || 'there';
-          const sent = await sendEmail(user.email, getWelcome24hEmail(firstName));
-
-          if (sent) {
-            await supabase.from('trial_emails_sent').insert({
-              user_id: user.id,
-              email_type: 'welcome_24h',
-            });
-            stats.welcome24h.sent++;
-            console.log(`✅ Sent welcome email to ${user.email}`);
-          }
-        }
-      }
-    }
-
-    // 2. Find users whose trial ends in ~2 days (Day 5, with 12-hour window)
-    // Day 5 = 5 days after signup, so look for signups 4.5-5.5 days ago
-    const day5Start = new Date(now.getTime() - 5.5 * 24 * 60 * 60 * 1000);
-    const day5End = new Date(now.getTime() - 4.5 * 24 * 60 * 60 * 1000);
-    const day5Users = await getUnsubscribedUsersWithEmails(day5Start, day5End);
-
-    if (day5Users.length > 0) {
-      stats.day5Reminder.found = day5Users.length;
-      for (const user of day5Users) {
-        const { data: existing } = await supabase
-          .from('trial_emails_sent')
-          .select('id')
-          .eq('user_id', user.id)
-          .eq('email_type', 'reminder_day5')
-          .single();
-
-        if (!existing && user.email) {
-          const firstName = user.full_name?.split(' ')[0] || 'there';
-          const sent = await sendEmail(user.email, getDay5ReminderEmail(firstName));
-
-          if (sent) {
-            await supabase.from('trial_emails_sent').insert({
-              user_id: user.id,
-              email_type: 'reminder_day5',
-            });
-            stats.day5Reminder.sent++;
-            console.log(`✅ Sent Day 5 reminder to ${user.email}`);
-          }
-        }
-      }
-    }
-
-    // 3. Find users whose trial just ended (Day 7, with 12-hour window)
-    // Day 7 = 7 days after signup, so look for signups 6.5-7.5 days ago
-    const day7Start = new Date(now.getTime() - 7.5 * 24 * 60 * 60 * 1000);
-    const day7End = new Date(now.getTime() - 6.5 * 24 * 60 * 60 * 1000);
-    const expiredUsers = await getUnsubscribedUsersWithEmails(day7Start, day7End);
-
-    if (expiredUsers.length > 0) {
-      stats.trialEnded.found = expiredUsers.length;
-      for (const user of expiredUsers) {
-        const { data: existing } = await supabase
-          .from('trial_emails_sent')
-          .select('id')
-          .eq('user_id', user.id)
-          .eq('email_type', 'trial_ended')
-          .single();
-
-        if (!existing && user.email) {
-          const firstName = user.full_name?.split(' ')[0] || 'there';
-          const sent = await sendEmail(user.email, getTrialEndedEmail(firstName));
-
-          if (sent) {
-            await supabase.from('trial_emails_sent').insert({
-              user_id: user.id,
-              email_type: 'trial_ended',
-            });
-            stats.trialEnded.sent++;
-            console.log(`✅ Sent trial ended email to ${user.email}`);
-          }
-        }
+    const welcomeUsers = await withEmails(welcomeProfiles ?? []);
+    stats.welcome24h.found = welcomeUsers.length;
+    for (const user of welcomeUsers) {
+      if (await alreadySent(user.id, 'welcome_24h')) continue;
+      const firstName = user.full_name?.split(' ')[0] || 'there';
+      if (await sendEmail(user.email, getWelcome24hEmail(firstName))) {
+        await supabase.from('trial_emails_sent').insert({
+          user_id: user.id,
+          email_type: 'welcome_24h',
+        });
+        stats.welcome24h.sent++;
+        console.log(`✅ Sent 24h activation email to ${user.email}`);
       }
     }
 
@@ -512,7 +283,11 @@ serve(async (req) => {
       { headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
     );
   } catch (error: any) {
-    await captureException(error, { functionName: 'send-trial-reminders', requestUrl: req.url, requestMethod: req.method });
+    await captureException(error, {
+      functionName: 'send-trial-reminders',
+      requestUrl: req.url,
+      requestMethod: req.method,
+    });
     console.error('❌ Error in trial reminder job:', error);
     return new Response(JSON.stringify({ error: error.message }), {
       status: 500,

@@ -291,6 +291,11 @@ const Subscriptions = () => {
         body: { priceId, mode: 'subscription', planId, offerCode, winbackCouponId },
       });
       if (error) throw new Error(error.message);
+      // Already on a live subscription (webhook may still be syncing)
+      if (data?.already_subscribed) {
+        window.location.assign('/dashboard');
+        return;
+      }
       if (data?.url) {
         if (offerCode) storageRemoveSync('elec-mate-offer-code');
         trackMilestone('Checkout Session Created', { planId, hasOfferCode: !!offerCode });
@@ -367,10 +372,9 @@ const Subscriptions = () => {
         //  - User subscribed via the mobile store and we can't see the sub from web
         toast({
           title: 'No active web subscription',
-          description:
-            data.stripe_customer_id
-              ? 'Your previous subscription has already ended. If you think this is wrong, email founder@elec-mate.com.'
-              : "If you subscribed through the iOS or Android app, cancel from your device's subscription manager. Otherwise email founder@elec-mate.com.",
+          description: data.stripe_customer_id
+            ? 'Your previous subscription has already ended. If you think this is wrong, email founder@elec-mate.com.'
+            : "If you subscribed through the iOS or Android app, cancel from your device's subscription manager. Otherwise email founder@elec-mate.com.",
           variant: 'destructive',
         });
         return;
@@ -553,9 +557,9 @@ const Subscriptions = () => {
               <span className="text-yellow-400">{winbackCoupon.newPrice}/month</span> is locked in.
             </p>
             <p className="mt-1 text-[13px] leading-relaxed text-white/70">
-              Pick the{' '}
-              <span className="capitalize">{winbackCoupon.tier}</span> plan below — the discount
-              applies automatically at checkout and stays for as long as you stay subscribed.
+              Pick the <span className="capitalize">{winbackCoupon.tier}</span> plan below — the
+              discount applies automatically at checkout and stays for as long as you stay
+              subscribed.
             </p>
           </div>
         )}
@@ -566,7 +570,10 @@ const Subscriptions = () => {
             Manage your subscription where you bought it
           </p>
           <p className="text-[13px] text-white/80 leading-relaxed">
-            Apple and Google require subscriptions purchased through their stores to be managed in their settings, and Stripe subscriptions can only be managed via the web. If you bought on the web and signed in on the iOS app, you'll need to cancel or change your plan from a browser — not in the app. Same the other way around.
+            Apple and Google require subscriptions purchased through their stores to be managed in
+            their settings, and Stripe subscriptions can only be managed via the web. If you bought
+            on the web and signed in on the iOS app, you'll need to cancel or change your plan from
+            a browser — not in the app. Same the other way around.
           </p>
         </div>
 
@@ -694,7 +701,7 @@ const Subscriptions = () => {
           </h1>
           <p className="text-base sm:text-lg text-white max-w-xl mx-auto">
             From first-year apprentice to running the whole firm. Free 7-day trial on every plan —
-            no card required.
+            no charge until day 8.
           </p>
         </header>
 

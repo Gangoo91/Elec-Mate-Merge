@@ -143,7 +143,7 @@ const TrialBanner = () => {
                   ? 'Your trial is ending soon! Upgrade to keep full access.'
                   : isWarning
                     ? 'Enjoying Elec-Mate? Lock in your access with a subscription.'
-                    : 'Full access to all features. No credit card required.'}
+                    : 'Full access to all features. No charge until your trial ends.'}
               </p>
             </div>
             <Button

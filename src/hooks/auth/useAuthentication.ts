@@ -175,9 +175,10 @@ export function useAuthentication() {
                   .api('auth/signUp', requestId)
                   .success({ email, userId: retryData.user.id, recovered: true });
                 trackMilestone('User Signed Up', { userId: retryData.user.id, email });
+                // No email-confirmation gate exists — don't tell users to wait for one
                 toast({
-                  title: 'Almost there!',
-                  description: 'Please check your email to confirm your account.',
+                  title: 'Account created',
+                  description: 'Setting up your free trial…',
                 });
                 return { error: null, data: retryData };
               }
@@ -219,9 +220,10 @@ export function useAuthentication() {
         trackMilestone('User Signed Up', { userId: data.user.id, email });
       }
 
+      // No email-confirmation gate exists — don't tell users to wait for one
       toast({
-        title: 'Almost there!',
-        description: 'Please check your email to confirm your account.',
+        title: 'Account created',
+        description: 'Setting up your free trial…',
       });
 
       return { error: null, data };

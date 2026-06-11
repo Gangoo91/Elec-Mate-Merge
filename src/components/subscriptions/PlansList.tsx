@@ -69,6 +69,12 @@ const PlansList = ({ billing }: PlansListProps) => {
 
       if (error) throw new Error(error.message);
 
+      // Already on a live subscription (webhook may still be syncing)
+      if (data?.already_subscribed) {
+        window.location.assign('/dashboard');
+        return;
+      }
+
       if (data?.url) {
         // Clear offer code after successful checkout creation
         if (offerCode) {
