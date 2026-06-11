@@ -1,20 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
-import {
-  Sparkles,
-  Loader2,
-  AlertTriangle,
-  Info,
-  XCircle,
-  Cable,
-  PoundSterling,
-  Zap,
-  Package,
-  Clock,
-  ShieldAlert,
-  ListChecks,
-  FileText,
-} from 'lucide-react';
+import { Loader2, ListChecks, FileText, RotateCcw } from 'lucide-react';
 import { Button } from '@/components/ui/button';
+import { cn } from '@/lib/utils';
 import { useSiteSurveyAnalysis } from '@/hooks/useSiteSurveyAnalysis';
 import { useSurveyMaterialsActions } from '@/hooks/useSurveyMaterialsActions';
 import type { SiteVisit } from '@/types/siteVisit';
@@ -29,279 +16,221 @@ interface SurveyAnalysisPanelProps {
   autoStart?: boolean;
 }
 
-function SeverityBadge({ severity }: { severity: 'info' | 'warning' | 'critical' }) {
-  const config = {
-    info: { bg: 'bg-blue-500/20', text: 'text-blue-400', label: 'Info' },
-    warning: { bg: 'bg-amber-500/20', text: 'text-amber-400', label: 'Warning' },
-    critical: { bg: 'bg-red-500/20', text: 'text-red-400', label: 'Critical' },
-  };
-  const c = config[severity];
+/** Numbered eyebrow header — the section language used across v2 */
+function SectionEyebrow({ children }: { children: React.ReactNode }) {
   return (
-    <span className={`${c.bg} ${c.text} text-[10px] font-semibold px-2 py-0.5 rounded-full`}>
-      {c.label}
-    </span>
-  );
-}
-
-function SeverityIcon({ severity }: { severity: 'info' | 'warning' | 'critical' }) {
-  switch (severity) {
-    case 'info':
-      return <Info className="h-4 w-4 text-blue-400 flex-shrink-0" />;
-    case 'warning':
-      return <AlertTriangle className="h-4 w-4 text-amber-400 flex-shrink-0" />;
-    case 'critical':
-      return <XCircle className="h-4 w-4 text-red-400 flex-shrink-0" />;
-  }
-}
-
-function MaterialsTable({ items }: { items: SurveyAnalysisResult['materials_list'] }) {
-  const total = items.reduce((sum, i) => sum + i.est_price_gbp * i.quantity, 0);
-  return (
-    <div className="space-y-2">
-      <div className="flex items-center gap-2">
-        <Package className="h-4 w-4 text-emerald-400" />
-        <h4 className="text-sm font-semibold text-white">Materials List</h4>
-      </div>
-      <div className="space-y-1.5">
-        {items.map((item, i) => (
-          <div key={i} className="py-2 border-b border-white/[0.04] last:border-0">
-            <div className="flex items-start justify-between gap-2 mb-0.5">
-              <p className="text-xs text-white font-medium flex-1">{item.description}</p>
-              <span className="text-xs text-emerald-400 font-semibold flex-shrink-0">
-                £{(item.est_price_gbp * item.quantity).toFixed(2)}
-              </span>
-            </div>
-            <div className="flex items-center gap-3 text-[10px] text-white">
-              <span>
-                {item.quantity} {item.unit}
-              </span>
-              <span>£{item.est_price_gbp.toFixed(2)} each</span>
-              {item.supplier && <span>{item.supplier}</span>}
-            </div>
-          </div>
-        ))}
-      </div>
-      <div className="flex justify-between text-xs font-semibold pt-2 border-t border-white/10">
-        <span className="text-white">Materials Total</span>
-        <span className="text-emerald-400">£{total.toFixed(2)}</span>
-      </div>
+    <div className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+      {children}
     </div>
   );
 }
 
-function RegulatoryFlagsSection({ flags }: { flags: RegulatoryFlag[] }) {
-  if (flags.length === 0) return null;
+/** Severity rendered as a restrained dot — no badges, no tinted cards */
+function SeverityDot({ severity }: { severity: 'info' | 'warning' | 'critical' }) {
   return (
-    <div className="space-y-2">
-      <div className="flex items-center gap-2">
-        <ShieldAlert className="h-4 w-4 text-amber-400" />
-        <h4 className="text-sm font-semibold text-white">Regulatory Flags</h4>
-      </div>
-      <div className="space-y-2">
-        {flags.map((flag, i) => (
-          <div
-            key={i}
-            className={`p-3 rounded-lg border ${
-              flag.severity === 'critical'
-                ? 'border-red-500/30 bg-red-500/10'
-                : flag.severity === 'warning'
-                  ? 'border-amber-500/30 bg-amber-500/10'
-                  : 'border-blue-500/30 bg-blue-500/10'
-            }`}
-          >
-            <div className="flex items-center gap-2 mb-1.5">
-              <SeverityIcon severity={flag.severity} />
-              <span className="text-xs font-semibold text-white">{flag.regulation}</span>
-              <SeverityBadge severity={flag.severity} />
-            </div>
-            <p className="text-xs text-white">{flag.description}</p>
-            {flag.room && (
-              <p className="text-[10px] text-white mt-1.5 pt-1.5 border-t border-white/[0.06]">
-                Room: {flag.room}
-              </p>
-            )}
-          </div>
-        ))}
-      </div>
-    </div>
+    <span
+      aria-label={severity}
+      className={cn(
+        'mt-[5px] h-1.5 w-1.5 flex-shrink-0 rounded-full',
+        severity === 'critical'
+          ? 'bg-red-400'
+          : severity === 'warning'
+            ? 'bg-amber-400'
+            : 'bg-white/40'
+      )}
+    />
   );
 }
 
-function CableSizingTable({ items }: { items: SurveyAnalysisResult['cable_sizing'] }) {
-  if (items.length === 0) return null;
-  return (
-    <div className="space-y-2">
-      <div className="flex items-center gap-2">
-        <Cable className="h-4 w-4 text-blue-400" />
-        <h4 className="text-sm font-semibold text-white">Cable Sizing</h4>
-      </div>
-      <div className="space-y-2">
-        {items.map((item, i) => (
-          <div key={i} className="p-3 rounded-lg bg-white/[0.03] border border-white/[0.06]">
-            <div className="flex items-center gap-2 mb-2.5">
-              <p className="text-xs font-semibold text-white flex-1">{item.circuit}</p>
-              <span className="text-[10px] font-bold text-blue-400 bg-blue-500/20 px-2 py-0.5 rounded-full flex-shrink-0">
-                {String(item.csa_mm2).replace(/\s*mm²?\s*/gi, '')} mm²
-              </span>
-            </div>
-            <div className="space-y-1.5">
-              <div className="flex items-start justify-between gap-3">
-                <span className="text-[10px] text-white flex-shrink-0 w-16">Cable</span>
-                <span className="text-xs text-white font-medium text-right">{item.cable_type}</span>
-              </div>
-              <div className="flex items-start justify-between gap-3">
-                <span className="text-[10px] text-white flex-shrink-0 w-16">Ref Method</span>
-                <span className="text-xs text-white font-medium text-right">{item.ref_method}</span>
-              </div>
-            </div>
-          </div>
-        ))}
-      </div>
-    </div>
-  );
-}
+const gbp = (n: number) =>
+  `£${n.toLocaleString('en-GB', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`;
 
-function CircuitRecommendationsSection({
-  items,
-}: {
-  items: SurveyAnalysisResult['circuit_recommendations'];
-}) {
-  if (items.length === 0) return null;
-  return (
-    <div className="space-y-2">
-      <div className="flex items-center gap-2">
-        <Zap className="h-4 w-4 text-elec-yellow" />
-        <h4 className="text-sm font-semibold text-white">Circuit Recommendations</h4>
-      </div>
-      <div className="space-y-2">
-        {items.map((item, i) => (
-          <div key={i} className="p-3 rounded-lg bg-white/[0.03] border border-white/[0.06]">
-            <div className="flex items-center gap-2 mb-2">
-              <p className="text-xs font-semibold text-white">{item.room}</p>
-              <span className="text-[10px] font-semibold text-elec-yellow bg-elec-yellow/20 px-2 py-0.5 rounded-full">
-                {item.rating_a}A
-              </span>
-            </div>
-            <div className="space-y-1">
-              <div>
-                <p className="text-[10px] text-white mb-0.5">Circuit Type</p>
-                <p className="text-xs text-white font-medium">{item.circuit_type}</p>
-              </div>
-              <div>
-                <p className="text-[10px] text-white mb-0.5">Protection</p>
-                <p className="text-xs text-white font-medium">{item.protection}</p>
-              </div>
-            </div>
-          </div>
-        ))}
-      </div>
-    </div>
-  );
-}
-
-function CostSummaryCard({
+/** Editorial cost header: one yellow numeral, hairline breakdown rows */
+function CostSummary({
   summary,
   labour,
 }: {
   summary: SurveyAnalysisResult['cost_summary'];
   labour: SurveyAnalysisResult['labour_estimate'];
 }) {
-  const confidenceColour = {
-    low: 'text-red-400',
-    medium: 'text-amber-400',
-    high: 'text-emerald-400',
-  };
   return (
-    <div className="space-y-3">
-      <div className="flex items-center gap-2">
-        <PoundSterling className="h-4 w-4 text-elec-yellow" />
-        <h4 className="text-sm font-semibold text-white">Cost Summary</h4>
-      </div>
-
-      {/* Total card */}
-      <div className="p-4 rounded-xl bg-elec-yellow/10 border border-elec-yellow/30 text-center">
-        <p className="text-xs text-white mb-1">Estimated Total</p>
-        <p className="text-2xl font-bold text-elec-yellow">
-          £
-          {summary.total_gbp.toLocaleString('en-GB', {
-            minimumFractionDigits: 2,
-            maximumFractionDigits: 2,
-          })}
-        </p>
-        <p className={`text-[10px] ${confidenceColour[summary.confidence]} mt-1 capitalize`}>
+    <div>
+      <div className="flex items-end justify-between gap-3">
+        <div>
+          <SectionEyebrow>ESTIMATED TOTAL</SectionEyebrow>
+          <p className="mt-1.5 text-[32px] font-semibold leading-none tracking-tight text-elec-yellow tabular-nums sm:text-[38px]">
+            {gbp(summary.total_gbp)}
+          </p>
+        </div>
+        <p className="pb-1 text-[11px] capitalize text-white/45">
           {summary.confidence} confidence
         </p>
       </div>
 
-      {/* Breakdown */}
-      <div className="space-y-1.5 text-xs">
-        <div className="flex justify-between">
-          <span className="text-white">Materials</span>
-          <span className="text-white font-medium">£{summary.materials_gbp.toFixed(2)}</span>
+      <div className="mt-4 overflow-hidden rounded-xl border border-white/[0.08]">
+        <div className="flex items-center justify-between bg-white/[0.02] px-3.5 py-2.5">
+          <span className="text-[13px] text-white/75">Materials</span>
+          <span className="text-[13px] font-medium tabular-nums text-white">
+            {gbp(summary.materials_gbp)}
+          </span>
         </div>
-        <div className="flex justify-between">
-          <span className="text-white">Labour ({labour.total_hours}h)</span>
-          <span className="text-white font-medium">£{summary.labour_gbp.toFixed(2)}</span>
+        <div className="flex items-center justify-between border-t border-white/[0.05] bg-white/[0.02] px-3.5 py-2.5">
+          <span className="text-[13px] text-white/75">Labour · {labour.total_hours}h</span>
+          <span className="text-[13px] font-medium tabular-nums text-white">
+            {gbp(summary.labour_gbp)}
+          </span>
         </div>
+        {labour.breakdown.map((task, i) => (
+          <div
+            key={i}
+            className="flex items-center justify-between border-t border-white/[0.05] py-2 pl-7 pr-3.5"
+          >
+            <span className="text-[12px] text-white/55">{task.task}</span>
+            <span className="text-[12px] tabular-nums text-white/55">{task.hours}h</span>
+          </div>
+        ))}
       </div>
-
-      {/* Labour breakdown */}
-      {labour.breakdown.length > 0 && (
-        <div className="space-y-2">
-          <div className="flex items-center gap-2">
-            <Clock className="h-3.5 w-3.5 text-blue-400" />
-            <p className="text-xs text-white font-semibold">Labour Breakdown</p>
-            <span className="text-[10px] text-blue-400 bg-blue-500/20 px-2 py-0.5 rounded-full font-semibold ml-auto">
-              {labour.total_hours}h total
-            </span>
-          </div>
-          <div className="space-y-1.5">
-            {labour.breakdown.map((task, i) => (
-              <div
-                key={i}
-                className="flex items-start gap-2 py-2 border-b border-white/[0.04] last:border-0"
-              >
-                <p className="text-xs text-white flex-1">{task.task}</p>
-                <span className="text-xs text-white font-semibold flex-shrink-0 tabular-nums">
-                  {task.hours}h
-                </span>
-              </div>
-            ))}
-          </div>
-        </div>
-      )}
     </div>
   );
 }
 
-function IssuesSection({ issues }: { issues: SurveyIssue[] }) {
+function MaterialsTable({ items }: { items: SurveyAnalysisResult['materials_list'] }) {
+  const total = items.reduce((sum, i) => sum + i.est_price_gbp * i.quantity, 0);
+  return (
+    <div>
+      <SectionEyebrow>MATERIALS · {items.length}</SectionEyebrow>
+      <div className="mt-2 overflow-hidden rounded-xl border border-white/[0.08]">
+        {items.map((item, i) => (
+          <div
+            key={i}
+            className={cn(
+              'flex items-start justify-between gap-3 px-3.5 py-2.5',
+              i > 0 && 'border-t border-white/[0.05]'
+            )}
+          >
+            <div className="min-w-0 flex-1">
+              <p className="text-[13px] leading-snug text-white">{item.description}</p>
+              <p className="mt-0.5 text-[11px] tabular-nums text-white/45">
+                {item.quantity} {item.unit} × {gbp(item.est_price_gbp)}
+              </p>
+            </div>
+            <span className="flex-shrink-0 text-[13px] font-medium tabular-nums text-white">
+              {gbp(item.est_price_gbp * item.quantity)}
+            </span>
+          </div>
+        ))}
+        <div className="flex items-center justify-between border-t border-white/[0.08] bg-white/[0.02] px-3.5 py-2.5">
+          <span className="text-[13px] font-medium text-white">Materials total</span>
+          <span className="text-[13px] font-semibold tabular-nums text-white">{gbp(total)}</span>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+function RegulatoryFlags({ flags }: { flags: RegulatoryFlag[] }) {
+  if (flags.length === 0) return null;
+  return (
+    <div>
+      <SectionEyebrow>REGULATORY FLAGS · {flags.length}</SectionEyebrow>
+      <div className="mt-2 overflow-hidden rounded-xl border border-white/[0.08]">
+        {flags.map((flag, i) => (
+          <div
+            key={i}
+            className={cn('flex gap-2.5 px-3.5 py-2.5', i > 0 && 'border-t border-white/[0.05]')}
+          >
+            <SeverityDot severity={flag.severity} />
+            <div className="min-w-0 flex-1">
+              <p className="text-[12.5px] font-medium text-white">{flag.regulation}</p>
+              <p className="mt-0.5 text-[12px] leading-snug text-white/65">{flag.description}</p>
+              {flag.room && <p className="mt-1 text-[11px] text-white/45">{flag.room}</p>}
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
+  );
+}
+
+function CableSizing({ items }: { items: SurveyAnalysisResult['cable_sizing'] }) {
+  if (items.length === 0) return null;
+  return (
+    <div>
+      <SectionEyebrow>CABLE SIZING</SectionEyebrow>
+      <div className="mt-2 overflow-hidden rounded-xl border border-white/[0.08]">
+        {items.map((item, i) => (
+          <div
+            key={i}
+            className={cn(
+              'flex items-center justify-between gap-3 px-3.5 py-2.5',
+              i > 0 && 'border-t border-white/[0.05]'
+            )}
+          >
+            <div className="min-w-0 flex-1">
+              <p className="text-[13px] text-white">{item.circuit}</p>
+              <p className="mt-0.5 truncate text-[11px] text-white/45">
+                {item.cable_type} · {item.ref_method}
+              </p>
+            </div>
+            <span className="flex-shrink-0 text-[13px] font-medium tabular-nums text-white">
+              {String(item.csa_mm2).replace(/\s*mm²?\s*/gi, '')} mm²
+            </span>
+          </div>
+        ))}
+      </div>
+    </div>
+  );
+}
+
+function CircuitRecommendations({
+  items,
+}: {
+  items: SurveyAnalysisResult['circuit_recommendations'];
+}) {
+  if (items.length === 0) return null;
+  return (
+    <div>
+      <SectionEyebrow>CIRCUITS</SectionEyebrow>
+      <div className="mt-2 overflow-hidden rounded-xl border border-white/[0.08]">
+        {items.map((item, i) => (
+          <div
+            key={i}
+            className={cn(
+              'flex items-center justify-between gap-3 px-3.5 py-2.5',
+              i > 0 && 'border-t border-white/[0.05]'
+            )}
+          >
+            <div className="min-w-0 flex-1">
+              <p className="text-[13px] text-white">{item.room}</p>
+              <p className="mt-0.5 truncate text-[11px] text-white/45">
+                {item.circuit_type} · {item.protection}
+              </p>
+            </div>
+            <span className="flex-shrink-0 text-[13px] font-medium tabular-nums text-white">
+              {item.rating_a}A
+            </span>
+          </div>
+        ))}
+      </div>
+    </div>
+  );
+}
+
+function Issues({ issues }: { issues: SurveyIssue[] }) {
   if (issues.length === 0) return null;
   return (
-    <div className="space-y-2">
-      <div className="flex items-center gap-2">
-        <AlertTriangle className="h-4 w-4 text-amber-400" />
-        <h4 className="text-sm font-semibold text-white">Issues & Actions</h4>
-      </div>
-      <div className="space-y-2">
+    <div>
+      <SectionEyebrow>ISSUES &amp; ACTIONS · {issues.length}</SectionEyebrow>
+      <div className="mt-2 overflow-hidden rounded-xl border border-white/[0.08]">
         {issues.map((issue, i) => (
           <div
             key={i}
-            className={`p-3 rounded-lg border ${
-              issue.severity === 'critical'
-                ? 'border-red-500/30 bg-red-500/10'
-                : issue.severity === 'warning'
-                  ? 'border-amber-500/30 bg-amber-500/10'
-                  : 'border-blue-500/30 bg-blue-500/10'
-            }`}
+            className={cn('flex gap-2.5 px-3.5 py-2.5', i > 0 && 'border-t border-white/[0.05]')}
           >
-            <div className="flex items-center gap-2 mb-1.5">
-              <SeverityIcon severity={issue.severity} />
-              <SeverityBadge severity={issue.severity} />
-            </div>
-            <p className="text-xs text-white font-medium mb-1.5">{issue.description}</p>
-            <div className="pt-1.5 border-t border-white/[0.06]">
-              <p className="text-[10px] text-white mb-0.5">Recommended Action</p>
-              <p className="text-xs text-white font-medium">{issue.action}</p>
+            <SeverityDot severity={issue.severity} />
+            <div className="min-w-0 flex-1">
+              <p className="text-[12.5px] leading-snug text-white">{issue.description}</p>
+              <p className="mt-1 text-[12px] leading-snug text-white/65">→ {issue.action}</p>
             </div>
           </div>
         ))}
@@ -335,26 +264,23 @@ function AnalysisProgress({
   const timeStr = minutes > 0 ? `${minutes}:${seconds.toString().padStart(2, '0')}` : `${seconds}s`;
 
   return (
-    <div className="space-y-3">
-      <div className="p-4 rounded-xl bg-white/[0.03] border border-white/[0.06]">
-        <div className="flex items-center gap-2 mb-3">
-          <Loader2 className="h-4 w-4 text-elec-yellow animate-spin" />
-          <span className="text-sm font-medium text-white flex-1">
-            {currentStep || 'Starting analysis...'}
-          </span>
-          <span className="text-xs font-mono text-elec-yellow tabular-nums">{timeStr}</span>
-        </div>
-        <div className="w-full h-2 bg-white/10 rounded-full overflow-hidden">
-          <div
-            className="h-full bg-elec-yellow rounded-full transition-all duration-500 ease-out"
-            style={{ width: `${progress}%` }}
-          />
-        </div>
-        <div className="flex items-center justify-between mt-2">
-          <p className="text-[11px] text-white">This can take up to 2 minutes</p>
-          <p className="text-xs text-white font-medium">{progress}%</p>
-        </div>
+    <div className="rounded-xl border border-white/[0.08] p-4">
+      <div className="flex items-center gap-2.5">
+        <Loader2 className="h-4 w-4 animate-spin text-elec-yellow" />
+        <span className="flex-1 text-[13px] font-medium text-white">
+          {currentStep || 'Starting analysis…'}
+        </span>
+        <span className="text-[12px] tabular-nums text-white/55">{timeStr}</span>
       </div>
+      <div className="mt-3 h-1 w-full overflow-hidden rounded-full bg-white/[0.08]">
+        <div
+          className="h-full rounded-full bg-elec-yellow transition-all duration-500 ease-out"
+          style={{ width: `${progress}%` }}
+        />
+      </div>
+      <p className="mt-2 text-[11px] text-white/45">
+        Live trade prices and BS 7671 checks — up to 2 minutes
+      </p>
     </div>
   );
 }
@@ -385,71 +311,62 @@ export const SurveyAnalysisPanel = ({ visit, autoStart = false }: SurveyAnalysis
   }, [autoStart, hasData, result, isStarting, status, startAnalysis, visit]);
 
   return (
-    <div className="space-y-4">
-      <div className="flex items-center gap-2">
-        <Sparkles className="h-4 w-4 text-elec-yellow" />
-        <h3 className="text-sm font-semibold text-white">AI Analysis</h3>
-      </div>
-
-      {/* Idle state — show run button */}
+    <div className="space-y-5">
+      {/* Idle / failed — run button */}
       {(status === 'idle' || status === 'failed') && (
         <div className="space-y-3">
+          <SectionEyebrow>AI PRICING</SectionEyebrow>
           {error && (
-            <div className="p-3 rounded-lg border border-red-500/30 bg-red-500/10">
-              <p className="text-xs text-red-400">{error}</p>
+            <div className="rounded-xl border border-red-500/30 bg-red-500/10 px-3.5 py-2.5">
+              <p className="text-[12px] text-red-300">{error}</p>
             </div>
           )}
-          <button
+          <Button
             onClick={() => startAnalysis(visit)}
             disabled={isStarting || !hasData}
-            className="w-full h-12 rounded-xl bg-elec-yellow/20 border border-elec-yellow/40 text-sm font-semibold text-white flex items-center justify-center gap-2 touch-manipulation active:bg-elec-yellow/30 disabled:opacity-50"
+            className="h-12 w-full touch-manipulation rounded-xl bg-elec-yellow text-[14px] font-semibold text-black transition-transform hover:bg-elec-yellow/90 active:scale-[0.98] disabled:opacity-50"
           >
             {isStarting ? (
               <>
-                <Loader2 className="h-4 w-4 animate-spin" />
-                Starting Analysis...
+                <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                Starting…
               </>
             ) : (
-              <>
-                <Sparkles className="h-4 w-4 text-elec-yellow" />
-                Run AI Analysis
-              </>
+              'Price this scope'
             )}
-          </button>
+          </Button>
           {!hasData && (
-            <p className="text-xs text-white text-center">
-              Add rooms and items first to run analysis
+            <p className="text-center text-[12px] text-white/55">
+              Add rooms and items first, then pricing runs automatically
             </p>
           )}
         </div>
       )}
 
-      {/* Processing state — progress bar + timer */}
+      {/* Processing */}
       {(status === 'pending' || status === 'processing') && (
-        <AnalysisProgress progress={progress} currentStep={currentStep} />
+        <div className="space-y-3">
+          <SectionEyebrow>AI PRICING</SectionEyebrow>
+          <AnalysisProgress progress={progress} currentStep={currentStep} />
+        </div>
       )}
 
       {/* Results */}
       {status === 'completed' && result && (
-        <div className="space-y-4">
-          {/* Cost Summary first — most important */}
-          <div className="p-3 rounded-xl bg-white/[0.03] border border-white/[0.06]">
-            <CostSummaryCard summary={result.cost_summary} labour={result.labour_estimate} />
-          </div>
+        <div className="space-y-5">
+          <CostSummary summary={result.cost_summary} labour={result.labour_estimate} />
 
-          {/* Materials */}
           {result.materials_list.length > 0 && (
-            <div className="p-3 rounded-xl bg-white/[0.03] border border-white/[0.06]">
+            <>
               <MaterialsTable items={result.materials_list} />
-
-              {/* Materials action buttons */}
-              <div className="flex flex-col gap-2 mt-3 pt-3 border-t border-white/[0.06]">
+              <div className="flex flex-col gap-2 sm:flex-row">
                 <Button
                   onClick={() => sendToQuote(visit, result.materials_list)}
-                  className="w-full h-11 touch-manipulation bg-elec-yellow hover:bg-elec-yellow/90 text-black font-semibold"
+                  variant="outline"
+                  className="h-11 flex-1 touch-manipulation rounded-xl border-white/[0.15] bg-white/[0.04] text-[13px] font-medium text-white transition-transform hover:bg-white/[0.08] active:scale-[0.98]"
                 >
-                  <FileText className="h-4 w-4 mr-2" />
-                  Send to Quote
+                  <FileText className="mr-2 h-4 w-4" />
+                  Send to quote
                 </Button>
                 <Button
                   onClick={async () => {
@@ -459,55 +376,31 @@ export const SurveyAnalysisPanel = ({ visit, autoStart = false }: SurveyAnalysis
                   }}
                   disabled={isSavingList}
                   variant="outline"
-                  className="w-full h-11 touch-manipulation border-elec-yellow/30 text-white"
+                  className="h-11 flex-1 touch-manipulation rounded-xl border-white/[0.15] bg-white/[0.04] text-[13px] font-medium text-white transition-transform hover:bg-white/[0.08] active:scale-[0.98]"
                 >
                   {isSavingList ? (
-                    <Loader2 className="h-4 w-4 mr-2 animate-spin" />
+                    <Loader2 className="mr-2 h-4 w-4 animate-spin" />
                   ) : (
-                    <ListChecks className="h-4 w-4 mr-2" />
+                    <ListChecks className="mr-2 h-4 w-4" />
                   )}
-                  Save to Materials List
+                  Save to materials list
                 </Button>
               </div>
-            </div>
+            </>
           )}
 
-          {/* Regulatory flags */}
-          {result.regulatory_flags.length > 0 && (
-            <div className="p-3 rounded-xl bg-white/[0.03] border border-white/[0.06]">
-              <RegulatoryFlagsSection flags={result.regulatory_flags} />
-            </div>
-          )}
+          <RegulatoryFlags flags={result.regulatory_flags} />
+          <CableSizing items={result.cable_sizing} />
+          <CircuitRecommendations items={result.circuit_recommendations} />
+          <Issues issues={result.issues} />
 
-          {/* Cable sizing */}
-          {result.cable_sizing.length > 0 && (
-            <div className="p-3 rounded-xl bg-white/[0.03] border border-white/[0.06]">
-              <CableSizingTable items={result.cable_sizing} />
-            </div>
-          )}
-
-          {/* Circuit recommendations */}
-          {result.circuit_recommendations.length > 0 && (
-            <div className="p-3 rounded-xl bg-white/[0.03] border border-white/[0.06]">
-              <CircuitRecommendationsSection items={result.circuit_recommendations} />
-            </div>
-          )}
-
-          {/* Issues */}
-          {result.issues.length > 0 && (
-            <div className="p-3 rounded-xl bg-white/[0.03] border border-white/[0.06]">
-              <IssuesSection issues={result.issues} />
-            </div>
-          )}
-
-          {/* Re-run button */}
           <button
             onClick={() => startAnalysis(visit)}
             disabled={isStarting}
-            className="w-full h-11 rounded-xl bg-white/[0.03] border border-white/[0.06] text-sm font-medium text-white flex items-center justify-center gap-2 touch-manipulation active:bg-white/[0.06]"
+            className="flex h-10 w-full items-center justify-center gap-1.5 rounded-lg text-[12px] font-medium text-white/55 transition-colors touch-manipulation hover:text-white active:bg-white/[0.04]"
           >
-            <Sparkles className="h-4 w-4" />
-            Re-run Analysis
+            <RotateCcw className="h-3.5 w-3.5" />
+            Re-run pricing
           </button>
         </div>
       )}
