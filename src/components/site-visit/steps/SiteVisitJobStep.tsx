@@ -235,7 +235,7 @@ export const SiteVisitJobStep = ({
                     onClick={() => handleSelectCustomer(customer)}
                     className="flex w-full items-center gap-3 rounded-xl p-3 text-left transition-colors touch-manipulation hover:bg-white/[0.04] active:bg-white/[0.06]"
                   >
-                    <div className="flex h-9 w-9 items-center justify-center rounded-lg bg-elec-gray">
+                    <div className="flex h-9 w-9 items-center justify-center rounded-lg border border-white/[0.08] bg-white/[0.06]">
                       <User className="h-4 w-4 text-white" />
                     </div>
                     <div className="min-w-0 flex-1">

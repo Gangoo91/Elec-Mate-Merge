@@ -1,7 +1,7 @@
 import React from 'react';
-import { FileText, User, MapPin, Home, Package, RotateCcw } from 'lucide-react';
-import { Button } from '@/components/ui/button';
+import { RotateCcw } from 'lucide-react';
 import { Textarea } from '@/components/ui/textarea';
+import { cn } from '@/lib/utils';
 import { getDefaultAssumptions } from '@/utils/defaultAssumptions';
 import type { SiteVisit } from '@/types/siteVisit';
 
@@ -11,6 +11,34 @@ interface ScopeOfWorksEditorProps {
   onAssumptionsChange: (val: string) => void;
 }
 
+function Eyebrow({ children }: { children: React.ReactNode }) {
+  return (
+    <div className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+      {children}
+    </div>
+  );
+}
+
+/** Hairline key/value row used throughout the scope document */
+function Row({ label, value, first }: { label: string; value: React.ReactNode; first?: boolean }) {
+  return (
+    <div
+      className={cn(
+        'flex items-start justify-between gap-3 px-3.5 py-2',
+        !first && 'border-t border-white/[0.05]'
+      )}
+    >
+      <span className="text-[12px] text-white/55">{label}</span>
+      <span className="text-right text-[12.5px] font-medium text-white">{value}</span>
+    </div>
+  );
+}
+
+/**
+ * The scope document, rendered in the v2 editorial language — eyebrow
+ * sections and hairline key/value tables. What the client will see, minus
+ * the branding the PDF adds.
+ */
 export const ScopeOfWorksEditor = ({
   visit,
   assumptions,
@@ -19,66 +47,40 @@ export const ScopeOfWorksEditor = ({
   const globalPrompts = visit.prompts.filter((p) => !p.roomId && p.response);
 
   return (
-    <div className="space-y-4">
-      {/* Header / branding */}
-      <div className="p-4 rounded-xl bg-gradient-to-r from-elec-yellow/20 to-amber-600/20 border border-elec-yellow/30">
-        <div className="flex items-center gap-2 mb-2">
-          <FileText className="h-5 w-5 text-elec-yellow" />
-          <h3 className="text-base font-bold text-white">Scope of Works</h3>
-        </div>
-        <p className="text-xs text-white">
-          Auto-generated from site visit — review before sending to client
+    <div className="space-y-5">
+      <div>
+        <Eyebrow>SCOPE OF WORKS</Eyebrow>
+        <p className="mt-1 text-[12px] text-white/55">
+          Built from the walk-round — review before it goes to the client
         </p>
       </div>
 
-      {/* Client details */}
-      <div className="p-3 rounded-xl bg-white/[0.03] border border-white/[0.06] space-y-2">
-        <div className="flex items-center gap-2 mb-1">
-          <User className="h-4 w-4 text-blue-400" />
-          <h4 className="text-sm font-semibold text-white">Client</h4>
-        </div>
-        <div className="grid grid-cols-2 gap-2 text-xs">
-          <div>
-            <p className="text-white">Name</p>
-            <p className="text-white">{visit.customerName || '—'}</p>
-          </div>
-          <div>
-            <p className="text-white">Phone</p>
-            <p className="text-white">{visit.customerPhone || '—'}</p>
-          </div>
-          <div>
-            <p className="text-white">Email</p>
-            <p className="text-white">{visit.customerEmail || '—'}</p>
-          </div>
-        </div>
+      {/* Client + property — one combined hairline table */}
+      <div className="overflow-hidden rounded-xl border border-white/[0.08]">
+        <Row first label="Client" value={visit.customerName || '—'} />
+        {visit.customerPhone && <Row label="Phone" value={visit.customerPhone} />}
+        {visit.customerEmail && <Row label="Email" value={visit.customerEmail} />}
+        <Row
+          label="Property"
+          value={
+            <>
+              {visit.propertyAddress || '—'}
+              {visit.propertyPostcode ? `, ${visit.propertyPostcode}` : ''}
+            </>
+          }
+        />
+        {visit.propertyType && (
+          <Row label="Type" value={<span className="capitalize">{visit.propertyType}</span>} />
+        )}
       </div>
 
-      {/* Property */}
-      <div className="p-3 rounded-xl bg-white/[0.03] border border-white/[0.06] space-y-2">
-        <div className="flex items-center gap-2 mb-1">
-          <MapPin className="h-4 w-4 text-emerald-400" />
-          <h4 className="text-sm font-semibold text-white">Property</h4>
-        </div>
-        <div className="text-xs space-y-1">
-          <p className="text-white">{visit.propertyAddress || '—'}</p>
-          <p className="text-white">{visit.propertyPostcode || ''}</p>
-          <p className="text-white capitalize">{visit.propertyType || ''}</p>
-        </div>
-      </div>
-
-      {/* Property assessment (global prompts) */}
+      {/* Property assessment */}
       {globalPrompts.length > 0 && (
-        <div className="p-3 rounded-xl bg-white/[0.03] border border-white/[0.06] space-y-2">
-          <div className="flex items-center gap-2 mb-1">
-            <Home className="h-4 w-4 text-orange-400" />
-            <h4 className="text-sm font-semibold text-white">Property Assessment</h4>
-          </div>
-          <div className="space-y-1">
-            {globalPrompts.map((p) => (
-              <div key={p.id} className="flex justify-between text-xs">
-                <span className="text-white">{p.promptQuestion}</span>
-                <span className="text-white font-medium">{p.response}</span>
-              </div>
+        <div>
+          <Eyebrow>PROPERTY ASSESSMENT</Eyebrow>
+          <div className="mt-2 overflow-hidden rounded-xl border border-white/[0.08]">
+            {globalPrompts.map((p, i) => (
+              <Row key={p.id} first={i === 0} label={p.promptQuestion} value={p.response} />
             ))}
           </div>
         </div>
@@ -88,42 +90,39 @@ export const ScopeOfWorksEditor = ({
       {visit.rooms.map((room) => {
         const roomPrompts = visit.prompts.filter((p) => p.roomId === room.id && p.response);
         return (
-          <div
-            key={room.id}
-            className="p-3 rounded-xl bg-white/[0.03] border border-white/[0.06] space-y-2"
-          >
-            <div className="flex items-center gap-2">
-              <Package className="h-4 w-4 text-purple-400" />
-              <h4 className="text-sm font-semibold text-white">{room.roomName}</h4>
-            </div>
-
-            {room.items.length > 0 ? (
-              <div className="space-y-1">
-                {room.items.map((item) => (
-                  <div key={item.id} className="flex justify-between text-xs">
-                    <span className="text-white">{item.itemDescription}</span>
-                    <span className="text-white font-medium">
+          <div key={room.id}>
+            <Eyebrow>
+              {room.roomName.toUpperCase()} · {room.items.length}{' '}
+              {room.items.length === 1 ? 'ITEM' : 'ITEMS'}
+            </Eyebrow>
+            <div className="mt-2 overflow-hidden rounded-xl border border-white/[0.08]">
+              {room.items.length > 0 ? (
+                room.items.map((item, i) => (
+                  <div
+                    key={item.id}
+                    className={cn(
+                      'flex items-start justify-between gap-3 px-3.5 py-2',
+                      i > 0 && 'border-t border-white/[0.05]'
+                    )}
+                  >
+                    <span className="text-[12.5px] text-white">{item.itemDescription}</span>
+                    <span className="flex-shrink-0 text-[12.5px] font-medium tabular-nums text-white">
                       {item.quantity} {item.unit}
                     </span>
                   </div>
-                ))}
-              </div>
-            ) : (
-              <p className="text-xs text-white italic">No items specified</p>
-            )}
-
-            {roomPrompts.length > 0 && (
-              <div className="space-y-1 pt-1 border-t border-white/[0.06]">
-                {roomPrompts.map((p) => (
-                  <div key={p.id} className="flex justify-between text-xs">
-                    <span className="text-white">{p.promptQuestion}</span>
-                    <span className="text-white font-medium">{p.response}</span>
-                  </div>
-                ))}
-              </div>
-            )}
-
-            {room.notes && <p className="text-xs text-white italic">Note: {room.notes}</p>}
+                ))
+              ) : (
+                <p className="px-3.5 py-2 text-[12px] italic text-white/45">No items specified</p>
+              )}
+              {roomPrompts.map((p) => (
+                <Row key={p.id} label={p.promptQuestion} value={p.response} />
+              ))}
+              {room.notes && (
+                <p className="border-t border-white/[0.05] px-3.5 py-2 text-[12px] text-white/65">
+                  {room.notes}
+                </p>
+              )}
+            </div>
           </div>
         );
       })}
@@ -131,22 +130,20 @@ export const ScopeOfWorksEditor = ({
       {/* Assumptions / exclusions */}
       <div className="space-y-2">
         <div className="flex items-center justify-between">
-          <label className="text-xs font-medium text-white">Assumptions & Exclusions</label>
-          <Button
-            variant="ghost"
-            size="sm"
+          <Eyebrow>ASSUMPTIONS &amp; EXCLUSIONS</Eyebrow>
+          <button
             onClick={() => onAssumptionsChange(getDefaultAssumptions(visit.propertyType, visit))}
-            className="h-8 px-2 text-xs text-white touch-manipulation"
+            className="flex h-9 items-center gap-1.5 rounded-lg px-2.5 text-[12px] font-medium text-white/55 transition-colors touch-manipulation hover:text-white active:bg-white/[0.06]"
           >
-            <RotateCcw className="h-3.5 w-3.5 mr-1" />
-            Reset Defaults
-          </Button>
+            <RotateCcw className="h-3.5 w-3.5" />
+            Reset defaults
+          </button>
         </div>
         <Textarea
           value={assumptions}
           onChange={(e) => onAssumptionsChange(e.target.value)}
-          placeholder="Tap 'Reset Defaults' to pre-fill smart assumptions"
-          className="touch-manipulation text-base min-h-[180px] focus:ring-2 focus:ring-elec-yellow/20 border-white/30 focus:border-yellow-500"
+          placeholder="Tap 'Reset defaults' to pre-fill smart assumptions"
+          className="min-h-[180px] touch-manipulation rounded-xl border-white/[0.12] bg-[hsl(0_0%_9%)] text-base text-white placeholder:text-white/40 focus:border-elec-yellow/50 focus:ring-elec-yellow/20"
           autoCapitalize="sentences"
           spellCheck
           enterKeyHint="done"

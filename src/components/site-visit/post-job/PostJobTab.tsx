@@ -1,13 +1,5 @@
 import { useState, useCallback, useEffect } from 'react';
-import {
-  Save,
-  Check,
-  Loader2,
-  Receipt,
-  Download,
-  PenTool,
-  Send,
-} from 'lucide-react';
+import { Save, Check, Loader2, Receipt, Download, PenTool, Send } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { useNavigate } from 'react-router-dom';
@@ -359,10 +351,10 @@ export const PostJobTab = ({ visit, onVisitUpdate }: PostJobTabProps) => {
             <>
               <div className="mt-4 grid grid-cols-2 gap-2">
                 <div className="space-y-1.5">
-                  <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-blue-400">
+                  <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
                     Before
                   </span>
-                  <div className="aspect-square overflow-hidden rounded-xl border border-blue-500/20 bg-white/[0.03]">
+                  <div className="aspect-square overflow-hidden rounded-xl border border-white/[0.08] bg-white/[0.03]">
                     <img
                       src={beforePhotos[compareIndex]?.photoUrl}
                       alt="Before"
@@ -371,10 +363,10 @@ export const PostJobTab = ({ visit, onVisitUpdate }: PostJobTabProps) => {
                   </div>
                 </div>
                 <div className="space-y-1.5">
-                  <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-emerald-400">
+                  <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-elec-yellow/80">
                     After
                   </span>
-                  <div className="aspect-square overflow-hidden rounded-xl border border-emerald-500/20 bg-white/[0.03]">
+                  <div className="aspect-square overflow-hidden rounded-xl border border-elec-yellow/20 bg-white/[0.03]">
                     <img
                       src={savedAfterPhotos[compareIndex]?.photoUrl}
                       alt="After"

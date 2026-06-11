@@ -24,7 +24,7 @@ export const AddItemButton = ({ onAdd, autoScroll = true }: AddItemButtonProps) 
       ref={ref}
       onClick={handleAdd}
       variant="outline"
-      className="w-full h-11 touch-manipulation border-dashed border-white/20 text-white hover:border-emerald-500 hover:text-emerald-400"
+      className="w-full h-11 touch-manipulation border-dashed border-white/20 text-white hover:border-elec-yellow hover:text-elec-yellow"
     >
       <Plus className="h-4 w-4 mr-2" />
       Add Item

@@ -227,7 +227,8 @@ export const ScopeShareButton = ({ visit, assumptions }: ScopeShareButtonProps) 
       <div className="mt-3 grid grid-cols-2 gap-2">
         <Button
           onClick={handleWhatsApp}
-          className="h-11 rounded-xl bg-emerald-500/15 text-emerald-400 hover:bg-emerald-500/25 touch-manipulation"
+          variant="outline"
+          className="h-11 touch-manipulation rounded-xl border-white/[0.15] bg-white/[0.04] text-white transition-transform hover:bg-white/[0.08] active:scale-[0.98]"
         >
           <MessageSquare className="mr-2 h-4 w-4" />
           WhatsApp
@@ -235,7 +236,8 @@ export const ScopeShareButton = ({ visit, assumptions }: ScopeShareButtonProps) 
         <Button
           onClick={handleEmail}
           disabled={isSendingEmail}
-          className="h-11 rounded-xl bg-blue-500/15 text-blue-400 hover:bg-blue-500/25 disabled:opacity-50 touch-manipulation"
+          variant="outline"
+          className="h-11 touch-manipulation rounded-xl border-white/[0.15] bg-white/[0.04] text-white transition-transform hover:bg-white/[0.08] active:scale-[0.98] disabled:opacity-50"
         >
           {isSendingEmail ? (
             <Loader2 className="mr-2 h-4 w-4 animate-spin" />

@@ -85,7 +85,7 @@ export const RoomPhotoCapture = ({
             return (
               <div
                 key={photo.id}
-                className="relative aspect-square overflow-hidden rounded-lg bg-elec-gray"
+                className="relative aspect-square overflow-hidden rounded-lg border border-white/[0.06] bg-white/[0.04]"
               >
                 <img
                   src={photo.photoUrl}
