@@ -57,13 +57,8 @@ const SiteVisitEditPage = () => {
   const navigate = useNavigate();
   const { id } = useParams<{ id: string }>();
   const [searchParams] = useSearchParams();
-  const {
-    loadSiteVisit,
-    saveSiteVisit,
-    uploadSiteVisitPhotos,
-    getQuoteStatus,
-    isLoading,
-  } = useSiteVisitStorage();
+  const { loadSiteVisit, saveSiteVisit, uploadSiteVisitPhotos, getQuoteStatus, isLoading } =
+    useSiteVisitStorage();
   const { toast } = useToast();
   const [visit, setVisit] = useState<SiteVisit | null>(null);
   const [activeTab, setActiveTab] = useState<'edit' | 'after' | 'post-job'>('edit');
@@ -100,7 +95,8 @@ const SiteVisitEditPage = () => {
     });
   }, [id, loadSiteVisit, getQuoteStatus, searchParams]);
 
-  const showAfterTab = !!visit && ['completed', 'scope_sent', 'signed', 'post_job'].includes(visit.status);
+  const showAfterTab =
+    !!visit && ['completed', 'scope_sent', 'signed', 'post_job'].includes(visit.status);
   const showPostJobTab = showAfterTab && postJobEligible;
 
   const counts = useMemo(() => {
@@ -329,11 +325,7 @@ const SiteVisitEditPage = () => {
                     <span
                       className={cn(
                         'text-[11.5px] font-medium',
-                        isCurrent
-                          ? 'text-white'
-                          : isPast
-                            ? 'text-emerald-400'
-                            : 'text-white/45'
+                        isCurrent ? 'text-white' : isPast ? 'text-emerald-400' : 'text-white/45'
                       )}
                     >
                       {step.label}
@@ -384,9 +376,9 @@ const SiteVisitEditPage = () => {
           <StatStrip
             columns={4}
             stats={[
-              { label: 'Rooms', value: counts.rooms, tone: 'emerald' },
-              { label: 'Items', value: counts.items, tone: 'blue' },
-              { label: 'Photos', value: counts.photos, tone: 'purple' },
+              { label: 'Rooms', value: counts.rooms },
+              { label: 'Items', value: counts.items },
+              { label: 'Photos', value: counts.photos },
               {
                 label: 'Quote',
                 value:
@@ -397,7 +389,7 @@ const SiteVisitEditPage = () => {
                         ? quoteStatusValue
                         : 'Linked'
                       : 'None',
-                tone: 'amber',
+                accent: true,
               },
             ]}
           />
@@ -415,9 +407,7 @@ const SiteVisitEditPage = () => {
                   </div>
                   <div className="mt-0.5 text-[12px] text-white/65">
                     Status:{' '}
-                    <span className="text-white capitalize">
-                      {quoteStatusValue || 'pending'}
-                    </span>
+                    <span className="text-white capitalize">{quoteStatusValue || 'pending'}</span>
                     {quoteTotal !== null && (
                       <>
                         {' · '}£{Math.round(quoteTotal).toLocaleString('en-GB')}
@@ -526,7 +516,6 @@ const SiteVisitEditPage = () => {
           )}
         </motion.div>
       </motion.main>
-
     </motion.div>
   );
 };

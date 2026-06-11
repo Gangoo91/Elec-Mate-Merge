@@ -365,10 +365,10 @@ const SiteVisitsHubPage = () => {
               columns={5}
               stats={[
                 { label: 'Total', value: kpis.total, accent: true },
-                { label: 'In progress', value: kpis.inProgress, tone: 'amber' },
-                { label: 'Completed', value: kpis.completed, tone: 'green' },
-                { label: 'Scope sent', value: kpis.scopeSent, tone: 'blue' },
-                { label: 'Signed', value: kpis.signed, tone: 'emerald' },
+                { label: 'In progress', value: kpis.inProgress },
+                { label: 'Completed', value: kpis.completed },
+                { label: 'Scope sent', value: kpis.scopeSent },
+                { label: 'Signed', value: kpis.signed },
               ]}
             />
           </motion.div>

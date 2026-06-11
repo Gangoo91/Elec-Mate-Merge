@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef, useCallback } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { Plus, User, Check, Clock } from 'lucide-react';
+import { Plus, User, Check, Clock, Search } from 'lucide-react';
 import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
 import { Button } from '@/components/ui/button';
@@ -39,7 +39,7 @@ const PROPERTY_TYPES: { value: PropertyType; label: string }[] = [
 ];
 
 const inputClass =
-  'h-11 touch-manipulation rounded-xl border-white/[0.08] bg-[hsl(0_0%_10%)] text-base text-white placeholder:text-white/40 focus:border-elec-yellow/40 focus:ring-elec-yellow/20';
+  'h-11 touch-manipulation rounded-xl border-white/[0.12] bg-[hsl(0_0%_9%)] text-base text-white placeholder:text-white/40 focus:border-elec-yellow/50 focus:ring-elec-yellow/20';
 
 /**
  * Step 01 · Job — who it's for and where it is. Merges the old Client +
@@ -195,15 +195,28 @@ export const SiteVisitJobStep = ({
 
         {!selectedCustomer && !showCreate && (
           <div className="space-y-3">
-            <Input
-              value={searchTerm}
-              onChange={(e) => setSearchTerm(e.target.value)}
-              placeholder="Search name, phone or email — or add new below"
-              className={inputClass}
-              autoCapitalize="off"
-              autoComplete="off"
-              enterKeyHint="search"
-            />
+            <div className="flex flex-col gap-2 sm:flex-row">
+              <div className="relative flex-1">
+                <Search className="pointer-events-none absolute left-3.5 top-1/2 h-4 w-4 -translate-y-1/2 text-white/40" />
+                <Input
+                  value={searchTerm}
+                  onChange={(e) => setSearchTerm(e.target.value)}
+                  placeholder="Search name, phone or email"
+                  className={cn(inputClass, 'pl-10')}
+                  autoCapitalize="off"
+                  autoComplete="off"
+                  enterKeyHint="search"
+                />
+              </div>
+              <Button
+                onClick={handleCreateNew}
+                variant="outline"
+                className="h-11 touch-manipulation border-dashed border-white/20 text-white hover:border-elec-yellow hover:text-elec-yellow sm:px-5"
+              >
+                <Plus className="mr-2 h-4 w-4" />
+                New client
+              </Button>
+            </div>
             {searchTerm && (
               <div className="max-h-[300px] space-y-1 overflow-y-auto">
                 {isLoading && (
@@ -235,14 +248,6 @@ export const SiteVisitJobStep = ({
                 ))}
               </div>
             )}
-            <Button
-              onClick={handleCreateNew}
-              variant="outline"
-              className="h-11 w-full touch-manipulation border-dashed border-white/20 text-white hover:border-elec-yellow hover:text-elec-yellow"
-            >
-              <Plus className="mr-2 h-4 w-4" />
-              New client
-            </Button>
           </div>
         )}
 
@@ -265,7 +270,7 @@ export const SiteVisitJobStep = ({
               </Button>
             </div>
             <div className="space-y-1">
-              <label className="text-xs font-medium text-white">Name *</label>
+              <label className="text-[11.5px] font-medium text-white/65">Name *</label>
               <Input
                 value={newName}
                 onChange={(e) => setNewName(e.target.value)}
@@ -276,33 +281,35 @@ export const SiteVisitJobStep = ({
                 enterKeyHint="next"
               />
             </div>
-            <div className="space-y-1">
-              <label className="text-xs font-medium text-white">Phone</label>
-              <Input
-                type="tel"
-                inputMode="tel"
-                value={newPhone}
-                onChange={(e) => setNewPhone(e.target.value)}
-                placeholder="07xxx xxxxxx"
-                className={inputClass}
-                autoCapitalize="off"
-                autoComplete="tel"
-                enterKeyHint="next"
-              />
-            </div>
-            <div className="space-y-1">
-              <label className="text-xs font-medium text-white">Email</label>
-              <Input
-                type="email"
-                inputMode="email"
-                value={newEmail}
-                onChange={(e) => setNewEmail(e.target.value)}
-                placeholder="client@email.com"
-                className={inputClass}
-                autoCapitalize="off"
-                autoComplete="email"
-                enterKeyHint="done"
-              />
+            <div className="grid gap-3 sm:grid-cols-2">
+              <div className="space-y-1">
+                <label className="text-[11.5px] font-medium text-white/65">Phone</label>
+                <Input
+                  type="tel"
+                  inputMode="tel"
+                  value={newPhone}
+                  onChange={(e) => setNewPhone(e.target.value)}
+                  placeholder="07xxx xxxxxx"
+                  className={inputClass}
+                  autoCapitalize="off"
+                  autoComplete="tel"
+                  enterKeyHint="next"
+                />
+              </div>
+              <div className="space-y-1">
+                <label className="text-[11.5px] font-medium text-white/65">Email</label>
+                <Input
+                  type="email"
+                  inputMode="email"
+                  value={newEmail}
+                  onChange={(e) => setNewEmail(e.target.value)}
+                  placeholder="client@email.com"
+                  className={inputClass}
+                  autoCapitalize="off"
+                  autoComplete="email"
+                  enterKeyHint="done"
+                />
+              </div>
             </div>
             {showSavePrompt && newName.trim() && !visit.customerId && (
               <SaveCustomerPrompt
@@ -337,7 +344,7 @@ export const SiteVisitJobStep = ({
         </div>
 
         <div className="space-y-1">
-          <label className="text-xs font-medium text-white">Address *</label>
+          <label className="text-[11.5px] font-medium text-white/65">Address *</label>
           <PlacesAutocomplete
             value={visit.propertyAddress || ''}
             onChange={(value) => onUpdateProperty({ propertyAddress: value })}
@@ -378,56 +385,58 @@ export const SiteVisitJobStep = ({
           )}
         </div>
 
-        <div className="space-y-1">
-          <label className="text-xs font-medium text-white">Postcode</label>
-          <Input
-            value={visit.propertyPostcode || ''}
-            // Uppercase on blur, not per keystroke — mid-input casing makes
-            // the iOS keyboard flicker (audit P1)
-            onChange={(e) => onUpdateProperty({ propertyPostcode: e.target.value })}
-            onBlur={(e) =>
-              onUpdateProperty({ propertyPostcode: e.target.value.toUpperCase().trim() })
-            }
-            placeholder="AB1 2CD"
-            className={cn(inputClass, 'uppercase')}
-            maxLength={8}
-            autoCapitalize="characters"
-            autoComplete="postal-code"
-            enterKeyHint="next"
-          />
-        </div>
+        <div className="grid gap-3 sm:grid-cols-[160px_1fr]">
+          <div className="space-y-1">
+            <label className="text-[11.5px] font-medium text-white/65">Postcode</label>
+            <Input
+              value={visit.propertyPostcode || ''}
+              // Uppercase on blur, not per keystroke — mid-input casing makes
+              // the iOS keyboard flicker (audit P1)
+              onChange={(e) => onUpdateProperty({ propertyPostcode: e.target.value })}
+              onBlur={(e) =>
+                onUpdateProperty({ propertyPostcode: e.target.value.toUpperCase().trim() })
+              }
+              placeholder="AB1 2CD"
+              className={cn(inputClass, 'uppercase')}
+              maxLength={8}
+              autoCapitalize="characters"
+              autoComplete="postal-code"
+              enterKeyHint="next"
+            />
+          </div>
 
-        <div className="space-y-1">
-          <label className="text-xs font-medium text-white">Property type</label>
-          <div className="grid grid-cols-3 gap-2">
-            {PROPERTY_TYPES.map((pt) => {
-              const active = visit.propertyType === pt.value;
-              return (
-                <button
-                  key={pt.value}
-                  type="button"
-                  onClick={() => onUpdateProperty({ propertyType: pt.value })}
-                  className={cn(
-                    'h-11 rounded-xl border text-[13px] font-medium transition-colors touch-manipulation active:scale-[0.98]',
-                    active
-                      ? 'border-elec-yellow/60 bg-elec-yellow/[0.12] text-elec-yellow'
-                      : 'border-white/[0.1] bg-white/[0.04] text-white/75 hover:bg-white/[0.08]'
-                  )}
-                >
-                  {pt.label}
-                </button>
-              );
-            })}
+          <div className="space-y-1">
+            <label className="text-[11.5px] font-medium text-white/65">Property type</label>
+            <div className="grid grid-cols-3 gap-2">
+              {PROPERTY_TYPES.map((pt) => {
+                const active = visit.propertyType === pt.value;
+                return (
+                  <button
+                    key={pt.value}
+                    type="button"
+                    onClick={() => onUpdateProperty({ propertyType: pt.value })}
+                    className={cn(
+                      'h-11 rounded-xl border text-[13px] font-medium transition-colors touch-manipulation active:scale-[0.98]',
+                      active
+                        ? 'border-elec-yellow/60 bg-elec-yellow/[0.12] text-elec-yellow'
+                        : 'border-white/[0.1] bg-white/[0.04] text-white/75 hover:bg-white/[0.08]'
+                    )}
+                  >
+                    {pt.label}
+                  </button>
+                );
+              })}
+            </div>
           </div>
         </div>
 
         <div className="space-y-1">
-          <label className="text-xs font-medium text-white">Access notes</label>
+          <label className="text-[11.5px] font-medium text-white/65">Access notes</label>
           <Textarea
             value={visit.accessNotes || ''}
             onChange={(e) => onUpdateProperty({ accessNotes: e.target.value })}
             placeholder="Gate code, parking, key safe location…"
-            className="min-h-[80px] touch-manipulation rounded-xl border-white/[0.08] bg-[hsl(0_0%_10%)] text-base text-white placeholder:text-white/40 focus:border-elec-yellow/40 focus:ring-elec-yellow/20"
+            className="min-h-[80px] touch-manipulation rounded-xl border-white/[0.12] bg-[hsl(0_0%_9%)] text-base text-white placeholder:text-white/40 focus:border-elec-yellow/50 focus:ring-elec-yellow/20"
             autoCapitalize="sentences"
             spellCheck
             enterKeyHint="done"
