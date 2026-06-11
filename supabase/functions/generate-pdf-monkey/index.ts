@@ -618,6 +618,12 @@ serve(async (req) => {
       // Check if summary view is enabled
       const showSummaryView = freshQuote?.settings?.showSummaryView || false;
 
+      // Money strings for the template — Liquid's `round: 2` drops trailing
+      // zeros (£55.0) and can't add thousands separators, so the payload
+      // sends properly formatted GBP alongside every numeric field.
+      const gbp = (v: number) =>
+        `£${(Number(v) || 0).toLocaleString('en-GB', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`;
+
       // Process items - either detailed or summary view
       let processedItems: Array<{
         name: string;
@@ -694,6 +700,8 @@ serve(async (req) => {
             quantity: 1,
             unit: 'lot',
             unitPrice: categoryTotals[category],
+            unitPriceFormatted: gbp(categoryTotals[category]),
+            amountFormatted: gbp(categoryTotals[category]),
           }));
 
       } else {
@@ -708,6 +716,8 @@ serve(async (req) => {
           unit: it.raw.unit || 'each',
           unitPrice: it.unitPrice,
           totalPrice: it.totalPrice,
+          unitPriceFormatted: gbp(it.unitPrice),
+          amountFormatted: gbp(it.totalPrice),
           category: it.category,
           subcategory: it.raw.subcategory || '',
           workerType: it.raw.workerType || it.raw.worker_type || '',
@@ -816,17 +826,17 @@ serve(async (req) => {
         // directly on invoices.stripe_payment_link_url.
         payLink:
           (freshQuote as Record<string, unknown> | null)?.stripe_payment_link_url || null,
-        // ELE-T-inv-extra — partial payment surfacing (totalPaid is
-        // numeric pennies on the row; partialPayments is a JSONB array
-        // of past payment events). Used when invoice is partially paid
-        // but not fully settled — template shows "Paid £X of £Y so far".
+        // ELE-T-inv-extra — partial payment surfacing. total_paid is stored
+        // in POUNDS (verified against live rows: 263.10 paid of 877.00 —
+        // the previous /100 here treated it as pence and would have printed
+        // £2.63). partialPayments is a JSONB array of past payment events.
         totalPaidFormatted: (() => {
           const tp = Number(
             (freshQuote as Record<string, unknown> | null)?.total_paid || 0
           );
-          return tp > 0 ? `£${(tp / 100).toFixed(2)}` : null;
+          return tp > 0 ? `£${tp.toFixed(2)}` : null;
         })(),
-        totalPaidPence: Number(
+        totalPaid: Number(
           (freshQuote as Record<string, unknown> | null)?.total_paid || 0
         ),
         partialPayments:
@@ -1078,26 +1088,35 @@ serve(async (req) => {
         // Add explicit calculation fields for template
         calculations: {
           subtotal: itemsSubtotal,
+          subtotalFormatted: gbp(itemsSubtotal),
           // ELE-888 + ELE-891 — adjustment surfacing for templates
           itemAdjustedSubtotal: itemAdjustedInvSubtotal,
           categoryAdjustments: invCategoryAdjustments,
           categoryAdjustmentDelta: invCategoryAdjustmentDelta,
           overhead: overhead,
+          overheadFormatted: gbp(overhead),
           overheadPercentage: settings.overheadPercentage || 0,
           profit: profit,
+          profitFormatted: gbp(profit),
           profitMargin: settings.profitMargin || 0,
           discountAmount: invDiscountAmount,
+          discountAmountFormatted: gbp(invDiscountAmount),
           discountLabel: invDiscountLabel,
           vatAmount: vatAmount,
+          vatAmountFormatted: gbp(vatAmount),
           vatRate: settings.vatRate || 20,
           total: total,
+          totalFormatted: gbp(total),
           reverseCharge: invReverseCharge,
           notionalVat: invNotionalVat,
+          notionalVatFormatted: gbp(invNotionalVat),
           cisEnabled: invCisEnabled,
           cisRate: invCisRate,
           cisAmount: invCisAmount,
+          cisAmountFormatted: gbp(invCisAmount),
           labourNet: invLabourNet,
           netPayable: invNetPayable,
+          netPayableFormatted: gbp(invNetPayable),
         },
         // Branding settings for dynamic styling (same as quotes)
         branding: {
@@ -1190,6 +1209,16 @@ serve(async (req) => {
           }
         }
         categoryAdjustmentLines = [];
+      }
+
+      // Money strings for the template — locale-formatted with thousands
+      // separators (Liquid's round:2 drops zeros). Applied AFTER markup
+      // absorption so the strings match the prices the customer sees.
+      const gbpQ = (v: number) =>
+        `£${(Number(v) || 0).toLocaleString('en-GB', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`;
+      for (const item of transformedItems as any[]) {
+        item.unitPriceFormatted = gbpQ(item.unitPrice);
+        item.totalPriceFormatted = gbpQ(item.totalPrice);
       }
 
       // Group items by category for template (after any markup absorption)
@@ -1429,16 +1458,16 @@ serve(async (req) => {
           cisAmount: qCisAmount,
           labourNet: qLabourNet,
           netPayable: qNetPayable,
-          // Formatted currency strings
-          subtotalFormatted: `£${itemsSubtotal.toFixed(2)}`,
-          overheadFormatted: overhead > 0 ? `£${overhead.toFixed(2)}` : null,
-          profitFormatted: profit > 0 ? `£${profit.toFixed(2)}` : null,
-          discountFormatted: discountAmount > 0 ? `-£${discountAmount.toFixed(2)}` : null,
-          vatFormatted: vatAmount > 0 ? `£${vatAmount.toFixed(2)}` : null,
-          totalFormatted: `£${total.toFixed(2)}`,
-          cisFormatted: qCisAmount > 0 ? `-£${qCisAmount.toFixed(2)}` : null,
-          netPayableFormatted: qCisAmount > 0 ? `£${qNetPayable.toFixed(2)}` : null,
-          notionalVatFormatted: qReverseCharge ? `£${qNotionalVat.toFixed(2)}` : null,
+          // Formatted currency strings (locale — thousands separators)
+          subtotalFormatted: gbpQ(itemsSubtotal),
+          overheadFormatted: overhead > 0 ? gbpQ(overhead) : null,
+          profitFormatted: profit > 0 ? gbpQ(profit) : null,
+          discountFormatted: discountAmount > 0 ? `−${gbpQ(discountAmount)}` : null,
+          vatFormatted: vatAmount > 0 ? gbpQ(vatAmount) : null,
+          totalFormatted: gbpQ(total),
+          cisFormatted: qCisAmount > 0 ? `−${gbpQ(qCisAmount)}` : null,
+          netPayableFormatted: qCisAmount > 0 ? gbpQ(qNetPayable) : null,
+          notionalVatFormatted: qReverseCharge ? gbpQ(qNotionalVat) : null,
         },
         // For backwards compatibility with existing templates
         subtotal: itemsSubtotal,

@@ -16,33 +16,33 @@ import {
 } from '@/components/ui/select';
 
 interface InvoiceSettingsStepProps {
-  settings?: InvoiceSettings;
   items?: QuoteItem[];
+  settings?: InvoiceSettings;
   notes?: string;
   onUpdateSettings: (settings: Partial<InvoiceSettings>) => void;
   onUpdateNotes: (notes: string) => void;
 }
 
 const inputClass =
-  'w-full h-11 px-3 rounded-lg text-[15px] text-white bg-white/[0.06] border border-white/[0.12] focus:border-elec-yellow focus:ring-2 focus:ring-elec-yellow/20 outline-none touch-manipulation placeholder:text-white';
+  'w-full h-12 px-3.5 rounded-xl text-base text-white bg-white/[0.05] border border-white/[0.10] focus:border-elec-yellow focus:ring-2 focus:ring-elec-yellow/15 outline-none touch-manipulation placeholder:text-white/40 transition-colors';
 
 const labelClass = 'text-[11px] text-white uppercase tracking-wider block mb-1.5 truncate';
 
 export const InvoiceSettingsStep = ({
-  settings,
   items,
+  settings,
   notes,
   onUpdateSettings,
   onUpdateNotes,
 }: InvoiceSettingsStepProps) => {
-  const darkStyle: React.CSSProperties = { colorScheme: 'dark' };
-
   // Live CIS preview — so the deduction can never silently come out as £0.
   // Mirrors the invoice calc (applyOverheadAndProfit: true).
   const cisPreview = useMemo(
     () => computeQuoteTotals((items || []) as QuoteItem[], settings as any, { applyOverheadAndProfit: true }),
     [items, settings]
   );
+
+  const darkStyle: React.CSSProperties = { colorScheme: 'dark' };
 
   const updateBankField = (field: string, value: string) => {
     onUpdateSettings({
@@ -60,10 +60,10 @@ export const InvoiceSettingsStep = ({
     <div className="space-y-6 text-left">
 
       {/* Invoice Display */}
-      <div className="flex items-center justify-between py-3 border-b border-white/[0.12]">
+      <div className="flex items-center justify-between py-3.5 border-b border-white/[0.08]">
         <div>
           <p className="text-[14px] font-medium text-white">Summary View</p>
-          <p className="text-[12px] text-white mt-0.5">
+          <p className="text-[12px] text-white/60 mt-0.5">
             {settings?.showSummaryView ? 'Labour & Materials totals only' : 'Itemised breakdown'}
           </p>
         </div>
@@ -75,12 +75,18 @@ export const InvoiceSettingsStep = ({
       </div>
 
       {/* VAT */}
-      <div className="h-[2px] w-full rounded-full bg-gradient-to-r from-elec-yellow/30 to-elec-yellow/5" />
+      <div className="pt-2">
+        <div className="flex items-baseline gap-2 mb-1">
+          <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-elec-yellow/80 tabular-nums">01</span>
+          <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/80">· Tax</span>
+        </div>
+        <p className="text-[11px] text-white/50">VAT, reverse charge and CIS</p>
+      </div>
       <div>
-        <div className="flex items-center justify-between py-3 border-b border-white/[0.12]">
+        <div className="flex items-center justify-between py-3.5 border-b border-white/[0.08]">
           <div>
             <p className="text-[14px] font-medium text-white">VAT Registered</p>
-            <p className="text-[12px] text-white mt-0.5">Add VAT to this invoice</p>
+            <p className="text-[12px] text-white/60 mt-0.5">Add VAT to this invoice</p>
           </div>
           <Switch
             checked={settings?.vatRegistered || false}
@@ -110,12 +116,10 @@ export const InvoiceSettingsStep = ({
       </div>
 
       {/* Construction — CIS + VAT reverse charge */}
-      <div className="h-[2px] w-full rounded-full bg-gradient-to-r from-elec-yellow/30 to-elec-yellow/5" />
       <div>
-        <p className="text-[11px] text-white/60 uppercase tracking-wider mb-1">Construction (CIS &amp; VAT)</p>
 
         {/* VAT reverse charge */}
-        <div className="flex items-center justify-between py-3 border-b border-white/[0.12]">
+        <div className="flex items-center justify-between py-3.5 border-b border-white/[0.08]">
           <div className="pr-3">
             <p className="text-[14px] font-medium text-white">VAT reverse charge</p>
             <p className="text-[12px] text-white/70 mt-0.5">CIS supplies — charge £0 VAT; customer accounts to HMRC</p>
@@ -133,7 +137,7 @@ export const InvoiceSettingsStep = ({
         )}
 
         {/* CIS deduction */}
-        <div className="flex items-center justify-between py-3 border-b border-white/[0.12] mt-1">
+        <div className="flex items-center justify-between py-3.5 border-b border-white/[0.08] mt-1">
           <div className="pr-3">
             <p className="text-[14px] font-medium text-white">CIS deduction</p>
             <p className="text-[12px] text-white/70 mt-0.5">Deducted from labour only (ex-VAT)</p>
@@ -154,7 +158,7 @@ export const InvoiceSettingsStep = ({
                   type="button"
                   onClick={() => onUpdateSettings({ cisRate: rate })}
                   className={cn(
-                    'h-11 rounded-lg text-[13px] font-semibold border transition-colors touch-manipulation',
+                    'h-12 rounded-xl text-[13px] font-semibold border transition-colors touch-manipulation',
                     (settings?.cisRate ?? 20) === rate
                       ? 'bg-elec-yellow text-black border-elec-yellow'
                       : 'bg-white/[0.06] text-white border-white/[0.12]'
@@ -194,12 +198,18 @@ export const InvoiceSettingsStep = ({
       </div>
 
       {/* Deductions & Discounts */}
-      <div className="h-[2px] w-full rounded-full bg-gradient-to-r from-elec-yellow/30 to-elec-yellow/5" />
+      <div className="pt-2">
+        <div className="flex items-baseline gap-2 mb-1">
+          <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-elec-yellow/80 tabular-nums">02</span>
+          <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/80">· Pricing</span>
+        </div>
+        <p className="text-[11px] text-white/50">Adjustments and discounts</p>
+      </div>
       <div>
-        <div className="flex items-center justify-between py-3 border-b border-white/[0.12]">
+        <div className="flex items-center justify-between py-3.5 border-b border-white/[0.08]">
           <div>
             <p className="text-[14px] font-medium text-white">Discount</p>
-            <p className="text-[12px] text-white mt-0.5">Goodwill, retention, early-payment, etc.</p>
+            <p className="text-[12px] text-white/60 mt-0.5">Goodwill, retention, early-payment, etc.</p>
           </div>
           <Switch
             checked={settings?.discountEnabled || false}
@@ -224,7 +234,7 @@ export const InvoiceSettingsStep = ({
                   type="button"
                   onClick={() => onUpdateSettings({ discountType: 'percentage' })}
                   className={cn(
-                    'px-4 h-11 rounded-lg text-[13px] font-medium transition-all touch-manipulation active:scale-[0.97]',
+                    'px-4 h-12 rounded-xl text-[13px] font-medium transition-all touch-manipulation active:scale-[0.97]',
                     (settings?.discountType || 'percentage') === 'percentage'
                       ? 'bg-elec-yellow/20 text-elec-yellow border border-elec-yellow/40'
                       : 'bg-white/[0.08] text-white border border-white/[0.12]'
@@ -236,7 +246,7 @@ export const InvoiceSettingsStep = ({
                   type="button"
                   onClick={() => onUpdateSettings({ discountType: 'fixed' })}
                   className={cn(
-                    'px-4 h-11 rounded-lg text-[13px] font-medium transition-all touch-manipulation active:scale-[0.97]',
+                    'px-4 h-12 rounded-xl text-[13px] font-medium transition-all touch-manipulation active:scale-[0.97]',
                     settings?.discountType === 'fixed'
                       ? 'bg-elec-yellow/20 text-elec-yellow border border-elec-yellow/40'
                       : 'bg-white/[0.08] text-white border border-white/[0.12]'
@@ -285,9 +295,8 @@ export const InvoiceSettingsStep = ({
       </div>
 
       {/* ELE-891 — Per-category adjustment */}
-      <div className="h-[2px] w-full rounded-full bg-gradient-to-r from-elec-yellow/30 to-elec-yellow/5" />
       <div>
-        <div className="py-3 border-b border-white/[0.12]">
+        <div className="py-3.5 border-b border-white/[0.08]">
           <p className="text-[14px] font-medium text-white">Per-category adjustment</p>
           <p className="text-[12px] text-white/70 mt-0.5">
             Signed %. Negative = discount, positive = markup. Applied before global discount.
@@ -326,7 +335,13 @@ export const InvoiceSettingsStep = ({
       </div>
 
       {/* Payment Terms */}
-      <div className="h-[2px] w-full rounded-full bg-gradient-to-r from-elec-yellow/30 to-elec-yellow/5" />
+      <div className="pt-2">
+        <div className="flex items-baseline gap-2 mb-1">
+          <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-elec-yellow/80 tabular-nums">03</span>
+          <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/80">· Payment</span>
+        </div>
+        <p className="text-[11px] text-white/50">Terms and bank details on the invoice</p>
+      </div>
       <div className="space-y-3">
         <div>
           <label className={labelClass}>Payment Terms</label>
@@ -383,7 +398,6 @@ export const InvoiceSettingsStep = ({
       </div>
 
       {/* Bank Details — 2x2 grid */}
-      <div className="h-[2px] w-full rounded-full bg-gradient-to-r from-elec-yellow/30 to-elec-yellow/5" />
       <div className="space-y-3">
         <div className="grid grid-cols-2 gap-3">
           <div>
@@ -440,7 +454,6 @@ export const InvoiceSettingsStep = ({
       </div>
 
       {/* Notes */}
-      <div className="h-[2px] w-full rounded-full bg-gradient-to-r from-elec-yellow/30 to-elec-yellow/5" />
       <div>
         <label className={labelClass}>Invoice Notes (Optional)</label>
         <textarea

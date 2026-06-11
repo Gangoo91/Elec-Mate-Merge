@@ -1,8 +1,13 @@
-import { useState, useMemo } from 'react';
+import { useState, useMemo, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { InvoiceItem, InvoiceSettings } from '@/types/invoice';
 import { Button } from '@/components/ui/button';
-import { Trash2, ChevronDown, ChevronUp, Check, Pencil, Copy, Percent } from 'lucide-react';
+import { Trash2, ChevronDown, ChevronUp, Check, Pencil, Copy, Percent, Zap, PenLine, LayoutTemplate, ScanLine, Loader2, BookOpen, PoundSterling, Search, AlertTriangle } from 'lucide-react';
+import { useDebounce } from '@/hooks/useDebounce';
+import { useMaterialsLists, type MaterialsListItem } from '@/hooks/useMaterialsLists';
+import { usePriceList } from '@/hooks/usePriceList';
+import { supabase } from '@/integrations/supabase/client';
+import { PANEL } from '@/components/electrician/shared/surfaces';
 import { toast } from '@/hooks/use-toast';
 import { JobTemplates } from '@/components/electrician/quote-builder/JobTemplates';
 import { cn } from '@/lib/utils';
@@ -57,10 +62,22 @@ interface InvoiceItemsStepProps {
   subtotal?: number;
   vatAmount?: number;
   total?: number;
+  stockItems?: { id: string; name: string; quantity: number; low_stock_threshold?: number | null }[];
 }
 
-type AddMethod = 'quick' | 'manual' | 'templates' | 'scan';
+type AddMethod = 'quick' | 'manual' | 'pricebook' | 'ratecard' | 'templates' | 'scan';
 type Category = 'labour' | 'materials' | 'equipment';
+
+/** Tames ALL-CAPS supplier product names; preserves trade acronyms. */
+const KEEP_CAPS = new Set(['LED', 'USB', 'RCD', 'RCBO', 'MCB', 'SPD', 'AFDD', 'PVC', 'XLPE', 'SWA', 'LSF', 'T&E', 'IP65', 'IP66', 'IP44', 'CU', 'DB', 'EV', 'AC', 'DC', 'UV', 'PIR']);
+function titleCaseProduct(name: string): string {
+  if (!name) return name;
+  if (name !== name.toUpperCase()) return name;
+  return name
+    .split(' ')
+    .map((w) => (KEEP_CAPS.has(w.replace(/[^A-Z0-9&]/g, '')) || /\d/.test(w) ? w : w.charAt(0) + w.slice(1).toLowerCase()))
+    .join(' ');
+}
 
 export const InvoiceItemsStep = ({
   // Default to empty arrays so the component can never crash on
@@ -77,6 +94,7 @@ export const InvoiceItemsStep = ({
   subtotal = 0,
   vatAmount = 0,
   total = 0,
+  stockItems = [],
 }: InvoiceItemsStepProps) => {
   const darkInputStyle: React.CSSProperties = {
     colorScheme: 'dark',
@@ -174,6 +192,83 @@ export const InvoiceItemsStep = ({
   // ELE-888 — per-item adjustment editor toggle
   const [adjustingItemId, setAdjustingItemId] = useState<string | null>(null);
   const [editingDescription, setEditingDescription] = useState('');
+
+  // Price Book + Rate Card + live stock (parity with the quote wizard, ELE-1014).
+  const { lists: materialsLists } = useMaterialsLists();
+  const { items: rateCardItems } = usePriceList();
+  const [priceBookSearch, setPriceBookSearch] = useState('');
+  const [rateCardSearch, setRateCardSearch] = useState('');
+
+  const stockById = useMemo(() => new Map(stockItems.map((st) => [st.id, st])), [stockItems]);
+
+  const pricedBookItems = useMemo(() => {
+    const result: { item: MaterialsListItem; listName: string }[] = [];
+    for (const list of materialsLists) {
+      for (const item of list.items) {
+        if (item.estimated_price != null && item.estimated_price > 0) {
+          result.push({ item, listName: list.name });
+        }
+      }
+    }
+    if (priceBookSearch.trim()) {
+      const q = priceBookSearch.toLowerCase();
+      return result.filter((pb) => pb.item.name.toLowerCase().includes(q));
+    }
+    return result;
+  }, [materialsLists, priceBookSearch]);
+
+  // Take-off check — saving this invoice decrements stock for every line
+  // carrying inventoryItemId (apply_invoice_stock_decrement RPC), so warn
+  // when AGGREGATE demand across quote + added lines exceeds what's on hand.
+  const stockWarnings = useMemo(() => {
+    const demand = new Map<string, number>();
+    for (const it of [...originalItems, ...additionalItems]) {
+      if (!it.inventoryItemId) continue;
+      const qty = Number(it.actualQuantity ?? it.quantity) || 0;
+      demand.set(it.inventoryItemId, (demand.get(it.inventoryItemId) || 0) + qty);
+    }
+    return Array.from(demand.entries()).flatMap(([id, need]) => {
+      const stock = stockById.get(id);
+      if (!stock || need <= stock.quantity) return [];
+      return [{ name: stock.name, need, have: stock.quantity }];
+    });
+  }, [originalItems, additionalItems, stockById]);
+
+  // Live supplier results (same marketplace_products pipeline as the quote
+  // wizard — Screwfix/Toolstation/CEF scraped daily by elec-pipeline).
+  const [liveResults, setLiveResults] = useState<any[]>([]);
+  const [isSearchingLive, setIsSearchingLive] = useState(false);
+  const debouncedMaterialSearch = useDebounce(materialSearch, 500);
+
+  useEffect(() => {
+    let cancelled = false;
+    (async () => {
+      if (debouncedMaterialSearch.trim().length < 3) {
+        setLiveResults([]);
+        return;
+      }
+      setIsSearchingLive(true);
+      try {
+        const { data, error } = await supabase.functions.invoke('search-materials-fast', {
+          body: { query: debouncedMaterialSearch, categoryFilter: null, supplierFilter: 'all', limit: 16 },
+        });
+        if (error) throw error;
+        if (!cancelled && data?.materials) {
+          const ms = [...data.materials].sort((a: any, b: any) =>
+            (b.source === 'live' ? 1 : 0) - (a.source === 'live' ? 1 : 0)
+          );
+          setLiveResults(ms);
+        }
+      } catch {
+        if (!cancelled) setLiveResults([]);
+      } finally {
+        if (!cancelled) setIsSearchingLive(false);
+      }
+    })();
+    return () => {
+      cancelled = true;
+    };
+  }, [debouncedMaterialSearch]);
 
   const calculateAdjustedPrice = (basePrice: number) => {
     return basePrice * (1 + priceAdjustment / 100);
@@ -444,7 +539,8 @@ export const InvoiceItemsStep = ({
   return (
     <div className="space-y-4 text-left">
       {/* Running Total */}
-      <div className="pb-4 border-b border-white/[0.12] space-y-1.5">
+      <div className={cn(PANEL, 'p-4 space-y-1.5')}>
+        <p className="text-[10px] font-medium uppercase tracking-[0.18em] text-elec-yellow/80 mb-1">Running total</p>
         <div className="flex items-center justify-between">
           <span className="text-[13px] text-white">Subtotal</span>
           <span className="text-[14px] text-white tabular-nums">{formatCurrency(subtotal)}</span>
@@ -472,11 +568,28 @@ export const InvoiceItemsStep = ({
         )}
         <div className="flex items-center justify-between pt-1.5">
           <span className="text-[14px] font-semibold text-white">Total</span>
-          <span className="text-[18px] font-bold text-white tabular-nums">
+          <span className="text-[20px] font-bold text-elec-yellow tabular-nums">
             {formatCurrency(total)}
           </span>
         </div>
       </div>
+
+      {/* Take-off vs stock — aggregate demand exceeds on-hand */}
+      {stockWarnings.length > 0 && (
+        <div className="rounded-xl border border-amber-500/25 bg-amber-500/[0.06] px-3.5 py-3 space-y-1">
+          <p className="text-[11px] font-semibold text-amber-400 uppercase tracking-wider flex items-center gap-1.5">
+            <AlertTriangle className="h-3.5 w-3.5" /> Billing more than you have in stock
+          </p>
+          {stockWarnings.map((w) => (
+            <p key={w.name} className="text-[12px] text-amber-200/90">
+              {w.name} — billing {w.need}, only {w.have} in stock
+            </p>
+          ))}
+          <p className="text-[11px] text-white/55 pt-0.5">
+            Stock-linked lines deduct automatically when this invoice is saved.
+          </p>
+        </div>
+      )}
 
       {/* Original Quote Items */}
       {originalItems.length > 0 && (
@@ -485,8 +598,9 @@ export const InvoiceItemsStep = ({
             onClick={() => setShowOriginalItems(!showOriginalItems)}
             className="w-full flex items-center justify-between py-2"
           >
-            <span className="text-[12px] font-semibold text-white uppercase tracking-wider">
-              Quote Items ({originalItems.length})
+            <span className="flex items-baseline gap-2">
+              <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-elec-yellow/80 tabular-nums">01</span>
+              <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/80">· From the quote ({originalItems.length})</span>
             </span>
             {showOriginalItems ? (
               <ChevronUp className="h-4 w-4 text-white" />
@@ -680,30 +794,40 @@ export const InvoiceItemsStep = ({
         </div>
       )}
 
-      {/* Add Method Tabs */}
-      <div className="flex gap-1.5 pt-2">
-        {[
-          { id: 'quick' as AddMethod, label: 'Quick' },
-          { id: 'manual' as AddMethod, label: 'Manual' },
-          { id: 'templates' as AddMethod, label: 'Jobs' },
-          { id: 'scan' as AddMethod, label: 'Scan' },
-        ].map((method) => {
-          const isActive = activeAddMethod === method.id;
-          return (
-            <button
-              key={method.id}
-              onClick={() => setActiveAddMethod(method.id)}
-              className={cn(
-                'flex-1 h-11 rounded-lg text-[13px] font-semibold transition-all touch-manipulation',
-                isActive
-                  ? 'bg-elec-yellow/20 text-elec-yellow border border-elec-yellow/40'
-                  : 'text-white'
-              )}
-            >
-              {method.label}
-            </button>
-          );
-        })}
+      {/* === ADD FROM — sources === */}
+      <div className="pt-1">
+        <p className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/60 mb-2">Add from</p>
+        <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-2">
+          {[
+            { id: 'quick' as AddMethod, label: 'Quick add', sub: 'Labour, materials & kit', icon: Zap },
+            { id: 'pricebook' as AddMethod, label: 'Price Book', sub: `${pricedBookItems.length} priced items`, icon: BookOpen },
+            ...(rateCardItems.length > 0
+              ? [{ id: 'ratecard' as AddMethod, label: 'Rate Card', sub: `${rateCardItems.length} rates`, icon: PoundSterling }]
+              : []),
+            { id: 'manual' as AddMethod, label: 'Manual', sub: 'Type your own line', icon: PenLine },
+            { id: 'templates' as AddMethod, label: 'Job templates', sub: 'Saved job packages', icon: LayoutTemplate },
+            { id: 'scan' as AddMethod, label: 'Scan invoice', sub: 'Import supplier costs', icon: ScanLine },
+          ].map((method) => {
+            const isActive = activeAddMethod === method.id;
+            return (
+              <button
+                key={method.id}
+                type="button"
+                onClick={() => setActiveAddMethod(method.id)}
+                className={cn(
+                  'flex flex-col items-start gap-1.5 p-3 rounded-xl border text-left touch-manipulation active:scale-[0.98] transition-all select-none',
+                  isActive ? 'bg-elec-yellow/[0.08] border-elec-yellow/[0.25]' : 'bg-white/[0.04] border-white/[0.08]'
+                )}
+              >
+                <method.icon className={cn('h-4 w-4', isActive ? 'text-elec-yellow' : 'text-white/70')} />
+                <span>
+                  <span className="block text-[12px] font-semibold text-white leading-tight">{method.label}</span>
+                  <span className="block text-[10px] text-white/55 mt-0.5">{method.sub}</span>
+                </span>
+              </button>
+            );
+          })}
+        </div>
       </div>
 
       {/* Quick Add */}
@@ -712,9 +836,9 @@ export const InvoiceItemsStep = ({
           {/* Category Tabs */}
           <div className="flex gap-1.5">
             {[
-              { id: 'labour' as Category, label: 'Labour' },
-              { id: 'materials' as Category, label: 'Materials' },
-              { id: 'equipment' as Category, label: 'Equipment' },
+              { id: 'labour' as Category, label: 'Labour', dot: 'bg-blue-400' },
+              { id: 'materials' as Category, label: 'Materials', dot: 'bg-emerald-400' },
+              { id: 'equipment' as Category, label: 'Equipment', dot: 'bg-purple-400' },
             ].map((cat) => {
               const isActive = newItem.category === cat.id;
               return (
@@ -722,12 +846,13 @@ export const InvoiceItemsStep = ({
                   key={cat.id}
                   onClick={() => handleCategoryChange(cat.id)}
                   className={cn(
-                    'flex-1 h-11 rounded-lg text-[13px] font-semibold transition-all touch-manipulation',
+                    'flex-1 h-11 rounded-xl text-[13px] font-semibold transition-all touch-manipulation flex items-center justify-center gap-1.5 border',
                     isActive
-                      ? 'bg-elec-yellow/20 text-elec-yellow border border-elec-yellow/40'
-                      : 'text-white'
+                      ? 'bg-elec-yellow/[0.08] border-elec-yellow/[0.25] text-elec-yellow'
+                      : 'bg-white/[0.04] border-white/[0.08] text-white/80'
                   )}
                 >
+                  <span className={cn('h-1.5 w-1.5 rounded-full', cat.dot)} />
                   {cat.label}
                 </button>
               );
@@ -762,7 +887,7 @@ export const InvoiceItemsStep = ({
               {/* Worker Type Selector */}
               <button
                 onClick={() => setWorkerSheetOpen(true)}
-                className="w-full flex items-center justify-between py-3 border-b border-white/[0.12] touch-manipulation active:scale-[0.99]"
+                className="w-full flex items-center justify-between px-3.5 h-14 rounded-xl bg-white/[0.05] border border-white/[0.10] touch-manipulation active:scale-[0.99] transition-all"
               >
                 <div className="flex items-center gap-3">
                   <div className="text-left">
@@ -785,7 +910,7 @@ export const InvoiceItemsStep = ({
               {/* Hours Selector */}
               <button
                 onClick={() => setHoursSheetOpen(true)}
-                className="w-full flex items-center justify-between py-3 border-b border-white/[0.12] touch-manipulation active:scale-[0.99]"
+                className="w-full flex items-center justify-between px-3.5 h-14 rounded-xl bg-white/[0.05] border border-white/[0.10] touch-manipulation active:scale-[0.99] transition-all"
               >
                 <div className="flex items-center gap-3">
                   <div className="text-left">
@@ -819,17 +944,65 @@ export const InvoiceItemsStep = ({
             <div className="space-y-2">
               {/* Search */}
               <input
-                placeholder="Search materials..."
+                placeholder="Search live supplier prices…"
                 value={materialSearch}
                 onChange={(e) => setMaterialSearch(e.target.value)}
                 style={darkInputStyle}
-                className="w-full h-11 px-4 rounded-xl bg-white/[0.06] border border-white/[0.12] text-[14px] text-white placeholder:text-white focus:outline-none focus:border-elec-yellow focus:ring-2 focus:ring-elec-yellow/20"
+                className="w-full h-12 px-4 rounded-xl bg-white/[0.05] border border-white/[0.10] text-[15px] text-white placeholder:text-white/40 focus:outline-none focus:border-elec-yellow focus:ring-2 focus:ring-elec-yellow/15 transition-colors"
               />
+
+              {/* ⚡ Live supplier prices — tap to fill the line */}
+              {materialSearch.trim().length >= 3 && (isSearchingLive || liveResults.length > 0) && (
+                <div className="space-y-1.5">
+                  <p className="text-[10px] font-medium uppercase tracking-[0.18em] text-elec-yellow/80 flex items-center gap-1.5 pt-1">
+                    <Zap className="h-3 w-3" /> Live supplier prices
+                    {isSearchingLive && <Loader2 className="h-3 w-3 animate-spin text-white/40" />}
+                  </p>
+                  {liveResults.slice(0, 8).map((m: any, idx: number) => {
+                    const price = Number(m.price) || 0;
+                    const days = m.scrapedAt
+                      ? Math.max(0, Math.floor((Date.now() - new Date(m.scrapedAt).getTime()) / 86400000))
+                      : null;
+                    return (
+                      <button
+                        key={`${m.supplier || 's'}-${idx}`}
+                        type="button"
+                        onClick={() => {
+                          setNewItem((prev) => ({
+                            ...prev,
+                            description: titleCaseProduct(m.name || m.description || ''),
+                            unitPrice: calculateAdjustedPrice(price),
+                            unit: 'each',
+                            materialCode: '',
+                          }));
+                          setMaterialSearch('');
+                        }}
+                        className="w-full flex items-center justify-between gap-3 px-3.5 py-2.5 rounded-xl bg-white/[0.04] border border-white/[0.08] text-left touch-manipulation active:scale-[0.99] transition-all"
+                      >
+                        <span className="min-w-0">
+                          <span className="block text-[13px] font-medium text-white truncate">
+                            {titleCaseProduct(m.name || m.description || '')}
+                          </span>
+                          <span className="block text-[11px] text-white/55 capitalize truncate">
+                            {m.source === 'live' && <Zap className="inline h-2.5 w-2.5 text-elec-yellow mr-0.5" />}
+                            {m.supplier || 'Trade catalogue'}
+                            {days !== null && ` · priced ${days === 0 ? 'today' : `${days}d ago`}`}
+                            {m.isOnSale && m.discountPercentage ? ` · −${m.discountPercentage}%` : ''}
+                          </span>
+                        </span>
+                        <span className="text-[14px] font-semibold text-white tabular-nums flex-shrink-0">
+                          £{price.toFixed(2)}
+                        </span>
+                      </button>
+                    );
+                  })}
+                </div>
+              )}
 
               {/* Category Selector */}
               <button
                 onClick={() => setCategorySheetOpen(true)}
-                className="w-full flex items-center justify-between py-3 border-b border-white/[0.12] touch-manipulation active:scale-[0.99]"
+                className="w-full flex items-center justify-between px-3.5 h-14 rounded-xl bg-white/[0.05] border border-white/[0.10] touch-manipulation active:scale-[0.99] transition-all"
               >
                 <div className="flex items-center gap-3">
                   <div className="text-left">
@@ -845,7 +1018,7 @@ export const InvoiceItemsStep = ({
               {/* Material Selector */}
               <button
                 onClick={() => setMaterialSheetOpen(true)}
-                className="w-full flex items-center justify-between py-3 border-b border-white/[0.12] touch-manipulation active:scale-[0.99]"
+                className="w-full flex items-center justify-between px-3.5 h-14 rounded-xl bg-white/[0.05] border border-white/[0.10] touch-manipulation active:scale-[0.99] transition-all"
               >
                 <div className="flex items-center gap-3">
                   <div className="text-left">
@@ -866,8 +1039,8 @@ export const InvoiceItemsStep = ({
               </button>
 
               {/* Markup Quick Select */}
-              <div className="flex items-center justify-between py-3 border-b border-white/[0.12]">
-                <span className="text-[11px] text-white uppercase tracking-wider">Markup</span>
+              <div className="flex items-center justify-between px-3.5 py-3 rounded-xl bg-white/[0.05] border border-white/[0.10]">
+                <span className="text-[11px] font-medium text-white/65 uppercase tracking-wider">Markup</span>
                 <div className="flex gap-1">
                   {[0, 10, 15, 20].map((markup) => (
                     <button
@@ -876,8 +1049,8 @@ export const InvoiceItemsStep = ({
                       className={cn(
                         'px-3 py-1.5 rounded-lg text-[12px] font-semibold transition-all touch-manipulation',
                         priceAdjustment === markup
-                          ? 'bg-elec-yellow/20 text-elec-yellow border border-elec-yellow/40'
-                          : 'bg-white/[0.08] text-white'
+                          ? 'bg-elec-yellow text-black'
+                          : 'bg-white/[0.06] text-white/80'
                       )}
                     >
                       {markup}%
@@ -893,7 +1066,7 @@ export const InvoiceItemsStep = ({
             <div className="space-y-2">
               <button
                 onClick={() => setEquipmentCategorySheetOpen(true)}
-                className="w-full flex items-center justify-between py-3 border-b border-white/[0.12] touch-manipulation active:scale-[0.99]"
+                className="w-full flex items-center justify-between px-3.5 h-14 rounded-xl bg-white/[0.05] border border-white/[0.10] touch-manipulation active:scale-[0.99] transition-all"
               >
                 <div className="flex items-center gap-3">
                   <div className="text-left">
@@ -910,7 +1083,7 @@ export const InvoiceItemsStep = ({
 
               <button
                 onClick={() => setEquipmentSheetOpen(true)}
-                className="w-full flex items-center justify-between py-3 border-b border-white/[0.12] touch-manipulation active:scale-[0.99]"
+                className="w-full flex items-center justify-between px-3.5 h-14 rounded-xl bg-white/[0.05] border border-white/[0.10] touch-manipulation active:scale-[0.99] transition-all"
               >
                 <div className="flex items-center gap-3">
                   <div className="text-left">
@@ -935,7 +1108,7 @@ export const InvoiceItemsStep = ({
           {/* Add Button */}
           <Button
             onClick={handleAddItem}
-            className="w-full h-12 bg-elec-yellow/15 text-elec-yellow font-semibold hover:bg-elec-yellow/20 active:scale-[0.98] touch-manipulation rounded-xl border border-elec-yellow/20"
+            className="w-full h-12 bg-elec-yellow text-black text-[15px] font-semibold hover:bg-elec-yellow/90 active:scale-[0.98] touch-manipulation rounded-xl"
           >
             Add to Invoice
           </Button>
@@ -946,8 +1119,8 @@ export const InvoiceItemsStep = ({
       {activeAddMethod === 'manual' && (
         <div className="space-y-3">
           <div>
-            <div className="pb-3 border-b border-white/[0.12]">
-              <label className="text-[11px] text-white uppercase tracking-wider block mb-1.5">
+            <div className="pb-3">
+              <label className="text-[11px] font-medium text-white/65 uppercase tracking-wider block mb-1.5">
                 Description
               </label>
               <input
@@ -955,38 +1128,38 @@ export const InvoiceItemsStep = ({
                 onChange={(e) => setNewItem((prev) => ({ ...prev, description: e.target.value }))}
                 placeholder="Enter item description"
                 style={darkInputStyle}
-                className="w-full h-11 px-3 rounded-lg bg-white/[0.06] border-0 text-[15px] text-white placeholder:text-white focus:outline-none focus:ring-2 focus:ring-elec-yellow/20 focus:border-elec-yellow"
+                className="w-full h-12 px-3.5 rounded-xl bg-white/[0.05] border border-white/[0.10] text-base text-white placeholder:text-white/40 focus:outline-none focus:ring-2 focus:ring-elec-yellow/15 focus:border-elec-yellow transition-colors"
               />
             </div>
             <div className="grid grid-cols-2 gap-3 py-3">
               <div>
-                <label className="text-[11px] text-white uppercase tracking-wider block mb-1.5">
+                <label className="text-[11px] font-medium text-white/65 uppercase tracking-wider block mb-1.5">
                   Quantity
                 </label>
                 <InlineDecimalInput
                   value={newItem.quantity}
                   onChange={(quantity) => setNewItem((prev) => ({ ...prev, quantity }))}
                   style={darkInputStyle}
-                  className="w-full h-11 px-3 rounded-lg bg-white/[0.06] border-0 text-[15px] text-white focus:outline-none focus:ring-2 focus:ring-elec-yellow/20 focus:border-elec-yellow"
+                  className="w-full h-12 px-3.5 rounded-xl bg-white/[0.05] border border-white/[0.10] text-base text-white focus:outline-none focus:ring-2 focus:ring-elec-yellow/15 focus:border-elec-yellow transition-colors"
                   placeholder="1"
                 />
               </div>
               <div>
-                <label className="text-[11px] text-white uppercase tracking-wider block mb-1.5">
-                  Unit Price (£)
+                <label className="text-[11px] font-medium text-white/65 uppercase tracking-wider block mb-1.5">
+                  Unit price (£)
                 </label>
                 <InlineDecimalInput
                   value={newItem.unitPrice}
                   onChange={(unitPrice) => setNewItem((prev) => ({ ...prev, unitPrice }))}
                   style={darkInputStyle}
-                  className="w-full h-11 px-3 rounded-lg bg-white/[0.06] border-0 text-[15px] text-white focus:outline-none focus:ring-2 focus:ring-elec-yellow/20 focus:border-elec-yellow"
+                  className="w-full h-12 px-3.5 rounded-xl bg-white/[0.05] border border-white/[0.10] text-base text-white focus:outline-none focus:ring-2 focus:ring-elec-yellow/15 focus:border-elec-yellow transition-colors"
                   placeholder="0.00"
                 />
               </div>
             </div>
             {/* ELE-889 — Unit type selector. Common UK trade units + custom. */}
             <div className="pt-1">
-              <label className="text-[11px] text-white uppercase tracking-wider block mb-1.5">
+              <label className="text-[11px] font-medium text-white/65 uppercase tracking-wider block mb-1.5">
                 Unit
               </label>
               <Select
@@ -1009,7 +1182,7 @@ export const InvoiceItemsStep = ({
                   }
                 }}
               >
-                <SelectTrigger className="h-11 px-3 rounded-lg bg-white/[0.06] border-0 text-[15px] text-white focus:ring-2 focus:ring-elec-yellow/20">
+                <SelectTrigger className="h-12 px-3.5 rounded-xl bg-white/[0.05] border border-white/[0.10] text-base text-white focus:ring-2 focus:ring-elec-yellow/15">
                   <SelectValue placeholder="Choose unit" />
                 </SelectTrigger>
                 <SelectContent className="z-[100] bg-elec-gray border-elec-gray text-white">
@@ -1035,15 +1208,15 @@ export const InvoiceItemsStep = ({
                   }
                   placeholder="e.g. per circuit, per spur"
                   style={darkInputStyle}
-                  className="w-full h-11 px-3 mt-2 rounded-lg bg-white/[0.06] border-0 text-[15px] text-white focus:outline-none focus:ring-2 focus:ring-elec-yellow/20 focus:border-elec-yellow placeholder:text-white/40"
+                  className="w-full h-12 px-3.5 mt-2 rounded-xl bg-white/[0.05] border border-white/[0.10] text-base text-white focus:outline-none focus:ring-2 focus:ring-elec-yellow/15 focus:border-elec-yellow placeholder:text-white/40 transition-colors"
                 />
               )}
             </div>
             {newItem.quantity > 0 && newItem.unitPrice > 0 && (
-              <div className="p-4 bg-white/[0.06] border-t border-white/[0.12]">
+              <div className="mt-3 p-4 rounded-xl bg-white/[0.05] border border-white/[0.10]">
                 <div className="flex justify-between items-center">
                   <span className="text-[14px] text-white">Line Total</span>
-                  <span className="text-[18px] font-bold text-white">
+                  <span className="text-[18px] font-bold text-elec-yellow tabular-nums">
                     {formatCurrency(newItem.quantity * newItem.unitPrice)}
                   </span>
                 </div>
@@ -1052,10 +1225,157 @@ export const InvoiceItemsStep = ({
           </div>
           <Button
             onClick={handleAddItem}
-            className="w-full h-12 bg-elec-yellow/15 text-elec-yellow font-semibold hover:bg-elec-yellow/20 active:scale-[0.98] touch-manipulation rounded-xl border border-elec-yellow/20"
+            className="w-full h-12 bg-elec-yellow text-black text-[15px] font-semibold hover:bg-elec-yellow/90 active:scale-[0.98] touch-manipulation rounded-xl"
           >
             Add to Invoice
           </Button>
+        </div>
+      )}
+
+      {/* Price Book — stock-aware, take-off-linked */}
+      {activeAddMethod === 'pricebook' && (
+        <div className="space-y-2.5">
+          <div className="relative">
+            <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-white/40" />
+            <input
+              type="text"
+              placeholder="Search your price book…"
+              value={priceBookSearch}
+              onChange={(e) => setPriceBookSearch(e.target.value)}
+              style={darkInputStyle}
+              className="w-full h-12 pl-10 pr-3 rounded-xl bg-white/[0.05] border border-white/[0.10] text-[15px] text-white placeholder:text-white/40 focus:outline-none focus:border-elec-yellow focus:ring-2 focus:ring-elec-yellow/15 transition-colors"
+            />
+          </div>
+          {pricedBookItems.length === 0 ? (
+            <div className={cn(PANEL, 'text-center py-6 px-4')}>
+              <p className="text-[13px] text-white/60">
+                {priceBookSearch ? 'No matching items' : 'No priced items in your materials lists yet.'}
+              </p>
+            </div>
+          ) : (
+            <>
+              <p className="text-[11px] text-white/50">
+                Stock-linked items show live levels and deduct automatically when the invoice is saved.
+              </p>
+              <div className="max-h-[420px] overflow-y-auto overscroll-contain grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-2">
+                {pricedBookItems.map((pb) => {
+                  const stock = pb.item.personal_inventory_id
+                    ? stockById.get(pb.item.personal_inventory_id)
+                    : null;
+                  const low =
+                    stock &&
+                    stock.low_stock_threshold != null &&
+                    stock.quantity <= stock.low_stock_threshold;
+                  return (
+                    <button
+                      key={`pb-${pb.item.id}`}
+                      type="button"
+                      onClick={() => {
+                        // estimated_price is ALREADY the sell price (ELE-1010) — use directly.
+                        const sellPrice = pb.item.estimated_price || 0;
+                        onAddItem({
+                          description: pb.item.name,
+                          quantity: pb.item.quantity || 1,
+                          unit: pb.item.unit || 'each',
+                          unitPrice: Math.round(sellPrice * 100) / 100,
+                          category: 'materials',
+                          // Stock link — saving the invoice runs the take-off (ELE-1014).
+                          inventoryItemId: pb.item.personal_inventory_id,
+                          notes: pb.item.supplier ? `Supplier: ${pb.item.supplier}` : undefined,
+                        } as any);
+                        toast({ title: 'Added to invoice', description: pb.item.name });
+                      }}
+                      className="flex flex-col text-left p-3 rounded-xl bg-white/[0.04] border border-white/[0.08] hover:bg-white/[0.06] active:bg-white/[0.08] transition-all touch-manipulation active:scale-[0.98] select-none"
+                    >
+                      <p className="font-medium text-[13px] text-white leading-snug line-clamp-2 min-h-[34px]">
+                        {pb.item.name}
+                      </p>
+                      <p className="font-bold text-[16px] text-elec-yellow tabular-nums mt-1.5">
+                        £{pb.item.estimated_price?.toFixed(2)}
+                        <span className="text-[11px] font-medium text-white/55 ml-1">/{pb.item.unit || 'each'}</span>
+                      </p>
+                      <div className="flex items-center gap-1.5 mt-2 flex-wrap">
+                        {stock && (
+                          <span
+                            className={cn(
+                              'px-1.5 py-0.5 rounded text-[10px] font-medium border',
+                              low
+                                ? 'bg-amber-500/10 text-amber-400 border-amber-500/20'
+                                : 'bg-emerald-500/10 text-emerald-400 border-emerald-500/20'
+                            )}
+                          >
+                            {stock.quantity} in stock
+                          </span>
+                        )}
+                        {pb.item.supplier && (
+                          <span className="text-[10px] text-white/55 truncate">{pb.item.supplier}</span>
+                        )}
+                        <span className="text-[10px] text-white/40 ml-auto truncate">{pb.listName}</span>
+                      </div>
+                    </button>
+                  );
+                })}
+              </div>
+            </>
+          )}
+        </div>
+      )}
+
+      {/* Rate Card — the user's charge-out rates */}
+      {activeAddMethod === 'ratecard' && (
+        <div className="space-y-2.5">
+          <div className="relative">
+            <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-white/40" />
+            <input
+              type="text"
+              placeholder="Search your rates…"
+              value={rateCardSearch}
+              onChange={(e) => setRateCardSearch(e.target.value)}
+              style={darkInputStyle}
+              className="w-full h-12 pl-10 pr-3 rounded-xl bg-white/[0.05] border border-white/[0.10] text-[15px] text-white placeholder:text-white/40 focus:outline-none focus:border-elec-yellow focus:ring-2 focus:ring-elec-yellow/15 transition-colors"
+            />
+          </div>
+          <div className="max-h-[420px] overflow-y-auto overscroll-contain grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-2">
+            {rateCardItems
+              .filter(
+                (item) =>
+                  !rateCardSearch.trim() ||
+                  item.name.toLowerCase().includes(rateCardSearch.toLowerCase())
+              )
+              .map((item) => (
+                <button
+                  key={item.id}
+                  type="button"
+                  onClick={() => {
+                    // Rate-card prices are charge-out rates — add as shown (ELE-1010).
+                    onAddItem({
+                      description: item.name,
+                      quantity: 1,
+                      unit: item.unit,
+                      unitPrice: item.unit_price,
+                      category:
+                        item.category === 'labour' || item.category === 'call-out'
+                          ? 'labour'
+                          : item.category === 'materials'
+                            ? 'materials'
+                            : 'equipment',
+                      notes: item.description || undefined,
+                    } as any);
+                    toast({ title: 'Added to invoice', description: item.name });
+                  }}
+                  className="flex flex-col text-left p-3 rounded-xl bg-white/[0.04] border border-white/[0.08] hover:bg-white/[0.06] active:bg-white/[0.08] transition-all touch-manipulation active:scale-[0.98] select-none"
+                >
+                  <p className="font-medium text-[13px] text-white leading-snug line-clamp-2 min-h-[34px]">
+                    {item.name}
+                  </p>
+                  <p className="font-bold text-[16px] text-elec-yellow tabular-nums mt-1.5">
+                    £{Number(item.unit_price).toFixed(2)}
+                    <span className="text-[11px] font-medium text-white/55 ml-1">/{item.unit}</span>
+                  </p>
+                  <span className="text-[10px] text-white/55 capitalize mt-2">{item.category}</span>
+                </button>
+              ))}
+          </div>
         </div>
       )}
 
@@ -1064,62 +1384,54 @@ export const InvoiceItemsStep = ({
 
       {/* Scan Invoice */}
       {activeAddMethod === 'scan' && (
-        <div className="space-y-3">
-          <div className="pb-3">
-            <p className="text-[14px] font-medium text-white">Scan Supplier Invoice</p>
-            <p className="text-[12px] text-white mt-0.5">
-              Take a photo or upload an invoice to auto-import materials
+        <div className={cn(PANEL, 'p-4 space-y-3')}>
+          <div>
+            <p className="text-[14px] font-semibold text-white">Scan a supplier invoice</p>
+            <p className="text-[12px] text-white/60 mt-0.5">
+              Photograph or upload an invoice — materials and prices import automatically
             </p>
           </div>
 
-          {/* Action Buttons */}
           <Button
             onClick={() => setScannerSheetOpen(true)}
-            className="w-full h-14 bg-elec-yellow/15 text-elec-yellow font-semibold hover:bg-elec-yellow/20 active:scale-[0.98] touch-manipulation rounded-xl border border-elec-yellow/20"
+            className="w-full h-12 bg-elec-yellow text-black text-[15px] font-semibold hover:bg-elec-yellow/90 active:scale-[0.98] touch-manipulation rounded-xl"
           >
-            Scan Invoice
+            <ScanLine className="h-4 w-4 mr-2" />
+            Scan invoice
           </Button>
 
-          {/* Tips */}
-          <div className="pt-3">
-            <p className="text-[11px] text-white uppercase tracking-wider mb-2">
-              Supported Suppliers
-            </p>
-            <div className="flex flex-wrap gap-2">
-              {['Screwfix', 'Toolstation', 'CEF', 'Edmundson', 'Rexel', 'Others'].map(
-                (supplier) => (
-                  <span
-                    key={supplier}
-                    className="px-2.5 py-1 rounded-lg bg-white/[0.08] text-[12px] text-white"
-                  >
-                    {supplier}
-                  </span>
-                )
-              )}
-            </div>
+          <div className="flex flex-wrap gap-1.5 pt-1">
+            {['Screwfix', 'Toolstation', 'CEF', 'Edmundson', 'Rexel', 'Others'].map((supplier) => (
+              <span
+                key={supplier}
+                className="px-2.5 py-1 rounded-lg bg-white/[0.05] border border-white/[0.08] text-[11px] text-white/70"
+              >
+                {supplier}
+              </span>
+            ))}
           </div>
         </div>
       )}
 
       {/* Empty State */}
       {originalItems.length === 0 && additionalItems.length === 0 && (
-        <div className="text-center py-10 px-4">
-          <p className="text-[15px] font-medium text-white mb-1">No items yet</p>
-          <p className="text-[13px] text-white mb-5">
-            Add labour, materials, or equipment to your invoice
+        <div className={cn(PANEL, 'text-center py-8 px-4')}>
+          <p className="text-[15px] font-semibold text-white mb-1">No items yet</p>
+          <p className="text-[13px] text-white/60 mb-4">
+            Add labour, materials or equipment using the tiles above
           </p>
           <div className="flex gap-2 justify-center">
             <button
               onClick={() => setActiveAddMethod('quick')}
-              className="px-4 h-11 rounded-lg text-[13px] font-medium bg-elec-yellow/20 text-elec-yellow border border-elec-yellow/40 touch-manipulation active:scale-[0.97]"
+              className="px-4 h-11 rounded-xl text-[13px] font-semibold bg-elec-yellow text-black touch-manipulation active:scale-[0.97] transition-all"
             >
-              Quick Add
+              Quick add
             </button>
             <button
               onClick={() => setActiveAddMethod('templates')}
-              className="px-4 h-11 rounded-lg text-[13px] font-medium bg-white/[0.08] text-white border border-white/[0.12] touch-manipulation active:scale-[0.97]"
+              className="px-4 h-11 rounded-xl text-[13px] font-medium bg-white/[0.05] text-white border border-white/[0.10] touch-manipulation active:scale-[0.97] transition-all"
             >
-              Use Template
+              Use a template
             </button>
           </div>
         </div>
@@ -1128,8 +1440,9 @@ export const InvoiceItemsStep = ({
       {/* Additional Items */}
       {additionalItems.length > 0 && (
         <div>
-          <p className="text-[12px] font-semibold text-white uppercase tracking-wider py-2">
-            Added Items ({additionalItems.length})
+          <p className="flex items-baseline gap-2 py-2">
+            <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-elec-yellow/80 tabular-nums">02</span>
+            <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/80">· Added on site ({additionalItems.length})</span>
           </p>
           <AnimatePresence mode="popLayout">
             {additionalItems.map((item) => (
@@ -1275,8 +1588,8 @@ export const InvoiceItemsStep = ({
       {/* Worker Type Sheet */}
       <Sheet open={workerSheetOpen} onOpenChange={setWorkerSheetOpen}>
         <SheetContent side="bottom" className="h-[70vh] rounded-t-3xl p-0">
-          <SheetHeader className="p-4 border-b border-white/[0.12]">
-            <SheetTitle className="text-white text-left">Select Worker Type</SheetTitle>
+          <SheetHeader className="p-4 border-b border-white/[0.08]">
+            <SheetTitle className="text-white text-left">Worker type</SheetTitle>
           </SheetHeader>
           <div className="overflow-y-auto h-[calc(70vh-60px)]">
             {workerTypes.map((worker) => {
@@ -1286,19 +1599,19 @@ export const InvoiceItemsStep = ({
                   key={worker.id}
                   onClick={() => handleWorkerTypeChange(worker.id)}
                   className={cn(
-                    'w-full flex items-center justify-between p-4 border-b border-white/[0.12] touch-manipulation active:bg-white/[0.08]',
-                    isSelected && 'bg-white/[0.06]'
+                    'w-full flex items-center justify-between p-4 border-b border-white/[0.06] touch-manipulation active:bg-white/[0.06] transition-colors',
+                    isSelected && 'bg-elec-yellow/[0.06]'
                   )}
                 >
                   <div className="flex-1 text-left">
                     <p className="text-[15px] font-medium text-white">{worker.name}</p>
-                    <p className="text-[12px] text-white">{worker.description}</p>
+                    <p className="text-[12px] text-white/60">{worker.description}</p>
                   </div>
                   <div className="flex items-center gap-3">
                     <span className="text-[15px] font-bold text-white">
                       £{workerRateForMode(worker.defaultHourlyRate)}{isDayMode ? '/day' : '/hr'}
                     </span>
-                    {isSelected && <Check className="h-5 w-5 text-white" />}
+                    {isSelected && <Check className="h-5 w-5 text-elec-yellow" />}
                   </div>
                 </button>
               );
@@ -1310,8 +1623,8 @@ export const InvoiceItemsStep = ({
       {/* Hours Sheet */}
       <Sheet open={hoursSheetOpen} onOpenChange={setHoursSheetOpen}>
         <SheetContent side="bottom" className="h-[60vh] rounded-t-3xl p-0">
-          <SheetHeader className="p-4 border-b border-white/[0.12]">
-            <SheetTitle className="text-white text-left">{isDayMode ? 'Select Days' : 'Select Hours'}</SheetTitle>
+          <SheetHeader className="p-4 border-b border-white/[0.08]">
+            <SheetTitle className="text-white text-left">{isDayMode ? 'Days on site' : 'Hours on site'}</SheetTitle>
           </SheetHeader>
           <div className="p-4 space-y-4">
             {/* Custom hours/days input */}
@@ -1325,7 +1638,7 @@ export const InvoiceItemsStep = ({
                   inputMode="decimal"
                   placeholder={isDayMode ? '0.5' : '3.5'}
                   style={darkInputStyle}
-                  className="flex-1 h-12 px-4 rounded-xl bg-white/[0.08] border border-elec-yellow/40 text-[17px] font-medium text-white placeholder:text-white focus:outline-none focus:border-elec-yellow focus:ring-2 focus:ring-elec-yellow/30 caret-elec-yellow"
+                  className="flex-1 h-12 px-4 rounded-xl bg-white/[0.08] border border-elec-yellow/40 text-[17px] font-medium text-white placeholder:text-white/40 focus:outline-none focus:border-elec-yellow focus:ring-2 focus:ring-elec-yellow/30 caret-elec-yellow"
                   onKeyDown={(e) => {
                     if (e.key === 'Enter') {
                       const val = parseFloat((e.target as HTMLInputElement).value);
@@ -1378,8 +1691,8 @@ export const InvoiceItemsStep = ({
       {/* Material Category Sheet */}
       <Sheet open={categorySheetOpen} onOpenChange={setCategorySheetOpen}>
         <SheetContent side="bottom" className="h-[60vh] rounded-t-3xl p-0">
-          <SheetHeader className="p-4 border-b border-white/[0.12]">
-            <SheetTitle className="text-white text-left">Select Category</SheetTitle>
+          <SheetHeader className="p-4 border-b border-white/[0.08]">
+            <SheetTitle className="text-white text-left">Category</SheetTitle>
           </SheetHeader>
           <div className="overflow-y-auto h-[calc(60vh-60px)]">
             <button
@@ -1388,12 +1701,12 @@ export const InvoiceItemsStep = ({
                 setCategorySheetOpen(false);
               }}
               className={cn(
-                'w-full flex items-center justify-between p-4 border-b border-white/[0.12] touch-manipulation',
-                !newItem.subcategory && 'bg-elec-yellow/10'
+                'w-full flex items-center justify-between p-4 border-b border-white/[0.06] touch-manipulation transition-colors',
+                !newItem.subcategory && 'bg-elec-yellow/[0.06]'
               )}
             >
               <span className="text-[16px] font-medium text-white">All Categories</span>
-              {!newItem.subcategory && <Check className="h-5 w-5 text-white" />}
+              {!newItem.subcategory && <Check className="h-5 w-5 text-elec-yellow" />}
             </button>
             {materialCategories.map((cat) => {
               const isSelected = newItem.subcategory === cat.id;
@@ -1405,12 +1718,12 @@ export const InvoiceItemsStep = ({
                     setCategorySheetOpen(false);
                   }}
                   className={cn(
-                    'w-full flex items-center justify-between p-4 border-b border-white/[0.12] touch-manipulation',
-                    isSelected && 'bg-white/[0.06]'
+                    'w-full flex items-center justify-between p-4 border-b border-white/[0.06] touch-manipulation transition-colors',
+                    isSelected && 'bg-elec-yellow/[0.06]'
                   )}
                 >
                   <span className="text-[16px] font-medium text-white">{cat.name}</span>
-                  {isSelected && <Check className="h-5 w-5 text-white" />}
+                  {isSelected && <Check className="h-5 w-5 text-elec-yellow" />}
                 </button>
               );
             })}
@@ -1421,8 +1734,8 @@ export const InvoiceItemsStep = ({
       {/* Material Sheet */}
       <Sheet open={materialSheetOpen} onOpenChange={setMaterialSheetOpen}>
         <SheetContent side="bottom" className="h-[80vh] rounded-t-3xl p-0">
-          <SheetHeader className="p-4 border-b border-white/[0.12]">
-            <SheetTitle className="text-white text-left">Select Material</SheetTitle>
+          <SheetHeader className="p-4 border-b border-white/[0.08]">
+            <SheetTitle className="text-white text-left">Material</SheetTitle>
           </SheetHeader>
           <div className="overflow-y-auto h-[calc(80vh-60px)]">
             {filteredMaterials.map((material) => {
@@ -1433,17 +1746,17 @@ export const InvoiceItemsStep = ({
                   key={material.id}
                   onClick={() => handleMaterialSelect(material.id)}
                   className={cn(
-                    'w-full flex items-center justify-between p-4 border-b border-white/[0.12] touch-manipulation active:bg-white/[0.08]',
-                    isSelected && 'bg-white/[0.06]'
+                    'w-full flex items-center justify-between p-4 border-b border-white/[0.06] touch-manipulation active:bg-white/[0.06] transition-colors',
+                    isSelected && 'bg-elec-yellow/[0.06]'
                   )}
                 >
                   <div className="flex-1 text-left">
                     <p className="text-[15px] font-medium text-white">{material.name}</p>
-                    <p className="text-[12px] text-white">{material.category}</p>
+                    <p className="text-[12px] text-white/60">{material.category}</p>
                   </div>
                   <div className="flex items-center gap-3">
                     <span className="text-[15px] font-bold text-white">£{price.toFixed(2)}</span>
-                    {isSelected && <Check className="h-5 w-5 text-white" />}
+                    {isSelected && <Check className="h-5 w-5 text-elec-yellow" />}
                   </div>
                 </button>
               );
@@ -1455,8 +1768,8 @@ export const InvoiceItemsStep = ({
       {/* Equipment Category Sheet */}
       <Sheet open={equipmentCategorySheetOpen} onOpenChange={setEquipmentCategorySheetOpen}>
         <SheetContent side="bottom" className="h-[50vh] rounded-t-3xl p-0">
-          <SheetHeader className="p-4 border-b border-white/[0.12]">
-            <SheetTitle className="text-white text-left">Select Category</SheetTitle>
+          <SheetHeader className="p-4 border-b border-white/[0.08]">
+            <SheetTitle className="text-white text-left">Category</SheetTitle>
           </SheetHeader>
           <div className="overflow-y-auto h-[calc(50vh-60px)]">
             {equipmentCategories.map((cat) => {
@@ -1469,12 +1782,12 @@ export const InvoiceItemsStep = ({
                     setEquipmentCategorySheetOpen(false);
                   }}
                   className={cn(
-                    'w-full flex items-center justify-between p-4 border-b border-white/[0.12] touch-manipulation',
-                    isSelected && 'bg-white/[0.06]'
+                    'w-full flex items-center justify-between p-4 border-b border-white/[0.06] touch-manipulation transition-colors',
+                    isSelected && 'bg-elec-yellow/[0.06]'
                   )}
                 >
                   <span className="text-[16px] font-medium text-white">{cat.name}</span>
-                  {isSelected && <Check className="h-5 w-5 text-white" />}
+                  {isSelected && <Check className="h-5 w-5 text-elec-yellow" />}
                 </button>
               );
             })}
@@ -1485,8 +1798,8 @@ export const InvoiceItemsStep = ({
       {/* Equipment Sheet */}
       <Sheet open={equipmentSheetOpen} onOpenChange={setEquipmentSheetOpen}>
         <SheetContent side="bottom" className="h-[70vh] rounded-t-3xl p-0">
-          <SheetHeader className="p-4 border-b border-white/[0.12]">
-            <SheetTitle className="text-white text-left">Select Equipment</SheetTitle>
+          <SheetHeader className="p-4 border-b border-white/[0.08]">
+            <SheetTitle className="text-white text-left">Equipment</SheetTitle>
           </SheetHeader>
           <div className="overflow-y-auto h-[calc(70vh-60px)]">
             {commonEquipment
@@ -1498,8 +1811,8 @@ export const InvoiceItemsStep = ({
                     key={equipment.id}
                     onClick={() => handleEquipmentSelect(equipment.id)}
                     className={cn(
-                      'w-full flex items-center justify-between p-4 border-b border-white/[0.12] touch-manipulation active:bg-white/[0.08]',
-                      isSelected && 'bg-white/[0.06]'
+                      'w-full flex items-center justify-between p-4 border-b border-white/[0.06] touch-manipulation active:bg-white/[0.06] transition-colors',
+                      isSelected && 'bg-elec-yellow/[0.06]'
                     )}
                   >
                     <div className="flex-1 text-left">
@@ -1510,7 +1823,7 @@ export const InvoiceItemsStep = ({
                       <span className="text-[15px] font-bold text-white">
                         £{equipment.dailyRate}/{equipment.unit}
                       </span>
-                      {isSelected && <Check className="h-5 w-5 text-white" />}
+                      {isSelected && <Check className="h-5 w-5 text-elec-yellow" />}
                     </div>
                   </button>
                 );

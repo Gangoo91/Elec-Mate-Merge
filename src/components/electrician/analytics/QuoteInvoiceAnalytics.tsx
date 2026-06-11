@@ -39,6 +39,7 @@ interface QuoteInvoiceAnalyticsProps {
 type DateRange = '7d' | '30d' | '90d' | '12m';
 
 import { isQuoteWon as isWon, isQuoteLost as isLost } from '@/utils/quote-status';
+import { isInvoiceOverdue, getInvoiceOutstanding } from '@/utils/invoice-status';
 
 const hasLeftDraft = (q: Quote) =>
   Boolean(q.first_sent_at) ||
@@ -140,15 +141,14 @@ export const QuoteInvoiceAnalytics: React.FC<QuoteInvoiceAnalyticsProps> = ({
 
     // Invoice metrics
     const paidInvoices = filteredInvoices.filter((i) => i.invoice_status === 'paid');
-    const unpaidInvoices = filteredInvoices.filter((i) => i.invoice_status !== 'paid');
-    const overdueInvoices = filteredInvoices.filter(
-      (i) =>
-        i.invoice_status !== 'paid' &&
-        i.invoice_due_date &&
-        isAfter(new Date(), new Date(i.invoice_due_date))
+    // Outstanding mirrors InvoicesPage: drafts excluded, part-payments netted off,
+    // overdue = the shared rule (explicit status or due date + 24h grace).
+    const unpaidInvoices = filteredInvoices.filter(
+      (i) => i.invoice_status !== 'paid' && i.invoice_status !== 'draft' && i.invoice_status
     );
+    const overdueInvoices = filteredInvoices.filter(isInvoiceOverdue);
     const totalRevenue = paidInvoices.reduce((s, i) => s + (i.total || 0), 0);
-    const outstandingAmount = unpaidInvoices.reduce((s, i) => s + (i.total || 0), 0);
+    const outstandingAmount = unpaidInvoices.reduce((s, i) => s + getInvoiceOutstanding(i), 0);
     const paidWithDates = paidInvoices.filter((i) => i.invoice_date && i.invoice_paid_at);
     const avgDaysToPayment =
       paidWithDates.length > 0

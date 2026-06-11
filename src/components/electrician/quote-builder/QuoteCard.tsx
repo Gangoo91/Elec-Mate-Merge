@@ -1,7 +1,9 @@
 import { Trash2, Check, Pencil, MoreVertical, Eye, ArrowRight } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { isQuoteWon, isQuoteLost, isQuoteInvoiced } from '@/utils/quote-status';
-import { format, differenceInDays, isPast } from 'date-fns';
+import { differenceInDays, isPast } from 'date-fns';
+import { formatCardAmount, formatCardAge } from '@/lib/format';
+import { PANEL } from '@/components/electrician/shared/surfaces';
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -36,28 +38,6 @@ interface QuoteCardProps {
   onDelete: () => void;
   onEdit: () => void;
   onAccept?: () => void;
-}
-
-function formatAge(date?: string | Date): string {
-  if (!date) return '';
-  try {
-    const d = new Date(date);
-    const days = differenceInDays(new Date(), d);
-    if (days <= 0) return 'Today';
-    if (days === 1) return '1d ago';
-    if (days <= 30) return `${days}d ago`;
-    return format(d, 'd MMM');
-  } catch {
-    return '';
-  }
-}
-
-function formatAmount(value: number): string {
-  const hasPence = Math.round((value || 0) * 100) % 100 !== 0;
-  return `£${(value || 0).toLocaleString('en-GB', {
-    minimumFractionDigits: hasPence ? 2 : 0,
-    maximumFractionDigits: hasPence ? 2 : 0,
-  })}`;
 }
 
 export function QuoteCard({ quote, onTap, onDelete, onEdit, onAccept }: QuoteCardProps) {
@@ -113,7 +93,7 @@ export function QuoteCard({ quote, onTap, onDelete, onEdit, onAccept }: QuoteCar
   const canAccept = isSent && !isWon && !isInvoiced;
 
   return (
-    <div className="relative h-full rounded-2xl border border-white/[0.10] bg-gradient-to-b from-white/[0.07] to-white/[0.03] shadow-[0_8px_24px_rgba(0,0,0,0.35)] overflow-hidden">
+    <div className={cn(PANEL, "relative h-full overflow-hidden")}>
       {/* Status wash */}
       <div
         className={cn(
@@ -155,7 +135,7 @@ export function QuoteCard({ quote, onTap, onDelete, onEdit, onAccept }: QuoteCar
 
         {/* Amount */}
         <p className="mt-2.5 text-[22px] font-bold text-elec-yellow tabular-nums leading-none tracking-tight">
-          {formatAmount(quote.total)}
+          {formatCardAmount(quote.total)}
         </p>
 
         {/* Footer — next step + age */}
@@ -183,7 +163,7 @@ export function QuoteCard({ quote, onTap, onDelete, onEdit, onAccept }: QuoteCar
               </span>
             )}
             <span className="text-[10px] text-white/65 tabular-nums">
-              {formatAge(quote.updatedAt || quote.createdAt)}
+              {formatCardAge(quote.updatedAt || quote.createdAt)}
             </span>
           </span>
         </div>

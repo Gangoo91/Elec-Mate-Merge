@@ -1,12 +1,13 @@
 import { useParams, useNavigate } from 'react-router-dom';
 import { Helmet } from 'react-helmet';
 import { cn } from '@/lib/utils';
-import { Loader2, ArrowLeft, MoreHorizontal } from 'lucide-react';
+import { Loader2, ArrowLeft, MoreHorizontal, Mail, Phone, Pencil, Copy, Download, Check, Bell, RefreshCw, Trash2, Send } from 'lucide-react';
 import { Sheet, SheetContent } from '@/components/ui/sheet';
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useMemo, Fragment } from 'react';
 import { supabase } from '@/integrations/supabase/client';
 import { Quote } from '@/types/quote';
 import { computeQuoteTotals } from '@/utils/quote-calculations';
+import { isInvoiceOverdue as invoiceIsOverdue, getInvoiceDaysOverdue } from '@/utils/invoice-status';
 import { format, isPast, differenceInDays, addHours } from 'date-fns';
 import { toast } from '@/hooks/use-toast';
 import CertificateGenerationDialog from '@/components/inspection/CertificateGenerationDialog';
@@ -22,14 +23,7 @@ import {
 } from '@/components/ui/alert-dialog';
 import { InvoiceSendDropdown } from '@/components/electrician/invoice-builder/InvoiceSendDropdown';
 import { useAccountingIntegrations } from '@/hooks/useAccountingIntegrations';
-
-/** Gradient section header — matching QuoteViewPage */
-const SectionHeader = ({ title }: { title: string }) => (
-  <div className="mb-3">
-    <div className="h-[2px] w-full rounded-full bg-gradient-to-r from-elec-yellow/40 to-elec-yellow/10 mb-2" />
-    <h2 className="text-[11px] font-bold text-white uppercase tracking-widest">{title}</h2>
-  </div>
-);
+import { PANEL } from '@/components/electrician/shared/surfaces';
 
 const InvoiceViewPage = () => {
   const { id } = useParams();
@@ -301,11 +295,25 @@ const InvoiceViewPage = () => {
   };
 
   // === DERIVED STATE ===
+  // Single source of truth (utils/invoice-status): paid wins → explicit
+  // 'overdue' status → due date + 24h grace. The old local version had no
+  // grace and ignored the cron-set status, so the card and the page could
+  // disagree about the same invoice.
   const getDaysOverdue = () => {
-    if (!invoice?.invoice_due_date || invoice.invoice_status === 'paid') return null;
-    const days = differenceInDays(new Date(), new Date(invoice.invoice_due_date));
+    if (!invoice || !invoiceIsOverdue(invoice)) return null;
+    const days = getInvoiceDaysOverdue(invoice);
     return days > 0 ? days : null;
   };
+
+  const cisT = useMemo(
+    () =>
+      computeQuoteTotals(
+        ((invoice?.items as any) || []) as any,
+        (invoice?.settings as any) || null,
+        { applyOverheadAndProfit: true }
+      ),
+    [invoice]
+  );
 
   if (isLoading) {
     return (
@@ -331,11 +339,9 @@ const InvoiceViewPage = () => {
 
   const daysOverdue = getDaysOverdue();
   const isPaid = invoice.invoice_status === 'paid';
-  const isOverdue = !!daysOverdue && daysOverdue > 0;
+  const isOverdue = invoiceIsOverdue(invoice);
   const isSent = invoice.invoice_status === 'sent';
   const isDraft = invoice.invoice_status === 'draft' || !invoice.invoice_status;
-  // CIS / VAT reverse charge breakdown (single source of truth = computeQuoteTotals).
-  const cisT = computeQuoteTotals(((invoice.items as any) || []) as any, (invoice.settings as any) || null, { applyOverheadAndProfit: true });
   // Outstanding is measured against the amount actually due — net payable when
   // CIS is withheld, otherwise the stored total (preserves prior behaviour).
   const amountDue = cisT.cisAmount > 0 ? cisT.netPayable : invoice.total;
@@ -346,21 +352,14 @@ const InvoiceViewPage = () => {
   // flow left them stuck. Any non-paid invoice can now be marked paid.
   const canMarkPaid = !isPaid;
 
-  const getGradient = () => {
-    if (isPaid) return 'from-emerald-500 via-emerald-400 to-green-400';
-    if (isOverdue) return 'from-red-500 via-rose-400 to-pink-400';
-    if (isSent) return 'from-blue-500 via-blue-400 to-cyan-400';
-    return 'from-elec-yellow/60 via-elec-yellow/40 to-amber-400/20';
-  };
+  const statusBadge = isPaid
+    ? { label: 'Paid', dot: 'bg-emerald-400', text: 'text-emerald-400', pill: 'bg-emerald-500/15 text-emerald-400 border-emerald-500/25', wash: 'from-emerald-500/[0.14]' }
+    : isOverdue
+      ? { label: 'Overdue', dot: 'bg-red-400', text: 'text-red-400', pill: 'bg-red-500/15 text-red-400 border-red-500/25', wash: 'from-red-500/[0.12]' }
+      : isSent
+        ? { label: 'Sent', dot: 'bg-blue-400', text: 'text-blue-400', pill: 'bg-blue-500/15 text-blue-400 border-blue-500/25', wash: 'from-blue-500/[0.14]' }
+        : { label: 'Draft', dot: 'bg-white/75', text: 'text-white/85', pill: 'bg-white/[0.08] text-white/85 border-white/[0.15]', wash: 'from-white/[0.06]' };
 
-  const getStatusBadge = () => {
-    if (isPaid) return { label: 'Paid', style: 'bg-emerald-500/15 text-emerald-400 border border-emerald-500/20' };
-    if (isOverdue) return { label: 'Overdue', style: 'bg-red-500/15 text-red-400 border border-red-500/20' };
-    if (isSent) return { label: 'Sent', style: 'bg-blue-500/15 text-blue-400 border border-blue-500/20' };
-    return { label: 'Draft', style: 'bg-white/[0.08] text-white border border-white/[0.12]' };
-  };
-
-  const statusBadge = getStatusBadge();
 
   // All items combined
   const allItems = [
@@ -416,195 +415,261 @@ const InvoiceViewPage = () => {
       </Helmet>
 
       {/* Sticky header — matching QuoteViewPage exactly */}
-      <header className="sticky top-0 z-40 bg-background/95 backdrop-blur-md">
-        <div className={cn('h-[2px] bg-gradient-to-r', getGradient())} />
-        <div className="flex items-center h-12 px-4 gap-3">
+      <header className="sticky top-0 z-40 bg-background/95 backdrop-blur-md border-b border-white/[0.06]">
+        <div className="flex items-center h-12 px-4 lg:px-6 gap-3">
           <button
             onClick={() => navigate('/electrician/invoices')}
-            className="h-9 w-9 -ml-1.5 flex items-center justify-center rounded-xl hover:bg-white/[0.05] active:scale-[0.95] touch-manipulation flex-shrink-0"
+            className="h-10 w-10 -ml-2 flex items-center justify-center rounded-xl hover:bg-white/[0.05] active:scale-[0.95] touch-manipulation flex-shrink-0"
           >
             <ArrowLeft className="h-5 w-5 text-white" />
           </button>
-          <span className="font-mono text-[13px] text-white flex-1 min-w-0 truncate">{invoice.invoice_number}</span>
-          <span className={cn('text-[11px] font-semibold px-2.5 py-1 rounded-lg', statusBadge.style)}>{statusBadge.label}</span>
+          <span className="font-mono text-[13px] text-white/85 flex-1 min-w-0 truncate">{invoice.invoice_number}</span>
+          <span className="flex items-center gap-1.5 flex-shrink-0">
+            <span className={cn('h-1.5 w-1.5 rounded-full', statusBadge.dot)} />
+            <span className={cn('text-[11px] font-semibold uppercase tracking-[0.08em]', statusBadge.text)}>
+              {statusBadge.label}
+            </span>
+          </span>
           <button
             onClick={() => setShowActionsSheet(true)}
-            className="h-9 w-9 flex items-center justify-center rounded-xl hover:bg-white/[0.05] active:scale-[0.95] touch-manipulation flex-shrink-0"
+            className="h-10 px-3.5 flex items-center gap-1.5 rounded-xl bg-white/[0.08] border border-white/[0.12] text-[12px] font-semibold text-white hover:bg-white/[0.12] active:scale-[0.97] transition-all touch-manipulation flex-shrink-0"
           >
-            <MoreHorizontal className="h-5 w-5 text-white" />
+            Actions
+            <MoreHorizontal className="h-4 w-4 text-white/80" />
           </button>
         </div>
       </header>
 
-      <div className="px-4 py-5 space-y-6 pb-8 max-w-3xl mx-auto lg:px-6">
+      <div className="px-4 py-5 pb-10 lg:px-6 space-y-4">
 
-        {/* === HERO === */}
-        <div className="relative rounded-2xl overflow-hidden">
-          <div className={cn('absolute inset-0 bg-gradient-to-br opacity-10', getGradient())} />
-          <div className={cn('absolute inset-x-0 top-0 h-[2px] bg-gradient-to-r', getGradient())} />
-          <div className="relative p-5">
-            <p className="text-[11px] text-white uppercase tracking-widest mb-3">Amount Due</p>
-            <p className="text-[42px] font-bold text-elec-yellow leading-none tracking-tight">
-              {formatCurrency(isPartPaid ? outstanding : invoice.total)}
+        {/* === HERO PANEL === */}
+        <div className="relative overflow-hidden rounded-3xl border border-white/[0.10] bg-gradient-to-b from-white/[0.07] to-white/[0.03] shadow-[0_12px_32px_rgba(0,0,0,0.4)]">
+          <div className={cn('absolute inset-0 bg-gradient-to-br via-transparent to-transparent pointer-events-none', statusBadge.wash)} />
+          <div className="relative p-4 sm:p-6">
+            <div className="flex items-center justify-between gap-3">
+              <span className="font-mono text-[12px] text-white/75 px-2.5 py-1 rounded-lg bg-white/[0.06] border border-white/[0.08]">
+                {invoice.invoice_number}
+              </span>
+              <span className={cn('inline-flex items-center gap-1.5 text-[11px] font-semibold uppercase tracking-[0.06em] px-2.5 py-1 rounded-full border', statusBadge.pill)}>
+                <span className={cn('h-1.5 w-1.5 rounded-full', statusBadge.dot)} />
+                {statusBadge.label}
+              </span>
+            </div>
+
+            <p className="text-[10px] text-white/60 uppercase tracking-[0.18em] mt-4">Amount due</p>
+            <p className="mt-1.5 text-[38px] sm:text-[46px] font-bold text-elec-yellow leading-none tracking-tight tabular-nums">
+              {formatCurrency(isPartPaid ? outstanding : amountDue)}
             </p>
             {isPartPaid && (
-              <p className="text-[12px] font-medium text-white/70 mt-1.5">
-                Deposit paid {formatCurrency(totalPaid)} of {formatCurrency(invoice.total)}
+              <p className="text-[12px] font-medium text-white/70 mt-1.5 tabular-nums">
+                {formatCurrency(totalPaid)} received of {formatCurrency(invoice.total)}
               </p>
             )}
-            <p className="text-[16px] font-semibold text-white mt-3">{invoice.client?.name || 'No client'}</p>
+            <p className="text-[17px] font-semibold text-white mt-3">{invoice.client?.name || 'No client'}</p>
             {invoice.jobDetails?.title && (
-              <p className="text-[13px] text-white mt-0.5">{invoice.jobDetails.title}</p>
+              <p className="text-[13px] text-white/70 mt-0.5">{invoice.jobDetails.title}</p>
             )}
-            <div className="flex items-center gap-3 mt-3">
+
+            {/* Fact chips */}
+            <div className="flex items-center gap-2 mt-4 flex-wrap">
               {invoice.invoice_date && (
-                <span className="text-[11px] font-medium text-white">
+                <span className="text-[11px] font-medium text-white/75 px-2.5 py-1 rounded-lg bg-white/[0.05] border border-white/[0.08]">
                   Issued {format(new Date(invoice.invoice_date), 'd MMM yyyy')}
                 </span>
               )}
-              {isOverdue && daysOverdue && (
-                <span className="text-[11px] font-medium text-red-400">{daysOverdue}d overdue</span>
+              {isOverdue && daysOverdue ? (
+                <span className="text-[11px] font-semibold text-red-400 px-2.5 py-1 rounded-lg bg-red-500/[0.08] border border-red-500/20">
+                  {daysOverdue}d overdue
+                </span>
+              ) : invoice.invoice_due_date && !isPaid ? (
+                <span className="text-[11px] font-medium text-white/75 px-2.5 py-1 rounded-lg bg-white/[0.05] border border-white/[0.08]">
+                  Due {format(new Date(invoice.invoice_due_date), 'd MMM yyyy')}
+                </span>
+              ) : null}
+              {isPaid && (invoice as any).invoice_paid_at && (
+                <span className="text-[11px] font-medium text-emerald-400 px-2.5 py-1 rounded-lg bg-emerald-500/[0.08] border border-emerald-500/15">
+                  Paid {format(new Date((invoice as any).invoice_paid_at), 'd MMM yyyy')}
+                </span>
+              )}
+              {(invoice as any).external_invoice_provider && (
+                <span className="text-[11px] font-medium text-white/75 px-2.5 py-1 rounded-lg bg-white/[0.05] border border-white/[0.08] capitalize">
+                  Synced · {(invoice as any).external_invoice_provider}
+                </span>
+              )}
+            </div>
+
+            {/* Progress stepper */}
+            <div className="mt-4 pt-4 sm:mt-5 sm:pt-5 border-t border-white/[0.08]">
+              <div className="flex items-start">
+                {timelineEvents.map((event, i) => (
+                  <Fragment key={i}>
+                    {i > 0 && (
+                      <div className={cn('flex-1 h-[2px] mt-[5px] min-w-3 rounded-full', event.active ? 'bg-white/30' : 'bg-white/[0.10]')} />
+                    )}
+                    <div className="flex flex-col items-center gap-1.5 flex-shrink-0 max-w-[72px] px-1">
+                      <span className={cn('h-3 w-3 rounded-full ring-4', event.active ? cn(event.colour, 'ring-white/[0.06]') : 'bg-white/[0.10] ring-transparent border border-white/[0.2]')} />
+                      <span className={cn('text-[10px] font-medium text-center leading-tight', event.active ? 'text-white/90' : 'text-white/45')}>
+                        {event.label}
+                      </span>
+                      {event.date && <span className="text-[9px] text-white/55 tabular-nums">{event.date}</span>}
+                    </div>
+                  </Fragment>
+                ))}
+              </div>
+            </div>
+          </div>
+        </div>
+
+        {/* === NEXT STEP BANNER === */}
+        {(isOverdue || isPartPaid || isDraft) && !isPaid && (
+          <button
+            onClick={() => setShowActionsSheet(true)}
+            className={cn(PANEL, 'w-full flex items-center justify-between gap-3 px-4 py-3.5 touch-manipulation active:scale-[0.99] transition-all text-left select-none')}
+          >
+            <span className="flex items-center gap-2.5 min-w-0">
+              <span className={cn('h-1.5 w-1.5 rounded-full flex-shrink-0', isOverdue ? 'bg-red-400' : isPartPaid ? 'bg-amber-400' : 'bg-white/60')} />
+              <span className="text-[13px] text-white/90 leading-snug">
+                {isOverdue
+                  ? `${daysOverdue}d overdue — send a payment reminder before it drifts`
+                  : isPartPaid
+                    ? `${formatCurrency(outstanding)} still outstanding — chase or mark paid`
+                    : 'Draft — send it or mark it sent when it goes out'}
+              </span>
+            </span>
+            <span className={cn('text-[12px] font-semibold flex-shrink-0', isOverdue ? 'text-red-400' : 'text-elec-yellow')}>
+              {isOverdue ? 'Chase →' : 'Actions →'}
+            </span>
+          </button>
+        )}
+
+        {/* === CLIENT — full width === */}
+        <div className={cn(PANEL, 'p-4 sm:p-5')}>
+          <div className="flex flex-col sm:flex-row sm:items-center gap-4">
+            <div className="flex items-center gap-3 flex-1 min-w-0">
+              <div className="h-11 w-11 rounded-full bg-elec-yellow/15 border border-elec-yellow/20 flex items-center justify-center flex-shrink-0">
+                <span className="text-[14px] font-bold text-elec-yellow">
+                  {(invoice.client?.name || '?').split(' ').map((w) => w[0]).slice(0, 2).join('').toUpperCase()}
+                </span>
+              </div>
+              <div className="flex-1 min-w-0">
+                <p className="text-[15px] font-semibold text-white truncate">{invoice.client?.name || 'No client'}</p>
+                {(invoice.client?.address || invoice.client?.postcode) && (
+                  <p className="text-[12px] text-white/60 truncate">
+                    {[invoice.client?.address, invoice.client?.postcode].filter(Boolean).join(', ')}
+                  </p>
+                )}
+              </div>
+            </div>
+            {(invoice.client?.email || invoice.client?.phone) && (
+              <div className="flex gap-2 sm:flex-shrink-0">
+                {invoice.client?.email && (
+                  <a
+                    href={`mailto:${invoice.client.email}`}
+                    className="flex-1 sm:flex-initial h-10 sm:px-5 flex items-center justify-center gap-2 rounded-xl bg-white/[0.06] border border-white/[0.08] text-[12px] font-medium text-white touch-manipulation active:scale-[0.97] transition-all"
+                  >
+                    <Mail className="h-3.5 w-3.5 text-white/70" /> Email
+                  </a>
+                )}
+                {invoice.client?.phone && (
+                  <a
+                    href={`tel:${invoice.client.phone}`}
+                    className="flex-1 sm:flex-initial h-10 sm:px-5 flex items-center justify-center gap-2 rounded-xl bg-white/[0.06] border border-white/[0.08] text-[12px] font-medium text-white touch-manipulation active:scale-[0.97] transition-all"
+                  >
+                    <Phone className="h-3.5 w-3.5 text-white/70" /> Call
+                  </a>
+                )}
+              </div>
+            )}
+          </div>
+        </div>
+
+        {/* === JOB + META — two equal boxes when a job scope exists === */}
+        <div
+          className={cn(
+            'gap-4 space-y-4 lg:space-y-0',
+            invoice.jobDetails?.description || invoice.jobDetails?.location
+              ? 'lg:grid lg:grid-cols-2 lg:items-stretch'
+              : ''
+          )}
+        >
+          {(invoice.jobDetails?.description || invoice.jobDetails?.location) && (
+            <div>
+              <div className={cn(PANEL, 'p-4 sm:p-5 h-full')}>
+                <h2 className="text-[14px] font-semibold text-white mb-2">
+                  {invoice.jobDetails?.title || 'Job'}
+                </h2>
+                {invoice.jobDetails?.description && (
+                  <p className="text-[13px] text-white/80 whitespace-pre-line leading-relaxed">
+                    {invoice.jobDetails.description}
+                  </p>
+                )}
+                {invoice.jobDetails?.location && (
+                  <p className="text-[12px] text-white/55 mt-2">{invoice.jobDetails.location}</p>
+                )}
+              </div>
+            </div>
+          )}
+          <div
+            className={cn(
+              'gap-4',
+              invoice.jobDetails?.description || invoice.jobDetails?.location
+                ? 'flex flex-col'
+                : 'grid lg:grid-cols-2 space-y-4 lg:space-y-0'
+            )}
+          >
+            {/* Dates */}
+            <div className={cn(PANEL, 'p-4 sm:p-5')}>
+              <div className="grid grid-cols-3 gap-3">
+                <div>
+                  <p className="text-[10px] text-white/55 uppercase tracking-wider mb-1.5">Issued</p>
+                  <p className="text-[13px] font-semibold text-white tabular-nums">
+                    {invoice.invoice_date ? format(new Date(invoice.invoice_date), 'd MMM yy') : '—'}
+                  </p>
+                </div>
+                <div>
+                  <p className="text-[10px] text-white/55 uppercase tracking-wider mb-1.5">Due</p>
+                  <p className={cn('text-[13px] font-semibold tabular-nums', isOverdue ? 'text-red-400' : 'text-white')}>
+                    {invoice.invoice_due_date ? format(new Date(invoice.invoice_due_date), 'd MMM yy') : '—'}
+                  </p>
+                </div>
+                {isPaid && (invoice as any).invoice_paid_at ? (
+                  <div>
+                    <p className="text-[10px] text-white/55 uppercase tracking-wider mb-1.5">Paid</p>
+                    <p className="text-[13px] font-semibold text-emerald-400 tabular-nums">
+                      {format(new Date((invoice as any).invoice_paid_at), 'd MMM yy')}
+                    </p>
+                  </div>
+                ) : (
+                  <div>
+                    <p className="text-[10px] text-white/55 uppercase tracking-wider mb-1.5">Terms</p>
+                    <p className="text-[13px] font-semibold text-white truncate">
+                      {(invoice.settings as any)?.paymentTerms || '—'}
+                    </p>
+                  </div>
+                )}
+              </div>
+              {/* Late payment interest — lives with the dates it derives from */}
+              {isOverdue && daysOverdue && daysOverdue > 0 && (
+                <div className="flex items-center justify-between mt-4 pt-3 border-t border-white/[0.08]">
+                  <p className="text-[12px] text-white/70">{daysOverdue} days late · 8.5% statutory</p>
+                  <span className="text-[14px] font-bold text-red-400 tabular-nums">
+                    +{formatCurrency((invoice.total * 0.085 * daysOverdue) / 365)}
+                  </span>
+                </div>
               )}
             </div>
           </div>
         </div>
 
-        {/* === PRIMARY CTA === */}
-        {canMarkPaid && (
-          <button
-            onClick={() => setShowMarkPaidDialog(true)}
-            disabled={isMarkingPaid}
-            className="w-full h-[52px] rounded-2xl bg-gradient-to-r from-emerald-500 to-emerald-600 text-white text-[15px] font-semibold touch-manipulation active:scale-[0.98] transition-all shadow-lg shadow-emerald-500/20"
-          >
-            Mark as Paid
-          </button>
-        )}
-
-        {/* === QUICK ACTIONS — inline primary only === */}
-        <div className="grid grid-cols-2 gap-2">
-          <InvoiceSendDropdown invoice={invoice} onSuccess={fetchInvoice} refreshKey={0} compact />
-          <button
-            onClick={handleDownloadPDF}
-            disabled={isDownloading}
-            className="h-11 rounded-xl bg-white/[0.06] border border-white/[0.08] text-[13px] font-medium text-white touch-manipulation active:scale-[0.97] active:bg-white/[0.1] transition-all disabled:opacity-50"
-          >
-            {isDownloading ? 'Generating...' : 'Download PDF'}
-          </button>
-        </div>
-
-        {/* === TIMELINE — vertical stepper === */}
-        <div>
-          <SectionHeader title="Timeline" />
-          <div className="space-y-0">
-            {timelineEvents.map((event, i) => (
-              <div key={i} className="flex items-stretch gap-3">
-                {/* Dot + vertical line */}
-                <div className="flex flex-col items-center w-4 flex-shrink-0">
-                  <div className={cn(
-                    'w-3 h-3 rounded-full flex-shrink-0 mt-0.5',
-                    event.active ? event.colour : 'bg-white/[0.12] border border-white/[0.15]'
-                  )} />
-                  {i < timelineEvents.length - 1 && (
-                    <div className={cn('w-[2px] flex-1 min-h-[20px] my-1', timelineEvents[i + 1].active ? 'bg-white/15' : 'bg-white/[0.06]')} />
-                  )}
-                </div>
-                {/* Label + date */}
-                <div className="flex items-baseline justify-between flex-1 pb-3">
-                  <p className={cn('text-[13px] font-medium', event.active ? 'text-white' : 'text-white/30')}>
-                    {event.label}
-                  </p>
-                  {event.date && (
-                    <p className="text-[12px] text-white/50 tabular-nums">{event.date}</p>
-                  )}
-                </div>
-              </div>
-            ))}
-          </div>
-        </div>
-
-        {/* === LATE PAYMENT INTEREST === */}
-        {isOverdue && daysOverdue && daysOverdue > 0 && (
-          <div>
-            <SectionHeader title="Late Payment Interest" />
-            <div className="flex items-center justify-between">
-              <p className="text-[13px] text-white">
-                {daysOverdue} days at 8.5% statutory rate
-              </p>
-              <span className="text-[15px] font-bold text-red-400">
-                +{formatCurrency((invoice.total * 0.085 * daysOverdue) / 365)}
+        {/* === LINE ITEMS — full width === */}
+        {allItems.length > 0 && (
+          <div className={cn(PANEL, 'p-4 sm:p-5')}>
+            <div className="flex items-center justify-between mb-1">
+              <h2 className="text-[14px] font-semibold text-white">Line items</h2>
+              <span className="text-[11px] text-white/65 px-2 py-0.5 rounded-md bg-white/[0.06] tabular-nums">
+                {allItems.length}
               </span>
             </div>
-          </div>
-        )}
-
-        {/* === CLIENT === */}
-        <div>
-          <SectionHeader title="Client" />
-          <div className="space-y-1">
-            <p className="text-[16px] font-semibold text-white">{invoice.client?.name || 'No client'}</p>
-            {invoice.client?.email && (
-              <a href={`mailto:${invoice.client.email}`} className="block text-[13px] text-elec-yellow touch-manipulation">
-                {invoice.client.email}
-              </a>
-            )}
-            {invoice.client?.phone && (
-              <a href={`tel:${invoice.client.phone}`} className="block text-[13px] text-elec-yellow touch-manipulation">
-                {invoice.client.phone}
-              </a>
-            )}
-            {(invoice.client?.address || invoice.client?.postcode) && (
-              <p className="text-[13px] text-white">
-                {[invoice.client?.address, invoice.client?.postcode].filter(Boolean).join(', ')}
-              </p>
-            )}
-          </div>
-        </div>
-
-        {/* === JOB === */}
-        {invoice.jobDetails?.title && (
-          <div>
-            <SectionHeader title="Job" />
-            <p className="text-[15px] font-semibold text-white">{invoice.jobDetails.title}</p>
-            {invoice.jobDetails.description && (
-              <p className="text-[13px] text-white mt-1 whitespace-pre-line">{invoice.jobDetails.description}</p>
-            )}
-            {invoice.jobDetails.location && (
-              <p className="text-[13px] text-white mt-1">{invoice.jobDetails.location}</p>
-            )}
-          </div>
-        )}
-
-        {/* === DATES === */}
-        <div>
-          <SectionHeader title="Dates" />
-          <div className="flex gap-8">
-            <div>
-              <p className="text-[10px] text-white uppercase tracking-widest mb-1">Issued</p>
-              <p className="text-[14px] font-medium text-white">
-                {invoice.invoice_date ? format(new Date(invoice.invoice_date), 'd MMM yyyy') : '—'}
-              </p>
-            </div>
-            <div>
-              <p className="text-[10px] text-white uppercase tracking-widest mb-1">Due</p>
-              <p className={cn('text-[14px] font-medium', isOverdue ? 'text-red-400' : 'text-white')}>
-                {invoice.invoice_due_date ? format(new Date(invoice.invoice_due_date), 'd MMM yyyy') : '—'}
-              </p>
-            </div>
-            {isPaid && (invoice as any).invoice_paid_at && (
-              <div>
-                <p className="text-[10px] text-white uppercase tracking-widest mb-1">Paid</p>
-                <p className="text-[14px] font-medium text-emerald-400">
-                  {format(new Date((invoice as any).invoice_paid_at), 'd MMM yyyy')}
-                </p>
-              </div>
-            )}
-          </div>
-        </div>
-
-        {/* === LINE ITEMS === */}
-        {allItems.length > 0 && (
-          <div>
-            <SectionHeader title={`Items (${allItems.length})`} />
             <div className="space-y-0 divide-y divide-white/[0.06]">
               {allItems.map((item: any, index: number) => {
                 const lineTotal = item.totalPrice || (item.quantity || 0) * (item.unitPrice || item.price || 0);
@@ -613,13 +678,13 @@ const InvoiceViewPage = () => {
                     <div className="flex items-start gap-3 flex-1 min-w-0">
                       <div className={cn(
                         'w-1.5 h-1.5 rounded-full mt-1.5 flex-shrink-0',
-                        item.category === 'labour' ? 'bg-blue-500' :
-                        item.category === 'materials' ? 'bg-green-500' :
-                        item.category === 'equipment' ? 'bg-purple-500' : 'bg-white'
+                        item.category === 'labour' ? 'bg-blue-400' :
+                        item.category === 'materials' ? 'bg-emerald-400' :
+                        item.category === 'equipment' ? 'bg-purple-400' : 'bg-white/70'
                       )} />
                       <div className="flex-1 min-w-0">
                         <p className="text-[14px] text-white font-medium">{item.description || item.name}</p>
-                        <p className="text-[12px] text-white mt-0.5">
+                        <p className="text-[12px] text-white/60 mt-0.5 tabular-nums">
                           {item.quantity} {item.unit || 'units'} × {formatCurrency(item.unitPrice || item.price || 0)}
                         </p>
                       </div>
@@ -635,36 +700,36 @@ const InvoiceViewPage = () => {
             {/* Pricing breakdown */}
             <div className="mt-4 pt-4 border-t border-white/[0.08] space-y-2">
               <div className="flex justify-between text-[13px]">
-                <span className="text-white">Subtotal</span>
+                <span className="text-white/65">Subtotal</span>
                 <span className="text-white tabular-nums">{formatCurrency(invoice.subtotal)}</span>
               </div>
               {(invoice.overhead ?? 0) > 0 && (
                 <div className="flex justify-between text-[13px]">
-                  <span className="text-white">Overhead</span>
+                  <span className="text-white/65">Overhead</span>
                   <span className="text-white tabular-nums">{formatCurrency(invoice.overhead)}</span>
                 </div>
               )}
               {(invoice.profit ?? 0) > 0 && (
                 <div className="flex justify-between text-[13px]">
-                  <span className="text-white">Profit</span>
+                  <span className="text-white/65">Profit</span>
                   <span className="text-white tabular-nums">{formatCurrency(invoice.profit)}</span>
                 </div>
               )}
               {(invoice.vatAmount ?? 0) > 0 && (
                 <div className="flex justify-between text-[13px]">
-                  <span className="text-white">VAT ({invoice.settings?.vatRate || 20}%)</span>
+                  <span className="text-white/65">VAT ({invoice.settings?.vatRate || 20}%)</span>
                   <span className="text-white tabular-nums">{formatCurrency(invoice.vatAmount)}</span>
                 </div>
               )}
               {cisT.reverseCharge && (
                 <div className="flex justify-between text-[13px]">
-                  <span className="text-white">VAT — reverse charge</span>
+                  <span className="text-white/65">VAT — reverse charge</span>
                   <span className="text-white tabular-nums">£0.00</span>
                 </div>
               )}
-              <div className="flex justify-between items-baseline pt-3 border-t border-white/[0.08]">
-                <span className="text-[15px] font-bold text-white">Total</span>
-                <span className="text-[22px] font-bold text-elec-yellow tabular-nums">{formatCurrency(invoice.total)}</span>
+              <div className="flex justify-between items-center mt-3 px-3.5 py-3 rounded-xl bg-elec-yellow/[0.08] border border-elec-yellow/[0.15]">
+                <span className="text-[14px] font-bold text-white">Total</span>
+                <span className="text-[22px] font-bold text-elec-yellow tabular-nums tracking-tight">{formatCurrency(invoice.total)}</span>
               </div>
               {cisT.cisAmount > 0 && (
                 <>
@@ -691,11 +756,9 @@ const InvoiceViewPage = () => {
                 </>
               )}
               {cisT.reverseCharge && (
-                <div className="mt-3 rounded-lg border-l-2 border-elec-yellow bg-white/[0.04] px-3 py-2.5">
-                  <p className="text-[11px] text-white/70 leading-relaxed">
-                    <span className="font-semibold text-white">VAT reverse charge applies.</span> Customer to account to HMRC for the VAT of {formatCurrency(cisT.notionalVat)} ({invoice.settings?.vatRate ?? 20}%). This invoice shows £0 VAT — do not pay the VAT to the supplier. VAT Act 1994, s.55A.
-                  </p>
-                </div>
+                <p className="text-[11px] text-white/55 mt-2 leading-relaxed">
+                  Reverse charge: customer to account to HMRC for the VAT — {formatCurrency(cisT.notionalVat)} @ {invoice.settings?.vatRate ?? 20}%.
+                </p>
               )}
             </div>
           </div>
@@ -703,16 +766,16 @@ const InvoiceViewPage = () => {
 
         {/* === NOTES === */}
         {invoice.notes && (
-          <div>
-            <SectionHeader title="Notes" />
-            <p className="text-[13px] text-white whitespace-pre-line leading-relaxed">{invoice.notes}</p>
+          <div className={cn(PANEL, 'p-4 sm:p-5')}>
+            <h2 className="text-[14px] font-semibold text-white mb-2">Notes</h2>
+            <p className="text-[13px] text-white/80 whitespace-pre-line leading-relaxed">{invoice.notes}</p>
           </div>
         )}
 
         {/* === ACCOUNTING SYNC STATUS === */}
         {(alreadySynced || hasConnectedProvider) && (
-          <div>
-            <SectionHeader title="Accounting" />
+          <div className={cn(PANEL, 'p-4 sm:p-5')}>
+            <h2 className="text-[14px] font-semibold text-white mb-3">Accounting</h2>
             {alreadySynced ? (
               <div className="space-y-3">
                 <div className="flex items-center justify-between">
@@ -767,110 +830,217 @@ const InvoiceViewPage = () => {
 
       </div>
 
+      {/* === STICKY ACTION BAR === */}
+      <div className="sticky bottom-0 z-40 bg-background/95 backdrop-blur-md border-t border-white/[0.08]">
+        <div className="flex gap-2 p-3 pb-[max(12px,env(safe-area-inset-bottom))] lg:px-6">
+          <div className="flex-1">
+            <InvoiceSendDropdown invoice={invoice} onSuccess={fetchInvoice} refreshKey={0} compact />
+          </div>
+          {canMarkPaid ? (
+            <button
+              onClick={() => setShowMarkPaidDialog(true)}
+              disabled={isMarkingPaid}
+              className="flex-1 h-12 rounded-xl bg-emerald-500 text-white text-[14px] font-semibold touch-manipulation active:scale-[0.97] transition-all disabled:opacity-50"
+            >
+              {isMarkingPaid ? 'Marking…' : 'Mark as Paid'}
+              <span className="sm:hidden font-bold tabular-nums"> · {formatCurrency(isPartPaid ? outstanding : amountDue)}</span>
+            </button>
+          ) : (
+            <button
+              onClick={handleDownloadPDF}
+              disabled={isDownloading}
+              className="flex-1 h-12 rounded-xl bg-white/[0.08] border border-white/[0.12] text-white text-[14px] font-semibold touch-manipulation active:scale-[0.97] transition-all disabled:opacity-50"
+            >
+              {isDownloading ? 'Generating…' : 'Download PDF'}
+            </button>
+          )}
+        </div>
+      </div>
+
       {/* === ACTIONS BOTTOM SHEET === */}
       <Sheet open={showActionsSheet} onOpenChange={setShowActionsSheet}>
-        <SheetContent side="bottom" className="rounded-t-2xl p-0 max-h-[60vh]">
-          <div className="p-5 space-y-1">
-            <p className="text-xs font-medium text-white uppercase tracking-wider mb-3 px-1">Actions</p>
-            {!isPaid && (
+        <SheetContent
+          side="bottom"
+          className="rounded-t-2xl p-0 max-h-[85vh] overflow-y-auto overscroll-contain border-t border-white/[0.10]"
+        >
+          <div className="w-full px-4 sm:px-6 pt-3 pb-[max(20px,env(safe-area-inset-bottom))]">
+            <div className="mx-auto h-1 w-10 rounded-full bg-white/[0.15] mb-4" />
+
+            {/* Context header */}
+            <div className="flex items-center justify-between gap-3 pb-3 mb-3 border-b border-white/[0.08]">
+              <div className="min-w-0">
+                <p className="text-[14px] font-semibold text-white truncate">{invoice.client?.name || 'No client'}</p>
+                <p className="text-[11px] text-white/55 font-mono truncate">{invoice.invoice_number}</p>
+              </div>
+              <p className="text-[18px] font-bold text-elec-yellow tabular-nums flex-shrink-0">
+                {formatCurrency(isPartPaid ? outstanding : amountDue)}
+              </p>
+            </div>
+
+            <div className="grid grid-cols-2 lg:grid-cols-4 gap-2">
+              {!isPaid && (
+                <button
+                  onClick={() => { setShowActionsSheet(false); navigate(`/electrician/invoice-quote-builder/${invoice.id}`); }}
+                  className="flex flex-col items-start gap-2.5 p-3.5 rounded-xl border touch-manipulation active:scale-[0.98] transition-all text-left select-none bg-white/[0.04] border-white/[0.08] hover:bg-white/[0.06]"
+                >
+                  <span className="h-10 w-10 rounded-xl flex items-center justify-center bg-white/[0.06] border border-white/[0.08]">
+                    <Pencil className="h-4 w-4 text-white/85" />
+                  </span>
+                  <span>
+                    <span className="block text-[13px] font-semibold text-white">Edit invoice</span>
+                    <span className="block text-[11px] text-white/55 mt-0.5">Items, prices and details</span>
+                  </span>
+                </button>
+              )}
+
+              {isDraft && (
+                <button
+                  onClick={async () => {
+                    setShowActionsSheet(false);
+                    const { error } = await supabase.from('quotes').update({ invoice_status: 'sent', invoice_sent_at: new Date().toISOString() }).eq('id', invoice.id);
+                    if (error) { toast({ title: 'Failed to update', variant: 'destructive' }); }
+                    else { toast({ title: 'Invoice marked as sent' }); fetchInvoice(); }
+                  }}
+                  className="flex flex-col items-start gap-2.5 p-3.5 rounded-xl border touch-manipulation active:scale-[0.98] transition-all text-left select-none bg-blue-500/[0.06] border-blue-500/[0.15] hover:bg-blue-500/[0.1]"
+                >
+                  <span className="h-10 w-10 rounded-xl flex items-center justify-center bg-blue-500/15 border border-blue-500/20">
+                    <Send className="h-4 w-4 text-blue-400" />
+                  </span>
+                  <span>
+                    <span className="block text-[13px] font-semibold text-blue-400">Mark as sent</span>
+                    <span className="block text-[11px] text-white/55 mt-0.5">Sent outside the app</span>
+                  </span>
+                </button>
+              )}
+
               <button
-                onClick={() => { setShowActionsSheet(false); navigate(`/electrician/invoice-quote-builder/${invoice.id}`); }}
-                className="w-full flex items-center justify-between h-12 px-4 rounded-xl hover:bg-white/[0.04] touch-manipulation active:scale-[0.99] transition-all"
-              >
-                <span className="text-[15px] font-medium text-white">Edit Invoice</span>
-                <span className="text-[12px] text-white">→</span>
-              </button>
-            )}
-            {isDraft && (
-              <button
-                onClick={async () => {
+                onClick={() => {
                   setShowActionsSheet(false);
-                  const { error } = await supabase.from('quotes').update({ invoice_status: 'sent', invoice_sent_at: new Date().toISOString() }).eq('id', invoice.id);
-                  if (error) { toast({ title: 'Failed to update', variant: 'destructive' }); }
-                  else { toast({ title: 'Invoice marked as sent' }); fetchInvoice(); }
+                  const sessionId = `dup-${Date.now()}`;
+                  sessionStorage.setItem(sessionId, JSON.stringify({
+                    quoteData: {
+                      client: invoice.client,
+                      jobDetails: invoice.jobDetails,
+                      items: [...(invoice.items || []), ...((invoice as any).additional_invoice_items || [])],
+                      settings: invoice.settings,
+                      notes: invoice.notes,
+                    },
+                  }));
+                  navigate(`/electrician/invoice-builder/create?quoteSessionId=${sessionId}`);
                 }}
-                className="w-full flex items-center justify-between h-12 px-4 rounded-xl hover:bg-white/[0.04] touch-manipulation active:scale-[0.99] transition-all"
+                className="flex flex-col items-start gap-2.5 p-3.5 rounded-xl border touch-manipulation active:scale-[0.98] transition-all text-left select-none bg-white/[0.04] border-white/[0.08] hover:bg-white/[0.06]"
               >
-                <span className="text-[15px] font-medium text-blue-400">Mark as Sent</span>
-              </button>
-            )}
-            <button
-              onClick={() => {
-                setShowActionsSheet(false);
-                // Store invoice data in session for duplication
-                const sessionId = `dup-${Date.now()}`;
-                sessionStorage.setItem(sessionId, JSON.stringify({
-                  quoteData: {
-                    client: invoice.client,
-                    jobDetails: invoice.jobDetails,
-                    items: [...(invoice.items || []), ...((invoice as any).additional_invoice_items || [])],
-                    settings: invoice.settings,
-                    notes: invoice.notes,
-                  },
-                }));
-                navigate(`/electrician/invoice-builder/create?quoteSessionId=${sessionId}`);
-              }}
-              className="w-full flex items-center justify-between h-12 px-4 rounded-xl hover:bg-white/[0.04] touch-manipulation active:scale-[0.99] transition-all"
-            >
-              <span className="text-[15px] font-medium text-white">Duplicate Invoice</span>
-              <span className="text-[12px] text-white">→</span>
-            </button>
-            {isOverdue && (
-              <>
-                <button
-                  onClick={() => { setShowActionsSheet(false); handleChase('gentle'); }}
-                  className="w-full flex items-center justify-between h-12 px-4 rounded-xl hover:bg-white/[0.04] touch-manipulation active:scale-[0.99] transition-all"
-                >
-                  <span className="text-[15px] font-medium text-amber-400">Send Gentle Reminder</span>
-                </button>
-                <button
-                  onClick={() => { setShowActionsSheet(false); handleChase('firm'); }}
-                  className="w-full flex items-center justify-between h-12 px-4 rounded-xl hover:bg-white/[0.04] touch-manipulation active:scale-[0.99] transition-all"
-                >
-                  <span className="text-[15px] font-medium text-amber-400">Send Firm Reminder</span>
-                </button>
-                <button
-                  onClick={() => { setShowActionsSheet(false); handleChase('final'); }}
-                  className="w-full flex items-center justify-between h-12 px-4 rounded-xl hover:bg-white/[0.04] touch-manipulation active:scale-[0.99] transition-all"
-                >
-                  <span className="text-[15px] font-medium text-red-400">Send Final Notice</span>
-                </button>
-              </>
-            )}
-            {hasConnectedProvider && (
-              <button
-                onClick={() => { setShowActionsSheet(false); handleSyncToAccounting(); }}
-                disabled={isSyncing}
-                className="w-full flex items-center justify-between h-12 px-4 rounded-xl hover:bg-white/[0.04] touch-manipulation active:scale-[0.99] transition-all disabled:opacity-50"
-              >
-                <span className="text-[15px] font-medium text-blue-400">
-                  {isSyncing ? 'Syncing...' : alreadySynced ? `Re-sync to ${providerName}` : `Sync to ${providerName}`}
+                <span className="h-10 w-10 rounded-xl flex items-center justify-center bg-white/[0.06] border border-white/[0.08]">
+                  <Copy className="h-4 w-4 text-white/85" />
                 </span>
-                {alreadySynced && <span className="text-[11px] text-emerald-400">Synced</span>}
-              </button>
-            )}
-            {alreadySynced && (
-              <button
-                onClick={() => { setShowActionsSheet(false); handleRefreshStatusFromProvider(); }}
-                disabled={isRefreshingFromProvider}
-                className="w-full flex items-center justify-between h-12 px-4 rounded-xl hover:bg-white/[0.04] touch-manipulation active:scale-[0.99] transition-all disabled:opacity-50"
-              >
-                <span className="text-[15px] font-medium text-blue-400">
-                  {isRefreshingFromProvider
-                    ? 'Checking…'
-                    : `Sync status from ${(invoice as any).external_invoice_provider
-                        ? (invoice as any).external_invoice_provider.charAt(0).toUpperCase() + (invoice as any).external_invoice_provider.slice(1)
-                        : providerName}`}
+                <span>
+                  <span className="block text-[13px] font-semibold text-white">Duplicate</span>
+                  <span className="block text-[11px] text-white/55 mt-0.5">New invoice from this one</span>
                 </span>
-                <span className="text-[11px] text-white/50">↻</span>
               </button>
-            )}
-            <div className="border-t border-white/[0.06] mt-2 pt-2">
+
+              <button
+                onClick={() => { setShowActionsSheet(false); handleDownloadPDF(); }}
+                className="flex flex-col items-start gap-2.5 p-3.5 rounded-xl border touch-manipulation active:scale-[0.98] transition-all text-left select-none bg-white/[0.04] border-white/[0.08] hover:bg-white/[0.06]"
+              >
+                <span className="h-10 w-10 rounded-xl flex items-center justify-center bg-white/[0.06] border border-white/[0.08]">
+                  <Download className="h-4 w-4 text-white/85" />
+                </span>
+                <span>
+                  <span className="block text-[13px] font-semibold text-white">Download PDF</span>
+                  <span className="block text-[11px] text-white/55 mt-0.5">Client-ready document</span>
+                </span>
+              </button>
+
+              {isOverdue && (
+                <>
+                  <button
+                    onClick={() => { setShowActionsSheet(false); handleChase('gentle'); }}
+                    className="flex flex-col items-start gap-2.5 p-3.5 rounded-xl border touch-manipulation active:scale-[0.98] transition-all text-left select-none bg-amber-500/[0.06] border-amber-500/[0.15] hover:bg-amber-500/[0.1]"
+                  >
+                    <span className="h-10 w-10 rounded-xl flex items-center justify-center bg-amber-500/15 border border-amber-500/20">
+                      <Bell className="h-4 w-4 text-amber-400" />
+                    </span>
+                    <span>
+                      <span className="block text-[13px] font-semibold text-amber-400">Gentle reminder</span>
+                      <span className="block text-[11px] text-white/55 mt-0.5">A friendly nudge</span>
+                    </span>
+                  </button>
+                  <button
+                    onClick={() => { setShowActionsSheet(false); handleChase('firm'); }}
+                    className="flex flex-col items-start gap-2.5 p-3.5 rounded-xl border touch-manipulation active:scale-[0.98] transition-all text-left select-none bg-amber-500/[0.06] border-amber-500/[0.15] hover:bg-amber-500/[0.1]"
+                  >
+                    <span className="h-10 w-10 rounded-xl flex items-center justify-center bg-amber-500/15 border border-amber-500/20">
+                      <Bell className="h-4 w-4 text-amber-400" />
+                    </span>
+                    <span>
+                      <span className="block text-[13px] font-semibold text-amber-400">Firm reminder</span>
+                      <span className="block text-[11px] text-white/55 mt-0.5">Payment now due</span>
+                    </span>
+                  </button>
+                  <button
+                    onClick={() => { setShowActionsSheet(false); handleChase('final'); }}
+                    className="flex flex-col items-start gap-2.5 p-3.5 rounded-xl border touch-manipulation active:scale-[0.98] transition-all text-left select-none bg-red-500/[0.05] border-red-500/[0.15] hover:bg-red-500/[0.08]"
+                  >
+                    <span className="h-10 w-10 rounded-xl flex items-center justify-center bg-red-500/15 border border-red-500/20">
+                      <Bell className="h-4 w-4 text-red-400" />
+                    </span>
+                    <span>
+                      <span className="block text-[13px] font-semibold text-red-400">Final notice</span>
+                      <span className="block text-[11px] text-white/55 mt-0.5">Before further action</span>
+                    </span>
+                  </button>
+                </>
+              )}
+
+              {hasConnectedProvider && (
+                <button
+                  onClick={() => { setShowActionsSheet(false); handleSyncToAccounting(); }}
+                  disabled={isSyncing}
+                  className="flex flex-col items-start gap-2.5 p-3.5 rounded-xl border touch-manipulation active:scale-[0.98] transition-all text-left select-none bg-white/[0.04] border-white/[0.08] hover:bg-blue-500/[0.06] disabled:opacity-50"
+                >
+                  <span className="h-10 w-10 rounded-xl flex items-center justify-center bg-blue-500/15 border border-blue-500/20">
+                    <RefreshCw className={cn('h-4 w-4 text-blue-400', isSyncing && 'animate-spin')} />
+                  </span>
+                  <span>
+                    <span className="block text-[13px] font-semibold text-white">
+                      {isSyncing ? 'Syncing…' : alreadySynced ? `Re-sync · ${providerName}` : `Sync to ${providerName}`}
+                    </span>
+                    <span className="block text-[11px] text-white/55 mt-0.5">
+                      {alreadySynced ? 'Push the latest version' : 'Send to your accounts'}
+                    </span>
+                  </span>
+                </button>
+              )}
+
+              {alreadySynced && (
+                <button
+                  onClick={() => { setShowActionsSheet(false); handleRefreshStatusFromProvider(); }}
+                  disabled={isRefreshingFromProvider}
+                  className="flex flex-col items-start gap-2.5 p-3.5 rounded-xl border touch-manipulation active:scale-[0.98] transition-all text-left select-none bg-white/[0.04] border-white/[0.08] hover:bg-blue-500/[0.06] disabled:opacity-50"
+                >
+                  <span className="h-10 w-10 rounded-xl flex items-center justify-center bg-blue-500/15 border border-blue-500/20">
+                    <RefreshCw className={cn('h-4 w-4 text-blue-400', isRefreshingFromProvider && 'animate-spin')} />
+                  </span>
+                  <span>
+                    <span className="block text-[13px] font-semibold text-white">
+                      {isRefreshingFromProvider ? 'Checking…' : 'Pull payment status'}
+                    </span>
+                    <span className="block text-[11px] text-white/55 mt-0.5">If paid in your accounts</span>
+                  </span>
+                </button>
+              )}
+            </div>
+
+            {/* Destructive — separated */}
+            <div className="border-t border-white/[0.08] mt-3 pt-3">
               <button
                 onClick={() => { setShowActionsSheet(false); setShowDeleteDialog(true); }}
-                className="w-full flex items-center h-12 px-4 rounded-xl hover:bg-red-500/[0.06] touch-manipulation active:scale-[0.99] transition-all"
+                className="w-full flex items-center gap-3 h-12 px-3 rounded-xl hover:bg-red-500/[0.06] active:bg-red-500/[0.1] touch-manipulation transition-all"
               >
-                <span className="text-[15px] font-medium text-red-400">Delete Invoice</span>
+                <Trash2 className="h-4 w-4 text-red-400 flex-shrink-0" />
+                <span className="text-[13px] font-semibold text-red-400">Delete invoice</span>
+                <span className="text-[11px] text-white/45 ml-auto">The original quote is preserved</span>
               </button>
             </div>
           </div>

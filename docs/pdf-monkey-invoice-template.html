@@ -3,72 +3,154 @@
   <head>
     <meta charset="UTF-8" />
     <style>
+      /* ============================================================
+         Elec-Mate invoice — premium edition.
+         The amount due is the hero; brand colour is an accent, not a
+         slab; hairlines over zebra stripes; tabular numerals on money.
+         @page margins pad EVERY page (incl. overflow pages).
+         ============================================================ */
+      @page { size: A4; margin: 12mm 10mm; }
       * { box-sizing: border-box; margin: 0; padding: 0; }
-      body { font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; font-size: 12px; color: #1f2937; line-height: 1.5; background: #ffffff; }
-      .page { padding: 20px; max-width: 210mm; margin: 0 auto; }
+      body { orphans: 3; widows: 3;
+        font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+        font-size: 11.5px; color: #111827; line-height: 1.55; background: #ffffff;
+        font-variant-numeric: tabular-nums;
+      }
+      .page { padding: 0; max-width: 210mm; margin: 0 auto; }
 
-      /* Header */
-      .header { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 30px; padding-bottom: 20px; border-bottom: 3px solid {{ branding.primaryColor | default: '#1e40af' }}; }
+      .muted { color: #374151; }
+      .label { font-size: 8.5px; text-transform: uppercase; letter-spacing: 0.08em; color: #4b5563; font-weight: 600; }
+      .num { font-variant-numeric: tabular-nums; white-space: nowrap; }
+
+      /* ── Brand accent bar ───────────────────────────────────── */
+      .brand-bar { height: 6px; border-radius: 3px; margin-bottom: 16px;
+        background: linear-gradient(90deg, {{ branding.primaryColor | default: '#1e40af' }} 0%, {{ branding.secondaryColor | default: '#1e3a8a' }} 60%, {{ branding.primaryColor | default: '#1e40af' }} 100%); }
+
+      /* ── Header: logo + company identity ────────────────────── */
+      .header { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 14px; padding-bottom: 14px; border-bottom: 1px solid #e5e7eb; }
       .logo-section { max-width: 280px; display: flex; align-items: center; }
       .logo-section img { display: block; }
       .company-info { text-align: right; }
-      .company-name { font-size: 22px; font-weight: 700; color: {{ branding.primaryColor | default: '#1e40af' }}; margin-bottom: 4px; }
-      .company-details { font-size: 11px; color: #6b7280; line-height: 1.6; }
+      .company-name { font-size: 20px; font-weight: 700; letter-spacing: -0.3px; color: {{ branding.primaryColor | default: '#1e40af' }}; margin-bottom: 4px; }
+      .company-details { font-size: 10.5px; color: #374151; line-height: 1.65; }
 
-      /* Invoice Title Banner */
-      .invoice-banner { background: linear-gradient(135deg, {{ branding.primaryColor | default: '#1e40af' }} 0%, {{ branding.secondaryColor | default: '#1e3a8a' }} 100%); color: white; padding: 20px 24px; border-radius: 12px; margin-bottom: 24px; display: flex; justify-content: space-between; align-items: center; }
-      .invoice-title { font-size: 24px; font-weight: 700; letter-spacing: -0.5px; }
-      .invoice-number { font-size: 14px; opacity: 0.9; margin-top: 4px; }
-      .invoice-dates { text-align: right; font-size: 12px; }
-      .invoice-dates strong { color: #ffffff; }
+      /* ── Title row: INVOICE + meta ───────────────────────────── */
+      .title-row { display: flex; justify-content: space-between; align-items: flex-end; margin-bottom: 14px; }
+      .doc-title { font-size: 26px; font-weight: 800; letter-spacing: 0.12em; color: {{ branding.primaryColor | default: '#1e40af' }}; }
+      .doc-number { font-size: 12px; color: #374151; margin-top: 2px; }
+      .meta-cells { display: flex; gap: 26px; text-align: right; }
+      .meta-cell .label { margin-bottom: 3px; }
+      .meta-cell .value { font-size: 12px; font-weight: 600; color: #111827; }
 
-      /* Two Column Layout */
-      .two-col { display: flex; gap: 24px; margin-bottom: 24px; }
+      /* ── Amount-due band ────────────────────────────────────── */
+      .amount-band {
+        display: flex; justify-content: space-between; align-items: center;
+        background: #fafbfc; border: 1px solid #eceef1;
+        border-left: 5px solid {{ branding.primaryColor | default: '#1e40af' }};
+        border-radius: 12px; padding: 18px 24px; margin-bottom: 18px;
+        page-break-inside: avoid;
+      }
+      .amount-band .label { margin-bottom: 4px; }
+      .amount-figure { font-size: 33px; font-weight: 800; letter-spacing: -0.7px; color: #111827; }
+      .amount-side { text-align: right; font-size: 11.5px; color: #111827; line-height: 1.7; }
+      .paid-stamp {
+        display: inline-block; padding: 6px 14px; border: 2px solid #16a34a; color: #16a34a;
+        font-weight: 800; font-size: 13px; letter-spacing: 0.12em; border-radius: 6px;
+        transform: rotate(-3deg); text-transform: uppercase;
+      }
+
+      /* ── Party cards ────────────────────────────────────────── */
+      .two-col { display: flex; gap: 16px; margin-bottom: 16px; page-break-inside: avoid; }
       .col { flex: 1; }
+      .card { background: #ffffff; border: 1px solid #eceef1; border-radius: 12px; padding: 15px 18px; height: 100%; page-break-inside: avoid; }
+      .card-header { font-size: 9px; text-transform: uppercase; letter-spacing: 0.08em; color: {{ branding.primaryColor | default: '#1e40af' }}; font-weight: 700; margin-bottom: 10px; }
+      .info-label { font-size: 8.5px; color: #4b5563; text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 1px; }
+      .info-value { font-size: 11.5px; color: #111827; margin-bottom: 7px; font-weight: 500; word-break: break-word; overflow-wrap: break-word; }
+      .info-value:last-child { margin-bottom: 0; }
 
-      /* Info Cards */
-      .info-card { background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 10px; padding: 16px 20px; height: 100%; }
-      .info-card-header { font-size: 10px; text-transform: uppercase; letter-spacing: 0.5px; color: {{ branding.primaryColor | default: '#1e40af' }}; font-weight: 600; margin-bottom: 12px; display: flex; align-items: center; gap: 6px; }
-      .info-card-header::before { content: ''; display: inline-block; width: 8px; height: 8px; background: {{ branding.primaryColor | default: '#1e40af' }}; border-radius: 50%; }
-      .info-label { font-size: 9px; color: #6b7280; text-transform: uppercase; letter-spacing: 0.3px; margin-bottom: 2px; }
-      .info-value { font-size: 12px; color: #1f2937; margin-bottom: 8px; font-weight: 500; word-break: break-word; overflow-wrap: break-word; }
+      /* ── Description ────────────────────────────────────────── */
+      .description-card { border: 1px solid #eceef1; border-radius: 12px; padding: 16px 20px; margin-bottom: 18px; }
+      .description-body {
+        font-size: 12px; color: #111827; line-height: 1.75;
+        white-space: pre-line; word-break: break-word; overflow-wrap: break-word;
+        orphans: 3; widows: 3;
+      }
 
-      /* Items Table */
-      .items-section { margin-bottom: 24px; }
-      .section-title { font-size: 14px; font-weight: 600; color: {{ branding.primaryColor | default: '#1e40af' }}; margin-bottom: 12px; padding-bottom: 8px; border-bottom: 2px solid {{ branding.primaryColor | default: '#1e40af' }}; }
+      /* ── Items table ────────────────────────────────────────── */
+      .items-section { margin-bottom: 6px; }
+      .section-title { font-size: 12px; font-weight: 700; color: #111827; letter-spacing: -0.1px; margin-bottom: 8px; page-break-after: avoid; }
       .items-table { width: 100%; border-collapse: collapse; }
-      .items-table th { background: {{ branding.secondaryColor | default: '#1e3a5f' }}; color: white; padding: 12px 16px; text-align: left; font-size: 10px; text-transform: uppercase; letter-spacing: 0.5px; font-weight: 600; }
-      .items-table th:last-child { text-align: right; }
-      .items-table td { padding: 12px 16px; border-bottom: 1px solid #e2e8f0; font-size: 11px; }
-      .items-table td:last-child { text-align: right; font-weight: 600; color: #1f2937; }
-      .items-table tr:nth-child(even) { background: #f8fafc; }
-      .items-table .item-desc { font-weight: 500; color: #1f2937; }
-      .items-table .item-notes { font-size: 10px; color: #6b7280; margin-top: 2px; }
-      .items-table .qty-unit { color: #6b7280; }
+      .items-table th {
+        padding: 9px 10px; text-align: left; font-size: 8.5px; text-transform: uppercase;
+        letter-spacing: 0.08em; font-weight: 700;
+        color: {{ branding.primaryColor | default: '#1e40af' }};
+        background: #f8fafc; border-bottom: 1.5px solid {{ branding.primaryColor | default: '#1e40af' }};
+      }
+      .items-table th:first-child { border-radius: 8px 0 0 0; }
+      .items-table th:last-child { border-radius: 0 8px 0 0; }
+      .items-table th.r, .items-table td.r { text-align: right; }
+      .items-table tr { page-break-inside: avoid; }
+      .items-table td { padding: 9px 10px; border-bottom: 1px solid #f0f1f3; font-size: 11.5px; vertical-align: top; }
+      .items-table .item-desc { font-weight: 600; color: #111827; }
+      .items-table .item-notes { font-size: 10px; color: #374151; margin-top: 2px; line-height: 1.5; }
+      .items-table .qty-unit { color: #1f2937; white-space: nowrap; }
 
-      /* Totals */
-      .totals-section { display: flex; justify-content: flex-end; margin-bottom: 30px; }
+      /* ── Totals ─────────────────────────────────────────────── */
+      .totals-section { display: flex; justify-content: flex-end; margin-top: 6px; margin-bottom: 16px; page-break-inside: avoid; }
       .totals-box { width: 320px; }
-      .totals-row { display: flex; justify-content: space-between; padding: 10px 16px; font-size: 12px; border-bottom: 1px solid #e2e8f0; }
-      .totals-row:first-child { border-radius: 8px 8px 0 0; background: #f8fafc; }
-      .totals-row.total { background: linear-gradient(135deg, {{ branding.primaryColor | default: '#1e40af' }} 0%, {{ branding.secondaryColor | default: '#1e3a8a' }} 100%); color: white; font-size: 16px; font-weight: 700; border-radius: 0 0 8px 8px; padding: 14px 16px; border: none; }
-      .totals-row .amount { font-weight: 600; color: #1f2937; white-space: nowrap; font-variant-numeric: tabular-nums; }
-      .totals-row span:first-child { padding-right: 12px; }
-      .totals-row.total .amount { color: #ffffff; }
+      .totals-row { display: flex; justify-content: space-between; padding: 7px 12px; font-size: 11.5px; color: #111827; }
+      .totals-row + .totals-row { border-top: 1px solid #f0f1f3; }
+      .totals-row .amount { font-weight: 600; color: #111827; }
+      .totals-row.negative, .totals-row.negative .amount { color: #b91c1c; }
+      .totals-row.due {
+        margin-top: 6px; border-top: none; border-radius: 8px;
+        background: {{ branding.primaryColor | default: '#1e40af' }};
+        color: #ffffff; font-size: 14px; font-weight: 700; padding: 12px 14px;
+      }
+      .totals-row.due .amount { color: #ffffff; font-size: 16px; font-weight: 800; }
+      .totals-row.settled { color: #15803d; }
+      .totals-row.settled .amount { color: #15803d; }
 
-      /* Footer */
-      .footer { margin-top: 30px; padding-top: 12px; border-top: 1px solid #e2e8f0; text-align: center; }
-      .footer-text { font-size: 9px; color: #9ca3af; }
-      .footer-brand { color: {{ branding.primaryColor | default: '#1e40af' }}; font-weight: 600; }
+      /* ── Callouts ───────────────────────────────────────────── */
+      .callout {
+        page-break-inside: avoid;
+        margin: 0 0 14px; padding: 11px 14px; background: #f8fafc;
+        border-left: 3px solid {{ branding.primaryColor | default: '#1e40af' }};
+        border-radius: 6px; font-size: 11px; color: #111827; line-height: 1.6;
+      }
+      .callout strong { color: {{ branding.primaryColor | default: '#1e40af' }}; }
 
-      /* Page break padding */
-      @page { margin-top: 40px; }
-      @media print { .page { padding-top: 40px; } }
+      /* ── Payment block ──────────────────────────────────────── */
+      .payment-block { border: 1px solid #e5e7eb; border-radius: 10px; overflow: hidden; page-break-inside: avoid; margin-bottom: 16px; }
+      .payment-header { background: linear-gradient(90deg, {{ branding.primaryColor | default: '#1e40af' }} 0%, {{ branding.secondaryColor | default: '#1e3a8a' }} 100%); padding: 9px 18px; color: #ffffff; font-size: 12px; font-weight: 700; letter-spacing: 0.02em; }
+      .payment-body { padding: 14px 18px; }
+      .bank-grid { display: flex; gap: 18px; }
+      .bank-cell { flex: 1; }
+      .bank-cell .value { border-bottom: 1.5px solid #e5e7eb; padding: 5px 1px; font-size: 12px; font-weight: 600; color: #111827; min-height: 24px; }
+      .bank-cell .value.ref { border-color: {{ branding.primaryColor | default: '#1e40af' }}; color: {{ branding.primaryColor | default: '#1e40af' }}; font-weight: 800; }
+
+      /* ── Key facts strip ────────────────────────────────────── */
+      .facts { display: flex; gap: 10px; margin-bottom: 16px; page-break-inside: avoid; }
+      .fact { flex: 1; text-align: center; background: #ffffff; border: 1px solid #eceef1; border-radius: 10px; padding: 11px 8px; }
+      .fact .label { margin-bottom: 3px; }
+      .fact .value { font-size: 13px; font-weight: 700; color: {{ branding.primaryColor | default: '#1e40af' }}; }
+
+      /* ── Terms ──────────────────────────────────────────────── */
+      .terms-block { margin-bottom: 14px; page-break-inside: avoid; }
+      .terms-list { margin: 0; padding: 0; list-style: none; column-count: 2; column-gap: 26px; }
+      .terms-list li { display: flex; align-items: flex-start; gap: 8px; margin-bottom: 7px; break-inside: avoid; font-size: 9.5px; color: #1f2937; line-height: 1.5; }
+      .terms-list li::before { content: '\2022'; color: {{ branding.primaryColor | default: '#1e40af' }}; font-size: 10px; line-height: 1.4; }
+
+      /* ── Footer ─────────────────────────────────────────────── */
+      .footer { padding-top: 10px; border-top: 1px solid #e5e7eb; display: flex; justify-content: space-between; align-items: center; }
+      .footer-text { font-size: 8.5px; color: #4b5563; }
+      .footer-brand { color: {{ branding.primaryColor | default: '#1e40af' }}; font-weight: 700; }
     </style>
   </head>
   <body>
     <div class="page">
-      <!-- Header with Logo and Company Info -->
+      <div class="brand-bar"></div>
+      <!-- ── Header: logo + full company identity + scheme badge ── -->
       <div class="header">
         <div class="logo-section">
           {% if companyProfile.logo_url != blank %}
@@ -87,10 +169,9 @@
           {% endif %}
           <div class="company-details">
             {{ companyProfile.company_address }}<br />
-            {% if companyProfile.company_phone != blank %}Tel: {{ companyProfile.company_phone }}<br />{%
-            endif %} {% if companyProfile.company_email != blank %}{{ companyProfile.company_email
-            }}<br />{% endif %} {% if companyProfile.vat_number != blank %}VAT: {{
-            companyProfile.vat_number }}{% endif %}
+            {% if companyProfile.company_phone != blank %}Tel: {{ companyProfile.company_phone }}<br />{% endif %}
+            {% if companyProfile.company_email != blank %}{{ companyProfile.company_email }}<br />{% endif %}
+            {% if companyProfile.vat_number != blank %}VAT: {{ companyProfile.vat_number }}{% endif %}
           </div>
           {% if credentials.schemeLogo != blank %}
           <div style="margin-top: 8px; text-align: right;">
@@ -100,92 +181,112 @@
         </div>
       </div>
 
-      <!-- Invoice Banner -->
-      <div class="invoice-banner">
+      <!-- ── Title row: INVOICE + dates ── -->
+      <div class="title-row">
         <div>
-          <div class="invoice-title">INVOICE</div>
-          <div class="invoice-number">Invoice #{{ invoice.invoiceNumber }}</div>
-          {% if invoice.purchaseOrder != blank %}
-          <div style="font-size: 11px; opacity: 0.8; margin-top: 2px">
-            PO: {{ invoice.purchaseOrder }}
-          </div>
-          {% endif %}
+          <div class="doc-title">INVOICE</div>
+          <div class="doc-number">{{ invoice.invoiceNumber }}{% if invoice.purchaseOrder != blank %} &nbsp;·&nbsp; PO {{ invoice.purchaseOrder }}{% endif %}</div>
         </div>
-        <div class="invoice-dates">
-          <div>Date: <strong>{{ invoice.createdAt | date: "%d/%m/%Y" }}</strong></div>
-          <div>Due Date: <strong>{{ invoice.dueDate | date: "%d/%m/%Y" }}</strong></div>
+        <div class="meta-cells">
+          <div class="meta-cell">
+            <div class="label">Issued</div>
+            <div class="value num">{{ invoice.createdAt | date: "%d %b %Y" }}</div>
+          </div>
+          <div class="meta-cell">
+            <div class="label">Due</div>
+            <div class="value num">{{ invoice.dueDate | date: "%d %b %Y" }}</div>
+          </div>
           {% if invoice.jobDetails.reference != blank %}
-          <div style="margin-top: 4px; font-size: 11px; opacity: 0.8">
-            Ref: {{ invoice.jobDetails.reference }}
+          <div class="meta-cell">
+            <div class="label">Ref</div>
+            <div class="value">{{ invoice.jobDetails.reference }}</div>
           </div>
           {% endif %}
         </div>
       </div>
 
-      <!-- Client and Job Details -->
+      <!-- ── Amount-due band: the hero ── -->
+      <div class="amount-band">
+        <div>
+          <div class="label">{% if invoice.isPaid %}Total — settled{% elsif invoice.totalPaidFormatted != blank %}Balance due{% elsif calculations.cisAmount > 0 %}Amount due after CIS{% else %}Amount due{% endif %}</div>
+          <div class="amount-figure num">
+            {% if invoice.totalPaidFormatted != blank and invoice.isPaid != true %}{{ calculations.balanceDueFormatted }}{% elsif calculations.cisAmount > 0 %}{% if calculations.netPayableFormatted != blank %}{{ calculations.netPayableFormatted }}{% else %}£{{ calculations.netPayable | round: 2 }}{% endif %}{% else %}{% if calculations.totalFormatted != blank %}{{ calculations.totalFormatted }}{% else %}£{{ calculations.total | round: 2 }}{% endif %}{% endif %}
+          </div>
+          {% if invoice.totalPaidFormatted != blank and invoice.isPaid != true %}
+          <div style="font-size: 10.5px; color: #15803d; margin-top: 3px; font-weight: 600;">
+            {{ invoice.totalPaidFormatted }} received of {% if calculations.totalFormatted != blank %}{{ calculations.totalFormatted }}{% else %}£{{ calculations.total | round: 2 }}{% endif %} total
+          </div>
+          {% endif %}
+        </div>
+        <div class="amount-side">
+          {% if invoice.isPaid %}
+          <span class="paid-stamp">Paid{% if invoice.paidAt != blank %} · {{ invoice.paidAt }}{% endif %}</span>
+          {% else %}
+          <span class="label" style="display: block; margin-bottom: 5px;">Payment due by</span>
+          <span class="num" style="display: inline-block; font-size: 13px; font-weight: 700; color: {{ branding.primaryColor | default: '#1e40af' }}; background: #ffffff; border: 1px solid #e5e7eb; border-radius: 8px; padding: 6px 14px;">{{ invoice.dueDate | date: "%d %B %Y" }}</span>
+          {% endif %}
+        </div>
+      </div>
+
+      <!-- ── Bill to / Job ── -->
       <div class="two-col">
         <div class="col">
-          <div class="info-card">
-            <div class="info-card-header">Client Details</div>
-            <div class="info-label">Name</div>
-            <div class="info-value">{{ invoice.client.name }}</div>
+          <div class="card">
+            <div class="card-header">Billed to</div>
+            <div class="info-value" style="font-weight: 700; font-size: 12.5px;">{{ invoice.client.name }}</div>
             {% if invoice.client.address != blank %}
-            <div class="info-label">Address</div>
-            <div class="info-value">{{ invoice.client.address }}</div>
-            {% endif %} {% if invoice.client.email != blank %}
-            <div class="info-label">Email</div>
-            <div class="info-value">{{ invoice.client.email }}</div>
-            {% endif %} {% if invoice.client.phone != blank %}
-            <div class="info-label">Phone</div>
-            <div class="info-value">{{ invoice.client.phone }}</div>
+            <div class="info-value" style="white-space: pre-line;">{{ invoice.client.address }}</div>
             {% endif %}
+            {% if invoice.client.email != blank %}<div class="info-value muted">{{ invoice.client.email }}</div>{% endif %}
+            {% if invoice.client.phone != blank %}<div class="info-value muted">{{ invoice.client.phone }}</div>{% endif %}
           </div>
         </div>
         <div class="col">
-          <div class="info-card">
-            <div class="info-card-header">Job Details</div>
+          <div class="card">
+            <div class="card-header">Job</div>
             <div class="info-label">Project</div>
             <div class="info-value">{{ invoice.jobDetails.title }}</div>
             {% if invoice.jobDetails.location != blank %}
             <div class="info-label">Location</div>
             <div class="info-value">{{ invoice.jobDetails.location }}</div>
-            {% endif %} {% if invoice.jobDetails.completionDate != blank %}
+            {% endif %}
+            {% if invoice.jobDetails.completionDate != blank %}
             <div class="info-label">Completed</div>
-            <div class="info-value">{{ invoice.jobDetails.completionDate | date: "%d/%m/%Y" }}</div>
+            <div class="info-value num">{{ invoice.jobDetails.completionDate | date: "%d %b %Y" }}</div>
+            {% endif %}
+            {% if invoice.isBooked %}
+            <div class="info-label">Work carried out</div>
+            <div class="info-value">{{ invoice.bookedSlotStart }}{% if invoice.bookedSlotEnd != blank %} &ndash; {{ invoice.bookedSlotEnd }}{% endif %}</div>
             {% endif %}
           </div>
         </div>
       </div>
 
-      <!-- Job Description - Full Width Section -->
+      <!-- ── Job description ── -->
       {% if invoice.jobDetails.description != blank %}
-      <div class="info-card" style="margin-bottom: 24px">
-        <div class="info-card-header">Job Description</div>
-        <div
-          style="
-            font-size: 11px;
-            color: #374151;
-            line-height: 1.6;
-            white-space: pre-line;
-            word-break: break-word;
-            overflow-wrap: break-word;
-          "
-        >
-          {{ invoice.jobDetails.description }}
-        </div>
+      <div class="description-card">
+        <div class="card-header">Description of works</div>
+        <div class="description-body">{{ invoice.jobDetails.description }}</div>
       </div>
       {% endif %}
 
-      <!-- Items Table -->
+      <!-- ── Certificate callout ── -->
+      {% if invoice.linkedCertificate %}
+      <div class="callout">
+        <strong>Certificate attached:</strong> {{ invoice.linkedCertificate.type }} {{ invoice.linkedCertificate.reference }} accompanies this invoice.
+      </div>
+      {% endif %}
+
+      <!-- ── Items ── -->
       <div class="items-section">
-        <div class="section-title">Invoice Breakdown</div>
+        <div class="section-title">Work &amp; materials</div>
         <table class="items-table">
           <thead>
             <tr>
-              <th style="width: 45%">Description</th>
-              <th style="width: 15%">Qty</th>
-              <th style="width: 20%">Unit Price</th>
-              <th style="width: 20%">Total</th>
+              <th style="width: 50%">Description</th>
+              <th style="width: 14%">Qty</th>
+              <th style="width: 18%" class="r">Unit price</th>
+              <th style="width: 18%" class="r">Amount</th>
             </tr>
           </thead>
           <tbody>
@@ -197,11 +298,10 @@
                 <div class="item-notes">{{ item.description }}</div>
                 {% endif %}
               </td>
-              <td class="qty-unit">{{ item.quantity }}</td>
-              <td>£{{ item.unitPrice | round: 2 }}</td>
-              <td>
-                £{% assign itemTotal = item.quantity | times: item.unitPrice %}{{ itemTotal | round:
-                2 }}
+              <td class="qty-unit">{{ item.quantity }}{% if item.unit != blank %} {{ item.unit }}{% endif %}</td>
+              <td class="r num">{% if item.unitPriceFormatted != blank %}{{ item.unitPriceFormatted }}{% else %}£{{ item.unitPrice | round: 2 }}{% endif %}</td>
+              <td class="r num" style="font-weight: 600;">
+                {% if item.amountFormatted != blank %}{{ item.amountFormatted }}{% else %}£{% assign itemTotal = item.quantity | times: item.unitPrice %}{{ itemTotal | round: 2 }}{% endif %}
               </td>
             </tr>
             {% endfor %}
@@ -209,389 +309,159 @@
         </table>
       </div>
 
-      <!-- Totals -->
+      <!-- ── Totals ── -->
       <div class="totals-section">
         <div class="totals-box">
           <div class="totals-row">
             <span>Subtotal</span>
-            <span class="amount">£{{ calculations.subtotal | round: 2 }}</span>
+            <span class="amount num">{% if calculations.subtotalFormatted != blank %}{{ calculations.subtotalFormatted }}{% else %}£{{ calculations.subtotal | round: 2 }}{% endif %}</span>
           </div>
           {% if calculations.overhead > 0 %}
           <div class="totals-row">
             <span>Overhead ({{ calculations.overheadPercentage }}%)</span>
-            <span class="amount">£{{ calculations.overhead | round: 2 }}</span>
+            <span class="amount num">{% if calculations.overheadFormatted != blank %}{{ calculations.overheadFormatted }}{% else %}£{{ calculations.overhead | round: 2 }}{% endif %}</span>
           </div>
-          {% endif %} {% if calculations.profit > 0 %}
+          {% endif %}
+          {% if calculations.profit > 0 %}
           <div class="totals-row">
             <span>Profit ({{ calculations.profitMargin }}%)</span>
-            <span class="amount">£{{ calculations.profit | round: 2 }}</span>
+            <span class="amount num">{% if calculations.profitFormatted != blank %}{{ calculations.profitFormatted }}{% else %}£{{ calculations.profit | round: 2 }}{% endif %}</span>
           </div>
-          {% endif %} {% if calculations.discountAmount > 0 %}
-          <div class="totals-row" style="color: #dc2626;">
+          {% endif %}
+          {% if calculations.discountAmount > 0 %}
+          <div class="totals-row negative">
             <span>{{ calculations.discountLabel }}</span>
-            <span class="amount" style="color: #dc2626;">-£{{ calculations.discountAmount | round: 2 }}</span>
+            <span class="amount num">&minus;{% if calculations.discountAmountFormatted != blank %}{{ calculations.discountAmountFormatted }}{% else %}£{{ calculations.discountAmount | round: 2 }}{% endif %}</span>
           </div>
-          {% endif %} {% if useVat and calculations.reverseCharge != true %}
+          {% endif %}
+          {% if useVat and calculations.reverseCharge != true %}
           <div class="totals-row">
             <span>VAT ({{ vatRate }}%)</span>
-            <span class="amount">£{{ calculations.vatAmount | round: 2 }}</span>
+            <span class="amount num">{% if calculations.vatAmountFormatted != blank %}{{ calculations.vatAmountFormatted }}{% else %}£{{ calculations.vatAmount | round: 2 }}{% endif %}</span>
           </div>
-          {% endif %} {% if calculations.reverseCharge %}
+          {% endif %}
+          {% if calculations.reverseCharge %}
           <div class="totals-row">
             <span>VAT &mdash; reverse charge</span>
-            <span class="amount">£0.00</span>
+            <span class="amount num">£0.00</span>
           </div>
           {% endif %}
-          <div class="totals-row total">
-            <span>{% if calculations.cisAmount > 0 %}Total{% else %}Amount Due{% endif %}</span>
-            <span class="amount">£{{ calculations.total | round: 2 }}</span>
-          </div>
           {% if calculations.cisAmount > 0 %}
-          <div class="totals-row" style="color: #dc2626;">
-            <span>Less: CIS ({{ calculations.cisRate }}% on labour)</span>
-            <span class="amount" style="color: #dc2626;">-£{{ calculations.cisAmount | round: 2 }}</span>
+          <div class="totals-row">
+            <span>Total</span>
+            <span class="amount num">{% if calculations.totalFormatted != blank %}{{ calculations.totalFormatted }}{% else %}£{{ calculations.total | round: 2 }}{% endif %}</span>
           </div>
-          <div class="totals-row total">
-            <span>Amount Due</span>
-            <span class="amount">£{{ calculations.netPayable | round: 2 }}</span>
+          <div class="totals-row negative">
+            <span>Less CIS ({{ calculations.cisRate }}% on labour)</span>
+            <span class="amount num">&minus;{% if calculations.cisAmountFormatted != blank %}{{ calculations.cisAmountFormatted }}{% else %}£{{ calculations.cisAmount | round: 2 }}{% endif %}</span>
           </div>
           {% endif %}
+          {% if invoice.totalPaidFormatted != blank and invoice.isPaid != true and calculations.cisAmount == 0 %}
+          <div class="totals-row" style="font-weight: 600;">
+            <span>Total</span>
+            <span class="amount num">{% if calculations.totalFormatted != blank %}{{ calculations.totalFormatted }}{% else %}£{{ calculations.total | round: 2 }}{% endif %}</span>
+          </div>
+          {% endif %}
+          {% if invoice.totalPaidFormatted != blank and invoice.isPaid != true %}
+          <div class="totals-row settled">
+            <span>Received to date</span>
+            <span class="amount num">&minus;{{ invoice.totalPaidFormatted }}</span>
+          </div>
+          {% endif %}
+          <div class="totals-row due" style="background: linear-gradient(90deg, {{ branding.primaryColor | default: '#1e40af' }} 0%, {{ branding.secondaryColor | default: '#1e3a8a' }} 100%);">
+            <span>{% if invoice.isPaid %}Total &mdash; paid{% elsif invoice.totalPaidFormatted != blank %}Balance due{% else %}Amount due{% endif %}</span>
+            <span class="amount num">
+              {% if invoice.totalPaidFormatted != blank and invoice.isPaid != true %}{{ calculations.balanceDueFormatted }}{% elsif calculations.cisAmount > 0 %}{% if calculations.netPayableFormatted != blank %}{{ calculations.netPayableFormatted }}{% else %}£{{ calculations.netPayable | round: 2 }}{% endif %}{% else %}{% if calculations.totalFormatted != blank %}{{ calculations.totalFormatted }}{% else %}£{{ calculations.total | round: 2 }}{% endif %}{% endif %}
+            </span>
+          </div>
         </div>
       </div>
+
+      <!-- ── Reverse-charge statement ── -->
       {% if calculations.reverseCharge %}
-      <div style="margin-top: 16px; padding: 12px 16px; background: #f3f4f6; border-left: 3px solid #1e40af; border-radius: 4px; font-size: 11.5px; color: #374151; line-height: 1.6;">
-        <strong style="color: #1e40af;">VAT reverse charge applies.</strong>
+      <div class="callout">
+        <strong>VAT reverse charge applies.</strong>
         Customer to account to HMRC for the VAT of
-        <strong>£{{ calculations.notionalVat | round: 2 }}</strong> ({{ calculations.vatRate }}%).
+        <strong>{% if calculations.notionalVatFormatted != blank %}{{ calculations.notionalVatFormatted }}{% else %}£{{ calculations.notionalVat | round: 2 }}{% endif %}</strong> ({{ calculations.vatRate }}%).
         This invoice shows £0 VAT &mdash; do not pay the VAT to the supplier. VAT Act 1994, s.55A.
       </div>
       {% endif %}
 
-      <!-- Invoice Terms Bar - Uses editable settings -->
-      <table
-        style="
-          width: 100%;
-          border-collapse: collapse;
-          margin-bottom: 20px;
-          page-break-inside: avoid;
-        "
-        cellpadding="0"
-        cellspacing="0"
-      >
-        <tr>
-          <td
-            style="
-              width: 25%;
-              padding: 14px 10px;
-              text-align: center;
-              background: #f8fafc;
-              border: 1px solid #e2e8f0;
-              border-right: none;
-              border-radius: 8px 0 0 8px;
-            "
-          >
-            <div
-              style="
-                font-size: 8px;
-                color: #6b7280;
-                text-transform: uppercase;
-                letter-spacing: 0.5px;
-                font-weight: 600;
-                margin-bottom: 4px;
-              "
-            >
-              Payment Terms
-            </div>
-            <div
-              style="font-size: 16px; color: {{ branding.primaryColor | default: '#1e40af' }}; font-weight: 700;"
-            >
-              {{ companyProfile.payment_terms | default: '14 days' }}
-            </div>
-          </td>
-          <td
-            style="
-              width: 25%;
-              padding: 14px 10px;
-              text-align: center;
-              background: #f8fafc;
-              border: 1px solid #e2e8f0;
-              border-right: none;
-            "
-          >
-            <div
-              style="
-                font-size: 8px;
-                color: #6b7280;
-                text-transform: uppercase;
-                letter-spacing: 0.5px;
-                font-weight: 600;
-                margin-bottom: 4px;
-              "
-            >
-              Late Payment Interest
-            </div>
-            <div
-              style="font-size: 16px; color: {{ branding.primaryColor | default: '#1e40af' }}; font-weight: 700;"
-            >
-              {{ invoiceSettings.latePaymentInterestRate | default: '8% p.a.' }}
-            </div>
-          </td>
-          <td
-            style="
-              width: 25%;
-              padding: 14px 10px;
-              text-align: center;
-              background: #f8fafc;
-              border: 1px solid #e2e8f0;
-              border-right: none;
-            "
-          >
-            <div
-              style="
-                font-size: 8px;
-                color: #6b7280;
-                text-transform: uppercase;
-                letter-spacing: 0.5px;
-                font-weight: 600;
-                margin-bottom: 4px;
-              "
-            >
-              Preferred Payment
-            </div>
-            <div
-              style="font-size: 16px; color: {{ branding.primaryColor | default: '#1e40af' }}; font-weight: 700;"
-            >
-              {{ invoiceSettings.preferredPaymentMethod | default: 'Bank Transfer' }}
-            </div>
-          </td>
-          <td
-            style="width: 25%; padding: 14px 10px; text-align: center; background: {{ branding.primaryColor | default: '#1e40af' }}; border: 1px solid {{ branding.primaryColor | default: '#1e40af' }}; border-radius: 0 8px 8px 0;"
-          >
-            <div
-              style="
-                font-size: 8px;
-                color: rgba(255, 255, 255, 0.8);
-                text-transform: uppercase;
-                letter-spacing: 0.5px;
-                font-weight: 600;
-                margin-bottom: 4px;
-              "
-            >
-              Reference
-            </div>
-            <div style="font-size: 20px; color: #ffffff; font-weight: 700">
-              {{ invoice.invoiceNumber }}
-            </div>
-          </td>
-        </tr>
-      </table>
-
-      <!-- Terms & Conditions - Clean Bullet Point Design -->
-      <div style="margin-bottom: 20px; page-break-inside: avoid">
-        <div
-          style="font-size: 13px; font-weight: 600; color: {{ branding.primaryColor | default: '#1e40af' }}; margin-bottom: 12px; padding-bottom: 8px; border-bottom: 2px solid {{ branding.primaryColor | default: '#1e40af' }};"
-        >
-          Terms &amp; Conditions
+      <!-- ── Key facts ── -->
+      <div class="facts">
+        <div class="fact">
+          <div class="label">Payment terms</div>
+          <div class="value">{{ companyProfile.payment_terms | default: '14 days' }}</div>
         </div>
-        <div
-          style="
-            background: #f8fafc;
-            border: 1px solid #e2e8f0;
-            border-radius: 8px;
-            padding: 20px 24px;
-          "
-        >
-          <ul style="margin: 0; padding: 0; list-style: none; column-count: 2; column-gap: 30px">
-            {% for term in terms %}
-            <li
-              style="
-                display: flex;
-                align-items: flex-start;
-                gap: 10px;
-                margin-bottom: 12px;
-                break-inside: avoid;
-                font-size: 10px;
-                color: #374151;
-                line-height: 1.5;
-              "
-            >
-              <span
-                style="color: {{ branding.primaryColor | default: '#1e40af' }}; font-size: 8px; margin-top: 3px;"
-                >●</span
-              >
-              <span>{{ term }}</span>
-            </li>
-            {% endfor %}
-          </ul>
+        <div class="fact">
+          <div class="label">Late payment interest</div>
+          <div class="value">{{ invoiceSettings.latePaymentInterestRate | default: '8% p.a.' }}</div>
+        </div>
+        <div class="fact">
+          <div class="label">Preferred payment</div>
+          <div class="value">{{ invoiceSettings.preferredPaymentMethod | default: 'Bank Transfer' }}</div>
+        </div>
+        <div class="fact" style="background: {{ branding.primaryColor | default: '#1e40af' }}; border-color: {{ branding.primaryColor | default: '#1e40af' }};">
+          <div class="label" style="color: rgba(255,255,255,0.85);">Payment reference</div>
+          <div class="value" style="color: #ffffff;">{{ invoice.invoiceNumber }}</div>
         </div>
       </div>
 
-      <!-- Payment Information - SAME PAGE, won't split -->
-      <div style="page-break-inside: avoid">
-        <div
-          style="border: 2px solid {{ branding.primaryColor | default: '#1e40af' }}; border-radius: 10px; overflow: hidden;"
-        >
-          <div
-            style="background: {{ branding.primaryColor | default: '#1e40af' }}; padding: 12px 20px;"
-          >
-            <span style="color: #ffffff; font-size: 14px; font-weight: 600"
-              >Payment Information</span
-            >
+      <!-- ── Payment information ── -->
+      {% if invoice.isPaid != true %}
+      <div class="payment-block">
+        <div class="payment-header">How to pay</div>
+        <div class="payment-body">
+          {% if invoice.payLink != blank %}
+          <div class="callout" style="margin-bottom: 12px;">
+            <strong>Pay online:</strong> {{ invoice.payLink }}
           </div>
-          <div style="padding: 18px 20px">
-            <p
-              style="font-size: 10px; color: #6b7280; margin: 0 0 16px 0; line-height: 1.5; padding: 10px 12px; background: #f1f5f9; border-radius: 4px; border-left: 3px solid {{ branding.primaryColor | default: '#1e40af' }};"
-            >
-              Please make payment by bank transfer using the details below. Use your invoice number
-              as the payment reference to ensure your payment is allocated correctly.
-            </p>
-
-            <table style="width: 100%; border-collapse: collapse" cellpadding="0" cellspacing="0">
-              <tr>
-                <td style="width: 50%; padding-right: 16px; vertical-align: top">
-                  <div
-                    style="
-                      font-size: 9px;
-                      color: #6b7280;
-                      text-transform: uppercase;
-                      letter-spacing: 0.5px;
-                      font-weight: 600;
-                      margin-bottom: 6px;
-                    "
-                  >
-                    Bank Name
-                  </div>
-                  <div
-                    style="
-                      border-bottom: 2px solid #d1d5db;
-                      padding: 8px 2px;
-                      min-height: 28px;
-                      font-size: 13px;
-                      color: #1f2937;
-                      font-weight: 500;
-                    "
-                  >
-                    {{ companyProfile.bank_name }}
-                  </div>
-                </td>
-                <td style="width: 50%; vertical-align: top">
-                  <div
-                    style="
-                      font-size: 9px;
-                      color: #6b7280;
-                      text-transform: uppercase;
-                      letter-spacing: 0.5px;
-                      font-weight: 600;
-                      margin-bottom: 6px;
-                    "
-                  >
-                    Account Name
-                  </div>
-                  <div
-                    style="
-                      border-bottom: 2px solid #d1d5db;
-                      padding: 8px 2px;
-                      min-height: 28px;
-                      font-size: 13px;
-                      color: #1f2937;
-                      font-weight: 500;
-                    "
-                  >
-                    {{ companyProfile.account_name }}
-                  </div>
-                </td>
-              </tr>
-            </table>
-
-            <table
-              style="width: 100%; border-collapse: collapse; margin-top: 14px"
-              cellpadding="0"
-              cellspacing="0"
-            >
-              <tr>
-                <td style="width: 33%; padding-right: 12px; vertical-align: top">
-                  <div
-                    style="
-                      font-size: 9px;
-                      color: #6b7280;
-                      text-transform: uppercase;
-                      letter-spacing: 0.5px;
-                      font-weight: 600;
-                      margin-bottom: 6px;
-                    "
-                  >
-                    Sort Code
-                  </div>
-                  <div
-                    style="
-                      border-bottom: 2px solid #d1d5db;
-                      padding: 8px 2px;
-                      min-height: 28px;
-                      font-size: 13px;
-                      color: #1f2937;
-                      font-weight: 500;
-                    "
-                  >
-                    {{ companyProfile.sort_code }}
-                  </div>
-                </td>
-                <td style="width: 33%; padding-right: 12px; vertical-align: top">
-                  <div
-                    style="
-                      font-size: 9px;
-                      color: #6b7280;
-                      text-transform: uppercase;
-                      letter-spacing: 0.5px;
-                      font-weight: 600;
-                      margin-bottom: 6px;
-                    "
-                  >
-                    Account Number
-                  </div>
-                  <div
-                    style="
-                      border-bottom: 2px solid #d1d5db;
-                      padding: 8px 2px;
-                      min-height: 28px;
-                      font-size: 13px;
-                      color: #1f2937;
-                      font-weight: 500;
-                    "
-                  >
-                    {{ companyProfile.account_number }}
-                  </div>
-                </td>
-                <td style="width: 33%; vertical-align: top">
-                  <div
-                    style="
-                      font-size: 9px;
-                      color: #6b7280;
-                      text-transform: uppercase;
-                      letter-spacing: 0.5px;
-                      font-weight: 600;
-                      margin-bottom: 6px;
-                    "
-                  >
-                    Payment Reference
-                  </div>
-                  <div
-                    style="border-bottom: 2px solid {{ branding.primaryColor | default: '#1e40af' }}; padding: 8px 2px; min-height: 28px; font-size: 13px; color: {{ branding.primaryColor | default: '#1e40af' }}; font-weight: 700;"
-                  >
-                    {{ invoice.invoiceNumber }}
-                  </div>
-                </td>
-              </tr>
-            </table>
+          {% endif %}
+          <div class="bank-grid">
+            <div class="bank-cell">
+              <div class="label" style="margin-bottom: 4px;">Bank</div>
+              <div class="value">{{ companyProfile.bank_name }}</div>
+            </div>
+            <div class="bank-cell">
+              <div class="label" style="margin-bottom: 4px;">Account name</div>
+              <div class="value">{{ companyProfile.account_name }}</div>
+            </div>
+            <div class="bank-cell">
+              <div class="label" style="margin-bottom: 4px;">Sort code</div>
+              <div class="value num">{{ companyProfile.sort_code }}</div>
+            </div>
+            <div class="bank-cell">
+              <div class="label" style="margin-bottom: 4px;">Account number</div>
+              <div class="value num">{{ companyProfile.account_number }}</div>
+            </div>
+            <div class="bank-cell">
+              <div class="label" style="margin-bottom: 4px;">Reference</div>
+              <div class="value ref">{{ invoice.invoiceNumber }}</div>
+            </div>
           </div>
-        </div>
-
-        <!-- Footer -->
-        <div class="footer">
-          <p class="footer-text">
-            Powered by <span class="footer-brand">Elec-Mate Professional Suite</span> ·
-            elec-mate.com
+          <p style="font-size: 9.5px; color: #374151; margin-top: 10px;">
+            Please use the payment reference above so your payment is allocated correctly.
           </p>
         </div>
+      </div>
+      {% endif %}
+
+      <!-- ── Terms ── -->
+      {% if terms.size > 0 %}
+      <div class="terms-block">
+        <div class="section-title" style="font-size: 11px; margin-bottom: 6px;">Terms &amp; conditions</div>
+        <ul class="terms-list">
+          {% for term in terms %}
+          <li><span>{{ term }}</span></li>
+          {% endfor %}
+        </ul>
+      </div>
+      {% endif %}
+
+      <!-- ── Footer ── -->
+      <div class="footer">
+        <span class="footer-text">{{ companyProfile.company_name }}{% if companyProfile.vat_number != blank %} &middot; VAT {{ companyProfile.vat_number }}{% endif %}</span>
+        <span class="footer-text">Powered by <span class="footer-brand">Elec-Mate</span> &middot; elec-mate.com</span>
       </div>
     </div>
   </body>

@@ -1,5 +1,6 @@
 import React from 'react';
-import { Card, CardContent } from '@/components/ui/card';
+import { cn } from '@/lib/utils';
+import { PANEL } from '@/components/electrician/shared/surfaces';
 import { Button } from '@/components/ui/button';
 import {
   FileText,
@@ -107,106 +108,75 @@ export const EmptyStateGuide: React.FC<EmptyStateGuideProps> = ({ type, onCreate
         ];
 
   return (
-    <div className="space-y-6">
-      {/* Hero Section */}
-      <div className="text-center space-y-4 px-4">
-        <div className="inline-flex items-center justify-center w-16 h-16 sm:w-20 sm:h-20 rounded-2xl bg-gradient-to-br from-elec-yellow/20 to-amber-500/10 border border-elec-yellow/30">
-          <FileText className="h-8 w-8 sm:h-10 sm:w-10 text-elec-yellow" />
-        </div>
-        <div className="space-y-2">
-          <h2 className="text-xl sm:text-2xl font-bold text-white">
+    <div className="space-y-4">
+      {/* Hero panel */}
+      <div className={cn(PANEL, 'relative overflow-hidden p-5 sm:p-7 text-center')}>
+        <div className="absolute inset-x-0 top-0 h-20 bg-gradient-to-b from-elec-yellow/[0.07] to-transparent pointer-events-none" />
+        <div className="relative">
+          <div className="inline-flex items-center justify-center w-14 h-14 rounded-2xl bg-elec-yellow/15 border border-elec-yellow/25 mb-4">
+            <FileText className="h-7 w-7 text-elec-yellow" />
+          </div>
+          <h2 className="text-[20px] sm:text-[24px] font-bold text-white tracking-tight">
             {type === 'quote'
-              ? 'Create Your First Quote'
+              ? 'Create your first quote'
               : type === 'invoice'
-              ? 'Create Your First Invoice'
-              : 'Import Your Certificates'}
+              ? 'Create your first invoice'
+              : 'Import your certificates'}
           </h2>
-          <p className="text-sm sm:text-base text-white max-w-md mx-auto">
+          <p className="text-[13px] text-white/70 mt-1.5 max-w-md mx-auto">
             {type === 'quote'
-              ? 'Professional quotes in 4 easy steps'
+              ? 'A professional, client-ready quote in about four minutes.'
               : type === 'invoice'
-              ? 'Professional invoices in 4 easy steps'
-              : 'Bring your existing certificates into Elec-Mate'}
+              ? 'A professional, client-ready invoice in about four minutes.'
+              : 'Bring your existing certificates into Elec-Mate.'}
           </p>
-        </div>
-
-        {/* Total time badge */}
-        <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white/5 border border-white/10">
-          <Clock className="h-4 w-4 text-elec-yellow" />
-          <span className="text-sm font-medium text-white">~4 minutes total</span>
+          <div className="inline-flex items-center gap-1.5 mt-3 px-3 py-1.5 rounded-lg bg-white/[0.05] border border-white/[0.08]">
+            <Clock className="h-3.5 w-3.5 text-elec-yellow" />
+            <span className="text-[11px] font-medium text-white/80">~4 minutes total</span>
+          </div>
         </div>
       </div>
 
-      {/* Steps Grid - 2x2 on mobile, 4x1 on desktop */}
-      <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4">
+      {/* Steps — numbered tiles, 2-up mobile / 4-up desktop */}
+      <div className="grid grid-cols-2 lg:grid-cols-4 gap-2.5">
         {steps.map((step, index) => (
-          <Card
-            key={index}
-            className="bg-gradient-to-br from-elec-gray to-elec-card border-white/10 hover:border-elec-yellow/30 transition-colors overflow-hidden"
-          >
-            <CardContent className="p-4 sm:p-5 space-y-3">
-              {/* Step number & time */}
-              <div className="flex items-center justify-between">
-                <span className="flex items-center justify-center w-7 h-7 sm:w-8 sm:h-8 rounded-full bg-elec-yellow text-black text-sm font-bold">
-                  {index + 1}
-                </span>
-                <span className="text-[10px] sm:text-xs font-medium text-elec-yellow bg-elec-yellow/10 px-2 py-1 rounded-full">
-                  {step.time}
-                </span>
-              </div>
-
-              {/* Icon */}
-              <div className="flex items-center justify-center w-10 h-10 sm:w-12 sm:h-12 rounded-xl bg-white/5">
-                <step.icon className="h-5 w-5 sm:h-6 sm:w-6 text-elec-yellow" />
-              </div>
-
-              {/* Title & Description */}
-              <div className="space-y-1">
-                <h3 className="font-semibold text-white text-sm sm:text-base leading-tight">
-                  {step.title}
-                </h3>
-                <p className="text-xs sm:text-sm text-white leading-relaxed line-clamp-2">
-                  {step.description}
-                </p>
-              </div>
-            </CardContent>
-          </Card>
+          <div key={index} className={cn(PANEL, 'p-4')}>
+            <div className="flex items-baseline gap-2">
+              <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-elec-yellow/80 tabular-nums">
+                0{index + 1}
+              </span>
+              <span className="text-[10px] text-white/45 ml-auto">{step.time}</span>
+            </div>
+            <div className="mt-3 h-9 w-9 rounded-xl bg-white/[0.06] border border-white/[0.08] flex items-center justify-center">
+              <step.icon className="h-4 w-4 text-elec-yellow" />
+            </div>
+            <h3 className="mt-3 text-[13px] font-semibold text-white leading-tight">{step.title}</h3>
+            <p className="mt-1 text-[11px] text-white/60 leading-snug line-clamp-2">{step.description}</p>
+          </div>
         ))}
       </div>
 
-      {/* Tip Card */}
-      <Card className="bg-gradient-to-r from-elec-yellow/10 to-amber-500/5 border-elec-yellow/20">
-        <CardContent className="p-4 sm:p-5">
-          <div className="flex items-start gap-3">
-            <div className="flex-shrink-0 w-8 h-8 rounded-lg bg-elec-yellow/20 flex items-center justify-center">
-              <Lightbulb className="h-4 w-4 text-elec-yellow" />
-            </div>
-            <div className="flex-1 min-w-0">
-              <p className="font-semibold text-white text-sm sm:text-base">Quick Tip</p>
-              <p className="text-xs sm:text-sm text-white mt-0.5">
-                {type === 'quote'
-                  ? 'All fields are auto-saved as you type. Return anytime to complete your quote.'
-                  : type === 'invoice'
-                  ? 'Create invoices from accepted quotes or start fresh with new client details.'
-                  : 'Supports EICR, EIC, Minor Works, and more. Import once, access forever.'}
-              </p>
-            </div>
-          </div>
-        </CardContent>
-      </Card>
-
-      {/* CTA Button */}
-      <div className="px-4 sm:px-0">
-        <Button
-          size="lg"
-          onClick={onCreateClick}
-          className="w-full h-14 sm:h-12 text-base font-semibold bg-elec-yellow hover:bg-elec-yellow/90 text-black touch-manipulation active:scale-[0.98] transition-all shadow-lg shadow-elec-yellow/20"
-        >
-          <Plus className="mr-2 h-5 w-5" />
-          {createLabel ?? (type === 'quote' ? 'Create Quote Now' : type === 'invoice' ? 'Create Invoice Now' : 'Import Certificates')}
-          <ChevronRight className="ml-2 h-5 w-5" />
-        </Button>
+      {/* Tip */}
+      <div className={cn(PANEL, 'flex items-start gap-2.5 px-4 py-3.5')}>
+        <Lightbulb className="h-4 w-4 text-elec-yellow flex-shrink-0 mt-0.5" />
+        <p className="text-[12px] text-white/80 leading-snug">
+          {type === 'quote'
+            ? 'Everything auto-saves as you type — come back anytime to finish.'
+            : type === 'invoice'
+            ? 'Convert an accepted quote in one tap, or start fresh with new client details.'
+            : 'Supports EICR, EIC, Minor Works and more. Import once, access forever.'}
+        </p>
       </div>
+
+      {/* CTA */}
+      <Button
+        size="lg"
+        onClick={onCreateClick}
+        className="w-full h-12 text-[15px] font-semibold bg-elec-yellow hover:bg-elec-yellow/90 text-black rounded-xl touch-manipulation active:scale-[0.98] transition-all"
+      >
+        <Plus className="mr-2 h-5 w-5" />
+        {createLabel ?? (type === 'quote' ? 'Create your first quote' : type === 'invoice' ? 'Create your first invoice' : 'Import certificates')}
+      </Button>
     </div>
   );
 };

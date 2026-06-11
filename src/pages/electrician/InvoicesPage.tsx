@@ -5,44 +5,29 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
-import {
-  FileText,
-  Send,
-  Edit,
-  Eye,
-  AlertCircle,
-  Plus,
-  CheckCircle,
-  TrendingUp,
-  Search,
-  ArrowLeft,
-  X,
-  RefreshCw,
-  Clock,
-  LayoutGrid,
-  List,
-  PoundSterling,
-  ChevronRight,
-} from 'lucide-react';
+import { FileText, Send, AlertCircle, Plus, CheckCircle, Search, ArrowLeft, X, Clock, ChevronRight, ArrowUpDown } from 'lucide-react';
 import { useInvoiceStorage } from '@/hooks/useInvoiceStorage';
 import { isPast, addHours } from 'date-fns';
 import { Quote } from '@/types/quote';
 import { useState, useEffect, useMemo, useCallback } from 'react';
 import { toast } from '@/hooks/use-toast';
 import { supabase } from '@/integrations/supabase/client';
-import InvoiceCardView from '@/components/electrician/InvoiceCardView';
-import InvoiceTableView from '@/components/electrician/InvoiceTableView';
 import { EmptyStateGuide } from '@/components/electrician/shared/EmptyStateGuide';
 import { cn } from '@/lib/utils';
 import { VoiceHeaderButton } from '@/components/electrician/VoiceHeaderButton';
 import { QuoteInvoiceAnalytics } from '@/components/electrician/analytics';
 import StripeConnectBanner from '@/components/electrician/StripeConnectBanner';
+import { InvoiceCard } from '@/components/electrician/invoice-builder/InvoiceCard';
+import { isInvoiceOverdue } from '@/utils/invoice-status';
+import { PANEL } from '@/components/electrician/shared/surfaces';
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from '@/components/ui/dropdown-menu';
 import CertificateGenerationDialog from '@/components/inspection/CertificateGenerationDialog';
 import { createQuickTaskBatch } from '@/utils/createQuickTask';
-import { ClipboardCheck } from 'lucide-react';
-import { openExternalUrl } from '@/utils/open-external-url';
-import { Capacitor } from '@capacitor/core';
-import { sharePdfToWhatsAppWeb } from '@/utils/share-pdf-to-whatsapp-web';
 
 type TemporaryPdfLinkResponse = {
   publicUrl: string;
@@ -63,7 +48,6 @@ const InvoicesPage = () => {
   const [searchQuery, setSearchQuery] = useState('');
   const [isSearchOpen, setIsSearchOpen] = useState(false);
   const [isRefreshing, setIsRefreshing] = useState(false);
-  const [viewMode, setViewMode] = useState<'card' | 'table'>('card');
   const [markingPaidId, setMarkingPaidId] = useState<string | null>(null);
   const [downloadingPdfId, setDownloadingPdfId] = useState<string | null>(null);
   const [showGenerationDialog, setShowGenerationDialog] = useState(false);
@@ -71,10 +55,11 @@ const InvoicesPage = () => {
   const [pdfFilename, setPdfFilename] = useState('Invoice.pdf');
   const [generationError, setGenerationError] = useState<string | null>(null);
   const [deletingInvoiceId, setDeletingInvoiceId] = useState<string | null>(null);
-  const [sharingWhatsAppId, setSharingWhatsAppId] = useState<string | null>(null);
-  const [sharingEmailId, setSharingEmailId] = useState<string | null>(null);
   const [stripeRefreshKey, setStripeRefreshKey] = useState(0);
   const [creatingChaseTasks, setCreatingChaseTasks] = useState(false);
+  const [sortBy, setSortBy] = useState<'newest' | 'oldest' | 'value-high' | 'due-soonest'>('newest');
+  const [quickFilter, setQuickFilter] = useState<'part-paid' | null>(null);
+  const [dateRange, setDateRange] = useState<'all' | '30d' | '90d'>('all');
 
   // Pull to refresh handler
   const handleRefresh = useCallback(async () => {
@@ -112,17 +97,6 @@ const InvoicesPage = () => {
   };
 
   // Retry helper for sharing functions
-  const retryAsync = async <T,>(fn: () => Promise<T>, attempts = 3, delayMs = 2000): Promise<T> => {
-    for (let i = 0; i < attempts; i++) {
-      try {
-        return await fn();
-      } catch (err) {
-        if (i === attempts - 1) throw err;
-        await new Promise((res) => setTimeout(res, delayMs * (i + 1)));
-      }
-    }
-    throw new Error('All retry attempts failed');
-  };
 
   const formatCurrency = (amount: number) => {
     return new Intl.NumberFormat('en-GB', {
@@ -242,10 +216,6 @@ const InvoicesPage = () => {
     }
   };
 
-  const handleSendSuccess = async () => {
-    await fetchInvoices();
-  };
-
   const handleMarkAsPaid = async (invoice: Quote) => {
     try {
       setMarkingPaidId(invoice.id);
@@ -279,144 +249,26 @@ const InvoicesPage = () => {
     setDeletingInvoiceId(null);
   };
 
-  const handleShareWhatsApp = async (invoice: Quote) => {
-    setSharingWhatsAppId(invoice.id);
-    try {
-      const clientName = invoice.client?.name || 'there';
 
-      if (Capacitor.isNativePlatform()) {
-        toast({
-          title: 'Preparing PDF',
-          description: 'Generating shareable link for WhatsApp...',
-          duration: 5000,
-        });
-        const {
-          data: { session },
-        } = await supabase.auth.getSession();
-        if (!session) throw new Error('User not authenticated');
-
-        const linkData = await retryAsync<TemporaryPdfLinkResponse>(async () => {
-          const { data, error } = await supabase.functions.invoke(
-            'generate-temporary-pdf-link',
-            {
-              body: { documentId: invoice.id, documentType: 'invoice' },
-              headers: { Authorization: `Bearer ${session.access_token}` },
-            }
-          );
-          if (error || !data?.publicUrl) throw new Error('Failed to generate shareable PDF link');
-          return data;
-        });
-
-        const message = `Hello ${clientName},\n\nHere is your invoice:\n\n📄 Invoice #${invoice.invoice_number}\n💷 Amount: ${formatCurrency(invoice.total)}\n\n📥 Download Invoice:\n${linkData.publicUrl}\n\nThank you for your business!`;
-
-        await openExternalUrl(`https://wa.me/?text=${encodeURIComponent(message)}`);
-        toast({ title: 'Opening WhatsApp', description: 'Invoice ready to share via WhatsApp' });
-        return;
-      }
-
-      toast({
-        title: 'Preparing PDF',
-        description: 'Getting the file ready to attach…',
-        duration: 5000,
-      });
-
-      const message = `Hello ${clientName},\n\nHere is your invoice:\n\n📄 Invoice #${invoice.invoice_number}\n💷 Amount: ${formatCurrency(invoice.total)}\n\nThank you for your business!`;
-
-      const result = await sharePdfToWhatsAppWeb({
-        documentId: invoice.id,
-        documentType: 'invoice',
-        filename: `Invoice-${invoice.invoice_number || invoice.id}.pdf`,
-        message,
-        title: `Invoice #${invoice.invoice_number}`,
-      });
-
-      toast({
-        title: result.mode === 'web-share' ? 'Opening share sheet' : 'PDF downloaded',
-        description:
-          result.mode === 'web-share'
-            ? 'Pick WhatsApp to send the PDF.'
-            : 'PDF saved to your Downloads — attach it from your WhatsApp chat.',
-      });
-    } catch (error) {
-      if (error instanceof Error && error.name === 'AbortError') return;
-      toast({
-        title: 'Error',
-        description: 'Failed to prepare invoice for WhatsApp. Please try again.',
-        variant: 'destructive',
-      });
-    } finally {
-      setSharingWhatsAppId(null);
-    }
-  };
-
-  const handleShareEmail = async (invoice: Quote) => {
-    setSharingEmailId(invoice.id);
-    try {
-      toast({
-        title: 'Preparing PDF',
-        description: 'Generating shareable link for email...',
-        duration: 5000,
-      });
-      const {
-        data: { session },
-      } = await supabase.auth.getSession();
-      if (!session) throw new Error('User not authenticated');
-
-      const linkData = await retryAsync<TemporaryPdfLinkResponse>(async () => {
-        const { data, error } = await supabase.functions.invoke(
-          'generate-temporary-pdf-link',
-          {
-            body: { documentId: invoice.id, documentType: 'invoice' },
-            headers: { Authorization: `Bearer ${session.access_token}` },
-          }
-        );
-        if (error || !data?.publicUrl) throw new Error('Failed to generate shareable PDF link');
-        return data;
-      });
-
-      const { data: freshInvoice, error: fetchError } = await supabase
-        .from('quotes')
-        .select('*')
-        .eq('id', invoice.id)
-        .single();
-      if (fetchError || !freshInvoice) throw new Error('Failed to fetch invoice data');
-
-      const clientData =
-        typeof freshInvoice.client_data === 'string'
-          ? JSON.parse(freshInvoice.client_data)
-          : freshInvoice.client_data;
-
-      const subject = `Invoice ${freshInvoice.invoice_number} - ${formatCurrency(freshInvoice.total)}`;
-      const body = `Hello ${clientData?.name || 'there'},\n\nPlease find attached your invoice:\n\nInvoice #${freshInvoice.invoice_number}\nAmount: ${formatCurrency(freshInvoice.total)}\n\nDownload your invoice here:\n${linkData.publicUrl}\n\nThank you for your business!`;
-
-      window.location.href = `mailto:${clientData?.email || ''}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
-      toast({ title: 'Opening Email', description: 'Invoice ready to send via email' });
-    } catch (error) {
-      // Email sharing failed after retries
-      toast({
-        title: 'Error',
-        description: 'Failed to prepare invoice for email. Please try again.',
-        variant: 'destructive',
-      });
-    } finally {
-      setSharingEmailId(null);
-    }
-  };
 
   // Calculate stats
   const stats = useMemo(() => {
     const draft = invoices.filter((i) => i.invoice_status === 'draft');
     const sent = invoices.filter((i) => i.invoice_status === 'sent');
-    const overdue = invoices.filter((i) => {
-      if (i.invoice_status === 'paid') return false;
-      if (i.invoice_status === 'overdue') return true;
-      return i.invoice_due_date && isPast(addHours(new Date(i.invoice_due_date), 24));
-    });
+    const overdue = invoices.filter(isInvoiceOverdue);
     const paid = invoices.filter((i) => i.invoice_status === 'paid');
-    const monthlyPaid = paid.reduce((sum, inv) => {
-      const total = typeof inv.total === 'number' && !isNaN(inv.total) ? inv.total : 0;
-      return sum + total;
-    }, 0);
+    const now = new Date();
+    const paidThisMonth = paid.filter((i) => {
+      const at = i.invoice_paid_at ? new Date(i.invoice_paid_at) : null;
+      return at && at.getMonth() === now.getMonth() && at.getFullYear() === now.getFullYear();
+    });
+    const sumTotal = (list: typeof invoices) =>
+      list.reduce((sum, inv) => sum + (typeof inv.total === 'number' && !isNaN(inv.total) ? inv.total : 0), 0);
+    const sumOutstanding = (list: typeof invoices) =>
+      list.reduce((sum, inv) => sum + Math.max(0, (inv.total || 0) - (inv.total_paid || 0)), 0);
+    const unpaid = invoices.filter(
+      (i) => i.invoice_status !== 'paid' && i.invoice_status !== 'draft' && i.invoice_status
+    );
 
     return {
       total: invoices.length,
@@ -424,7 +276,12 @@ const InvoicesPage = () => {
       sent: sent.length,
       overdue: overdue.length,
       paid: paid.length,
-      monthlyTotal: monthlyPaid,
+      monthlyTotal: sumTotal(paidThisMonth),
+      monthlyCount: paidThisMonth.length,
+      outstandingValue: sumOutstanding(unpaid),
+      outstandingCount: unpaid.length,
+      overdueValue: sumOutstanding(overdue),
+      draftValue: sumTotal(draft),
     };
   }, [invoices]);
 
@@ -432,11 +289,7 @@ const InvoicesPage = () => {
   const handleCreateChaseTasks = async () => {
     setCreatingChaseTasks(true);
     try {
-      const overdueInvoices = invoices.filter((i) => {
-        if (i.invoice_status === 'paid') return false;
-        if (i.invoice_status === 'overdue') return true;
-        return i.invoice_due_date && isPast(addHours(new Date(i.invoice_due_date), 24));
-      });
+      const overdueInvoices = invoices.filter(isInvoiceOverdue);
 
       const tasks = overdueInvoices.map((inv) => ({
         title: `Chase payment: Invoice ${inv.invoice_number || ''}${inv.client?.name ? ` — ${inv.client.name}` : ''}`.trim(),
@@ -467,11 +320,7 @@ const InvoicesPage = () => {
 
     if (activeFilter !== 'all') {
       if (activeFilter === 'overdue') {
-        filtered = filtered.filter((i) => {
-          if (i.invoice_status === 'paid') return false;
-          if (i.invoice_status === 'overdue') return true;
-          return i.invoice_due_date && isPast(addHours(new Date(i.invoice_due_date), 24));
-        });
+        filtered = filtered.filter(isInvoiceOverdue);
       } else {
         filtered = filtered.filter((i) => i.invoice_status === activeFilter);
       }
@@ -487,13 +336,68 @@ const InvoicesPage = () => {
       );
     }
 
-    // Sort: chronological, newest created first
-    return [...filtered].sort((a, b) => {
-      const aDate = new Date(a.createdAt).getTime();
-      const bDate = new Date(b.createdAt).getTime();
-      return bDate - aDate;
+    if (quickFilter === 'part-paid') {
+      filtered = filtered.filter(
+        (i) => i.invoice_status !== 'paid' && (i.total_paid || 0) > 0.005
+      );
+    }
+
+    if (dateRange !== 'all') {
+      const cutoff = new Date();
+      cutoff.setDate(cutoff.getDate() - (dateRange === '30d' ? 30 : 90));
+      filtered = filtered.filter((i) => {
+        const d = i.invoice_date || i.createdAt;
+        return d ? new Date(d) >= cutoff : false;
+      });
+    }
+
+    const created = (i: (typeof invoices)[number]) =>
+      new Date(i.invoice_date || i.createdAt).getTime();
+    const sorted = [...filtered];
+    switch (sortBy) {
+      case 'oldest':
+        sorted.sort((a, b) => created(a) - created(b));
+        break;
+      case 'value-high':
+        sorted.sort((a, b) => (b.total || 0) - (a.total || 0));
+        break;
+      case 'due-soonest':
+        sorted.sort((a, b) => {
+          const da = a.invoice_due_date ? new Date(a.invoice_due_date).getTime() : Infinity;
+          const db = b.invoice_due_date ? new Date(b.invoice_due_date).getTime() : Infinity;
+          return da - db;
+        });
+        break;
+      default:
+        sorted.sort((a, b) => created(b) - created(a));
+    }
+    return sorted;
+  }, [invoices, activeFilter, searchQuery, quickFilter, dateRange, sortBy]);
+
+  const filteredValue = useMemo(
+    () => filteredInvoices.reduce((acc, i) => acc + (i.total || 0), 0),
+    [filteredInvoices]
+  );
+
+  // 30-day invoicing sparkline for the analytics strip
+  const sparkPoints = useMemo(() => {
+    const days = 30;
+    const counts = new Array(days).fill(0);
+    const today = new Date();
+    today.setHours(0, 0, 0, 0);
+    invoices.forEach((i) => {
+      const src = i.invoice_date || i.createdAt;
+      if (!src) return;
+      const d0 = new Date(src);
+      d0.setHours(0, 0, 0, 0);
+      const d = Math.round((today.getTime() - d0.getTime()) / 86400000);
+      if (d >= 0 && d < days) counts[days - 1 - d]++;
     });
-  }, [invoices, activeFilter, searchQuery]);
+    const max = Math.max(...counts, 1);
+    return counts
+      .map((v, i) => `${((i / (days - 1)) * 100).toFixed(1)},${(29 - (v / max) * 26).toFixed(1)}`)
+      .join(' ');
+  }, [invoices]);
 
   const filters = [
     { id: 'all', label: 'All', count: invoices.length, icon: FileText },
@@ -668,10 +572,10 @@ const InvoicesPage = () => {
               >
                 <ArrowLeft className="h-5 w-5" />
               </button>
-              <h1 className="flex-1 text-lg font-semibold text-white truncate">Invoices</h1>
+              <h1 className="flex-1 text-[22px] font-bold text-white truncate tracking-tight">Invoices</h1>
               <button
                 onClick={() => navigate('/electrician/quotes')}
-                className="h-8 px-2.5 rounded-lg bg-white/[0.06] border border-white/[0.08] text-[10px] font-semibold text-white touch-manipulation active:scale-[0.97] transition-all flex-shrink-0"
+                className="h-8 px-2.5 rounded-lg bg-white/[0.08] text-[11px] font-medium text-white/90 touch-manipulation active:scale-[0.97] transition-all flex-shrink-0"
               >
                 Quotes
               </button>
@@ -689,26 +593,47 @@ const InvoicesPage = () => {
               </button>
         </div>
 
-        {/* Filter pills */}
-          <div className="flex gap-2 px-4 pb-3 overflow-x-auto scrollbar-hide">
-            {filters.map((filter) => (
-              <button
-                key={filter.id}
-                onClick={() => handleFilterChange(filter.id)}
-                className={cn(
-                  'flex-shrink-0 h-8 px-3 rounded-lg text-xs font-medium transition-all touch-manipulation active:scale-[0.98]',
-                  activeFilter === filter.id
-                    ? 'bg-elec-yellow/15 text-elec-yellow border border-elec-yellow/25'
-                    : 'bg-white/[0.04] text-white border border-white/[0.08] hover:bg-white/[0.07]'
-                )}
-              >
+        {/* Money subline */}
+        <p className="px-4 mt-0.5 text-[12px] text-white/75">
+          <span className={cn('font-semibold tabular-nums', stats.outstandingValue > 0 ? 'text-elec-yellow' : 'text-white/90')}>
+            {formatCurrency(stats.outstandingValue)}
+          </span>{' '}
+          outstanding
+          {stats.overdue > 0 && (
+            <>
+              <span className="mx-1.5 text-white/30">·</span>
+              <span className="font-semibold text-red-400 tabular-nums">{stats.overdue}</span> overdue
+            </>
+          )}
+        </p>
+
+        {/* Status tabs */}
+        <div className="flex gap-5 px-4 mt-2 overflow-x-auto scrollbar-hide">
+          {filters.map((filter) => (
+            <button
+              key={filter.id}
+              onClick={() => handleFilterChange(filter.id)}
+              className="relative flex-shrink-0 pb-3 pt-2 text-[13px] font-medium whitespace-nowrap touch-manipulation select-none"
+            >
+              <span className={activeFilter === filter.id ? 'text-white' : 'text-white/65'}>
                 {filter.label}
-                {filter.count > 0 && (
-                  <span className="ml-1.5 text-white/50">{filter.count}</span>
-                )}
-              </button>
-            ))}
-          </div>
+              </span>
+              {filter.count > 0 && (
+                <span
+                  className={cn(
+                    'ml-1.5 text-[11px] tabular-nums',
+                    activeFilter === filter.id ? 'text-elec-yellow' : 'text-white/45'
+                  )}
+                >
+                  {filter.count}
+                </span>
+              )}
+              {activeFilter === filter.id && (
+                <span className="absolute bottom-0 left-0 right-0 h-[2px] rounded-full bg-elec-yellow" />
+              )}
+            </button>
+          ))}
+        </div>
       </header>
 
       {/* Content */}
@@ -716,85 +641,104 @@ const InvoicesPage = () => {
         {/* Stripe Connect Banner */}
         <StripeConnectBanner refreshKey={stripeRefreshKey} />
 
-        {/* 01 · REVENUE — editorial eyebrow + hero (mirrors QuotesPage 01 · PIPELINE) */}
+        {/* 01 · REVENUE — panel, mirrors QuotesPage pipeline */}
         <div className="space-y-3">
           <div className="flex items-baseline gap-2">
             <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-elec-yellow/80 tabular-nums">01</span>
-            <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/50">· Revenue</span>
+            <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/65">· Revenue</span>
           </div>
 
-          {/* Gradient accent */}
-          <div className="h-[2px] w-full rounded-full bg-gradient-to-r from-elec-yellow/40 to-elec-yellow/10" />
-
-          {/* Main value */}
-          <div className="flex items-end justify-between">
-            <div>
-              <p className="text-[10px] text-white uppercase tracking-widest font-medium">This month</p>
-              <p className="text-[38px] font-extrabold text-elec-yellow leading-none tracking-tight mt-1">
-                {formatCurrency(stats.monthlyTotal)}
-              </p>
+          <div className={cn(PANEL, 'overflow-hidden mt-2')}>
+            <div className="grid grid-cols-2 lg:grid-cols-4">
+              <button
+                onClick={() => handleFilterChange('paid')}
+                className="p-4 text-left border-b border-r border-white/[0.08] lg:border-b-0 touch-manipulation active:bg-white/[0.03] transition-colors"
+              >
+                <p className="text-[22px] font-bold text-emerald-400 tabular-nums leading-none tracking-tight">{formatCurrency(stats.monthlyTotal)}</p>
+                <p className="text-[11px] text-white/80 mt-1.5">Paid this month · <span className="text-white tabular-nums">{stats.monthlyCount}</span></p>
+              </button>
+              <button
+                onClick={() => handleFilterChange('sent')}
+                className="p-4 text-left border-b border-white/[0.08] lg:border-b-0 lg:border-r touch-manipulation active:bg-white/[0.03] transition-colors"
+              >
+                <p className="text-[22px] font-bold text-amber-400 tabular-nums leading-none tracking-tight">{formatCurrency(stats.outstandingValue)}</p>
+                <p className="text-[11px] text-white/80 mt-1.5">Outstanding · <span className="text-white tabular-nums">{stats.outstandingCount}</span></p>
+              </button>
+              <button
+                onClick={() => handleFilterChange('overdue')}
+                className="p-4 text-left border-r border-white/[0.08] touch-manipulation active:bg-white/[0.03] transition-colors"
+              >
+                <p className={cn('text-[22px] font-bold tabular-nums leading-none tracking-tight', stats.overdue > 0 ? 'text-red-400' : 'text-white')}>{formatCurrency(stats.overdueValue)}</p>
+                <p className="text-[11px] text-white/80 mt-1.5">Overdue · <span className="text-white tabular-nums">{stats.overdue}</span></p>
+              </button>
+              <button
+                onClick={() => handleFilterChange('draft')}
+                className="p-4 text-left touch-manipulation active:bg-white/[0.03] transition-colors"
+              >
+                <p className="text-[22px] font-bold text-white tabular-nums leading-none tracking-tight">{formatCurrency(stats.draftValue)}</p>
+                <p className="text-[11px] text-white/80 mt-1.5">Drafts · <span className="text-white tabular-nums">{stats.draft}</span></p>
+              </button>
             </div>
-            <div className="text-right pb-0.5">
-              <p className="text-[28px] font-bold text-white leading-none">{stats.paid}</p>
-              <p className="text-[10px] text-white uppercase tracking-widest mt-0.5">Paid</p>
-            </div>
+
+            {/* Chase alert — panel footer */}
+            {stats.overdue > 0 && (
+              <button
+                type="button"
+                onClick={handleCreateChaseTasks}
+                disabled={creatingChaseTasks}
+                className="w-full flex items-center justify-between py-3 px-4 border-t border-white/[0.08] touch-manipulation active:bg-white/[0.03] transition-colors disabled:opacity-50"
+              >
+                <p className="text-[12px] text-white/90">
+                  <span className="font-semibold text-red-400 tabular-nums">{stats.overdue}</span> invoice{stats.overdue !== 1 ? 's' : ''} need chasing
+                </p>
+                <span className="text-[11px] font-semibold text-amber-400 flex-shrink-0 ml-3">
+                  {creatingChaseTasks ? 'Creating…' : 'Create tasks →'}
+                </span>
+              </button>
+            )}
           </div>
 
-          {/* Stat pills — 2×2 grid */}
-          <div className="grid grid-cols-2 gap-2">
-            <button onClick={() => handleFilterChange('overdue')} className="rounded-xl bg-white/[0.04] border border-white/[0.06] py-3 px-3 text-left touch-manipulation active:scale-[0.97] transition-all">
-              <p className={cn('text-[18px] font-bold tabular-nums', stats.overdue > 0 ? 'text-red-400' : 'text-white')}>{stats.overdue}</p>
-              <p className="text-[11px] text-white mt-0.5">Overdue</p>
-            </button>
-            <button onClick={() => handleFilterChange('sent')} className="rounded-xl bg-white/[0.04] border border-white/[0.06] py-3 px-3 text-left touch-manipulation active:scale-[0.97] transition-all">
-              <p className="text-[18px] font-bold text-amber-400 tabular-nums">{stats.sent}</p>
-              <p className="text-[11px] text-white mt-0.5">Sent</p>
-            </button>
-            <button onClick={() => handleFilterChange('draft')} className="rounded-xl bg-white/[0.04] border border-white/[0.06] py-3 px-3 text-left touch-manipulation active:scale-[0.97] transition-all">
-              <p className="text-[18px] font-bold text-white tabular-nums">{stats.draft}</p>
-              <p className="text-[11px] text-white mt-0.5">Drafts</p>
-            </button>
-            <button onClick={() => handleFilterChange('all')} className="rounded-xl bg-white/[0.04] border border-white/[0.06] py-3 px-3 text-left touch-manipulation active:scale-[0.97] transition-all">
-              <p className="text-[18px] font-bold text-blue-400 tabular-nums">{stats.total}</p>
-              <p className="text-[11px] text-white mt-0.5">Total</p>
-            </button>
-          </div>
-
-          {/* Chase alert */}
-          {stats.overdue > 0 && (
-            <button
-              type="button"
-              onClick={handleCreateChaseTasks}
-              disabled={creatingChaseTasks}
-              className="w-full flex items-center justify-between py-2.5 px-4 rounded-xl bg-amber-500/[0.06] border border-amber-500/15 touch-manipulation active:scale-[0.98] transition-all disabled:opacity-50"
-            >
-              <p className="text-[12px] text-white">
-                <span className="font-bold text-amber-400">{stats.overdue}</span> invoice{stats.overdue !== 1 ? 's' : ''} need chasing
-              </p>
-              <span className="text-[11px] font-bold text-amber-400 flex-shrink-0 ml-3">
-                {creatingChaseTasks ? 'Creating...' : 'Create Tasks'}
-              </span>
-            </button>
-          )}
-
-          {/* Analytics — collapsed by default */}
+          {/* Analytics — sparkline strip, expands to full panel */}
           {invoices.length > 0 && (
-            <details>
-              <summary className="flex items-center justify-between cursor-pointer touch-manipulation py-2 list-none">
-                <span className="text-xs font-medium text-white uppercase tracking-wider">Analytics</span>
-                <ChevronRight className="w-4 h-4 text-white transition-transform [details[open]>&]:rotate-90" />
-              </summary>
-              <div className="mt-2">
-                <QuoteInvoiceAnalytics
-                  quotes={[]}
-                  invoices={invoices}
-                  formatCurrency={formatCurrency}
-                  lastUpdated={lastUpdated}
-                  onRefresh={fetchInvoices}
-                  isLoading={isLoading}
-                />
-              </div>
-            </details>
+            <div className={cn(PANEL, 'px-4 py-3')}>
+              <QuoteInvoiceAnalytics
+                quotes={[]}
+                invoices={invoices}
+                formatCurrency={formatCurrency}
+                lastUpdated={lastUpdated}
+                onRefresh={fetchInvoices}
+                isLoading={isLoading}
+                trigger={(isOpen) => (
+                  <button className="w-full flex items-center gap-3 py-1 touch-manipulation">
+                    <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/65 flex-shrink-0">
+                      Analytics
+                    </span>
+                    <svg
+                      viewBox="0 0 100 32"
+                      preserveAspectRatio="none"
+                      className="flex-1 h-8 min-w-0 text-elec-yellow/90"
+                      aria-hidden="true"
+                    >
+                      <polyline
+                        points={sparkPoints}
+                        fill="none"
+                        stroke="currentColor"
+                        strokeWidth="1.5"
+                        vectorEffect="non-scaling-stroke"
+                        strokeLinejoin="round"
+                        strokeLinecap="round"
+                      />
+                    </svg>
+                    <ChevronRight
+                      className={cn(
+                        'w-4 h-4 text-white/60 transition-transform flex-shrink-0',
+                        isOpen && 'rotate-90'
+                      )}
+                    />
+                  </button>
+                )}
+              />
+            </div>
           )}
         </div>
 
@@ -810,9 +754,72 @@ const InvoicesPage = () => {
                   : `${activeFilter.charAt(0).toUpperCase() + activeFilter.slice(1)} invoices`}
               </span>
             </div>
-            <span className="text-[11px] text-white/50 tabular-nums">
+            <span className="text-[11px] text-white/80 tabular-nums">
               {filteredInvoices.length} {filteredInvoices.length === 1 ? 'invoice' : 'invoices'}
+              {filteredInvoices.length > 0 && (
+                <span className="text-white"> · {formatCurrency(filteredValue)}</span>
+              )}
             </span>
+          </div>
+
+          {/* Sort + quick filters */}
+          <div className="flex items-center gap-2 overflow-x-auto scrollbar-hide -mx-4 px-4">
+            <DropdownMenu>
+              <DropdownMenuTrigger asChild>
+                <button className="flex-shrink-0 h-9 flex items-center gap-1.5 text-[12px] font-medium text-white/90 touch-manipulation select-none active:scale-[0.97] transition-all">
+                  <ArrowUpDown className="h-3.5 w-3.5 text-elec-yellow" />
+                  {{ newest: 'Newest', oldest: 'Oldest', 'value-high': 'Highest value', 'due-soonest': 'Due soonest' }[sortBy]}
+                </button>
+              </DropdownMenuTrigger>
+              <DropdownMenuContent align="start" className="z-[100] min-w-[160px] bg-elec-gray border-white/10">
+                {(
+                  [
+                    ['newest', 'Newest'],
+                    ['oldest', 'Oldest'],
+                    ['value-high', 'Highest value'],
+                    ['due-soonest', 'Due soonest'],
+                  ] as const
+                ).map(([id, label]) => (
+                  <DropdownMenuItem
+                    key={id}
+                    onClick={() => setSortBy(id)}
+                    className={cn(
+                      'h-11 text-[14px] touch-manipulation focus:bg-white/[0.06]',
+                      sortBy === id ? 'text-elec-yellow focus:text-elec-yellow' : 'text-white focus:text-white'
+                    )}
+                  >
+                    {label}
+                  </DropdownMenuItem>
+                ))}
+              </DropdownMenuContent>
+            </DropdownMenu>
+
+            <div className="h-5 w-px bg-white/[0.16] flex-shrink-0" />
+
+            <button
+              onClick={() => setQuickFilter(quickFilter === 'part-paid' ? null : 'part-paid')}
+              className={cn(
+                'flex-shrink-0 h-9 px-3 rounded-lg text-[12px] font-medium transition-all touch-manipulation active:scale-[0.97] select-none',
+                quickFilter === 'part-paid' ? 'bg-elec-yellow/10 text-elec-yellow' : 'text-white/75'
+              )}
+            >
+              Part-paid
+            </button>
+
+            <div className="h-5 w-px bg-white/[0.16] flex-shrink-0" />
+
+            {(['30d', '90d'] as const).map((r) => (
+              <button
+                key={r}
+                onClick={() => setDateRange(dateRange === r ? 'all' : r)}
+                className={cn(
+                  'flex-shrink-0 h-9 px-3 rounded-lg text-[12px] font-medium transition-all touch-manipulation active:scale-[0.97] select-none',
+                  dateRange === r ? 'bg-elec-yellow/10 text-elec-yellow' : 'text-white/75'
+                )}
+              >
+                {r}
+              </button>
+            ))}
           </div>
 
           {isLoading ? (
@@ -839,32 +846,30 @@ const InvoicesPage = () => {
             ) : (
               <div className="text-center py-12">
                 <p className="text-[14px] font-medium text-white">
-                  No {activeFilter !== 'all' ? activeFilter : ''} invoices
+                  No {activeFilter !== 'all' ? activeFilter : quickFilter === 'part-paid' ? 'part-paid' : ''} invoices
                 </p>
-                <p className="text-[12px] text-white mt-1">
-                  Invoices will appear here when {activeFilter}
+                <p className="text-[12px] text-white/70 mt-1">
+                  {quickFilter || dateRange !== 'all'
+                    ? 'Try clearing the filters above'
+                    : `Invoices will appear here when ${activeFilter}`}
                 </p>
               </div>
             )
           ) : (
-            <div className="space-y-3">
+            <div className="grid grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-2.5">
               <AnimatePresence>
                 {filteredInvoices.map((invoice) => (
-                  <motion.div key={invoice.id} layout exit={{ opacity: 0, scale: 0.95 }}>
-                    <InvoiceCardView
-                      invoices={[invoice]}
-                      onInvoiceAction={handleInvoiceAction}
-                      onDownloadPDF={handleDownloadPDF}
-                      onMarkAsPaid={handleMarkAsPaid}
-                      onSendSuccess={handleSendSuccess}
-                      onDeleteInvoice={handleDeleteInvoice}
-                      onShareWhatsApp={handleShareWhatsApp}
-                      onShareEmail={handleShareEmail}
-                      markingPaidId={markingPaidId}
-                      downloadingPdfId={downloadingPdfId}
-                      deletingInvoiceId={deletingInvoiceId}
-                      formatCurrency={formatCurrency}
-                      stripeRefreshKey={stripeRefreshKey}
+                  <motion.div key={invoice.id} id={`invoice-${invoice.id}`} layout exit={{ opacity: 0, scale: 0.95 }} className="h-full">
+                    <InvoiceCard
+                      invoice={invoice}
+                      onTap={() => handleInvoiceAction(invoice)}
+                      onMarkPaid={() => handleMarkAsPaid(invoice)}
+                      onDownloadPDF={() => handleDownloadPDF(invoice)}
+                      onEdit={() => navigate(`/electrician/invoice-quote-builder/${invoice.id}`)}
+                      onDelete={() => handleDeleteInvoice(invoice.id)}
+                      isMarkingPaid={markingPaidId === invoice.id}
+                      isDownloading={downloadingPdfId === invoice.id}
+                      isDeleting={deletingInvoiceId === invoice.id}
                     />
                   </motion.div>
                 ))}

@@ -1,7 +1,8 @@
-import React, { useState, useEffect, useRef, useCallback } from 'react';
+import React, { useState, useEffect, useRef, useCallback, Fragment, useMemo } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
-import { Loader2 } from 'lucide-react';
+import { Loader2, Check, ChevronLeft } from 'lucide-react';
+import { cn } from '@/lib/utils';
 import { Quote } from '@/types/quote';
 import { Invoice } from '@/types/invoice';
 import { useInvoiceBuilder } from '@/hooks/useInvoiceBuilder';
@@ -9,12 +10,20 @@ import { useInvoiceStorage } from '@/hooks/useInvoiceStorage';
 import { useCompanyProfile } from '@/hooks/useCompanyProfile';
 import { draftStorage } from '@/utils/draftStorage';
 import { AutoSaveIndicator } from '../shared/AutoSaveIndicator';
+import { useInventoryStorage } from '@/hooks/useInventoryStorage';
 
 import { InvoiceReviewStep } from './steps/InvoiceReviewStep';
 import { InvoiceClientDetailsStep } from './steps/InvoiceClientDetailsStep';
 import { InvoiceItemsStep } from './steps/InvoiceItemsStep';
 import { InvoiceSettingsStep } from './steps/InvoiceSettingsStep';
 
+
+const STEPS = [
+  { key: 'client', label: 'Client', title: 'Who’s the invoice for?', sub: 'Client and job details' },
+  { key: 'items', label: 'Items', title: 'What are you billing?', sub: 'Original quote items plus anything added on site' },
+  { key: 'settings', label: 'Settings', title: 'Money settings', sub: 'VAT, CIS, payment terms and notes' },
+  { key: 'review', label: 'Review', title: 'Check and create', sub: 'Everything your client will see' },
+] as const;
 
 interface InvoiceWizardProps {
   sourceQuote?: Quote;
@@ -209,16 +218,54 @@ export const InvoiceWizard = ({
     invoiceBuilder.updateJobDetails(jobDetails);
   };
 
+  const [step, setStep] = useState(0);
+  const goToStep = (next: number) => {
+    setStep(Math.max(0, Math.min(STEPS.length - 1, next)));
+    window.scrollTo({ top: 0 });
+  };
+  const isLastStep = step === STEPS.length - 1;
+  const itemCount =
+    (invoiceBuilder.invoice.items || []).length +
+    (invoiceBuilder.invoice.additional_invoice_items || []).length;
+  const completed: (boolean | null)[] = [
+    !!invoiceBuilder.invoice.client?.name,
+    itemCount > 0,
+    null,
+    null,
+  ];
+
   const canSave = !!(
     invoiceBuilder.invoice.client?.name &&
     ((invoiceBuilder.invoice.items || []).length > 0 || (invoiceBuilder.invoice.additional_invoice_items || []).length > 0)
   );
 
+  // Live stock check — single fetch here, shared with the items step (same
+  // pattern as QuoteWizard). Saving runs the take-off, so warn on aggregate
+  // demand across quote lines + added lines before the sparky commits.
+  const { items: stockItems } = useInventoryStorage();
+  const stockWarnings = useMemo(() => {
+    const byId = new Map(stockItems.map((st) => [st.id, st]));
+    const demand = new Map<string, number>();
+    for (const it of [
+      ...(invoiceBuilder.invoice.items || []),
+      ...(invoiceBuilder.invoice.additional_invoice_items || []),
+    ]) {
+      if (!it.inventoryItemId) continue;
+      const qty = Number((it as { actualQuantity?: number }).actualQuantity ?? it.quantity) || 0;
+      demand.set(it.inventoryItemId, (demand.get(it.inventoryItemId) || 0) + qty);
+    }
+    return Array.from(demand.entries()).flatMap(([id, need]) => {
+      const stock = byId.get(id);
+      if (!stock || need <= stock.quantity) return [];
+      return [{ name: stock.name, need, have: stock.quantity }];
+    });
+  }, [invoiceBuilder.invoice.items, invoiceBuilder.invoice.additional_invoice_items, stockItems]);
+
   return (
-    <div ref={contentRef} className="space-y-8 pb-32 px-3 sm:px-3 lg:px-4">
+    <div ref={contentRef} className="pb-40 px-3 sm:px-4 lg:px-6">
       {/* Recovery Banner */}
       {showRecoveryBanner && recoveredDraft && (
-        <div className="flex items-center justify-between p-3 rounded-xl bg-amber-500/[0.06] border border-amber-500/15">
+        <div className="flex items-center justify-between p-3 mb-4 rounded-xl bg-amber-500/[0.06] border border-amber-500/15">
           <div>
             <p className="text-[13px] font-semibold text-amber-400">Recover unsaved invoice?</p>
             <p className="text-[11px] text-white">
@@ -236,89 +283,192 @@ export const InvoiceWizard = ({
 
       {/* Auto-save status */}
       {!sourceQuote && (
-        <div className="flex justify-end -mb-4">
+        <div className="flex justify-end mb-2">
           <AutoSaveIndicator isSaving={isSaving} lastSaved={lastSaved} />
         </div>
       )}
 
-      {/* === ALL SECTIONS ON ONE PAGE === */}
-
-      {/* 1. Client Details */}
-      <section>
-        <div className="mb-3 flex items-center gap-2">
-          <div className="h-[2px] flex-1 rounded-full bg-gradient-to-r from-elec-yellow/40 to-elec-yellow/10" />
-          <div className={`w-2 h-2 rounded-full flex-shrink-0 ${invoiceBuilder.invoice.client?.name ? 'bg-emerald-400' : 'bg-white/20'}`} />
+      {/* === STEP RAIL === */}
+      <div className="pt-3 pb-6">
+        <div className="flex items-center">
+          {STEPS.map((st, i) => (
+            <Fragment key={st.key}>
+              {i > 0 && (
+                <div
+                  className={cn(
+                    'flex-1 h-[2px] rounded-full mx-2 sm:mx-3 min-w-3',
+                    i <= step ? 'bg-elec-yellow/50' : 'bg-white/[0.10]'
+                  )}
+                />
+              )}
+              <button
+                type="button"
+                onClick={() => goToStep(i)}
+                className="flex items-center gap-2 flex-shrink-0 py-1 touch-manipulation select-none"
+              >
+                <span
+                  className={cn(
+                    'h-8 w-8 rounded-full flex items-center justify-center text-[12px] font-bold tabular-nums transition-all',
+                    i === step
+                      ? 'bg-elec-yellow text-black shadow-[0_0_0_4px_rgba(250,204,21,0.12)]'
+                      : completed[i]
+                        ? 'bg-emerald-500/15 text-emerald-400 border border-emerald-500/30'
+                        : 'bg-white/[0.06] text-white/55 border border-white/[0.10]'
+                  )}
+                >
+                  {completed[i] && i !== step ? <Check className="h-4 w-4" /> : i + 1}
+                </span>
+                <span
+                  className={cn(
+                    'text-[12px] font-medium leading-none hidden sm:block',
+                    i === step ? 'text-white' : completed[i] ? 'text-white/80' : 'text-white/50'
+                  )}
+                >
+                  {st.label}
+                </span>
+              </button>
+            </Fragment>
+          ))}
         </div>
-        <InvoiceClientDetailsStep
-          initialData={{
-            client: invoiceBuilder.invoice.client,
-            jobDetails: invoiceBuilder.invoice.jobDetails,
-          }}
-          onUpdate={handleClientUpdate}
-        />
-      </section>
+      </div>
 
-      {/* 2. Invoice Items */}
-      <section>
-        <div className="mb-3 flex items-center gap-2">
-          <div className="h-[2px] flex-1 rounded-full bg-gradient-to-r from-elec-yellow/40 to-elec-yellow/10" />
-          <div className={`w-2 h-2 rounded-full flex-shrink-0 ${((invoiceBuilder.invoice.items || []).length > 0 || (invoiceBuilder.invoice.additional_invoice_items || []).length > 0) ? 'bg-emerald-400' : 'bg-white/20'}`} />
+      {/* === STEP CONTENT — all mounted, current visible === */}
+      <div className="sm:rounded-2xl sm:border sm:border-white/[0.10] sm:bg-gradient-to-b sm:from-white/[0.05] sm:to-white/[0.02] sm:shadow-[0_8px_24px_rgba(0,0,0,0.35)] sm:p-6 lg:p-8">
+        <div className="mb-5 pb-4 border-b border-white/[0.08]">
+          <h2 className="text-[20px] font-bold text-white leading-tight">{STEPS[step].title}</h2>
+          <p className="text-[12px] text-white/60 mt-1">{STEPS[step].sub}</p>
         </div>
-        <h2 className="text-sm font-bold text-white uppercase tracking-wide mb-3">Items</h2>
-        <InvoiceItemsStep
-          originalItems={invoiceBuilder.invoice.items || []}
-          additionalItems={invoiceBuilder.invoice.additional_invoice_items || []}
-          onAddItem={invoiceBuilder.addInvoiceItem}
-          onUpdateItem={invoiceBuilder.updateInvoiceItem}
-          onRemoveItem={invoiceBuilder.removeInvoiceItem}
-          settings={invoiceBuilder.invoice.settings}
-          subtotal={invoiceBuilder.invoice.subtotal || 0}
-          vatAmount={invoiceBuilder.invoice.vatAmount || 0}
-          total={invoiceBuilder.invoice.total || 0}
-        />
-      </section>
 
-      {/* 3. Settings */}
-      <section>
-        <div className="mb-3 flex items-center gap-2">
-          <div className="h-[2px] flex-1 rounded-full bg-gradient-to-r from-elec-yellow/40 to-elec-yellow/10" />
-          <div className="w-2 h-2 rounded-full flex-shrink-0 bg-emerald-400" />
-        </div>
-        <h2 className="text-sm font-bold text-white uppercase tracking-wide mb-3">Settings</h2>
-        <InvoiceSettingsStep
-          settings={invoiceBuilder.invoice.settings}
-          items={invoiceBuilder.invoice.items}
-          notes={invoiceBuilder.invoice.invoice_notes}
-          onUpdateSettings={invoiceBuilder.updateInvoiceSettings}
-          onUpdateNotes={invoiceBuilder.setInvoiceNotes}
-        />
-      </section>
+        <section className={cn(step !== 0 && 'hidden')}>
+          <InvoiceClientDetailsStep
+            initialData={{
+              client: invoiceBuilder.invoice.client,
+              jobDetails: invoiceBuilder.invoice.jobDetails,
+            }}
+            onUpdate={handleClientUpdate}
+          />
+        </section>
 
-      {/* 4. Review */}
-      <section>
-        <div className="mb-3 flex items-center gap-2">
-          <div className="h-[2px] flex-1 rounded-full bg-gradient-to-r from-elec-yellow/40 to-elec-yellow/10" />
-          <div className="w-2 h-2 rounded-full flex-shrink-0 bg-emerald-400" />
-        </div>
-        <h2 className="text-sm font-bold text-white uppercase tracking-wide mb-3">Invoice Summary</h2>
-        <InvoiceReviewStep invoice={invoiceBuilder.invoice} />
-      </section>
+        <section className={cn(step !== 1 && 'hidden')}>
+          <InvoiceItemsStep
+            originalItems={invoiceBuilder.invoice.items || []}
+            additionalItems={invoiceBuilder.invoice.additional_invoice_items || []}
+            onAddItem={invoiceBuilder.addInvoiceItem}
+            onUpdateItem={invoiceBuilder.updateInvoiceItem}
+            onRemoveItem={invoiceBuilder.removeInvoiceItem}
+            settings={invoiceBuilder.invoice.settings}
+            subtotal={invoiceBuilder.invoice.subtotal || 0}
+            vatAmount={invoiceBuilder.invoice.vatAmount || 0}
+            total={invoiceBuilder.invoice.total || 0}
+            stockItems={stockItems}
+          />
+        </section>
 
-      {/* Sticky footer with live total + CTA */}
-      <div className="fixed bottom-0 left-0 right-0 z-30 bg-gradient-to-t from-background via-background/98 to-background/80 backdrop-blur-md border-t border-white/[0.12] px-4 pb-4 pt-3 lg:left-64 shadow-2xl shadow-black/40">
-        <div className="flex items-center justify-between mb-3">
-          <span className="text-[13px] text-white">Total</span>
-          <span className="text-[20px] font-bold text-elec-yellow tabular-nums">
-            {new Intl.NumberFormat('en-GB', { style: 'currency', currency: 'GBP' }).format(invoiceBuilder.invoice.total || 0)}
-          </span>
+        <section className={cn(step !== 2 && 'hidden')}>
+          <InvoiceSettingsStep
+            settings={invoiceBuilder.invoice.settings}
+            items={invoiceBuilder.invoice.items}
+            notes={invoiceBuilder.invoice.invoice_notes}
+            onUpdateSettings={invoiceBuilder.updateInvoiceSettings}
+            onUpdateNotes={invoiceBuilder.setInvoiceNotes}
+          />
+        </section>
+
+        <section className={cn(step !== 3 && 'hidden')}>
+          <InvoiceReviewStep invoice={invoiceBuilder.invoice} />
+        </section>
+      </div>
+
+      {/* === STICKY FOOTER — live total + navigation === */}
+      <div className="fixed bottom-0 left-0 right-0 z-30 bg-background/95 backdrop-blur-md border-t border-white/[0.08] lg:left-[var(--sidebar-width,0px)]">
+        <div className="px-4 lg:px-6">
+          {/* Stock warning */}
+          {stockWarnings.length > 0 && (
+            <p className="pt-2 text-[11px] text-amber-400">
+              {stockWarnings.length} item{stockWarnings.length !== 1 ? 's' : ''} over your stock level — saving this invoice deducts stock
+            </p>
+          )}
+
+          {/* Mobile strip */}
+          <div className="flex items-center justify-between pt-2.5 pb-1 sm:hidden">
+            <span className="text-[11px] text-white/55 tabular-nums">
+              Step {step + 1} of {STEPS.length}
+              <span className="text-white/20 mx-1.5">·</span>
+              <span className="text-white/70">
+                {itemCount > 0 ? `${itemCount} item${itemCount !== 1 ? 's' : ''}` : 'No items yet'}
+                {invoiceBuilder.invoice.settings?.vatRegistered && itemCount > 0 ? ' · inc. VAT' : ''}
+              </span>
+              {(isSaving || lastSaved) && (
+                <span className="text-white/40"> {isSaving ? '· Saving…' : '· Saved'}</span>
+              )}
+            </span>
+            <span className="text-[20px] font-bold text-elec-yellow tabular-nums tracking-tight">
+              {new Intl.NumberFormat('en-GB', { style: 'currency', currency: 'GBP' }).format(invoiceBuilder.invoice.total || 0)}
+            </span>
+          </div>
+
+          {/* Navigation */}
+          <div className="flex items-center gap-3 pb-[max(16px,env(safe-area-inset-bottom))] pt-1.5 sm:pt-3">
+            {step > 0 && (
+              <button
+                type="button"
+                onClick={() => goToStep(step - 1)}
+                className="h-12 w-12 flex items-center justify-center rounded-xl bg-white/[0.06] border border-white/[0.10] text-white touch-manipulation active:scale-[0.97] transition-all flex-shrink-0"
+                aria-label="Previous step"
+              >
+                <ChevronLeft className="h-5 w-5" />
+              </button>
+            )}
+            <div className="hidden sm:flex items-center gap-2.5 min-w-0 text-[11px] text-white/55 tabular-nums">
+              <span>Step {step + 1} of {STEPS.length}</span>
+              <span className="text-white/20">·</span>
+              <span className="text-white/70 truncate">
+                {itemCount > 0 ? `${itemCount} item${itemCount !== 1 ? 's' : ''}` : 'No items yet'}
+                {invoiceBuilder.invoice.settings?.vatRegistered && itemCount > 0 ? ' · inc. VAT' : ''}
+              </span>
+              {(isSaving || lastSaved) && (
+                <span className="text-white/40">{isSaving ? '· Saving…' : '· Saved'}</span>
+              )}
+            </div>
+            <div className="hidden sm:block flex-1" />
+            <span className="hidden sm:inline text-[20px] font-bold text-elec-yellow tabular-nums tracking-tight">
+              {new Intl.NumberFormat('en-GB', { style: 'currency', currency: 'GBP' }).format(invoiceBuilder.invoice.total || 0)}
+            </span>
+            {!isLastStep && canSave && (
+              <button
+                type="button"
+                onClick={handleGenerate}
+                disabled={isGenerating}
+                className="hidden sm:flex h-12 px-5 items-center justify-center rounded-xl bg-white/[0.06] border border-white/[0.10] text-[13px] font-semibold text-white touch-manipulation active:scale-[0.97] transition-all disabled:opacity-50"
+              >
+                {isGenerating ? 'Saving…' : existingInvoice ? 'Save' : 'Create'}
+              </button>
+            )}
+            {isLastStep ? (
+              <button
+                onClick={handleGenerate}
+                disabled={isGenerating || !canSave}
+                className="flex-1 sm:flex-none sm:px-10 h-12 bg-elec-yellow text-black hover:bg-elec-yellow/90 font-semibold text-[15px] rounded-xl touch-manipulation active:scale-[0.98] disabled:opacity-50"
+              >
+                {isGenerating
+                  ? 'Creating…'
+                  : !canSave
+                    ? 'Add a client and items first'
+                    : existingInvoice
+                      ? 'Save Invoice'
+                      : 'Create Invoice'}
+              </button>
+            ) : (
+              <button
+                type="button"
+                onClick={() => goToStep(step + 1)}
+                className="flex-1 sm:flex-none sm:px-10 h-12 rounded-xl bg-elec-yellow text-black font-semibold text-[15px] touch-manipulation active:scale-[0.98] transition-all"
+              >
+                Next · {STEPS[step + 1].label}
+              </button>
+            )}
+          </div>
         </div>
-        <button
-          onClick={handleGenerate}
-          disabled={isGenerating || !canSave}
-          className="w-full h-13 bg-elec-yellow text-black hover:bg-elec-yellow/90 font-semibold text-[15px] rounded-xl touch-manipulation active:scale-[0.98] disabled:opacity-50"
-        >
-          {isGenerating ? 'Creating...' : 'Create Invoice'}
-        </button>
       </div>
     </div>
   );

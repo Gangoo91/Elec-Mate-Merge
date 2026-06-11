@@ -112,3 +112,25 @@ export function fmtRelTime(iso: string | null): string {
   if (hrs < 24) return `${hrs}h ago`;
   return fmtRel(iso);
 }
+
+/**
+ * Card-style amount: whole pounds unless there are pence (saves card width).
+ */
+export function formatCardAmount(value: number): string {
+  const hasPence = Math.round((value || 0) * 100) % 100 !== 0;
+  return formatCurrency(value || 0, hasPence ? 2 : 0);
+}
+
+/**
+ * Card-style age: Today / Nd ago up to a month, then a short date.
+ */
+export function formatCardAge(date?: string | Date | null): string {
+  if (!date) return '';
+  const d = new Date(date);
+  if (isNaN(d.getTime())) return '';
+  const days = Math.floor((Date.now() - d.getTime()) / 86400000);
+  if (days <= 0) return 'Today';
+  if (days === 1) return '1d ago';
+  if (days <= 30) return `${days}d ago`;
+  return d.toLocaleDateString('en-GB', { day: 'numeric', month: 'short' });
+}

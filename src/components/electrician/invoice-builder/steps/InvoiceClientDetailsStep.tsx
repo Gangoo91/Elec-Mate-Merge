@@ -5,7 +5,11 @@ import * as z from 'zod';
 import { Form, FormControl, FormField, FormItem, FormMessage } from '@/components/ui/form';
 import { UnifiedAddressFinder } from '@/components/ui/unified-address-finder';
 import { QuoteClient, JobDetails } from '@/types/quote';
-import { X } from 'lucide-react';
+import { CalendarIcon } from 'lucide-react';
+import { cn } from '@/lib/utils';
+import { format, parse, isValid } from 'date-fns';
+import { Calendar } from '@/components/ui/calendar';
+import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover';
 import ClientSelector from '@/components/ClientSelector';
 import { Customer } from '@/hooks/inspection/useCustomers';
 import { SaveCustomerPrompt } from '@/components/electrician/shared/SaveCustomerPrompt';
@@ -149,13 +153,18 @@ export const InvoiceClientDetailsStep = ({
   }, [form, onUpdate, customerId, savePromptDismissed]);
 
   const inputClass =
-    'w-full h-11 px-3 rounded-lg text-[15px] text-white bg-white/[0.06] border border-white/[0.12] focus:border-elec-yellow focus:ring-2 focus:ring-elec-yellow/20 outline-none touch-manipulation placeholder:text-white';
+    'w-full h-12 px-3.5 rounded-xl text-base text-white bg-white/[0.05] border border-white/[0.10] focus:border-elec-yellow focus:ring-2 focus:ring-elec-yellow/15 outline-none touch-manipulation placeholder:text-white/40 transition-colors';
+  const labelClass = 'text-[11px] font-medium uppercase tracking-wider text-white/65 mb-1.5 block';
+  const [dateOpen, setDateOpen] = useState(false);
+  const completionRaw = form.watch('workStartDate');
+  const completionDate = completionRaw ? parse(completionRaw, 'yyyy-MM-dd', new Date()) : undefined;
+  const completionValid = completionDate && isValid(completionDate) ? completionDate : undefined;
 
-  /** Section label with gold gradient */
-  const SectionHeader = ({ title }: { title: string }) => (
-    <div className="mb-3">
-      <div className="h-[2px] w-full rounded-full bg-gradient-to-r from-elec-yellow/40 to-elec-yellow/10 mb-2" />
-      <h2 className="text-sm font-bold text-white uppercase tracking-wide">{title}</h2>
+  /** Numbered eyebrow — matches the quote wizard steps */
+  const SectionHeader = ({ n, title }: { n: string; title: string }) => (
+    <div className="flex items-baseline gap-2 mb-3">
+      <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-elec-yellow/80 tabular-nums">{n}</span>
+      <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/80">· {title}</span>
     </div>
   );
 
@@ -165,19 +174,24 @@ export const InvoiceClientDetailsStep = ({
 
         {/* Customer selector */}
         <div>
-          <SectionHeader title="Select Existing Customer" />
+          <SectionHeader n="01" title="Existing customer" />
           {selectedCustomer ? (
-            <div className="flex items-center justify-between p-3 rounded-xl bg-white/[0.04] border border-emerald-500/20">
-              <div className="min-w-0">
-                <p className="text-[14px] font-semibold text-white">{selectedCustomer.name}</p>
-                <p className="text-[12px] text-white truncate">
+            <div className="flex items-center gap-3 p-3.5 rounded-xl bg-emerald-500/[0.05] border border-emerald-500/20">
+              <div className="h-10 w-10 rounded-full bg-emerald-500/15 border border-emerald-500/25 flex items-center justify-center flex-shrink-0">
+                <span className="text-[13px] font-bold text-emerald-400">
+                  {selectedCustomer.name.split(' ').map((w) => w[0]).slice(0, 2).join('').toUpperCase()}
+                </span>
+              </div>
+              <div className="min-w-0 flex-1">
+                <p className="text-[14px] font-semibold text-white truncate">{selectedCustomer.name}</p>
+                <p className="text-[12px] text-white/60 truncate">
                   {selectedCustomer.email || selectedCustomer.phone || 'No contact details'}
                 </p>
               </div>
               <button
                 type="button"
                 onClick={handleClearCustomer}
-                className="text-[11px] font-medium text-red-400 touch-manipulation ml-3 flex-shrink-0"
+                className="h-9 px-3 rounded-lg text-[11px] font-semibold text-red-400 bg-red-500/[0.08] border border-red-500/[0.15] touch-manipulation active:scale-[0.97] transition-all flex-shrink-0"
               >
                 Clear
               </button>
@@ -192,42 +206,41 @@ export const InvoiceClientDetailsStep = ({
 
         {/* Client details */}
         <div>
-          <SectionHeader title="Client Details" />
-          <div className="space-y-3">
+          <SectionHeader n="02" title="Client details" />
+          <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 lg:gap-4">
             <FormField control={form.control} name="name" render={({ field }) => (
-              <FormItem>
-                <label className="text-[11px] text-white uppercase tracking-wider mb-1.5 block">Client Name *</label>
+              <FormItem className="col-span-2">
+                <label className={labelClass}>Client name <span className="text-elec-yellow">*</span></label>
                 <FormControl>
                   <input {...field} placeholder="Full name" className={inputClass} autoComplete="name" />
                 </FormControl>
                 <FormMessage className="text-[12px] text-red-400" />
               </FormItem>
             )} />
-            <div className="grid grid-cols-2 gap-3">
-              <FormField control={form.control} name="phone" render={({ field }) => (
-                <FormItem>
-                  <label className="text-[11px] text-white uppercase tracking-wider mb-1.5 block">Phone</label>
-                  <FormControl>
-                    <input {...field} type="tel" inputMode="tel" placeholder="07xxx xxxxxx" className={inputClass} autoComplete="tel" />
-                  </FormControl>
-                </FormItem>
-              )} />
-              <FormField control={form.control} name="email" render={({ field }) => (
-                <FormItem>
-                  <label className="text-[11px] text-white uppercase tracking-wider mb-1.5 block">Email</label>
-                  <FormControl>
-                    <input {...field} type="email" inputMode="email" placeholder="client@example.com" className={inputClass} autoComplete="email" />
-                  </FormControl>
-                  <FormMessage className="text-[12px] text-red-400" />
-                </FormItem>
-              )} />
-            </div>
+            <FormField control={form.control} name="phone" render={({ field }) => (
+              <FormItem>
+                <label className={labelClass}>Phone</label>
+                <FormControl>
+                  <input {...field} type="tel" inputMode="tel" placeholder="Contact number" className={inputClass} autoComplete="tel" />
+                </FormControl>
+              </FormItem>
+            )} />
+            <FormField control={form.control} name="email" render={({ field }) => (
+              <FormItem>
+                <label className={labelClass}>Email</label>
+                <FormControl>
+                  <input {...field} type="email" inputMode="email" placeholder="Email address" className={inputClass} autoComplete="email" />
+                </FormControl>
+                <FormMessage className="text-[12px] text-red-400" />
+              </FormItem>
+            )} />
           </div>
         </div>
 
         {/* Address */}
         <div>
-          <SectionHeader title="Job Site Address" />
+          <SectionHeader n="03" title="Job site address" />
+          <div className="lg:max-w-2xl">
           <UnifiedAddressFinder
             key={addressKey}
             onAddressSelect={handleAddressSelect}
@@ -237,6 +250,7 @@ export const InvoiceClientDetailsStep = ({
                 : ''
             }
           />
+          </div>
         </div>
 
         {/* Save customer prompt */}
@@ -255,30 +269,51 @@ export const InvoiceClientDetailsStep = ({
 
         {/* Job Details */}
         <div>
-          <SectionHeader title="Job Details" />
-          <div className="space-y-3">
-            <FormField control={form.control} name="jobTitle" render={({ field }) => (
-              <FormItem>
-                <label className="text-[11px] text-white uppercase tracking-wider mb-1.5 block">Job Title *</label>
-                <FormControl>
-                  <input {...field} placeholder="e.g., Consumer Unit Replacement" className={inputClass} />
-                </FormControl>
-                <FormMessage className="text-[12px] text-red-400" />
-              </FormItem>
-            )} />
+          <SectionHeader n="04" title="Job details" />
+          <div className="space-y-4">
+            <div className="grid grid-cols-1 lg:grid-cols-3 gap-3 lg:gap-4">
+              <FormField control={form.control} name="jobTitle" render={({ field }) => (
+                <FormItem className="lg:col-span-2">
+                  <label className={labelClass}>Job title <span className="text-elec-yellow">*</span></label>
+                  <FormControl>
+                    <input {...field} placeholder="e.g. Consumer Unit Replacement" className={inputClass} />
+                  </FormControl>
+                  <FormMessage className="text-[12px] text-red-400" />
+                </FormItem>
+              )} />
+              <FormField control={form.control} name="workStartDate" render={({ field }) => (
+                <FormItem>
+                  <label className={labelClass}>Work completion date</label>
+                  <Popover open={dateOpen} onOpenChange={setDateOpen}>
+                    <PopoverTrigger asChild>
+                      <button
+                        type="button"
+                        className={cn(inputClass, 'flex items-center justify-between text-left', !completionValid && 'text-white/40')}
+                      >
+                        {completionValid ? format(completionValid, 'EEE d MMM yyyy') : 'Pick a date'}
+                        <CalendarIcon className="h-4 w-4 text-white/50 flex-shrink-0 ml-2" />
+                      </button>
+                    </PopoverTrigger>
+                    <PopoverContent align="start" className="w-auto p-0 z-[100] bg-elec-gray border-white/10">
+                      <Calendar
+                        mode="single"
+                        selected={completionValid}
+                        onSelect={(date) => {
+                          field.onChange(date ? format(date, 'yyyy-MM-dd') : '');
+                          setDateOpen(false);
+                        }}
+                        initialFocus
+                      />
+                    </PopoverContent>
+                  </Popover>
+                </FormItem>
+              )} />
+            </div>
             <FormField control={form.control} name="jobDescription" render={({ field }) => (
               <FormItem>
-                <label className="text-[11px] text-white uppercase tracking-wider mb-1.5 block">Description</label>
+                <label className={labelClass}>Description</label>
                 <FormControl>
-                  <textarea {...field} placeholder="Describe the work completed..." className={`${inputClass} min-h-[80px] resize-none`} rows={3} />
-                </FormControl>
-              </FormItem>
-            )} />
-            <FormField control={form.control} name="workStartDate" render={({ field }) => (
-              <FormItem>
-                <label className="text-[11px] text-white uppercase tracking-wider mb-1.5 block">Work Completion Date</label>
-                <FormControl>
-                  <input {...field} type="date" style={{ colorScheme: 'dark' }} className={inputClass} />
+                  <textarea {...field} placeholder="Describe the work completed — your client reads this on the invoice" className={`${inputClass} min-h-[100px] resize-none py-3`} rows={4} />
                 </FormControl>
               </FormItem>
             )} />

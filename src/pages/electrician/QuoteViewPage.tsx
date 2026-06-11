@@ -547,7 +547,7 @@ const QuoteViewPage = () => {
 
       {/* Sticky header */}
       <header className="sticky top-0 z-40 bg-background/95 backdrop-blur-md border-b border-white/[0.06]">
-        <div className="flex items-center h-12 px-4 gap-3 max-w-6xl mx-auto">
+        <div className="flex items-center h-12 px-4 lg:px-6 gap-3">
           <button
             onClick={() => navigate('/electrician/quotes')}
             className="h-10 w-10 -ml-2 flex items-center justify-center rounded-xl hover:bg-white/[0.05] active:scale-[0.95] touch-manipulation flex-shrink-0"
@@ -571,7 +571,7 @@ const QuoteViewPage = () => {
         </div>
       </header>
 
-      <div className="px-4 py-5 pb-10 max-w-6xl mx-auto lg:px-6 space-y-4">
+      <div className="px-4 py-5 pb-10 lg:px-6 space-y-4">
 
         {/* === HERO PANEL === */}
         <div className={cn('relative overflow-hidden rounded-3xl border border-white/[0.10] bg-gradient-to-b from-white/[0.07] to-white/[0.03] shadow-[0_12px_32px_rgba(0,0,0,0.4)]')}>
@@ -587,7 +587,7 @@ const QuoteViewPage = () => {
               </span>
             </div>
 
-            <p className="mt-4 text-[38px] sm:text-[46px] font-bold text-elec-yellow leading-none tracking-tight tabular-nums">
+            <p className="mt-3 sm:mt-4 text-[38px] sm:text-[46px] font-bold text-elec-yellow leading-none tracking-tight tabular-nums">
               {formatCurrency(quote.total)}
             </p>
             <p className="text-[17px] font-semibold text-white mt-3">{quote.client?.name || 'No client'}</p>
@@ -627,7 +627,7 @@ const QuoteViewPage = () => {
             </div>
 
             {/* Progress stepper */}
-            <div className="mt-5 pt-5 border-t border-white/[0.08]">
+            <div className="mt-4 pt-4 sm:mt-5 sm:pt-5 border-t border-white/[0.08]">
               <div className="flex items-start">
                 {timelineEvents.map((event, i) => (
                   <Fragment key={i}>
@@ -709,13 +709,18 @@ const QuoteViewPage = () => {
           </div>
         </div>
 
-        {/* === PANELS GRID === */}
-        <div className="lg:grid lg:grid-cols-[1fr_340px] lg:gap-4 lg:items-stretch space-y-4 lg:space-y-0">
-
-          {/* LEFT — job scope, line items, notes */}
-          <div className="flex flex-col gap-4">
+        {/* === JOB + META — two equal boxes when a job scope exists, meta row otherwise === */}
+        <div
+          className={cn(
+            'gap-4 space-y-4 lg:space-y-0',
+            quote.jobDetails?.description || quote.jobDetails?.location
+              ? 'lg:grid lg:grid-cols-2 lg:items-stretch'
+              : ''
+          )}
+        >
+          <div className={cn(!(quote.jobDetails?.description || quote.jobDetails?.location) && 'hidden')}>
             {(quote.jobDetails?.description || quote.jobDetails?.location) && (
-              <div className={cn(PANEL, 'p-4 sm:p-5')}>
+              <div className={cn(PANEL, 'p-4 sm:p-5 h-full')}>
                 <h2 className="text-[14px] font-semibold text-white mb-2">
                   {quote.jobDetails?.title || 'Job'}
                 </h2>
@@ -729,112 +734,15 @@ const QuoteViewPage = () => {
                 )}
               </div>
             )}
-            {quote.items && quote.items.length > 0 && (
-              <div className={cn(PANEL, 'p-4 sm:p-5 flex-1 flex flex-col')}>
-                <div className="flex items-center justify-between mb-1">
-                  <h2 className="text-[14px] font-semibold text-white">Line items</h2>
-                  <span className="text-[11px] text-white/65 px-2 py-0.5 rounded-md bg-white/[0.06] tabular-nums">
-                    {quote.items.length}
-                  </span>
-                </div>
-                <div className="divide-y divide-white/[0.07]">
-                  {quote.items.map((item) => (
-                    <div key={item.id} className="flex items-start justify-between gap-4 py-3.5">
-                      <div className="flex items-start gap-3 flex-1 min-w-0">
-                        <div className={cn(
-                          'w-1.5 h-1.5 rounded-full mt-[7px] flex-shrink-0',
-                          item.category === 'labour' ? 'bg-blue-400' :
-                          item.category === 'materials' ? 'bg-emerald-400' :
-                          item.category === 'equipment' ? 'bg-purple-400' : 'bg-white/70'
-                        )} />
-                        <div className="flex-1 min-w-0">
-                          <p className="text-[14px] text-white font-medium leading-snug">{item.description}</p>
-                          <p className="text-[12px] text-white/60 mt-1 tabular-nums">
-                            {item.quantity} {item.unit || 'units'} × {formatCurrency(item.unitPrice)}
-                          </p>
-                        </div>
-                      </div>
-                      <p className="text-[14px] font-semibold text-white flex-shrink-0 tabular-nums">
-                        {formatCurrency(item.totalPrice)}
-                      </p>
-                    </div>
-                  ))}
-                </div>
-
-                {/* Totals */}
-                <div className="mt-auto pt-4 border-t border-white/[0.10] space-y-2">
-                  <div className="flex justify-between text-[13px]">
-                    <span className="text-white/65">Subtotal</span>
-                    <span className="text-white/90 tabular-nums">{formatCurrency(quote.subtotal)}</span>
-                  </div>
-                  {quote.overhead > 0 && (
-                    <div className="flex justify-between text-[13px]">
-                      <span className="text-white/65">Overhead ({quote.settings?.overheadPercentage || 0}%)</span>
-                      <span className="text-white/90 tabular-nums">{formatCurrency(quote.overhead)}</span>
-                    </div>
-                  )}
-                  {quote.profit > 0 && (
-                    <div className="flex justify-between text-[13px]">
-                      <span className="text-white/65">Profit ({quote.settings?.profitPercentage || 0}%)</span>
-                      <span className="text-white/90 tabular-nums">{formatCurrency(quote.profit)}</span>
-                    </div>
-                  )}
-                  {quote.discountAmount > 0 && (
-                    <div className="flex justify-between text-[13px]">
-                      <span className="text-white/65">Discount</span>
-                      <span className="text-emerald-400 tabular-nums">−{formatCurrency(quote.discountAmount)}</span>
-                    </div>
-                  )}
-                  {quote.vatAmount > 0 && (
-                    <div className="flex justify-between text-[13px]">
-                      <span className="text-white/65">VAT ({quote.settings?.vatRate || 20}%)</span>
-                      <span className="text-white/90 tabular-nums">{formatCurrency(quote.vatAmount)}</span>
-                    </div>
-                  )}
-                  {liveTotals?.reverseCharge && (
-                    <div className="flex justify-between text-[13px]">
-                      <span className="text-white/65">VAT — reverse charge</span>
-                      <span className="text-white/90 tabular-nums">£0.00</span>
-                    </div>
-                  )}
-                  <div className="flex justify-between items-center mt-3 px-3.5 py-3 rounded-xl bg-elec-yellow/[0.08] border border-elec-yellow/[0.15]">
-                    <span className="text-[14px] font-bold text-white">Total</span>
-                    <span className="text-[22px] font-bold text-elec-yellow tabular-nums tracking-tight">
-                      {formatCurrency(quote.total)}
-                    </span>
-                  </div>
-                  {liveTotals && liveTotals.cisAmount > 0 && (
-                    <div className="pt-1 space-y-1.5">
-                      <div className="flex justify-between text-[13px]">
-                        <span className="text-white/65">CIS deduction ({liveTotals.cisRate}% of labour)</span>
-                        <span className="text-red-400 tabular-nums">−{formatCurrency(liveTotals.cisAmount)}</span>
-                      </div>
-                      <div className="flex justify-between text-[13px]">
-                        <span className="text-white font-semibold">Net payable after CIS</span>
-                        <span className="text-white font-semibold tabular-nums">{formatCurrency(liveTotals.netPayable)}</span>
-                      </div>
-                    </div>
-                  )}
-                  {liveTotals?.reverseCharge && (
-                    <p className="text-[11px] text-white/55 pt-1 leading-relaxed">
-                      Reverse charge: customer to account to HMRC for the VAT — {formatCurrency(liveTotals.notionalVat)} @ {quote.settings?.vatRate ?? 20}%.
-                    </p>
-                  )}
-                </div>
-              </div>
-            )}
-
-            {quote.notes && (
-              <div className={cn(PANEL, 'p-4 sm:p-5')}>
-                <h2 className="text-[14px] font-semibold text-white mb-2">Notes</h2>
-                <p className="text-[13px] text-white/80 whitespace-pre-line leading-relaxed">{quote.notes}</p>
-              </div>
-            )}
           </div>
-
-          {/* RIGHT — client, dates, your numbers, signature */}
-          <div className="space-y-4">
-
+          <div
+            className={cn(
+              'gap-4',
+              quote.jobDetails?.description || quote.jobDetails?.location
+                ? 'flex flex-col'
+                : 'grid lg:grid-cols-2 space-y-4 lg:space-y-0'
+            )}
+          >
             {/* Dates */}
             <div className={cn(PANEL, 'p-4 sm:p-5')}>
               <div className="grid grid-cols-3 gap-3">
@@ -926,11 +834,115 @@ const QuoteViewPage = () => {
           </div>
         </div>
 
+        {/* === LINE ITEMS — full width === */}
+            {quote.items && quote.items.length > 0 && (
+              <div className={cn(PANEL, 'p-4 sm:p-5')}>
+                <div className="flex items-center justify-between mb-1">
+                  <h2 className="text-[14px] font-semibold text-white">Line items</h2>
+                  <span className="text-[11px] text-white/65 px-2 py-0.5 rounded-md bg-white/[0.06] tabular-nums">
+                    {quote.items.length}
+                  </span>
+                </div>
+                <div className="divide-y divide-white/[0.07]">
+                  {quote.items.map((item) => (
+                    <div key={item.id} className="flex items-start justify-between gap-4 py-3.5">
+                      <div className="flex items-start gap-3 flex-1 min-w-0">
+                        <div className={cn(
+                          'w-1.5 h-1.5 rounded-full mt-[7px] flex-shrink-0',
+                          item.category === 'labour' ? 'bg-blue-400' :
+                          item.category === 'materials' ? 'bg-emerald-400' :
+                          item.category === 'equipment' ? 'bg-purple-400' : 'bg-white/70'
+                        )} />
+                        <div className="flex-1 min-w-0">
+                          <p className="text-[14px] text-white font-medium leading-snug">{item.description}</p>
+                          <p className="text-[12px] text-white/60 mt-1 tabular-nums">
+                            {item.quantity} {item.unit || 'units'} × {formatCurrency(item.unitPrice)}
+                          </p>
+                        </div>
+                      </div>
+                      <p className="text-[14px] font-semibold text-white flex-shrink-0 tabular-nums">
+                        {formatCurrency(item.totalPrice)}
+                      </p>
+                    </div>
+                  ))}
+                </div>
+
+                {/* Totals */}
+                <div className="mt-2 pt-4 border-t border-white/[0.10] space-y-2">
+                  <div className="flex justify-between text-[13px]">
+                    <span className="text-white/65">Subtotal</span>
+                    <span className="text-white/90 tabular-nums">{formatCurrency(quote.subtotal)}</span>
+                  </div>
+                  {quote.overhead > 0 && (
+                    <div className="flex justify-between text-[13px]">
+                      <span className="text-white/65">Overhead ({quote.settings?.overheadPercentage || 0}%)</span>
+                      <span className="text-white/90 tabular-nums">{formatCurrency(quote.overhead)}</span>
+                    </div>
+                  )}
+                  {quote.profit > 0 && (
+                    <div className="flex justify-between text-[13px]">
+                      <span className="text-white/65">Profit ({quote.settings?.profitPercentage || 0}%)</span>
+                      <span className="text-white/90 tabular-nums">{formatCurrency(quote.profit)}</span>
+                    </div>
+                  )}
+                  {quote.discountAmount > 0 && (
+                    <div className="flex justify-between text-[13px]">
+                      <span className="text-white/65">Discount</span>
+                      <span className="text-emerald-400 tabular-nums">−{formatCurrency(quote.discountAmount)}</span>
+                    </div>
+                  )}
+                  {quote.vatAmount > 0 && (
+                    <div className="flex justify-between text-[13px]">
+                      <span className="text-white/65">VAT ({quote.settings?.vatRate || 20}%)</span>
+                      <span className="text-white/90 tabular-nums">{formatCurrency(quote.vatAmount)}</span>
+                    </div>
+                  )}
+                  {liveTotals?.reverseCharge && (
+                    <div className="flex justify-between text-[13px]">
+                      <span className="text-white/65">VAT — reverse charge</span>
+                      <span className="text-white/90 tabular-nums">£0.00</span>
+                    </div>
+                  )}
+                  <div className="flex justify-between items-center mt-3 px-3.5 py-3 rounded-xl bg-elec-yellow/[0.08] border border-elec-yellow/[0.15]">
+                    <span className="text-[14px] font-bold text-white">Total</span>
+                    <span className="text-[22px] font-bold text-elec-yellow tabular-nums tracking-tight">
+                      {formatCurrency(quote.total)}
+                    </span>
+                  </div>
+                  {liveTotals && liveTotals.cisAmount > 0 && (
+                    <div className="pt-1 space-y-1.5">
+                      <div className="flex justify-between text-[13px]">
+                        <span className="text-white/65">CIS deduction ({liveTotals.cisRate}% of labour)</span>
+                        <span className="text-red-400 tabular-nums">−{formatCurrency(liveTotals.cisAmount)}</span>
+                      </div>
+                      <div className="flex justify-between text-[13px]">
+                        <span className="text-white font-semibold">Net payable after CIS</span>
+                        <span className="text-white font-semibold tabular-nums">{formatCurrency(liveTotals.netPayable)}</span>
+                      </div>
+                    </div>
+                  )}
+                  {liveTotals?.reverseCharge && (
+                    <p className="text-[11px] text-white/55 pt-1 leading-relaxed">
+                      Reverse charge: customer to account to HMRC for the VAT — {formatCurrency(liveTotals.notionalVat)} @ {quote.settings?.vatRate ?? 20}%.
+                    </p>
+                  )}
+                </div>
+              </div>
+            )}
+
+        {/* === NOTES === */}
+            {quote.notes && (
+              <div className={cn(PANEL, 'p-4 sm:p-5')}>
+                <h2 className="text-[14px] font-semibold text-white mb-2">Notes</h2>
+                <p className="text-[13px] text-white/80 whitespace-pre-line leading-relaxed">{quote.notes}</p>
+              </div>
+            )}
+
       </div>
 
       {/* === STICKY ACTION BAR — sticks inside the content column, respects sidebar === */}
       <div className="sticky bottom-0 z-40 bg-background/95 backdrop-blur-md border-t border-white/[0.08]">
-        <div className="flex gap-2 p-3 pb-[max(12px,env(safe-area-inset-bottom))] max-w-6xl mx-auto lg:px-6">
+        <div className="flex gap-2 p-3 pb-[max(12px,env(safe-area-inset-bottom))] lg:px-6">
           <div className="flex-1">
             <QuoteSendDropdown
               quote={quote}
@@ -943,6 +955,7 @@ const QuoteViewPage = () => {
               className="flex-1 h-12 rounded-xl bg-emerald-500 text-white text-[14px] font-semibold touch-manipulation active:scale-[0.97] transition-all"
             >
               Mark Accepted
+              <span className="sm:hidden font-bold tabular-nums"> · {formatCurrency(quote.total)}</span>
             </button>
           ) : canConvertToInvoice ? (
             <button
@@ -951,6 +964,7 @@ const QuoteViewPage = () => {
               className="flex-1 h-12 rounded-xl bg-elec-yellow text-black text-[14px] font-semibold touch-manipulation active:scale-[0.97] transition-all disabled:opacity-50"
             >
               Convert to Invoice
+              <span className="sm:hidden font-bold tabular-nums"> · {formatCurrency(quote.total)}</span>
             </button>
           ) : (
             <button
