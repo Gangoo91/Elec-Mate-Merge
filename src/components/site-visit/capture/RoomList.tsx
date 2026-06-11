@@ -42,7 +42,7 @@ export const RoomList = ({
     return (
       <div className="space-y-1.5">
         <div className="flex items-center justify-between mb-1">
-          <p className="text-xs font-medium text-white">Reorder Rooms</p>
+          <p className="text-[11.5px] font-medium text-white/65">Reorder Rooms</p>
           <Button
             variant="ghost"
             size="sm"

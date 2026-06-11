@@ -93,12 +93,12 @@ export const RoomPanel = ({
 
       {/* Room notes */}
       <div className="space-y-1">
-        <label className="text-xs font-medium text-white">Room Notes</label>
+        <label className="text-[11.5px] font-medium text-white/65">Room Notes</label>
         <Textarea
           value={room.notes || ''}
           onChange={(e) => onUpdateRoomNotes(room.id, e.target.value)}
           placeholder="Any notes about this room..."
-          className="touch-manipulation text-base min-h-[60px] focus:ring-2 focus:ring-elec-yellow/20 border-white/30 focus:border-yellow-500"
+          className="min-h-[60px] touch-manipulation text-base rounded-xl border-white/[0.12] bg-[hsl(0_0%_9%)] text-white placeholder:text-white/40 focus:border-elec-yellow/50 focus:ring-elec-yellow/20"
           autoCapitalize="sentences"
           spellCheck
           enterKeyHint="done"

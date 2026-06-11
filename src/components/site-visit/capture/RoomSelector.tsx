@@ -41,7 +41,7 @@ export const RoomSelector = ({ existingRooms, onAddRoom, propertyType }: RoomSel
 
   return (
     <div className="space-y-2">
-      <label className="text-xs font-medium text-white">Add room — tap to add</label>
+      <label className="text-[11.5px] font-medium text-white/65">Add room — tap to add</label>
       <div className="flex flex-wrap gap-2">
         {availableTypes.map((rt) => (
           <button
@@ -78,7 +78,7 @@ export const RoomSelector = ({ existingRooms, onAddRoom, propertyType }: RoomSel
               if (e.key === 'Enter') handleAddCustom();
             }}
             placeholder="e.g. Boot room, Plant room 2"
-            className="h-11 flex-1 text-base touch-manipulation border-white/30 focus:border-yellow-500 focus:ring-yellow-500"
+            className="h-11 flex-1 text-base touch-manipulation rounded-xl border-white/[0.12] bg-[hsl(0_0%_9%)] text-white placeholder:text-white/40 focus:border-elec-yellow/50 focus:ring-elec-yellow/20"
             autoCapitalize="words"
             autoComplete="off"
             enterKeyHint="done"

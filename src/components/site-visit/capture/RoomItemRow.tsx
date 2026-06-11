@@ -76,7 +76,7 @@ export const RoomItemRow = ({ item, roomType, onUpdate, onRemove }: RoomItemRowP
               const val = parseInt(e.target.value) || 1;
               onUpdate({ quantity: Math.max(1, val) });
             }}
-            className="h-11 w-14 text-center text-base text-white touch-manipulation border-white/30 focus:border-yellow-500 focus:ring-yellow-500 [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none"
+            className="h-11 w-14 text-center text-base touch-manipulation rounded-xl border-white/[0.12] bg-[hsl(0_0%_9%)] text-white placeholder:text-white/40 focus:border-elec-yellow/50 focus:ring-elec-yellow/20 [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none"
             enterKeyHint="done"
           />
           <Button
@@ -106,7 +106,7 @@ export const RoomItemRow = ({ item, roomType, onUpdate, onRemove }: RoomItemRowP
           value={item.itemDescription || ''}
           onChange={(e) => onUpdate({ itemDescription: e.target.value })}
           placeholder="What is it? e.g. Dado trunking adaptor"
-          className="h-11 text-base touch-manipulation border-white/30 focus:border-yellow-500 focus:ring-yellow-500"
+          className="h-11 text-base touch-manipulation rounded-xl border-white/[0.12] bg-[hsl(0_0%_9%)] text-white placeholder:text-white/40 focus:border-elec-yellow/50 focus:ring-elec-yellow/20"
           autoCapitalize="sentences"
           autoComplete="off"
           enterKeyHint="done"
@@ -131,7 +131,7 @@ export const RoomItemRow = ({ item, roomType, onUpdate, onRemove }: RoomItemRowP
           value={item.notes || ''}
           onChange={(e) => onUpdate({ notes: e.target.value })}
           placeholder="Additional notes for this item..."
-          className="touch-manipulation text-base min-h-[60px] focus:ring-2 focus:ring-elec-yellow/20 border-white/30 focus:border-yellow-500"
+          className="min-h-[60px] touch-manipulation text-base rounded-xl border-white/[0.12] bg-[hsl(0_0%_9%)] text-white placeholder:text-white/40 focus:border-elec-yellow/50 focus:ring-elec-yellow/20"
           autoCapitalize="sentences"
           spellCheck
           enterKeyHint="done"
