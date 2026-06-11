@@ -2,7 +2,6 @@ import React, { useState, useCallback } from 'react';
 import { useCompanyProfile } from '@/hooks/useCompanyProfile';
 import { useNotifications } from '@/components/notifications/NotificationProvider';
 import { motion } from 'framer-motion';
-import { saveOfficeLocation } from '@/services/settingsService';
 import {
   ListCard,
   ListRow,
@@ -95,18 +94,9 @@ const BusinessTab = () => {
   const handleSave = useCallback(
     async (data: Record<string, unknown>) => {
       try {
-        if (data.office_lat !== undefined && data.office_lng !== undefined) {
-          const lat = data.office_lat as number | null;
-          const lng = data.office_lng as number | null;
-          if (lat !== null && lng !== null) {
-            await saveOfficeLocation({
-              lat,
-              lng,
-              address: (data.company_address as string) || null,
-            });
-          }
-        }
-
+        // office_lat/office_lng are columns on company_profiles and persist via
+        // saveCompanyProfile below — a separate saveOfficeLocation call would
+        // race the profile insert on first save (unique user_id).
         const success = await saveCompanyProfile(data);
         if (success) {
           addNotification({

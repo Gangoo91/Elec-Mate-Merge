@@ -1,8 +1,8 @@
 import { useState, useEffect, useRef } from 'react';
-import { RefreshCw, Loader2, Upload, Image as ImageIcon, Trash2, RotateCw, Plus } from 'lucide-react';
+import { RefreshCw, Loader2, Upload, Image as ImageIcon, Trash2 } from 'lucide-react';
 import {
-  getSetting,
-  setSetting,
+  getNotificationEmail,
+  setNotificationEmail as saveNotificationEmail,
   getCompanySettings,
   saveCompanySettings,
   getBrandingSettings,
@@ -11,14 +11,6 @@ import {
   type CompanySettings,
   type BrandingSettings,
 } from '@/services/settingsService';
-import {
-  useTeamMembers,
-  useInviteTeamMember,
-  useRemoveTeamMember,
-  useResendInvitation,
-  type TeamMemberRole,
-} from '@/hooks/useTeamMembers';
-import { InviteTeamMemberDialog } from '../dialogs/InviteTeamMemberDialog';
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
 import { Switch } from '@/components/ui/switch';
@@ -36,7 +28,6 @@ import { useIsMobile } from '@/hooks/use-mobile';
 import { supabase } from '@/integrations/supabase/client';
 import { permissionsList, rolePermissions, type TeamRole } from '@/data/employerMockData';
 import { StripeConnectCard } from '../StripeConnectCard';
-import VoiceSettingsPanel from '../VoiceSettingsPanel';
 import {
   PageFrame,
   PageHero,
@@ -46,9 +37,7 @@ import {
   ListBody,
   ListRow,
   Pill,
-  Avatar as EditorialAvatar,
   LoadingBlocks,
-  EmptyState,
   Eyebrow,
   Divider,
   PrimaryButton,
@@ -99,12 +88,9 @@ export function SettingsSection() {
   });
   const [uploadingLogo, setUploadingLogo] = useState(false);
   const [savingBranding, setSavingBranding] = useState(false);
-
-  const [showInviteDialog, setShowInviteDialog] = useState(false);
-  const { data: teamMembers = [], isLoading: teamLoading } = useTeamMembers();
-  const inviteTeamMember = useInviteTeamMember();
-  const removeTeamMember = useRemoveTeamMember();
-  const resendInvitation = useResendInvitation();
+  // Guards against saving default branding values over real ones before
+  // the profile has loaded (would null the logo / reset colours)
+  const [brandingLoaded, setBrandingLoaded] = useState(false);
 
   const [dirty, setDirty] = useState(false);
 
@@ -169,7 +155,7 @@ export function SettingsSection() {
   };
 
   useEffect(() => {
-    getSetting('business_notification_email').then((value) => {
+    getNotificationEmail().then((value) => {
       if (value) setNotificationEmail(value);
     });
     getCompanySettings().then((settings) => {
@@ -178,19 +164,21 @@ export function SettingsSection() {
     });
     getBrandingSettings().then((settings) => {
       setBrandingSettings(settings);
+      setBrandingLoaded(true);
     });
   }, []);
 
   const refresh = async () => {
     setLoadingCompany(true);
     const [emailVal, company, branding] = await Promise.all([
-      getSetting('business_notification_email'),
+      getNotificationEmail(),
       getCompanySettings(),
       getBrandingSettings(),
     ]);
     if (emailVal) setNotificationEmail(emailVal);
     setCompanySettings(company);
     setBrandingSettings(branding);
+    setBrandingLoaded(true);
     setLoadingCompany(false);
     setDirty(false);
     toast({ title: 'Refreshed', description: 'Settings reloaded.' });
@@ -208,7 +196,7 @@ export function SettingsSection() {
 
   const handleSaveNotificationEmail = async () => {
     setSavingEmail(true);
-    const success = await setSetting('business_notification_email', notificationEmail);
+    const success = await saveNotificationEmail(notificationEmail);
     setSavingEmail(false);
     if (success) {
       toast({ title: 'Saved', description: 'Notification email updated successfully.' });
@@ -257,6 +245,7 @@ export function SettingsSection() {
   };
 
   const handleSaveBranding = async () => {
+    if (!brandingLoaded) return;
     setSavingBranding(true);
     const success = await saveBrandingSettings(brandingSettings);
     setSavingBranding(false);
@@ -293,7 +282,7 @@ export function SettingsSection() {
     setSavingBranding(true);
     const [companyOk, brandingOk] = await Promise.all([
       saveCompanySettings(companySettings),
-      saveBrandingSettings(brandingSettings),
+      brandingLoaded ? saveBrandingSettings(brandingSettings) : Promise.resolve(true),
     ]);
     setSavingCompany(false);
     setSavingBranding(false);
@@ -307,14 +296,6 @@ export function SettingsSection() {
         variant: 'destructive',
       });
     }
-  };
-
-  const handleInviteTeamMember = async (data: {
-    email: string;
-    name?: string;
-    role: TeamMemberRole;
-  }) => {
-    await inviteTeamMember.mutateAsync(data);
   };
 
   const integrations = [
@@ -367,21 +348,37 @@ export function SettingsSection() {
     });
   };
 
-  const getInitials = (member: { name?: string; email: string }) =>
-    (member.name || member.email)
-      .split(/[ @]/)
-      .map((n) => n[0]?.toUpperCase() || '')
-      .filter(Boolean)
-      .slice(0, 2)
-      .join('');
-
   const notificationItems = [
-    { key: 'emailAlerts', label: 'Email alerts', description: 'Receive important updates via email' },
-    { key: 'certificationReminders', label: 'Certification reminders', description: 'Get notified when certifications are expiring' },
-    { key: 'jobUpdates', label: 'Job updates', description: 'Notifications about job progress and completions' },
-    { key: 'invoiceAlerts', label: 'Invoice alerts', description: 'Payment reminders and overdue notices' },
-    { key: 'tenderDeadlines', label: 'Tender deadlines', description: 'Reminders for upcoming tender deadlines' },
-    { key: 'safetyAlerts', label: 'Safety alerts', description: 'Immediate notifications for safety incidents' },
+    {
+      key: 'emailAlerts',
+      label: 'Email alerts',
+      description: 'Receive important updates via email',
+    },
+    {
+      key: 'certificationReminders',
+      label: 'Certification reminders',
+      description: 'Get notified when certifications are expiring',
+    },
+    {
+      key: 'jobUpdates',
+      label: 'Job updates',
+      description: 'Notifications about job progress and completions',
+    },
+    {
+      key: 'invoiceAlerts',
+      label: 'Invoice alerts',
+      description: 'Payment reminders and overdue notices',
+    },
+    {
+      key: 'tenderDeadlines',
+      label: 'Tender deadlines',
+      description: 'Reminders for upcoming tender deadlines',
+    },
+    {
+      key: 'safetyAlerts',
+      label: 'Safety alerts',
+      description: 'Immediate notifications for safety incidents',
+    },
   ] as const;
 
   if (loadingCompany) {
@@ -415,11 +412,7 @@ export function SettingsSection() {
 
         {/* General */}
         <ListCard>
-          <ListCardHeader
-            tone="yellow"
-            title="General"
-            meta={<Pill tone="yellow">Company</Pill>}
-          />
+          <ListCardHeader tone="yellow" title="General" meta={<Pill tone="yellow">Company</Pill>} />
           <ListBody>
             <ListRow
               title="Company name"
@@ -636,18 +629,6 @@ export function SettingsSection() {
           </ListBody>
         </ListCard>
 
-        {/* Voice Assistant */}
-        <ListCard>
-          <ListCardHeader
-            tone="indigo"
-            title="Voice assistant"
-            meta={<Pill tone="indigo">Mate</Pill>}
-          />
-          <div className="p-5 sm:p-6">
-            <VoiceSettingsPanel />
-          </div>
-        </ListCard>
-
         {/* Notifications */}
         <ListCard>
           <ListCardHeader
@@ -703,16 +684,12 @@ export function SettingsSection() {
             <ListRow
               title="Change password"
               subtitle="Update your sign-in credentials"
-              trailing={
-                <SecondaryButton>Change</SecondaryButton>
-              }
+              trailing={<SecondaryButton>Change</SecondaryButton>}
             />
             <ListRow
               title="Two-factor authentication"
               subtitle="Add an extra step at sign-in"
-              trailing={
-                <SecondaryButton>Enable</SecondaryButton>
-              }
+              trailing={<SecondaryButton>Enable</SecondaryButton>}
             />
             <ListRow
               title="Session timeout"
@@ -751,9 +728,7 @@ export function SettingsSection() {
             <ListRow
               title="API keys"
               subtitle="Manage developer access tokens"
-              trailing={
-                <SecondaryButton>Manage</SecondaryButton>
-              }
+              trailing={<SecondaryButton>Manage</SecondaryButton>}
             />
           </ListBody>
         </ListCard>
@@ -773,16 +748,12 @@ export function SettingsSection() {
                 title={
                   <span className="inline-flex items-center gap-2">
                     {integration.name}
-                    {integration.connected && (
-                      <Pill tone="emerald">Connected</Pill>
-                    )}
+                    {integration.connected && <Pill tone="emerald">Connected</Pill>}
                   </span>
                 }
                 subtitle={integration.description}
                 trailing={
-                  <SecondaryButton>
-                    {integration.connected ? 'Manage' : 'Connect'}
-                  </SecondaryButton>
+                  <SecondaryButton>{integration.connected ? 'Manage' : 'Connect'}</SecondaryButton>
                 }
               />
             ))}
@@ -820,67 +791,6 @@ export function SettingsSection() {
               />
             ))}
           </ListBody>
-        </ListCard>
-
-        {/* Team — Members */}
-        <ListCard>
-          <ListCardHeader
-            tone="cyan"
-            title="Team members"
-            meta={<Pill tone="cyan">{teamMembers.length}</Pill>}
-            action="Invite"
-            onAction={() => setShowInviteDialog(true)}
-          />
-          {teamLoading ? (
-            <div className="p-6">
-              <LoadingBlocks />
-            </div>
-          ) : teamMembers.length === 0 ? (
-            <EmptyState
-              title="No team members yet"
-              description="Invite operatives, supervisors and PMs to access the dashboard."
-              action="Invite team member"
-              onAction={() => setShowInviteDialog(true)}
-            />
-          ) : (
-            <ListBody>
-              {teamMembers.map((member) => (
-                <ListRow
-                  key={member.id}
-                  lead={<EditorialAvatar initials={getInitials(member)} />}
-                  title={member.name || member.email}
-                  subtitle={member.email}
-                  trailing={
-                    <>
-                      <Pill tone={member.status === 'Pending' ? 'amber' : 'emerald'}>
-                        {member.status === 'Pending' ? 'Pending' : member.role}
-                      </Pill>
-                      {member.status === 'Pending' && (
-                        <IconButton
-                          aria-label="Resend invitation"
-                          onClick={() => resendInvitation.mutate(member.id)}
-                          disabled={resendInvitation.isPending}
-                        >
-                          <RotateCw
-                            className={`h-4 w-4 ${resendInvitation.isPending ? 'animate-spin' : ''}`}
-                          />
-                        </IconButton>
-                      )}
-                      {member.role !== 'Owner' && (
-                        <IconButton
-                          aria-label="Remove member"
-                          onClick={() => removeTeamMember.mutate(member.id)}
-                          disabled={removeTeamMember.isPending}
-                        >
-                          <Trash2 className="h-4 w-4" />
-                        </IconButton>
-                      )}
-                    </>
-                  }
-                />
-              ))}
-            </ListBody>
-          )}
         </ListCard>
 
         {/* Team — Roles & permissions */}
@@ -1002,16 +912,12 @@ export function SettingsSection() {
             <ListRow
               title="Subscription"
               subtitle="Manage plan and payment methods"
-              trailing={
-                <SecondaryButton>Manage</SecondaryButton>
-              }
+              trailing={<SecondaryButton>Manage</SecondaryButton>}
             />
             <ListRow
               title="Invoices"
               subtitle="View and download past invoices"
-              trailing={
-                <SecondaryButton>View</SecondaryButton>
-              }
+              trailing={<SecondaryButton>View</SecondaryButton>}
             />
             <ListRow
               title="Save payment details"
@@ -1036,9 +942,7 @@ export function SettingsSection() {
             <ListRow
               title="Export all data"
               subtitle="Download a JSON archive of every record"
-              trailing={
-                <SecondaryButton>Export</SecondaryButton>
-              }
+              trailing={<SecondaryButton>Export</SecondaryButton>}
             />
             <ListRow
               title="Delete account"
@@ -1052,13 +956,6 @@ export function SettingsSection() {
             />
           </ListBody>
         </ListCard>
-
-        <InviteTeamMemberDialog
-          open={showInviteDialog}
-          onOpenChange={setShowInviteDialog}
-          onInvite={handleInviteTeamMember}
-          isInviting={inviteTeamMember.isPending}
-        />
       </PageFrame>
 
       {/* Sticky save bar */}
@@ -1073,10 +970,7 @@ export function SettingsSection() {
             </div>
             <div className="shrink-0 flex items-center gap-2">
               <SecondaryButton onClick={refresh}>Discard</SecondaryButton>
-              <PrimaryButton
-                onClick={handleSaveAll}
-                disabled={savingCompany || savingBranding}
-              >
+              <PrimaryButton onClick={handleSaveAll} disabled={savingCompany || savingBranding}>
                 {savingCompany || savingBranding ? (
                   <Loader2 className="h-4 w-4 mr-2 animate-spin" />
                 ) : null}

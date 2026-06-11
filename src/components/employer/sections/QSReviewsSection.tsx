@@ -89,14 +89,14 @@ export function QSReviewsSection() {
             </p>
             <p className="text-xs text-white/50 max-w-sm mx-auto">
               When a team member submits an EICR, EIC or Minor Works certificate for Qualifying
-              Supervisor sign-off, it will appear here. To get started, add your team in Settings
-              and assign someone the QS role — team members link automatically when they sign in
-              with the email on their roster entry.
+              Supervisor sign-off, it will appear here. To get started, add your team in the Team
+              section and assign someone the QS role — team members link automatically when they
+              sign in with the email on their roster entry.
             </p>
           </div>
           <button
             type="button"
-            onClick={() => navigate('/employer?section=settings')}
+            onClick={() => navigate('/employer?section=team')}
             className="h-11 px-5 rounded-lg text-sm font-semibold bg-elec-yellow/15 border border-elec-yellow/30 text-elec-yellow touch-manipulation active:scale-[0.98]"
           >
             Set up your team

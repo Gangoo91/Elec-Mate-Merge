@@ -111,6 +111,18 @@ export const useCompanyProfile = () => {
             .insert(cleanProfileData)
             .select()
             .single();
+
+          // 23505: a concurrent save (or another surface, e.g. employer
+          // Settings) created the row first — user_id is unique, so apply
+          // this save as an update instead of failing.
+          if (result.error?.code === '23505') {
+            result = await supabase
+              .from('company_profiles')
+              .update(cleanProfileData)
+              .eq('user_id', user.id)
+              .select()
+              .single();
+          }
         }
 
         if (result.error) {
