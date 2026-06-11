@@ -5,6 +5,7 @@ import { storageGetJSONSync, storageRemoveSync } from '@/utils/storage';
 import { ArrowLeft } from 'lucide-react';
 import { QuoteWizard } from '@/components/electrician/quote-builder/QuoteWizard';
 import { useQuoteStorage } from '@/hooks/useQuoteStorage';
+import { toast } from '@/hooks/use-toast';
 import { useState, useEffect } from 'react';
 import type { Quote } from '@/types/quote';
 import { VoiceFormProvider } from '@/contexts/VoiceFormContext';
@@ -128,6 +129,18 @@ const QuoteBuilderCreate = () => {
       if (parsed) {
         setSiteVisitContext(parsed.siteVisitData);
         storageRemoveSync(siteVisitSessionId);
+        // Surface unpriced lines to the electrician here — item notes were
+        // deliberately not used as a flag because they print on the client PDF
+        const unpriced = (parsed.siteVisitData?.materials || []).filter(
+          (m: { unitPrice?: number }) => !m.unitPrice
+        ).length;
+        if (unpriced > 0) {
+          toast({
+            title: `${unpriced} item${unpriced === 1 ? '' : 's'} need${unpriced === 1 ? 's' : ''} a price`,
+            description:
+              'These came through from the site visit without live pricing — set them in the Items step before sending.',
+          });
+        }
       }
     }
 
@@ -280,7 +293,8 @@ const QuoteBuilderCreate = () => {
               )}
             </p>
             <p className="text-[12px] text-white mt-0.5">
-              {Array.isArray(costContext.materials) ? costContext.materials.length : 0} materials pre-filled
+              {Array.isArray(costContext.materials) ? costContext.materials.length : 0} materials
+              pre-filled
               {selectedTier && (
                 <span className="text-white/55">
                   {' '}
@@ -297,7 +311,9 @@ const QuoteBuilderCreate = () => {
             className="mx-4 mt-4 px-4 py-3 rounded-xl bg-blue-500/[0.06] border border-blue-500/15"
           >
             <p className="text-[13px] font-semibold text-blue-400">Certificate Data Imported</p>
-            <p className="text-[12px] text-white mt-0.5">Client details pre-filled from certificate</p>
+            <p className="text-[12px] text-white mt-0.5">
+              Client details pre-filled from certificate
+            </p>
           </motion.div>
         )}
         {siteVisitContext && (
@@ -326,8 +342,13 @@ const QuoteBuilderCreate = () => {
             animate={{ opacity: 1, y: 0 }}
             className="mx-4 mt-4 px-4 py-3 rounded-xl bg-amber-500/[0.06] border border-amber-500/15"
           >
-            <p className="text-[13px] font-semibold text-amber-400">Materials Imported from {materialsContext.sourceLabel}</p>
-            <p className="text-[12px] text-white mt-0.5">{materialsContext.materials.length} {materialsContext.materials.length === 1 ? 'item' : 'items'} pre-filled</p>
+            <p className="text-[13px] font-semibold text-amber-400">
+              Materials Imported from {materialsContext.sourceLabel}
+            </p>
+            <p className="text-[12px] text-white mt-0.5">
+              {materialsContext.materials.length}{' '}
+              {materialsContext.materials.length === 1 ? 'item' : 'items'} pre-filled
+            </p>
           </motion.div>
         )}
         {duplicateFrom && (

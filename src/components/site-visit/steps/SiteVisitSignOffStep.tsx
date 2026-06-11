@@ -66,7 +66,8 @@ export const SiteVisitSignOffStep = ({
 
     // Start polling when fallback (send-link) is visible
     if (showFallback && !pollRef.current) {
-      pollRef.current = setInterval(checkRemoteSignature, 10_000);
+      // 3s — at 10s the electrician stood watching a dead screen (audit P1)
+      pollRef.current = setInterval(checkRemoteSignature, 3_000);
     }
 
     return () => {
@@ -262,21 +263,26 @@ export const SiteVisitSignOffStep = ({
         <>
           {/* Client name input */}
           <div className="space-y-1.5">
-            <label className="text-[11.5px] font-medium text-white/65">Client name</label>
+            <label className="text-[11.5px] font-medium text-white/65">
+              Client name <span className="text-elec-yellow">*</span>
+            </label>
             <Input
               value={clientName}
               onChange={(e) => setClientName(e.target.value)}
-              placeholder="Enter client name"
-              className="h-11 touch-manipulation rounded-xl border-white/[0.08] bg-[hsl(0_0%_10%)] text-[14px] text-white placeholder:text-white/40 focus:border-elec-yellow/40 focus:ring-elec-yellow/20"
+              placeholder="Who's signing — appears on the PDF"
+              className="h-11 touch-manipulation rounded-xl border-white/[0.08] bg-[hsl(0_0%_10%)] text-base text-white placeholder:text-white/40 focus:border-elec-yellow/40 focus:ring-elec-yellow/20"
+              autoCapitalize="words"
+              autoComplete="off"
+              enterKeyHint="done"
             />
           </div>
 
-          {/* Signature capture */}
+          {/* Signature capture — 280px: gloved fingers need room (audit P1) */}
           <SignatureCapture
             onCapture={handleSignatureCapture}
             variant="dark"
             showActions={false}
-            height={180}
+            height={280}
           />
 
           {/* Confirm & Sign button */}
@@ -298,19 +304,21 @@ export const SiteVisitSignOffStep = ({
             )}
           </Button>
 
-          {/* Fallback: Send link instead */}
+          {/* Equal-weight alternative — half of sign-offs happen with no
+              client on site; this was a buried underline link (audit P2) */}
           {!showFallback ? (
-            <button
+            <Button
               onClick={() => setShowFallback(true)}
-              className="w-full text-center text-sm text-white underline underline-offset-2 py-2 touch-manipulation"
+              variant="outline"
+              className="h-12 w-full touch-manipulation rounded-xl border-white/[0.15] bg-white/[0.04] text-[14px] font-medium text-white transition-transform hover:bg-white/[0.08] active:scale-[0.98]"
             >
-              <Send className="h-3.5 w-3.5 inline mr-1.5" />
-              Client not present? Send a link instead
-            </button>
+              <Send className="mr-2 h-4 w-4" />
+              Client not here? Send a signing link
+            </Button>
           ) : (
-            <div className="space-y-2 pt-2 border-t border-white/[0.06]">
-              <p className="text-xs text-white text-center">
-                Send a link for the client to sign remotely
+            <div className="space-y-2 border-t border-white/[0.06] pt-3">
+              <p className="text-center text-xs text-white/65">
+                Send a link for the client to sign remotely — this page updates the moment they sign
               </p>
               <ScopeShareButton visit={visit} assumptions={assumptions} />
             </div>

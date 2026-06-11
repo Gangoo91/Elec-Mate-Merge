@@ -65,8 +65,7 @@ export const useQuoteBuilder = (onQuoteGenerated?: () => void, initialQuote?: Qu
   const addItem = useCallback((item: Omit<QuoteItem, 'id' | 'totalPrice'>) => {
     const base = item.quantity * item.unitPrice;
     const adj = item.itemAdjustmentPercent;
-    const totalPrice =
-      typeof adj === 'number' && adj !== 0 ? base * (1 + adj / 100) : base;
+    const totalPrice = typeof adj === 'number' && adj !== 0 ? base * (1 + adj / 100) : base;
     const newItem: QuoteItem = {
       ...item,
       id: uuidv4(),
@@ -88,8 +87,7 @@ export const useQuoteBuilder = (onQuoteGenerated?: () => void, initialQuote?: Qu
         const merged = { ...item, ...updates };
         const base = (merged.quantity || 0) * (merged.unitPrice || 0);
         const adj = merged.itemAdjustmentPercent;
-        merged.totalPrice =
-          typeof adj === 'number' && adj !== 0 ? base * (1 + adj / 100) : base;
+        merged.totalPrice = typeof adj === 'number' && adj !== 0 ? base * (1 + adj / 100) : base;
         return merged;
       }),
       updatedAt: new Date(),
@@ -127,7 +125,9 @@ export const useQuoteBuilder = (onQuoteGenerated?: () => void, initialQuote?: Qu
   // Cloud auto-save — upserts draft to Supabase every 10s when data changes
   const lastSavedRef = useRef<string>('');
   const isPersistingDraftRef = useRef(false);
-  const [cloudSaveStatus, setCloudSaveStatus] = useState<'idle' | 'saving' | 'saved' | 'error'>('idle');
+  const [cloudSaveStatus, setCloudSaveStatus] = useState<'idle' | 'saving' | 'saved' | 'error'>(
+    'idle'
+  );
 
   const getDraftSnapshot = useCallback(
     () =>
@@ -176,6 +176,7 @@ export const useQuoteBuilder = (onQuoteGenerated?: () => void, initialQuote?: Qu
         total: finalQuote.total || 0,
         status: 'draft',
         notes: quote.notes || null,
+        site_visit_id: quote.site_visit_id || null,
         updated_at: new Date().toISOString(),
       };
 
@@ -271,11 +272,19 @@ export const useQuoteBuilder = (onQuoteGenerated?: () => void, initialQuote?: Qu
 
       // Validate quote before generation — only require client name and at least one item
       if (!finalQuote.client?.name) {
-        toast({ title: 'Missing Client', description: 'Please enter a client name.', variant: 'destructive' });
+        toast({
+          title: 'Missing Client',
+          description: 'Please enter a client name.',
+          variant: 'destructive',
+        });
         return;
       }
       if (!finalQuote.items || finalQuote.items.length === 0) {
-        toast({ title: 'No Items', description: 'Please add at least one item to the quote.', variant: 'destructive' });
+        toast({
+          title: 'No Items',
+          description: 'Please add at least one item to the quote.',
+          variant: 'destructive',
+        });
         return;
       }
 
@@ -379,6 +388,19 @@ export const useQuoteBuilder = (onQuoteGenerated?: () => void, initialQuote?: Qu
 
       if (saved) {
         logger.api('quotes/save', requestId).success({ quoteNumber: updatedQuote.quoteNumber });
+
+        // Backlink the source site visit: visit ↔ quote both ways, and mark
+        // the scope as sent so the visits hub reflects reality
+        if (updatedQuote.site_visit_id && updatedQuote.id) {
+          void supabase
+            .from('site_visits')
+            .update({ quote_id: updatedQuote.id, status: 'scope_sent' })
+            .eq('id', updatedQuote.site_visit_id)
+            .then(({ error }) => {
+              if (error) console.warn('[QuoteBuilder] Site-visit backlink failed:', error.message);
+            });
+        }
+
         const url = pdfDownloadUrl;
         const num = pdfQuoteNumber;
         toast({

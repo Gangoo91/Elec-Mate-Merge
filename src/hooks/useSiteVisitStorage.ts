@@ -1,7 +1,11 @@
 import { useState, useCallback } from 'react';
 import { supabase } from '@/integrations/supabase/client';
 import { useToast } from '@/hooks/use-toast';
-import { transformScopeToQuoteItems } from '@/utils/scopeToQuoteTransformer';
+import {
+  transformAnalysisToQuoteItems,
+  transformScopeToQuoteItems,
+} from '@/utils/scopeToQuoteTransformer';
+import type { SurveyAnalysisResult } from '@/types/surveyAnalysis';
 import { storageSetJSONSync } from '@/utils/storage';
 import type {
   SiteVisit,
@@ -32,7 +36,7 @@ interface UseSiteVisitStorageReturn {
   updateStatus: (id: string, status: SiteVisitStatus) => Promise<boolean>;
   lockScopeBaseline: (visit: SiteVisit) => Promise<ScopeBaseline | null>;
   generatePreStartChecklistForVisit: (visit: SiteVisit) => Promise<PreStartChecklist | null>;
-  sendToQuoteWizard: (visit: SiteVisit) => string;
+  sendToQuoteWizard: (visit: SiteVisit, analysis?: SurveyAnalysisResult | null) => string;
   ensureCustomer: (visit: SiteVisit) => Promise<string | null>;
   uploadSiteVisitPhotos: (visit: SiteVisit) => Promise<SiteVisitPhoto[]>;
   createPhotoProject: (visit: SiteVisit) => Promise<string | null>;
@@ -52,110 +56,22 @@ export function useSiteVisitStorage(): UseSiteVisitStorageReturn {
     async (visit: SiteVisit): Promise<string | null> => {
       setIsSaving(true);
       try {
-        const {
-          data: { user },
-        } = await supabase.auth.getUser();
-        if (!user) throw new Error('Not authenticated');
+        // Atomic RPC: parent + all children replaced in ONE transaction.
+        // The old client-side delete-children-then-reinsert could permanently
+        // destroy rooms/photos if the connection dropped mid-save (ELE-1069).
+        // Blob photo URLs are excluded server-side.
+        const { data: visitId, error } = await supabase.rpc('save_site_visit_atomic', {
+          p_visit: JSON.parse(JSON.stringify(visit)),
+        });
 
-        // Upsert site_visit
-        const { data: visitRow, error: visitError } = await supabase
-          .from('site_visits')
-          .upsert({
-            id: visit.id,
-            user_id: user.id,
-            customer_id: visit.customerId || null,
-            property_address: visit.propertyAddress || null,
-            property_postcode: visit.propertyPostcode || null,
-            property_type: visit.propertyType || null,
-            access_notes: visit.accessNotes || null,
-            status: visit.status,
-            quote_id: visit.quoteId || null,
-            photo_project_id: visit.photoProjectId || null,
-          })
-          .select('id')
-          .single();
-
-        if (visitError) throw visitError;
-        const visitId = visitRow.id;
-
-        // Delete existing children and re-insert (simpler than diffing)
-        await supabase.from('site_visit_rooms').delete().eq('site_visit_id', visitId);
-        await supabase.from('site_visit_photos').delete().eq('site_visit_id', visitId);
-        await supabase.from('site_visit_prompts').delete().eq('site_visit_id', visitId);
-
-        // Insert rooms + items
-        for (const room of visit.rooms) {
-          const { data: roomRow, error: roomError } = await supabase
-            .from('site_visit_rooms')
-            .insert({
-              id: room.id,
-              site_visit_id: visitId,
-              room_name: room.roomName,
-              room_type: room.roomType,
-              sort_order: room.sortOrder,
-              notes: room.notes || null,
-            })
-            .select('id')
-            .single();
-
-          if (roomError) throw roomError;
-
-          if (room.items.length > 0) {
-            const itemRows = room.items.map((item) => ({
-              id: item.id,
-              room_id: roomRow.id,
-              item_type: item.itemType,
-              item_description: item.itemDescription,
-              quantity: item.quantity,
-              unit: item.unit,
-              notes: item.notes || null,
-              sort_order: item.sortOrder,
-            }));
-            const { error: itemsError } = await supabase.from('site_visit_items').insert(itemRows);
-            if (itemsError) throw itemsError;
-          }
-        }
-
-        // Insert photos (only those with persistent URLs — blob URLs are skipped)
-        const persistedPhotos = visit.photos.filter((p) => !p.photoUrl.startsWith('blob:'));
-        if (persistedPhotos.length > 0) {
-          const photoRows = persistedPhotos.map((p) => ({
-            id: p.id,
-            site_visit_id: visitId,
-            room_id: p.roomId || null,
-            item_id: p.itemId || null,
-            safety_photo_id: p.safetyPhotoId || null,
-            photo_url: p.photoUrl,
-            storage_path: p.storagePath || null,
-            description: p.description || null,
-            photo_phase: p.photoPhase,
-          }));
-          const { error: photosError } = await supabase.from('site_visit_photos').insert(photoRows);
-          if (photosError) throw photosError;
-        }
-
-        // Insert prompts
-        if (visit.prompts.length > 0) {
-          const promptRows = visit.prompts.map((p) => ({
-            id: p.id,
-            site_visit_id: visitId,
-            room_id: p.roomId || null,
-            prompt_key: p.promptKey,
-            prompt_question: p.promptQuestion,
-            response: p.response || null,
-          }));
-          const { error: promptsError } = await supabase
-            .from('site_visit_prompts')
-            .insert(promptRows);
-          if (promptsError) throw promptsError;
-        }
+        if (error) throw error;
 
         toast({
           title: 'Site visit saved',
           description: 'All data saved successfully.',
         });
 
-        return visitId;
+        return (visitId as string) ?? visit.id;
       } catch (error: unknown) {
         console.error('[SiteVisitStorage] Save failed:', error);
         toast({
@@ -256,13 +172,21 @@ export function useSiteVisitStorage(): UseSiteVisitStorageReturn {
           id: row.id,
           userId: row.user_id,
           customerId: row.customer_id,
+          // Denormalised capture fields — the customers row may not exist
+          // until the Generate step, so these carry the client details for
+          // cloud-resumed drafts
+          customerName: row.customer_name ?? undefined,
+          customerEmail: row.customer_email ?? undefined,
+          customerPhone: row.customer_phone ?? undefined,
           propertyAddress: row.property_address,
           propertyPostcode: row.property_postcode,
           propertyType: row.property_type,
           accessNotes: row.access_notes,
+          assumptions: row.assumptions ?? undefined,
           status: row.status,
           quoteId: row.quote_id,
           photoProjectId: row.photo_project_id,
+          projectId: row.project_id ?? undefined,
           createdAt: row.created_at,
           updatedAt: row.updated_at,
           rooms,
@@ -415,6 +339,17 @@ export function useSiteVisitStorage(): UseSiteVisitStorageReturn {
       } = await supabase.auth.getUser();
       if (!user) return null;
 
+      // IDEMPOTENT: a pipeline retry that ran after creation but before the
+      // visit state captured the id must reuse the customer, not duplicate it
+      const { data: existing } = await supabase
+        .from('customers')
+        .select('id')
+        .eq('user_id', user.id)
+        .ilike('name', visit.customerName.trim())
+        .limit(1)
+        .maybeSingle();
+      if (existing?.id) return existing.id;
+
       const { data, error } = await supabase
         .from('customers')
         .insert({
@@ -435,7 +370,10 @@ export function useSiteVisitStorage(): UseSiteVisitStorageReturn {
     }
   }, []);
 
-  // Fix 3a: Create photo project for the site visit
+  // Fix 3a: Create photo project for the site visit.
+  // IDEMPOTENT: re-running the finalise pipeline (retry, double-tap) must
+  // never mint another project — ELE-734's five duplicate "Site Visit —
+  // 33 Gable rd" projects came from exactly that.
   const createPhotoProject = useCallback(async (visit: SiteVisit): Promise<string | null> => {
     try {
       const {
@@ -443,12 +381,23 @@ export function useSiteVisitStorage(): UseSiteVisitStorageReturn {
       } = await supabase.auth.getUser();
       if (!user) return null;
 
+      // Already linked on the visit? Reuse it.
+      if (visit.photoProjectId) return visit.photoProjectId;
+
+      // Linked in the DB from a previous run? Reuse that.
+      const { data: existingVisit } = await supabase
+        .from('site_visits')
+        .select('photo_project_id')
+        .eq('id', visit.id)
+        .maybeSingle();
+      if (existingVisit?.photo_project_id) return existingVisit.photo_project_id;
+
       const { data, error } = await supabase
         .from('photo_projects')
         .insert({
           user_id: user.id,
           customer_id: visit.customerId || null,
-          name: `Site Visit — ${visit.propertyAddress || 'Unknown'}`,
+          name: `Site visit — ${visit.propertyAddress || 'Unknown'} (${new Date().toLocaleDateString('en-GB')})`,
           description: `Photos from site visit at ${visit.propertyAddress || 'unknown address'}`,
           address: visit.propertyAddress || null,
           status: 'active',
@@ -531,6 +480,26 @@ export function useSiteVisitStorage(): UseSiteVisitStorageReturn {
         } = await supabase.auth.getUser();
         if (!user) throw new Error('Not authenticated');
 
+        // IDEMPOTENT: a baseline is a lock — re-running the pipeline must
+        // return the existing one, never stack duplicates
+        const { data: existing } = await supabase
+          .from('scope_baselines')
+          .select('*')
+          .eq('site_visit_id', visit.id)
+          .order('locked_at', { ascending: false })
+          .limit(1)
+          .maybeSingle();
+        if (existing) {
+          return {
+            id: existing.id,
+            siteVisitId: existing.site_visit_id,
+            quoteId: existing.quote_id,
+            baselineData: existing.baseline_data,
+            lockedAt: existing.locked_at,
+            lockedBy: existing.locked_by,
+          };
+        }
+
         const baselineData = {
           rooms: visit.rooms.map((r) => ({
             roomName: r.roomName,
@@ -593,6 +562,30 @@ export function useSiteVisitStorage(): UseSiteVisitStorageReturn {
           data: { user },
         } = await supabase.auth.getUser();
         if (!user) throw new Error('Not authenticated');
+
+        // IDEMPOTENT: re-runs return the existing checklist
+        const { data: existing } = await supabase
+          .from('pre_start_checklists')
+          .select('*')
+          .eq('site_visit_id', visit.id)
+          .order('created_at', { ascending: false })
+          .limit(1)
+          .maybeSingle();
+        if (existing) {
+          return {
+            id: existing.id,
+            siteVisitId: existing.site_visit_id,
+            userId: existing.user_id,
+            items: existing.items,
+            status: existing.status,
+          };
+        }
+
+        // Don't insert an empty checklist for a visit with no captured scope
+        if (visit.rooms.length === 0 || visit.rooms.every((r) => r.items.length === 0)) {
+          console.warn('[SiteVisitStorage] Skipping checklist — no rooms/items captured');
+          return null;
+        }
 
         const items = generatePreStartChecklist(visit);
 
@@ -694,42 +687,49 @@ export function useSiteVisitStorage(): UseSiteVisitStorageReturn {
   );
 
   // Fix 2: Include materials from scopeToQuoteTransformer
-  const sendToQuoteWizard = useCallback((visit: SiteVisit): string => {
-    const sessionId = `site-visit-${visit.id}-${Date.now()}`;
+  const sendToQuoteWizard = useCallback(
+    (visit: SiteVisit, analysis?: SurveyAnalysisResult | null): string => {
+      const sessionId = `site-visit-${visit.id}-${Date.now()}`;
 
-    // Build scope description from rooms
-    const roomSummary = visit.rooms
-      .map((r) => {
-        const itemList = r.items.map((i) => `${i.itemDescription} x${i.quantity}`).join(', ');
-        return `${r.roomName}: ${itemList || 'no items'}`;
-      })
-      .join('\n');
+      // Build scope description from rooms
+      const roomSummary = visit.rooms
+        .map((r) => {
+          const itemList = r.items.map((i) => `${i.itemDescription} x${i.quantity}`).join(', ');
+          return `${r.roomName}: ${itemList || 'no items'}`;
+        })
+        .join('\n');
 
-    // Transform scope into quote materials
-    const quoteItems = transformScopeToQuoteItems(visit);
+      // Prefer the site-survey AI analysis (live-priced materials + labour
+      // estimate); fall back to the raw captured scope, explicitly unpriced
+      const quoteItems =
+        analysis && analysis.materials_list?.length
+          ? transformAnalysisToQuoteItems(analysis)
+          : transformScopeToQuoteItems(visit);
 
-    const siteVisitData = {
-      siteVisitData: {
-        client: {
-          name: visit.customerName || '',
-          email: visit.customerEmail || '',
-          phone: visit.customerPhone || '',
-          address: visit.propertyAddress || '',
-          postcode: visit.propertyPostcode || '',
+      const siteVisitData = {
+        siteVisitData: {
+          client: {
+            name: visit.customerName || '',
+            email: visit.customerEmail || '',
+            phone: visit.customerPhone || '',
+            address: visit.propertyAddress || '',
+            postcode: visit.propertyPostcode || '',
+          },
+          jobDetails: {
+            title: `Electrical works — ${visit.propertyAddress || 'Site visit'}`,
+            description: `Scope of works:\n${roomSummary}`,
+            location: visit.propertyAddress || '',
+          },
+          materials: quoteItems,
+          siteVisitId: visit.id,
         },
-        jobDetails: {
-          title: `Electrical works — ${visit.propertyAddress || 'Site visit'}`,
-          description: `Scope of works:\n${roomSummary}`,
-          location: visit.propertyAddress || '',
-        },
-        materials: quoteItems,
-        siteVisitId: visit.id,
-      },
-    };
+      };
 
-    storageSetJSONSync(sessionId, siteVisitData);
-    return sessionId;
-  }, []);
+      storageSetJSONSync(sessionId, siteVisitData);
+      return sessionId;
+    },
+    []
+  );
 
   const searchPreviousVisits = useCallback(
     async (

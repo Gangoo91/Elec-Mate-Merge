@@ -62,10 +62,14 @@ export interface SiteVisit {
   propertyPostcode?: string;
   propertyType?: PropertyType;
   accessNotes?: string;
+  /** Scope assumptions — part of the visit so drafts/cloud/resume carry it */
+  assumptions?: string;
   status: SiteVisitStatus;
   quoteId?: string;
   photoProjectId?: string;
   invoiceId?: string;
+  /** Business Hub project this visit belongs to (spark_projects.id) */
+  projectId?: string;
   rooms: SiteVisitRoom[];
   prompts: SiteVisitPrompt[];
   photos: SiteVisitPhoto[];

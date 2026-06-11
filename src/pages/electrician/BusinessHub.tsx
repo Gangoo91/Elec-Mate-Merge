@@ -302,9 +302,7 @@ const EditorialToolGrid = ({
   if (cards.length === 0) return null;
 
   const colClass =
-    columns === 'two'
-      ? 'grid-cols-1 sm:grid-cols-2'
-      : 'grid-cols-1 sm:grid-cols-2 lg:grid-cols-3';
+    columns === 'two' ? 'grid-cols-1 sm:grid-cols-2' : 'grid-cols-1 sm:grid-cols-2 lg:grid-cols-3';
 
   // Pad the final row with non-interactive filler cells so the rounded grid
   // never shows the bleed-through grey from `bg-white/[0.12]` between gaps.
@@ -386,11 +384,7 @@ const EditorialToolGrid = ({
         {/* Trailing filler cells — match active-cell bg so the row looks
             complete instead of revealing the white/0.12 grid background. */}
         {Array.from({ length: fillerCount }).map((_, i) => (
-          <div
-            key={`filler-${i}`}
-            aria-hidden
-            className="hidden lg:block bg-[hsl(0_0%_10%)]"
-          />
+          <div key={`filler-${i}`} aria-hidden className="hidden lg:block bg-[hsl(0_0%_10%)]" />
         ))}
       </motion.div>
     </motion.section>
@@ -426,13 +420,29 @@ const BusinessHub = () => {
     deleteProject,
   } = useSparkProjects('active');
   const { counts: snagCounts } = useSnags();
-  const {
-    tasks,
-    saveTask,
-    updateTask,
-    deleteTask,
-    markDone,
-  } = useSparkTasks('all');
+
+  // In-progress site visits — drafts now reach the cloud as they're captured,
+  // so the hub can honestly say "2 in progress" (feeds ELE-1070's recents idea)
+  const [draftVisitCount, setDraftVisitCount] = useState(0);
+  useEffect(() => {
+    let cancelled = false;
+    (async () => {
+      const {
+        data: { user },
+      } = await supabase.auth.getUser();
+      if (!user || cancelled) return;
+      const { count } = await supabase
+        .from('site_visits')
+        .select('id', { count: 'exact', head: true })
+        .eq('user_id', user.id)
+        .eq('status', 'in_progress');
+      if (!cancelled && typeof count === 'number') setDraftVisitCount(count);
+    })();
+    return () => {
+      cancelled = true;
+    };
+  }, []);
+  const { tasks, saveTask, updateTask, deleteTask, markDone } = useSparkTasks('all');
   const { customers, saveCustomer, updateCustomer, deleteCustomer } = useCustomers();
   const { activeSession, elapsedSeconds } = useTimeTracker();
 
@@ -490,7 +500,10 @@ const BusinessHub = () => {
       return {
         headline: pickHeadline(HEADLINES_OVERDUE),
         verdict: `${overduePounds} overdue across your books — a single chase email today turns into payment next week.`,
-        cta: { label: 'View overdue', onClick: () => navigate('/electrician/invoices?filter=overdue') },
+        cta: {
+          label: 'View overdue',
+          onClick: () => navigate('/electrician/invoices?filter=overdue'),
+        },
       };
     }
     if (outstanding > 0) {
@@ -560,7 +573,11 @@ const BusinessHub = () => {
       title: 'Calendar',
       description: 'Jobs, appointments and bookings.',
       to: '/electrician/business/calendar',
-      meta: new Date().toLocaleDateString('en-GB', { weekday: 'short', day: 'numeric', month: 'short' }),
+      meta: new Date().toLocaleDateString('en-GB', {
+        weekday: 'short',
+        day: 'numeric',
+        month: 'short',
+      }),
     },
     {
       id: 'time-tracker',
@@ -609,8 +626,7 @@ const BusinessHub = () => {
       title: 'Projects',
       description: 'Group jobs, tasks and snags.',
       to: '/electrician/projects',
-      meta:
-        projectCounts.active > 0 ? `${projectCounts.active} active` : 'Start a project',
+      meta: projectCounts.active > 0 ? `${projectCounts.active} active` : 'Start a project',
     },
     {
       id: 'booking-link',
@@ -629,7 +645,8 @@ const BusinessHub = () => {
       title: 'Site Visits',
       description: 'Pre-job and post-job site visit records.',
       to: '/electrician/site-visits',
-      meta: 'New visit',
+      meta: draftVisitCount > 0 ? `${draftVisitCount} in progress` : 'New visit',
+      alert: draftVisitCount > 0,
     },
     {
       id: 'photo-docs',
@@ -755,10 +772,7 @@ const BusinessHub = () => {
           aria-labelledby="mate-heading"
         >
           {/* Eyebrow with breathing pulse — signals Mate is live */}
-          <motion.div
-            variants={itemVariants}
-            className="flex items-center gap-2 mb-3 sm:mb-4"
-          >
+          <motion.div variants={itemVariants} className="flex items-center gap-2 mb-3 sm:mb-4">
             <span className="relative flex h-2 w-2" aria-hidden="true">
               <span className="absolute inline-flex h-full w-full rounded-full bg-elec-yellow opacity-75 animate-ping" />
               <span className="relative inline-flex rounded-full h-2 w-2 bg-elec-yellow" />
@@ -781,7 +795,8 @@ const BusinessHub = () => {
             variants={itemVariants}
             className="mt-2.5 sm:mt-3 text-[13.5px] sm:text-[15px] leading-relaxed text-white/55 max-w-[620px]"
           >
-            Plain English — tasks, snags, projects, customers, regs. I propose, you approve, it saves.
+            Plain English — tasks, snags, projects, customers, regs. I propose, you approve, it
+            saves.
           </motion.p>
 
           {/* Chat input bar — looks live, opens the sheet on tap */}
@@ -850,10 +865,7 @@ const BusinessHub = () => {
           </motion.div>
 
           {/* Trust tag — replaces the buried "Grounded in BS 7671" in the old paragraph */}
-          <motion.div
-            variants={itemVariants}
-            className="mt-6 sm:mt-8 flex items-center gap-3"
-          >
+          <motion.div variants={itemVariants} className="mt-6 sm:mt-8 flex items-center gap-3">
             <span className="h-px flex-1 bg-gradient-to-r from-transparent via-white/10 to-transparent" />
             <p className="text-[10px] font-semibold uppercase tracking-[0.18em] text-white/40">
               Grounded in BS 7671
@@ -870,7 +882,12 @@ const BusinessHub = () => {
 
         <EditorialToolGrid number="04" label="ON THE JOB" cards={onTheJob} columns="three" />
 
-        <EditorialToolGrid number="05" label="MONEY & STOCK" cards={moneyAndStock} columns="three" />
+        <EditorialToolGrid
+          number="05"
+          label="MONEY & STOCK"
+          cards={moneyAndStock}
+          columns="three"
+        />
 
         <EditorialToolGrid number="06" label="GROW" cards={grow} columns="two" />
 

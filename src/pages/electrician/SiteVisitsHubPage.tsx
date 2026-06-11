@@ -309,7 +309,9 @@ const SiteVisitsHubPage = () => {
                         className="block w-full border-t border-white/[0.06] px-4 py-3 text-left text-[13px] text-white transition-colors hover:bg-white/[0.04] touch-manipulation"
                       >
                         <div className="font-medium">New post-site visit</div>
-                        <div className="text-[11px] text-white/55">After photos · sign-off · invoice</div>
+                        <div className="text-[11px] text-white/55">
+                          After photos · sign-off · invoice
+                        </div>
                       </button>
                       {visits.some((v) => v.status === 'in_progress') && (
                         <button
@@ -593,7 +595,10 @@ const SiteVisitsHubPage = () => {
             </p>
           </motion.div>
         ) : (
-          <motion.div variants={itemVariants} className="grid grid-cols-1 gap-3 lg:grid-cols-2 lg:gap-4">
+          <motion.div
+            variants={itemVariants}
+            className="grid grid-cols-1 gap-3 lg:grid-cols-2 lg:gap-4"
+          >
             <AnimatePresence mode="popLayout">
               {filteredVisits.map((visit) => {
                 const sc = statusPillTone[visit.status as StatusKey] || 'amber';
@@ -607,6 +612,7 @@ const SiteVisitsHubPage = () => {
                     variants={itemVariants}
                     layout
                     exit={{ opacity: 0, scale: 0.95 }}
+                    className="h-full"
                   >
                     <div
                       role="button"
@@ -635,7 +641,7 @@ const SiteVisitsHubPage = () => {
                         }
                       }}
                       className={cn(
-                        'group relative cursor-pointer overflow-hidden rounded-2xl border p-4 text-left transition-all duration-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-elec-yellow/50 active:scale-[0.995] touch-manipulation sm:p-5',
+                        'group relative flex h-full min-h-[118px] cursor-pointer flex-col overflow-hidden rounded-2xl border p-4 text-left transition-all duration-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-elec-yellow/50 active:scale-[0.995] touch-manipulation sm:p-5',
                         isSelected
                           ? 'border-elec-yellow/50 bg-elec-yellow/[0.06]'
                           : 'border-white/[0.08] bg-[hsl(0_0%_12%)] hover:bg-[hsl(0_0%_15%)]'
@@ -677,7 +683,7 @@ const SiteVisitsHubPage = () => {
                           <p className="mt-1 truncate text-[12px] text-white/65">
                             {visit.customerName || 'No customer'} · {relativeDate(visit.updatedAt)}
                           </p>
-                          <div className="mt-2.5 flex flex-wrap items-center gap-1.5">
+                          <div className="mt-2.5 flex min-h-[20px] flex-wrap items-center gap-1.5">
                             {counts.rooms > 0 && (
                               <span className="inline-flex h-5 items-center rounded-full border border-white/[0.08] bg-white/[0.04] px-2 text-[10.5px] font-medium text-white/75">
                                 {counts.rooms} room{counts.rooms !== 1 ? 's' : ''}
@@ -790,7 +796,6 @@ const SiteVisitsHubPage = () => {
           </AlertDialogFooter>
         </AlertDialogContent>
       </AlertDialog>
-
     </div>
   );
 };

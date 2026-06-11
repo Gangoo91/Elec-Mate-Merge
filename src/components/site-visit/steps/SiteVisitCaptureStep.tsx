@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Mic, PenLine } from 'lucide-react';
 import { GlobalPromptsPanel } from '../capture/GlobalPromptsPanel';
 import { RoomList } from '../capture/RoomList';
@@ -27,9 +27,9 @@ interface SiteVisitCaptureStepProps {
   onUpdateItem: (itemId: string, updates: Partial<SiteVisitItem>) => void;
   onRemoveItem: (roomId: string, itemId: string) => void;
   onUpdateRoomNotes: (roomId: string, notes: string) => void;
-  onAddPhoto: (photo: Omit<SiteVisitPhoto, 'id' | 'siteVisitId'>) => void;
+  onAddPhoto: (photo: Omit<SiteVisitPhoto, 'id' | 'siteVisitId'>) => string | void;
   onRemovePhoto: (photoId: string) => void;
-  onUpdatePhotoUrl?: (photoId: string, newUrl: string) => void;
+  onUpdatePhotoUrl?: (photoId: string, newUrl: string, storagePath?: string) => void;
   getPromptResponse: (promptKey: string, roomId?: string) => string | undefined;
   setPromptResponse: (
     promptKey: string,
@@ -66,6 +66,21 @@ export const SiteVisitCaptureStep = ({
   const [showTemplates, setShowTemplates] = useState(
     visit.rooms.length === 0 && !!visit.propertyType
   );
+  // Offline awareness for the WHOLE capture step — voice mode had a banner,
+  // the mode people actually use didn't (audit P1)
+  const [isOnline, setIsOnline] = useState(
+    typeof navigator === 'undefined' ? true : navigator.onLine
+  );
+  useEffect(() => {
+    const onUp = () => setIsOnline(true);
+    const onDown = () => setIsOnline(false);
+    window.addEventListener('online', onUp);
+    window.addEventListener('offline', onDown);
+    return () => {
+      window.removeEventListener('online', onUp);
+      window.removeEventListener('offline', onDown);
+    };
+  }, []);
 
   const activeRoom = visit.rooms.find((r) => r.id === activeRoomId);
 
@@ -76,6 +91,12 @@ export const SiteVisitCaptureStep = ({
 
   return (
     <div className="space-y-4">
+      {!isOnline && (
+        <div className="rounded-xl border border-amber-500/30 bg-amber-500/10 px-3.5 py-2.5 text-[12.5px] text-amber-200">
+          Working offline — everything keeps saving to this device and syncs the moment signal
+          returns. Photos upload then too.
+        </div>
+      )}
       <div className="flex items-start justify-between">
         <div>
           <h2 className="text-[18px] font-semibold tracking-tight text-white sm:text-[20px]">
@@ -94,30 +115,27 @@ export const SiteVisitCaptureStep = ({
         )}
       </div>
 
-      {/* Manual / Voice toggle */}
-      <div className="flex gap-2">
-        <button
-          onClick={() => setCaptureMode('manual')}
-          className={`flex-1 h-11 rounded-xl border text-sm font-medium transition-all touch-manipulation flex items-center justify-center gap-2 ${
-            captureMode === 'manual'
-              ? 'bg-elec-yellow/20 border-elec-yellow text-white'
-              : 'bg-elec-gray border-white/10 text-white'
-          }`}
-        >
-          <PenLine className="h-4 w-4" />
-          Manual
-        </button>
-        <button
-          onClick={() => setCaptureMode('voice')}
-          className={`flex-1 h-11 rounded-xl border text-sm font-medium transition-all touch-manipulation flex items-center justify-center gap-2 ${
-            captureMode === 'voice'
-              ? 'bg-elec-yellow/20 border-elec-yellow text-white'
-              : 'bg-elec-gray border-white/10 text-white'
-          }`}
-        >
-          <Mic className="h-4 w-4" />
-          Voice Capture
-        </button>
+      {/* Manual / Voice — segmented control */}
+      <div className="grid grid-cols-2 gap-1 rounded-2xl border border-white/[0.08] bg-white/[0.03] p-1">
+        {(
+          [
+            { key: 'manual', label: 'Manual', Icon: PenLine },
+            { key: 'voice', label: 'Voice capture', Icon: Mic },
+          ] as const
+        ).map(({ key, label, Icon }) => (
+          <button
+            key={key}
+            onClick={() => setCaptureMode(key)}
+            className={`flex h-11 items-center justify-center gap-2 rounded-xl text-sm font-medium transition-colors touch-manipulation active:scale-[0.98] ${
+              captureMode === key
+                ? 'bg-elec-yellow font-semibold text-black'
+                : 'text-white/65 hover:text-white'
+            }`}
+          >
+            <Icon className="h-4 w-4" />
+            {label}
+          </button>
+        ))}
       </div>
 
       {captureMode === 'voice' ? (
@@ -176,6 +194,7 @@ export const SiteVisitCaptureStep = ({
             <RoomPanel
               room={activeRoom}
               photos={visit.photos}
+              visitId={visit.id}
               onAddItem={onAddItem}
               onUpdateItem={onUpdateItem}
               onRemoveItem={onRemoveItem}

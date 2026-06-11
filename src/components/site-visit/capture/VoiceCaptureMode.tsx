@@ -208,10 +208,10 @@ export const VoiceCaptureMode = ({
           </div>
           <button
             onClick={handleStart}
-            className="w-full h-14 rounded-xl flex items-center justify-center gap-3 text-base font-semibold transition-all touch-manipulation bg-emerald-500/20 border border-emerald-500/40 text-emerald-400 active:bg-emerald-500/30"
+            className="flex h-14 w-full items-center justify-center gap-3 rounded-xl bg-elec-yellow text-base font-semibold text-black transition-transform touch-manipulation hover:bg-elec-yellow/90 active:scale-[0.98]"
           >
             <Mic className="h-5 w-5" />
-            Start Capture
+            Start capture
           </button>
         </>
       )}
@@ -310,7 +310,7 @@ export const VoiceCaptureMode = ({
           {phase === 'capturing' && (
             <button
               onClick={handleDone}
-              className="w-full h-14 rounded-xl flex items-center justify-center gap-3 text-base font-semibold transition-all touch-manipulation bg-white/10 border border-white/20 text-white active:bg-white/20"
+              className="flex h-14 w-full items-center justify-center gap-3 rounded-xl border border-white/20 bg-white/10 text-base font-semibold text-white transition-transform touch-manipulation active:scale-[0.98] active:bg-white/20"
             >
               <CheckCircle className="h-5 w-5" />
               Done

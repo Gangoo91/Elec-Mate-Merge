@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useRef } from 'react';
 import { Textarea } from '@/components/ui/textarea';
 import { RoomItemRow } from './RoomItemRow';
 import { RoomPhotoCapture } from './RoomPhotoCapture';
@@ -9,13 +9,14 @@ import type { SiteVisitRoom, SiteVisitItem, SiteVisitPhoto } from '@/types/siteV
 interface RoomPanelProps {
   room: SiteVisitRoom;
   photos: SiteVisitPhoto[];
+  visitId?: string;
   onAddItem: (roomId: string, item: Omit<SiteVisitItem, 'id' | 'roomId' | 'sortOrder'>) => void;
   onUpdateItem: (itemId: string, updates: Partial<SiteVisitItem>) => void;
   onRemoveItem: (roomId: string, itemId: string) => void;
   onUpdateRoomNotes: (roomId: string, notes: string) => void;
-  onAddPhoto: (photo: Omit<SiteVisitPhoto, 'id' | 'siteVisitId'>) => void;
+  onAddPhoto: (photo: Omit<SiteVisitPhoto, 'id' | 'siteVisitId'>) => string | void;
   onRemovePhoto: (photoId: string) => void;
-  onUpdatePhotoUrl?: (photoId: string, newUrl: string) => void;
+  onUpdatePhotoUrl?: (photoId: string, newUrl: string, storagePath?: string) => void;
   getPromptResponse: (promptKey: string, roomId?: string) => string | undefined;
   setPromptResponse: (
     promptKey: string,
@@ -28,6 +29,7 @@ interface RoomPanelProps {
 export const RoomPanel = ({
   room,
   photos,
+  visitId,
   onAddItem,
   onUpdateItem,
   onRemoveItem,
@@ -38,6 +40,14 @@ export const RoomPanel = ({
   getPromptResponse,
   setPromptResponse,
 }: RoomPanelProps) => {
+  const panelRef = useRef<HTMLDivElement>(null);
+
+  // Bring the panel into view when switching rooms — adding a room used to
+  // scroll to the top of the page, away from the room just added (audit P1)
+  useEffect(() => {
+    panelRef.current?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  }, [room.id]);
+
   const handleAddEmptyItem = () => {
     onAddItem(room.id, {
       itemType: '',
@@ -47,22 +57,22 @@ export const RoomPanel = ({
     });
   };
 
-  const handleAddPhoto = (photoUrl: string, description?: string) => {
+  const handleAddPhoto = (photoUrl: string, description?: string) =>
     onAddPhoto({
       roomId: room.id,
       photoUrl,
       description,
       photoPhase: 'before',
     });
-  };
 
   return (
-    <div className="space-y-4">
-      {/* Room header */}
-      <div className="flex items-center gap-2">
-        <div className="w-1.5 h-1.5 rounded-full bg-elec-yellow" />
+    <div ref={panelRef} className="scroll-mt-20 space-y-4">
+      {/* Room header — sticky so you always know which room you're filling
+          in 400px down the panel (audit: navigation confusion) */}
+      <div className="sticky top-14 z-20 -mx-1 flex items-center gap-2 rounded-lg bg-background/95 px-1 py-2 backdrop-blur-sm">
+        <div className="h-1.5 w-1.5 rounded-full bg-elec-yellow" />
         <h3 className="text-base font-semibold text-white">{room.roomName}</h3>
-        <span className="text-xs text-white">
+        <span className="text-xs text-white/60">
           {room.items.length} item{room.items.length !== 1 ? 's' : ''}
         </span>
       </div>
@@ -100,6 +110,7 @@ export const RoomPanel = ({
         photos={photos}
         roomId={room.id}
         photoPhase="before"
+        visitId={visitId}
         onAddPhoto={handleAddPhoto}
         onRemovePhoto={onRemovePhoto}
         onUpdatePhotoUrl={onUpdatePhotoUrl}

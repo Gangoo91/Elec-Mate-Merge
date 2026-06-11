@@ -1,14 +1,7 @@
 import React, { useState } from 'react';
 import { Plus } from 'lucide-react';
-import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from '@/components/ui/select';
+import { cn } from '@/lib/utils';
 import { getRoomTypesForProperty } from '@/data/siteVisit/roomTypes';
 import type { RoomType, PropertyType, SiteVisitRoom } from '@/types/siteVisit';
 
@@ -18,70 +11,89 @@ interface RoomSelectorProps {
   propertyType?: PropertyType;
 }
 
+/**
+ * Tap-to-add room chips (was a dropdown + Add button — three interactions
+ * where one will do). Rooms already added disappear from the grid; "Custom"
+ * opens an inline name field.
+ */
 export const RoomSelector = ({ existingRooms, onAddRoom, propertyType }: RoomSelectorProps) => {
-  const [selectedType, setSelectedType] = useState<RoomType | ''>('');
+  const [showCustom, setShowCustom] = useState(false);
   const [customName, setCustomName] = useState('');
 
   const usedTypes = new Set(existingRooms.map((r) => r.roomType));
+  const usedNames = new Set(existingRooms.map((r) => r.roomName.trim().toLowerCase()));
   const roomTypes = getRoomTypesForProperty(propertyType);
 
-  // Filter out already-added rooms (except custom, which can be added multiple times)
-  const availableTypes = roomTypes.filter((rt) => rt.type === 'custom' || !usedTypes.has(rt.type));
+  const availableTypes = roomTypes.filter((rt) => rt.type !== 'custom' && !usedTypes.has(rt.type));
 
-  const handleAdd = () => {
-    if (!selectedType) return;
-
-    const roomDef = roomTypes.find((r) => r.type === selectedType);
-    const name = selectedType === 'custom' ? customName.trim() : roomDef?.label || selectedType;
-
-    if (selectedType === 'custom' && !customName.trim()) return;
-
-    onAddRoom(selectedType, name);
-    setSelectedType('');
+  const handleAddCustom = () => {
+    const name = customName.trim();
+    if (!name) return;
+    // No duplicate custom names — they make the scope and quote ambiguous
+    if (usedNames.has(name.toLowerCase())) {
+      setCustomName('');
+      return;
+    }
+    onAddRoom('custom', name);
     setCustomName('');
+    setShowCustom(false);
   };
 
   return (
-    <div className="flex gap-2 items-end">
-      <div className="flex-1 space-y-1">
-        <label className="text-xs font-medium text-white">Add Room</label>
-        <Select value={selectedType} onValueChange={(val) => setSelectedType(val as RoomType)}>
-          <SelectTrigger className="h-11 touch-manipulation bg-elec-gray border-elec-gray focus:border-elec-yellow focus:ring-elec-yellow data-[state=open]:border-elec-yellow data-[state=open]:ring-2">
-            <SelectValue placeholder="Select room type..." />
-          </SelectTrigger>
-          <SelectContent className="z-[100] max-w-[calc(100vw-2rem)] bg-elec-gray border-elec-gray text-foreground">
-            {availableTypes.map((rt) => (
-              <SelectItem key={rt.type} value={rt.type} className="touch-manipulation">
-                {rt.label}
-              </SelectItem>
-            ))}
-          </SelectContent>
-        </Select>
+    <div className="space-y-2">
+      <label className="text-xs font-medium text-white">Add room — tap to add</label>
+      <div className="flex flex-wrap gap-2">
+        {availableTypes.map((rt) => (
+          <button
+            key={rt.type}
+            type="button"
+            onClick={() => onAddRoom(rt.type, rt.label)}
+            className="flex h-11 items-center gap-1.5 rounded-full border border-white/[0.12] bg-white/[0.04] px-4 text-[13px] font-medium text-white transition-colors touch-manipulation hover:border-elec-yellow/40 hover:text-elec-yellow active:scale-[0.97] active:bg-elec-yellow/[0.1]"
+          >
+            <Plus className="h-3.5 w-3.5 text-elec-yellow/70" />
+            {rt.label}
+          </button>
+        ))}
+        <button
+          type="button"
+          onClick={() => setShowCustom((s) => !s)}
+          className={cn(
+            'flex h-11 items-center gap-1.5 rounded-full border border-dashed px-4 text-[13px] font-medium transition-colors touch-manipulation active:scale-[0.97]',
+            showCustom
+              ? 'border-elec-yellow/60 bg-elec-yellow/[0.1] text-elec-yellow'
+              : 'border-white/20 text-white/70 hover:border-elec-yellow/40 hover:text-elec-yellow'
+          )}
+        >
+          <Plus className="h-3.5 w-3.5" />
+          Custom…
+        </button>
       </div>
 
-      {selectedType === 'custom' && (
-        <div className="flex-1 space-y-1">
-          <label className="text-xs font-medium text-white">Room Name</label>
+      {showCustom && (
+        <div className="flex gap-2">
           <Input
             value={customName}
             onChange={(e) => setCustomName(e.target.value)}
-            placeholder="e.g. Boot Room"
-            className="h-11 text-base touch-manipulation border-white/30 focus:border-yellow-500 focus:ring-yellow-500"
+            onKeyDown={(e) => {
+              if (e.key === 'Enter') handleAddCustom();
+            }}
+            placeholder="e.g. Boot room, Plant room 2"
+            className="h-11 flex-1 text-base touch-manipulation border-white/30 focus:border-yellow-500 focus:ring-yellow-500"
             autoCapitalize="words"
             autoComplete="off"
             enterKeyHint="done"
+            autoFocus
           />
+          <button
+            type="button"
+            onClick={handleAddCustom}
+            disabled={!customName.trim()}
+            className="h-11 rounded-xl bg-elec-yellow px-4 text-sm font-semibold text-black transition-transform touch-manipulation hover:bg-elec-yellow/90 active:scale-[0.97] disabled:opacity-40"
+          >
+            Add
+          </button>
         </div>
       )}
-
-      <Button
-        onClick={handleAdd}
-        disabled={!selectedType || (selectedType === 'custom' && !customName.trim())}
-        className="h-11 px-4 touch-manipulation bg-emerald-600 hover:bg-emerald-700 text-white"
-      >
-        <Plus className="h-4 w-4 mr-1" />
-        Add
-      </Button>
     </div>
   );
 };

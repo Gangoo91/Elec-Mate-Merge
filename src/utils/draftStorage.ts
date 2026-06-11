@@ -136,6 +136,49 @@ export const draftStorage = {
   },
 
   /**
+   * Load the most recent draft of a type regardless of which id it was
+   * saved under. Needed where the form generates its own uuid up-front
+   * (site visits): drafts save under `-<uuid>` keys, so loadDraft(type, null)
+   * — which only checks the `-new` key — never finds them. That exact
+   * mismatch made site-visit recovery a no-op (ELE-1069).
+   * `isMeaningful` lets the caller define what counts as recoverable data.
+   */
+  loadLatestDraft: (
+    reportType: string,
+    isMeaningful?: (data: Record<string, unknown>) => boolean
+  ): { data: Record<string, unknown>; lastModified: Date; reportId: string | null } | null => {
+    try {
+      const prefix = `${DRAFT_PREFIX}${reportType}-`;
+      const expiryMs = DRAFT_EXPIRY_DAYS * 24 * 60 * 60 * 1000;
+      const now = Date.now();
+      let best: { draft: DraftData; reportId: string | null } | null = null;
+
+      for (let i = 0; i < localStorage.length; i++) {
+        const key = localStorage.key(i);
+        if (!key?.startsWith(prefix)) continue;
+        const draft = safeGetJSON<DraftData | null>(key, null);
+        if (!draft?.data) continue;
+        if (now - draft.lastModified > expiryMs) continue;
+        if (isMeaningful && !isMeaningful(draft.data)) continue;
+        if (!best || draft.lastModified > best.draft.lastModified) {
+          const idPart = key.slice(prefix.length);
+          best = { draft, reportId: idPart === 'new' ? null : idPart };
+        }
+      }
+
+      if (!best) return null;
+      return {
+        data: best.draft.data,
+        lastModified: new Date(best.draft.lastModified),
+        reportId: best.reportId,
+      };
+    } catch (error) {
+      console.error('[DraftStorage] Failed to load latest draft:', error);
+      return null;
+    }
+  },
+
+  /**
    * Check if there's a recoverable draft for a new report
    * Only returns true for "new" drafts (not existing reports)
    */

@@ -3,20 +3,8 @@ import { Minus, Plus, Trash2, ChevronDown, ChevronUp } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
-import {
-  Select,
-  SelectContent,
-  SelectGroup,
-  SelectItem,
-  SelectLabel,
-  SelectTrigger,
-  SelectValue,
-} from '@/components/ui/select';
-import {
-  getAccessoriesForRoom,
-  getAccessoriesByCategory,
-  ACCESSORY_CATEGORIES,
-} from '@/data/siteVisit/accessoryTypes';
+import { ItemTypePickerSheet } from './ItemTypePickerSheet';
+import { getAccessoriesForRoom, type AccessoryType } from '@/data/siteVisit/accessoryTypes';
 import type { SiteVisitItem, RoomType } from '@/types/siteVisit';
 
 interface RoomItemRowProps {
@@ -28,19 +16,17 @@ interface RoomItemRowProps {
 
 export const RoomItemRow = ({ item, roomType, onUpdate, onRemove }: RoomItemRowProps) => {
   const [showNotes, setShowNotes] = useState(!!item.notes);
+  const [pickerOpen, setPickerOpen] = useState(false);
 
   const accessories = getAccessoriesForRoom(roomType);
-  const grouped = getAccessoriesByCategory(accessories);
+  const selected = accessories.find((a) => a.id === item.itemType);
 
-  const handleTypeChange = (accessoryId: string) => {
-    const accessory = accessories.find((a) => a.id === accessoryId);
-    if (accessory) {
-      onUpdate({
-        itemType: accessory.id,
-        itemDescription: accessory.id === 'custom_item' ? '' : accessory.label,
-        unit: accessory.defaultUnit,
-      });
-    }
+  const handleTypeSelect = (accessory: AccessoryType) => {
+    onUpdate({
+      itemType: accessory.id,
+      itemDescription: accessory.id === 'custom_item' ? '' : accessory.label,
+      unit: accessory.defaultUnit,
+    });
   };
 
   const isCustomItem = item.itemType === 'custom_item';
@@ -48,31 +34,27 @@ export const RoomItemRow = ({ item, roomType, onUpdate, onRemove }: RoomItemRowP
   return (
     <div className="space-y-2 p-3 rounded-xl bg-white/[0.03] border border-white/[0.06]">
       <div className="flex gap-2 items-start">
-        {/* Accessory select */}
+        {/* Item type — opens a searchable bottom sheet (was a 54-option dropdown) */}
         <div className="flex-1 min-w-0">
-          <Select value={item.itemType} onValueChange={handleTypeChange}>
-            <SelectTrigger className="h-11 touch-manipulation bg-elec-gray border-elec-gray focus:border-elec-yellow focus:ring-elec-yellow data-[state=open]:border-elec-yellow data-[state=open]:ring-2 text-sm">
-              <SelectValue placeholder="Select item..." />
-            </SelectTrigger>
-            <SelectContent className="z-[100] max-w-[calc(100vw-2rem)] bg-elec-gray border-elec-gray text-foreground max-h-[40vh]">
-              {ACCESSORY_CATEGORIES.map((cat) => {
-                const catItems = grouped[cat.id];
-                if (!catItems || catItems.length === 0) return null;
-                return (
-                  <SelectGroup key={cat.id}>
-                    <SelectLabel className="text-xs text-white font-semibold px-2">
-                      {cat.label}
-                    </SelectLabel>
-                    {catItems.map((a) => (
-                      <SelectItem key={a.id} value={a.id} className="touch-manipulation">
-                        {a.label}
-                      </SelectItem>
-                    ))}
-                  </SelectGroup>
-                );
-              })}
-            </SelectContent>
-          </Select>
+          <button
+            type="button"
+            onClick={() => setPickerOpen(true)}
+            className={`flex h-11 w-full items-center justify-between gap-2 rounded-xl border px-3.5 text-left text-sm touch-manipulation active:scale-[0.99] ${
+              selected
+                ? 'border-white/[0.1] bg-white/[0.05] text-white'
+                : 'border-dashed border-white/20 bg-transparent text-white/50'
+            }`}
+          >
+            <span className="truncate">{selected ? selected.label : 'Choose item…'}</span>
+            <ChevronDown className="h-4 w-4 flex-shrink-0 text-white/40" />
+          </button>
+          <ItemTypePickerSheet
+            open={pickerOpen}
+            onOpenChange={setPickerOpen}
+            accessories={accessories}
+            selectedId={item.itemType || undefined}
+            onSelect={handleTypeSelect}
+          />
         </div>
 
         {/* Quantity stepper */}
@@ -132,12 +114,16 @@ export const RoomItemRow = ({ item, roomType, onUpdate, onRemove }: RoomItemRowP
         />
       )}
 
-      {/* Expandable notes */}
+      {/* Expandable notes — proper tappable affordance (was 12px text) */}
       <button
         onClick={() => setShowNotes(!showNotes)}
-        className="flex items-center gap-1 text-xs text-white touch-manipulation"
+        className="flex h-9 items-center gap-1.5 rounded-lg px-2 -ml-2 text-[13px] font-medium text-white/70 touch-manipulation active:bg-white/[0.06]"
       >
-        {showNotes ? <ChevronUp className="h-3 w-3" /> : <ChevronDown className="h-3 w-3" />}
+        {showNotes ? (
+          <ChevronUp className="h-3.5 w-3.5" />
+        ) : (
+          <ChevronDown className="h-3.5 w-3.5" />
+        )}
         Notes
       </button>
       {showNotes && (

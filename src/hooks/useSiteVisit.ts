@@ -40,6 +40,7 @@ export interface UseSiteVisitReturn {
       Pick<SiteVisit, 'propertyAddress' | 'propertyPostcode' | 'propertyType' | 'accessNotes'>
     >
   ) => void;
+  updateAssumptions: (assumptions: string) => void;
 
   // Rooms
   addRoom: (roomType: RoomType, roomName: string) => string;
@@ -56,7 +57,7 @@ export interface UseSiteVisitReturn {
   // Photos
   addPhoto: (photo: Omit<SiteVisitPhoto, 'id' | 'siteVisitId'>) => string;
   removePhoto: (photoId: string) => void;
-  updatePhotoUrl: (photoId: string, newUrl: string) => void;
+  updatePhotoUrl: (photoId: string, newUrl: string, storagePath?: string) => void;
 
   // Prompts
   setPromptResponse: (
@@ -101,7 +102,7 @@ export function useSiteVisit(initialVisit?: Partial<SiteVisit>): UseSiteVisitRet
       case 'scope_sent':
       case 'signed':
       case 'post_job':
-        return 3; // Review step — shows completed results
+        return 2; // Scope & Price — where the finished outputs live (4-step wizard)
       default:
         return 0;
     }
@@ -178,6 +179,11 @@ export function useSiteVisit(initialVisit?: Partial<SiteVisit>): UseSiteVisitRet
     },
     []
   );
+
+  // Assumptions — lives on the visit so every save layer carries it
+  const updateAssumptions = useCallback((assumptions: string) => {
+    setVisit((v) => ({ ...v, assumptions }));
+  }, []);
 
   // Rooms
   const addRoom = useCallback((roomType: RoomType, roomName: string): string => {
@@ -289,10 +295,12 @@ export function useSiteVisit(initialVisit?: Partial<SiteVisit>): UseSiteVisitRet
     }));
   }, []);
 
-  const updatePhotoUrl = useCallback((photoId: string, newUrl: string) => {
+  const updatePhotoUrl = useCallback((photoId: string, newUrl: string, storagePath?: string) => {
     setVisit((v) => ({
       ...v,
-      photos: v.photos.map((p) => (p.id === photoId ? { ...p, photoUrl: newUrl } : p)),
+      photos: v.photos.map((p) =>
+        p.id === photoId ? { ...p, photoUrl: newUrl, ...(storagePath ? { storagePath } : {}) } : p
+      ),
     }));
   }, []);
 
@@ -353,6 +361,7 @@ export function useSiteVisit(initialVisit?: Partial<SiteVisit>): UseSiteVisitRet
     prevStep,
     updateClient,
     updateProperty,
+    updateAssumptions,
     addRoom,
     removeRoom,
     updateRoomNotes,

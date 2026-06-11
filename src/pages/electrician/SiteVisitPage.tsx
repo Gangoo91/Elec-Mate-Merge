@@ -1,10 +1,10 @@
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useSearchParams } from 'react-router-dom';
 import { Helmet } from 'react-helmet';
 import { motion } from 'framer-motion';
 import { ArrowLeft, ClipboardList } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { SiteVisitWizard } from '@/components/site-visit/SiteVisitWizard';
-import { useState } from 'react';
+import { useState, useMemo } from 'react';
 import {
   AlertDialog,
   AlertDialogAction,
@@ -18,7 +18,23 @@ import {
 
 const SiteVisitPage = () => {
   const navigate = useNavigate();
+  const [searchParams] = useSearchParams();
   const [showExitDialog, setShowExitDialog] = useState(false);
+
+  // Project context — ProjectDetailPage launches visits with
+  // ?projectId=&clientName=&address= so the visit lands inside the project
+  // and the Job step arrives pre-filled
+  const initialVisit = useMemo(() => {
+    const projectId = searchParams.get('projectId');
+    const clientName = searchParams.get('clientName');
+    const address = searchParams.get('address');
+    if (!projectId && !clientName && !address) return undefined;
+    return {
+      ...(projectId ? { projectId } : {}),
+      ...(clientName ? { customerName: clientName } : {}),
+      ...(address ? { propertyAddress: address } : {}),
+    };
+  }, [searchParams]);
 
   const handleBack = () => {
     setShowExitDialog(true);
@@ -72,7 +88,7 @@ const SiteVisitPage = () => {
 
       {/* Main Content */}
       <main className="px-4 py-4">
-        <SiteVisitWizard onComplete={handleComplete} />
+        <SiteVisitWizard onComplete={handleComplete} initialVisit={initialVisit} />
       </main>
 
       {/* Exit Confirmation Dialog */}

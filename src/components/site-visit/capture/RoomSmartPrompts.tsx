@@ -1,13 +1,7 @@
 import React from 'react';
 import { HelpCircle } from 'lucide-react';
 import { Input } from '@/components/ui/input';
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from '@/components/ui/select';
+import { PromptAnswerOptions } from './PromptAnswerOptions';
 import { getPromptsForRoom } from '@/data/siteVisit/smartPrompts';
 import type { RoomType } from '@/types/siteVisit';
 
@@ -43,39 +37,19 @@ export const RoomSmartPrompts = ({
               {prompt.helpText && <p className="text-[11px] text-white">{prompt.helpText}</p>}
 
               {prompt.inputType === 'select' && prompt.options && (
-                <Select
+                <PromptAnswerOptions
+                  options={prompt.options}
                   value={value}
-                  onValueChange={(val) => setResponse(prompt.key, val, roomId, prompt.question)}
-                >
-                  <SelectTrigger className="h-11 touch-manipulation bg-elec-gray border-elec-gray focus:border-elec-yellow focus:ring-elec-yellow data-[state=open]:border-elec-yellow data-[state=open]:ring-2">
-                    <SelectValue placeholder="Select..." />
-                  </SelectTrigger>
-                  <SelectContent className="z-[100] max-w-[calc(100vw-2rem)] bg-elec-gray border-elec-gray text-foreground">
-                    {prompt.options.map((opt) => (
-                      <SelectItem key={opt} value={opt} className="touch-manipulation">
-                        {opt}
-                      </SelectItem>
-                    ))}
-                  </SelectContent>
-                </Select>
+                  onSelect={(val) => setResponse(prompt.key, val, roomId, prompt.question)}
+                />
               )}
 
               {prompt.inputType === 'yes_no' && (
-                <div className="flex gap-2">
-                  {['Yes', 'No'].map((opt) => (
-                    <button
-                      key={opt}
-                      onClick={() => setResponse(prompt.key, opt, roomId, prompt.question)}
-                      className={`flex-1 h-11 rounded-xl border text-sm font-medium transition-all touch-manipulation ${
-                        value === opt
-                          ? 'bg-elec-yellow/20 border-elec-yellow text-white'
-                          : 'bg-elec-gray border-white/10 text-white hover:border-white/20'
-                      }`}
-                    >
-                      {opt}
-                    </button>
-                  ))}
-                </div>
+                <PromptAnswerOptions
+                  options={['Yes', 'No']}
+                  value={value}
+                  onSelect={(val) => setResponse(prompt.key, val, roomId, prompt.question)}
+                />
               )}
 
               {prompt.inputType === 'text' && (

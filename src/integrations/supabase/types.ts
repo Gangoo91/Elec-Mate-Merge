@@ -38844,6 +38844,10 @@ export type Database = {
           reports_count: number
         }[]
       }
+      save_site_visit_atomic: {
+        Args: { p_visit: Json }
+        Returns: string
+      }
       get_qs_countersignature_for_pdf: {
         Args: { p_report_id: string }
         Returns: Json

@@ -22,6 +22,11 @@ import type { SurveyAnalysisResult, RegulatoryFlag, SurveyIssue } from '@/types/
 
 interface SurveyAnalysisPanelProps {
   visit: SiteVisit;
+  /**
+   * Kick off the analysis automatically when the panel mounts with no prior
+   * result (Scope & Price step) — manual button remains the fallback/retry.
+   */
+  autoStart?: boolean;
 }
 
 function SeverityBadge({ severity }: { severity: 'info' | 'warning' | 'critical' }) {
@@ -354,13 +359,30 @@ function AnalysisProgress({
   );
 }
 
-export const SurveyAnalysisPanel = ({ visit }: SurveyAnalysisPanelProps) => {
+export const SurveyAnalysisPanel = ({ visit, autoStart = false }: SurveyAnalysisPanelProps) => {
   const { status, progress, currentStep, result, error, startAnalysis, isStarting } =
     useSiteSurveyAnalysis(visit.id);
   const { saveToMaterialsList, sendToQuote } = useSurveyMaterialsActions();
   const [isSavingList, setIsSavingList] = useState(false);
+  const autoStartedRef = useRef(false);
 
   const hasData = visit.rooms.length > 0;
+
+  // Auto-run once per mount when there's scope and no prior result. The
+  // mount-load of an existing job resolves quickly, so wait one tick of
+  // status before deciding — never double-fire (analysis costs an AI run).
+  useEffect(() => {
+    if (!autoStart || autoStartedRef.current) return;
+    if (!hasData || result || isStarting) return;
+    if (status !== 'idle') return;
+    const timer = setTimeout(() => {
+      if (!autoStartedRef.current && !result && status === 'idle') {
+        autoStartedRef.current = true;
+        void startAnalysis(visit);
+      }
+    }, 1500);
+    return () => clearTimeout(timer);
+  }, [autoStart, hasData, result, isStarting, status, startAnalysis, visit]);
 
   return (
     <div className="space-y-4">

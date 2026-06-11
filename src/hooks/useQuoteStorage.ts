@@ -43,14 +43,8 @@ export const useQuoteStorage = () => {
     };
   }, []);
 
-  const activeKey = useMemo(
-    () => [...QUERY_KEYS.QUOTES, userId, 'active'] as const,
-    [userId]
-  );
-  const invoicedKey = useMemo(
-    () => [...QUERY_KEYS.QUOTES, userId, 'invoiced'] as const,
-    [userId]
-  );
+  const activeKey = useMemo(() => [...QUERY_KEYS.QUOTES, userId, 'active'] as const, [userId]);
+  const invoicedKey = useMemo(() => [...QUERY_KEYS.QUOTES, userId, 'invoiced'] as const, [userId]);
 
   const parseNumber = (value: unknown): number => {
     if (typeof value === 'number') {
@@ -114,6 +108,8 @@ export const useQuoteStorage = () => {
       // Email view tracking (from join with quote_views if available)
       email_opened_at: row.email_opened_at ? new Date(row.email_opened_at) : undefined,
       email_open_count: row.email_open_count || 0,
+      // Source site visit
+      site_visit_id: row.site_visit_id,
       // Linked certificate fields
       linked_certificate_id: row.linked_certificate_id,
       linked_certificate_type: row.linked_certificate_type,
@@ -207,13 +203,11 @@ export const useQuoteStorage = () => {
   // in user. Stays false (the original early-return path) when there's no
   // logged-in user.
   const loading =
-    !hasResolvedAuth ||
-    (userId !== null && (activeQuery.isLoading || invoicedQuery.isLoading));
+    !hasResolvedAuth || (userId !== null && (activeQuery.isLoading || invoicedQuery.isLoading));
   const lastUpdated = useMemo(
     () =>
       new Date(
-        Math.max(activeQuery.dataUpdatedAt || 0, invoicedQuery.dataUpdatedAt || 0) ||
-          Date.now()
+        Math.max(activeQuery.dataUpdatedAt || 0, invoicedQuery.dataUpdatedAt || 0) || Date.now()
       ),
     [activeQuery.dataUpdatedAt, invoicedQuery.dataUpdatedAt]
   );
@@ -258,9 +252,7 @@ export const useQuoteStorage = () => {
   // invalidation — every cached consumer refetches together.
   const refreshQuotes = useCallback(async () => {
     try {
-      await Promise.all([
-        queryClient.invalidateQueries({ queryKey: QUERY_KEYS.QUOTES }),
-      ]);
+      await Promise.all([queryClient.invalidateQueries({ queryKey: QUERY_KEYS.QUOTES })]);
     } catch (error) {
       captureApiError(error, 'quotes/refresh', { context: 'refreshQuotes' });
     }
@@ -392,6 +384,8 @@ export const useQuoteStorage = () => {
               : new Date(quote.accepted_at).toISOString()
             : null,
           public_token: quote.public_token,
+          // Source site visit (when created from a site-visit scope)
+          site_visit_id: quote.site_visit_id || null,
           // Linked certificate fields (when created from EICR/EIC/Minor Works)
           linked_certificate_id: quote.linked_certificate_id || null,
           linked_certificate_type: quote.linked_certificate_type || null,

@@ -175,6 +175,8 @@ export interface Quote {
   pdf_url?: string;
   pdf_generated_at?: Date;
   pdf_version?: number;
+  // Source site visit (when created from a site-visit scope)
+  site_visit_id?: string;
   // Linked certificate fields (when created from EICR/EIC/Minor Works)
   linked_certificate_id?: string;
   linked_certificate_type?: 'EICR' | 'EIC' | 'Minor Works';

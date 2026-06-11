@@ -50,7 +50,14 @@ export const RoomTemplateSelector = ({
     <div className="rounded-xl bg-white/[0.03] border border-white/[0.06] overflow-hidden">
       <div className="flex items-center gap-2 px-4 py-2.5 bg-white/[0.02] border-b border-white/[0.06]">
         <LayoutTemplate className="h-4 w-4 text-elec-yellow" />
-        <h3 className="text-sm font-semibold text-white">Quick Start Templates</h3>
+        <h3 className="flex-1 text-sm font-semibold text-white">Quick start</h3>
+        {/* Visible skip — was buried at the bottom of the expanded card */}
+        <button
+          onClick={onDismiss}
+          className="flex h-9 items-center rounded-full px-3 text-[12px] font-medium text-white/60 touch-manipulation hover:text-white active:bg-white/[0.06]"
+        >
+          Skip
+        </button>
       </div>
 
       {!selectedTemplate ? (
@@ -59,10 +66,10 @@ export const RoomTemplateSelector = ({
             <button
               key={idx}
               onClick={() => handleSelectTemplate(template)}
-              className="flex-shrink-0 px-4 py-2.5 rounded-xl border border-white/10 bg-elec-gray text-sm font-medium text-white touch-manipulation min-h-[44px] hover:border-elec-yellow transition-colors"
+              className="min-h-[48px] flex-shrink-0 rounded-xl border border-white/[0.1] bg-white/[0.04] px-4 py-2.5 text-left text-sm font-medium text-white transition-colors touch-manipulation hover:border-elec-yellow/40 active:scale-[0.97]"
             >
               {template.label}
-              <span className="block text-[10px] text-white mt-0.5">
+              <span className="mt-0.5 block text-[10px] uppercase tracking-[0.14em] text-white/45">
                 {template.rooms.length} rooms
               </span>
             </button>
@@ -78,18 +85,18 @@ export const RoomTemplateSelector = ({
               <button
                 key={idx}
                 onClick={() => toggleRoom(idx)}
-                className={`flex items-center gap-2 px-3 py-2 rounded-lg text-xs font-medium touch-manipulation transition-colors min-h-[44px] ${
+                className={`flex min-h-[44px] items-center gap-2 rounded-lg px-3 py-2 text-[13px] font-medium transition-colors touch-manipulation active:scale-[0.98] ${
                   checkedRooms.has(idx)
-                    ? 'bg-emerald-500/20 border border-emerald-500/40 text-white'
-                    : 'bg-white/[0.03] border border-white/[0.06] text-white'
+                    ? 'border border-elec-yellow/50 bg-elec-yellow/[0.12] text-white'
+                    : 'border border-white/[0.06] bg-white/[0.03] text-white/75'
                 }`}
               >
                 <div
-                  className={`w-4 h-4 rounded flex items-center justify-center flex-shrink-0 ${
-                    checkedRooms.has(idx) ? 'bg-emerald-500' : 'border border-white/30'
+                  className={`flex h-4 w-4 flex-shrink-0 items-center justify-center rounded ${
+                    checkedRooms.has(idx) ? 'bg-elec-yellow' : 'border border-white/30'
                   }`}
                 >
-                  {checkedRooms.has(idx) && <Check className="h-2.5 w-2.5 text-white" />}
+                  {checkedRooms.has(idx) && <Check className="h-2.5 w-2.5 text-black" />}
                 </div>
                 {room.roomName}
               </button>
@@ -108,17 +115,11 @@ export const RoomTemplateSelector = ({
               size="sm"
               onClick={handleAddSelected}
               disabled={checkedRooms.size === 0}
-              className="flex-1 h-11 touch-manipulation bg-emerald-600 hover:bg-emerald-700 text-white font-medium"
+              className="h-11 flex-1 touch-manipulation bg-elec-yellow font-semibold text-black transition-transform hover:bg-elec-yellow/90 active:scale-[0.98]"
             >
-              Add {checkedRooms.size} Room{checkedRooms.size !== 1 ? 's' : ''}
+              Add {checkedRooms.size} room{checkedRooms.size !== 1 ? 's' : ''}
             </Button>
           </div>
-          <button
-            onClick={onDismiss}
-            className="w-full text-center text-xs text-white underline underline-offset-2 py-1 touch-manipulation"
-          >
-            Skip — add rooms manually
-          </button>
         </div>
       )}
     </div>
