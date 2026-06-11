@@ -2930,7 +2930,7 @@ export type Database = {
             foreignKeyName: "briefings_job_id_fkey"
             columns: ["job_id"]
             isOneToOne: false
-            referencedRelation: "jobs"
+            referencedRelation: "employer_jobs"
             referencedColumns: ["id"]
           },
           {
@@ -4872,7 +4872,7 @@ export type Database = {
             foreignKeyName: "client_portal_links_job_id_fkey"
             columns: ["job_id"]
             isOneToOne: false
-            referencedRelation: "jobs"
+            referencedRelation: "employer_jobs"
             referencedColumns: ["id"]
           },
         ]
@@ -13169,134 +13169,36 @@ export type Database = {
           },
         ]
       }
-      employer_app_settings: {
+      employer_audit_log: {
         Row: {
-          created_at: string | null
-          description: string | null
-          id: string
-          key: string
-          updated_at: string | null
-          value: string | null
-        }
-        Insert: {
-          created_at?: string | null
-          description?: string | null
-          id?: string
-          key: string
-          updated_at?: string | null
-          value?: string | null
-        }
-        Update: {
-          created_at?: string | null
-          description?: string | null
-          id?: string
-          key?: string
-          updated_at?: string | null
-          value?: string | null
-        }
-        Relationships: []
-      }
-      employer_automation_logs: {
-        Row: {
-          actions_taken: Json
-          duration_ms: number | null
-          error_message: string | null
-          executed_at: string
-          id: string
-          records_processed: number
-          rule_id: string
-          status: string
-          trigger_data: Json | null
-        }
-        Insert: {
-          actions_taken?: Json
-          duration_ms?: number | null
-          error_message?: string | null
-          executed_at?: string
-          id?: string
-          records_processed?: number
-          rule_id: string
-          status?: string
-          trigger_data?: Json | null
-        }
-        Update: {
-          actions_taken?: Json
-          duration_ms?: number | null
-          error_message?: string | null
-          executed_at?: string
-          id?: string
-          records_processed?: number
-          rule_id?: string
-          status?: string
-          trigger_data?: Json | null
-        }
-        Relationships: [
-          {
-            foreignKeyName: "employer_automation_logs_rule_id_fkey"
-            columns: ["rule_id"]
-            isOneToOne: false
-            referencedRelation: "employer_automation_rules"
-            referencedColumns: ["id"]
-          },
-        ]
-      }
-      employer_automation_rules: {
-        Row: {
-          actions: Json
-          category: string
-          conditions: Json
+          action: string
+          actor_id: string | null
           created_at: string
-          description: string | null
-          failure_count: number
+          detail: Json | null
+          employer_id: string
+          entity: string
+          entity_id: string | null
           id: string
-          is_active: boolean
-          is_system: boolean
-          last_run_at: string | null
-          name: string
-          next_run_at: string | null
-          run_count: number
-          success_count: number
-          trigger_config: Json
-          trigger_type: string
-          updated_at: string
         }
         Insert: {
-          actions?: Json
-          category?: string
-          conditions?: Json
+          action: string
+          actor_id?: string | null
           created_at?: string
-          description?: string | null
-          failure_count?: number
+          detail?: Json | null
+          employer_id: string
+          entity: string
+          entity_id?: string | null
           id?: string
-          is_active?: boolean
-          is_system?: boolean
-          last_run_at?: string | null
-          name: string
-          next_run_at?: string | null
-          run_count?: number
-          success_count?: number
-          trigger_config?: Json
-          trigger_type?: string
-          updated_at?: string
         }
         Update: {
-          actions?: Json
-          category?: string
-          conditions?: Json
+          action?: string
+          actor_id?: string | null
           created_at?: string
-          description?: string | null
-          failure_count?: number
+          detail?: Json | null
+          employer_id?: string
+          entity?: string
+          entity_id?: string | null
           id?: string
-          is_active?: boolean
-          is_system?: boolean
-          last_run_at?: string | null
-          name?: string
-          next_run_at?: string | null
-          run_count?: number
-          success_count?: number
-          trigger_config?: Json
-          trigger_type?: string
-          updated_at?: string
         }
         Relationships: []
       }
@@ -13355,7 +13257,7 @@ export type Database = {
           access_token: string
           created_at: string
           id: string
-          job_id: string
+          job_id: string | null
           message: string
           read_at: string | null
           sender_type: string
@@ -13364,16 +13266,16 @@ export type Database = {
           access_token: string
           created_at?: string
           id?: string
-          job_id: string
+          job_id?: string | null
           message: string
           read_at?: string | null
-          sender_type: string
+          sender_type?: string
         }
         Update: {
           access_token?: string
           created_at?: string
           id?: string
-          job_id?: string
+          job_id?: string | null
           message?: string
           read_at?: string | null
           sender_type?: string
@@ -13381,91 +13283,6 @@ export type Database = {
         Relationships: [
           {
             foreignKeyName: "employer_client_messages_job_id_fkey"
-            columns: ["job_id"]
-            isOneToOne: false
-            referencedRelation: "employer_jobs"
-            referencedColumns: ["id"]
-          },
-        ]
-      }
-      employer_client_portal_invites: {
-        Row: {
-          access_token: string
-          client_email: string | null
-          client_name: string
-          created_at: string
-          expires_at: string
-          id: string
-          job_id: string
-          last_accessed_at: string | null
-          permissions: Json
-        }
-        Insert: {
-          access_token: string
-          client_email?: string | null
-          client_name: string
-          created_at?: string
-          expires_at: string
-          id?: string
-          job_id: string
-          last_accessed_at?: string | null
-          permissions?: Json
-        }
-        Update: {
-          access_token?: string
-          client_email?: string | null
-          client_name?: string
-          created_at?: string
-          expires_at?: string
-          id?: string
-          job_id?: string
-          last_accessed_at?: string | null
-          permissions?: Json
-        }
-        Relationships: [
-          {
-            foreignKeyName: "employer_client_portal_invites_job_id_fkey"
-            columns: ["job_id"]
-            isOneToOne: false
-            referencedRelation: "employer_jobs"
-            referencedColumns: ["id"]
-          },
-        ]
-      }
-      employer_client_signoffs: {
-        Row: {
-          access_token: string
-          client_name: string
-          id: string
-          job_id: string
-          notes: string | null
-          signature_data: string
-          signed_at: string
-          stage: string
-        }
-        Insert: {
-          access_token: string
-          client_name: string
-          id?: string
-          job_id: string
-          notes?: string | null
-          signature_data: string
-          signed_at?: string
-          stage: string
-        }
-        Update: {
-          access_token?: string
-          client_name?: string
-          id?: string
-          job_id?: string
-          notes?: string | null
-          signature_data?: string
-          signed_at?: string
-          stage?: string
-        }
-        Relationships: [
-          {
-            foreignKeyName: "employer_client_signoffs_job_id_fkey"
             columns: ["job_id"]
             isOneToOne: false
             referencedRelation: "employer_jobs"
@@ -14133,7 +13950,22 @@ export type Database = {
           updated_at?: string
           user_id?: string | null
         }
-        Relationships: []
+        Relationships: [
+          {
+            foreignKeyName: "employer_employees_employer_id_fkey"
+            columns: ["employer_id"]
+            isOneToOne: false
+            referencedRelation: "profiles"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "employer_employees_employer_id_fkey"
+            columns: ["employer_id"]
+            isOneToOne: false
+            referencedRelation: "v_assessor_workload"
+            referencedColumns: ["assessor_id"]
+          },
+        ]
       }
       employer_expense_claims: {
         Row: {
@@ -14209,12 +14041,14 @@ export type Database = {
           actions_taken: string | null
           created_at: string
           description: string | null
+          employer_id: string
           id: string
           incident_type: string
           job_id: string | null
           location: string | null
           reported_at: string
           reported_by: string | null
+          reported_by_id: string | null
           severity: string
           status: string
           title: string
@@ -14224,12 +14058,14 @@ export type Database = {
           actions_taken?: string | null
           created_at?: string
           description?: string | null
+          employer_id?: string
           id?: string
           incident_type?: string
           job_id?: string | null
           location?: string | null
           reported_at?: string
           reported_by?: string | null
+          reported_by_id?: string | null
           severity?: string
           status?: string
           title: string
@@ -14239,12 +14075,14 @@ export type Database = {
           actions_taken?: string | null
           created_at?: string
           description?: string | null
+          employer_id?: string
           id?: string
           incident_type?: string
           job_id?: string | null
           location?: string | null
           reported_at?: string
           reported_by?: string | null
+          reported_by_id?: string | null
           severity?: string
           status?: string
           title?: string
@@ -14252,11 +14090,90 @@ export type Database = {
         }
         Relationships: [
           {
+            foreignKeyName: "employer_incidents_employer_id_fkey"
+            columns: ["employer_id"]
+            isOneToOne: false
+            referencedRelation: "profiles"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "employer_incidents_employer_id_fkey"
+            columns: ["employer_id"]
+            isOneToOne: false
+            referencedRelation: "v_assessor_workload"
+            referencedColumns: ["assessor_id"]
+          },
+          {
             foreignKeyName: "employer_incidents_job_id_fkey"
             columns: ["job_id"]
             isOneToOne: false
             referencedRelation: "employer_jobs"
             referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "employer_incidents_reported_by_id_fkey"
+            columns: ["reported_by_id"]
+            isOneToOne: false
+            referencedRelation: "profiles"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "employer_incidents_reported_by_id_fkey"
+            columns: ["reported_by_id"]
+            isOneToOne: false
+            referencedRelation: "v_assessor_workload"
+            referencedColumns: ["assessor_id"]
+          },
+        ]
+      }
+      employer_invites: {
+        Row: {
+          created_at: string
+          employer_id: string
+          expires_at: string | null
+          id: string
+          invite_code: string
+          is_active: boolean
+          max_uses: number | null
+          role_to_assign: string
+          use_count: number
+        }
+        Insert: {
+          created_at?: string
+          employer_id?: string
+          expires_at?: string | null
+          id?: string
+          invite_code: string
+          is_active?: boolean
+          max_uses?: number | null
+          role_to_assign?: string
+          use_count?: number
+        }
+        Update: {
+          created_at?: string
+          employer_id?: string
+          expires_at?: string | null
+          id?: string
+          invite_code?: string
+          is_active?: boolean
+          max_uses?: number | null
+          role_to_assign?: string
+          use_count?: number
+        }
+        Relationships: [
+          {
+            foreignKeyName: "employer_invites_employer_id_fkey"
+            columns: ["employer_id"]
+            isOneToOne: false
+            referencedRelation: "profiles"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "employer_invites_employer_id_fkey"
+            columns: ["employer_id"]
+            isOneToOne: false
+            referencedRelation: "v_assessor_workload"
+            referencedColumns: ["assessor_id"]
           },
         ]
       }
@@ -14266,10 +14183,11 @@ export type Database = {
           client_email: string | null
           client_name: string | null
           created_at: string
-          expires_at: string
+          expires_at: string | null
           id: string
           invoice_id: string
           status: string
+          updated_at: string
           viewed_at: string | null
         }
         Insert: {
@@ -14277,10 +14195,11 @@ export type Database = {
           client_email?: string | null
           client_name?: string | null
           created_at?: string
-          expires_at: string
+          expires_at?: string | null
           id?: string
           invoice_id: string
           status?: string
+          updated_at?: string
           viewed_at?: string | null
         }
         Update: {
@@ -14288,10 +14207,11 @@ export type Database = {
           client_email?: string | null
           client_name?: string | null
           created_at?: string
-          expires_at?: string
+          expires_at?: string | null
           id?: string
           invoice_id?: string
           status?: string
+          updated_at?: string
           viewed_at?: string | null
         }
         Relationships: [
@@ -14310,6 +14230,7 @@ export type Database = {
           client: string
           created_at: string
           due_date: string | null
+          employer_id: string
           id: string
           invoice_number: string
           job_id: string | null
@@ -14326,6 +14247,7 @@ export type Database = {
           client: string
           created_at?: string
           due_date?: string | null
+          employer_id?: string
           id?: string
           invoice_number: string
           job_id?: string | null
@@ -14342,6 +14264,7 @@ export type Database = {
           client?: string
           created_at?: string
           due_date?: string | null
+          employer_id?: string
           id?: string
           invoice_number?: string
           job_id?: string | null
@@ -14354,6 +14277,20 @@ export type Database = {
           updated_at?: string
         }
         Relationships: [
+          {
+            foreignKeyName: "employer_invoices_employer_id_fkey"
+            columns: ["employer_id"]
+            isOneToOne: false
+            referencedRelation: "profiles"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "employer_invoices_employer_id_fkey"
+            columns: ["employer_id"]
+            isOneToOne: false
+            referencedRelation: "v_assessor_workload"
+            referencedColumns: ["assessor_id"]
+          },
           {
             foreignKeyName: "employer_invoices_job_id_fkey"
             columns: ["job_id"]
@@ -14374,6 +14311,7 @@ export type Database = {
         Row: {
           assigned_at: string
           assigned_by: string | null
+          assigned_by_id: string | null
           created_at: string
           employee_id: string
           end_date: string | null
@@ -14389,6 +14327,7 @@ export type Database = {
         Insert: {
           assigned_at?: string
           assigned_by?: string | null
+          assigned_by_id?: string | null
           created_at?: string
           employee_id: string
           end_date?: string | null
@@ -14404,6 +14343,7 @@ export type Database = {
         Update: {
           assigned_at?: string
           assigned_by?: string | null
+          assigned_by_id?: string | null
           created_at?: string
           employee_id?: string
           end_date?: string | null
@@ -14417,6 +14357,20 @@ export type Database = {
           updated_at?: string
         }
         Relationships: [
+          {
+            foreignKeyName: "employer_job_assignments_assigned_by_id_fkey"
+            columns: ["assigned_by_id"]
+            isOneToOne: false
+            referencedRelation: "profiles"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "employer_job_assignments_assigned_by_id_fkey"
+            columns: ["assigned_by_id"]
+            isOneToOne: false
+            referencedRelation: "v_assessor_workload"
+            referencedColumns: ["assessor_id"]
+          },
           {
             foreignKeyName: "employer_job_assignments_employee_id_fkey"
             columns: ["employee_id"]
@@ -14479,6 +14433,7 @@ export type Database = {
           created_at: string
           id: string
           job_id: string
+          task_id: string | null
         }
         Insert: {
           author_name: string
@@ -14487,6 +14442,7 @@ export type Database = {
           created_at?: string
           id?: string
           job_id: string
+          task_id?: string | null
         }
         Update: {
           author_name?: string
@@ -14495,6 +14451,7 @@ export type Database = {
           created_at?: string
           id?: string
           job_id?: string
+          task_id?: string | null
         }
         Relationships: [
           {
@@ -14502,6 +14459,13 @@ export type Database = {
             columns: ["job_id"]
             isOneToOne: false
             referencedRelation: "employer_jobs"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "employer_job_comments_task_id_fkey"
+            columns: ["task_id"]
+            isOneToOne: false
+            referencedRelation: "employer_job_tasks"
             referencedColumns: ["id"]
           },
         ]
@@ -14543,22 +14507,40 @@ export type Database = {
         Row: {
           colour: string
           created_at: string
+          employer_id: string
           id: string
           name: string
         }
         Insert: {
           colour?: string
           created_at?: string
+          employer_id?: string
           id?: string
           name: string
         }
         Update: {
           colour?: string
           created_at?: string
+          employer_id?: string
           id?: string
           name?: string
         }
-        Relationships: []
+        Relationships: [
+          {
+            foreignKeyName: "employer_job_labels_employer_id_fkey"
+            columns: ["employer_id"]
+            isOneToOne: false
+            referencedRelation: "profiles"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "employer_job_labels_employer_id_fkey"
+            columns: ["employer_id"]
+            isOneToOne: false
+            referencedRelation: "v_assessor_workload"
+            referencedColumns: ["assessor_id"]
+          },
+        ]
       }
       employer_job_pack_acknowledgements: {
         Row: {
@@ -14662,6 +14644,7 @@ export type Database = {
           briefing_pack_generated: boolean | null
           client: string
           created_at: string | null
+          employer_id: string
           estimated_value: number | null
           hazards: string[] | null
           id: string
@@ -14682,6 +14665,7 @@ export type Database = {
           briefing_pack_generated?: boolean | null
           client: string
           created_at?: string | null
+          employer_id?: string
           estimated_value?: number | null
           hazards?: string[] | null
           id?: string
@@ -14702,6 +14686,7 @@ export type Database = {
           briefing_pack_generated?: boolean | null
           client?: string
           created_at?: string | null
+          employer_id?: string
           estimated_value?: number | null
           hazards?: string[] | null
           id?: string
@@ -14716,7 +14701,102 @@ export type Database = {
           title?: string
           updated_at?: string | null
         }
-        Relationships: []
+        Relationships: [
+          {
+            foreignKeyName: "employer_job_packs_employer_id_fkey"
+            columns: ["employer_id"]
+            isOneToOne: false
+            referencedRelation: "profiles"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "employer_job_packs_employer_id_fkey"
+            columns: ["employer_id"]
+            isOneToOne: false
+            referencedRelation: "v_assessor_workload"
+            referencedColumns: ["assessor_id"]
+          },
+        ]
+      }
+      employer_job_tasks: {
+        Row: {
+          assignee_employee_id: string | null
+          completed_at: string | null
+          created_at: string
+          description: string | null
+          due_date: string | null
+          employer_id: string
+          id: string
+          job_id: string
+          photos: Json
+          position: number
+          priority: string
+          status: string
+          title: string
+          updated_at: string
+        }
+        Insert: {
+          assignee_employee_id?: string | null
+          completed_at?: string | null
+          created_at?: string
+          description?: string | null
+          due_date?: string | null
+          employer_id?: string
+          id?: string
+          job_id: string
+          photos?: Json
+          position?: number
+          priority?: string
+          status?: string
+          title: string
+          updated_at?: string
+        }
+        Update: {
+          assignee_employee_id?: string | null
+          completed_at?: string | null
+          created_at?: string
+          description?: string | null
+          due_date?: string | null
+          employer_id?: string
+          id?: string
+          job_id?: string
+          photos?: Json
+          position?: number
+          priority?: string
+          status?: string
+          title?: string
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "employer_job_tasks_assignee_employee_id_fkey"
+            columns: ["assignee_employee_id"]
+            isOneToOne: false
+            referencedRelation: "employer_employees"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "employer_job_tasks_employer_id_fkey"
+            columns: ["employer_id"]
+            isOneToOne: false
+            referencedRelation: "profiles"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "employer_job_tasks_employer_id_fkey"
+            columns: ["employer_id"]
+            isOneToOne: false
+            referencedRelation: "v_assessor_workload"
+            referencedColumns: ["assessor_id"]
+          },
+          {
+            foreignKeyName: "employer_job_tasks_job_id_fkey"
+            columns: ["job_id"]
+            isOneToOne: false
+            referencedRelation: "employer_jobs"
+            referencedColumns: ["id"]
+          },
+        ]
       }
       employer_jobs: {
         Row: {
@@ -14793,42 +14873,6 @@ export type Database = {
         }
         Relationships: []
       }
-      employer_knowledge_documents: {
-        Row: {
-          category: string
-          content: string
-          created_at: string
-          id: string
-          metadata: Json | null
-          summary: string | null
-          tags: string[] | null
-          title: string
-          updated_at: string
-        }
-        Insert: {
-          category: string
-          content: string
-          created_at?: string
-          id?: string
-          metadata?: Json | null
-          summary?: string | null
-          tags?: string[] | null
-          title: string
-          updated_at?: string
-        }
-        Update: {
-          category?: string
-          content?: string
-          created_at?: string
-          id?: string
-          metadata?: Json | null
-          summary?: string | null
-          tags?: string[] | null
-          title?: string
-          updated_at?: string
-        }
-        Relationships: []
-      }
       employer_leave_requests: {
         Row: {
           approved_by: string | null
@@ -14892,6 +14936,7 @@ export type Database = {
         Row: {
           created_at: string
           delivery_date: string | null
+          employer_id: string
           id: string
           items: Json
           job_id: string | null
@@ -14899,6 +14944,7 @@ export type Database = {
           order_date: string
           order_number: string
           ordered_by: string | null
+          ordered_by_id: string | null
           status: string
           supplier_id: string
           total: number
@@ -14907,6 +14953,7 @@ export type Database = {
         Insert: {
           created_at?: string
           delivery_date?: string | null
+          employer_id?: string
           id?: string
           items?: Json
           job_id?: string | null
@@ -14914,6 +14961,7 @@ export type Database = {
           order_date?: string
           order_number: string
           ordered_by?: string | null
+          ordered_by_id?: string | null
           status?: string
           supplier_id: string
           total?: number
@@ -14922,6 +14970,7 @@ export type Database = {
         Update: {
           created_at?: string
           delivery_date?: string | null
+          employer_id?: string
           id?: string
           items?: Json
           job_id?: string | null
@@ -14929,6 +14978,7 @@ export type Database = {
           order_date?: string
           order_number?: string
           ordered_by?: string | null
+          ordered_by_id?: string | null
           status?: string
           supplier_id?: string
           total?: number
@@ -14936,11 +14986,39 @@ export type Database = {
         }
         Relationships: [
           {
+            foreignKeyName: "employer_material_orders_employer_id_fkey"
+            columns: ["employer_id"]
+            isOneToOne: false
+            referencedRelation: "profiles"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "employer_material_orders_employer_id_fkey"
+            columns: ["employer_id"]
+            isOneToOne: false
+            referencedRelation: "v_assessor_workload"
+            referencedColumns: ["assessor_id"]
+          },
+          {
             foreignKeyName: "employer_material_orders_job_id_fkey"
             columns: ["job_id"]
             isOneToOne: false
             referencedRelation: "employer_jobs"
             referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "employer_material_orders_ordered_by_id_fkey"
+            columns: ["ordered_by_id"]
+            isOneToOne: false
+            referencedRelation: "profiles"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "employer_material_orders_ordered_by_id_fkey"
+            columns: ["ordered_by_id"]
+            isOneToOne: false
+            referencedRelation: "v_assessor_workload"
+            referencedColumns: ["assessor_id"]
           },
           {
             foreignKeyName: "employer_material_orders_supplier_id_fkey"
@@ -15244,6 +15322,7 @@ export type Database = {
           buy_price: number
           category: string
           created_at: string
+          employer_id: string
           id: string
           markup: number | null
           name: string
@@ -15259,6 +15338,7 @@ export type Database = {
           buy_price?: number
           category: string
           created_at?: string
+          employer_id?: string
           id?: string
           markup?: number | null
           name: string
@@ -15274,6 +15354,7 @@ export type Database = {
           buy_price?: number
           category?: string
           created_at?: string
+          employer_id?: string
           id?: string
           markup?: number | null
           name?: string
@@ -15286,6 +15367,20 @@ export type Database = {
           updated_at?: string
         }
         Relationships: [
+          {
+            foreignKeyName: "employer_price_book_employer_id_fkey"
+            columns: ["employer_id"]
+            isOneToOne: false
+            referencedRelation: "profiles"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "employer_price_book_employer_id_fkey"
+            columns: ["employer_id"]
+            isOneToOne: false
+            referencedRelation: "v_assessor_workload"
+            referencedColumns: ["assessor_id"]
+          },
           {
             foreignKeyName: "employer_price_book_supplier_id_fkey"
             columns: ["supplier_id"]
@@ -15353,7 +15448,9 @@ export type Database = {
           client_phone: string | null
           created_at: string
           created_by: string | null
+          created_by_id: string | null
           description: string | null
+          employer_id: string
           id: string
           job_id: string | null
           job_title: string | null
@@ -15373,7 +15470,9 @@ export type Database = {
           client_phone?: string | null
           created_at?: string
           created_by?: string | null
+          created_by_id?: string | null
           description?: string | null
+          employer_id?: string
           id?: string
           job_id?: string | null
           job_title?: string | null
@@ -15393,7 +15492,9 @@ export type Database = {
           client_phone?: string | null
           created_at?: string
           created_by?: string | null
+          created_by_id?: string | null
           description?: string | null
+          employer_id?: string
           id?: string
           job_id?: string | null
           job_title?: string | null
@@ -15408,66 +15509,35 @@ export type Database = {
         }
         Relationships: [
           {
-            foreignKeyName: "employer_quotes_job_id_fkey"
-            columns: ["job_id"]
+            foreignKeyName: "employer_quotes_created_by_id_fkey"
+            columns: ["created_by_id"]
             isOneToOne: false
-            referencedRelation: "employer_jobs"
+            referencedRelation: "profiles"
             referencedColumns: ["id"]
           },
-        ]
-      }
-      employer_rams: {
-        Row: {
-          approved_at: string | null
-          approved_by: string | null
-          client: string | null
-          control_measures: string[] | null
-          created_at: string
-          hazards: string[] | null
-          id: string
-          job_id: string | null
-          location: string | null
-          ppe_required: string[] | null
-          scope_of_work: string | null
-          status: string
-          title: string
-          updated_at: string
-        }
-        Insert: {
-          approved_at?: string | null
-          approved_by?: string | null
-          client?: string | null
-          control_measures?: string[] | null
-          created_at?: string
-          hazards?: string[] | null
-          id?: string
-          job_id?: string | null
-          location?: string | null
-          ppe_required?: string[] | null
-          scope_of_work?: string | null
-          status?: string
-          title: string
-          updated_at?: string
-        }
-        Update: {
-          approved_at?: string | null
-          approved_by?: string | null
-          client?: string | null
-          control_measures?: string[] | null
-          created_at?: string
-          hazards?: string[] | null
-          id?: string
-          job_id?: string | null
-          location?: string | null
-          ppe_required?: string[] | null
-          scope_of_work?: string | null
-          status?: string
-          title?: string
-          updated_at?: string
-        }
-        Relationships: [
           {
-            foreignKeyName: "employer_rams_job_id_fkey"
+            foreignKeyName: "employer_quotes_created_by_id_fkey"
+            columns: ["created_by_id"]
+            isOneToOne: false
+            referencedRelation: "v_assessor_workload"
+            referencedColumns: ["assessor_id"]
+          },
+          {
+            foreignKeyName: "employer_quotes_employer_id_fkey"
+            columns: ["employer_id"]
+            isOneToOne: false
+            referencedRelation: "profiles"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "employer_quotes_employer_id_fkey"
+            columns: ["employer_id"]
+            isOneToOne: false
+            referencedRelation: "v_assessor_workload"
+            referencedColumns: ["assessor_id"]
+          },
+          {
+            foreignKeyName: "employer_quotes_job_id_fkey"
             columns: ["job_id"]
             isOneToOne: false
             referencedRelation: "employer_jobs"
@@ -15481,6 +15551,7 @@ export type Database = {
           business_name: string | null
           charges_enabled: boolean
           created_at: string
+          employer_id: string
           id: string
           onboarding_completed: boolean
           payouts_enabled: boolean
@@ -15492,6 +15563,7 @@ export type Database = {
           business_name?: string | null
           charges_enabled?: boolean
           created_at?: string
+          employer_id?: string
           id?: string
           onboarding_completed?: boolean
           payouts_enabled?: boolean
@@ -15503,13 +15575,29 @@ export type Database = {
           business_name?: string | null
           charges_enabled?: boolean
           created_at?: string
+          employer_id?: string
           id?: string
           onboarding_completed?: boolean
           payouts_enabled?: boolean
           stripe_account_id?: string
           updated_at?: string
         }
-        Relationships: []
+        Relationships: [
+          {
+            foreignKeyName: "employer_stripe_connected_accounts_employer_id_fkey"
+            columns: ["employer_id"]
+            isOneToOne: false
+            referencedRelation: "profiles"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "employer_stripe_connected_accounts_employer_id_fkey"
+            columns: ["employer_id"]
+            isOneToOne: false
+            referencedRelation: "v_assessor_workload"
+            referencedColumns: ["assessor_id"]
+          },
+        ]
       }
       employer_suppliers: {
         Row: {
@@ -15523,6 +15611,7 @@ export type Database = {
           delivery_days: number | null
           discount_percent: number | null
           email: string | null
+          employer_id: string
           id: string
           name: string
           notes: string | null
@@ -15540,6 +15629,7 @@ export type Database = {
           delivery_days?: number | null
           discount_percent?: number | null
           email?: string | null
+          employer_id?: string
           id?: string
           name: string
           notes?: string | null
@@ -15557,60 +15647,35 @@ export type Database = {
           delivery_days?: number | null
           discount_percent?: number | null
           email?: string | null
+          employer_id?: string
           id?: string
           name?: string
           notes?: string | null
           phone?: string | null
           updated_at?: string
         }
-        Relationships: []
-      }
-      employer_team_members: {
-        Row: {
-          accepted_at: string | null
-          created_at: string
-          email: string
-          id: string
-          invited_at: string
-          member_user_id: string | null
-          name: string | null
-          owner_user_id: string
-          role: string
-          status: string
-          updated_at: string
-        }
-        Insert: {
-          accepted_at?: string | null
-          created_at?: string
-          email: string
-          id?: string
-          invited_at?: string
-          member_user_id?: string | null
-          name?: string | null
-          owner_user_id: string
-          role?: string
-          status?: string
-          updated_at?: string
-        }
-        Update: {
-          accepted_at?: string | null
-          created_at?: string
-          email?: string
-          id?: string
-          invited_at?: string
-          member_user_id?: string | null
-          name?: string | null
-          owner_user_id?: string
-          role?: string
-          status?: string
-          updated_at?: string
-        }
-        Relationships: []
+        Relationships: [
+          {
+            foreignKeyName: "employer_suppliers_employer_id_fkey"
+            columns: ["employer_id"]
+            isOneToOne: false
+            referencedRelation: "profiles"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "employer_suppliers_employer_id_fkey"
+            columns: ["employer_id"]
+            isOneToOne: false
+            referencedRelation: "v_assessor_workload"
+            referencedColumns: ["assessor_id"]
+          },
+        ]
       }
       employer_timesheets: {
         Row: {
           approved_at: string | null
           approved_by: string | null
+          approved_by_id: string | null
           break_minutes: number
           clock_in: string | null
           clock_out: string | null
@@ -15627,6 +15692,7 @@ export type Database = {
         Insert: {
           approved_at?: string | null
           approved_by?: string | null
+          approved_by_id?: string | null
           break_minutes?: number
           clock_in?: string | null
           clock_out?: string | null
@@ -15643,6 +15709,7 @@ export type Database = {
         Update: {
           approved_at?: string | null
           approved_by?: string | null
+          approved_by_id?: string | null
           break_minutes?: number
           clock_in?: string | null
           clock_out?: string | null
@@ -15657,6 +15724,20 @@ export type Database = {
           updated_at?: string
         }
         Relationships: [
+          {
+            foreignKeyName: "employer_timesheets_approved_by_id_fkey"
+            columns: ["approved_by_id"]
+            isOneToOne: false
+            referencedRelation: "profiles"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "employer_timesheets_approved_by_id_fkey"
+            columns: ["approved_by_id"]
+            isOneToOne: false
+            referencedRelation: "v_assessor_workload"
+            referencedColumns: ["assessor_id"]
+          },
           {
             foreignKeyName: "employer_timesheets_employee_id_fkey"
             columns: ["employee_id"]
@@ -15679,6 +15760,7 @@ export type Database = {
           closing_date: string | null
           created_at: string | null
           description: string | null
+          employer_id: string | null
           id: string
           location: string
           moderated_at: string | null
@@ -15700,6 +15782,7 @@ export type Database = {
           closing_date?: string | null
           created_at?: string | null
           description?: string | null
+          employer_id?: string | null
           id?: string
           location: string
           moderated_at?: string | null
@@ -15721,6 +15804,7 @@ export type Database = {
           closing_date?: string | null
           created_at?: string | null
           description?: string | null
+          employer_id?: string | null
           id?: string
           location?: string
           moderated_at?: string | null
@@ -15738,6 +15822,20 @@ export type Database = {
           views?: number | null
         }
         Relationships: [
+          {
+            foreignKeyName: "employer_vacancies_employer_id_fkey"
+            columns: ["employer_id"]
+            isOneToOne: false
+            referencedRelation: "profiles"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "employer_vacancies_employer_id_fkey"
+            columns: ["employer_id"]
+            isOneToOne: false
+            referencedRelation: "v_assessor_workload"
+            referencedColumns: ["assessor_id"]
+          },
           {
             foreignKeyName: "employer_vacancies_moderated_by_fkey"
             columns: ["moderated_by"]
@@ -15898,30 +15996,6 @@ export type Database = {
           template_data?: Json
           updated_at?: string
           user_id?: string
-        }
-        Relationships: []
-      }
-      employer_voice_sessions: {
-        Row: {
-          context: Json | null
-          created_at: string | null
-          id: string
-          session_key: string
-          updated_at: string | null
-        }
-        Insert: {
-          context?: Json | null
-          created_at?: string | null
-          id?: string
-          session_key: string
-          updated_at?: string | null
-        }
-        Update: {
-          context?: Json | null
-          created_at?: string | null
-          id?: string
-          session_key?: string
-          updated_at?: string | null
         }
         Relationships: []
       }
@@ -19487,7 +19561,7 @@ export type Database = {
             foreignKeyName: "job_financials_job_id_fkey"
             columns: ["job_id"]
             isOneToOne: true
-            referencedRelation: "jobs"
+            referencedRelation: "employer_jobs"
             referencedColumns: ["id"]
           },
         ]
@@ -19565,7 +19639,7 @@ export type Database = {
             foreignKeyName: "job_issues_job_id_fkey"
             columns: ["job_id"]
             isOneToOne: false
-            referencedRelation: "jobs"
+            referencedRelation: "employer_jobs"
             referencedColumns: ["id"]
           },
           {
@@ -19825,7 +19899,7 @@ export type Database = {
             foreignKeyName: "job_tests_job_id_fkey"
             columns: ["job_id"]
             isOneToOne: false
-            referencedRelation: "jobs"
+            referencedRelation: "employer_jobs"
             referencedColumns: ["id"]
           },
           {
@@ -19843,75 +19917,6 @@ export type Database = {
             referencedColumns: ["id"]
           },
         ]
-      }
-      jobs: {
-        Row: {
-          archived_at: string | null
-          client: string
-          cover_photo_url: string | null
-          created_at: string | null
-          description: string | null
-          end_date: string | null
-          id: string
-          is_template: boolean | null
-          lat: number | null
-          lng: number | null
-          location: string | null
-          position: number | null
-          progress: number | null
-          start_date: string | null
-          status: string | null
-          title: string
-          updated_at: string | null
-          user_id: string | null
-          value: number | null
-          workers_count: number | null
-        }
-        Insert: {
-          archived_at?: string | null
-          client: string
-          cover_photo_url?: string | null
-          created_at?: string | null
-          description?: string | null
-          end_date?: string | null
-          id?: string
-          is_template?: boolean | null
-          lat?: number | null
-          lng?: number | null
-          location?: string | null
-          position?: number | null
-          progress?: number | null
-          start_date?: string | null
-          status?: string | null
-          title: string
-          updated_at?: string | null
-          user_id?: string | null
-          value?: number | null
-          workers_count?: number | null
-        }
-        Update: {
-          archived_at?: string | null
-          client?: string
-          cover_photo_url?: string | null
-          created_at?: string | null
-          description?: string | null
-          end_date?: string | null
-          id?: string
-          is_template?: boolean | null
-          lat?: number | null
-          lng?: number | null
-          location?: string | null
-          position?: number | null
-          progress?: number | null
-          start_date?: string | null
-          status?: string | null
-          title?: string
-          updated_at?: string | null
-          user_id?: string | null
-          value?: number | null
-          workers_count?: number | null
-        }
-        Relationships: []
       }
       jobs_weekly_cache: {
         Row: {
@@ -26907,7 +26912,7 @@ export type Database = {
             foreignKeyName: "progress_logs_job_id_fkey"
             columns: ["job_id"]
             isOneToOne: false
-            referencedRelation: "jobs"
+            referencedRelation: "employer_jobs"
             referencedColumns: ["id"]
           },
         ]
@@ -27839,6 +27844,7 @@ export type Database = {
           client_data: Json
           created_at: string
           customer_id: string | null
+          declined_reason: string | null
           deleted_at: string | null
           deposit_amount_pennies: number | null
           deposit_invoice_id: string | null
@@ -27890,6 +27896,7 @@ export type Database = {
           reminder_count: number | null
           settings: Json
           signature_url: string | null
+          site_visit_id: string | null
           status: string
           stripe_checkout_session_id: string | null
           stripe_payment_intent_id: string | null
@@ -27923,6 +27930,7 @@ export type Database = {
           client_data: Json
           created_at?: string
           customer_id?: string | null
+          declined_reason?: string | null
           deleted_at?: string | null
           deposit_amount_pennies?: number | null
           deposit_invoice_id?: string | null
@@ -27974,6 +27982,7 @@ export type Database = {
           reminder_count?: number | null
           settings: Json
           signature_url?: string | null
+          site_visit_id?: string | null
           status?: string
           stripe_checkout_session_id?: string | null
           stripe_payment_intent_id?: string | null
@@ -28007,6 +28016,7 @@ export type Database = {
           client_data?: Json
           created_at?: string
           customer_id?: string | null
+          declined_reason?: string | null
           deleted_at?: string | null
           deposit_amount_pennies?: number | null
           deposit_invoice_id?: string | null
@@ -28058,6 +28068,7 @@ export type Database = {
           reminder_count?: number | null
           settings?: Json
           signature_url?: string | null
+          site_visit_id?: string | null
           status?: string
           stripe_checkout_session_id?: string | null
           stripe_payment_intent_id?: string | null
@@ -28102,6 +28113,13 @@ export type Database = {
             columns: ["project_id"]
             isOneToOne: false
             referencedRelation: "spark_projects"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "quotes_site_visit_id_fkey"
+            columns: ["site_visit_id"]
+            isOneToOne: false
+            referencedRelation: "site_visits"
             referencedColumns: ["id"]
           },
           {
@@ -31659,8 +31677,12 @@ export type Database = {
       site_visits: {
         Row: {
           access_notes: string | null
+          assumptions: string | null
           created_at: string | null
+          customer_email: string | null
           customer_id: string | null
+          customer_name: string | null
+          customer_phone: string | null
           id: string
           invoice_id: string | null
           photo_project_id: string | null
@@ -31675,8 +31697,12 @@ export type Database = {
         }
         Insert: {
           access_notes?: string | null
+          assumptions?: string | null
           created_at?: string | null
+          customer_email?: string | null
           customer_id?: string | null
+          customer_name?: string | null
+          customer_phone?: string | null
           id?: string
           invoice_id?: string | null
           photo_project_id?: string | null
@@ -31691,8 +31717,12 @@ export type Database = {
         }
         Update: {
           access_notes?: string | null
+          assumptions?: string | null
           created_at?: string | null
+          customer_email?: string | null
           customer_id?: string | null
+          customer_name?: string | null
+          customer_phone?: string | null
           id?: string
           invoice_id?: string | null
           photo_project_id?: string | null
@@ -36437,7 +36467,7 @@ export type Database = {
             foreignKeyName: "variation_orders_job_id_fkey"
             columns: ["job_id"]
             isOneToOne: false
-            referencedRelation: "jobs"
+            referencedRelation: "employer_jobs"
             referencedColumns: ["id"]
           },
         ]
@@ -38157,6 +38187,7 @@ export type Database = {
         }[]
       }
       accept_college_invite: { Args: { p_invite_code: string }; Returns: Json }
+      accept_employer_invite: { Args: { p_invite_code: string }; Returns: Json }
       accept_quote_by_token: {
         Args: {
           accepted_email: string
@@ -38918,6 +38949,7 @@ export type Database = {
           client_data: Json
           created_at: string
           customer_id: string | null
+          declined_reason: string | null
           deleted_at: string | null
           deposit_amount_pennies: number | null
           deposit_invoice_id: string | null
@@ -38969,6 +39001,7 @@ export type Database = {
           reminder_count: number | null
           settings: Json
           signature_url: string | null
+          site_visit_id: string | null
           status: string
           stripe_checkout_session_id: string | null
           stripe_payment_intent_id: string | null
@@ -39138,6 +39171,7 @@ export type Database = {
         Args: { _student_id: string }
         Returns: boolean
       }
+      is_assigned_to_job: { Args: { p_job_id: string }; Returns: boolean }
       is_college_staff: { Args: { p_user_id: string }; Returns: boolean }
       is_owner_of_quote: { Args: { q_id: string }; Returns: boolean }
       is_qs_issue_blocked: { Args: { p_report_uuid: string }; Returns: boolean }
@@ -39374,6 +39408,7 @@ export type Database = {
         Args: { source_id: string; target_id: string }
         Returns: Json
       }
+      my_employee_ids: { Args: never; Returns: string[] }
       normalize_compliance_statuses: {
         Args: never
         Returns: {
@@ -39381,6 +39416,16 @@ export type Database = {
         }[]
       }
       normalize_query_text: { Args: { query_text: string }; Returns: string }
+      notify_employer_bell: {
+        Args: {
+          p_employer: string
+          p_message: string
+          p_meta?: Json
+          p_title: string
+          p_type: string
+        }
+        Returns: undefined
+      }
       propose_ac_signoff: {
         Args: {
           p_ac_code: string
@@ -39593,6 +39638,7 @@ export type Database = {
         }
         Returns: Json
       }
+      save_site_visit_atomic: { Args: { p_visit: Json }; Returns: string }
       search_bs7671: {
         Args: {
           match_count?: number
@@ -40506,6 +40552,16 @@ export type Database = {
         Returns: Json
       }
       sync_expired_trials: { Args: never; Returns: undefined }
+      team_push: {
+        Args: {
+          p_body: string
+          p_data?: Json
+          p_title: string
+          p_user_id: string
+        }
+        Returns: undefined
+      }
+      teardown_employer_tenant: { Args: { p_user: string }; Returns: Json }
       trigger_materials_weekly_refresh: { Args: never; Returns: undefined }
       unified_rag_search: {
         Args: {

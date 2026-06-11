@@ -2,8 +2,8 @@ import { useQuery } from '@tanstack/react-query';
 import { supabase } from '@/integrations/supabase/client';
 import { useMemo } from 'react';
 
-// employer_job_financials table does not exist yet — disable query until migration is run
-const JOB_FINANCIALS_TABLE_EXISTS = false;
+// job_financials is live (FK employer_jobs, user_id-scoped RLS)
+const JOB_FINANCIALS_TABLE_EXISTS = true;
 
 // Types
 export interface ProfitabilitySummary {
@@ -87,7 +87,7 @@ async function fetchExpenses() {
 // Fetch job financials for profitability
 async function fetchJobFinancials() {
   const { data, error } = await supabase
-    .from('employer_job_financials')
+    .from('job_financials')
     .select(
       `
       *,

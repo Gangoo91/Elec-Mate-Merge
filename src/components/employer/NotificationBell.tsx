@@ -37,6 +37,12 @@ const getNotificationIcon = (type: string) => {
       return <MessageSquare className="h-4 w-4 text-info" />;
     case 'qs_review_submitted':
       return <ShieldCheck className="h-4 w-4 text-elec-yellow" />;
+    case 'leave_requested':
+      return <Clock className="h-4 w-4 text-elec-yellow" />;
+    case 'expense_submitted':
+      return <Briefcase className="h-4 w-4 text-elec-yellow" />;
+    case 'snag_reported':
+      return <AlertTriangle className="h-4 w-4 text-warning" />;
     default:
       return <Bell className="h-4 w-4 text-white" />;
   }
@@ -47,6 +53,12 @@ const getNotificationRoute = (type: string): string | null => {
   switch (type) {
     case 'qs_review_submitted':
       return '/employer?section=qsreviews';
+    case 'leave_requested':
+      return '/employer?section=timesheets';
+    case 'expense_submitted':
+      return '/employer?section=expenses';
+    case 'snag_reported':
+      return '/employer?section=issues';
     default:
       return null;
   }

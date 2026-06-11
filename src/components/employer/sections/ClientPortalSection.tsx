@@ -143,15 +143,6 @@ export function ClientPortalSection() {
     if (portalLink) openExternalUrl(getPortalUrl());
   };
 
-  const handleSendEmail = () => {
-    if (selectedJob) {
-      toast({
-        title: 'Email sent',
-        description: `Portal link sent to ${portalLink?.client_name || selectedJob.client}.`,
-      });
-    }
-  };
-
   const handleRefreshLink = async () => {
     if (portalLink) {
       await regenerateToken.mutateAsync(portalLink.id);
@@ -555,11 +546,7 @@ export function ClientPortalSection() {
                     </IconButton>
                   </div>
 
-                  <div className="grid grid-cols-1 sm:grid-cols-3 gap-2">
-                    <PrimaryButton onClick={handleSendEmail} fullWidth>
-                      <Mail className="h-4 w-4 mr-2" />
-                      Email to client
-                    </PrimaryButton>
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
                     <SecondaryButton
                       onClick={handleToggleActive}
                       disabled={toggleActive.isPending}

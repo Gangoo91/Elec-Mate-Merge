@@ -36,11 +36,12 @@ export function MyJobsSheet({ open, onOpenChange }: MyJobsSheetProps) {
 
   const getStatusBadge = (status: string) => {
     switch (status) {
-      case 'in_progress':
+      case 'Active':
         return <Badge className="bg-green-500/20 text-green-400 border-0">In Progress</Badge>;
-      case 'scheduled':
+      case 'Pending':
+      case 'On Hold':
         return <Badge className="bg-blue-500/20 text-blue-400 border-0">Scheduled</Badge>;
-      case 'completed':
+      case 'Completed':
         return <Badge className="bg-gray-500/20 text-gray-400 border-0">Completed</Badge>;
       default:
         return <Badge className="bg-amber-500/20 text-amber-400 border-0">{status}</Badge>;

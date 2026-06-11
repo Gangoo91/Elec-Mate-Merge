@@ -24,12 +24,6 @@ export function SmartDocsHub({ onNavigate }: SmartDocsHubProps) {
       title="Smart Docs"
       description="Generate RAMS, method statements, design specs, briefing packs and quotes in minutes."
       tone="purple"
-      stats={[
-        { label: 'Generated 30d', value: '0', tone: 'purple' },
-        { label: 'Saved hours', value: '0', tone: 'emerald', accent: true },
-        { label: 'Templates', value: '5', tone: 'blue' },
-        { label: 'Export formats', value: 'PDF', tone: 'indigo' },
-      ]}
     >
       <section className="space-y-5">
         <SectionHeader

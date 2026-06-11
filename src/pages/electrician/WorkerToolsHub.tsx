@@ -31,7 +31,6 @@ import {
   Briefcase,
   IdCard,
   FileText,
-  ShieldCheck,
   Receipt,
   Wrench,
   LucideIcon,
@@ -40,7 +39,8 @@ import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { cn } from '@/lib/utils';
 import { useAuth } from '@/contexts/AuthContext';
-import { useWorkerSelfService, useSafetyDocs } from '@/hooks/useWorkerSelfService';
+import { useWorkerSelfService } from '@/hooks/useWorkerSelfService';
+import { JoinTeamCard } from '@/components/worker-tools/JoinTeamCard';
 import { StatusSheet } from '@/components/worker-tools/StatusSheet';
 import { TimesheetSheet } from '@/components/worker-tools/TimesheetSheet';
 import { LeaveRequestSheet } from '@/components/worker-tools/LeaveRequestSheet';
@@ -48,7 +48,6 @@ import { CommsSheet } from '@/components/worker-tools/CommsSheet';
 import { MyJobsSheet } from '@/components/worker-tools/MyJobsSheet';
 import { CredentialsSheet } from '@/components/worker-tools/CredentialsSheet';
 import { ProgressNotesSheet } from '@/components/worker-tools/ProgressNotesSheet';
-import { SafetyDocsSheet } from '@/components/worker-tools/SafetyDocsSheet';
 import { ExpenseSheet } from '@/components/worker-tools/ExpenseSheet';
 import { SnagReportSheet } from '@/components/worker-tools/SnagReportSheet';
 
@@ -167,7 +166,6 @@ export default function WorkerToolsHub() {
   const [jobsSheetOpen, setJobsSheetOpen] = useState(false);
   const [credentialsSheetOpen, setCredentialsSheetOpen] = useState(false);
   const [progressNotesSheetOpen, setProgressNotesSheetOpen] = useState(false);
-  const [safetyDocsSheetOpen, setSafetyDocsSheetOpen] = useState(false);
   const [expenseSheetOpen, setExpenseSheetOpen] = useState(false);
   const [snagReportSheetOpen, setSnagReportSheetOpen] = useState(false);
 
@@ -184,8 +182,6 @@ export default function WorkerToolsHub() {
     activeJobsCount,
   } = useWorkerSelfService();
 
-  const { data: safetyDocs } = useSafetyDocs();
-  const pendingSafetyDocs = safetyDocs?.filter((d) => !d.acknowledged_at)?.length || 0;
 
   // Dev mode: allow whitelisted emails to access without employee record
   const isDevMode = user?.email && DEV_WHITELIST.includes(user.email);
@@ -215,16 +211,19 @@ export default function WorkerToolsHub() {
             </Button>
           </Link>
 
-          <div className="text-center py-12">
+          <div className="text-center py-8 mb-6">
             <div className="w-20 h-20 rounded-2xl bg-elec-yellow/10 flex items-center justify-center mx-auto mb-6">
               <Briefcase className="h-10 w-10 text-elec-yellow" />
             </div>
             <h1 className="text-2xl font-bold text-white mb-3">Worker Tools</h1>
-            <p className="text-white max-w-sm mx-auto">
-              You don't have an employee profile linked to your account. Contact your employer to
-              get access to Worker Tools.
+            <p className="text-white/70 max-w-sm mx-auto">
+              Your account isn't linked to a company team yet. If your employer added you by
+              email, signing in with that email links you automatically — otherwise enter their
+              team invite code below.
             </p>
           </div>
+
+          <JoinTeamCard onJoined={() => window.location.reload()} />
         </div>
       </div>
     );
@@ -364,16 +363,6 @@ export default function WorkerToolsHub() {
                 subtitle="Log daily notes"
                 onClick={() => setProgressNotesSheetOpen(true)}
               />
-              <WorkerToolCard
-                icon={ShieldCheck}
-                title="Safety Docs"
-                subtitle={
-                  pendingSafetyDocs > 0 ? `${pendingSafetyDocs} pending` : 'All acknowledged'
-                }
-                subtitleColour={pendingSafetyDocs > 0 ? 'text-amber-400' : 'text-white'}
-                badge={pendingSafetyDocs}
-                onClick={() => setSafetyDocsSheetOpen(true)}
-              />
 
               {/* Row 5 */}
               <WorkerToolCard
@@ -414,7 +403,6 @@ export default function WorkerToolsHub() {
       <MyJobsSheet open={jobsSheetOpen} onOpenChange={setJobsSheetOpen} />
       <CredentialsSheet open={credentialsSheetOpen} onOpenChange={setCredentialsSheetOpen} />
       <ProgressNotesSheet open={progressNotesSheetOpen} onOpenChange={setProgressNotesSheetOpen} />
-      <SafetyDocsSheet open={safetyDocsSheetOpen} onOpenChange={setSafetyDocsSheetOpen} />
       <ExpenseSheet open={expenseSheetOpen} onOpenChange={setExpenseSheetOpen} />
       <SnagReportSheet open={snagReportSheetOpen} onOpenChange={setSnagReportSheetOpen} />
     </div>

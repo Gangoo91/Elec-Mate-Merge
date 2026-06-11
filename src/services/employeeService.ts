@@ -84,6 +84,16 @@ export const createEmployee = async (
     throw error;
   }
 
+  // Tell the person they've been added and how to link (fire-and-forget —
+  // roster creation never fails because an email didn't send)
+  if (data?.email) {
+    supabase.functions
+      .invoke('send-team-welcome', { body: { employeeId: data.id } })
+      .then(({ error: emailError }) => {
+        if (emailError) console.error('Welcome email failed:', emailError);
+      });
+  }
+
   return data;
 };
 
@@ -106,16 +116,9 @@ export const updateEmployee = async (
   return data;
 };
 
-export const deleteEmployee = async (id: string): Promise<boolean> => {
-  const { error } = await supabase.from('employer_employees').delete().eq('id', id);
-
-  if (error) {
-    console.error('Error deleting employee:', error);
-    return false;
-  }
-
-  return true;
-};
+// Hard deletes are intentionally NOT exposed: employee history (timesheets,
+// payroll, certifications, Elec-ID) is FK-RESTRICTed at the database. Archive
+// via status='Archived'; full teardown only via teardown_employer_tenant.
 
 export const getActiveEmployees = async (): Promise<Employee[]> => {
   const {

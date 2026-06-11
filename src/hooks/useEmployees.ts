@@ -7,7 +7,6 @@ import {
   getEmployeeById,
   createEmployee,
   updateEmployee,
-  deleteEmployee,
   getActiveEmployees,
   Employee,
 } from '@/services/employeeService';
@@ -84,13 +83,3 @@ export const useUpdateEmployee = () => {
   });
 };
 
-export const useDeleteEmployee = () => {
-  const queryClient = useQueryClient();
-
-  return useMutation({
-    mutationFn: deleteEmployee,
-    onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: EMPLOYEES_KEY });
-    },
-  });
-};

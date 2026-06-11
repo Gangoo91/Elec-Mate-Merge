@@ -33,6 +33,7 @@ export interface Quote {
   valid_until: string | null;
   job_id: string | null;
   created_by: string | null;
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   line_items: any[];
   notes: string | null;
   created_at: string;
@@ -50,6 +51,7 @@ export interface Invoice {
   paid_date: string | null;
   job_id: string | null;
   quote_id: string | null;
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   line_items: any[];
   notes: string | null;
   created_at: string;
@@ -98,6 +100,7 @@ export interface MaterialOrder {
   order_number: string;
   supplier_id: string;
   job_id: string | null;
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   items: any[];
   total: number;
   status: string;
@@ -436,6 +439,7 @@ export async function updateOrderStatus(
   status: string,
   deliveryDate?: string
 ): Promise<MaterialOrder> {
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const updates: any = { status };
   if (deliveryDate) updates.delivery_date = deliveryDate;
 
@@ -663,55 +667,88 @@ export interface StripeConnectStatus {
 }
 
 export async function getStripeConnectStatus(): Promise<StripeConnectStatus> {
+  // Same engine as the electrician side: per-user, JWT-verified, status held
+  // on company_profiles. The response is flat — map it to the card's shape.
   const { data, error } = await supabase.functions.invoke('get-stripe-connect-status');
 
   if (error) {
-    console.error('Error fetching Stripe Connect status:', error);
-    return { connected: false, stripeConfigured: false, message: error.message };
+    const msg = error.message || '';
+    return {
+      connected: false,
+      stripeConfigured: !msg.includes('STRIPE_SECRET_KEY'),
+      message: msg,
+    };
   }
 
-  return data;
+  if (!data?.connected) {
+    return { connected: false, stripeConfigured: true };
+  }
+
+  return {
+    connected: true,
+    stripeConfigured: true,
+    account: {
+      id: data.accountId,
+      stripeAccountId: data.accountId,
+      status: data.status,
+      chargesEnabled: !!data.chargesEnabled,
+      payoutsEnabled: !!data.payoutsEnabled,
+      businessName: null,
+      onboardingCompleted: !!data.detailsSubmitted,
+      requirementsCurrently: data.requirements || [],
+    },
+  };
 }
 
 export async function createStripeConnectAccount(
-  businessName: string,
-  email: string | null
+  _businessName: string,
+  _email: string | null
 ): Promise<{ onboardingUrl: string; accountId: string; isExisting: boolean }> {
-  const currentUrl = window.location.origin;
-
+  // create-stripe-connect-account is idempotent: creates the Express account
+  // (from the caller's company profile) or returns a fresh onboarding /
+  // dashboard link for an existing one. It builds success/refresh URLs from
+  // returnUrl itself.
   const { data, error } = await supabase.functions.invoke('create-stripe-connect-account', {
-    body: {
-      businessName,
-      email,
-      returnUrl: `${currentUrl}/employer?tab=settings&stripe=success`,
-      refreshUrl: `${currentUrl}/employer?tab=settings&stripe=refresh`,
-    },
+    body: { returnUrl: `${window.location.origin}/employer?section=settings` },
   });
 
   if (error) throw error;
-  return data;
+  if (data?.error) throw new Error(data.error);
+  return {
+    onboardingUrl: data.url,
+    accountId: data.accountId || '',
+    isExisting: data.type === 'dashboard',
+  };
 }
 
 export async function getStripeOnboardingLink(
-  type: 'onboarding' | 'dashboard' = 'onboarding'
+  _type: 'onboarding' | 'dashboard' = 'onboarding'
 ): Promise<{ url: string }> {
-  const currentUrl = window.location.origin;
-
-  const { data, error } = await supabase.functions.invoke('create-stripe-connect-onboarding-link', {
-    body: {
-      type,
-      returnUrl: `${currentUrl}/employer?tab=settings&stripe=success`,
-      refreshUrl: `${currentUrl}/employer?tab=settings&stripe=refresh`,
-    },
+  // Idempotent re-entry: pending account → onboarding link, active account →
+  // Express dashboard login link.
+  const { data, error } = await supabase.functions.invoke('create-stripe-connect-account', {
+    body: { returnUrl: `${window.location.origin}/employer?section=settings` },
   });
 
   if (error) throw error;
-  return data;
+  if (data?.error) throw new Error(data.error);
+  return { url: data.url };
 }
 
 export async function disconnectStripeConnect(): Promise<{ success: boolean }> {
-  const { data, error } = await supabase.functions.invoke('disconnect-stripe-connect');
+  // The connection is two columns on the caller's own company profile —
+  // owner RLS covers it, no privileged function involved. The Stripe account
+  // itself is untouched.
+  const {
+    data: { user },
+  } = await supabase.auth.getUser();
+  if (!user) throw new Error('Not authenticated');
+
+  const { error } = await supabase
+    .from('company_profiles')
+    .update({ stripe_account_id: null, stripe_account_status: null })
+    .eq('user_id', user.id);
 
   if (error) throw error;
-  return data;
+  return { success: true };
 }

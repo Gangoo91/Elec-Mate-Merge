@@ -1,6 +1,7 @@
 import { useState, useMemo } from 'react';
 import { RefreshCw } from 'lucide-react';
 import { toast } from '@/hooks/use-toast';
+import { supabase } from '@/integrations/supabase/client';
 import { useJobPacks, useUpdateJobPackDocument, useUpdateJobPack } from '@/hooks/useJobPacks';
 import { useEmployees } from '@/hooks/useEmployees';
 import { useJobs } from '@/hooks/useJobs';
@@ -99,13 +100,13 @@ export const JobPacksSection = () => {
     try {
       await updateDocument.mutateAsync({ id: jobPackId, documentType, status: true });
       toast({
-        title: `${documentName} Generated`,
-        description: `${documentName} has been auto-generated.`,
+        title: `${documentName} marked as prepared`,
+        description: 'Tick reflects pack readiness — attach the document itself in pack files.',
       });
     } catch (error) {
       toast({
         title: 'Error',
-        description: `Failed to generate ${documentName}.`,
+        description: `Could not update ${documentName}.`,
         variant: 'destructive',
       });
     }
@@ -121,9 +122,31 @@ export const JobPacksSection = () => {
           sent_to_workers_at: new Date().toISOString(),
         },
       });
+
+      // The acknowledgement rows are what make the pack visible to the
+      // workers' accounts (worker RLS reads pack documents via their ack)
+      const workerIds = jobPack.assigned_workers || [];
+      if (workerIds.length > 0) {
+        const { data: existing } = await supabase
+          .from('employer_job_pack_acknowledgements')
+          .select('employee_id')
+          .eq('job_pack_id', jobPack.id);
+        const already = new Set((existing || []).map((r) => r.employee_id));
+        const fresh = workerIds.filter((id) => !already.has(id));
+        if (fresh.length > 0) {
+          const { error: ackError } = await supabase
+            .from('employer_job_pack_acknowledgements')
+            .insert(fresh.map((employee_id) => ({ job_pack_id: jobPack.id, employee_id })));
+          if (ackError) throw ackError;
+        }
+      }
+
       toast({
         title: 'Job Pack Sent',
-        description: `${jobPack.title} has been sent to assigned workers.`,
+        description:
+          workerIds.length > 0
+            ? `${jobPack.title} is now visible to ${workerIds.length} assigned worker${workerIds.length === 1 ? '' : 's'} for sign-off.`
+            : `${jobPack.title} marked sent — assign workers so they can see it.`,
       });
     } catch (error) {
       toast({

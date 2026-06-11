@@ -108,12 +108,30 @@ export function WorkerTrackingSection() {
     toast({ title: 'Workers refreshed', description: 'Location data updated' });
   }, [refetchLocations]);
 
-  const handleCall = (employeeName: string) => {
-    toast({ title: `Calling ${employeeName}...`, description: 'Opening phone dialler' });
+  const handleCall = (phone: string) => {
+    window.location.href = `tel:${phone}`;
   };
 
-  const handleMessage = (employeeName: string) => {
-    toast({ title: `Messaging ${employeeName}...`, description: 'Opening message composer' });
+  const handleMessage = async (employeeId: string, employeeName: string) => {
+    const content = window.prompt(`Message to ${employeeName}:`);
+    if (!content?.trim()) return;
+    try {
+      await createCommunication({
+        sender_id: null,
+        type: 'message',
+        title: `Message for ${employeeName}`,
+        content: content.trim(),
+        priority: 'normal',
+        target_audience: 'specific',
+        target_employee_ids: [employeeId],
+        attachments: null,
+        is_pinned: false,
+        expires_at: null,
+      });
+      toast({ title: 'Message sent', description: `Sent to ${employeeName}.` });
+    } catch {
+      toast({ title: 'Send failed', variant: 'destructive' });
+    }
   };
 
   const handleCheckIn = async () => {
@@ -410,7 +428,7 @@ export function WorkerTrackingSection() {
                                 <button
                                   onClick={(e) => {
                                     e.stopPropagation();
-                                    handleCall(checkIn.employeeName);
+                                    handleCall(checkIn.phone!);
                                   }}
                                   className="h-9 w-9 rounded-full bg-white/[0.04] border border-white/[0.08] text-white flex items-center justify-center hover:bg-white/[0.08] touch-manipulation"
                                   aria-label={`Call ${checkIn.employeeName}`}
@@ -422,7 +440,7 @@ export function WorkerTrackingSection() {
                                 <button
                                   onClick={(e) => {
                                     e.stopPropagation();
-                                    handleMessage(checkIn.employeeName);
+                                    handleMessage(checkIn.employeeId, checkIn.employeeName);
                                   }}
                                   className="h-9 w-9 rounded-full bg-white/[0.04] border border-white/[0.08] text-white flex items-center justify-center hover:bg-white/[0.08] touch-manipulation"
                                   aria-label={`Message ${checkIn.employeeName}`}

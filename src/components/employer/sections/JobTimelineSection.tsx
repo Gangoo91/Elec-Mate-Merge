@@ -2,6 +2,7 @@ import { useState, useMemo } from 'react';
 import { RefreshCw, Users, MapPin } from 'lucide-react';
 import { useJobs } from '@/hooks/useJobs';
 import { useEmployees } from '@/hooks/useEmployees';
+import { useWorkerLocations } from '@/hooks/useWorkerLocations';
 import { cn } from '@/lib/utils';
 import { ViewJobSheet } from '@/components/employer/sheets/ViewJobSheet';
 import { Job } from '@/services/jobService';
@@ -56,6 +57,7 @@ export function JobTimelineSection() {
 
   const { data: jobs = [], isLoading: jobsLoading, refetch } = useJobs();
   const { data: employees = [], isLoading: employeesLoading } = useEmployees();
+  const { data: workerLocations = [] } = useWorkerLocations();
 
   const rangeDays = RANGE_DAYS[range];
 
@@ -124,37 +126,6 @@ export function JobTimelineSection() {
   const onScheduleCount = jobsThisPeriod.filter((j) => (j.progress ?? 0) >= 50).length;
   const slippingCount = jobsThisPeriod.length - onScheduleCount;
 
-  const detectClashes = () => {
-    const clashes: Array<{
-      employee: (typeof employees)[0];
-      jobs: typeof activeJobs;
-      date: Date;
-    }> = [];
-
-    if (activeJobs.length >= 2 && employees.length > 0) {
-      const todayIdx = getTodayIndex();
-      if (todayIdx >= 0 && todayIdx < 5) {
-        const overlappingJobs = jobsThisPeriod.filter((job) => {
-          const pos = getJobPosition(job);
-          return (
-            pos && todayIdx >= pos.startDay && todayIdx < pos.startDay + pos.duration
-          );
-        });
-
-        if (overlappingJobs.length >= 2 && employees[0]) {
-          clashes.push({
-            employee: employees[0],
-            jobs: overlappingJobs.slice(0, 2),
-            date: periodDays[todayIdx],
-          });
-        }
-      }
-    }
-
-    return clashes;
-  };
-
-  const clashes = detectClashes();
 
   const handleJobClick = (job: (typeof activeJobs)[0]) => {
     const fullJob = jobs.find((j) => j.id === job.id);
@@ -412,23 +383,6 @@ export function JobTimelineSection() {
         )}
       </ListCard>
 
-      {clashes.length > 0 && (
-        <div className="space-y-3">
-          <Eyebrow>Conflicts</Eyebrow>
-          {clashes.map((clash, idx) => (
-            <AlertRow
-              key={idx}
-              tone="red"
-              title={`${clash.employee.name} — double booked`}
-              subtitle={`Assigned to "${clash.jobs[0]?.title}" and "${clash.jobs[1]?.title}" on ${clash.date.toLocaleDateString(
-                'en-GB',
-                { day: 'numeric', month: 'long' }
-              )}`}
-              trailing={<Pill tone="red">Clash</Pill>}
-            />
-          ))}
-        </div>
-      )}
 
       {!employeesLoading && employees.length > 0 && (
         <ListCard>
@@ -442,19 +396,10 @@ export function JobTimelineSection() {
               .filter((e) => e.status === 'Active')
               .slice(0, 9)
               .map((employee) => {
-                const idx = employees.findIndex((e) => e.id === employee.id);
-                const hasClash = clashes.some((c) => c.employee.id === employee.id);
-                const onSite = idx < 3 && jobsThisPeriod.length > 0;
-                const statusTone: Tone = hasClash
-                  ? 'red'
-                  : onSite
-                    ? 'emerald'
-                    : 'cyan';
-                const statusLabel = hasClash
-                  ? 'Clash'
-                  : onSite
-                    ? 'On site'
-                    : 'Available';
+                const loc = workerLocations.find((l) => l.employee_id === employee.id);
+                const onSite = (loc?.status || '').toLowerCase().replace('_', ' ') === 'on site';
+                const statusTone: Tone = onSite ? 'emerald' : 'cyan';
+                const statusLabel = onSite ? 'On site' : 'Available';
                 return (
                   <ListRow
                     key={employee.id}

@@ -10,7 +10,9 @@ import {
   SelectValue,
 } from '@/components/ui/select';
 import { useIsMobile } from '@/hooks/use-mobile';
-import { useEmployer, type Employee } from '@/contexts/EmployerContext';
+import type { Employee } from '@/services/employeeService';
+import { createCommunication } from '@/services/communicationService';
+import { useQueryClient } from '@tanstack/react-query';
 import { useJobs } from '@/hooks/useJobs';
 import { toast } from '@/hooks/use-toast';
 import { MessageSquare, Send, Paperclip } from 'lucide-react';
@@ -52,7 +54,7 @@ interface SendMessageDialogProps {
 
 export function SendMessageDialog({ employee, open, onOpenChange }: SendMessageDialogProps) {
   const isMobile = useIsMobile();
-  const { sendMessage } = useEmployer();
+  const queryClient = useQueryClient();
   const { data: jobs = [] } = useJobs();
   const [messageType, setMessageType] = useState('general');
   const [subject, setSubject] = useState('');
@@ -67,7 +69,7 @@ export function SendMessageDialog({ employee, open, onOpenChange }: SendMessageD
     setMessage(quickMessage);
   };
 
-  const handleSend = () => {
+  const handleSend = async () => {
     if (!message.trim()) {
       toast({
         title: 'Message Required',
@@ -77,25 +79,38 @@ export function SendMessageDialog({ employee, open, onOpenChange }: SendMessageD
       return;
     }
 
-    sendMessage(
-      employee.id,
-      employee.name,
-      messageType,
-      message,
-      subject || undefined,
-      selectedJobId || undefined
-    );
-
-    toast({
-      title: 'Message Sent',
-      description: `Your message has been sent to ${employee.name}.`,
-    });
-
-    setMessageType('general');
-    setSubject('');
-    setMessage('');
-    setSelectedJobId('');
-    onOpenChange(false);
+    try {
+      // Lands in the real Communications feed; the recipient row makes it
+      // show in the worker's Messages sheet
+      await createCommunication({
+        sender_id: null,
+        type: messageType === 'urgent' ? 'alert' : 'message',
+        title: subject || `Message for ${employee.name}`,
+        content: message,
+        priority: messageType === 'urgent' ? 'urgent' : 'normal',
+        target_audience: 'specific',
+        target_employee_ids: [employee.id],
+        attachments: null,
+        is_pinned: false,
+        expires_at: null,
+      });
+      queryClient.invalidateQueries({ queryKey: ['communications'] });
+      toast({
+        title: 'Message Sent',
+        description: `Your message has been sent to ${employee.name}.`,
+      });
+      setMessageType('general');
+      setSubject('');
+      setMessage('');
+      setSelectedJobId('');
+      onOpenChange(false);
+    } catch {
+      toast({
+        title: 'Send failed',
+        description: 'Could not send the message. Try again.',
+        variant: 'destructive',
+      });
+    }
   };
 
   return (
@@ -116,7 +131,7 @@ export function SendMessageDialog({ employee, open, onOpenChange }: SendMessageD
 
         <div className="flex items-center gap-3 p-3 bg-[hsl(0_0%_12%)] border border-white/[0.06] rounded-2xl">
           <div className="w-10 h-10 rounded-xl bg-white/[0.06] border border-white/[0.08] flex items-center justify-center text-[13px] font-semibold text-white flex-shrink-0">
-            {employee.avatar}
+            {employee.avatar_initials}
           </div>
           <div className="min-w-0 flex-1">
             <p className="text-[13px] font-semibold text-white truncate">{employee.name}</p>
@@ -194,14 +209,7 @@ export function SendMessageDialog({ employee, open, onOpenChange }: SendMessageD
               rows={4}
               className={`${textareaClass} min-h-[120px]`}
             />
-            <div className="flex items-center justify-between text-[11px] text-white">
-              <button
-                type="button"
-                className="inline-flex items-center gap-1 hover:text-elec-yellow transition-colors"
-              >
-                <Paperclip className="h-3 w-3" />
-                Attach file
-              </button>
+            <div className="flex items-center justify-end text-[11px] text-white">
               <span>{message.length} / 500</span>
             </div>
           </div>

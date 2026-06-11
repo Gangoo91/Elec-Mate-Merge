@@ -1,8 +1,20 @@
 import { useMemo, useState } from 'react';
+import { Sheet, SheetContent, SheetHeader, SheetTitle } from '@/components/ui/sheet';
+import { Input } from '@/components/ui/input';
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from '@/components/ui/select';
 import { RefreshCw, AlertTriangle } from 'lucide-react';
 import {
   useComplianceDocuments,
   useComplianceStats,
+  useCreateComplianceDocument,
+  type DocumentType,
+  type DocumentCategory,
   type ComplianceDocument,
 } from '@/hooks/useComplianceDocuments';
 import {
@@ -19,6 +31,7 @@ import {
   LoadingBlocks,
   IconButton,
   type Tone,
+  PrimaryButton,
 } from '@/components/employer/editorial';
 
 type FilterValue = 'all' | 'insurance' | 'pat' | 'calibration' | 'audits';
@@ -88,6 +101,31 @@ export function ComplianceSection() {
   const [selected, setSelected] = useState<ComplianceDocument | null>(null);
 
   const { data: documents, isLoading, error, refetch } = useComplianceDocuments();
+  const createDocument = useCreateComplianceDocument();
+  const [addOpen, setAddOpen] = useState(false);
+  const [newDoc, setNewDoc] = useState({
+    title: '',
+    document_type: 'Certificate' as DocumentType,
+    category: 'Insurance' as DocumentCategory,
+    expiry_date: '',
+    notes: '',
+  });
+
+  const handleAddDocument = async () => {
+    if (!newDoc.title.trim()) return;
+    await createDocument.mutateAsync({
+      title: newDoc.title.trim(),
+      document_type: newDoc.document_type,
+      category: newDoc.category,
+      status: 'Current',
+      expiry_date: newDoc.expiry_date || undefined,
+      notes: newDoc.notes || undefined,
+      signatures_required: 0,
+      signatures_collected: 0,
+    });
+    setAddOpen(false);
+    setNewDoc({ title: '', document_type: 'Certificate', category: 'Insurance', expiry_date: '', notes: '' });
+  };
   const { data: stats } = useComplianceStats();
 
   const enriched = useMemo(() => {
@@ -186,9 +224,12 @@ export function ComplianceSection() {
         description="Insurance renewals, PAT schedule, calibration and audit trail."
         tone="cyan"
         actions={
-          <IconButton onClick={() => refetch()} aria-label="Refresh">
-            <RefreshCw className="h-4 w-4" />
-          </IconButton>
+          <>
+            <PrimaryButton onClick={() => setAddOpen(true)}>Add document</PrimaryButton>
+            <IconButton onClick={() => refetch()} aria-label="Refresh">
+              <RefreshCw className="h-4 w-4" />
+            </IconButton>
+          </>
         }
       />
 
@@ -368,6 +409,72 @@ export function ComplianceSection() {
           <AlertTriangle aria-hidden />
         </div>
       )}
+
+      <Sheet open={addOpen} onOpenChange={setAddOpen}>
+        <SheetContent side="bottom" className="p-0 rounded-t-2xl overflow-hidden">
+          <div className="bg-background px-4 pt-4 pb-8 space-y-4">
+            <SheetHeader>
+              <SheetTitle className="text-left text-base">Add compliance document</SheetTitle>
+            </SheetHeader>
+            <Input
+              placeholder="Title (e.g. Public liability insurance)"
+              value={newDoc.title}
+              onChange={(e) => setNewDoc((p) => ({ ...p, title: e.target.value }))}
+              className="h-11 text-base touch-manipulation border-white/30 focus:border-yellow-500 focus:ring-yellow-500"
+            />
+            <div className="grid grid-cols-2 gap-3">
+              <Select
+                value={newDoc.document_type}
+                onValueChange={(v) => setNewDoc((p) => ({ ...p, document_type: v as DocumentType }))}
+              >
+                <SelectTrigger className="h-11 touch-manipulation bg-elec-gray border-elec-gray focus:border-elec-yellow">
+                  <SelectValue />
+                </SelectTrigger>
+                <SelectContent className="z-[100] bg-elec-gray border-elec-gray text-foreground">
+                  {['Certificate', 'Policy', 'Permit', 'Induction', 'Briefing', 'Method Statement', 'RAMS Sign-off'].map((t) => (
+                    <SelectItem key={t} value={t}>
+                      {t}
+                    </SelectItem>
+                  ))}
+                </SelectContent>
+              </Select>
+              <Select
+                value={newDoc.category}
+                onValueChange={(v) => setNewDoc((p) => ({ ...p, category: v as DocumentCategory }))}
+              >
+                <SelectTrigger className="h-11 touch-manipulation bg-elec-gray border-elec-gray focus:border-elec-yellow">
+                  <SelectValue />
+                </SelectTrigger>
+                <SelectContent className="z-[100] bg-elec-gray border-elec-gray text-foreground">
+                  {['Insurance', 'Safety', 'Legal', 'Training', 'Permits', 'Induction'].map((c) => (
+                    <SelectItem key={c} value={c}>
+                      {c}
+                    </SelectItem>
+                  ))}
+                </SelectContent>
+              </Select>
+            </div>
+            <div>
+              <label className="text-[11px] uppercase tracking-wider text-white/50">
+                Expiry / renewal date
+              </label>
+              <Input
+                type="date"
+                value={newDoc.expiry_date}
+                onChange={(e) => setNewDoc((p) => ({ ...p, expiry_date: e.target.value }))}
+                className="h-11 mt-1 text-base touch-manipulation border-white/30 focus:border-yellow-500 focus:ring-yellow-500"
+              />
+            </div>
+            <PrimaryButton
+              onClick={handleAddDocument}
+              disabled={!newDoc.title.trim() || createDocument.isPending}
+              fullWidth
+            >
+              {createDocument.isPending ? 'Saving…' : 'Add document'}
+            </PrimaryButton>
+          </div>
+        </SheetContent>
+      </Sheet>
     </PageFrame>
   );
 }

@@ -24,9 +24,12 @@ export function JobsHub({ onNavigate }: JobsHubProps) {
 
   const activeJobs = jobs.filter((j) => j.status === 'Active').length;
   const todayJobs = jobs.filter((j) => {
-    if (!j.scheduled_date) return false;
+    // A job is "on today" when today falls inside its start/end window
     const today = new Date().toISOString().slice(0, 10);
-    return String(j.scheduled_date).slice(0, 10) === today;
+    const start = j.start_date ? String(j.start_date).slice(0, 10) : null;
+    const end = j.end_date ? String(j.end_date).slice(0, 10) : null;
+    if (!start) return false;
+    return start <= today && (!end || end >= today) && j.status === 'Active';
   }).length;
   const completed7d = jobs.filter((j) => {
     if (j.status !== 'Completed' || !j.updated_at) return false;

@@ -6,8 +6,28 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 
 import { Card, CardContent } from '@/components/ui/card';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
-import { useEmployer, type Employee, type AvailabilityStatus } from '@/contexts/EmployerContext';
-import { AddNoteDialog } from '@/components/employer/dialogs/AddNoteDialog';
+// View-model the Team section maps real employer_employees rows into
+export type AvailabilityStatus = 'Available' | 'On Job' | 'On Leave' | 'Unavailable';
+export interface TeamMemberView {
+  id: string;
+  name: string;
+  role: string;
+  teamRole?: string;
+  team_role?: string;
+  email?: string;
+  phone?: string;
+  avatar: string;
+  photo?: string;
+  availability: AvailabilityStatus;
+  joinDate?: string;
+  hourlyRate?: number;
+  emergencyContact?: { name: string; phone: string; relationship?: string };
+  currentJobTitle?: string;
+  currentJobLocation?: string;
+}
+import { useEmployeeAssignments, useDeleteJobAssignment } from '@/hooks/useJobAssignments';
+import { useCertificationsByEmployee } from '@/hooks/useCertifications';
+import { differenceInDays, parseISO } from 'date-fns';
 import { CreateElecIDForEmployeeDialog } from '@/components/employer/dialogs/CreateElecIDForEmployeeDialog';
 import { useIsMobile } from '@/hooks/use-mobile';
 import { useElecIdProfileByEmployee } from '@/hooks/useElecId';
@@ -33,8 +53,8 @@ import {
   ExternalLink,
 } from 'lucide-react';
 import { toast } from '@/hooks/use-toast';
-import type { TeamRole } from '@/data/employerMockData';
 
+type TeamRole = 'QS' | 'Supervisor' | 'Operative' | 'Apprentice' | 'Project Manager';
 const roleColors: Record<TeamRole, string> = {
   QS: 'bg-elec-yellow/20 text-elec-yellow',
   Supervisor: 'bg-blue-500/20 text-blue-400',
@@ -58,7 +78,7 @@ const noteTypeColors: Record<string, string> = {
 };
 
 interface TeamMemberSheetProps {
-  employee: Employee | null;
+  employee: TeamMemberView | null;
   open: boolean;
   onOpenChange: (open: boolean) => void;
   onEdit?: () => void;
@@ -75,10 +95,10 @@ export function TeamMemberSheet({
   onSendMessage,
 }: TeamMemberSheetProps) {
   const isMobile = useIsMobile();
-  const { certifications, getEmployeeAssignments, removeEmployeeFromJob, setEmployeeRating } =
-    useEmployer();
+  const { data: rawAssignments = [] } = useEmployeeAssignments(employee?.id || '');
+  const deleteAssignment = useDeleteJobAssignment();
+  const { data: rawCerts = [] } = useCertificationsByEmployee(employee?.id);
   const [activeTab, setActiveTab] = useState('details');
-  const [addNoteOpen, setAddNoteOpen] = useState(false);
   const [createElecIdOpen, setCreateElecIdOpen] = useState(false);
 
   const { data: elecIdProfile, isLoading: elecIdLoading } = useElecIdProfileByEmployee(
@@ -87,8 +107,25 @@ export function TeamMemberSheet({
 
   if (!employee) return null;
 
-  const employeeAssignments = getEmployeeAssignments(employee.id);
-  const employeeCerts = certifications.filter((c) => c.employeeId === employee.id);
+  const employeeAssignments = rawAssignments
+    .filter((a) => !['completed', 'cancelled', 'removed', 'ended'].includes((a.status || '').toLowerCase()))
+    .map((a) => ({
+      id: a.id,
+      jobTitle: a.job?.title || 'Job',
+      jobLocation: a.job?.location || '',
+    }));
+  const employeeCerts = rawCerts.map((c) => {
+    const days = c.expiry_date
+      ? differenceInDays(parseISO(c.expiry_date), new Date())
+      : null;
+    return {
+      id: c.id,
+      name: c.name,
+      issuer: c.issuing_body || '',
+      daysRemaining: days ?? 0,
+      status: days !== null && days < 0 ? 'Expired' : days !== null && days <= 60 ? 'Warning' : 'Active',
+    };
+  });
   const expiringSoonCerts = employeeCerts.filter(
     (c) => c.status === 'Warning' || c.status === 'Expired'
   );
@@ -128,8 +165,8 @@ export function TeamMemberSheet({
             </h2>
             <p className="text-sm md:text-base text-white">{employee.role}</p>
             <div className="flex items-center gap-1.5 mt-2 flex-wrap">
-              <Badge className={`text-xs ${roleColors[employee.teamRole]}`}>
-                {employee.teamRole}
+              <Badge className={`text-xs ${roleColors[(employee.teamRole as TeamRole) || 'Operative']}`}>
+                {employee.teamRole || employee.team_role || 'Operative'}
               </Badge>
               <Badge
                 variant="outline"
@@ -137,12 +174,6 @@ export function TeamMemberSheet({
               >
                 {employee.availability}
               </Badge>
-              {employee.rating > 0 && (
-                <Badge variant="outline" className="border-amber-500/50 text-amber-400 text-xs">
-                  <Star className="h-3 w-3 mr-0.5 fill-amber-400" />
-                  {employee.rating}
-                </Badge>
-              )}
               {expiringSoonCerts.length > 0 && (
                 <Badge variant="outline" className="border-amber-500 text-amber-400 text-xs">
                   <AlertTriangle className="h-3 w-3 mr-0.5" />
@@ -195,12 +226,6 @@ export function TeamMemberSheet({
               className="flex-1 data-[state=active]:bg-transparent data-[state=active]:border-b-2 data-[state=active]:border-elec-yellow rounded-none px-2 py-3 text-sm text-white"
             >
               Credentials
-            </TabsTrigger>
-            <TabsTrigger
-              value="notes"
-              className="flex-1 data-[state=active]:bg-transparent data-[state=active]:border-b-2 data-[state=active]:border-elec-yellow rounded-none px-2 py-3 text-sm text-white"
-            >
-              Notes
             </TabsTrigger>
           </TabsList>
         </div>
@@ -267,12 +292,8 @@ export function TeamMemberSheet({
               )}
 
               {/* Pay Rates */}
-              {(employee.dayRate || employee.hourlyRate) && (
-                <div className="grid grid-cols-2 gap-3">
-                  <div className="p-4 rounded-xl bg-[hsl(0_0%_12%)] border border-white/[0.06] text-center">
-                    <p className="text-2xl font-bold text-elec-yellow">£{employee.dayRate}</p>
-                    <p className="text-xs text-white">Day Rate</p>
-                  </div>
+              {!!employee.hourlyRate && (
+                <div className="grid grid-cols-1 gap-3">
                   <div className="p-4 rounded-xl bg-[hsl(0_0%_12%)] border border-white/[0.06] text-center">
                     <p className="text-2xl font-bold text-elec-yellow">£{employee.hourlyRate}</p>
                     <p className="text-xs text-white">Hourly Rate</p>
@@ -280,48 +301,6 @@ export function TeamMemberSheet({
                 </div>
               )}
 
-              {/* Skills */}
-              {employee.skills.length > 0 && (
-                <div className="space-y-2">
-                  <h4 className="text-sm font-medium text-white flex items-center gap-2">
-                    <Zap className="h-4 w-4 text-amber-400" />
-                    Skills
-                  </h4>
-                  <div className="flex flex-wrap gap-2">
-                    {employee.skills.map((skill) => (
-                      <Badge
-                        key={skill}
-                        variant="secondary"
-                        className="text-xs py-1 px-3 bg-white/[0.06] text-white"
-                      >
-                        {skill}
-                      </Badge>
-                    ))}
-                  </div>
-                </div>
-              )}
-
-              {/* Rating */}
-              <div className="space-y-2">
-                <h4 className="text-sm font-medium text-white">Performance Rating</h4>
-                <div className="flex items-center gap-1">
-                  {[1, 2, 3, 4, 5].map((star) => (
-                    <button
-                      key={star}
-                      onClick={() => {
-                        setEmployeeRating(employee.id, star);
-                        toast({ title: 'Rating Updated' });
-                      }}
-                      className="p-1"
-                    >
-                      <Star
-                        className={`h-7 w-7 transition-colors ${star <= employee.rating ? 'text-amber-400 fill-amber-400' : 'text-white hover:text-amber-400/50'}`}
-                      />
-                    </button>
-                  ))}
-                  <span className="text-sm text-white ml-2">{employee.rating} / 5</span>
-                </div>
-              </div>
             </TabsContent>
 
             {/* Jobs Tab */}
@@ -353,8 +332,8 @@ export function TeamMemberSheet({
                       <button
                         type="button"
                         className="h-8 w-8 flex items-center justify-center rounded-full text-white hover:bg-red-500/10 hover:text-red-400 touch-manipulation"
-                        onClick={() => {
-                          removeEmployeeFromJob(a.id);
+                        onClick={async () => {
+                          await deleteAssignment.mutateAsync(a.id);
                           toast({ title: 'Removed from Job' });
                         }}
                       >
@@ -463,44 +442,6 @@ export function TeamMemberSheet({
               </div>
             </TabsContent>
 
-            {/* Notes Tab */}
-            <TabsContent value="notes" className="mt-0 space-y-3">
-              <div className="flex items-center justify-between">
-                <h4 className="font-medium text-white">Notes ({employee.notes.length})</h4>
-                <SecondaryButton size="sm" onClick={() => setAddNoteOpen(true)}>
-                  <Plus className="h-3 w-3 mr-1" />
-                  Add Note
-                </SecondaryButton>
-              </div>
-              {employee.notes.length > 0 ? (
-                <div className="space-y-2">
-                  {employee.notes.map((note) => (
-                    <Card
-                      key={note.id}
-                      className={`border-l-4 bg-[hsl(0_0%_12%)] border border-white/[0.06] ${noteTypeColors[note.type]}`}
-                    >
-                      <CardContent className="p-3">
-                        <div className="flex items-start justify-between mb-1">
-                          <Badge variant="secondary" className="text-xs bg-white/[0.06] text-white">
-                            {note.type}
-                          </Badge>
-                          <span className="text-xs text-white">
-                            {new Date(note.createdAt).toLocaleDateString('en-GB')}
-                          </span>
-                        </div>
-                        <p className="text-sm text-white">{note.content}</p>
-                        <p className="text-xs text-white mt-1">— {note.authorName}</p>
-                      </CardContent>
-                    </Card>
-                  ))}
-                </div>
-              ) : (
-                <div className="text-center py-8">
-                  <StickyNote className="h-10 w-10 text-white mx-auto mb-2" />
-                  <p className="text-sm text-white">No notes yet</p>
-                </div>
-              )}
-            </TabsContent>
           </div>
         </div>
       </Tabs>
@@ -524,7 +465,6 @@ export function TeamMemberSheet({
             <ProfileContent />
           </DrawerContent>
         </Drawer>
-        <AddNoteDialog employee={employee} open={addNoteOpen} onOpenChange={setAddNoteOpen} />
         <CreateElecIDForEmployeeDialog
           employeeId={employee.id}
           employeeName={employee.name}
@@ -543,7 +483,6 @@ export function TeamMemberSheet({
           <ProfileContent />
         </SheetContent>
       </Sheet>
-      <AddNoteDialog employee={employee} open={addNoteOpen} onOpenChange={setAddNoteOpen} />
       <CreateElecIDForEmployeeDialog
         employeeId={employee.id}
         employeeName={employee.name}

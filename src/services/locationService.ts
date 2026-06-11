@@ -206,18 +206,38 @@ export const estimateTravelTime = (distanceKm: number): number => {
   return Math.round((distanceKm / averageSpeedKmh) * 60);
 };
 
-// Get current user's employee record (for self-service)
+// Get current user's employee record (for self-service).
+// Resolution is by user_id — the account link set by claim_employee_records()
+// on sign-in (email matching is only the CLAIM mechanism, not the lookup key;
+// worker RLS policies also key on user_id). Excludes self-created Elec-ID
+// stubs (employer_id null) — only real roster rows count.
 export const getMyEmployeeRecord = async (): Promise<Employee | null> => {
   const {
     data: { user },
   } = await supabase.auth.getUser();
   if (!user) return null;
 
-  const { data, error } = await supabase
-    .from('employer_employees')
-    .select('*')
-    .eq('email', user.email)
-    .maybeSingle();
+  const fetchRecord = () =>
+    supabase
+      .from('employer_employees')
+      .select('*')
+      .eq('user_id', user.id)
+      .not('employer_id', 'is', null)
+      .order('created_at', { ascending: true })
+      .limit(1)
+      .maybeSingle();
+
+  let { data, error } = await fetchRecord();
+
+  // No linked roster row yet — the employer may have added this person by
+  // email. Claim any matching rows (confirmed-email match, employer-created
+  // rows only) and retry once.
+  if (!data && !error) {
+    const { data: claimed } = await supabase.rpc('claim_employee_records');
+    if ((claimed ?? 0) > 0) {
+      ({ data, error } = await fetchRecord());
+    }
+  }
 
   if (error) {
     console.error('Error fetching employee record:', error);

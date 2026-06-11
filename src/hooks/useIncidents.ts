@@ -25,7 +25,7 @@ export type IncidentStatus =
 
 export interface Incident {
   id: string;
-  user_id: string;
+  employer_id: string;
   incident_type: IncidentType;
   title: string;
   description: string;
@@ -50,8 +50,57 @@ export interface Incident {
   resolved_at?: string;
 }
 
-export type CreateIncidentInput = Omit<Incident, 'id' | 'user_id' | 'created_at' | 'updated_at'>;
+export type CreateIncidentInput = Omit<Incident, 'id' | 'employer_id' | 'created_at' | 'updated_at'>;
 export type UpdateIncidentInput = Partial<CreateIncidentInput>;
+
+
+// The employer_incidents table is narrower than the report form. The mapper
+// folds the extra detail into description/actions_taken on write, and
+// reverse-maps on read so the UI keeps its shape.
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+const rowToIncident = (row: any): Incident => ({
+  id: row.id,
+  employer_id: row.employer_id,
+  incident_type: row.incident_type,
+  title: row.title,
+  description: row.description || '',
+  location: row.location || '',
+  date_occurred: row.reported_at || row.created_at,
+  severity: row.severity,
+  status: row.status,
+  immediate_action_taken: row.actions_taken || undefined,
+  created_at: row.created_at,
+  updated_at: row.updated_at,
+});
+
+const incidentToRow = (input: Partial<CreateIncidentInput>) => {
+  const extras: string[] = [];
+  if (input.witnesses) extras.push(`Witnesses: ${input.witnesses}`);
+  if (input.equipment_involved) extras.push(`Equipment involved: ${input.equipment_involved}`);
+  if (input.injuries_sustained) extras.push(`Injuries: ${input.injuries_sustained}`);
+  if (input.first_aid_given) extras.push('First aid given');
+  if (input.supervisor_notified)
+    extras.push(`Supervisor notified${input.supervisor_name ? `: ${input.supervisor_name}` : ''}`);
+  if (input.potential_consequences) extras.push(`Potential consequences: ${input.potential_consequences}`);
+  if (input.follow_up_required)
+    extras.push(`Follow-up required${input.follow_up_notes ? `: ${input.follow_up_notes}` : ''}`);
+
+  const description = [input.description, extras.length ? extras.join('\n') : null]
+    .filter(Boolean)
+    .join('\n\n');
+
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const row: any = {};
+  if (input.title !== undefined) row.title = input.title;
+  if (description) row.description = description;
+  if (input.incident_type !== undefined) row.incident_type = input.incident_type;
+  if (input.severity !== undefined) row.severity = input.severity;
+  if (input.status !== undefined) row.status = input.status;
+  if (input.location !== undefined) row.location = input.location;
+  if (input.date_occurred !== undefined) row.reported_at = input.date_occurred;
+  if (input.immediate_action_taken !== undefined) row.actions_taken = input.immediate_action_taken;
+  return row;
+};
 
 // Fetch all incidents for the current user
 export function useIncidents() {
@@ -67,12 +116,11 @@ export function useIncidents() {
         const { data, error } = await supabase
           .from('employer_incidents')
           .select('*')
-          .eq('user_id', user.id)
-          .order('date_occurred', { ascending: false });
+          .eq('employer_id', user.id)
+          .order('reported_at', { ascending: false });
 
-        // Table may not exist or user may not have access - return empty array
         if (error) return [];
-        return data as Incident[];
+        return (data || []).map(rowToIncident);
       } catch {
         // Graceful degradation for non-employer users
         return [];
@@ -95,7 +143,7 @@ export function useIncident(id: string | undefined) {
         .single();
 
       if (error) throw error;
-      return data as Incident;
+      return rowToIncident(data);
     },
     enabled: !!id,
   });
@@ -114,12 +162,12 @@ export function useIncidentsByStatus(status: IncidentStatus) {
       const { data, error } = await supabase
         .from('employer_incidents')
         .select('*')
-        .eq('user_id', user.id)
+        .eq('employer_id', user.id)
         .eq('status', status)
-        .order('date_occurred', { ascending: false });
+        .order('reported_at', { ascending: false });
 
       if (error) throw error;
-      return data as Incident[];
+      return (data || []).map(rowToIncident);
     },
   });
 }
@@ -147,7 +195,7 @@ export function useIncidentStats() {
         const { data, error } = await supabase
           .from('employer_incidents')
           .select('status, severity')
-          .eq('user_id', user.id);
+          .eq('employer_id', user.id);
 
         // Table may not exist or user may not have access - return empty stats
         if (error || !data)
@@ -200,14 +248,17 @@ export function useCreateIncident() {
       } = await supabase.auth.getUser();
       if (!user) throw new Error('Not authenticated');
 
+      const row = incidentToRow(input);
+      if (!row.reported_at) row.reported_at = new Date().toISOString();
+
       const { data, error } = await supabase
         .from('employer_incidents')
-        .insert({ ...input, user_id: user.id })
+        .insert(row) // employer_id stamps via DEFAULT auth.uid()
         .select()
         .single();
 
       if (error) throw error;
-      return data as Incident;
+      return rowToIncident(data);
     },
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['incidents'] });
@@ -238,13 +289,13 @@ export function useUpdateIncident() {
     }: UpdateIncidentInput & { id: string }): Promise<Incident> => {
       const { data, error } = await supabase
         .from('employer_incidents')
-        .update({ ...input, updated_at: new Date().toISOString() })
+        .update({ ...incidentToRow(input), updated_at: new Date().toISOString() })
         .eq('id', id)
         .select()
         .single();
 
       if (error) throw error;
-      return data as Incident;
+      return rowToIncident(data);
     },
     onSuccess: (data) => {
       queryClient.invalidateQueries({ queryKey: ['incidents'] });

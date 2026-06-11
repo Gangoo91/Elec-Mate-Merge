@@ -17,7 +17,7 @@ import {
   Map,
 } from 'lucide-react';
 import { cn } from '@/lib/utils';
-import { PhotoCategory } from '@/data/employerMockData';
+import { PhotoCategory } from '@/components/employer/employerViewTypes';
 import { SignatureCapture } from '@/components/ui/signature-capture';
 import { useToast } from '@/hooks/use-toast';
 import { PhotoViewer } from '@/components/employer/PhotoViewer';

@@ -26,7 +26,6 @@ import {
 import { toast } from '@/hooks/use-toast';
 import { useIsMobile } from '@/hooks/use-mobile';
 import { supabase } from '@/integrations/supabase/client';
-import { permissionsList, rolePermissions, type TeamRole } from '@/data/employerMockData';
 import { StripeConnectCard } from '../StripeConnectCard';
 import {
   PageFrame,
@@ -52,17 +51,6 @@ import {
 export function SettingsSection() {
   const isMobile = useIsMobile();
   const fileInputRef = useRef<HTMLInputElement>(null);
-  const [notifications, setNotifications] = useState({
-    emailAlerts: true,
-    certificationReminders: true,
-    jobUpdates: true,
-    invoiceAlerts: true,
-    tenderDeadlines: true,
-    safetyAlerts: true,
-  });
-
-  const [selectedRole, setSelectedRole] = useState<TeamRole>('Operative');
-  const [rolePerms, setRolePerms] = useState<Record<TeamRole, string[]>>(rolePermissions);
   const [notificationEmail, setNotificationEmail] = useState('');
   const [savingEmail, setSavingEmail] = useState(false);
 
@@ -298,96 +286,13 @@ export function SettingsSection() {
     }
   };
 
-  const integrations = [
-    {
-      name: 'Stripe Connect',
-      description: 'Accept card payments directly into your account',
-      connected: false,
-      tone: 'purple' as const,
-    },
-    {
-      name: 'Xero',
-      description: 'Accounting & payroll integration',
-      connected: true,
-      tone: 'cyan' as const,
-    },
-    {
-      name: 'Sage',
-      description: 'Accounting software sync',
-      connected: false,
-      tone: 'green' as const,
-    },
-    {
-      name: 'Google Workspace',
-      description: 'Calendar and email sync',
-      connected: false,
-      tone: 'blue' as const,
-    },
-    {
-      name: 'Dropbox',
-      description: 'Document storage',
-      connected: true,
-      tone: 'indigo' as const,
-    },
-  ];
-
-  const handleSavePermissions = () => {
-    toast({
-      title: 'Permissions saved',
-      description: `Permissions for ${selectedRole} role have been updated.`,
-    });
-  };
-
-  const togglePermission = (permId: string) => {
-    setRolePerms((prev) => {
-      const currentPerms = prev[selectedRole] || [];
-      if (currentPerms.includes(permId)) {
-        return { ...prev, [selectedRole]: currentPerms.filter((p) => p !== permId) };
-      }
-      return { ...prev, [selectedRole]: [...currentPerms, permId] };
-    });
-  };
-
-  const notificationItems = [
-    {
-      key: 'emailAlerts',
-      label: 'Email alerts',
-      description: 'Receive important updates via email',
-    },
-    {
-      key: 'certificationReminders',
-      label: 'Certification reminders',
-      description: 'Get notified when certifications are expiring',
-    },
-    {
-      key: 'jobUpdates',
-      label: 'Job updates',
-      description: 'Notifications about job progress and completions',
-    },
-    {
-      key: 'invoiceAlerts',
-      label: 'Invoice alerts',
-      description: 'Payment reminders and overdue notices',
-    },
-    {
-      key: 'tenderDeadlines',
-      label: 'Tender deadlines',
-      description: 'Reminders for upcoming tender deadlines',
-    },
-    {
-      key: 'safetyAlerts',
-      label: 'Safety alerts',
-      description: 'Immediate notifications for safety incidents',
-    },
-  ] as const;
-
   if (loadingCompany) {
     return (
       <PageFrame>
         <PageHero
           eyebrow="Admin"
           title="Settings"
-          description="Company profile, branding, integrations and team permissions."
+          description="Company profile, branding, payments and QS sign-off."
           tone="yellow"
         />
         <LoadingBlocks />
@@ -401,7 +306,7 @@ export function SettingsSection() {
         <PageHero
           eyebrow="Admin"
           title="Settings"
-          description="Company profile, branding, integrations and team permissions."
+          description="Company profile, branding, payments and QS sign-off."
           tone="yellow"
           actions={
             <IconButton onClick={refresh} aria-label="Refresh settings">
@@ -655,193 +560,11 @@ export function SettingsSection() {
                 </div>
               }
             />
-            {notificationItems.map((item) => (
-              <ListRow
-                key={item.key}
-                title={item.label}
-                subtitle={item.description}
-                trailing={
-                  <Switch
-                    checked={notifications[item.key as keyof typeof notifications]}
-                    onCheckedChange={(checked) =>
-                      setNotifications((prev) => ({ ...prev, [item.key]: checked }))
-                    }
-                  />
-                }
-              />
-            ))}
           </ListBody>
         </ListCard>
 
-        {/* Security */}
-        <ListCard>
-          <ListCardHeader
-            tone="orange"
-            title="Security"
-            meta={<Pill tone="orange">Account</Pill>}
-          />
-          <ListBody>
-            <ListRow
-              title="Change password"
-              subtitle="Update your sign-in credentials"
-              trailing={<SecondaryButton>Change</SecondaryButton>}
-            />
-            <ListRow
-              title="Two-factor authentication"
-              subtitle="Add an extra step at sign-in"
-              trailing={<SecondaryButton>Enable</SecondaryButton>}
-            />
-            <ListRow
-              title="Session timeout"
-              subtitle="Auto sign-out after inactivity"
-              trailing={
-                <Select defaultValue="60">
-                  <SelectTrigger className={`${selectTriggerClass} w-40`}>
-                    <SelectValue />
-                  </SelectTrigger>
-                  <SelectContent className={selectContentClass}>
-                    <SelectItem value="15">15 minutes</SelectItem>
-                    <SelectItem value="30">30 minutes</SelectItem>
-                    <SelectItem value="60">1 hour</SelectItem>
-                    <SelectItem value="240">4 hours</SelectItem>
-                    <SelectItem value="never">Never</SelectItem>
-                  </SelectContent>
-                </Select>
-              }
-            />
-            <ListRow
-              title="Password policy"
-              subtitle="Minimum strength requirements"
-              trailing={
-                <Select defaultValue="strong">
-                  <SelectTrigger className={`${selectTriggerClass} w-40`}>
-                    <SelectValue />
-                  </SelectTrigger>
-                  <SelectContent className={selectContentClass}>
-                    <SelectItem value="basic">Basic</SelectItem>
-                    <SelectItem value="strong">Strong</SelectItem>
-                    <SelectItem value="enterprise">Enterprise</SelectItem>
-                  </SelectContent>
-                </Select>
-              }
-            />
-            <ListRow
-              title="API keys"
-              subtitle="Manage developer access tokens"
-              trailing={<SecondaryButton>Manage</SecondaryButton>}
-            />
-          </ListBody>
-        </ListCard>
-
-        {/* Integrations */}
-        <ListCard>
-          <ListCardHeader
-            tone="emerald"
-            title="Integrations"
-            meta={<Pill tone="emerald">{integrations.length}</Pill>}
-          />
-          <ListBody>
-            {integrations.map((integration) => (
-              <ListRow
-                key={integration.name}
-                accent={integration.tone}
-                title={
-                  <span className="inline-flex items-center gap-2">
-                    {integration.name}
-                    {integration.connected && <Pill tone="emerald">Connected</Pill>}
-                  </span>
-                }
-                subtitle={integration.description}
-                trailing={
-                  <SecondaryButton>{integration.connected ? 'Manage' : 'Connect'}</SecondaryButton>
-                }
-              />
-            ))}
-          </ListBody>
-        </ListCard>
-
-        <div className="hidden">
-          <StripeConnectCard />
-        </div>
-
-        {/* Document templates */}
-        <ListCard>
-          <ListCardHeader
-            tone="amber"
-            title="Document templates"
-            meta={<Pill tone="amber">RAMS</Pill>}
-          />
-          <ListBody>
-            {[
-              'RAMS template',
-              'Method statement template',
-              'Briefing pack template',
-              'Closeout report template',
-            ].map((template) => (
-              <ListRow
-                key={template}
-                title={template}
-                subtitle="Branded with your colours and logo"
-                trailing={
-                  <div className="flex items-center gap-2">
-                    <SecondaryButton>Edit</SecondaryButton>
-                    <SecondaryButton>Download</SecondaryButton>
-                  </div>
-                }
-              />
-            ))}
-          </ListBody>
-        </ListCard>
-
-        {/* Team — Roles & permissions */}
-        <ListCard>
-          <ListCardHeader
-            tone="cyan"
-            title="Roles & permissions"
-            meta={<Pill tone="cyan">{selectedRole}</Pill>}
-            action="Save"
-            onAction={handleSavePermissions}
-          />
-          <div className="px-5 sm:px-6 pt-4 pb-2">
-            <Eyebrow>Select role</Eyebrow>
-            <div className={`mt-3 flex gap-2 ${isMobile ? 'flex-wrap' : ''}`}>
-              {(['QS', 'Supervisor', 'Operative', 'Apprentice'] as TeamRole[]).map((role) => {
-                const active = selectedRole === role;
-                return (
-                  <button
-                    key={role}
-                    onClick={() => setSelectedRole(role)}
-                    className={`h-11 px-4 rounded-full text-[12.5px] font-medium touch-manipulation transition-colors ${
-                      active
-                        ? 'bg-elec-yellow text-black'
-                        : 'bg-[hsl(0_0%_10%)] text-white border border-white/10 hover:bg-white/[0.06]'
-                    } ${isMobile ? 'flex-1' : ''}`}
-                  >
-                    {role}
-                  </button>
-                );
-              })}
-            </div>
-          </div>
-          <Divider />
-          <ListBody>
-            {permissionsList.map((perm) => (
-              <ListRow
-                key={perm.id}
-                lead={
-                  <Checkbox
-                    id={perm.id}
-                    checked={rolePerms[selectedRole]?.includes(perm.id) || false}
-                    onCheckedChange={() => togglePermission(perm.id)}
-                    className={checkboxClass}
-                  />
-                }
-                title={perm.name}
-                subtitle={perm.description}
-              />
-            ))}
-          </ListBody>
-        </ListCard>
+        {/* Payments — Stripe Connect (the one real integration) */}
+        <StripeConnectCard />
 
         {/* Team — QS sign-off */}
         <ListCard>
@@ -910,16 +633,6 @@ export function SettingsSection() {
               }
             />
             <ListRow
-              title="Subscription"
-              subtitle="Manage plan and payment methods"
-              trailing={<SecondaryButton>Manage</SecondaryButton>}
-            />
-            <ListRow
-              title="Invoices"
-              subtitle="View and download past invoices"
-              trailing={<SecondaryButton>View</SecondaryButton>}
-            />
-            <ListRow
               title="Save payment details"
               subtitle="Update bank info shown on invoices"
               trailing={
@@ -931,31 +644,6 @@ export function SettingsSection() {
           </ListBody>
         </ListCard>
 
-        {/* Danger zone */}
-        <ListCard className="border-red-500/30">
-          <ListCardHeader
-            tone="red"
-            title="Danger zone"
-            meta={<Pill tone="red">Irreversible</Pill>}
-          />
-          <ListBody>
-            <ListRow
-              title="Export all data"
-              subtitle="Download a JSON archive of every record"
-              trailing={<SecondaryButton>Export</SecondaryButton>}
-            />
-            <ListRow
-              title="Delete account"
-              subtitle="Permanently remove your organisation and all data"
-              trailing={
-                <DestructiveButton>
-                  <Trash2 className="h-4 w-4 mr-2" />
-                  Delete
-                </DestructiveButton>
-              }
-            />
-          </ListBody>
-        </ListCard>
       </PageFrame>
 
       {/* Sticky save bar */}

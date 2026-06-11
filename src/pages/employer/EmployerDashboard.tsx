@@ -5,7 +5,6 @@ import { useQueryClient } from '@tanstack/react-query';
 import { useToast } from '@/hooks/use-toast';
 import useSEO from '@/hooks/useSEO';
 import { ChevronLeft, RefreshCw } from 'lucide-react';
-import { EmployerProvider } from '@/contexts/EmployerContext';
 import {
   IconButton,
   LoadingBlocks,
@@ -187,11 +186,6 @@ const PhotoGallerySection = lazy(() =>
     default: m.PhotoGallerySection,
   }))
 );
-const AutomationsSection = lazy(() =>
-  import('@/components/employer/sections/AutomationsSection').then((m) => ({
-    default: m.AutomationsSection,
-  }))
-);
 const AIDesignSpecSection = lazy(() =>
   import('@/components/employer/sections/AIDesignSpecSection').then((m) => ({
     default: m.AIDesignSpecSection,
@@ -232,54 +226,6 @@ const SmartDocsHub = lazy(() =>
   import('@/components/employer/hubs/SmartDocsHub').then((m) => ({ default: m.SmartDocsHub }))
 );
 
-const CreateQuoteDialog = lazy(() =>
-  import('@/components/employer/dialogs/CreateQuoteDialog').then((m) => ({
-    default: m.CreateQuoteDialog,
-  }))
-);
-const AddJobDialog = lazy(() =>
-  import('@/components/employer/dialogs/AddJobDialog').then((m) => ({ default: m.AddJobDialog }))
-);
-const AddEmployeeDialog = lazy(() =>
-  import('@/components/employer/dialogs/AddEmployeeDialog').then((m) => ({
-    default: m.AddEmployeeDialog,
-  }))
-);
-const CreateInvoiceDialog = lazy(() =>
-  import('@/components/employer/dialogs/CreateInvoiceDialog').then((m) => ({
-    default: m.CreateInvoiceDialog,
-  }))
-);
-const CreateExpenseDialog = lazy(() =>
-  import('@/components/employer/dialogs/CreateExpenseDialog').then((m) => ({
-    default: m.CreateExpenseDialog,
-  }))
-);
-const ManualTimeEntryDialog = lazy(() =>
-  import('@/components/employer/dialogs/ManualTimeEntryDialog').then((m) => ({
-    default: m.ManualTimeEntryDialog,
-  }))
-);
-const AddCertificationDialog = lazy(() =>
-  import('@/components/employer/dialogs/AddCertificationDialog').then((m) => ({
-    default: m.AddCertificationDialog,
-  }))
-);
-const CreateOrderDialog = lazy(() =>
-  import('@/components/employer/dialogs/CreateOrderDialog').then((m) => ({
-    default: m.CreateOrderDialog,
-  }))
-);
-const CreateSupplierDialog = lazy(() =>
-  import('@/components/employer/dialogs/CreateSupplierDialog').then((m) => ({
-    default: m.CreateSupplierDialog,
-  }))
-);
-const PostVacancyDialog = lazy(() =>
-  import('@/components/employer/dialogs/PostVacancyDialog').then((m) => ({
-    default: m.PostVacancyDialog,
-  }))
-);
 
 export type Section =
   | 'overview'
@@ -322,7 +268,6 @@ export type Section =
   | 'training'
   | 'briefings'
   | 'compliance'
-  | 'automations'
   | 'smartdocs'
   | 'aidesignspec'
   | 'airams'
@@ -380,7 +325,6 @@ const getParentSection = (section: Section): Section => {
     smartdocs: 'overview',
     overview: 'overview',
     settings: 'overview',
-    automations: 'overview',
   };
   return hierarchy[section] || 'overview';
 };
@@ -424,10 +368,10 @@ const sectionMetadata: Record<Section, SectionMeta> = {
   peoplehub: {
     eyebrow: 'Hub',
     title: 'People',
-    queryKeys: ['employees', 'talentPool', 'vacancies'],
+    queryKeys: ['employer-employees', 'talentPool', 'vacancies'],
   },
-  team: { eyebrow: 'People', title: 'Your Team', queryKeys: ['employees'] },
-  elecid: { eyebrow: 'People', title: 'Credentials', queryKeys: ['employees', 'certifications'] },
+  team: { eyebrow: 'People', title: 'Your Team', queryKeys: ['employer-employees'] },
+  elecid: { eyebrow: 'People', title: 'Credentials', queryKeys: ['employer-employees', 'certifications'] },
   timesheets: { eyebrow: 'People', title: 'Timesheets', queryKeys: ['timesheets'] },
   comms: { eyebrow: 'People', title: 'Communications', queryKeys: ['communications'] },
   talentpool: { eyebrow: 'People', title: 'Talent Pool', queryKeys: ['talentPool'] },
@@ -478,7 +422,6 @@ const sectionMetadata: Record<Section, SectionMeta> = {
   aimethodstatement: { eyebrow: 'Smart Docs', title: 'Method Statement' },
   aibriefingpack: { eyebrow: 'Smart Docs', title: 'Briefing Pack' },
   aiquote: { eyebrow: 'Smart Docs', title: 'Quote' },
-  automations: { eyebrow: 'Tools', title: 'Automations' },
   settings: { eyebrow: 'Account', title: 'Settings' },
 };
 
@@ -522,69 +465,6 @@ const EmployerDashboard = () => {
     previousSectionRef.current = activeSection;
   }, [activeSection]);
 
-  const [quoteDialogOpen, setQuoteDialogOpen] = useState(false);
-  const [jobDialogOpen, setJobDialogOpen] = useState(false);
-  const [employeeDialogOpen, setEmployeeDialogOpen] = useState(false);
-  const [invoiceDialogOpen, setInvoiceDialogOpen] = useState(false);
-  const [expenseDialogOpen, setExpenseDialogOpen] = useState(false);
-  const [timeEntryDialogOpen, setTimeEntryDialogOpen] = useState(false);
-  const [certificationDialogOpen, setCertificationDialogOpen] = useState(false);
-  const [orderDialogOpen, setOrderDialogOpen] = useState(false);
-  const [supplierDialogOpen, setSupplierDialogOpen] = useState(false);
-  const [vacancyDialogOpen, setVacancyDialogOpen] = useState(false);
-
-  useEffect(() => {
-    const handleOpenDialog = (e: CustomEvent<{ dialogName: string }>) => {
-      const { dialogName } = e.detail;
-
-      const dialogMap: Record<string, () => void> = {
-        quote: () => setQuoteDialogOpen(true),
-        'create-quote': () => setQuoteDialogOpen(true),
-        job: () => setJobDialogOpen(true),
-        'create-job': () => setJobDialogOpen(true),
-        employee: () => setEmployeeDialogOpen(true),
-        'add-employee': () => setEmployeeDialogOpen(true),
-        invoice: () => setInvoiceDialogOpen(true),
-        'create-invoice': () => setInvoiceDialogOpen(true),
-        expense: () => setExpenseDialogOpen(true),
-        'create-expense': () => setExpenseDialogOpen(true),
-        'time-entry': () => setTimeEntryDialogOpen(true),
-        timesheet: () => setTimeEntryDialogOpen(true),
-        certification: () => setCertificationDialogOpen(true),
-        'add-certification': () => setCertificationDialogOpen(true),
-        order: () => setOrderDialogOpen(true),
-        'create-order': () => setOrderDialogOpen(true),
-        supplier: () => setSupplierDialogOpen(true),
-        'create-supplier': () => setSupplierDialogOpen(true),
-        vacancy: () => setVacancyDialogOpen(true),
-        'post-vacancy': () => setVacancyDialogOpen(true),
-      };
-
-      const openFn = dialogMap[dialogName.toLowerCase()];
-      if (openFn) openFn();
-    };
-
-    const handleCloseDialog = () => {
-      setQuoteDialogOpen(false);
-      setJobDialogOpen(false);
-      setEmployeeDialogOpen(false);
-      setInvoiceDialogOpen(false);
-      setExpenseDialogOpen(false);
-      setTimeEntryDialogOpen(false);
-      setCertificationDialogOpen(false);
-      setOrderDialogOpen(false);
-      setSupplierDialogOpen(false);
-      setVacancyDialogOpen(false);
-    };
-
-    window.addEventListener('voice-open-dialog', handleOpenDialog as EventListener);
-    window.addEventListener('voice-close-dialog', handleCloseDialog);
-
-    return () => {
-      window.removeEventListener('voice-open-dialog', handleOpenDialog as EventListener);
-      window.removeEventListener('voice-close-dialog', handleCloseDialog);
-    };
-  }, []);
 
   const handleNavigate = useCallback((section: Section | string) => {
     const sectionMap: Record<string, Section> = {
@@ -860,8 +740,6 @@ const EmployerDashboard = () => {
         return <BriefingsSection />;
       case 'compliance':
         return <ComplianceSection />;
-      case 'automations':
-        return <AutomationsSection />;
       case 'smartdocs':
         return <SmartDocsHub onNavigate={handleNavigate} />;
       case 'aidesignspec':
@@ -882,7 +760,7 @@ const EmployerDashboard = () => {
   const hasRefresh = !!(currentMeta.queryKeys && currentMeta.queryKeys.length > 0);
 
   return (
-    <EmployerProvider>
+    <>
       <div className="min-h-screen bg-[hsl(0_0%_6%)] text-white">
         {!isOverview && (
           <div className="sticky top-0 z-30 bg-[hsl(0_0%_6%)]/85 backdrop-blur-md border-b border-white/[0.06]">
@@ -923,55 +801,7 @@ const EmployerDashboard = () => {
         </main>
       </div>
 
-      <Suspense fallback={null}>
-        {quoteDialogOpen && (
-          <CreateQuoteDialog open={quoteDialogOpen} onOpenChange={setQuoteDialogOpen} />
-        )}
-        {jobDialogOpen && (
-          <AddJobDialog open={jobDialogOpen} onOpenChange={setJobDialogOpen} trigger={null} />
-        )}
-        {employeeDialogOpen && (
-          <AddEmployeeDialog
-            open={employeeDialogOpen}
-            onOpenChange={setEmployeeDialogOpen}
-            trigger={null}
-          />
-        )}
-        {invoiceDialogOpen && (
-          <CreateInvoiceDialog open={invoiceDialogOpen} onOpenChange={setInvoiceDialogOpen} />
-        )}
-        {expenseDialogOpen && (
-          <CreateExpenseDialog open={expenseDialogOpen} onOpenChange={setExpenseDialogOpen} />
-        )}
-        {timeEntryDialogOpen && (
-          <ManualTimeEntryDialog
-            open={timeEntryDialogOpen}
-            onOpenChange={setTimeEntryDialogOpen}
-            trigger={null}
-          />
-        )}
-        {certificationDialogOpen && (
-          <AddCertificationDialog
-            open={certificationDialogOpen}
-            onOpenChange={setCertificationDialogOpen}
-            trigger={null}
-          />
-        )}
-        {orderDialogOpen && (
-          <CreateOrderDialog open={orderDialogOpen} onOpenChange={setOrderDialogOpen} />
-        )}
-        {supplierDialogOpen && (
-          <CreateSupplierDialog open={supplierDialogOpen} onOpenChange={setSupplierDialogOpen} />
-        )}
-        {vacancyDialogOpen && (
-          <PostVacancyDialog
-            open={vacancyDialogOpen}
-            onOpenChange={setVacancyDialogOpen}
-            trigger={null}
-          />
-        )}
-      </Suspense>
-    </EmployerProvider>
+    </>
   );
 };
 

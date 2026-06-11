@@ -15,7 +15,9 @@ import {
   SelectTrigger,
   SelectValue,
 } from '@/components/ui/select';
-import { useEmployer } from '@/contexts/EmployerContext';
+import { useEmployees } from '@/hooks/useEmployees';
+import { supabase } from '@/integrations/supabase/client';
+import { useQueryClient } from '@tanstack/react-query';
 import { toast } from '@/hooks/use-toast';
 import { Award, Plus } from 'lucide-react';
 import { useOptionalVoiceFormContext } from '@/contexts/VoiceFormContext';
@@ -71,7 +73,8 @@ export function AddCertificationDialog({
   open: controlledOpen,
   onOpenChange,
 }: AddCertificationDialogProps) {
-  const { addCertification, employees } = useEmployer();
+  const { data: employees = [] } = useEmployees();
+  const queryClient = useQueryClient();
   const [internalOpen, setInternalOpen] = useState(false);
 
   const open = controlledOpen ?? internalOpen;
@@ -103,12 +106,13 @@ export function AddCertificationDialog({
       onFillField: (field, value) => {
         const strValue = String(value);
         switch (field) {
-          case 'employee':
+          case 'employee': {
             const emp = employees.find((e) =>
               e.name.toLowerCase().includes(strValue.toLowerCase())
             );
             if (emp) setFormData((prev) => ({ ...prev, employeeId: emp.id }));
             break;
+          }
           case 'name':
             setFormData((prev) => ({ ...prev, name: strValue }));
             break;
@@ -133,7 +137,7 @@ export function AddCertificationDialog({
     return () => voiceContext.unregisterForm('add-certification');
   }, [open, voiceContext, employees]);
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
     if (!formData.employeeId || !formData.name || !formData.issuer || !formData.expiryDate) {
@@ -148,16 +152,25 @@ export function AddCertificationDialog({
     const employee = employees.find((e) => e.id === formData.employeeId);
     if (!employee) return;
 
-    addCertification({
+    const { error } = await supabase.from('employer_certifications').insert({
+      employee_id: formData.employeeId,
       name: formData.name,
-      employee: employee.name,
-      employeeId: formData.employeeId,
-      expiryDate: formData.expiryDate,
-      issuer: formData.issuer,
-      certNumber: formData.certNumber || `CERT-${Date.now()}`,
+      issuing_body: formData.issuer,
+      certificate_number: formData.certNumber || null,
+      expiry_date: formData.expiryDate,
       status: 'Active',
     });
 
+    if (error) {
+      toast({
+        title: 'Save failed',
+        description: 'Could not save the certification. Try again.',
+        variant: 'destructive',
+      });
+      return;
+    }
+
+    queryClient.invalidateQueries({ queryKey: ['certifications'] });
     toast({
       title: 'Certification Added',
       description: `${formData.name} has been added for ${employee.name}.`,

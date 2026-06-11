@@ -5,7 +5,8 @@ import { Input } from '@/components/ui/input';
 import { ScrollArea } from '@/components/ui/scroll-area';
 import { Badge } from '@/components/ui/badge';
 import { useIsMobile } from '@/hooks/use-mobile';
-import { useEmployer } from '@/contexts/EmployerContext';
+import type { Employee } from '@/services/employeeService';
+import { useCreateJobAssignment } from '@/hooks/useJobAssignments';
 import { useJobs } from '@/hooks/useJobs';
 import { toast } from '@/hooks/use-toast';
 import { Briefcase, MapPin, Check, Search, Users } from 'lucide-react';
@@ -21,17 +22,22 @@ interface BulkAssignDialogProps {
   open: boolean;
   onOpenChange: (open: boolean) => void;
   onComplete?: () => void;
+  selectedEmployees: Employee[];
 }
 
-export function BulkAssignDialog({ open, onOpenChange, onComplete }: BulkAssignDialogProps) {
+export function BulkAssignDialog({
+  open,
+  onOpenChange,
+  onComplete,
+  selectedEmployees,
+}: BulkAssignDialogProps) {
   const isMobile = useIsMobile();
-  const { selectedEmployeeIds, employees, bulkAssignToJob } = useEmployer();
+  const createAssignment = useCreateJobAssignment();
   const { data: jobs = [] } = useJobs();
   const [selectedJobId, setSelectedJobId] = useState<string | null>(null);
   const [startDate, setStartDate] = useState(new Date().toISOString().split('T')[0]);
   const [searchQuery, setSearchQuery] = useState('');
 
-  const selectedEmployees = employees.filter((e) => selectedEmployeeIds.includes(e.id));
   const activeJobs = jobs.filter((j) => j.status === 'Active' || j.status === 'Pending');
 
   const filteredJobs = activeJobs.filter(
@@ -41,7 +47,7 @@ export function BulkAssignDialog({ open, onOpenChange, onComplete }: BulkAssignD
       job.location.toLowerCase().includes(searchQuery.toLowerCase())
   );
 
-  const handleAssign = () => {
+  const handleAssign = async () => {
     if (!selectedJobId) {
       toast({
         title: 'Select a Job',
@@ -54,11 +60,29 @@ export function BulkAssignDialog({ open, onOpenChange, onComplete }: BulkAssignD
     const selectedJob = jobs.find((j) => j.id === selectedJobId);
     if (!selectedJob) return;
 
-    bulkAssignToJob(selectedJob.id, selectedJob.title, selectedJob.location, startDate);
+    const results = await Promise.allSettled(
+      selectedEmployees.map((emp) =>
+        createAssignment.mutateAsync({
+          assignment: {
+            job_id: selectedJob.id,
+            employee_id: emp.id,
+            start_date: startDate,
+          },
+          jobTitle: selectedJob.title,
+          jobLocation: selectedJob.location,
+        })
+      )
+    );
+    const ok = results.filter((r) => r.status === 'fulfilled').length;
+    const failed = results.length - ok;
 
     toast({
-      title: 'Team Assigned',
-      description: `${selectedEmployees.length} workers assigned to ${selectedJob.title}.`,
+      title: failed === 0 ? 'Team Assigned' : 'Partially assigned',
+      description:
+        failed === 0
+          ? `${ok} workers assigned to ${selectedJob.title}.`
+          : `${ok} assigned, ${failed} failed (possibly already on this job).`,
+      variant: failed === 0 ? undefined : 'destructive',
     });
 
     setSelectedJobId(null);
@@ -92,7 +116,7 @@ export function BulkAssignDialog({ open, onOpenChange, onComplete }: BulkAssignD
                   key={emp.id}
                   className="w-8 h-8 rounded-full bg-elec-yellow/20 flex items-center justify-center text-[11px] font-bold text-elec-yellow border-2 border-[hsl(0_0%_8%)]"
                 >
-                  {emp.avatar}
+                  {emp.avatar_initials}
                 </div>
               ))}
               {selectedEmployees.length > 4 && (

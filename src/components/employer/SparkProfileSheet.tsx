@@ -86,12 +86,8 @@ interface SparkProfileSheetProps {
   onOpenChange: (open: boolean) => void;
   electrician: EnhancedElectrician | null;
   isSaved: boolean;
-  isInLabourBank: boolean;
-  labourBankRate?: number;
   onSave: () => void;
   onContact: () => void;
-  onBook: () => void;
-  onAddToLabourBank: () => void;
 }
 
 // Elec-ID verification tier configuration
@@ -127,12 +123,8 @@ export function SparkProfileSheet({
   onOpenChange,
   electrician,
   isSaved,
-  isInLabourBank,
-  labourBankRate,
   onSave,
   onContact,
-  onBook,
-  onAddToLabourBank,
 }: SparkProfileSheetProps) {
   const [trainingDialogOpen, setTrainingDialogOpen] = useState(false);
 
@@ -222,24 +214,12 @@ export function SparkProfileSheet({
               </div>
               <div className="text-center">
                 <p className="text-lg font-bold text-emerald-400">
-                  £{isInLabourBank && labourBankRate ? labourBankRate : electrician.dayRate}
+                  £{electrician.dayRate}
                 </p>
                 <p className="text-xs text-white">/day</p>
               </div>
             </div>
 
-            {/* Labour Bank Badge */}
-            {isInLabourBank && (
-              <div className="mx-4 mt-4 p-3 bg-emerald-500/10 rounded-xl border border-emerald-500/20 flex items-center gap-3">
-                <Zap className="h-5 w-5 text-emerald-400" />
-                <div>
-                  <p className="font-medium text-emerald-400">Labour Bank Member</p>
-                  <p className="text-xs text-white">
-                    Pre-agreed rate: £{labourBankRate}/day
-                  </p>
-                </div>
-              </div>
-            )}
 
             {/* Availability Status */}
             <div className="px-4 py-4">
@@ -409,22 +389,7 @@ export function SparkProfileSheet({
               <MessageSquare className="h-5 w-5 mr-2" />
               Message
             </SecondaryButton>
-            {isInLabourBank ? (
-              <PrimaryButton size="lg" className="flex-1 h-14" onClick={onBook}>
-                <Calendar className="h-5 w-5 mr-2" />
-                Book Now
-              </PrimaryButton>
-            ) : (
-              <>
-                <SecondaryButton size="lg" className="h-14 w-14 px-0" onClick={onAddToLabourBank}>
-                  <Zap className="h-5 w-5" />
-                </SecondaryButton>
-                <PrimaryButton size="lg" className="flex-1 h-14" onClick={onBook}>
-                  <Calendar className="h-5 w-5 mr-2" />
-                  Hire
-                </PrimaryButton>
-              </>
-            )}
+
           </div>
         </div>
 

@@ -16,7 +16,7 @@ import {
   SelectValue,
 } from '@/components/ui/select';
 import { RadioGroup, RadioGroupItem } from '@/components/ui/radio-group';
-import { useUpdateEmployee, useDeleteEmployee } from '@/hooks/useEmployees';
+import { useUpdateEmployee } from '@/hooks/useEmployees';
 import { uploadEmployeePhoto } from '@/services/photoUploadService';
 import { toast } from '@/hooks/use-toast';
 import { UserCog, Trash2, Camera, Loader2, CreditCard } from 'lucide-react';
@@ -68,7 +68,6 @@ interface EditEmployeeDialogProps {
 
 export function EditEmployeeDialog({ employee, open, onOpenChange }: EditEmployeeDialogProps) {
   const updateEmployee = useUpdateEmployee();
-  const deleteEmployee = useDeleteEmployee();
   const fileInputRef = useRef<HTMLInputElement>(null);
   const [showDeleteConfirm, setShowDeleteConfirm] = useState(false);
   const [isUploading, setIsUploading] = useState(false);
@@ -244,7 +243,9 @@ export function EditEmployeeDialog({ employee, open, onOpenChange }: EditEmploye
     if (!employee) return;
 
     try {
-      await deleteEmployee.mutateAsync(employee.id);
+      // Archive = status change. Never a hard delete — that would destroy
+      // timesheet/payroll/credential history (DB now RESTRICTs it anyway).
+      await updateEmployee.mutateAsync({ id: employee.id, updates: { status: 'Archived' } });
       toast({
         title: 'Employee Archived',
         description: `${employee.name} has been archived.`,
@@ -538,9 +539,9 @@ export function EditEmployeeDialog({ employee, open, onOpenChange }: EditEmploye
             <AlertDialogAction
               onClick={handleDelete}
               className="bg-red-500/20 text-red-400 border border-red-500/30 hover:bg-red-500/30"
-              disabled={deleteEmployee.isPending}
+              disabled={updateEmployee.isPending}
             >
-              {deleteEmployee.isPending ? 'Archiving...' : 'Archive'}
+              {updateEmployee.isPending ? 'Archiving...' : 'Archive'}
             </AlertDialogAction>
           </AlertDialogFooter>
         </AlertDialogContent>

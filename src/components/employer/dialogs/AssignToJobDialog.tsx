@@ -5,7 +5,8 @@ import { Textarea } from '@/components/ui/textarea';
 import { ScrollArea } from '@/components/ui/scroll-area';
 import { Badge } from '@/components/ui/badge';
 import { useIsMobile } from '@/hooks/use-mobile';
-import { useEmployer, type Employee } from '@/contexts/EmployerContext';
+import type { Employee } from '@/services/employeeService';
+import { useCreateJobAssignment } from '@/hooks/useJobAssignments';
 import { useJobs } from '@/hooks/useJobs';
 import { toast } from '@/hooks/use-toast';
 import { Briefcase, MapPin, Check, Search } from 'lucide-react';
@@ -28,7 +29,7 @@ interface AssignToJobDialogProps {
 
 export function AssignToJobDialog({ employee, open, onOpenChange }: AssignToJobDialogProps) {
   const isMobile = useIsMobile();
-  const { assignEmployeeToJob } = useEmployer();
+  const createAssignment = useCreateJobAssignment();
   const { data: jobs = [] } = useJobs();
   const [selectedJobId, setSelectedJobId] = useState<string | null>(null);
   const [startDate, setStartDate] = useState(new Date().toISOString().split('T')[0]);
@@ -46,7 +47,7 @@ export function AssignToJobDialog({ employee, open, onOpenChange }: AssignToJobD
       job.location.toLowerCase().includes(searchQuery.toLowerCase())
   );
 
-  const handleAssign = () => {
+  const handleAssign = async () => {
     if (!selectedJobId) {
       toast({
         title: 'Select a Job',
@@ -57,27 +58,34 @@ export function AssignToJobDialog({ employee, open, onOpenChange }: AssignToJobD
     }
 
     const selectedJob = jobs.find((j) => j.id === selectedJobId);
-
     if (!selectedJob) return;
 
-    assignEmployeeToJob(
-      employee.id,
-      selectedJob.id,
-      selectedJob.title,
-      selectedJob.location,
-      startDate,
-      notes || undefined
-    );
-
-    toast({
-      title: 'Employee Assigned',
-      description: `${employee.name} has been assigned to ${selectedJob.title}.`,
-    });
-
-    setSelectedJobId(null);
-    setNotes('');
-    setSearchQuery('');
-    onOpenChange(false);
+    try {
+      await createAssignment.mutateAsync({
+        assignment: {
+          job_id: selectedJob.id,
+          employee_id: employee.id,
+          start_date: startDate,
+          notes: notes || null,
+        },
+        jobTitle: selectedJob.title,
+        jobLocation: selectedJob.location,
+      });
+      toast({
+        title: 'Employee Assigned',
+        description: `${employee.name} has been assigned to ${selectedJob.title}.`,
+      });
+      setSelectedJobId(null);
+      setNotes('');
+      setSearchQuery('');
+      onOpenChange(false);
+    } catch {
+      toast({
+        title: 'Assignment failed',
+        description: 'Could not save the assignment. Try again.',
+        variant: 'destructive',
+      });
+    }
   };
 
   return (
@@ -100,7 +108,7 @@ export function AssignToJobDialog({ employee, open, onOpenChange }: AssignToJobD
 
           <div className="flex items-center gap-3 p-3 bg-white/[0.04] border border-white/[0.08] rounded-xl mt-4">
             <div className="w-10 h-10 rounded-full bg-elec-yellow/20 flex items-center justify-center font-bold text-elec-yellow flex-shrink-0">
-              {employee.avatar}
+              {employee.avatar_initials}
             </div>
             <div className="min-w-0">
               <p className="font-medium text-white truncate">{employee.name}</p>

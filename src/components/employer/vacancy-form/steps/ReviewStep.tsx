@@ -3,7 +3,7 @@ import { Save, Send, Eye, AlertCircle, FileText } from 'lucide-react';
 import { Input } from '@/components/ui/input';
 import { VacancyPreviewCard } from '../VacancyPreviewCard';
 import type { VacancyFormData } from '../schema';
-import { useEmployer } from '@/contexts/EmployerContext';
+import { useCompanyProfile } from '@/hooks/useCompanyProfile';
 import {
   inputClass,
   FormCard,
@@ -31,7 +31,7 @@ export function ReviewStep({
     watch,
   } = useFormContext<VacancyFormData>();
 
-  const { employer } = useEmployer();
+  const { companyProfile } = useCompanyProfile();
   const formData = watch();
 
   // Calculate minimum closing date (tomorrow)
@@ -62,7 +62,7 @@ export function ReviewStep({
 
         <VacancyPreviewCard
           data={formData}
-          companyName={employer?.company_name || 'Your Company'}
+          companyName={companyProfile?.company_name || 'Your Company'}
         />
       </FormCard>
 

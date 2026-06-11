@@ -1,4 +1,8 @@
 import type { Section } from '@/pages/employer/EmployerDashboard';
+import { useIncidentStats } from '@/hooks/useIncidents';
+import { useRAMSDocuments } from '@/hooks/useRAMSDocuments';
+import { usePolicyStats } from '@/hooks/usePolicies';
+import { useTrainingRecords } from '@/hooks/useTrainingRecords';
 import {
   HubLanding,
   SectionHeader,
@@ -8,17 +12,19 @@ import {
 
 interface SafetyHubProps {
   onNavigate: (section: Section) => void;
-  openIncidentsCount?: number;
-  pendingRamsCount?: number;
-  policiesCount?: number;
 }
 
-export function SafetyHub({
-  onNavigate,
-  openIncidentsCount = 0,
-  pendingRamsCount = 0,
-  policiesCount = 0,
-}: SafetyHubProps) {
+export function SafetyHub({ onNavigate }: SafetyHubProps) {
+  // Real stats — these were props that no caller ever passed (permanent zeros)
+  const { data: incidentStats } = useIncidentStats();
+  const { data: ramsDocs = [] } = useRAMSDocuments();
+  const { data: policyStats } = usePolicyStats();
+  const openIncidentsCount = incidentStats?.open ?? 0;
+  const pendingRamsCount = ramsDocs.filter((d) => d.status === 'draft' || d.status === 'submitted').length;
+  const policiesCount = policyStats?.total ?? 0;
+  const { data: trainingRecords = [] } = useTrainingRecords();
+  const trainingCount = trainingRecords.length;
+
   return (
     <HubLanding
       eyebrow="HR & Safety"
@@ -29,7 +35,7 @@ export function SafetyHub({
         { label: 'Open incidents', value: openIncidentsCount, tone: 'red' },
         { label: 'Pending RAMS', value: pendingRamsCount, tone: 'orange' },
         { label: 'Policies', value: policiesCount, tone: 'blue' },
-        { label: 'Compliance %', value: '100%', accent: true },
+        { label: 'Training records', value: trainingCount, accent: true },
       ]}
     >
       <section className="space-y-5">

@@ -93,9 +93,16 @@ export const getCommunicationById = async (id: string): Promise<Communication | 
 export const createCommunication = async (
   communication: Omit<Communication, 'id' | 'created_at'>
 ): Promise<Communication> => {
+  // RLS requires sender_id = auth.uid() — stamp it here so no call site can
+  // forget (null fails the INSERT policy with 42501)
+  const {
+    data: { user },
+  } = await supabase.auth.getUser();
+  if (!user) throw new Error('Not authenticated');
+
   const { data, error } = await supabase
     .from('employer_communications')
-    .insert(communication)
+    .insert({ ...communication, sender_id: user.id })
     .select()
     .single();
 
@@ -160,19 +167,27 @@ export const pinCommunication = async (id: string, isPinned: boolean): Promise<b
 const createRecipientsForCommunication = async (communication: Communication): Promise<void> => {
   let employeeIds: string[] = [];
 
+  // employer_employees carries a PUBLIC SELECT policy (Elec-ID verification),
+  // so these queries MUST self-scope to the sender's company — without the
+  // filter an "All team" broadcast fans out to every employer's roster
+  const {
+    data: { user },
+  } = await supabase.auth.getUser();
+  if (!user) return;
+
   if (communication.target_audience === 'all') {
-    // Get all active employees
     const { data: employees } = await supabase
       .from('employer_employees')
       .select('id')
+      .eq('employer_id', user.id)
       .eq('status', 'Active');
 
     employeeIds = (employees || []).map((e) => e.id);
   } else if (communication.target_audience === 'managers') {
-    // Get employees with manager roles
     const { data: employees } = await supabase
       .from('employer_employees')
       .select('id')
+      .eq('employer_id', user.id)
       .eq('status', 'Active')
       .in('team_role', ['Manager', 'Admin', 'Supervisor']);
 

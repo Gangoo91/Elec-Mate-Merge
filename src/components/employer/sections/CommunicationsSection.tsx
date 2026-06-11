@@ -38,8 +38,6 @@ import {
   useCommunicationRecipients,
   useCreateCommunication,
   usePinCommunication,
-  useMarkAsRead,
-  useAcknowledgeMessage,
   useDeleteCommunication,
 } from '@/hooks/useCommunications';
 import { useActiveEmployees } from '@/hooks/useEmployees';
@@ -127,8 +125,6 @@ export const CommunicationsSection = () => {
   const { data: employees = [] } = useActiveEmployees();
   const createCommunication = useCreateCommunication();
   const pinCommunication = usePinCommunication();
-  const markAsReadMutation = useMarkAsRead();
-  const acknowledgeMutation = useAcknowledgeMessage();
   const deleteCommunication = useDeleteCommunication();
 
   const [recipientsMessageId, setRecipientsMessageId] = useState<string | null>(null);
@@ -153,9 +149,6 @@ export const CommunicationsSection = () => {
   const [messageTitle, setMessageTitle] = useState('');
   const [messageContent, setMessageContent] = useState('');
   const [isPinned, setIsPinned] = useState(false);
-  const [isScheduled, setIsScheduled] = useState(false);
-  const [scheduleDate, setScheduleDate] = useState<Date | undefined>();
-  const [scheduleTime, setScheduleTime] = useState('09:00');
   const [priority, setPriority] = useState<'normal' | 'high'>('normal');
   const [recipientMode, setRecipientMode] = useState<'all' | 'specific'>('all');
 
@@ -393,19 +386,14 @@ export const CommunicationsSection = () => {
         target_audience: targetAudience,
         target_employee_ids: recipientMode === 'specific' ? selectedRecipients : null,
         is_pinned: isPinned,
-        expires_at: isScheduled && scheduleDate ? scheduleDate.toISOString() : null,
+        expires_at: null,
         sender_id: null,
         attachments: null,
       });
 
-      const scheduleInfo =
-        isScheduled && scheduleDate
-          ? ` for ${format(scheduleDate, 'dd MMM')} at ${scheduleTime}`
-          : '';
-
       toast({
-        title: isScheduled ? 'Scheduled' : 'Sent',
-        description: `${recipientCount} recipients${scheduleInfo}`,
+        title: 'Sent',
+        description: `${recipientCount} recipients`,
       });
       setShowCompose(false);
       resetCompose();
@@ -420,9 +408,6 @@ export const CommunicationsSection = () => {
     setMessageContent('');
     setSelectedType('Team Broadcast');
     setIsPinned(false);
-    setIsScheduled(false);
-    setScheduleDate(undefined);
-    setScheduleTime('09:00');
     setPriority('normal');
     setRecipientMode('all');
   };
@@ -658,12 +643,6 @@ export const CommunicationsSection = () => {
         setPriority={setPriority}
         isPinned={isPinned}
         setIsPinned={setIsPinned}
-        isScheduled={isScheduled}
-        setIsScheduled={setIsScheduled}
-        scheduleDate={scheduleDate}
-        setScheduleDate={setScheduleDate}
-        scheduleTime={scheduleTime}
-        setScheduleTime={setScheduleTime}
         handleSendMessage={handleSendMessage}
         sendPending={createCommunication.isPending}
         handleUseTemplate={handleUseTemplate}
@@ -901,12 +880,6 @@ interface ComposeSheetProps {
   setPriority: (v: 'normal' | 'high') => void;
   isPinned: boolean;
   setIsPinned: (v: boolean) => void;
-  isScheduled: boolean;
-  setIsScheduled: (v: boolean) => void;
-  scheduleDate: Date | undefined;
-  setScheduleDate: (v: Date | undefined) => void;
-  scheduleTime: string;
-  setScheduleTime: (v: string) => void;
   handleSendMessage: () => void;
   sendPending: boolean;
   handleUseTemplate: (template: (typeof templates)[0]) => void;
@@ -931,12 +904,6 @@ const ComposeSheet = ({
   setPriority,
   isPinned,
   setIsPinned,
-  isScheduled,
-  setIsScheduled,
-  scheduleDate,
-  setScheduleDate,
-  scheduleTime,
-  setScheduleTime,
   handleSendMessage,
   sendPending,
   handleUseTemplate,
@@ -1139,68 +1106,6 @@ const ComposeSheet = ({
                 onCheckedChange={(checked) => setIsPinned(!!checked)}
                 className={checkboxClass}
               />
-            </div>
-
-            <div className="space-y-2">
-              <div className="flex items-center justify-between p-4 rounded-2xl bg-[hsl(0_0%_12%)] border border-white/[0.06]">
-                <span className="text-[13px] font-medium text-white">Schedule</span>
-                <Checkbox
-                  checked={isScheduled}
-                  onCheckedChange={(checked) => setIsScheduled(!!checked)}
-                  className={checkboxClass}
-                />
-              </div>
-
-              {isScheduled && (
-                <div className="grid grid-cols-2 gap-2 p-3 rounded-2xl bg-[hsl(0_0%_12%)] border border-white/[0.06]">
-                  <Popover>
-                    <PopoverTrigger asChild>
-                      <Button
-                        variant="outline"
-                        className="h-11 justify-start gap-2 rounded-2xl bg-[hsl(0_0%_10%)] border-white/[0.08] text-white hover:bg-[hsl(0_0%_14%)] hover:text-white touch-manipulation"
-                      >
-                        <CalendarIcon className="h-4 w-4" />
-                        {scheduleDate ? format(scheduleDate, 'dd MMM') : 'Date'}
-                      </Button>
-                    </PopoverTrigger>
-                    <PopoverContent className="w-auto p-0" align="start">
-                      <Calendar
-                        mode="single"
-                        selected={scheduleDate}
-                        onSelect={setScheduleDate}
-                        disabled={(date) => date < new Date()}
-                        initialFocus
-                      />
-                    </PopoverContent>
-                  </Popover>
-                  <Select value={scheduleTime} onValueChange={setScheduleTime}>
-                    <SelectTrigger className={selectTriggerClass}>
-                      <SelectValue />
-                    </SelectTrigger>
-                    <SelectContent className={selectContentClass}>
-                      {[
-                        '06:00',
-                        '07:00',
-                        '08:00',
-                        '09:00',
-                        '10:00',
-                        '11:00',
-                        '12:00',
-                        '13:00',
-                        '14:00',
-                        '15:00',
-                        '16:00',
-                        '17:00',
-                        '18:00',
-                      ].map((time) => (
-                        <SelectItem key={time} value={time} className="text-white">
-                          {time}
-                        </SelectItem>
-                      ))}
-                    </SelectContent>
-                  </Select>
-                </div>
-              )}
             </div>
           </div>
 

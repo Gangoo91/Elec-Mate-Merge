@@ -3,9 +3,9 @@ import { supabase } from '@/integrations/supabase/client';
 import { useToast } from '@/hooks/use-toast';
 import { Job } from '@/services/jobService';
 
-// employer_job_financials table does not exist yet — all queries disabled
+// job_financials + variation_orders are live (FK employer_jobs, user_id-scoped RLS)
 // to prevent 400 errors. Set to true once the migration has been run.
-const TABLE_EXISTS = false;
+const TABLE_EXISTS = true;
 
 // Types
 export interface JobFinancial {
@@ -76,7 +76,7 @@ export function useJobFinancials() {
     enabled: TABLE_EXISTS,
     queryFn: async (): Promise<JobFinancialWithJob[]> => {
       const { data, error } = await supabase
-        .from('employer_job_financials')
+        .from('job_financials')
         .select(
           `
           *,
@@ -92,7 +92,7 @@ export function useJobFinancials() {
 
       for (const fin of financials) {
         const { data: variations } = await supabase
-          .from('employer_variation_orders')
+          .from('variation_orders')
           .select('*')
           .eq('job_id', fin.job_id)
           .order('created_at', { ascending: false });
@@ -114,7 +114,7 @@ export function useJobFinancial(jobId: string | undefined) {
       if (!jobId) return null;
 
       const { data, error } = await supabase
-        .from('employer_job_financials')
+        .from('job_financials')
         .select(
           `
           *,
@@ -131,7 +131,7 @@ export function useJobFinancial(jobId: string | undefined) {
 
       // Fetch variation orders
       const { data: variations } = await supabase
-        .from('employer_variation_orders')
+        .from('variation_orders')
         .select('*')
         .eq('job_id', jobId)
         .order('created_at', { ascending: false });
@@ -204,7 +204,7 @@ export function useUpdateJobFinancial() {
       }
 
       const { data: result, error } = await supabase
-        .from('employer_job_financials')
+        .from('job_financials')
         .update(updates)
         .eq('job_id', jobId)
         .select()
@@ -247,7 +247,7 @@ export function useCreateVariationOrder() {
       if (!userData.user) throw new Error('Not authenticated');
 
       const { data: result, error } = await supabase
-        .from('employer_variation_orders')
+        .from('variation_orders')
         .insert({
           ...data,
           user_id: userData.user.id,
@@ -299,7 +299,7 @@ export function useUpdateVariationOrderStatus() {
       }
 
       const { data: result, error } = await supabase
-        .from('employer_variation_orders')
+        .from('variation_orders')
         .update(updates)
         .eq('id', id)
         .select()
@@ -332,7 +332,7 @@ export function useDeleteVariationOrder() {
 
   return useMutation({
     mutationFn: async (id: string): Promise<void> => {
-      const { error } = await supabase.from('employer_variation_orders').delete().eq('id', id);
+      const { error } = await supabase.from('variation_orders').delete().eq('id', id);
 
       if (error) throw error;
     },
@@ -403,7 +403,7 @@ export function useRecordActualCost() {
     }): Promise<JobFinancial> => {
       // First get current values
       const { data: current, error: fetchError } = await supabase
-        .from('employer_job_financials')
+        .from('job_financials')
         .select('*')
         .eq('job_id', jobId)
         .single();
@@ -460,7 +460,7 @@ export function useRecordActualCost() {
       }
 
       const { data: result, error } = await supabase
-        .from('employer_job_financials')
+        .from('job_financials')
         .update(updates)
         .eq('job_id', jobId)
         .select()
@@ -565,7 +565,7 @@ export function useUpdateBudgetValues() {
     }): Promise<JobFinancial> => {
       // Get current values
       const { data: current, error: fetchError } = await supabase
-        .from('employer_job_financials')
+        .from('job_financials')
         .select('*')
         .eq('job_id', jobId)
         .single();
@@ -602,7 +602,7 @@ export function useUpdateBudgetValues() {
       }
 
       const { data: result, error } = await supabase
-        .from('employer_job_financials')
+        .from('job_financials')
         .update(updates)
         .eq('job_id', jobId)
         .select()
@@ -653,7 +653,7 @@ export function useCreateJobFinancial() {
       const profit = data.budget_profit || 0;
 
       const { data: result, error } = await supabase
-        .from('employer_job_financials')
+        .from('job_financials')
         .insert({
           ...data,
           user_id: userData.user.id,
@@ -705,7 +705,7 @@ export function useUpdateVariationOrder() {
       updates: Partial<Omit<VariationOrder, 'id' | 'created_at' | 'user_id'>>;
     }): Promise<VariationOrder> => {
       const { data: result, error } = await supabase
-        .from('employer_variation_orders')
+        .from('variation_orders')
         .update({
           ...updates,
           updated_at: new Date().toISOString(),
@@ -743,7 +743,7 @@ export function useVariationOrdersByStatus(status?: VariationOrder['status']) {
       (VariationOrder & { job?: { title: string; client: string } })[]
     > => {
       let query = supabase
-        .from('employer_variation_orders')
+        .from('variation_orders')
         .select(
           `
           *,
@@ -783,7 +783,7 @@ export function useUpdateJobPayments() {
       if (paid !== undefined) updates.paid = paid;
 
       const { data: result, error } = await supabase
-        .from('employer_job_financials')
+        .from('job_financials')
         .update(updates)
         .eq('job_id', jobId)
         .select()

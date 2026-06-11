@@ -17,7 +17,6 @@ interface TalentFilterChipsProps {
   availabilityFilter: 'all' | 'now' | 'week';
   tierFilter: 'all' | 'verified' | 'premium';
   selectedSpecialisms: string[];
-  labourBankOnly: boolean;
   experienceFilter?: ExperienceLevel;
   selectedEcsCards?: string[];
   selectedQualifications?: string[];
@@ -25,7 +24,6 @@ interface TalentFilterChipsProps {
   onRemoveAvailability: () => void;
   onRemoveTier: () => void;
   onRemoveSpecialism: (spec: string) => void;
-  onRemoveLabourBank: () => void;
   onRemoveExperience?: () => void;
   onRemoveEcsCard?: (card: string) => void;
   onRemoveQualification?: (qual: string) => void;
@@ -38,7 +36,6 @@ export function TalentFilterChips({
   availabilityFilter,
   tierFilter,
   selectedSpecialisms,
-  labourBankOnly,
   experienceFilter = 'all',
   selectedEcsCards = [],
   selectedQualifications = [],
@@ -46,7 +43,6 @@ export function TalentFilterChips({
   onRemoveAvailability,
   onRemoveTier,
   onRemoveSpecialism,
-  onRemoveLabourBank,
   onRemoveExperience,
   onRemoveEcsCard,
   onRemoveQualification,
@@ -59,7 +55,6 @@ export function TalentFilterChips({
     availabilityFilter !== 'all' ||
     tierFilter !== 'all' ||
     selectedSpecialisms.length > 0 ||
-    labourBankOnly ||
     experienceFilter !== 'all' ||
     selectedEcsCards.length > 0 ||
     selectedQualifications.length > 0 ||
@@ -71,7 +66,6 @@ export function TalentFilterChips({
     availabilityFilter !== 'all',
     tierFilter !== 'all',
     ...selectedSpecialisms.map(() => true),
-    labourBankOnly,
     experienceFilter !== 'all',
     ...selectedEcsCards.map(() => true),
     ...selectedQualifications.map(() => true),
@@ -127,25 +121,6 @@ export function TalentFilterChips({
     }
   }
 
-  // Labour Bank chip
-  if (labourBankOnly) {
-    if (visibleChips.length < 3) {
-      visibleChips.push(
-        <Badge
-          key="labour-bank"
-          variant="secondary"
-          className="h-8 px-3 gap-1.5 bg-success/10 text-success border-success/30 hover:bg-success/20 cursor-pointer touch-manipulation"
-          onClick={onRemoveLabourBank}
-        >
-          <Zap className="h-3 w-3" />
-          Labour Bank
-          <X className="h-3 w-3 ml-1" />
-        </Badge>
-      );
-    } else {
-      hiddenCount++;
-    }
-  }
 
   // Specialism chips
   selectedSpecialisms.forEach((spec) => {

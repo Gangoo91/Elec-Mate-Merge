@@ -19,7 +19,7 @@ import {
   RotateCcw,
   Camera,
 } from 'lucide-react';
-import { PhotoCategory } from '@/data/employerMockData';
+import { PhotoCategory } from '@/components/employer/employerViewTypes';
 import { cn } from '@/lib/utils';
 import { useIsMobile } from '@/hooks/use-mobile';
 

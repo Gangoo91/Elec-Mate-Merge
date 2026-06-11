@@ -101,7 +101,7 @@ export function TimesheetSheet({ open, onOpenChange }: TimesheetSheetProps) {
     }, 300);
   };
 
-  const handleClockIn = () => {
+  const handleClockIn = async () => {
     if (!selectedJobId || !employeeId || !employeeName) {
       toast.error('Please select a job');
       return;
@@ -113,9 +113,9 @@ export function TimesheetSheet({ open, onOpenChange }: TimesheetSheetProps) {
       return;
     }
 
-    clockIn(employeeId, employeeName, selectedJobId, job.title);
-    toast.success(`Clocked in to ${job.title}`);
-    handleClose();
+    // The hook persists the open entry and toasts success/failure itself
+    const ok = await clockIn(employeeId, employeeName, selectedJobId, job.title);
+    if (ok) handleClose();
   };
 
   const handleClockOut = async () => {

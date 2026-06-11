@@ -91,7 +91,8 @@ export function ExpenseSheet({ open, onOpenChange }: ExpenseSheetProps) {
   };
 
   const getStatusBadge = (status: string) => {
-    switch (status) {
+    // Stored Capitalised ('Pending') — normalise before matching
+    switch ((status || '').toLowerCase()) {
       case 'pending':
         return <Badge className="bg-amber-500/20 text-amber-400 border-0">Pending</Badge>;
       case 'approved':

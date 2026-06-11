@@ -1,4 +1,5 @@
 import { useState, useMemo } from 'react';
+import { useTeamLeaveRequests } from '@/hooks/useTeamLeave';
 import { Button } from '@/components/ui/button';
 import { Checkbox } from '@/components/ui/checkbox';
 import {
@@ -161,14 +162,6 @@ export const TimesheetsSection = () => {
   const [selectedTimesheetIds, setSelectedTimesheetIds] = useState<string[]>([]);
   const [isSelectMode, setIsSelectMode] = useState(false);
 
-  const [accountingConnections, setAccountingConnections] = useState<AccountingConnection[]>([
-    { provider: 'xero', isConnected: false, lastSync: null },
-    { provider: 'sage', isConnected: false, lastSync: null },
-    { provider: 'quickbooks', isConnected: false, lastSync: null },
-    { provider: 'intuit', isConnected: false, lastSync: null },
-    { provider: 'csv', isConnected: true, lastSync: null },
-  ]);
-  const [syncInProgress, setSyncInProgress] = useState<AccountingProvider | null>(null);
 
   const timesheets: DisplayTimesheet[] = useMemo(() => {
     return rawTimesheets.map((ts) => {
@@ -255,7 +248,13 @@ export const TimesheetsSection = () => {
     return sum + calculateLabourCost(ts.employeeId, ot);
   }, 0);
 
-  const onLeaveToday = 0;
+  const { data: teamLeave = [] } = useTeamLeaveRequests();
+  const onLeaveToday = useMemo(() => {
+    const today = new Date().toISOString().slice(0, 10);
+    return teamLeave.filter(
+      (lr) => lr.status === 'approved' && lr.startDate <= today && lr.endDate >= today
+    ).length;
+  }, [teamLeave]);
 
   const weekDays = eachDayOfInterval({ start: currentWeekStart, end: currentWeekEnd });
   const dailyBreakdown = weekDays.map((day) => {
@@ -431,30 +430,6 @@ export const TimesheetsSection = () => {
       .filter((ts) => ts.status === 'Pending')
       .map((ts) => ts.id);
     setSelectedTimesheetIds(pendingIds);
-  };
-
-  const handleConnectProvider = (provider: AccountingProvider) => {
-    setAccountingConnections((prev) =>
-      prev.map((conn) =>
-        conn.provider === provider
-          ? { ...conn, isConnected: true, lastSync: new Date().toISOString() }
-          : conn
-      )
-    );
-    toast.success(`${getProviderName(provider)} connected successfully`);
-  };
-
-  const handleSyncProvider = (provider: AccountingProvider) => {
-    setSyncInProgress(provider);
-    setTimeout(() => {
-      setAccountingConnections((prev) =>
-        prev.map((conn) =>
-          conn.provider === provider ? { ...conn, lastSync: new Date().toISOString() } : conn
-        )
-      );
-      setSyncInProgress(null);
-      toast.success(`${approvedHours.toFixed(1)} hours synced to ${getProviderName(provider)}`);
-    }, 2000);
   };
 
   const handleExport = (provider: AccountingProvider) => {
@@ -685,7 +660,7 @@ export const TimesheetsSection = () => {
                         {clockState?.jobTitle || 'Unknown job'}
                       </div>
                       <div className="mt-1 text-[12px] text-white">
-                        Started · GPS verified
+                        On the clock
                       </div>
                     </div>
                     <div className="text-right shrink-0">
@@ -1042,62 +1017,20 @@ export const TimesheetsSection = () => {
               <ListCardHeader tone="amber" title="Providers" />
               <ListBody>
                 {ACCOUNTING_PROVIDERS.map((provider) => {
-                  const conn = accountingConnections.find((c) => c.provider === provider.id);
-                  const isConnected = conn?.isConnected;
-                  const isSyncing = syncInProgress === provider.id;
-
                   return (
                     <ListRow
                       key={provider.id}
                       lead={<Avatar initials={getInitials(provider.name)} size="sm" />}
                       title={provider.name}
-                      subtitle={
-                        isConnected && conn?.lastSync
-                          ? `Last sync · ${format(parseISO(conn.lastSync), 'dd/MM HH:mm')}`
-                          : isConnected
-                            ? 'Connected'
-                            : 'Not connected'
-                      }
+                      subtitle={'CSV formatted for ' + provider.name + ' import'}
                       trailing={
-                        provider.id === 'csv' ? (
-                          <button
-                            onClick={() => handleExport('csv')}
-                            className="h-9 px-3 inline-flex items-center gap-1.5 rounded-full bg-elec-yellow text-black text-[12px] font-semibold hover:bg-elec-yellow/90 transition-colors touch-manipulation"
-                          >
-                            <Download className="h-3.5 w-3.5" />
-                            Download
-                          </button>
-                        ) : isConnected ? (
-                          <div className="flex gap-1.5">
-                            <button
-                              onClick={() => handleExport(provider.id)}
-                              className="h-9 w-9 inline-flex items-center justify-center rounded-full bg-white/[0.04] border border-white/[0.08] text-white hover:bg-white/[0.08] transition-colors touch-manipulation"
-                              aria-label="Download CSV"
-                            >
-                              <Download className="h-3.5 w-3.5" />
-                            </button>
-                            <button
-                              onClick={() => handleSyncProvider(provider.id)}
-                              disabled={isSyncing || approvedHours === 0}
-                              className="h-9 px-3 inline-flex items-center gap-1.5 rounded-full bg-elec-yellow text-black text-[12px] font-semibold hover:bg-elec-yellow/90 disabled:opacity-50 transition-colors touch-manipulation"
-                            >
-                              {isSyncing ? (
-                                <RefreshCw className="h-3.5 w-3.5 animate-spin" />
-                              ) : (
-                                <Zap className="h-3.5 w-3.5" />
-                              )}
-                              Sync
-                            </button>
-                          </div>
-                        ) : (
-                          <button
-                            onClick={() => handleConnectProvider(provider.id)}
-                            className="h-9 px-3 inline-flex items-center gap-1.5 rounded-full bg-white/[0.04] border border-white/[0.08] text-white text-[12px] font-medium hover:bg-white/[0.08] transition-colors touch-manipulation"
-                          >
-                            <Link2 className="h-3.5 w-3.5" />
-                            Connect
-                          </button>
-                        )
+                        <button
+                          onClick={() => handleExport(provider.id)}
+                          className="h-9 px-3 inline-flex items-center gap-1.5 rounded-full bg-elec-yellow text-black text-[12px] font-semibold hover:bg-elec-yellow/90 transition-colors touch-manipulation"
+                        >
+                          <Download className="h-3.5 w-3.5" />
+                          Export CSV
+                        </button>
                       }
                     />
                   );

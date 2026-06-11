@@ -231,7 +231,9 @@ export function PeopleHub({ onNavigate }: PeopleHubProps) {
   }, [profiles]);
 
   const pendingTimesheetCount = useMemo(
-    () => timesheets.filter((t) => t.status === 'pending' || t.status === 'submitted').length,
+    // Status is stored Capitalised ('Pending') — compare case-insensitively
+    // so the approval badge actually lights up
+    () => timesheets.filter((t) => ['pending', 'submitted'].includes(t.status?.toLowerCase())).length,
     [timesheets]
   );
 
@@ -381,7 +383,7 @@ export function PeopleHub({ onNavigate }: PeopleHubProps) {
     if (openVacancies > 0 && newApplicationsCount === 0) {
       return {
         title: 'Your live vacancies have no fresh applications',
-        body: 'Try reposting to the talent pool — 12 sparkies match your roles.',
+        body: 'Try reposting to the talent pool to reach available electricians.',
         cta: 'Open talent pool',
         onCta: onOpenTalentPool,
       };

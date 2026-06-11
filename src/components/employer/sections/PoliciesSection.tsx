@@ -131,7 +131,7 @@ export function PoliciesSection() {
           if (draftTemplates.length > 0) handleViewTemplate(draftTemplates[0]);
         }}
       >
-        Upload policy
+        Browse templates
       </PrimaryButton>
       <IconButton onClick={refresh} aria-label="Refresh">
         <RefreshCw className="h-4 w-4" />
@@ -145,7 +145,7 @@ export function PoliciesSection() {
         <PageHero
           eyebrow="HR & Safety"
           title="Policies"
-          description="Upload, version, distribute and track acknowledgements."
+          description="Adopt templates, customise and manage your policy library."
           tone="blue"
           actions={heroActions}
         />
@@ -166,7 +166,7 @@ export function PoliciesSection() {
       <PageHero
         eyebrow="HR & Safety"
         title="Policies"
-        description="Upload, version, distribute and track acknowledgements."
+        description="Adopt templates, customise and manage your policy library."
         tone="blue"
         actions={heroActions}
       />
@@ -177,7 +177,7 @@ export function PoliciesSection() {
           { label: 'Active', value: activeCount, tone: 'blue' },
           { label: 'Awaiting ack', value: awaitingCount, tone: 'orange' },
           {
-            label: 'Acknowledged %',
+            label: 'Adopted %',
             value: `${acknowledgedPct}%`,
             tone: 'emerald',
             accent: true,

@@ -87,6 +87,8 @@ export function StripeConnectCard() {
 
       // Open Stripe onboarding in system browser
       await openExternalUrl(result.onboardingUrl);
+      setActionLoading(false);
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     } catch (error: any) {
       console.error('Error creating Stripe account:', error);
       toast({
@@ -103,6 +105,7 @@ export function StripeConnectCard() {
     try {
       const result = await getStripeOnboardingLink('onboarding');
       await openExternalUrl(result.url);
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     } catch (error: any) {
       console.error('Error getting onboarding link:', error);
       toast({
@@ -119,6 +122,7 @@ export function StripeConnectCard() {
     try {
       const result = await getStripeOnboardingLink('dashboard');
       await openExternalUrl(result.url);
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     } catch (error: any) {
       console.error('Error getting dashboard link:', error);
       toast({
@@ -137,6 +141,7 @@ export function StripeConnectCard() {
       await disconnectStripeConnect();
       toast({ title: 'Disconnected', description: 'Stripe account has been disconnected.' });
       fetchStatus();
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     } catch (error: any) {
       console.error('Error disconnecting:', error);
       toast({

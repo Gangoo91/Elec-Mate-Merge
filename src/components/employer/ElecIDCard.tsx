@@ -1,7 +1,7 @@
 import { Share2 } from 'lucide-react';
 import { Avatar, Pill, type Tone } from './editorial';
 import { cn } from '@/lib/utils';
-import type { ElecIdProfile } from '@/data/employerMockData';
+import type { ElecIdProfile } from '@/components/employer/employerViewTypes';
 
 interface ElecIDCardProps {
   profile: ElecIdProfile;

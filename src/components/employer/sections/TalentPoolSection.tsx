@@ -1,13 +1,9 @@
 import { useState, useMemo, useCallback } from 'react';
 import { Sheet, SheetContent, SheetTrigger } from '@/components/ui/sheet';
-import { BookLabourBankDialog } from '@/components/employer/dialogs/BookLabourBankDialog';
 import {
   SparkProfileSheet,
   type EnhancedElectrician,
 } from '@/components/employer/SparkProfileSheet';
-import { TalentMapView } from '@/components/employer/TalentMapView';
-import { GoogleMapsProvider } from '@/contexts/GoogleMapsContext';
-import { AvailabilityCalendar } from '@/components/employer/AvailabilityCalendar';
 import { MessageDialog } from '@/components/employer/talent-pool/MessageDialog';
 import { InviteToApplyDialog } from '@/components/employer/talent-pool/InviteToApplyDialog';
 import { TalentFilterChips } from '@/components/employer/talent-pool/TalentFilterChips';
@@ -40,12 +36,10 @@ import {
   RefreshCw,
 } from 'lucide-react';
 import { toast } from '@/hooks/use-toast';
-import { useEmployer } from '@/contexts/EmployerContext';
 import { useTalentPool, type TalentPoolWorker, type ExperienceLevel } from '@/hooks/useTalentPool';
 import { addDays, format } from 'date-fns';
 import { Slider } from '@/components/ui/slider';
 
-type ViewMode = 'list' | 'map' | 'calendar';
 type AvailabilityFilter = 'all' | 'now' | 'week';
 type TierFilter = 'all' | 'verified' | 'premium';
 
@@ -187,14 +181,26 @@ const tierToneFor = (tier: string | undefined): Tone => {
 };
 
 export function TalentPoolSection() {
-  const { savedCandidates, labourBank, toggleSaveCandidate, addToLabourBank } = useEmployer();
+  // Saved list persists per device; the labour-bank booking theatre is gone
+  const [savedCandidates, setSavedCandidates] = useState<string[]>(() => {
+    try {
+      return JSON.parse(localStorage.getItem('talent_saved_candidates') || '[]');
+    } catch {
+      return [];
+    }
+  });
+  const toggleSaveCandidate = (id: string) => {
+    setSavedCandidates((prev) => {
+      const next = prev.includes(id) ? prev.filter((x) => x !== id) : [...prev, id];
+      localStorage.setItem('talent_saved_candidates', JSON.stringify(next));
+      return next;
+    });
+  };
 
-  const [viewMode, setViewMode] = useState<ViewMode>('list');
   const [searchQuery, setSearchQuery] = useState('');
   const [profileSheetOpen, setProfileSheetOpen] = useState(false);
   const [messageDialogOpen, setMessageDialogOpen] = useState(false);
   const [inviteDialogOpen, setInviteDialogOpen] = useState(false);
-  const [bookingDialogOpen, setBookingDialogOpen] = useState(false);
   const [filterSheetOpen, setFilterSheetOpen] = useState(false);
   const [selectedElectrician, setSelectedElectrician] = useState<EnhancedElectrician | null>(null);
   const [isRefreshing, setIsRefreshing] = useState(false);
@@ -202,7 +208,6 @@ export function TalentPoolSection() {
   const [availabilityFilter, setAvailabilityFilter] = useState<AvailabilityFilter>('all');
   const [tierFilter, setTierFilter] = useState<TierFilter>('all');
   const [selectedSpecialisms, setSelectedSpecialisms] = useState<string[]>([]);
-  const [labourBankOnly, setLabourBankOnly] = useState(false);
   const [experienceFilter, setExperienceFilter] = useState<ExperienceLevel>('all');
   const [selectedEcsCards, setSelectedEcsCards] = useState<string[]>([]);
   const [selectedQualifications, setSelectedQualifications] = useState<string[]>([]);
@@ -232,13 +237,11 @@ export function TalentPoolSection() {
 
   const enhancedElectricians = useMemo(() => workers.map(convertToEnhancedElectrician), [workers]);
 
-  const labourBankIds = labourBank.map((m) => m.electricianId);
 
   const activeFilterCount = [
     availabilityFilter !== 'all',
     tierFilter !== 'all',
     selectedSpecialisms.length > 0,
-    labourBankOnly,
     experienceFilter !== 'all',
     selectedEcsCards.length > 0,
     selectedQualifications.length > 0,
@@ -246,19 +249,14 @@ export function TalentPoolSection() {
   ].filter(Boolean).length;
 
   const filteredElectricians = useMemo(() => {
-    if (!labourBankOnly) return enhancedElectricians;
-    return enhancedElectricians.filter((e) => labourBankIds.includes(e.id));
-  }, [enhancedElectricians, labourBankOnly, labourBankIds]);
+    return enhancedElectricians;
+  }, [enhancedElectricians]);
 
-  const getLabourBankRate = (electricianId: string) => {
-    return labourBank.find((r) => r.electricianId === electricianId);
-  };
 
   const clearFilters = () => {
     setAvailabilityFilter('all');
     setTierFilter('all');
     setSelectedSpecialisms([]);
-    setLabourBankOnly(false);
     setExperienceFilter('all');
     setSelectedEcsCards([]);
     setSelectedQualifications([]);
@@ -297,26 +295,7 @@ export function TalentPoolSection() {
     setInviteDialogOpen(true);
   };
 
-  const handleBook = (electrician: EnhancedElectrician) => {
-    setSelectedElectrician(electrician);
-    setBookingDialogOpen(true);
-    setProfileSheetOpen(false);
-  };
 
-  const handleAddToLabourBank = (electrician: EnhancedElectrician) => {
-    if (labourBank.some((m) => m.electricianId === electrician.id)) {
-      toast({
-        title: 'Already in Labour Bank',
-        description: `${electrician.name} is already in your Labour Bank.`,
-      });
-      return;
-    }
-    addToLabourBank(electrician.id, electrician.name, electrician.dayRate, electrician.hourlyRate);
-    toast({
-      title: 'Added to Labour Bank',
-      description: `${electrician.name} has been added at £${electrician.dayRate}/day.`,
-    });
-  };
 
   const skillTabs = useMemo(
     () => [
@@ -327,71 +306,48 @@ export function TalentPoolSection() {
       { value: 'ev', label: 'EV Charging' },
       { value: 'solar', label: 'Solar PV' },
       { value: 'senior', label: 'Senior 8+ yrs' },
-      { value: 'list', label: 'List' },
-      { value: 'map', label: 'Map' },
-      { value: 'calendar', label: 'Calendar' },
     ],
     [availableNowCount]
   );
 
   const activeQuickTab: string = useMemo(() => {
-    if (viewMode === 'map') return 'map';
-    if (viewMode === 'calendar') return 'calendar';
     if (availabilityFilter === 'now') return 'available';
     if (tierFilter === 'verified') return 'verified';
     if (tierFilter === 'premium') return 'premium';
     if (selectedSpecialisms.includes('EV Charging')) return 'ev';
     if (selectedSpecialisms.includes('Solar PV')) return 'solar';
     if (experienceFilter === 'senior') return 'senior';
-    return viewMode === 'list' ? 'list' : 'all';
-  }, [viewMode, availabilityFilter, tierFilter, selectedSpecialisms, experienceFilter]);
+    return 'list';
+  }, [availabilityFilter, tierFilter, selectedSpecialisms, experienceFilter]);
 
   const handleQuickTab = (value: string) => {
     switch (value) {
       case 'all':
         clearFilters();
-        setViewMode('list');
         return;
       case 'available':
         setAvailabilityFilter(availabilityFilter === 'now' ? 'all' : 'now');
-        setViewMode('list');
         return;
       case 'verified':
         setTierFilter(tierFilter === 'verified' ? 'all' : 'verified');
-        setViewMode('list');
         return;
       case 'premium':
         setTierFilter(tierFilter === 'premium' ? 'all' : 'premium');
-        setViewMode('list');
         return;
       case 'ev':
         toggleSpecialism('EV Charging');
-        setViewMode('list');
         return;
       case 'solar':
         toggleSpecialism('Solar PV');
-        setViewMode('list');
         return;
       case 'senior':
         setExperienceFilter(experienceFilter === 'senior' ? 'all' : 'senior');
-        setViewMode('list');
         return;
-      case 'list':
-        setViewMode('list');
-        return;
-      case 'map':
-        setViewMode('map');
-        return;
-      case 'calendar':
-        setViewMode('calendar');
         return;
     }
   };
 
   const shortlistedCount = savedCandidates.length;
-  const labourBankCount = labourBank.length;
-  const signedCount = labourBankCount;
-  const invitedCount = shortlistedCount;
 
   return (
     <PageFrame>
@@ -419,10 +375,10 @@ export function TalentPoolSection() {
       <StatStrip
         columns={4}
         stats={[
+          { label: 'In the pool', value: filteredElectricians.length, tone: 'blue' },
           { label: 'Available', value: availableNowCount, tone: 'emerald' },
           { label: 'Shortlisted', value: shortlistedCount, tone: 'yellow' },
-          { label: 'Invited', value: invitedCount, tone: 'blue' },
-          { label: 'Signed', value: signedCount, accent: true },
+          { label: 'Verified', value: enhancedElectricians.filter((e) => !!e.verificationTier && e.verificationTier !== 'basic').length, accent: true },
         ]}
       />
 
@@ -642,20 +598,6 @@ export function TalentPoolSection() {
                     </div>
                   </div>
 
-                  <Divider />
-
-                  <div className="bg-[hsl(0_0%_12%)] border border-white/[0.06] rounded-2xl px-4 py-4 flex items-center justify-between">
-                    <div>
-                      <p className="text-[13px] font-semibold text-white">Labour Bank only</p>
-                      <p className="text-[11.5px] text-white">Pre-agreed rates</p>
-                    </div>
-                    <button
-                      onClick={() => setLabourBankOnly(!labourBankOnly)}
-                      className={`h-10 px-4 rounded-full text-[12.5px] font-medium border touch-manipulation transition-colors ${labourBankOnly ? 'bg-elec-yellow text-black border-elec-yellow' : 'bg-[hsl(0_0%_9%)] text-white border-white/[0.08]'}`}
-                    >
-                      {labourBankOnly ? 'On' : 'Off'}
-                    </button>
-                  </div>
                 </div>
 
                 <div className="flex-shrink-0 border-t border-white/[0.06] p-4 flex flex-row gap-2">
@@ -678,7 +620,6 @@ export function TalentPoolSection() {
         availabilityFilter={availabilityFilter}
         tierFilter={tierFilter}
         selectedSpecialisms={selectedSpecialisms}
-        labourBankOnly={labourBankOnly}
         experienceFilter={experienceFilter}
         selectedEcsCards={selectedEcsCards}
         selectedQualifications={selectedQualifications}
@@ -688,7 +629,6 @@ export function TalentPoolSection() {
         onRemoveSpecialism={(spec) =>
           setSelectedSpecialisms((prev) => prev.filter((s) => s !== spec))
         }
-        onRemoveLabourBank={() => setLabourBankOnly(false)}
         onRemoveExperience={() => setExperienceFilter('all')}
         onRemoveEcsCard={(card) => setSelectedEcsCards((prev) => prev.filter((c) => c !== card))}
         onRemoveQualification={(qual) =>
@@ -701,7 +641,7 @@ export function TalentPoolSection() {
 
       {isLoading && <LoadingBlocks />}
 
-      {!isLoading && viewMode === 'list' && (
+      {!isLoading && (
         <ListCard>
           <ListCardHeader
             tone="blue"
@@ -728,10 +668,9 @@ export function TalentPoolSection() {
             <ListBody>
               {filteredElectricians.map((electrician) => {
                 const isSaved = savedCandidates.includes(electrician.id);
-                const labourBankRate = getLabourBankRate(electrician.id);
-                const isInLabourBank = !!labourBankRate;
                 const availTone = availabilityToneFor(electrician.availability);
                 const tierTone = tierToneFor(electrician.verificationTier as string | undefined);
+                // eslint-disable-next-line @typescript-eslint/no-explicit-any
                 const role = (electrician as any).currentRole || 'Electrician';
 
                 return (
@@ -741,11 +680,13 @@ export function TalentPoolSection() {
                     title={
                       <span className="inline-flex items-center gap-2">
                         <span className="text-white">{electrician.name}</span>
-                        {isInLabourBank && <Pill tone="yellow">Labour Bank</Pill>}
                         {isSaved && <Pill tone="amber">Saved</Pill>}
                       </span>
                     }
-                    subtitle={`${role} · ${electrician.location} · £${electrician.dayRate}/day · ${(electrician as any).totalYearsExperience ?? electrician.experience} yrs`}
+                    subtitle={`${role} · ${electrician.location} · £${electrician.dayRate}/day · ${
+                      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+                      (electrician as any).totalYearsExperience ?? electrician.experience
+                    } yrs`}
                     trailing={
                       <>
                         <Pill tone={tierTone}>{electrician.verificationTier ?? 'verified'}</Pill>
@@ -761,53 +702,13 @@ export function TalentPoolSection() {
         </ListCard>
       )}
 
-      {!isLoading && viewMode === 'map' && (
-        <ListCard>
-          <ListCardHeader tone="cyan" title="Map view" meta={<Pill tone="cyan">{filteredElectricians.length}</Pill>} />
-          <div className="p-4 sm:p-5">
-            <GoogleMapsProvider>
-              <TalentMapView
-                electricians={filteredElectricians}
-                savedCandidates={savedCandidates}
-                labourBankIds={labourBankIds}
-                onSelectElectrician={handleOpenProfile}
-              />
-            </GoogleMapsProvider>
-          </div>
-        </ListCard>
-      )}
-
-      {!isLoading && viewMode === 'calendar' && (
-        <ListCard>
-          <ListCardHeader tone="purple" title="Availability calendar" meta={<Pill tone="purple">{filteredElectricians.length}</Pill>} />
-          <div className="p-4 sm:p-5">
-            <AvailabilityCalendar
-              electricians={filteredElectricians}
-              labourBankIds={labourBankIds}
-              onSelectElectrician={(electrician) => {
-                setSelectedElectrician(electrician);
-                setBookingDialogOpen(true);
-              }}
-            />
-          </div>
-        </ListCard>
-      )}
-
       <SparkProfileSheet
         open={profileSheetOpen}
         onOpenChange={setProfileSheetOpen}
         electrician={selectedElectrician}
         isSaved={selectedElectrician ? savedCandidates.includes(selectedElectrician.id) : false}
-        isInLabourBank={
-          selectedElectrician ? labourBankIds.includes(selectedElectrician.id) : false
-        }
-        labourBankRate={
-          selectedElectrician ? getLabourBankRate(selectedElectrician.id)?.agreedDayRate : undefined
-        }
         onSave={() => selectedElectrician && handleSave(selectedElectrician)}
         onContact={() => selectedElectrician && handleMessage(selectedElectrician)}
-        onBook={() => selectedElectrician && handleBook(selectedElectrician)}
-        onAddToLabourBank={() => selectedElectrician && handleAddToLabourBank(selectedElectrician)}
       />
 
       <MessageDialog
@@ -818,6 +719,7 @@ export function TalentPoolSection() {
             ? {
                 id: selectedElectrician.id,
                 elecIdProfileId:
+                  // eslint-disable-next-line @typescript-eslint/no-explicit-any
                   (selectedElectrician as any).elecIdProfileId || selectedElectrician.id,
                 name: selectedElectrician.name,
                 avatar: selectedElectrician.avatar,
@@ -836,6 +738,7 @@ export function TalentPoolSection() {
             ? {
                 id: selectedElectrician.id,
                 elecIdProfileId:
+                  // eslint-disable-next-line @typescript-eslint/no-explicit-any
                   (selectedElectrician as any).elecIdProfileId || selectedElectrician.id,
                 name: selectedElectrician.name,
                 avatar: selectedElectrician.avatar,
@@ -845,24 +748,6 @@ export function TalentPoolSection() {
         }
       />
 
-      <BookLabourBankDialog
-        open={bookingDialogOpen}
-        onOpenChange={setBookingDialogOpen}
-        electrician={
-          selectedElectrician
-            ? {
-                id: selectedElectrician.id,
-                name: selectedElectrician.name,
-                ecsCardType: selectedElectrician.ecsCardType,
-                dayRate: selectedElectrician.dayRate,
-                hourlyRate: selectedElectrician.hourlyRate,
-              }
-            : null
-        }
-        preAgreedRate={
-          selectedElectrician ? getLabourBankRate(selectedElectrician.id)?.agreedDayRate : undefined
-        }
-      />
     </PageFrame>
   );
 }

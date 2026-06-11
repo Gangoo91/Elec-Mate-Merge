@@ -52,14 +52,7 @@ import {
 } from '@/components/employer/editorial';
 import { useToast } from '@/hooks/use-toast';
 
-type RangeKey = '7d' | '30d' | '90d' | 'year';
 
-const rangeTabs: { value: RangeKey; label: string }[] = [
-  { value: '7d', label: '7d' },
-  { value: '30d', label: '30d' },
-  { value: '90d', label: '90d' },
-  { value: 'year', label: 'Year' },
-];
 
 const ELEC_YELLOW = 'hsl(var(--elec-yellow))';
 const WHITE_60 = 'rgba(255,255,255,0.6)';
@@ -75,7 +68,6 @@ const tooltipStyle = {
 };
 
 export function ReportsSection() {
-  const [range, setRange] = useState<RangeKey>('30d');
   const queryClient = useQueryClient();
   const { toast } = useToast();
 
@@ -150,7 +142,7 @@ export function ReportsSection() {
     const url = URL.createObjectURL(blob);
     const a = document.createElement('a');
     a.href = url;
-    a.download = `reports-${range}-${new Date().toISOString().slice(0, 10)}.csv`;
+    a.download = `reports-${new Date().toISOString().slice(0, 10)}.csv`;
     document.body.appendChild(a);
     a.click();
     document.body.removeChild(a);
@@ -200,7 +192,7 @@ export function ReportsSection() {
     ? `£${(metrics.profit.current / 1000).toFixed(0)}k`
     : '£0';
   const profitMarginValue = `${(profitability?.profitMargin ?? 0).toFixed(1)}%`;
-  const utilisationValue = `${metrics?.complianceRate ?? 0}%`;
+  const complianceValue = `${metrics?.complianceRate ?? 0}%`;
 
   if (isLoading) {
     return (
@@ -208,7 +200,7 @@ export function ReportsSection() {
         <PageHero
           eyebrow="Money"
           title="Reports"
-          description="Revenue, profitability, utilisation and debtor aging."
+          description="Revenue, profitability, compliance and debtor aging."
           tone="blue"
         />
         <LoadingBlocks />
@@ -221,7 +213,7 @@ export function ReportsSection() {
       <PageHero
         eyebrow="Money"
         title="Reports"
-        description="Revenue, profitability, utilisation and debtor aging."
+        description="Revenue, profitability, compliance and debtor aging."
         tone="blue"
         actions={
           <>
@@ -233,19 +225,13 @@ export function ReportsSection() {
         }
       />
 
-      <FilterBar
-        tabs={rangeTabs}
-        activeTab={range}
-        onTabChange={(v) => setRange(v as RangeKey)}
-      />
-
       <StatStrip
         columns={4}
         stats={[
           { label: 'Revenue £', value: totalRevenueK, tone: 'emerald' },
           { label: 'Profit £', value: totalProfitK, accent: true },
           { label: 'Margin %', value: profitMarginValue, tone: 'emerald' },
-          { label: 'Utilisation %', value: utilisationValue, tone: 'blue' },
+          { label: 'Compliance %', value: complianceValue, tone: 'blue' },
         ]}
       />
 

@@ -1,17 +1,20 @@
 import { useState, useCallback, useMemo } from 'react';
-import { RefreshCw, MessageSquare, Briefcase, X, CheckSquare, Square } from 'lucide-react';
+import { RefreshCw, MessageSquare, Briefcase, X, CheckSquare, Square, Send } from 'lucide-react';
 import { PullToRefresh } from '@/components/ui/pull-to-refresh';
 import { Sheet, SheetContent, SheetHeader, SheetTitle } from '@/components/ui/sheet';
 import { Checkbox } from '@/components/ui/checkbox';
 import { ScrollArea } from '@/components/ui/scroll-area';
 import { useEmployees } from '@/hooks/useEmployees';
 import { AddEmployeeDialog } from '@/components/employer/dialogs/AddEmployeeDialog';
+import { TeamInviteSheet } from '@/components/employer/sheets/TeamInviteSheet';
 import { EditEmployeeDialog } from '@/components/employer/dialogs/EditEmployeeDialog';
 import { TeamMemberSheet } from '@/components/employer/TeamMemberSheet';
 import { AssignToJobDialog } from '@/components/employer/dialogs/AssignToJobDialog';
 import { SendMessageDialog } from '@/components/employer/dialogs/SendMessageDialog';
 import { BulkAssignDialog } from '@/components/employer/dialogs/BulkAssignDialog';
 import { toast } from '@/hooks/use-toast';
+import { Textarea } from '@/components/ui/textarea';
+import { createCommunication } from '@/services/communicationService';
 import {
   PageFrame,
   PageHero,
@@ -38,19 +41,6 @@ type TeamRole = 'QS' | 'Supervisor' | 'Operative' | 'Apprentice' | 'Project Mana
 type AvailabilityStatus = 'Available' | 'On Job' | 'On Leave' | 'Unavailable';
 type FilterTab = 'all' | 'active' | 'leave' | 'pending';
 
-const ALL_SKILLS = [
-  '18th Edition',
-  'Testing & Inspection',
-  'EV Charging',
-  'Solar PV',
-  'Smart Home',
-  'Commercial',
-  'Domestic',
-  'First Aid',
-  'Project Management',
-  'Design',
-  'Basic Wiring',
-];
 
 const ROLE_TONE: Record<TeamRole, Tone> = {
   QS: 'yellow',
@@ -100,7 +90,6 @@ export function EmployeesSection() {
   const [activeTab, setActiveTab] = useState<FilterTab>('all');
   const [selectedEmployee, setSelectedEmployee] = useState<Employee | null>(null);
   const [selectedRoles, setSelectedRoles] = useState<TeamRole[]>([]);
-  const [selectedSkills, setSelectedSkills] = useState<string[]>([]);
   const [selectedAvailability, setSelectedAvailability] = useState<AvailabilityStatus[]>([]);
   const [multiSelectMode, setMultiSelectMode] = useState(false);
   const [filterOpen, setFilterOpen] = useState(false);
@@ -112,6 +101,7 @@ export function EmployeesSection() {
   const [messageDialogOpen, setMessageDialogOpen] = useState(false);
   const [bulkAssignDialogOpen, setBulkAssignDialogOpen] = useState(false);
   const [addEmployeeDialogOpen, setAddEmployeeDialogOpen] = useState(false);
+  const [inviteSheetOpen, setInviteSheetOpen] = useState(false);
 
   const activeEmployees = useMemo(
     () => employees.filter((e) => e.status !== 'Archived'),
@@ -161,12 +151,6 @@ export function EmployeesSection() {
     );
   };
 
-  const toggleSkill = (skill: string) => {
-    setSelectedSkills((prev) =>
-      prev.includes(skill) ? prev.filter((s) => s !== skill) : [...prev, skill]
-    );
-  };
-
   const toggleAvailability = (status: AvailabilityStatus) => {
     setSelectedAvailability((prev) =>
       prev.includes(status) ? prev.filter((s) => s !== status) : [...prev, status]
@@ -175,7 +159,6 @@ export function EmployeesSection() {
 
   const clearFilters = () => {
     setSelectedRoles([]);
-    setSelectedSkills([]);
     setSelectedAvailability([]);
   };
 
@@ -193,11 +176,33 @@ export function EmployeesSection() {
     setSelectedEmployeeIds([]);
   };
 
-  const handleBulkMessage = () => {
+  const [bulkMessageText, setBulkMessageText] = useState('');
+  const [bulkMessageOpen, setBulkMessageOpen] = useState(false);
+
+  const handleBulkMessage = async () => {
     const selectedEmps = employees.filter((e) => selectedEmployeeIds.includes(e.id));
-    toast({ title: 'Messages sent', description: `Sent to ${selectedEmps.length} team members.` });
-    clearEmployeeSelection();
-    setMultiSelectMode(false);
+    if (!bulkMessageText.trim() || selectedEmps.length === 0) return;
+    try {
+      await createCommunication({
+        sender_id: null,
+        type: 'message',
+        title: `Message to ${selectedEmps.length} team member${selectedEmps.length === 1 ? '' : 's'}`,
+        content: bulkMessageText.trim(),
+        priority: 'normal',
+        target_audience: 'specific',
+        target_employee_ids: selectedEmps.map((e) => e.id),
+        attachments: null,
+        is_pinned: false,
+        expires_at: null,
+      });
+      toast({ title: 'Message sent', description: `Sent to ${selectedEmps.length} team members.` });
+      setBulkMessageText('');
+      setBulkMessageOpen(false);
+      clearEmployeeSelection();
+      setMultiSelectMode(false);
+    } catch {
+      toast({ title: 'Send failed', description: 'Could not send the message.', variant: 'destructive' });
+    }
   };
 
   const exitMultiSelect = () => {
@@ -205,9 +210,8 @@ export function EmployeesSection() {
     setMultiSelectMode(false);
   };
 
-  const hasActiveFilters =
-    selectedRoles.length > 0 || selectedSkills.length > 0 || selectedAvailability.length > 0;
-  const filterCount = selectedRoles.length + selectedSkills.length + selectedAvailability.length;
+  const hasActiveFilters = selectedRoles.length > 0 || selectedAvailability.length > 0;
+  const filterCount = selectedRoles.length + selectedAvailability.length;
 
   if (isLoading) {
     return (
@@ -255,6 +259,9 @@ export function EmployeesSection() {
               <PrimaryButton onClick={() => setAddEmployeeDialogOpen(true)}>
                 Add team member
               </PrimaryButton>
+              <SecondaryButton onClick={() => setInviteSheetOpen(true)}>
+                Invite code
+              </SecondaryButton>
               <IconButton onClick={() => refetch()} aria-label="Refresh">
                 <RefreshCw className={`h-4 w-4 ${isRefetching ? 'animate-spin' : ''}`} />
               </IconButton>
@@ -278,7 +285,7 @@ export function EmployeesSection() {
             { label: 'Total', value: totalCount },
             { label: 'Active', value: availableCount + onJobCount, tone: 'emerald' },
             { label: 'On leave', value: onLeaveCount, tone: 'amber' },
-            { label: 'Vacant', value: pendingCount, tone: 'red' },
+            { label: 'Archived', value: pendingCount, tone: 'red' },
           ]}
         />
 
@@ -298,7 +305,7 @@ export function EmployeesSection() {
             />
             <div className="flex items-center gap-2 px-5 sm:px-6 py-3.5 sm:py-4">
               <SecondaryButton
-                onClick={handleBulkMessage}
+                onClick={() => setBulkMessageOpen(true)}
                 disabled={selectedEmployeeIds.length === 0}
               >
                 <MessageSquare className="h-4 w-4 mr-2" />
@@ -486,33 +493,42 @@ export function EmployeesSection() {
                   </ListCard>
                 </div>
 
-                <div>
-                  <Eyebrow>Skills</Eyebrow>
-                  <div className="mt-3 flex flex-wrap gap-2">
-                    {ALL_SKILLS.map((skill) => {
-                      const active = selectedSkills.includes(skill);
-                      return (
-                        <button
-                          key={skill}
-                          onClick={() => toggleSkill(skill)}
-                          className={`h-10 px-3.5 rounded-full text-[12.5px] font-medium touch-manipulation transition-colors ${
-                            active
-                              ? 'bg-elec-yellow text-black'
-                              : 'bg-[hsl(0_0%_14%)] border border-white/[0.08] text-white hover:bg-[hsl(0_0%_17%)]'
-                          }`}
-                        >
-                          {skill}
-                        </button>
-                      );
-                    })}
-                  </div>
-                </div>
               </div>
             </ScrollArea>
 
             <div className="px-5 sm:px-6 py-4 border-t border-white/[0.06] bg-[hsl(0_0%_10%)]">
               <PrimaryButton onClick={() => setFilterOpen(false)} fullWidth>
                 Show {filteredEmployees.length} results
+              </PrimaryButton>
+            </div>
+          </SheetContent>
+        </Sheet>
+
+        <TeamInviteSheet open={inviteSheetOpen} onOpenChange={setInviteSheetOpen} />
+
+        <Sheet open={bulkMessageOpen} onOpenChange={setBulkMessageOpen}>
+          <SheetContent side="bottom" className="p-0 rounded-t-2xl overflow-hidden">
+            <div className="bg-background px-4 pt-4 pb-8 space-y-4">
+              <SheetHeader>
+                <SheetTitle className="text-left text-base">
+                  Message {selectedEmployeeIds.length} team member
+                  {selectedEmployeeIds.length === 1 ? '' : 's'}
+                </SheetTitle>
+              </SheetHeader>
+              <Textarea
+                value={bulkMessageText}
+                onChange={(e) => setBulkMessageText(e.target.value)}
+                placeholder="Type your message…"
+                rows={4}
+                className="touch-manipulation text-base min-h-[120px] focus:ring-2 focus:ring-elec-yellow/20 border-white/30 focus:border-yellow-500"
+              />
+              <PrimaryButton
+                onClick={handleBulkMessage}
+                disabled={!bulkMessageText.trim()}
+                fullWidth
+              >
+                <Send className="h-4 w-4 mr-2" />
+                Send message
               </PrimaryButton>
             </div>
           </SheetContent>
@@ -572,57 +588,13 @@ export function EmployeesSection() {
         />
 
         <AssignToJobDialog
-          employee={
-            selectedEmployee
-              ? {
-                  id: selectedEmployee.id,
-                  name: selectedEmployee.name,
-                  role: selectedEmployee.role,
-                  teamRole: getTeamRole(selectedEmployee.team_role),
-                  status: selectedEmployee.status,
-                  certifications: selectedEmployee.certifications_count,
-                  activeJobs: selectedEmployee.active_jobs_count,
-                  phone: selectedEmployee.phone || '',
-                  email: selectedEmployee.email || '',
-                  joinDate: selectedEmployee.join_date || '',
-                  permissions: [],
-                  completedDocuments: [],
-                  avatar: selectedEmployee.avatar_initials,
-                  availability: getAvailability(selectedEmployee),
-                  skills: [],
-                  rating: 0,
-                  notes: [],
-                }
-              : null
-          }
+          employee={selectedEmployee}
           open={assignJobDialogOpen}
           onOpenChange={setAssignJobDialogOpen}
         />
 
         <SendMessageDialog
-          employee={
-            selectedEmployee
-              ? {
-                  id: selectedEmployee.id,
-                  name: selectedEmployee.name,
-                  role: selectedEmployee.role,
-                  teamRole: getTeamRole(selectedEmployee.team_role),
-                  status: selectedEmployee.status,
-                  certifications: selectedEmployee.certifications_count,
-                  activeJobs: selectedEmployee.active_jobs_count,
-                  phone: selectedEmployee.phone || '',
-                  email: selectedEmployee.email || '',
-                  joinDate: selectedEmployee.join_date || '',
-                  permissions: [],
-                  completedDocuments: [],
-                  avatar: selectedEmployee.avatar_initials,
-                  availability: getAvailability(selectedEmployee),
-                  skills: [],
-                  rating: 0,
-                  notes: [],
-                }
-              : null
-          }
+          employee={selectedEmployee}
           open={messageDialogOpen}
           onOpenChange={setMessageDialogOpen}
         />
@@ -630,7 +602,11 @@ export function EmployeesSection() {
         <BulkAssignDialog
           open={bulkAssignDialogOpen}
           onOpenChange={setBulkAssignDialogOpen}
-          onComplete={() => setMultiSelectMode(false)}
+          onComplete={() => {
+            clearEmployeeSelection();
+            setMultiSelectMode(false);
+          }}
+          selectedEmployees={employees.filter((e) => selectedEmployeeIds.includes(e.id))}
         />
       </PageFrame>
     </PullToRefresh>

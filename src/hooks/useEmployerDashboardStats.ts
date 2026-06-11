@@ -165,7 +165,7 @@ export function useEmployerDashboardStats(): UseEmployerDashboardStatsReturn {
 
       // Calculate revenue growth (compare to same period last year - simplified)
       // In production, you'd fetch last year's data too
-      const revenueGrowthPercent = currentRevenue > 0 ? 16 : 0; // Placeholder
+      const revenueGrowthPercent = 0; // Real period-over-period calc comes with finance build-out
 
       // Build upcoming deadlines from certifications
       const upcomingDeadlines = expiringCerts

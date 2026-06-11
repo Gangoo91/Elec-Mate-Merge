@@ -83,7 +83,7 @@ export const getMyLeaveRequests = async (employeeId: string): Promise<LeaveReque
     id: item.id,
     employeeId: item.employee_id,
     employeeName: item.employee_name || '',
-    type: item.leave_type as LeaveType,
+    type: item.type as LeaveType,
     startDate: item.start_date,
     endDate: item.end_date,
     halfDay: item.half_day as 'am' | 'pm' | undefined,
@@ -92,7 +92,7 @@ export const getMyLeaveRequests = async (employeeId: string): Promise<LeaveReque
     reason: item.reason || undefined,
     approvedBy: item.approved_by || undefined,
     approvedDate: item.approved_at || undefined,
-    rejectedReason: item.rejection_reason || undefined,
+    rejectedReason: item.rejected_reason || undefined,
     createdAt: item.created_at,
   }));
 };
@@ -116,12 +116,12 @@ export const submitLeaveRequest = async (
     .insert({
       employee_id: employeeId,
       employee_name: employeeName,
-      leave_type: request.type,
+      type: request.type,
       start_date: request.startDate,
       end_date: request.endDate,
       half_day: request.halfDay || null,
       total_days: totalDays,
-      status: 'pending',
+      status: 'Pending',
       reason: request.reason || null,
     })
     .select()
@@ -137,7 +137,7 @@ export const submitLeaveRequest = async (
         id: data.id,
         employeeId: data.employee_id,
         employeeName: data.employee_name || '',
-        type: data.leave_type as LeaveType,
+        type: data.type as LeaveType,
         startDate: data.start_date,
         endDate: data.end_date,
         halfDay: data.half_day as 'am' | 'pm' | undefined,
@@ -235,9 +235,9 @@ export const getMyLeaveAllowance = async (
 } | null> => {
   const currentYear = new Date().getFullYear();
 
-  // Try to get from holiday_allowances table
+  // Try to get from the holiday allowances table
   const { data: allowance } = await supabase
-    .from('employer_holiday_allowances')
+    .from('employee_holiday_allowances')
     .select('*')
     .eq('employee_id', employeeId)
     .eq('year', currentYear)
@@ -258,16 +258,16 @@ export const getMyLeaveAllowance = async (
     .from('employer_leave_requests')
     .select('total_days, status')
     .eq('employee_id', employeeId)
-    .eq('leave_type', 'annual')
+    .eq('type', 'annual')
     .gte('start_date', `${currentYear}-01-01`)
     .lte('end_date', `${currentYear}-12-31`);
 
   const usedDays = (requests || [])
-    .filter((r) => r.status === 'approved')
+    .filter((r) => r.status?.toLowerCase() === 'approved')
     .reduce((sum, r) => sum + (r.total_days || 0), 0);
 
   const pendingDays = (requests || [])
-    .filter((r) => r.status === 'pending')
+    .filter((r) => r.status?.toLowerCase() === 'pending')
     .reduce((sum, r) => sum + (r.total_days || 0), 0);
 
   return {
@@ -324,17 +324,17 @@ export const useWorkerSelfService = () => {
     queryKey: ['active-jobs-count', employeeId],
     queryFn: async () => {
       if (!employeeId) return 0;
-      const { data, error } = await supabase
-        .from('jobs')
-        .select('id', { count: 'exact', head: true })
-        .contains('assigned_workers', [employeeId])
-        .in('status', ['scheduled', 'in_progress']);
+      const { count, error } = await supabase
+        .from('employer_job_assignments')
+        .select('id, job:employer_jobs!inner(status)', { count: 'exact', head: true })
+        .eq('employee_id', employeeId)
+        .not('job.status', 'in', '("Completed","Cancelled")');
 
       if (error) {
         console.error('Error fetching active jobs count:', error);
         return 0;
       }
-      return data?.length || 0;
+      return count || 0;
     },
     enabled: !!employeeId,
     staleTime: 2 * 60 * 1000,
@@ -412,26 +412,41 @@ export const useMyJobs = (filter: 'active' | 'completed' | 'all' = 'active') => 
     queryFn: async () => {
       if (!employeeId) return [];
 
-      let query = supabase
-        .from('jobs')
-        .select('id, title, client_name, address, status, scheduled_date')
-        .contains('assigned_workers', [employeeId])
-        .order('scheduled_date', { ascending: false });
-
-      if (filter === 'active') {
-        query = query.in('status', ['scheduled', 'in_progress']);
-      } else if (filter === 'completed') {
-        query = query.eq('status', 'completed');
-      }
-
-      const { data, error } = await query.limit(50);
+      const { data, error } = await supabase
+        .from('employer_job_assignments')
+        .select(
+          'job:employer_jobs!inner(id, title, client, location, status, start_date)'
+        )
+        .eq('employee_id', employeeId)
+        .order('created_at', { ascending: false })
+        .limit(50);
 
       if (error) {
         console.error('Error fetching my jobs:', error);
         return [];
       }
 
-      return data || [];
+      const jobs = (data || [])
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        .map((row: any) => row.job)
+        .filter(Boolean)
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        .map((j: any) => ({
+          id: j.id,
+          title: j.title,
+          client_name: j.client,
+          address: j.location,
+          status: j.status,
+          scheduled_date: j.start_date,
+        }));
+
+      if (filter === 'active') {
+        return jobs.filter((j) => !['Completed', 'Cancelled'].includes(j.status));
+      }
+      if (filter === 'completed') {
+        return jobs.filter((j) => j.status === 'Completed');
+      }
+      return jobs;
     },
     enabled: !!employeeId,
     staleTime: 2 * 60 * 1000,
@@ -469,10 +484,10 @@ export const useMyCredentials = () => {
         return { certifications: [] };
       }
 
-      // Get certifications
+      // Certifications recorded by the employer against this roster row
       const { data: certs, error: certsError } = await supabase
-        .from('employee_certifications')
-        .select('id, name, issuer, certificate_number, expiry_date')
+        .from('employer_certifications')
+        .select('id, name, issuing_body, certificate_number, expiry_date')
         .eq('employee_id', employeeId)
         .order('expiry_date', { ascending: true });
 
@@ -480,21 +495,36 @@ export const useMyCredentials = () => {
         console.error('Error fetching certifications:', certsError);
       }
 
-      // Get Elec-ID info
-      const { data: elecId } = await supabase
-        .from('elec_id_cards')
-        .select('card_number, verified')
-        .eq('user_id', employeeId)
-        .maybeSingle();
+      // Elec-ID: any profile on the user's own rows (roster or self-created stub)
+      const {
+        data: { user },
+      } = await supabase.auth.getUser();
+      let elecId: { cardNumber?: string; verified: boolean } | undefined;
+      if (user) {
+        const { data: profile } = await supabase
+          .from('employer_elec_id_profiles')
+          .select('ecs_card_number, elec_id_number, is_verified, employee:employer_employees!inner(user_id)')
+          .eq('employee.user_id', user.id)
+          .order('created_at', { ascending: false })
+          .limit(1)
+          .maybeSingle();
+        if (profile) {
+          elecId = {
+            cardNumber: profile.ecs_card_number || profile.elec_id_number || undefined,
+            verified: profile.is_verified || false,
+          };
+        }
+      }
 
       return {
-        elecId: elecId
-          ? {
-              cardNumber: elecId.card_number,
-              verified: elecId.verified || false,
-            }
-          : undefined,
-        certifications: certs || [],
+        elecId,
+        certifications: (certs || []).map((c) => ({
+          id: c.id,
+          name: c.name,
+          issuer: c.issuing_body || undefined,
+          certificate_number: c.certificate_number || undefined,
+          expiry_date: c.expiry_date || undefined,
+        })),
       };
     },
     enabled: !!employeeId,
@@ -526,10 +556,10 @@ export const useProgressNotes = (jobId?: string) => {
       if (!jobId || !employeeId) return [];
 
       const { data, error } = await supabase
-        .from('job_progress_notes')
+        .from('employer_job_comments')
         .select('id, job_id, content, created_at')
         .eq('job_id', jobId)
-        .eq('employee_id', employeeId)
+        .eq('comment_type', 'progress')
         .order('created_at', { ascending: false })
         .limit(10);
 
@@ -544,15 +574,20 @@ export const useProgressNotes = (jobId?: string) => {
     staleTime: 60 * 1000,
   });
 
+  const employeeName = employeeQuery.data?.name || '';
+
   const submitNoteMutation = useMutation({
     mutationFn: async ({ jobId: jId, content }: { jobId: string; content: string }) => {
       if (!employeeId) throw new Error('No employee ID');
 
+      // Lands in the employer's job comments feed (worker RLS requires the
+      // author_name to match the worker's own roster name)
       const { data, error } = await supabase
-        .from('job_progress_notes')
+        .from('employer_job_comments')
         .insert({
           job_id: jId,
-          employee_id: employeeId,
+          author_name: employeeName,
+          comment_type: 'progress',
           content,
         })
         .select()
@@ -571,92 +606,6 @@ export const useProgressNotes = (jobId?: string) => {
     isLoading: recentNotesQuery.isLoading,
     submitNote: submitNoteMutation.mutateAsync,
     isSubmitting: submitNoteMutation.isPending,
-  };
-};
-
-/**
- * Safety document type
- */
-export interface SafetyDoc {
-  id: string;
-  title: string;
-  type: string;
-  description?: string;
-  mandatory: boolean;
-  acknowledged_at?: string;
-}
-
-/**
- * Hook for safety documents requiring acknowledgement
- */
-export const useSafetyDocs = () => {
-  const employeeQuery = useMyEmployeeRecord();
-  const employeeId = employeeQuery.data?.id;
-  const queryClient = useQueryClient();
-
-  const docsQuery = useQuery<SafetyDoc[]>({
-    queryKey: ['safety-docs', employeeId],
-    queryFn: async () => {
-      if (!employeeId) return [];
-
-      const { data, error } = await supabase
-        .from('safety_document_acknowledgements')
-        .select(
-          `
-          id,
-          acknowledged_at,
-          document:safety_documents (
-            id,
-            title,
-            type,
-            description,
-            mandatory
-          )
-        `
-        )
-        .eq('employee_id', employeeId)
-        .order('created_at', { ascending: false });
-
-      if (error) {
-        console.error('Error fetching safety docs:', error);
-        return [];
-      }
-
-      return (data || []).map((item) => ({
-        id: (item.document as any)?.id || item.id,
-        title: (item.document as any)?.title || 'Unknown',
-        type: (item.document as any)?.type || 'Document',
-        description: (item.document as any)?.description,
-        mandatory: (item.document as any)?.mandatory || false,
-        acknowledged_at: item.acknowledged_at,
-      }));
-    },
-    enabled: !!employeeId,
-    staleTime: 2 * 60 * 1000,
-  });
-
-  const acknowledgeMutation = useMutation({
-    mutationFn: async (docId: string) => {
-      if (!employeeId) throw new Error('No employee ID');
-
-      const { error } = await supabase
-        .from('safety_document_acknowledgements')
-        .update({ acknowledged_at: new Date().toISOString() })
-        .eq('document_id', docId)
-        .eq('employee_id', employeeId);
-
-      if (error) throw error;
-    },
-    onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ['safety-docs', employeeId] });
-    },
-  });
-
-  return {
-    data: docsQuery.data,
-    isLoading: docsQuery.isLoading,
-    acknowledgeDoc: acknowledgeMutation.mutateAsync,
-    isAcknowledging: acknowledgeMutation.isPending,
   };
 };
 
@@ -687,7 +636,7 @@ export const useMyExpenses = () => {
       if (!employeeId) return [];
 
       const { data, error } = await supabase
-        .from('employee_expenses')
+        .from('employer_expense_claims')
         .select('id, category, amount, description, job_id, status, created_at')
         .eq('employee_id', employeeId)
         .order('created_at', { ascending: false })
@@ -719,14 +668,16 @@ export const useMyExpenses = () => {
       if (!employeeId) throw new Error('No employee ID');
 
       const { data, error } = await supabase
-        .from('employee_expenses')
+        .from('employer_expense_claims')
         .insert({
           employee_id: employeeId,
           category,
           amount,
-          description: description || null,
+          // description is NOT NULL — fall back to the category
+          description: description?.trim() || category,
           job_id: jobId || null,
-          status: 'pending',
+          status: 'Pending',
+          submitted_date: new Date().toISOString().split('T')[0],
         })
         .select()
         .single();
@@ -773,9 +724,8 @@ export const useSnagReports = (jobId?: string) => {
       if (!employeeId) return [];
 
       let query = supabase
-        .from('job_snag_reports')
+        .from('job_issues')
         .select('id, job_id, severity, description, location, created_at')
-        .eq('reported_by', employeeId)
         .order('created_at', { ascending: false })
         .limit(10);
 
@@ -810,13 +760,27 @@ export const useSnagReports = (jobId?: string) => {
     }) => {
       if (!employeeId) throw new Error('No employee ID');
 
+      // Stamped with the job owner's user_id (enforced by RLS) so the snag
+      // appears directly in the employer's Quality & Issues sections
+      const { data: job, error: jobError } = await supabase
+        .from('employer_jobs')
+        .select('user_id, title')
+        .eq('id', jId)
+        .single();
+      if (jobError || !job) throw jobError || new Error('Job not found');
+
       const { data, error } = await supabase
-        .from('job_snag_reports')
+        .from('job_issues')
         .insert({
           job_id: jId,
-          reported_by: employeeId,
-          severity,
+          user_id: job.user_id,
+          title: description.slice(0, 80),
           description,
+          issue_type: 'snag',
+          severity,
+          status: 'open',
+          // FK to the roster row — identifies which team member reported it
+          reported_by: employeeId,
           location: location || null,
         })
         .select()

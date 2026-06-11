@@ -17,7 +17,13 @@ import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover
 import { Switch } from '@/components/ui/switch';
 import { Progress } from '@/components/ui/progress';
 import { toast } from '@/hooks/use-toast';
-import { useEmployer } from '@/contexts/EmployerContext';
+import { useEmployees } from '@/hooks/useEmployees';
+import {
+  useTeamLeaveRequests,
+  useTeamAllowances,
+  useAddTeamLeave,
+  useDecideLeave,
+} from '@/hooks/useTeamLeave';
 import {
   format,
   parseISO,
@@ -74,15 +80,11 @@ const getStatusColour = (status: LeaveStatus): string => {
 };
 
 export function LeaveTabContent() {
-  const {
-    employees,
-    holidayAllowances,
-    leaveRequests,
-    addLeaveRequest,
-    approveLeaveRequest,
-    rejectLeaveRequest,
-    getEmployeeAllowance,
-  } = useEmployer();
+  const { data: employees = [] } = useEmployees();
+  const { data: leaveRequests = [] } = useTeamLeaveRequests();
+  const { data: holidayAllowances = [] } = useTeamAllowances();
+  const addLeave = useAddTeamLeave();
+  const decideLeave = useDecideLeave();
 
   const [showRequestForm, setShowRequestForm] = useState(false);
   const [selectedEmployee, setSelectedEmployee] = useState<string>('');
@@ -117,7 +119,7 @@ export function LeaveTabContent() {
 
     const totalDays = calculateDays();
 
-    addLeaveRequest({
+    addLeave.mutate({
       employeeId: selectedEmployee,
       employeeName: employee.name,
       type: leaveType,
@@ -125,7 +127,6 @@ export function LeaveTabContent() {
       endDate: format(endDate, 'yyyy-MM-dd'),
       halfDay: isHalfDay ? halfDayPeriod : undefined,
       totalDays,
-      status: 'pending',
       reason,
     });
 
@@ -143,21 +144,26 @@ export function LeaveTabContent() {
     setIsHalfDay(false);
   };
 
-  const handleApprove = (id: string) => {
-    approveLeaveRequest(id, 'Manager');
-    toast({
-      title: 'Leave Approved',
-      description: 'The leave request has been approved.',
-    });
+  const handleApprove = async (id: string) => {
+    try {
+      await decideLeave.mutateAsync({ id, decision: 'approved' });
+      toast({ title: 'Leave Approved', description: 'The leave request has been approved.' });
+    } catch {
+      toast({ title: 'Could not approve', variant: 'destructive' });
+    }
   };
 
-  const handleReject = (id: string) => {
-    rejectLeaveRequest(id, 'Declined by manager');
-    toast({
-      title: 'Leave Rejected',
-      description: 'The leave request has been rejected.',
-      variant: 'destructive',
-    });
+  const handleReject = async (id: string) => {
+    try {
+      await decideLeave.mutateAsync({ id, decision: 'rejected', reason: 'Declined by manager' });
+      toast({
+        title: 'Leave Rejected',
+        description: 'The leave request has been rejected.',
+        variant: 'destructive',
+      });
+    } catch {
+      toast({ title: 'Could not reject', variant: 'destructive' });
+    }
   };
 
   // Get calendar data for team view
@@ -350,7 +356,7 @@ export function LeaveTabContent() {
                 <CardContent className="p-4">
                   <div className="flex items-center gap-3 mb-3">
                     <div className="w-10 h-10 rounded-full bg-elec-yellow/20 flex items-center justify-center text-elec-yellow text-sm font-semibold">
-                      {employee.avatar}
+                      {employee.avatar_initials}
                     </div>
                     <div className="flex-1 min-w-0">
                       <p className="font-medium text-white truncate">{employee.name}</p>

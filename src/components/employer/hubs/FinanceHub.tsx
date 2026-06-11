@@ -61,7 +61,7 @@ export function FinanceHub({ onNavigate }: FinanceHubProps) {
           onClick: () => onNavigate('quotes'),
         },
         {
-          label: 'Won this month',
+          label: 'Paid invoices',
           value: fmtMoney(revenue),
           tone: 'emerald',
           onClick: () => onNavigate('reports'),
@@ -73,10 +73,11 @@ export function FinanceHub({ onNavigate }: FinanceHubProps) {
           onClick: () => onNavigate('quotes'),
         },
         {
-          label: 'Profit 30d',
-          value: fmtMoney(Math.max(revenue - totalOverdueInvoices, 0)),
+          label: 'Overdue £',
+          value: fmtMoney(totalOverdueInvoices),
+          tone: 'red',
           accent: true,
-          onClick: () => onNavigate('financials'),
+          onClick: () => onNavigate('quotes'),
         },
       ]}
     >

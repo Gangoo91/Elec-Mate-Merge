@@ -50,7 +50,6 @@ import {
   useBulkUpdateApplicationStatus,
 } from '@/hooks/useVacancyApplications';
 import { useConversations } from '@/hooks/useConversations';
-import { useEmployer } from '@/contexts/EmployerContext';
 import { useQueryClient } from '@tanstack/react-query';
 import { toast } from '@/hooks/use-toast';
 
@@ -129,7 +128,6 @@ export function JobVacanciesSection() {
   const toggleVacancyStatus = useToggleVacancyStatus();
   const updateApplicationStatus = useUpdateApplicationStatus();
   const bulkUpdateStatus = useBulkUpdateApplicationStatus();
-  const { employer } = useEmployer();
 
   const [topTab, setTopTab] = useState<TopTab>('vacancies');
   const [vacancyTab, setVacancyTab] = useState<VacancyTab>('live');

@@ -23,6 +23,7 @@ import {
   useRAMSDocumentStats,
   type RAMSDocument,
 } from '@/hooks/useRAMSDocuments';
+import { useTrainingStats } from '@/hooks/useTrainingRecords';
 import type { Tone } from '@/components/employer/editorial';
 
 const incidentTypeLabels: Record<string, string> = {
@@ -86,7 +87,8 @@ export function SafetyHRSection() {
     ? Math.max(0, (ramsStats.total ?? 0) - (ramsStats.approved ?? 0))
     : 0;
 
-  const trainingDue30d = 0;
+  const { data: trainingStats } = useTrainingStats();
+  const trainingDue30d = trainingStats?.expiringsSoon ?? 0;
 
   const safetyScore = incidentStats
     ? Math.max(
@@ -127,7 +129,7 @@ export function SafetyHRSection() {
       tone: severityTone[incident.severity] ?? 'orange',
       pillTone: statusTone[incident.status] ?? 'amber',
       pillLabel: incident.status.replace('_', ' '),
-      onClick: () => navigate('/employer/safety/incidents'),
+      onClick: () => navigate('/employer?section=incidents'),
     })),
     ...pendingRamsList.map((rams: RAMSDocument) => ({
       title: `RAMS: ${rams.project_name}`,
@@ -137,7 +139,7 @@ export function SafetyHRSection() {
       tone: 'amber' as Tone,
       pillTone: statusTone[rams.status] ?? 'amber',
       pillLabel: rams.status.replace('_', ' '),
-      onClick: () => navigate('/employer/safety/rams'),
+      onClick: () => navigate('/employer?section=rams'),
     })),
   ].slice(0, 6);
 
@@ -155,7 +157,7 @@ export function SafetyHRSection() {
       description: 'Risk assessments and method statements per project.',
       meta: `${ramsStats?.total ?? 0} documents`,
       tone: 'amber',
-      path: '/employer/safety/rams',
+      path: '/employer?section=rams',
     },
     {
       eyebrow: 'Reporting',
@@ -163,7 +165,7 @@ export function SafetyHRSection() {
       description: 'Near-misses, injuries and investigations.',
       meta: `${incidentStats?.open ?? 0} open`,
       tone: 'red',
-      path: '/employer/safety/incidents',
+      path: '/employer?section=incidents',
     },
     {
       eyebrow: 'Governance',
@@ -171,7 +173,7 @@ export function SafetyHRSection() {
       description: 'Health, safety and HR policy library.',
       meta: 'Manage policies',
       tone: 'blue',
-      path: '/employer/safety/policies',
+      path: '/employer?section=policies',
     },
     {
       eyebrow: 'People',
@@ -179,7 +181,7 @@ export function SafetyHRSection() {
       description: 'Tickets, certifications and renewals.',
       meta: `${trainingDue30d} due in 30 days`,
       tone: 'cyan',
-      path: '/employer/safety/training',
+      path: '/employer?section=training',
     },
     {
       eyebrow: 'Communications',
@@ -187,7 +189,7 @@ export function SafetyHRSection() {
       description: 'Toolbox talks and signed acknowledgements.',
       meta: 'Issue a briefing',
       tone: 'purple',
-      path: '/employer/safety/briefings',
+      path: '/employer?section=briefings',
     },
     {
       eyebrow: 'Audits',
@@ -195,7 +197,7 @@ export function SafetyHRSection() {
       description: 'CDM, CHAS and regulatory checks.',
       meta: 'View status',
       tone: 'emerald',
-      path: '/employer/safety/compliance',
+      path: '/employer?section=compliance',
     },
     {
       eyebrow: 'Workforce',
@@ -203,7 +205,7 @@ export function SafetyHRSection() {
       description: 'Employment contracts and right-to-work.',
       meta: 'Manage contracts',
       tone: 'indigo',
-      path: '/employer/safety/contracts',
+      path: '/employer?section=contracts',
     },
   ];
 

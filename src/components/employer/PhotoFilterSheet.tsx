@@ -13,7 +13,7 @@ import { ScrollArea } from '@/components/ui/scroll-area';
 import { Checkbox } from '@/components/ui/checkbox';
 import { Search, X, Check, Eye, AlertTriangle } from 'lucide-react';
 import { cn } from '@/lib/utils';
-import { PhotoCategory } from '@/data/employerMockData';
+import { PhotoCategory } from '@/components/employer/employerViewTypes';
 import {
   inputClass,
   checkboxClass,
