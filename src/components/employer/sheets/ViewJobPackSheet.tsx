@@ -291,7 +291,8 @@ export function ViewJobPackSheet({ jobPack, open, onOpenChange }: ViewJobPackShe
 
   if (!jobPack) return null;
 
-  const acknowledgedCount = acknowledgements.length;
+  const signedAcks = acknowledgements.filter((a) => !!a.acknowledged_at);
+  const acknowledgedCount = signedAcks.length;
   const acknowledgedPercent =
     assignedEmployees.length > 0
       ? Math.round((acknowledgedCount / assignedEmployees.length) * 100)
@@ -307,10 +308,7 @@ export function ViewJobPackSheet({ jobPack, open, onOpenChange }: ViewJobPackShe
     <>
       <SuccessCheckmark show={showSuccess} />
       <Sheet open={open} onOpenChange={onOpenChange}>
-        <SheetContent
-          side="bottom"
-          className="h-[85vh] p-0 overflow-hidden bg-[hsl(0_0%_8%)]"
-        >
+        <SheetContent side="bottom" className="h-[85vh] p-0 overflow-hidden bg-[hsl(0_0%_8%)]">
           <SheetShell
             eyebrow={jobPack.client}
             title={isEditing ? 'Edit job pack' : jobPack.title}
@@ -326,11 +324,7 @@ export function ViewJobPackSheet({ jobPack, open, onOpenChange }: ViewJobPackShe
                   <SecondaryButton onClick={() => setIsEditing(false)} fullWidth>
                     Cancel
                   </SecondaryButton>
-                  <PrimaryButton
-                    onClick={handleSave}
-                    disabled={updateJobPack.isPending}
-                    fullWidth
-                  >
+                  <PrimaryButton onClick={handleSave} disabled={updateJobPack.isPending} fullWidth>
                     <Save className="h-4 w-4 mr-2" />
                     Save changes
                   </PrimaryButton>
@@ -520,9 +514,7 @@ export function ViewJobPackSheet({ jobPack, open, onOpenChange }: ViewJobPackShe
 
                   <div className="rounded-2xl border border-dashed border-white/[0.1] bg-[hsl(0_0%_10%)] p-6 text-center">
                     <Upload className="h-8 w-8 mx-auto text-white mb-2" />
-                    <p className="text-sm font-medium text-white">
-                      Upload additional documents
-                    </p>
+                    <p className="text-sm font-medium text-white">Upload additional documents</p>
                     <p className="text-xs text-white">Design drawings, specs, schedules</p>
                     <SecondaryButton className="mt-3">Choose files</SecondaryButton>
                   </div>
@@ -707,11 +699,7 @@ export function ViewJobPackSheet({ jobPack, open, onOpenChange }: ViewJobPackShe
                       </FormCard>
                     )}
 
-                  <PrimaryButton
-                    onClick={handleSave}
-                    disabled={updateJobPack.isPending}
-                    fullWidth
-                  >
+                  <PrimaryButton onClick={handleSave} disabled={updateJobPack.isPending} fullWidth>
                     <Save className="h-4 w-4 mr-2" />
                     Save briefing content
                   </PrimaryButton>
@@ -748,7 +736,9 @@ export function ViewJobPackSheet({ jobPack, open, onOpenChange }: ViewJobPackShe
 
                       <FormCard eyebrow="Acknowledgement status">
                         {assignedEmployees.map((emp) => {
-                          const ack = acknowledgements.find((a) => a.employee_id === emp.id);
+                          const ack = acknowledgements.find(
+                            (a) => a.employee_id === emp.id && !!a.acknowledged_at
+                          );
                           return (
                             <div
                               key={emp.id}
@@ -781,9 +771,9 @@ export function ViewJobPackSheet({ jobPack, open, onOpenChange }: ViewJobPackShe
                                 </div>
                               </div>
                               {!ack && (
-                                <SecondaryButton size="sm">
-                                  <RefreshCw className="h-4 w-4" />
-                                </SecondaryButton>
+                                <span className="text-[11px] text-white/40">
+                                  Awaiting signature
+                                </span>
                               )}
                             </div>
                           );
@@ -828,9 +818,7 @@ export function ViewJobPackSheet({ jobPack, open, onOpenChange }: ViewJobPackShe
                         <div className="flex items-center justify-between text-sm">
                           <span className="text-white">Certifications</span>
                           <Pill
-                            tone={
-                              certificationCompliance.percentage === 100 ? 'emerald' : 'amber'
-                            }
+                            tone={certificationCompliance.percentage === 100 ? 'emerald' : 'amber'}
                           >
                             {certificationCompliance.percentage}% compliant
                           </Pill>

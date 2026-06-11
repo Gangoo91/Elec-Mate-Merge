@@ -35,6 +35,7 @@ import {
   Wrench,
   LucideIcon,
   ClipboardList,
+  FileCheck2,
 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
@@ -48,6 +49,7 @@ import { LeaveRequestSheet } from '@/components/worker-tools/LeaveRequestSheet';
 import { CommsSheet } from '@/components/worker-tools/CommsSheet';
 import { MyJobsSheet } from '@/components/worker-tools/MyJobsSheet';
 import { MyTasksSheet } from '@/components/worker-tools/MyTasksSheet';
+import { SignOffsSheet } from '@/components/worker-tools/SignOffsSheet';
 import { useMyTasks } from '@/hooks/useJobTasks';
 import { CredentialsSheet } from '@/components/worker-tools/CredentialsSheet';
 import { ProgressNotesSheet } from '@/components/worker-tools/ProgressNotesSheet';
@@ -168,6 +170,7 @@ export default function WorkerToolsHub() {
   const [commsSheetOpen, setCommsSheetOpen] = useState(false);
   const [jobsSheetOpen, setJobsSheetOpen] = useState(false);
   const [tasksSheetOpen, setTasksSheetOpen] = useState(false);
+  const [signOffsSheetOpen, setSignOffsSheetOpen] = useState(false);
   const [credentialsSheetOpen, setCredentialsSheetOpen] = useState(false);
   const [progressNotesSheetOpen, setProgressNotesSheetOpen] = useState(false);
   const [expenseSheetOpen, setExpenseSheetOpen] = useState(false);
@@ -182,6 +185,9 @@ export default function WorkerToolsHub() {
     const params = new URLSearchParams(window.location.search);
     if (params.get('task')) {
       setTasksSheetOpen(true);
+      window.history.replaceState({}, '', window.location.pathname);
+    } else if (params.get('signoff')) {
+      setSignOffsSheetOpen(true);
       window.history.replaceState({}, '', window.location.pathname);
     }
   }, []);
@@ -372,6 +378,12 @@ export default function WorkerToolsHub() {
                 onClick={() => setTasksSheetOpen(true)}
               />
               <WorkerToolCard
+                icon={FileCheck2}
+                title="Sign-offs"
+                subtitle="RAMS & job packs"
+                onClick={() => setSignOffsSheetOpen(true)}
+              />
+              <WorkerToolCard
                 icon={IdCard}
                 title="Credentials"
                 subtitle="View Elec-ID"
@@ -424,6 +436,7 @@ export default function WorkerToolsHub() {
       <CommsSheet open={commsSheetOpen} onOpenChange={setCommsSheetOpen} />
       <MyJobsSheet open={jobsSheetOpen} onOpenChange={setJobsSheetOpen} />
       <MyTasksSheet open={tasksSheetOpen} onOpenChange={setTasksSheetOpen} />
+      <SignOffsSheet open={signOffsSheetOpen} onOpenChange={setSignOffsSheetOpen} />
       <CredentialsSheet open={credentialsSheetOpen} onOpenChange={setCredentialsSheetOpen} />
       <ProgressNotesSheet open={progressNotesSheetOpen} onOpenChange={setProgressNotesSheetOpen} />
       <ExpenseSheet open={expenseSheetOpen} onOpenChange={setExpenseSheetOpen} />
