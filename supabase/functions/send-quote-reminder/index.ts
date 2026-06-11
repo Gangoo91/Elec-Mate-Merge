@@ -144,7 +144,7 @@ const handler = async (req: Request): Promise<Response> => {
     }
 
     // Build URLs
-    const acceptUrl = `https://www.elec-mate.com/public-quote/${publicToken}#accept`;
+    const acceptUrl = `https://elec-mate.com/public-quote/${publicToken}#accept`;
 
     // Build and send email
     const resend = new Resend(resendApiKey);
