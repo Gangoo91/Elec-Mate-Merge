@@ -19,6 +19,7 @@ import { QuoteInvoiceAnalytics } from '@/components/electrician/analytics';
 import StripeConnectBanner from '@/components/electrician/StripeConnectBanner';
 import { InvoiceCard } from '@/components/electrician/invoice-builder/InvoiceCard';
 import { isInvoiceOverdue } from '@/utils/invoice-status';
+import { useAccountingIntegrations } from '@/hooks/useAccountingIntegrations';
 import { PANEL } from '@/components/electrician/shared/surfaces';
 import {
   DropdownMenu,
@@ -49,6 +50,7 @@ const InvoicesPage = () => {
   const [isSearchOpen, setIsSearchOpen] = useState(false);
   const [isRefreshing, setIsRefreshing] = useState(false);
   const [markingPaidId, setMarkingPaidId] = useState<string | null>(null);
+  const { recordExternalPayment } = useAccountingIntegrations();
   const [downloadingPdfId, setDownloadingPdfId] = useState<string | null>(null);
   const [showGenerationDialog, setShowGenerationDialog] = useState(false);
   const [generatedPdfUrl, setGeneratedPdfUrl] = useState<string | null>(null);
@@ -221,13 +223,17 @@ const InvoicesPage = () => {
       setMarkingPaidId(invoice.id);
       const { error } = await supabase
         .from('quotes')
-        .update({ invoice_status: 'paid' })
+        .update({ invoice_status: 'paid', invoice_paid_at: new Date().toISOString() })
         .eq('id', invoice.id);
       if (error) throw error;
       toast({
         title: 'Invoice marked as paid',
         description: `Invoice ${invoice.invoice_number} has been marked as paid.`,
       });
+      // Close the loop in the accounting software (best-effort, non-blocking).
+      if (invoice.external_invoice_id && invoice.external_invoice_provider) {
+        recordExternalPayment(invoice.id, invoice.external_invoice_provider);
+      }
       recordPositiveAction();
       await fetchInvoices();
     } catch (error) {

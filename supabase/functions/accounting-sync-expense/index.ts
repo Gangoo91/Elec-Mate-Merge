@@ -71,6 +71,7 @@ interface ExpenseData {
   mileage_miles: number | null;
   mileage_from: string | null;
   mileage_to: string | null;
+  receipt_url: string | null;
 }
 
 interface SyncResult {
@@ -264,6 +265,7 @@ Deno.serve(async (req: Request) => {
           mileage_miles: expense.mileage_miles ? parseFloat(expense.mileage_miles) : null,
           mileage_from: expense.mileage_from,
           mileage_to: expense.mileage_to,
+          receipt_url: expense.receipt_url || null,
         };
 
         let result: SyncResult;
@@ -278,6 +280,24 @@ Deno.serve(async (req: Request) => {
           default:
             throw new Error(`Provider "${provider}" not supported for expense sync`);
         }
+
+        // Attach the receipt image to the provider record (best-effort —
+        // the numbers are already in; the photo is the HMRC evidence).
+        let receiptAttached = false;
+        if (expenseData.receipt_url) {
+          try {
+            receiptAttached = await attachReceipt(
+              provider as AccountingProvider,
+              accessToken,
+              tenantId,
+              result.externalExpenseId,
+              expenseData.receipt_url
+            );
+          } catch (attachErr) {
+            console.error(`Receipt attach failed for expense ${expense.id}:`, attachErr);
+          }
+        }
+        (result as SyncResult & { receiptAttached?: boolean }).receiptAttached = receiptAttached;
 
         results.push(result);
 
@@ -817,4 +837,109 @@ function getCategoryLabel(category: string): string {
     other: 'Other',
   };
   return labels[category] || category;
+}
+
+
+// ════════════════════════════════════════════════════════════════════
+// Receipt attachments — upload the stored receipt image to the provider
+// record so the evidence lives in the accounting file, not just Elec-Mate.
+// Xero: attachment on the BankTransaction. QuickBooks: Attachable linked
+// to the Purchase via multipart upload.
+// ════════════════════════════════════════════════════════════════════
+
+async function attachReceipt(
+  provider: AccountingProvider,
+  accessToken: string,
+  tenantId: string,
+  externalExpenseId: string,
+  receiptUrl: string
+): Promise<boolean> {
+  // Pull the image from storage (public bucket URL on the expense row).
+  const imgRes = await fetch(receiptUrl);
+  if (!imgRes.ok) throw new Error(`Receipt download failed: ${imgRes.status}`);
+  const contentType = imgRes.headers.get('content-type') || 'image/jpeg';
+  const bytes = new Uint8Array(await imgRes.arrayBuffer());
+  if (bytes.length === 0) throw new Error('Receipt download was empty');
+  if (bytes.length > 9_500_000) throw new Error('Receipt too large to attach (>9.5MB)');
+
+  const ext = contentType.includes('png') ? 'png' : contentType.includes('pdf') ? 'pdf' : 'jpg';
+  const filename = `receipt-${externalExpenseId}.${ext}`;
+
+  switch (provider) {
+    case 'xero': {
+      const res = await fetch(
+        `https://api.xero.com/api.xro/2.0/BankTransactions/${externalExpenseId}/Attachments/${filename}`,
+        {
+          method: 'PUT',
+          headers: {
+            Authorization: `Bearer ${accessToken}`,
+            'xero-tenant-id': tenantId,
+            Accept: 'application/json',
+            'Content-Type': contentType,
+          },
+          body: bytes,
+        }
+      );
+      if (!res.ok) {
+        const txt = await res.text().catch(() => '');
+        throw new Error(`Xero attachment ${res.status}: ${txt.slice(0, 300)}`);
+      }
+      return true;
+    }
+
+    case 'quickbooks': {
+      const boundary = '----elecmate' + crypto.randomUUID().replace(/-/g, '');
+      const metadata = JSON.stringify({
+        AttachableRef: [
+          { EntityRef: { type: 'Purchase', value: externalExpenseId }, IncludeOnSend: false },
+        ],
+        FileName: filename,
+        ContentType: contentType,
+      });
+
+      const enc = new TextEncoder();
+      const parts: Uint8Array[] = [];
+      parts.push(
+        enc.encode(
+          `--${boundary}\r\nContent-Disposition: form-data; name="file_metadata_01"; filename="metadata.json"\r\nContent-Type: application/json\r\n\r\n${metadata}\r\n`
+        )
+      );
+      parts.push(
+        enc.encode(
+          `--${boundary}\r\nContent-Disposition: form-data; name="file_content_01"; filename="${filename}"\r\nContent-Type: ${contentType}\r\n\r\n`
+        )
+      );
+      parts.push(bytes);
+      parts.push(enc.encode(`\r\n--${boundary}--\r\n`));
+
+      const bodyLen = parts.reduce((n, pt) => n + pt.length, 0);
+      const body = new Uint8Array(bodyLen);
+      let off = 0;
+      for (const pt of parts) {
+        body.set(pt, off);
+        off += pt.length;
+      }
+
+      const res = await fetch(`${QUICKBOOKS_BASE_URL}/v3/company/${tenantId}/upload?minorversion=70`, {
+        method: 'POST',
+        headers: {
+          Authorization: `Bearer ${accessToken}`,
+          Accept: 'application/json',
+          'Content-Type': `multipart/form-data; boundary=${boundary}`,
+        },
+        body,
+      });
+      if (!res.ok) {
+        const txt = await res.text().catch(() => '');
+        throw new Error(`QuickBooks attachment ${res.status}: ${txt.slice(0, 300)}`);
+      }
+      const json = await res.json();
+      const fault = json?.AttachableResponse?.[0]?.Fault;
+      if (fault) throw new Error(`QuickBooks attachment fault: ${JSON.stringify(fault).slice(0, 300)}`);
+      return true;
+    }
+
+    default:
+      return false;
+  }
 }

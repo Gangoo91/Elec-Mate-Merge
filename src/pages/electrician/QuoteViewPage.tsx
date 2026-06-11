@@ -24,6 +24,17 @@ import { createQuickTask } from '@/utils/createQuickTask';
 import { computeQuoteTotals } from '@/utils/quote-calculations';
 import { cn } from '@/lib/utils';
 
+/** Why a quote was lost — feeds win/loss analytics. Keys persist in quotes.declined_reason. */
+const DECLINE_REASONS = [
+  { key: 'price', label: 'Too expensive', hint: 'Price was the sticking point' },
+  { key: 'timing', label: 'Bad timing', hint: 'Couldn\u2019t start soon enough' },
+  { key: 'competitor', label: 'Went elsewhere', hint: 'Chose another electrician' },
+  { key: 'no_response', label: 'Went quiet', hint: 'Client stopped responding' },
+  { key: 'cancelled', label: 'Job cancelled', hint: 'Work no longer happening' },
+  { key: 'other', label: 'Other', hint: 'None of the above' },
+] as const;
+
+
 const QuoteViewPage = () => {
   const { id } = useParams<{ id: string }>();
   const navigate = useNavigate();
@@ -41,6 +52,7 @@ const QuoteViewPage = () => {
   const [isSendingReminder, setIsSendingReminder] = useState(false);
   const [isReverting, setIsReverting] = useState(false);
   const [showActionsSheet, setShowActionsSheet] = useState(false);
+  const [showDeclineSheet, setShowDeclineSheet] = useState(false);
   const [showRevertDialog, setShowRevertDialog] = useState(false);
   const [showProjectPicker, setShowProjectPicker] = useState(false);
   const [projects, setProjects] = useState<
@@ -246,17 +258,23 @@ const QuoteViewPage = () => {
     toast({ title: 'Duplicating quote', description: 'Edit the copy and save as new' });
   };
 
-  const handleMarkAsDeclined = async () => {
+  const handleMarkAsDeclined = async (reason?: string) => {
     if (!quote) return;
     const { error } = await supabase
       .from('quotes')
-      .update({ acceptance_status: 'rejected' })
+      .update({ acceptance_status: 'rejected', declined_reason: reason ?? null })
       .eq('id', quote.id);
     if (error) {
       toast({ title: 'Failed', variant: 'destructive' });
     } else {
-      setQuote((prev) => (prev ? { ...prev, acceptance_status: 'rejected' } : prev));
-      toast({ title: 'Marked as declined' });
+      setQuote((prev) =>
+        prev ? { ...prev, acceptance_status: 'rejected', declined_reason: reason ?? null } : prev
+      );
+      setShowDeclineSheet(false);
+      toast({
+        title: 'Marked as declined',
+        description: reason ? `Reason: ${DECLINE_REASONS.find((r) => r.key === reason)?.label}` : undefined,
+      });
     }
   };
 
@@ -392,8 +410,18 @@ const QuoteViewPage = () => {
       return { label: 'Invoiced', dot: 'bg-blue-400', text: 'text-blue-400', pill: 'bg-blue-500/15 text-blue-400 border-blue-500/25', wash: 'from-blue-500/[0.14]' };
     if (isAccepted)
       return { label: 'Won', dot: 'bg-emerald-400', text: 'text-emerald-400', pill: 'bg-emerald-500/15 text-emerald-400 border-emerald-500/25', wash: 'from-emerald-500/[0.14]' };
-    if (quote?.acceptance_status === 'rejected')
-      return { label: 'Declined', dot: 'bg-red-400', text: 'text-red-400', pill: 'bg-red-500/15 text-red-400 border-red-500/25', wash: 'from-red-500/[0.12]' };
+    if (quote?.acceptance_status === 'rejected') {
+      const reason = DECLINE_REASONS.find(
+        (r) => r.key === (quote as { declined_reason?: string | null }).declined_reason
+      );
+      return {
+        label: reason ? `Declined · ${reason.label}` : 'Declined',
+        dot: 'bg-red-400',
+        text: 'text-red-400',
+        pill: 'bg-red-500/15 text-red-400 border-red-500/25',
+        wash: 'from-red-500/[0.12]',
+      };
+    }
     if (isExpired)
       return { label: 'Expired', dot: 'bg-red-400', text: 'text-red-400', pill: 'bg-red-500/15 text-red-400 border-red-500/25', wash: 'from-red-500/[0.12]' };
     if (quote?.status === 'sent' || quote?.status === 'pending')
@@ -1090,7 +1118,7 @@ const QuoteViewPage = () => {
 
               {canDecline && (
                 <button
-                  onClick={() => { setShowActionsSheet(false); handleMarkAsDeclined(); }}
+                  onClick={() => { setShowActionsSheet(false); setShowDeclineSheet(true); }}
                   className="flex flex-col items-start gap-2.5 p-3.5 rounded-xl bg-white/[0.04] border border-white/[0.08] hover:bg-red-500/[0.06] active:scale-[0.98] touch-manipulation transition-all text-left select-none"
                 >
                   <span className="h-10 w-10 rounded-xl bg-red-500/[0.10] border border-red-500/[0.15] flex items-center justify-center">
@@ -1177,6 +1205,45 @@ const QuoteViewPage = () => {
                 <span className="text-[11px] text-white/45 ml-auto">Permanent — cannot be undone</span>
               </button>
             </div>
+          </div>
+        </SheetContent>
+      </Sheet>
+
+      {/* Decline reason — one tap, feeds win/loss analytics */}
+      <Sheet open={showDeclineSheet} onOpenChange={setShowDeclineSheet}>
+        <SheetContent
+          side="bottom"
+          className="rounded-t-2xl p-0 max-h-[85vh] overflow-y-auto overscroll-contain border-t border-white/[0.10]"
+        >
+          <div className="w-full px-4 sm:px-6 pt-3 pb-[max(20px,env(safe-area-inset-bottom))]">
+            <div className="mx-auto h-1 w-10 rounded-full bg-white/[0.15] mb-4" />
+
+            <div className="pb-3 mb-3 border-b border-white/[0.08]">
+              <p className="text-[14px] font-semibold text-white">Why was it declined?</p>
+              <p className="text-[11px] text-white/55 mt-0.5">
+                One tap — this builds your win/loss insight over time
+              </p>
+            </div>
+
+            <div className="grid grid-cols-2 lg:grid-cols-3 gap-2">
+              {DECLINE_REASONS.map((r) => (
+                <button
+                  key={r.key}
+                  onClick={() => handleMarkAsDeclined(r.key)}
+                  className="flex flex-col items-start gap-1 p-3.5 rounded-xl bg-white/[0.04] border border-white/[0.08] hover:bg-red-500/[0.05] active:scale-[0.98] touch-manipulation transition-all text-left select-none min-h-[64px]"
+                >
+                  <span className="text-[13px] font-semibold text-white">{r.label}</span>
+                  <span className="text-[11px] text-white/55">{r.hint}</span>
+                </button>
+              ))}
+            </div>
+
+            <button
+              onClick={() => handleMarkAsDeclined()}
+              className="w-full mt-3 h-11 rounded-xl text-[12px] font-medium text-white/55 bg-white/[0.03] border border-white/[0.06] touch-manipulation active:scale-[0.99] transition-all"
+            >
+              Skip — just mark it declined
+            </button>
           </div>
         </SheetContent>
       </Sheet>

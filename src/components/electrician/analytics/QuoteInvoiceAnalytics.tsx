@@ -199,6 +199,59 @@ export const QuoteInvoiceAnalytics: React.FC<QuoteInvoiceAnalyticsProps> = ({
         ),
       });
     }
+    // Win/loss intelligence — why quotes are being lost (declined_reason)
+    const lostWithReason = filteredQuotes.filter(
+      (q) => isLost(q) && (q as { declined_reason?: string | null }).declined_reason
+    );
+    if (lostWithReason.length >= 3) {
+      const counts = new Map<string, number>();
+      for (const q of lostWithReason) {
+        const r = (q as { declined_reason?: string | null }).declined_reason as string;
+        counts.set(r, (counts.get(r) || 0) + 1);
+      }
+      const [topKey, topCount] = [...counts.entries()].sort((a, b) => b[1] - a[1])[0];
+      const share = Math.round((topCount / lostWithReason.length) * 100);
+      if (share >= 40) {
+        const reasonText: Record<string, React.ReactNode> = {
+          price: (
+            <>
+              <span className="font-semibold text-white">{share}%</span> of lost quotes were{' '}
+              <span className="font-semibold text-white">too expensive</span> — your pricing may be
+              above the market for these jobs
+            </>
+          ),
+          timing: (
+            <>
+              <span className="font-semibold text-white">{share}%</span> of lost quotes were down to{' '}
+              <span className="font-semibold text-white">timing</span> — quoting lead times sooner
+              could win these
+            </>
+          ),
+          competitor: (
+            <>
+              <span className="font-semibold text-white">{share}%</span> of lost quotes{' '}
+              <span className="font-semibold text-white">went to another electrician</span> — speed
+              of follow-up usually decides these
+            </>
+          ),
+          no_response: (
+            <>
+              <span className="font-semibold text-white">{share}%</span> of lost quotes just{' '}
+              <span className="font-semibold text-white">went quiet</span> — earlier chasing could
+              save some
+            </>
+          ),
+          cancelled: (
+            <>
+              <span className="font-semibold text-white">{share}%</span> of lost quotes were{' '}
+              <span className="font-semibold text-white">cancelled jobs</span> — out of your hands
+            </>
+          ),
+        };
+        const text = reasonText[topKey];
+        if (text) list.push({ dot: 'bg-red-400', text });
+      }
+    }
     if (metrics.unviewedSent.length > 0) {
       list.push({
         dot: 'bg-amber-400',

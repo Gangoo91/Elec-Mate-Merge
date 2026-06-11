@@ -160,6 +160,85 @@ export async function refreshXeroToken(refreshToken: string): Promise<RefreshRes
   };
 }
 
+export interface RecordPaymentResult {
+  alreadyPaid: boolean;
+  amountRecorded: number;
+  externalPaymentId: string | null;
+}
+
+/**
+ * Record a payment against a Xero invoice (Elec-Mate "Mark as paid" →
+ * provider). Pays off the invoice's remaining AmountDue into the first
+ * payments-enabled bank account. Idempotent in effect: if Xero already
+ * shows the invoice settled, returns alreadyPaid without writing.
+ */
+export async function recordXeroPayment(
+  accessToken: string,
+  tenantId: string,
+  invoiceId: string,
+  paidAtISO?: string | null
+): Promise<RecordPaymentResult> {
+  const current = await pullInvoiceStatusFromXero(accessToken, tenantId, invoiceId);
+  if (current.isPaid || current.amountDue <= 0.005) {
+    return { alreadyPaid: true, amountRecorded: 0, externalPaymentId: null };
+  }
+
+  // Find an account that can receive payments (prefer a bank account).
+  const accRes = await fetch(
+    'https://api.xero.com/api.xro/2.0/Accounts?where=' +
+      encodeURIComponent('EnablePaymentsToAccount==true'),
+    {
+      headers: {
+        Authorization: `Bearer ${accessToken}`,
+        'xero-tenant-id': tenantId,
+        Accept: 'application/json',
+      },
+    }
+  );
+  if (!accRes.ok) {
+    const txt = await accRes.text().catch(() => '');
+    throw new Error(`Xero accounts lookup ${accRes.status}: ${txt.slice(0, 300)}`);
+  }
+  const accJson = await accRes.json();
+  // deno-lint-ignore no-explicit-any
+  const accounts: any[] = accJson?.Accounts ?? [];
+  const account =
+    accounts.find((a) => String(a.Type).toUpperCase() === 'BANK') ?? accounts[0];
+  if (!account?.AccountID) {
+    throw new Error(
+      'No payments-enabled account found in Xero. Enable "payments to this account" on a bank account in Xero, then try again.'
+    );
+  }
+
+  const dateISO = (paidAtISO ? new Date(paidAtISO) : new Date()).toISOString().split('T')[0];
+  const payRes = await fetch('https://api.xero.com/api.xro/2.0/Payments', {
+    method: 'PUT',
+    headers: {
+      Authorization: `Bearer ${accessToken}`,
+      'xero-tenant-id': tenantId,
+      Accept: 'application/json',
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify({
+      Payments: [
+        {
+          Invoice: { InvoiceID: invoiceId },
+          Account: { AccountID: account.AccountID },
+          Date: dateISO,
+          Amount: current.amountDue,
+        },
+      ],
+    }),
+  });
+  if (!payRes.ok) {
+    const txt = await payRes.text().catch(() => '');
+    throw new Error(`Xero payment ${payRes.status}: ${txt.slice(0, 400)}`);
+  }
+  const payJson = await payRes.json();
+  const paymentId = payJson?.Payments?.[0]?.PaymentID ?? null;
+  return { alreadyPaid: false, amountRecorded: current.amountDue, externalPaymentId: paymentId };
+}
+
 export interface ApplyResult {
   updated: boolean;
   totalPaid: number;

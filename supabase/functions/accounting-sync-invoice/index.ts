@@ -4,6 +4,8 @@
  */
 
 import { corsHeaders } from '../_shared/cors.ts';
+import { recordXeroPayment } from '../_shared/xero-invoice-status.ts';
+import { recordQuickBooksPayment } from '../_shared/quickbooks-invoice-status.ts';
 import { captureException } from '../_shared/sentry.ts';
 import { createClient } from '../_shared/deps.ts';
 import { handleError, ValidationError, ExternalAPIError } from '../_shared/errors.ts';
@@ -95,10 +97,12 @@ Deno.serve(async (req: Request) => {
     // Parse request body
     let invoiceId: string;
     let provider: string;
+    let recordPayment = false;
     try {
       const body = await req.json();
       invoiceId = body.invoiceId;
       provider = body.provider;
+      recordPayment = body.recordPayment === true;
     } catch (parseErr) {
       return errorResponse('Invalid JSON body', String(parseErr), 400);
     }
@@ -244,6 +248,43 @@ Deno.serve(async (req: Request) => {
           .eq('provider', provider);
       } catch (refreshErr) {
         return errorResponse('Token refresh failed', String(refreshErr), 401);
+      }
+    }
+
+    // ── Record-payment mode (two-way: Elec-Mate "Mark as paid" → provider) ──
+    // Settles the invoice's remaining balance in the provider so their books
+    // close the invoice too. No invoice re-push happens on this path.
+    if (recordPayment) {
+      if (!invoice.external_invoice_id || invoice.external_invoice_provider !== provider) {
+        return errorResponse(
+          'Invoice not synced to this provider yet',
+          'Sync the invoice to your accounting software first, then payments can be recorded against it.',
+          409
+        );
+      }
+      try {
+        const paidAt = (invoice.invoice_paid_at as string | null) ?? null;
+        const result =
+          provider === 'xero'
+            ? await recordXeroPayment(accessToken, tenantId, invoice.external_invoice_id, paidAt)
+            : provider === 'quickbooks'
+              ? await recordQuickBooksPayment(accessToken, tenantId, invoice.external_invoice_id, paidAt)
+              : null;
+        if (!result) {
+          return errorResponse(
+            `Recording payments in ${provider} is not supported yet`,
+            'Xero and QuickBooks are supported.',
+            501
+          );
+        }
+        console.log(`Payment recorded in ${provider}:`, JSON.stringify(result));
+        return new Response(JSON.stringify({ success: true, mode: 'payment', provider, ...result }), {
+          headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+        });
+      } catch (payErr) {
+        const msg = payErr instanceof Error ? payErr.message : String(payErr);
+        console.error('Record-payment error:', msg);
+        return errorResponse(`Failed to record payment in ${provider}`, msg, 502);
       }
     }
 

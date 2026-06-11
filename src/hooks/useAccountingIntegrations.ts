@@ -368,6 +368,47 @@ export const useAccountingIntegrations = (): UseAccountingIntegrationsReturn => 
     [integrations, refreshStatus]
   );
 
+  // Push a payment INTO the connected provider when the invoice is marked
+  // paid in Elec-Mate — settles the remaining balance so Xero/QuickBooks
+  // close the invoice too. Best-effort: callers should not block on this.
+  const recordExternalPayment = useCallback(
+    async (invoiceId: string, provider: string): Promise<boolean> => {
+      try {
+        const { data: session } = await supabase.auth.getSession();
+        if (!session.session) return false;
+
+        const response = await supabase.functions.invoke('accounting-sync-invoice', {
+          headers: { Authorization: `Bearer ${session.session.access_token}` },
+          body: { invoiceId, provider, recordPayment: true },
+        });
+
+        if (response.error || response.data?.success === false) {
+          const detail = response.data?.detail || response.data?.error || response.error?.message;
+          toast.error(`Couldn't record the payment in ${getProviderDisplayName(provider)}`, {
+            description: detail ? String(detail).substring(0, 180) : undefined,
+            duration: 8000,
+          });
+          return false;
+        }
+
+        const providerName = getProviderDisplayName(provider);
+        if (response.data?.alreadyPaid) {
+          toast.success(`${providerName} already shows this invoice as paid`);
+        } else {
+          toast.success(
+            `Payment of £${Number(response.data?.amountRecorded ?? 0).toFixed(2)} recorded in ${providerName}`,
+            { duration: 6000 }
+          );
+        }
+        return true;
+      } catch (err) {
+        console.error('[recordExternalPayment] failed:', err);
+        return false;
+      }
+    },
+    []
+  );
+
   // Pull latest payment status for an invoice from the connected provider
   // (e.g. user marked the invoice paid in Xero — bring that into Elec-Mate).
   const refreshInvoiceStatus = useCallback(
@@ -466,6 +507,7 @@ export const useAccountingIntegrations = (): UseAccountingIntegrationsReturn => 
     syncInvoice,
     syncExpenses,
     refreshInvoiceStatus,
+    recordExternalPayment,
     refreshStatus,
     getIntegration,
     isProviderConnected,

@@ -72,6 +72,76 @@ export async function pullInvoiceStatusFromQuickBooks(
   };
 }
 
+export interface RecordPaymentResult {
+  alreadyPaid: boolean;
+  amountRecorded: number;
+  externalPaymentId: string | null;
+}
+
+/**
+ * Record a payment against a QuickBooks invoice (Elec-Mate "Mark as paid" →
+ * provider). Pays the invoice's remaining Balance, linked to the invoice so
+ * QB closes it; deposits to QB's default Undeposited Funds. If QB already
+ * shows it settled, returns alreadyPaid without writing.
+ */
+export async function recordQuickBooksPayment(
+  accessToken: string,
+  realmId: string,
+  invoiceId: string,
+  paidAtISO?: string | null
+): Promise<RecordPaymentResult> {
+  // Read the invoice for its balance + customer (required on Payment).
+  const invRes = await fetch(
+    `${QB_BASE_URL}/v3/company/${realmId}/invoice/${invoiceId}?minorversion=70`,
+    { headers: { Authorization: `Bearer ${accessToken}`, Accept: 'application/json' } }
+  );
+  if (!invRes.ok) {
+    const txt = await invRes.text().catch(() => '');
+    throw new Error(`QuickBooks invoice lookup ${invRes.status}: ${txt.slice(0, 300)}`);
+  }
+  const inv = (await invRes.json())?.Invoice;
+  if (!inv) throw new Error('QuickBooks returned no invoice for that ID');
+
+  const balance = Math.round((Number(inv.Balance) || 0) * 100) / 100;
+  if (balance <= 0.005) {
+    return { alreadyPaid: true, amountRecorded: 0, externalPaymentId: null };
+  }
+  if (!inv.CustomerRef?.value) {
+    throw new Error('QuickBooks invoice has no customer reference — cannot record a payment');
+  }
+
+  const dateISO = (paidAtISO ? new Date(paidAtISO) : new Date()).toISOString().split('T')[0];
+  const payRes = await fetch(
+    `${QB_BASE_URL}/v3/company/${realmId}/payment?minorversion=70`,
+    {
+      method: 'POST',
+      headers: {
+        Authorization: `Bearer ${accessToken}`,
+        Accept: 'application/json',
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        CustomerRef: { value: inv.CustomerRef.value },
+        TotalAmt: balance,
+        TxnDate: dateISO,
+        Line: [
+          {
+            Amount: balance,
+            LinkedTxn: [{ TxnId: invoiceId, TxnType: 'Invoice' }],
+          },
+        ],
+      }),
+    }
+  );
+  if (!payRes.ok) {
+    const txt = await payRes.text().catch(() => '');
+    throw new Error(`QuickBooks payment ${payRes.status}: ${txt.slice(0, 400)}`);
+  }
+  const payJson = await payRes.json();
+  const paymentId = payJson?.Payment?.Id ?? null;
+  return { alreadyPaid: false, amountRecorded: balance, externalPaymentId: paymentId };
+}
+
 // ── OAuth: decrypt, refresh-if-expired (persisting), return a usable token ──
 export async function getValidQuickBooksAccess(
   supabase: SupabaseLike,

@@ -43,7 +43,7 @@ const InvoiceViewPage = () => {
   const [isSyncing, setIsSyncing] = useState(false);
   const [isRefreshingFromProvider, setIsRefreshingFromProvider] = useState(false);
   const [totalPaid, setTotalPaid] = useState<number>(0);
-  const { hasConnectedProvider, syncInvoice, refreshInvoiceStatus, integrations } =
+  const { hasConnectedProvider, syncInvoice, refreshInvoiceStatus, recordExternalPayment, integrations } =
     useAccountingIntegrations();
 
   const connectedProvider = integrations.find((i) => i.status === 'connected');
@@ -253,6 +253,10 @@ const InvoiceViewPage = () => {
       if (error) throw error;
       toast({ title: 'Invoice marked as paid', description: `Invoice ${invoice.invoice_number} has been marked as paid.` });
       setShowMarkPaidDialog(false);
+      // Close the loop in the accounting software (best-effort, non-blocking).
+      if (invoice.external_invoice_id && invoice.external_invoice_provider) {
+        recordExternalPayment(invoice.id, invoice.external_invoice_provider);
+      }
       fetchInvoice();
     } catch (error) {
       toast({ title: 'Error', description: 'Failed to mark invoice as paid.', variant: 'destructive' });
