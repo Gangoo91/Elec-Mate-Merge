@@ -21,6 +21,7 @@ export interface JobAssignmentWithDetails extends JobAssignment {
     id: string;
     name: string;
     role: string;
+    team_role?: string | null;
     avatar_initials: string;
     phone: string | null;
     email: string | null;
@@ -39,7 +40,7 @@ export const getJobAssignments = async (jobId: string): Promise<JobAssignmentWit
     .select(
       `
       *,
-      employee:employer_employees(id, name, role, avatar_initials, phone, email)
+      employee:employer_employees(id, name, role, team_role, avatar_initials, phone, email)
     `
     )
     .eq('job_id', jobId)
@@ -176,6 +177,7 @@ export const checkForClashes = async (
   }
 
   // Filter for overlapping dates
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const clashes = (data || []).filter((assignment: any) => {
     const assignmentStart = new Date(assignment.start_date);
     const assignmentEnd = assignment.end_date

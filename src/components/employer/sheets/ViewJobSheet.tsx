@@ -27,7 +27,7 @@ import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '@/component
 import { AssignWorkersSheet } from '@/components/employer/sheets/AssignWorkersSheet';
 import { CopyJobSheet } from '@/components/employer/sheets/CopyJobSheet';
 import { JobLabelPicker } from '@/components/employer/JobLabelPicker';
-import { JobChecklist } from '@/components/employer/JobChecklist';
+import { JobTasksPanel } from '@/components/employer/JobTasksPanel';
 import { JobActivityFeed } from '@/components/employer/JobActivityFeed';
 import { DueDateBadge } from '@/components/employer/DueDateBadge';
 import { toast } from '@/hooks/use-toast';
@@ -361,10 +361,7 @@ export function ViewJobSheet({ job, open, onOpenChange }: ViewJobSheetProps) {
     <>
       <SuccessCheckmark show={showSuccess} />
       <Sheet open={open} onOpenChange={onOpenChange}>
-        <SheetContent
-          side="bottom"
-          className="h-[85vh] p-0 overflow-hidden bg-[hsl(0_0%_8%)]"
-        >
+        <SheetContent side="bottom" className="h-[85vh] p-0 overflow-hidden bg-[hsl(0_0%_8%)]">
           {isEditing ? (
             <SheetShell
               eyebrow="Edit job"
@@ -375,11 +372,7 @@ export function ViewJobSheet({ job, open, onOpenChange }: ViewJobSheetProps) {
                   <SecondaryButton onClick={() => setIsEditing(false)} fullWidth>
                     Cancel
                   </SecondaryButton>
-                  <PrimaryButton
-                    onClick={handleSave}
-                    disabled={updateJob.isPending}
-                    fullWidth
-                  >
+                  <PrimaryButton onClick={handleSave} disabled={updateJob.isPending} fullWidth>
                     <Save className="h-4 w-4 mr-2" />
                     Save changes
                   </PrimaryButton>
@@ -481,10 +474,7 @@ export function ViewJobSheet({ job, open, onOpenChange }: ViewJobSheetProps) {
               description={
                 <span className="flex flex-wrap items-center gap-2">
                   <Pill tone={statusTone[job.status] ?? 'yellow'}>{job.status}</Pill>
-                  <DueDateBadge
-                    endDate={job.end_date}
-                    isCompleted={job.status === 'Completed'}
-                  />
+                  <DueDateBadge endDate={job.end_date} isCompleted={job.status === 'Completed'} />
                   <DropdownMenu>
                     <DropdownMenuTrigger asChild>
                       <button
@@ -585,18 +575,14 @@ export function ViewJobSheet({ job, open, onOpenChange }: ViewJobSheetProps) {
                   <Calendar className="h-5 w-5 text-blue-400" />
                   <div>
                     <Eyebrow>Duration</Eyebrow>
-                    <p className="text-sm font-medium text-white">
-                      {calculateDuration() || '-'}
-                    </p>
+                    <p className="text-sm font-medium text-white">{calculateDuration() || '-'}</p>
                   </div>
                 </div>
                 <div className="rounded-2xl bg-[hsl(0_0%_12%)] border border-white/[0.06] p-4 flex items-center gap-3">
                   <Users className="h-5 w-5 text-amber-400" />
                   <div>
                     <Eyebrow>Workers</Eyebrow>
-                    <p className="text-sm font-medium text-white">
-                      {assignments.length} assigned
-                    </p>
+                    <p className="text-sm font-medium text-white">{assignments.length} assigned</p>
                   </div>
                 </div>
               </FormGrid>
@@ -631,9 +617,7 @@ export function ViewJobSheet({ job, open, onOpenChange }: ViewJobSheetProps) {
                     <button className="w-full p-4 flex items-center justify-between touch-manipulation">
                       <div className="flex items-center gap-2">
                         <Users className="h-4 w-4 text-white" />
-                        <span className="text-sm font-medium text-white">
-                          Assigned workers
-                        </span>
+                        <span className="text-sm font-medium text-white">Assigned workers</span>
                         <Pill tone="yellow">{assignments.length}</Pill>
                       </div>
                       <div className="flex items-center gap-2">
@@ -698,8 +682,8 @@ export function ViewJobSheet({ job, open, onOpenChange }: ViewJobSheetProps) {
                                 <AlertDialogHeader>
                                   <AlertDialogTitle>Remove worker?</AlertDialogTitle>
                                   <AlertDialogDescription>
-                                    Are you sure you want to remove {assignment.employee?.name}{' '}
-                                    from this job?
+                                    Are you sure you want to remove {assignment.employee?.name} from
+                                    this job?
                                   </AlertDialogDescription>
                                 </AlertDialogHeader>
                                 <AlertDialogFooter>
@@ -732,7 +716,7 @@ export function ViewJobSheet({ job, open, onOpenChange }: ViewJobSheetProps) {
                     <button className="w-full p-4 flex items-center justify-between touch-manipulation">
                       <div className="flex items-center gap-2">
                         <ListChecks className="h-4 w-4 text-white" />
-                        <span className="text-sm font-medium text-white">Checklist</span>
+                        <span className="text-sm font-medium text-white">Tasks</span>
                       </div>
                       <ChevronDown
                         className={cn(
@@ -744,7 +728,7 @@ export function ViewJobSheet({ job, open, onOpenChange }: ViewJobSheetProps) {
                   </CollapsibleTrigger>
                   <CollapsibleContent>
                     <div className="p-4 pt-0">
-                      <JobChecklist jobId={job.id} />
+                      <JobTasksPanel jobId={job.id} />
                     </div>
                   </CollapsibleContent>
                 </div>
@@ -832,8 +816,7 @@ export function ViewJobSheet({ job, open, onOpenChange }: ViewJobSheetProps) {
                   <AlertDialogHeader>
                     <AlertDialogTitle>Delete job?</AlertDialogTitle>
                     <AlertDialogDescription>
-                      Are you sure you want to delete "{job.title}"? This action cannot be
-                      undone.
+                      Are you sure you want to delete "{job.title}"? This action cannot be undone.
                     </AlertDialogDescription>
                   </AlertDialogHeader>
                   <AlertDialogFooter>

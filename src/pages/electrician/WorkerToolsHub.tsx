@@ -16,7 +16,7 @@
  * Yellow/amber theme to match app design language.
  */
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import useSEO from '@/hooks/useSEO';
 import { motion } from 'framer-motion';
@@ -34,6 +34,7 @@ import {
   Receipt,
   Wrench,
   LucideIcon,
+  ClipboardList,
 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
@@ -46,6 +47,8 @@ import { TimesheetSheet } from '@/components/worker-tools/TimesheetSheet';
 import { LeaveRequestSheet } from '@/components/worker-tools/LeaveRequestSheet';
 import { CommsSheet } from '@/components/worker-tools/CommsSheet';
 import { MyJobsSheet } from '@/components/worker-tools/MyJobsSheet';
+import { MyTasksSheet } from '@/components/worker-tools/MyTasksSheet';
+import { useMyTasks } from '@/hooks/useJobTasks';
 import { CredentialsSheet } from '@/components/worker-tools/CredentialsSheet';
 import { ProgressNotesSheet } from '@/components/worker-tools/ProgressNotesSheet';
 import { ExpenseSheet } from '@/components/worker-tools/ExpenseSheet';
@@ -164,12 +167,24 @@ export default function WorkerToolsHub() {
   const [leaveSheetOpen, setLeaveSheetOpen] = useState(false);
   const [commsSheetOpen, setCommsSheetOpen] = useState(false);
   const [jobsSheetOpen, setJobsSheetOpen] = useState(false);
+  const [tasksSheetOpen, setTasksSheetOpen] = useState(false);
   const [credentialsSheetOpen, setCredentialsSheetOpen] = useState(false);
   const [progressNotesSheetOpen, setProgressNotesSheetOpen] = useState(false);
   const [expenseSheetOpen, setExpenseSheetOpen] = useState(false);
   const [snagReportSheetOpen, setSnagReportSheetOpen] = useState(false);
 
   const { user } = useAuth();
+  const { data: myTasks = [] } = useMyTasks();
+  const openTaskCount = myTasks.filter((t) => t.status !== 'Done').length;
+
+  // Push deep-links land here with ?task=<id> — open My Tasks directly
+  useEffect(() => {
+    const params = new URLSearchParams(window.location.search);
+    if (params.get('task')) {
+      setTasksSheetOpen(true);
+      window.history.replaceState({}, '', window.location.pathname);
+    }
+  }, []);
   const {
     employee,
     isLoadingEmployee,
@@ -181,7 +196,6 @@ export default function WorkerToolsHub() {
     unreadCount,
     activeJobsCount,
   } = useWorkerSelfService();
-
 
   // Dev mode: allow whitelisted emails to access without employee record
   const isDevMode = user?.email && DEV_WHITELIST.includes(user.email);
@@ -217,9 +231,9 @@ export default function WorkerToolsHub() {
             </div>
             <h1 className="text-2xl font-bold text-white mb-3">Worker Tools</h1>
             <p className="text-white/70 max-w-sm mx-auto">
-              Your account isn't linked to a company team yet. If your employer added you by
-              email, signing in with that email links you automatically — otherwise enter their
-              team invite code below.
+              Your account isn't linked to a company team yet. If your employer added you by email,
+              signing in with that email links you automatically — otherwise enter their team invite
+              code below.
             </p>
           </div>
 
@@ -350,6 +364,14 @@ export default function WorkerToolsHub() {
                 onClick={() => setJobsSheetOpen(true)}
               />
               <WorkerToolCard
+                icon={ClipboardList}
+                title="My Tasks"
+                subtitle={openTaskCount > 0 ? `${openTaskCount} open` : 'No open tasks'}
+                subtitleColour={openTaskCount > 0 ? 'text-amber-400' : 'text-white'}
+                badge={openTaskCount}
+                onClick={() => setTasksSheetOpen(true)}
+              />
+              <WorkerToolCard
                 icon={IdCard}
                 title="Credentials"
                 subtitle="View Elec-ID"
@@ -401,6 +423,7 @@ export default function WorkerToolsHub() {
       <LeaveRequestSheet open={leaveSheetOpen} onOpenChange={setLeaveSheetOpen} />
       <CommsSheet open={commsSheetOpen} onOpenChange={setCommsSheetOpen} />
       <MyJobsSheet open={jobsSheetOpen} onOpenChange={setJobsSheetOpen} />
+      <MyTasksSheet open={tasksSheetOpen} onOpenChange={setTasksSheetOpen} />
       <CredentialsSheet open={credentialsSheetOpen} onOpenChange={setCredentialsSheetOpen} />
       <ProgressNotesSheet open={progressNotesSheetOpen} onOpenChange={setProgressNotesSheetOpen} />
       <ExpenseSheet open={expenseSheetOpen} onOpenChange={setExpenseSheetOpen} />

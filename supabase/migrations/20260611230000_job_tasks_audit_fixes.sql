@@ -1,0 +1,20 @@
+-- ============================================================================
+-- ELE-1073 audit fixes (applied live as job_tasks_audit_fixes)
+--
+-- 1. guard_task_worker_update trigger: workers may only change status/photos/
+--    own assignment — title/priority/due/position/job_id/employer_id pinned
+--    (closed a cross-tenant job-graft hole); worker UPDATE with-check pins
+--    employer_id+job_id implicitly via the trigger.
+-- 2. completed_at clears when a Done task reopens (trg_notify_task_status).
+-- 3. "Worker reads own assigned tasks" SELECT (tickets survive assignment
+--    end) + "Worker claims unassigned task" UPDATE (up-for-grabs pool).
+-- 4. append_task_photo(p_task_id, p_path) — concurrency-safe jsonb append,
+--    owner-or-assignee checked; photos now store PATHS, signed on read.
+-- 5. task-photos PRIVATE bucket (own-folder insert, authenticated signed
+--    reads, own delete) — job-site photos off the public listable bucket.
+-- 6. touch_updated_at search_path pinned.
+--
+-- Full SQL bodies live in the DB migration of the same name.
+-- (applied additionally as task_push_deeplinks): assignment + comment pushes
+-- route to '/electrician/worker-tools?task=<id>' so the app opens the exact
+-- ticket.
