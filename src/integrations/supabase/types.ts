@@ -5779,6 +5779,7 @@ export type Database = {
           id: string
           level: string | null
           name: string
+          qualification_id: string | null
           status: string | null
         }
         Insert: {
@@ -5790,6 +5791,7 @@ export type Database = {
           id?: string
           level?: string | null
           name: string
+          qualification_id?: string | null
           status?: string | null
         }
         Update: {
@@ -5801,6 +5803,7 @@ export type Database = {
           id?: string
           level?: string | null
           name?: string
+          qualification_id?: string | null
           status?: string | null
         }
         Relationships: [
@@ -5824,6 +5827,20 @@ export type Database = {
             isOneToOne: false
             referencedRelation: "v_portfolio_stats_by_college"
             referencedColumns: ["college_id"]
+          },
+          {
+            foreignKeyName: "college_courses_qualification_id_fkey"
+            columns: ["qualification_id"]
+            isOneToOne: false
+            referencedRelation: "qualifications"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "college_courses_qualification_id_fkey"
+            columns: ["qualification_id"]
+            isOneToOne: false
+            referencedRelation: "v_iqa_sampling_status"
+            referencedColumns: ["qualification_id"]
           },
         ]
       }
@@ -6800,6 +6817,7 @@ export type Database = {
       college_invites: {
         Row: {
           college_id: string
+          course_id: string | null
           created_at: string
           created_by: string | null
           expires_at: string | null
@@ -6814,6 +6832,7 @@ export type Database = {
         }
         Insert: {
           college_id: string
+          course_id?: string | null
           created_at?: string
           created_by?: string | null
           expires_at?: string | null
@@ -6828,6 +6847,7 @@ export type Database = {
         }
         Update: {
           college_id?: string
+          course_id?: string | null
           created_at?: string
           created_by?: string | null
           expires_at?: string | null
@@ -6861,6 +6881,13 @@ export type Database = {
             isOneToOne: false
             referencedRelation: "v_portfolio_stats_by_college"
             referencedColumns: ["college_id"]
+          },
+          {
+            foreignKeyName: "college_invites_course_id_fkey"
+            columns: ["course_id"]
+            isOneToOne: false
+            referencedRelation: "college_courses"
+            referencedColumns: ["id"]
           },
           {
             foreignKeyName: "college_invites_qualification_id_fkey"
@@ -10043,6 +10070,8 @@ export type Database = {
           logo_data_url: string | null
           logo_size: string | null
           logo_url: string | null
+          notification_email: string | null
+          office_address: string | null
           office_lat: number | null
           office_lng: number | null
           overhead_percentage: number | null
@@ -10101,6 +10130,8 @@ export type Database = {
           logo_data_url?: string | null
           logo_size?: string | null
           logo_url?: string | null
+          notification_email?: string | null
+          office_address?: string | null
           office_lat?: number | null
           office_lng?: number | null
           overhead_percentage?: number | null
@@ -10159,6 +10190,8 @@ export type Database = {
           logo_data_url?: string | null
           logo_size?: string | null
           logo_url?: string | null
+          notification_email?: string | null
+          office_address?: string | null
           office_lat?: number | null
           office_lng?: number | null
           overhead_percentage?: number | null
@@ -38124,44 +38157,6 @@ export type Database = {
         }[]
       }
       accept_college_invite: { Args: { p_invite_code: string }; Returns: Json }
-      college_portfolio_summaries: {
-        Args: never
-        Returns: {
-          assignment_id: string
-          student_id: string
-          qualification_id: string
-          total_entries: number
-          completed_entries: number
-          draft_entries: number
-          reviewed_entries: number
-          awaiting_review: number
-          feedback_given: number
-          signed_off: number
-          categories_complete: number
-          categories_total: number
-          ojt_hours_completed: number
-          ojt_hours_required: number
-          gateway_passed: boolean
-          ksbs_total: number
-        }[]
-      }
-      college_student_summaries: {
-        Args: { p_college_id: string }
-        Returns: {
-          student_id: string
-          user_id: string
-          otj_verified_minutes: number
-          otj_pending_minutes: number
-          portfolio_total: number
-          portfolio_completed: number
-          submissions_pending: number
-          ac_total: number
-          ac_assessed: number
-          attendance_present: number
-          attendance_total: number
-          risk_level: string
-        }[]
-      }
       accept_quote_by_token: {
         Args: {
           accepted_email: string
@@ -38266,6 +38261,62 @@ export type Database = {
       cleanup_hs_query_cache: { Args: never; Returns: undefined }
       cleanup_pdf_queue: { Args: never; Returns: number }
       cleanup_rag_cache: { Args: never; Returns: undefined }
+      college_cohort_summaries: {
+        Args: { p_cohort_ids: string[] }
+        Returns: {
+          apprentice_count: number
+          at_risk: number
+          avg_attendance_pct: number
+          avg_progress_pct: number
+          cohort_id: string
+          cohort_name: string
+          epa_almost: number
+          epa_no_verdict: number
+          epa_not_yet: number
+          epa_ready: number
+          otj_total_hours: number
+          otj_verified_hours: number
+        }[]
+      }
+      college_portfolio_summaries: {
+        Args: never
+        Returns: {
+          assignment_id: string
+          awaiting_review: number
+          categories_complete: number
+          categories_total: number
+          completed_entries: number
+          draft_entries: number
+          feedback_given: number
+          gateway_passed: boolean
+          ksbs_total: number
+          ojt_hours_completed: number
+          ojt_hours_required: number
+          qualification_id: string
+          reviewed_entries: number
+          signed_off: number
+          student_id: string
+          total_entries: number
+        }[]
+      }
+      college_student_summaries: {
+        Args: { p_college_id: string }
+        Returns: {
+          ac_assessed: number
+          ac_total: number
+          attendance_present: number
+          attendance_present_late: number
+          attendance_total: number
+          otj_pending_minutes: number
+          otj_verified_minutes: number
+          portfolio_completed: number
+          portfolio_total: number
+          risk_level: string
+          student_id: string
+          submissions_pending: number
+          user_id: string
+        }[]
+      }
       complete_ai_job: {
         Args: {
           job_id: string
@@ -38537,6 +38588,8 @@ export type Database = {
           logo_data_url: string | null
           logo_size: string | null
           logo_url: string | null
+          notification_email: string | null
+          office_address: string | null
           office_lat: number | null
           office_lng: number | null
           overhead_percentage: number | null
@@ -38771,10 +38824,6 @@ export type Database = {
         }[]
       }
       get_profile_count: { Args: never; Returns: number }
-      get_public_stats: {
-        Args: never
-        Returns: { profiles_count: number; reports_count: number }[]
-      }
       get_public_quote_for_booking: {
         Args: { quote_id_param: string }
         Returns: {
@@ -38786,6 +38835,13 @@ export type Database = {
           job_title: string
           quote_number: string
           user_id: string
+        }[]
+      }
+      get_public_stats: {
+        Args: never
+        Returns: {
+          profiles_count: number
+          reports_count: number
         }[]
       }
       get_qs_countersignature_for_pdf: {

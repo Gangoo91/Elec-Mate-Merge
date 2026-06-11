@@ -4,7 +4,7 @@ import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { useCollegeStudents, useStudentsAtRisk } from '@/hooks/college/useCollegeStudents';
 import type { CollegeStudent } from '@/services/college/collegeStudentService';
 import { useCollegeCohorts } from '@/hooks/college/useCollegeCohorts';
-import { useCollegeAttendance } from '@/hooks/college/useCollegeAttendance';
+import { useCollegeStudentSummaries } from '@/hooks/college/useCollegeStudentSummaries';
 import { StudentDetailSheet } from '@/components/college/sheets/StudentDetailSheet';
 import { ProgressUpdateSheet } from '@/components/college/sheets/ProgressUpdateSheet';
 import { useToast } from '@/hooks/use-toast';
@@ -36,7 +36,11 @@ export function ProgressTrackingSection() {
   const { data: students = [], isLoading: studentsLoading } = useCollegeStudents();
   const { data: studentsAtRisk = [] } = useStudentsAtRisk();
   const { data: cohorts = [] } = useCollegeCohorts();
-  const { data: attendance = [] } = useCollegeAttendance();
+  // Per-student attendance comes from one server-side aggregation instead of
+  // fetching every attendance row for the college and counting in JS.
+  const collegeId = students[0]?.college_id ?? undefined;
+  const { data: studentSummaries = [] } = useCollegeStudentSummaries(collegeId);
+  const summaryByStudent = new Map(studentSummaries.map((s) => [s.student_id, s]));
 
   const { toast } = useToast();
   const queryClient = useQueryClient();
@@ -50,7 +54,7 @@ export function ProgressTrackingSection() {
 
   const handleRefresh = async () => {
     await queryClient.invalidateQueries({ queryKey: ['college-students'] });
-    await queryClient.invalidateQueries({ queryKey: ['college-attendance'] });
+    await queryClient.invalidateQueries({ queryKey: ['college-student-summaries'] });
   };
 
   const getAvatarInitials = (name: string): string => {
@@ -60,10 +64,10 @@ export function ProgressTrackingSection() {
   };
 
   const getStudentAttendanceRate = (studentId: string): number => {
-    const records = attendance.filter((a) => a.student_id === studentId);
-    if (records.length === 0) return 100;
-    const present = records.filter((a) => a.status === 'Present' || a.status === 'Late').length;
-    return Math.round((present / records.length) * 100);
+    const s = summaryByStudent.get(studentId);
+    // Same definition as before: (Present + Late) / total; 100% when no records.
+    if (!s || s.attendance_total === 0) return 100;
+    return Math.round((s.attendance_present_late / s.attendance_total) * 100);
   };
 
   const progressData = students

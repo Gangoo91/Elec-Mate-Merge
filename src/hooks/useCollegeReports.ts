@@ -109,19 +109,58 @@ export async function fetchOtjReport(filters: ReportFilters): Promise<OtjRow[]> 
   const collegeId = await callerCollegeId();
   if (!collegeId) return [];
 
-  let q = supabase
-    .from('college_otj_entries')
-    .select(
-      'id, college_id, student_id, activity_date, activity_type, title, duration_minutes, verification_status, verified_at'
-    )
-    .eq('college_id', collegeId);
-  if (filters.startDate) q = q.gte('activity_date', filters.startDate);
-  if (filters.endDate) q = q.lte('activity_date', filters.endDate);
-  const { data: entries } = await q.order('activity_date', { ascending: false }).limit(2000);
+  // If filtering by cohort, resolve its learners up front and filter the query
+  // server-side. The old code fetched a truncated page across ALL cohorts and
+  // then filtered by cohort NAME after the fact, so a cohort export could miss
+  // most of its own entries once other cohorts filled the row cap.
+  let cohortUserIds: string[] | null = null;
+  if (filters.cohortId) {
+    const { data: cohortStudents } = await supabase
+      .from('college_students')
+      .select('user_id')
+      .eq('college_id', collegeId)
+      .eq('cohort_id', filters.cohortId);
+    cohortUserIds = (cohortStudents ?? [])
+      .map((s) => s.user_id)
+      .filter((v): v is string => !!v);
+    if (cohortUserIds.length === 0) return [];
+  }
 
-  const studentIds = Array.from(
-    new Set((entries ?? []).map((e: any) => e.student_id as string))
-  );
+  // Paginate so the export is COMPLETE — the old .limit(2000) silently dropped
+  // entries (200 learners x 10+ OTJ entries crosses 2000 within a term, which
+  // would understate hours on an ESFA funding export).
+  type OtjEntry = {
+    student_id: string;
+    activity_date: string;
+    activity_type: string;
+    title: string;
+    duration_minutes: number;
+    verification_status: string;
+    verified_at: string | null;
+  };
+  const entries: OtjEntry[] = [];
+  const PAGE = 1000;
+  for (let from = 0; ; from += PAGE) {
+    let q = supabase
+      .from('college_otj_entries')
+      .select(
+        'id, college_id, student_id, activity_date, activity_type, title, duration_minutes, verification_status, verified_at'
+      )
+      .eq('college_id', collegeId);
+    if (filters.startDate) q = q.gte('activity_date', filters.startDate);
+    if (filters.endDate) q = q.lte('activity_date', filters.endDate);
+    if (cohortUserIds) q = q.in('student_id', cohortUserIds);
+    const { data, error } = await q
+      .order('activity_date', { ascending: false })
+      .order('id', { ascending: true }) // unique tiebreaker — stable paging
+      .range(from, from + PAGE - 1);
+    if (error) throw error;
+    const batch = (data ?? []) as OtjEntry[];
+    entries.push(...batch);
+    if (batch.length < PAGE) break;
+  }
+
+  const studentIds = Array.from(new Set(entries.map((e) => e.student_id)));
   const { data: students } = await supabase
     .from('college_students')
     .select('user_id, name, cohort_id')
@@ -147,7 +186,7 @@ export async function fetchOtjReport(filters: ReportFilters): Promise<OtjRow[]> 
     .in('id', cohortIds);
   const cohortMap = new Map((cohorts ?? []).map((c: any) => [c.id, c.name as string]));
 
-  const rows: OtjRow[] = (entries ?? []).map((e: any) => {
+  const rows: OtjRow[] = entries.map((e) => {
     const s = studentByUser.get(e.student_id);
     const cohortName = s?.cohort_id ? (cohortMap.get(s.cohort_id) ?? null) : null;
     return {
@@ -163,10 +202,7 @@ export async function fetchOtjReport(filters: ReportFilters): Promise<OtjRow[]> 
     };
   });
 
-  if (filters.cohortId) {
-    const wantedName = cohortMap.get(filters.cohortId);
-    return rows.filter((r) => r.cohort_name === wantedName);
-  }
+  // Cohort filtering already applied server-side above.
   return rows;
 }
 
@@ -185,13 +221,27 @@ export async function fetchAttendanceReport(filters: ReportFilters): Promise<Att
   const studentIds = (students ?? []).map((s: any) => s.id);
   if (studentIds.length === 0) return [];
 
-  let q = supabase
-    .from('college_attendance')
-    .select('student_id, date, status, notes')
-    .in('student_id', studentIds);
-  if (filters.startDate) q = q.gte('date', filters.startDate);
-  if (filters.endDate) q = q.lte('date', filters.endDate);
-  const { data: rows } = await q.order('date', { ascending: false }).limit(5000);
+  // Paginate so the attendance export is COMPLETE — the old .limit(5000) would
+  // truncate badly (200 learners x ~daily marks runs to tens of thousands of rows).
+  type AttRow = { student_id: string; date: string; status: string; notes: string | null };
+  const rows: AttRow[] = [];
+  const PAGE = 1000;
+  for (let from = 0; ; from += PAGE) {
+    let q = supabase
+      .from('college_attendance')
+      .select('student_id, date, status, notes')
+      .in('student_id', studentIds);
+    if (filters.startDate) q = q.gte('date', filters.startDate);
+    if (filters.endDate) q = q.lte('date', filters.endDate);
+    const { data, error } = await q
+      .order('date', { ascending: false })
+      .order('id', { ascending: true }) // unique tiebreaker — stable paging
+      .range(from, from + PAGE - 1);
+    if (error) throw error;
+    const batch = (data ?? []) as AttRow[];
+    rows.push(...batch);
+    if (batch.length < PAGE) break;
+  }
 
   const cohortIds = Array.from(
     new Set(
@@ -212,12 +262,7 @@ export async function fetchAttendanceReport(filters: ReportFilters): Promise<Att
     ])
   );
 
-  return ((rows ?? []) as Array<{
-    student_id: string;
-    date: string;
-    status: string;
-    notes: string | null;
-  }>).map((r) => {
+  return rows.map((r) => {
     const s = studentMap.get(r.student_id);
     return {
       student_name: s?.name ?? '—',
@@ -460,18 +505,29 @@ export async function fetchEpaPassRateReport(
 export async function fetchAcCoverageGapReport(
   filters: ReportFilters
 ): Promise<AcCoverageGapRow[]> {
-  // Pull a representative slice of the qualification's ACs and count
-  // matching lesson + resource mappings. Capped at 2000 ACs to stay snappy.
-  let qrQ = supabase
-    .from('qualification_requirements')
-    .select('qualification_code, unit_code, ac_code, ac_text');
-  if (filters.qualificationCode) qrQ = qrQ.eq('qualification_code', filters.qualificationCode);
-  const { data: qrs } = await qrQ.limit(2000);
-  if (!qrs || qrs.length === 0) return [];
+  // Pull the qualification's ACs and count matching lesson + resource mappings.
+  // Paginated so an all-qualifications run isn't silently truncated (was capped
+  // at 2000; ~23 quals x ~300 ACs comfortably exceeds that), which would hide
+  // real coverage gaps.
+  type QrRow = { qualification_code: string; unit_code: string; ac_code: string; ac_text: string };
+  const qrs: QrRow[] = [];
+  const PAGE = 1000;
+  for (let from = 0; ; from += PAGE) {
+    let qrQ = supabase
+      .from('qualification_requirements')
+      .select('qualification_code, unit_code, ac_code, ac_text');
+    if (filters.qualificationCode) qrQ = qrQ.eq('qualification_code', filters.qualificationCode);
+    const { data, error } = await qrQ
+      .order('id', { ascending: true }) // deterministic order — stable paging
+      .range(from, from + PAGE - 1);
+    if (error) throw error;
+    const batch = (data ?? []) as QrRow[];
+    qrs.push(...batch);
+    if (batch.length < PAGE) break;
+  }
+  if (qrs.length === 0) return [];
 
-  const acCodes = Array.from(
-    new Set((qrs as Array<{ ac_code: string }>).map((q) => q.ac_code))
-  );
+  const acCodes = Array.from(new Set(qrs.map((q) => q.ac_code)));
 
   const [{ data: lessonMap }, { data: resourceMap }] = await Promise.all([
     supabase
@@ -493,7 +549,7 @@ export async function fetchAcCoverageGapReport(
     resourceCounts.set(r.ac_code, (resourceCounts.get(r.ac_code) ?? 0) + 1);
   }
 
-  return (qrs as Array<any>).map((q) => {
+  return qrs.map((q) => {
     const lc = lessonCounts.get(q.ac_code) ?? 0;
     const rc = resourceCounts.get(q.ac_code) ?? 0;
     return {
@@ -528,17 +584,36 @@ export async function fetchQuizResultsReport(
   const userIds = Array.from(studentMap.keys());
   if (userIds.length === 0) return [];
 
-  let aQ = supabase
-    .from('tutor_quiz_attempts')
-    .select('id, quiz_id, student_id, submitted_at, score, total_points')
-    .in('student_id', userIds);
-  if (filters.startDate) aQ = aQ.gte('submitted_at', filters.startDate);
-  if (filters.endDate) aQ = aQ.lte('submitted_at', filters.endDate);
-  const { data: attempts } = await aQ.order('submitted_at', { ascending: false }).limit(2000);
+  // Paginate so the quiz export is COMPLETE — the old .limit(2000) would drop
+  // attempts as a cohort builds up quiz history over the year.
+  type AttemptRow = {
+    id: string;
+    quiz_id: string;
+    student_id: string;
+    submitted_at: string;
+    score: number | null;
+    total_points: number | null;
+  };
+  const attempts: AttemptRow[] = [];
+  const PAGE = 1000;
+  for (let from = 0; ; from += PAGE) {
+    let aQ = supabase
+      .from('tutor_quiz_attempts')
+      .select('id, quiz_id, student_id, submitted_at, score, total_points')
+      .in('student_id', userIds);
+    if (filters.startDate) aQ = aQ.gte('submitted_at', filters.startDate);
+    if (filters.endDate) aQ = aQ.lte('submitted_at', filters.endDate);
+    const { data, error } = await aQ
+      .order('submitted_at', { ascending: false })
+      .order('id', { ascending: true }) // unique tiebreaker — stable paging
+      .range(from, from + PAGE - 1);
+    if (error) throw error;
+    const batch = (data ?? []) as AttemptRow[];
+    attempts.push(...batch);
+    if (batch.length < PAGE) break;
+  }
 
-  const quizIds = Array.from(
-    new Set((attempts ?? []).map((a: any) => a.quiz_id as string))
-  );
+  const quizIds = Array.from(new Set(attempts.map((a) => a.quiz_id)));
   const { data: quizzes } = await supabase
     .from('tutor_quizzes')
     .select('id, title, pass_mark')
@@ -547,7 +622,7 @@ export async function fetchQuizResultsReport(
     (quizzes ?? []).map((q: any) => [q.id, { title: q.title, pass_mark: q.pass_mark as number | null }])
   );
 
-  return ((attempts ?? []) as Array<any>).map((a) => {
+  return attempts.map((a) => {
     const q = quizMap.get(a.quiz_id);
     const pct =
       a.score != null && a.total_points
