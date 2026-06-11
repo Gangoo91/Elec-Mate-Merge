@@ -2,15 +2,16 @@
  * Accounting Pull All Invoices (background auto-sync)
  *
  * Cron-driven counterpart to accounting-pull-invoice-status. For every user
- * with a connected Xero account, refreshes the payment status of their open
- * (not fully paid) synced invoices and writes back deposits / full payments.
+ * with a connected Xero OR QuickBooks account, refreshes the payment status
+ * of their open (not fully paid) synced invoices and writes back deposits /
+ * full payments.
  *
- * This is what makes a Xero deposit show up in Elec-Mate WITHOUT the user
- * manually tapping "Sync from Xero" (ELE-1041). Service-role only — intended
- * to be invoked by pg_cron with the service-role bearer token.
+ * This is what makes a Xero/QuickBooks deposit show up in Elec-Mate WITHOUT
+ * the user manually tapping "Pull status" (ELE-1041). Service-role only —
+ * intended to be invoked by pg_cron with the service-role bearer token.
  *
- * Bounded for Xero rate limits: a capped number of invoices per tenant, with a
- * short pause between calls.
+ * Bounded for provider rate limits (Xero 60/min/tenant is the tighter one):
+ * a capped number of invoices per tenant, with a short pause between calls.
  */
 
 import { corsHeaders } from '../_shared/cors.ts';
@@ -22,6 +23,10 @@ import {
   applyPaymentStatus,
   type OAuthTokenRow,
 } from '../_shared/xero-invoice-status.ts';
+import {
+  pullInvoiceStatusFromQuickBooks,
+  getValidQuickBooksAccess,
+} from '../_shared/quickbooks-invoice-status.ts';
 
 const SUPABASE_URL = Deno.env.get('SUPABASE_URL')!;
 const SUPABASE_SERVICE_ROLE_KEY = Deno.env.get('SUPABASE_SERVICE_ROLE_KEY')!;
@@ -40,13 +45,13 @@ Deno.serve(async (req: Request) => {
   const summary = { tenants: 0, checked: 0, updated: 0, errors: 0 };
 
   try {
-    // All connected Xero accounts.
+    // All connected accounts with a two-way pull implementation.
     const { data: tokens, error: tokenErr } = await supabase
       .from('accounting_oauth_tokens')
       .select(
         'user_id, provider, encrypted_access_token, encrypted_refresh_token, token_expires_at, tenant_id'
       )
-      .eq('provider', 'xero');
+      .in('provider', ['xero', 'quickbooks']);
 
     if (tokenErr) throw tokenErr;
 
@@ -59,7 +64,7 @@ Deno.serve(async (req: Request) => {
         .select('id, total, total_paid, invoice_status, external_invoice_id')
         .eq('user_id', tokenRow.user_id)
         .eq('invoice_raised', true)
-        .eq('external_invoice_provider', 'xero')
+        .eq('external_invoice_provider', tokenRow.provider)
         .not('external_invoice_id', 'is', null)
         .or('invoice_status.is.null,invoice_status.neq.paid')
         .limit(MAX_INVOICES_PER_TENANT);
@@ -75,7 +80,10 @@ Deno.serve(async (req: Request) => {
       let accessToken: string;
       let tenantId: string;
       try {
-        ({ accessToken, tenantId } = await getValidXeroAccess(supabase, tokenRow));
+        ({ accessToken, tenantId } =
+          tokenRow.provider === 'quickbooks'
+            ? await getValidQuickBooksAccess(supabase, tokenRow)
+            : await getValidXeroAccess(supabase, tokenRow));
       } catch (authErr) {
         console.error(`[pull-all] token unusable for ${tokenRow.user_id}:`, authErr);
         summary.errors++;
@@ -85,11 +93,18 @@ Deno.serve(async (req: Request) => {
       for (const inv of invoices) {
         summary.checked++;
         try {
-          const pulled = await pullInvoiceStatusFromXero(
-            accessToken,
-            tenantId,
-            inv.external_invoice_id as string
-          );
+          const pulled =
+            tokenRow.provider === 'quickbooks'
+              ? await pullInvoiceStatusFromQuickBooks(
+                  accessToken,
+                  tenantId,
+                  inv.external_invoice_id as string
+                )
+              : await pullInvoiceStatusFromXero(
+                  accessToken,
+                  tenantId,
+                  inv.external_invoice_id as string
+                );
           const applied = await applyPaymentStatus(
             supabase,
             inv.id as string,

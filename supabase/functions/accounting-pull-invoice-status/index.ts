@@ -26,6 +26,10 @@ import { captureException } from '../_shared/sentry.ts';
 import { createClient } from '../_shared/deps.ts';
 import { decryptToken, encryptToken } from '../_shared/encryption.ts';
 import { applyPaymentStatus } from '../_shared/xero-invoice-status.ts';
+import {
+  pullInvoiceStatusFromQuickBooks,
+  refreshQuickBooksToken,
+} from '../_shared/quickbooks-invoice-status.ts';
 
 const SUPABASE_URL = Deno.env.get('SUPABASE_URL')!;
 const SUPABASE_SERVICE_ROLE_KEY = Deno.env.get('SUPABASE_SERVICE_ROLE_KEY')!;
@@ -113,7 +117,7 @@ Deno.serve(async (req: Request) => {
     if (!quote.external_invoice_id || !quote.external_invoice_provider) {
       return errorResponse(
         'This invoice was never synced to an accounting provider',
-        'Use "Sync to Xero" first — there is no external invoice ID stored on this row, so we have nothing to look up.',
+        'Sync this invoice to your accounting software first — there is no external invoice ID stored on this row, so we have nothing to look up.',
         409
       );
     }
@@ -207,10 +211,13 @@ Deno.serve(async (req: Request) => {
         case 'xero':
           pulled = await pullInvoiceStatusFromXero(accessToken, tenantId, externalId);
           break;
+        case 'quickbooks':
+          pulled = await pullInvoiceStatusFromQuickBooks(accessToken, tenantId, externalId);
+          break;
         default:
           return errorResponse(
             `Pull-from-${provider} not yet supported`,
-            'Phase 1 only supports Xero. Other providers will be added later.',
+            'Xero and QuickBooks are supported. Sage / FreshBooks will be added later.',
             501
           );
       }
@@ -331,6 +338,8 @@ async function refreshAccessToken(
   switch (provider) {
     case 'xero':
       return refreshXeroToken(refreshToken);
+    case 'quickbooks':
+      return refreshQuickBooksToken(refreshToken);
     default:
       throw new Error(`Refresh not implemented for ${provider}`);
   }
