@@ -264,17 +264,15 @@ export function ViewJobPackSheet({ jobPack, open, onOpenChange }: ViewJobPackShe
     setIsSendingToWorkers(true);
 
     try {
-      await updateJobPack.mutateAsync({
-        id: jobPack.id,
-        updates: {
-          sent_to_workers_at: new Date().toISOString(),
-          status: 'In Progress',
-        },
-      });
+      // Atomic server-side send: status + ack rows + worker pushes
+      const { data, error } = await supabase.rpc('send_job_pack', { p_pack_id: jobPack.id });
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      const r = data as any;
+      if (error || r?.error) throw new Error(r?.error || error?.message);
 
       toast({
         title: 'Pack sent',
-        description: `Job pack sent to ${assignedEmployees.length} worker(s).`,
+        description: `Job pack sent to ${r?.workers ?? assignedEmployees.length} worker(s) for sign-off.`,
       });
       setShowSuccess(true);
       setTimeout(() => setShowSuccess(false), 700);

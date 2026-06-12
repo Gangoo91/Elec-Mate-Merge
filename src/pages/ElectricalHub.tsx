@@ -435,6 +435,14 @@ const ElectricalHubInner = () => {
 
   const identityTools: ToolCard[] = [
     {
+      id: 'worker-tools',
+      eyebrow: 'My employer',
+      title: 'Worker Tools',
+      description: 'Your jobs, tasks, clock-in, timesheets and sign-offs.',
+      to: '/electrician/worker-tools',
+      meta: 'Joined a firm? Start here',
+    },
+    {
       id: 'elec-id',
       eyebrow: 'Profile',
       title: 'My Elec-ID',

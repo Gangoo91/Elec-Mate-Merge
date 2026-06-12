@@ -41,6 +41,11 @@ function resolvePushDestinationUrl(
   if (!data) return null;
   const r = role || data?.role || '';
 
+  // Team pushes (tasks, pack sign-offs, comments, assignments) carry their
+  // exact destination — honour it before any type-based guessing. Only
+  // accept in-app paths.
+  if (data.route && data.route.startsWith('/')) return data.route;
+
   if (data.type === 'admin_message')
     return r === 'employer' ? '/employer?open=messages' : '/dashboard?open=messages';
   if (data.action === 'open_tasks' || data.type === 'task') return '/electrician/tasks';

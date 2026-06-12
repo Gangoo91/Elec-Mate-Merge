@@ -410,7 +410,9 @@ export function ProgressLogsSection() {
         >
           <div className="flex flex-col h-full">
             <SheetHeader className="px-5 py-4 border-b border-white/[0.06]">
-              <SheetTitle className="text-white text-base font-semibold">New progress log</SheetTitle>
+              <SheetTitle className="text-white text-base font-semibold">
+                New progress log
+              </SheetTitle>
             </SheetHeader>
 
             <div className="flex-1 overflow-y-auto overscroll-contain px-5 py-5 space-y-5">
@@ -439,13 +441,15 @@ export function ProgressLogsSection() {
                   type="date"
                   value={formData.date}
                   onChange={(e) => setFormData((prev) => ({ ...prev, date: e.target.value }))}
-className={inputClass}
+                  className={inputClass}
                 />
               </div>
 
               <div className="grid grid-cols-2 gap-3">
                 <div className="space-y-2">
-                  <Label className="text-white text-[12px] uppercase tracking-[0.14em]">Weather</Label>
+                  <Label className="text-white text-[12px] uppercase tracking-[0.14em]">
+                    Weather
+                  </Label>
                   <Select
                     value={formData.weather}
                     onValueChange={(v) =>
@@ -478,7 +482,7 @@ className={inputClass}
                         workers_on_site: parseInt(e.target.value) || 1,
                       }))
                     }
-  className={inputClass}
+                    className={inputClass}
                   />
                 </div>
               </div>
@@ -498,7 +502,7 @@ className={inputClass}
                       hours_worked: parseFloat(e.target.value) || 0,
                     }))
                   }
-className={inputClass}
+                  className={inputClass}
                 />
               </div>
 
@@ -512,7 +516,7 @@ className={inputClass}
                     setFormData((prev) => ({ ...prev, work_description: e.target.value }))
                   }
                   placeholder="Describe the work completed today…"
-className={`${textareaClass} min-h-[100px]`}
+                  className={`${textareaClass} min-h-[100px]`}
                 />
               </div>
 
@@ -525,7 +529,7 @@ className={`${textareaClass} min-h-[100px]`}
                     value={newWorkItem}
                     onChange={(e) => setNewWorkItem(e.target.value)}
                     placeholder="Add work item…"
-className={`${inputClass} flex-1`}
+                    className={`${inputClass} flex-1`}
                     onKeyDown={(e) =>
                       e.key === 'Enter' && (e.preventDefault(), handleAddWorkItem())
                     }
@@ -569,7 +573,7 @@ className={`${inputClass} flex-1`}
                     value={newMaterial.item}
                     onChange={(e) => setNewMaterial((prev) => ({ ...prev, item: e.target.value }))}
                     placeholder="Item"
-className={inputClass}
+                    className={inputClass}
                   />
                   <Input
                     value={newMaterial.quantity}
@@ -577,7 +581,7 @@ className={inputClass}
                       setNewMaterial((prev) => ({ ...prev, quantity: e.target.value }))
                     }
                     placeholder="Qty"
-className={inputClass}
+                    className={inputClass}
                   />
                   <div className="flex gap-1">
                     <Input
@@ -590,7 +594,7 @@ className={inputClass}
                         }))
                       }
                       placeholder="£"
-  className={`${inputClass} flex-1`}
+                      className={`${inputClass} flex-1`}
                     />
                     <button
                       onClick={handleAddMaterial}
@@ -633,7 +637,7 @@ className={inputClass}
                   value={formData.notes || ''}
                   onChange={(e) => setFormData((prev) => ({ ...prev, notes: e.target.value }))}
                   placeholder="Any additional notes…"
-className={`${textareaClass} min-h-[80px]`}
+                  className={`${textareaClass} min-h-[80px]`}
                 />
               </div>
             </div>
@@ -693,7 +697,11 @@ className={`${textareaClass} min-h-[80px]`}
                         </span>
                       ),
                     },
-                    { label: 'Workers', value: String(selectedLog.workers_on_site ?? '—'), tone: 'amber' },
+                    {
+                      label: 'Workers',
+                      value: String(selectedLog.workers_on_site ?? '—'),
+                      tone: 'amber',
+                    },
                     {
                       label: 'Workers',
                       value: selectedLog.workers_on_site ?? 0,
@@ -811,10 +819,8 @@ className={`${textareaClass} min-h-[80px]`}
                   </SecondaryButton>
                   <span className="text-[11px] text-white sm:ml-auto self-center tabular-nums">
                     Created {format(new Date(selectedLog.date), 'dd MMM yyyy')}
-                    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-                    {(selectedLog as any).created_at &&
-                      // eslint-disable-next-line @typescript-eslint/no-explicit-any
-                      ` at ${format(new Date((selectedLog as any).created_at), 'HH:mm')}`}
+                    {(selectedLog as { created_at?: string }).created_at &&
+                      ` at ${format(new Date((selectedLog as { created_at?: string }).created_at!), 'HH:mm')}`}
                   </span>
                 </div>
               </div>

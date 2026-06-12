@@ -22,14 +22,7 @@ import {
   type IssueSeverity,
 } from '@/hooks/useJobIssues';
 import { useJobs } from '@/hooks/useJobs';
-import {
-  Plus,
-  Camera,
-  CheckCircle2,
-  Loader2,
-  RefreshCw,
-  X,
-} from 'lucide-react';
+import { Plus, Camera, CheckCircle2, Loader2, RefreshCw, X } from 'lucide-react';
 import {
   PageFrame,
   PageHero,
@@ -103,7 +96,6 @@ export const QualitySection = () => {
   const { toast } = useToast();
 
   const { data: snagIssues, isLoading, error, refetch } = useJobIssuesByType(['Snag', 'Defect']);
-  const { data: stats } = useJobIssueStats();
   const { data: jobs } = useJobs();
   const createIssue = useCreateJobIssue();
   const updateStatus = useUpdateJobIssueStatus();
@@ -280,7 +272,7 @@ export const QualitySection = () => {
                   placeholder="Brief description of the issue…"
                   value={snagTitle}
                   onChange={(e) => setSnagTitle(e.target.value)}
-className={inputClass}
+                  className={inputClass}
                 />
               </div>
 
@@ -290,7 +282,7 @@ className={inputClass}
                   placeholder="Where is this issue?"
                   value={snagLocation}
                   onChange={(e) => setSnagLocation(e.target.value)}
-className={inputClass}
+                  className={inputClass}
                 />
               </div>
 
@@ -527,7 +519,9 @@ className={inputClass}
                         <div className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
                           Location
                         </div>
-                        <div className="mt-1.5 text-[14px] text-white">{selectedIssue.location}</div>
+                        <div className="mt-1.5 text-[14px] text-white">
+                          {selectedIssue.location}
+                        </div>
                       </div>
                     )}
                     {selectedIssue.description && (
@@ -582,8 +576,7 @@ className={inputClass}
                 )}
               </div>
 
-              {(selectedIssue.status === 'Open' ||
-                selectedIssue.status === 'In Progress') && (
+              {(selectedIssue.status === 'Open' || selectedIssue.status === 'In Progress') && (
                 <div className="p-4 border-t border-white/[0.06]">
                   <PrimaryButton
                     onClick={() => handleResolve(selectedIssue)}

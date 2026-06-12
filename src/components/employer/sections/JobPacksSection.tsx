@@ -2,6 +2,7 @@ import { useState, useMemo } from 'react';
 import { RefreshCw } from 'lucide-react';
 import { toast } from '@/hooks/use-toast';
 import { supabase } from '@/integrations/supabase/client';
+import { useQueryClient } from '@tanstack/react-query';
 import { useJobPacks, useUpdateJobPackDocument, useUpdateJobPack } from '@/hooks/useJobPacks';
 import { useEmployees } from '@/hooks/useEmployees';
 import { useJobs } from '@/hooks/useJobs';
@@ -46,6 +47,7 @@ export const JobPacksSection = () => {
   const { data: jobs = [] } = useJobs();
   const updateDocument = useUpdateJobPackDocument();
   const updateJobPack = useUpdateJobPack();
+  const queryClient = useQueryClient();
 
   const jobPackJobIds = useMemo(
     () => new Set(jobPacks.map((jp) => jp.title.toLowerCase())),
@@ -115,45 +117,22 @@ export const JobPacksSection = () => {
   const handleSendToWorkers = async (e: React.MouseEvent, jobPack: JobPack) => {
     e.stopPropagation();
     try {
-      await updateJobPack.mutateAsync({
-        id: jobPack.id,
-        updates: {
-          status: 'In Progress',
-          sent_to_workers_at: new Date().toISOString(),
-        },
-      });
-
-      // The acknowledgement rows are what make the pack visible to the
-      // workers' accounts (worker RLS reads pack documents via their ack)
-      const workerIds = jobPack.assigned_workers || [];
-      if (workerIds.length > 0) {
-        const { data: existing } = await supabase
-          .from('employer_job_pack_acknowledgements')
-          .select('employee_id')
-          .eq('job_pack_id', jobPack.id);
-        const already = new Set((existing || []).map((r) => r.employee_id));
-        const fresh = workerIds.filter((id) => !already.has(id));
-        if (fresh.length > 0) {
-          const { error: ackError } = await supabase
-            .from('employer_job_pack_acknowledgements')
-            .insert(fresh.map((employee_id) => ({ job_pack_id: jobPack.id, employee_id })));
-          if (ackError) throw ackError;
-        }
-      }
+      // Atomic server-side send: status + ack rows + worker pushes in one call
+      const { data, error } = await supabase.rpc('send_job_pack', { p_pack_id: jobPack.id });
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      const r = data as any;
+      if (error || r?.error) throw new Error(r?.error || error?.message);
+      queryClient.invalidateQueries({ queryKey: ['jobPacks'] });
 
       toast({
         title: 'Job Pack Sent',
         description:
-          workerIds.length > 0
-            ? `${jobPack.title} is now visible to ${workerIds.length} assigned worker${workerIds.length === 1 ? '' : 's'} for sign-off.`
+          (r?.workers ?? 0) > 0
+            ? `${jobPack.title} is now with ${r.workers} worker${r.workers === 1 ? '' : 's'} for sign-off.`
             : `${jobPack.title} marked sent — assign workers so they can see it.`,
       });
-    } catch (error) {
-      toast({
-        title: 'Error',
-        description: 'Failed to send job pack.',
-        variant: 'destructive',
-      });
+    } catch {
+      toast({ title: 'Error', description: 'Could not send the pack.', variant: 'destructive' });
     }
   };
 
@@ -190,11 +169,7 @@ export const JobPacksSection = () => {
           actions={
             <>
               <PrimaryButton onClick={() => setShowNewJobPack(true)}>New pack</PrimaryButton>
-              <IconButton
-                onClick={() => refetch()}
-                disabled={isRefetching}
-                aria-label="Refresh"
-              >
+              <IconButton onClick={() => refetch()} disabled={isRefetching} aria-label="Refresh">
                 <RefreshCw className={isRefetching ? 'h-4 w-4 animate-spin' : 'h-4 w-4'} />
               </IconButton>
             </>
@@ -258,9 +233,7 @@ export const JobPacksSection = () => {
             <div className="p-5 sm:p-6">
               <EmptyState
                 title={
-                  activeTab === 'all'
-                    ? 'No job packs yet'
-                    : `No ${activeTab.toLowerCase()} packs`
+                  activeTab === 'all' ? 'No job packs yet' : `No ${activeTab.toLowerCase()} packs`
                 }
                 description="Job packs bundle scope, RAMS, method statements, briefings and sign-offs per job."
                 action="Create job pack"
@@ -279,9 +252,7 @@ export const JobPacksSection = () => {
                   allDocsReady && jobPack.status === 'Draft' && assignedEmployees.length > 0;
                 const tone = statusTone[jobPack.status] ?? 'amber';
 
-                const subtitleBits = [jobPack.client, jobPack.location]
-                  .filter(Boolean)
-                  .join(' · ');
+                const subtitleBits = [jobPack.client, jobPack.location].filter(Boolean).join(' · ');
 
                 return (
                   <ListRow
@@ -306,12 +277,7 @@ export const JobPacksSection = () => {
                           <button
                             onClick={(e) => {
                               if (!jobPack.rams_generated) {
-                                handleGenerateDocument(
-                                  e,
-                                  jobPack.id,
-                                  'rams_generated',
-                                  'RAMS'
-                                );
+                                handleGenerateDocument(e, jobPack.id, 'rams_generated', 'RAMS');
                               } else if (!jobPack.method_statement_generated) {
                                 handleGenerateDocument(
                                   e,

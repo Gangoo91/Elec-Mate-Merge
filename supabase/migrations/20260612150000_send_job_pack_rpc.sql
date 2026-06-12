@@ -1,0 +1,3 @@
+-- E2: send_job_pack(p_pack_id) — atomic owner-checked send: marks pack sent
+-- + creates ack rows for all assigned workers (idempotent; ack INSERT
+-- trigger pushes each worker). Full body in DB migration send_job_pack_rpc.

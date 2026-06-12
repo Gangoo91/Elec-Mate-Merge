@@ -6,6 +6,7 @@ import { format } from 'date-fns';
 import { Wrench, Package, Truck, Building2, Check, Calendar, PoundSterling } from 'lucide-react';
 import { Sheet, SheetContent, SheetHeader, SheetTitle } from '@/components/ui/sheet';
 import { Input } from '@/components/ui/input';
+import { Label } from '@/components/ui/label';
 import { Textarea } from '@/components/ui/textarea';
 import { Card } from '@/components/ui/card';
 import { cn } from '@/lib/utils';
@@ -160,7 +161,9 @@ export function RecordActualCostSheet({
                         className={cn(
                           'flex flex-col items-start gap-2 p-3 rounded-lg border transition-all text-left',
                           'hover:bg-white/[0.04] active:scale-[0.98]',
-                          isSelected ? 'border-elec-yellow bg-elec-yellow/10' : 'border-white/[0.08]'
+                          isSelected
+                            ? 'border-elec-yellow bg-elec-yellow/10'
+                            : 'border-white/[0.08]'
                         )}
                       >
                         <div className="flex items-center gap-2 w-full">
@@ -206,9 +209,7 @@ export function RecordActualCostSheet({
                 >
                   <div className="flex justify-between items-center">
                     <div>
-                      <p className="text-xs text-white">
-                        {selectedCategory?.label} Budget Status
-                      </p>
+                      <p className="text-xs text-white">{selectedCategory?.label} Budget Status</p>
                       <p className="text-sm font-medium">
                         {formatCurrency(categoryComparison.actual)} of{' '}
                         {formatCurrency(categoryComparison.budgeted)}
@@ -241,7 +242,9 @@ export function RecordActualCostSheet({
                     onChange={(e) => setValue('amount', parseFloat(e.target.value) || 0)}
                   />
                 </div>
-                {errors.amount && <p className="text-xs text-red-500 mt-1">{errors.amount.message}</p>}
+                {errors.amount && (
+                  <p className="text-xs text-red-500 mt-1">{errors.amount.message}</p>
+                )}
               </Field>
 
               {/* Date */}
@@ -276,9 +279,7 @@ export function RecordActualCostSheet({
               <Card className="p-4 bg-gradient-to-br from-elec-yellow/10 to-transparent border-elec-yellow/30">
                 <div className="text-center mb-4">
                   <p className="text-sm text-white">Recording</p>
-                  <p className="text-3xl font-bold text-white">
-                    {formatCurrency(values.amount)}
-                  </p>
+                  <p className="text-3xl font-bold text-white">{formatCurrency(values.amount)}</p>
                 </div>
 
                 <div className="space-y-3 text-sm">

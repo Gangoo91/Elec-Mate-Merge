@@ -180,7 +180,7 @@ const createRecipientsForCommunication = async (communication: Communication): P
       .from('employer_employees')
       .select('id')
       .eq('employer_id', user.id)
-      .eq('status', 'Active');
+      .ilike('status', 'active');
 
     employeeIds = (employees || []).map((e) => e.id);
   } else if (communication.target_audience === 'managers') {
@@ -188,7 +188,7 @@ const createRecipientsForCommunication = async (communication: Communication): P
       .from('employer_employees')
       .select('id')
       .eq('employer_id', user.id)
-      .eq('status', 'Active')
+      .ilike('status', 'active')
       .in('team_role', ['Manager', 'Admin', 'Supervisor']);
 
     employeeIds = (employees || []).map((e) => e.id);
