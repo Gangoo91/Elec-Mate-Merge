@@ -37,6 +37,16 @@ const CoursesSection = lazy(() =>
     default: m.CoursesSection,
   }))
 );
+const CourseManagementSection = lazy(() =>
+  import('@/components/college/sections/CourseManagementSection').then((m) => ({
+    default: m.CourseManagementSection,
+  }))
+);
+const SafeguardingQueueSection = lazy(() =>
+  import('@/components/college/sections/SafeguardingQueueSection').then((m) => ({
+    default: m.SafeguardingQueueSection,
+  }))
+);
 const LessonPlansSection = lazy(() =>
   import('@/components/college/sections/LessonPlansSection').then((m) => ({
     default: m.LessonPlansSection,
@@ -238,6 +248,7 @@ export type CollegeSection =
   | 'supportstaff'
   // Curriculum Hub sections
   | 'courses'
+  | 'coursesetup'
   | 'lessonplans'
   | 'teachingresources'
   | 'tutornotebook'
@@ -253,6 +264,7 @@ export type CollegeSection =
   | 'workqueue'
   // Resources Hub sections
   | 'compliancedocs'
+  | 'safeguardingqueue'
   | 'ltisettings'
   | 'collegesettings'
   // Employer Portal
@@ -287,6 +299,7 @@ const sectionTitles: Record<CollegeSection, string> = {
   cohorts: 'Cohorts',
   supportstaff: 'Support Staff',
   courses: 'Courses',
+  coursesetup: 'Course Setup',
   lessonplans: 'Lesson Plans',
   teachingresources: 'Teaching Resources',
   tutornotebook: 'Tutor Notebook',
@@ -300,6 +313,7 @@ const sectionTitles: Record<CollegeSection, string> = {
   portfolio: 'Portfolio',
   workqueue: 'Work Queue',
   compliancedocs: 'Compliance Docs',
+  safeguardingqueue: 'Safeguarding',
   ltisettings: 'LTI Settings',
   collegesettings: 'College Settings',
   employerportal: 'Employer Portal',
@@ -478,6 +492,7 @@ const CollegeDashboard = () => {
     const peopleSubSections: CollegeSection[] = ['tutors', 'students', 'cohorts', 'supportstaff'];
     const curriculumSubSections: CollegeSection[] = [
       'courses',
+      'coursesetup',
       'lessonplans',
       'teachingresources',
       'tutornotebook',
@@ -562,6 +577,10 @@ const CollegeDashboard = () => {
       // Curriculum Hub sections
       case 'courses':
         return <CoursesSection />;
+      case 'coursesetup':
+        return <CourseManagementSection />;
+      case 'safeguardingqueue':
+        return <SafeguardingQueueSection />;
       case 'lessonplans':
         return <LessonPlansSection />;
       case 'teachingresources':

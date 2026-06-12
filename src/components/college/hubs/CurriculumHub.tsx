@@ -95,15 +95,24 @@ export function CurriculumHub({ onNavigate }: CurriculumHubProps) {
           <HubGrid columns={4}>
             <HubCard
               number="01"
-              eyebrow="Qualifications & Units"
-              title="Courses"
-              description="Manage qualifications, unit structures and assessment criteria."
+              eyebrow="Courses you run"
+              title="Course Setup"
+              description="Set up the courses learners enrol on — standard, off-the-job hours and status."
               tone="emerald"
               meta={`${activeCourses} active`}
-              onClick={() => onNavigate('courses')}
+              onClick={() => onNavigate('coursesetup')}
             />
             <HubCard
               number="02"
+              eyebrow="Qualifications & Units"
+              title="Curriculum Browser"
+              description="Browse qualification units, LO/AC and BS 7671:2018+A4:2026 matching."
+              tone="emerald"
+              meta="C&G · EAL · ECS"
+              onClick={() => onNavigate('courses')}
+            />
+            <HubCard
+              number="03"
               eyebrow="Year Plan"
               title="Schemes of Work"
               description="Plan how each qualification is delivered to a cohort across the academic year."
@@ -112,7 +121,7 @@ export function CurriculumHub({ onNavigate }: CurriculumHubProps) {
               onClick={() => onNavigate('schemesofwork')}
             />
             <HubCard
-              number="03"
+              number="04"
               eyebrow="Plans & Delivery"
               title="Lesson Plans"
               description="Create, sequence and publish lesson plans per cohort."
@@ -121,7 +130,7 @@ export function CurriculumHub({ onNavigate }: CurriculumHubProps) {
               onClick={() => onNavigate('lessonplans')}
             />
             <HubCard
-              number="04"
+              number="05"
               eyebrow="Materials Library"
               title="Teaching Resources"
               description="Slides, handouts and reference materials for lessons."
@@ -130,7 +139,7 @@ export function CurriculumHub({ onNavigate }: CurriculumHubProps) {
               onClick={() => onNavigate('teachingresources')}
             />
             <HubCard
-              number="05"
+              number="06"
               eyebrow="Quality & Policy"
               title="Compliance & QA"
               description="Policies, quality documentation and Ofsted-ready records."
@@ -146,7 +155,7 @@ export function CurriculumHub({ onNavigate }: CurriculumHubProps) {
           <SectionHeader eyebrow="AI-Powered" title="Intelligent tools" />
           <HubGrid columns={2}>
             <HubCard
-              number="06"
+              number="07"
               eyebrow="Notes & Summaries"
               title="Teaching Notebook"
               description="AI-assisted notes, lesson summaries and auto-generated quizzes."
@@ -156,7 +165,7 @@ export function CurriculumHub({ onNavigate }: CurriculumHubProps) {
               onClick={() => onNavigate('tutornotebook')}
             />
             <HubCard
-              number="07"
+              number="08"
               eyebrow="Scheduled Delivery"
               title="Timetable"
               description="Weekly lesson schedule across cohorts, rooms and tutors."
@@ -229,10 +238,10 @@ export function CurriculumHub({ onNavigate }: CurriculumHubProps) {
             <HubCard
               size="sm"
               eyebrow="Course"
-              title="New qualification"
-              description="Add a course framework."
+              title="New course"
+              description="Set up a course & OTJ hours."
               tone="emerald"
-              onClick={() => onNavigate('courses')}
+              onClick={() => onNavigate('coursesetup')}
               cta="Add"
             />
             <HubCard

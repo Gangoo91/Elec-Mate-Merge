@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react';
+import { useCollegeSafeguardingReadiness } from '@/hooks/useCollegeSafeguardingReadiness';
 import {
   Dialog,
   DialogContent,
@@ -147,6 +148,7 @@ export function AddPastoralNoteDialog({
   }, [kind]);
 
   const isSafeguarding = kind === 'safeguarding';
+  const { canRoute: safeguardingCanRoute } = useCollegeSafeguardingReadiness();
   const meta = KIND_META[kind];
 
   const canSave = body.trim().length > 0 && !saving;
@@ -431,9 +433,18 @@ export function AddPastoralNoteDialog({
           <div>
             <label className={fieldLabelClass}>Visibility</label>
             {isSafeguarding ? (
-              <div className="bg-red-500/[0.05] border border-red-500/25 rounded-xl px-4 py-3 text-[12.5px] text-red-200 leading-relaxed">
-                Safeguarding entries are visible to designated leads only. This
-                cannot be changed.
+              <div className="space-y-2">
+                <div className="bg-red-500/[0.05] border border-red-500/25 rounded-xl px-4 py-3 text-[12.5px] text-red-200 leading-relaxed">
+                  Safeguarding entries are visible to designated leads only. This
+                  cannot be changed.
+                </div>
+                {!safeguardingCanRoute && (
+                  <div className="bg-rose-500/[0.08] border border-rose-500/35 rounded-xl px-4 py-3 text-[12px] text-rose-100 leading-relaxed">
+                    <span className="font-semibold">No Designated Safeguarding Lead can receive this.</span>{' '}
+                    Your entry will still be recorded and flagged to college admins, but assign a DSL
+                    with an account so safeguarding concerns route properly.
+                  </div>
+                )}
               </div>
             ) : (
               <div className="flex flex-wrap gap-1.5">

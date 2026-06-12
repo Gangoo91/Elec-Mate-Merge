@@ -10,6 +10,14 @@ export interface CollegeCourse {
   duration_months: number | null;
   status: string | null;
   created_at: string | null;
+  qualification_id: string | null;
+  /**
+   * Required off-the-job training hours for the apprenticeship standard this
+   * course delivers (DfE Annex C — see src/data/otjStandards.ts). Learners
+   * inherit this on enrolment via the tg_set_otj_required_hours DB trigger, so
+   * it must be set once here per course.
+   */
+  otj_required_hours: number | null;
 }
 
 export const getCollegeCourses = async (collegeId?: string): Promise<CollegeCourse[]> => {

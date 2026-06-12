@@ -125,10 +125,17 @@ Deno.serve(async (req) => {
         .gte('date', d56Ago);
       const recentAtt = (attRows ?? []).filter((r) => r.date >= d28Iso);
       const priorAtt = (attRows ?? []).filter((r) => r.date >= d56Ago && r.date < d28Iso);
+      // Attendance statuses are stored capitalised ('Present'/'Late'/'Absent'/
+      // 'Authorised'); compare case-insensitively so good attendance isn't
+      // mis-scored as 0% (which previously slapped a phantom "Attendance is 0%"
+      // risk factor on every learner with a register).
       const rate = (rows: { status: string }[]) =>
         rows.length === 0
           ? null
-          : rows.filter((r) => r.status === 'present' || r.status === 'late').length / rows.length;
+          : rows.filter((r) => {
+              const s = (r.status ?? '').toLowerCase();
+              return s === 'present' || s === 'late';
+            }).length / rows.length;
       const recentRate = rate(recentAtt);
       const priorRate = rate(priorAtt);
       if (recentRate !== null) {

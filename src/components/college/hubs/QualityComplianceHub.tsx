@@ -37,12 +37,28 @@ export function QualityComplianceHub({ onNavigate }: QualityComplianceHubProps) 
           />
         </motion.div>
 
+        {/* SAFEGUARDING — most critical, kept first. */}
+        <motion.section variants={itemVariants} className="space-y-6 sm:space-y-7">
+          <SectionHeader eyebrow="Safeguarding" title="Concerns & designated leads" />
+          <HubGrid columns={2}>
+            <HubCard
+              number="01"
+              eyebrow="DSL queue"
+              title="Safeguarding Queue"
+              description="Every safeguarding concern logged at your college, in one place — seen whether or not an alert reached you. Designated leads only."
+              tone="red"
+              meta="DSL only"
+              onClick={() => onNavigate('safeguardingqueue')}
+            />
+          </HubGrid>
+        </motion.section>
+
         {/* IQA & STANDARDISATION */}
         <motion.section variants={itemVariants} className="space-y-6 sm:space-y-7">
           <SectionHeader eyebrow="Internal Quality Assurance" title="Sample, standardise, assure" />
           <HubGrid columns={2}>
             <HubCard
-              number="01"
+              number="02"
               eyebrow="Sampling & verdicts"
               title="IQA Dashboard"
               description="Sampling plans, findings, standardisation and coverage."
@@ -51,7 +67,7 @@ export function QualityComplianceHub({ onNavigate }: QualityComplianceHubProps) 
               onClick={() => navigate('/college/iqa')}
             />
             <HubCard
-              number="02"
+              number="03"
               eyebrow="Findings & actions"
               title="IQA Workflow"
               description="Manage findings, standardisation prep and assessor agreement."
@@ -60,7 +76,7 @@ export function QualityComplianceHub({ onNavigate }: QualityComplianceHubProps) 
               onClick={() => onNavigate('iqaworkflow')}
             />
             <HubCard
-              number="03"
+              number="04"
               eyebrow="OTJ assurance"
               title="IQA OTJ Audit"
               description="Sample and audit off-the-job verification decisions."
@@ -69,7 +85,7 @@ export function QualityComplianceHub({ onNavigate }: QualityComplianceHubProps) 
               onClick={() => onNavigate('iqaotjaudit')}
             />
             <HubCard
-              number="04"
+              number="05"
               eyebrow="Teaching quality"
               title="Tutor Observations"
               description="360 view of observations of tutors — peer, IQA, HoD, learning walks."
@@ -85,7 +101,7 @@ export function QualityComplianceHub({ onNavigate }: QualityComplianceHubProps) 
           <SectionHeader eyebrow="Inspection & Ofsted" title="Walk in ready" />
           <HubGrid columns={2}>
             <HubCard
-              number="05"
+              number="06"
               eyebrow="Live RAG lens"
               title="Ofsted EIF"
               description="Your KPIs against the Education Inspection Framework, RAG-rated live."
@@ -94,7 +110,7 @@ export function QualityComplianceHub({ onNavigate }: QualityComplianceHubProps) 
               onClick={() => navigate('/college/compliance/ofsted')}
             />
             <HubCard
-              number="06"
+              number="07"
               eyebrow="Self-assessment"
               title="SAR Draft"
               description="Draft and maintain your Self-Assessment Report."
@@ -103,7 +119,7 @@ export function QualityComplianceHub({ onNavigate }: QualityComplianceHubProps) 
               onClick={() => navigate('/college/compliance/sar')}
             />
             <HubCard
-              number="07"
+              number="08"
               eyebrow="Improvement plan"
               title="QIP Tracker"
               description="Quality Improvement Plan — actions, owners, due dates."
@@ -112,7 +128,7 @@ export function QualityComplianceHub({ onNavigate }: QualityComplianceHubProps) 
               onClick={() => navigate('/college/compliance/qip')}
             />
             <HubCard
-              number="08"
+              number="09"
               eyebrow="Evidence pack"
               title="Audit Pack"
               description="Ofsted-ready pack: IQA samples, assessor decisions, evidence chain."
@@ -121,7 +137,7 @@ export function QualityComplianceHub({ onNavigate }: QualityComplianceHubProps) 
               onClick={() => navigate('/college/compliance/pack')}
             />
             <HubCard
-              number="09"
+              number="10"
               eyebrow="Practice run"
               title="Inspection Rehearsal"
               description="Mate plays the inspector and asks you the hard questions."
@@ -130,7 +146,7 @@ export function QualityComplianceHub({ onNavigate }: QualityComplianceHubProps) 
               onClick={() => navigate('/college/compliance/rehearsal')}
             />
             <HubCard
-              number="10"
+              number="11"
               eyebrow="Quality overview"
               title="Quality Dashboard"
               description="Ofsted-ready quality overview: KPIs and the evidence behind them."
@@ -146,7 +162,7 @@ export function QualityComplianceHub({ onNavigate }: QualityComplianceHubProps) 
           <SectionHeader eyebrow="Records & Reports" title="The paper trail" />
           <HubGrid columns={2}>
             <HubCard
-              number="11"
+              number="12"
               eyebrow="Funding & quality exports"
               title="Reports"
               description="CSV exports: OTJ, attendance, progress, EPA, AC coverage, quiz results."
@@ -155,7 +171,7 @@ export function QualityComplianceHub({ onNavigate }: QualityComplianceHubProps) 
               onClick={() => navigate('/college/reports')}
             />
             <HubCard
-              number="12"
+              number="13"
               eyebrow="Policies & checks"
               title="Compliance Docs"
               description="Institution policies, DBS checks, staff documentation."
@@ -164,7 +180,7 @@ export function QualityComplianceHub({ onNavigate }: QualityComplianceHubProps) 
               onClick={() => onNavigate('compliancedocs')}
             />
             <HubCard
-              number="13"
+              number="14"
               eyebrow="Who did what · when"
               title="Audit Log"
               description="Append-only record of every sensitive action — built for audits."

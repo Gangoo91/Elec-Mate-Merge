@@ -12,6 +12,8 @@ const KIND_LABEL: Record<ActionRequiredKind, string> = {
   quiz_overdue: 'Overdue quiz',
   goal_blocked: 'Blocked goal',
   tutor_comment_unread: 'Tutor comment',
+  portfolio_action: 'Portfolio',
+  attendance_low: 'Attendance',
 };
 
 const KIND_TONE: Record<ActionRequiredKind, string> = {
@@ -19,6 +21,8 @@ const KIND_TONE: Record<ActionRequiredKind, string> = {
   quiz_overdue: 'text-white/85',
   goal_blocked: 'text-white/85',
   tutor_comment_unread: 'text-white/85',
+  portfolio_action: 'text-white/85',
+  attendance_low: 'text-amber-200/85',
 };
 
 interface Props {

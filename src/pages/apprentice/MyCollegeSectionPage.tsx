@@ -4,6 +4,7 @@ import { SubPageShell } from '@/components/apprentice-hub/college-hub/SubPageShe
 import { MyTodayFocusCard } from '@/components/apprentice-hub/MyTodayFocusCard';
 import { MyThisWeekCard } from '@/components/apprentice-hub/MyThisWeekCard';
 import { MyTimetableCard } from '@/components/apprentice-hub/MyTimetableCard';
+import { MyAttendanceCard } from '@/components/apprentice-hub/MyAttendanceCard';
 import { MyCollegePlanCard } from '@/components/apprentice-hub/MyCollegePlanCard';
 import { MyTutorMessagesCard } from '@/components/apprentice-hub/MyTutorMessagesCard';
 import { MyAcCoverageCard } from '@/components/apprentice-hub/MyAcCoverageCard';
@@ -53,12 +54,13 @@ const SECTIONS: Record<Section, SectionDef> = {
     eyebrow: 'Today',
     title: 'Your day at college',
     description:
-      "Today's focus, this week's lessons and your timetable — everything that's due or scheduled, in one place.",
+      "Today's focus, this week's lessons, your timetable and your attendance record — everything in one place.",
     render: () => (
       <>
         <MyTodayFocusCard />
         <MyThisWeekCard />
         <MyTimetableCard />
+        <MyAttendanceCard />
       </>
     ),
   },

@@ -29,6 +29,9 @@ export interface CollegeOverviewStat {
   pending_quizzes: number;
   overdue_quizzes: number;
   unactioned_portfolio_comments: number;
+  /** % of marked sessions attended (Present + Late). null = no register yet. */
+  attendance_rate: number | null;
+  attendance_sessions: number;
 }
 
 export type ActionRequiredKind =
@@ -36,7 +39,8 @@ export type ActionRequiredKind =
   | 'quiz_overdue'
   | 'goal_blocked'
   | 'tutor_comment_unread'
-  | 'portfolio_action';
+  | 'portfolio_action'
+  | 'attendance_low';
 
 export interface ActionRequiredItem {
   kind: ActionRequiredKind;
@@ -67,6 +71,8 @@ const ZERO_STATS: CollegeOverviewStat = {
   pending_quizzes: 0,
   overdue_quizzes: 0,
   unactioned_portfolio_comments: 0,
+  attendance_rate: null,
+  attendance_sessions: 0,
 };
 
 export function useMyCollegeOverview(): MyCollegeOverview {
@@ -87,6 +93,11 @@ export function useMyCollegeOverview(): MyCollegeOverview {
   const [otjActions, setOtjActions] = useState<ActionRequiredItem[]>([]);
   const [unactionedPortfolioComments, setUnactionedPortfolioComments] = useState(0);
   const [portfolioActions, setPortfolioActions] = useState<ActionRequiredItem[]>([]);
+  const [attendance, setAttendance] = useState<{ rate: number | null; sessions: number }>({
+    rate: null,
+    sessions: 0,
+  });
+  const [attendanceActions, setAttendanceActions] = useState<ActionRequiredItem[]>([]);
 
   const load = useCallback(async () => {
     if (!user) {
@@ -111,6 +122,36 @@ export function useMyCollegeOverview(): MyCollegeOverview {
     setHasCollegeLink(Boolean(cs));
     setStudentName(cs?.name ?? null);
     setCourseName(cs?.course?.name ?? null);
+
+    // Attendance — keyed on college_students.id (not the auth uid). RLS already
+    // lets the learner read their own register (cs.user_id = auth.uid()).
+    if (cs?.id) {
+      const attRes = await supabase
+        .from('college_attendance')
+        .select('status')
+        .eq('student_id', cs.id);
+      const rows = (attRes.data ?? []) as Array<{ status: string }>;
+      const sessions = rows.length;
+      const attended = rows.filter((r) => r.status === 'Present' || r.status === 'Late').length;
+      const rate = sessions > 0 ? Math.round((attended / sessions) * 100) : null;
+      setAttendance({ rate, sessions });
+
+      // Early warning only once there's enough signal to be meaningful, so a
+      // learner with one missed session isn't alarmed.
+      const lowAttendance: ActionRequiredItem[] = [];
+      if (rate !== null && rate < 85 && sessions >= 4) {
+        lowAttendance.push({
+          kind: 'attendance_low',
+          title: `Attendance is ${rate}%`,
+          detail: 'Below the usual target — if something is getting in the way, tell your tutor early.',
+          href: '/apprentice/college/today',
+        });
+      }
+      setAttendanceActions(lowAttendance);
+    } else {
+      setAttendance({ rate: null, sessions: 0 });
+      setAttendanceActions([]);
+    }
 
     // 2. OTJ + portfolio comments — both keyed on user_id (auth uid).
     const [otjRes, portfolioRes] = await Promise.all([
@@ -284,8 +325,10 @@ export function useMyCollegeOverview(): MyCollegeOverview {
       pending_quizzes: quizAgg.pending,
       overdue_quizzes: quizAgg.overdue,
       unactioned_portfolio_comments: unactionedPortfolioComments,
+      attendance_rate: attendance.rate,
+      attendance_sessions: attendance.sessions,
     }),
-    [otjMinutes, ilpAgg, quizAgg, unactionedPortfolioComments]
+    [otjMinutes, ilpAgg, quizAgg, unactionedPortfolioComments, attendance]
   );
 
   const actionRequired: ActionRequiredItem[] = useMemo(
@@ -293,6 +336,7 @@ export function useMyCollegeOverview(): MyCollegeOverview {
       [
         ...otjActions,
         ...quizAgg.overdueActions,
+        ...attendanceActions,
         ...portfolioActions,
         ...ilpAgg.blockedActions,
         ...ilpAgg.unreadActions,
@@ -300,6 +344,7 @@ export function useMyCollegeOverview(): MyCollegeOverview {
     [
       otjActions,
       quizAgg.overdueActions,
+      attendanceActions,
       portfolioActions,
       ilpAgg.blockedActions,
       ilpAgg.unreadActions,

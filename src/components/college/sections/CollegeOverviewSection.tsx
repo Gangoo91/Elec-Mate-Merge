@@ -31,6 +31,7 @@ import { EPACountdown } from '@/components/college/widgets/EPACountdown';
 import { ActivityFeed } from '@/components/college/widgets/ActivityFeed';
 import { MyComplianceWidget } from '@/components/college/widgets/MyComplianceWidget';
 import { ComplianceLeadsWidget } from '@/components/college/widgets/ComplianceLeadsWidget';
+import { SafeguardingReadinessBanner } from '@/components/college/widgets/SafeguardingReadinessBanner';
 import { VerifierInboxWidget } from '@/components/college/widgets/VerifierInboxWidget';
 import { MyAcknowledgementsWidget } from '@/components/college/widgets/MyAcknowledgementsWidget';
 import { TopExpiringWidget } from '@/components/college/widgets/TopExpiringWidget';
@@ -535,6 +536,11 @@ export function CollegeOverviewSection({ onNavigate }: CollegeOverviewSectionPro
         verdict={verdict}
         cta={{ label: "View today's queue", onClick: () => navigate('/college/today') }}
       />
+
+      {/* SAFEGUARDING GATE — renders only when concerns can't be routed to a DSL. */}
+      <motion.div variants={itemVariants}>
+        <SafeguardingReadinessBanner />
+      </motion.div>
 
       {/* GET AROUND — the six areas first: the clear answer to "where do I go?" */}
       <CollegeHubs hubs={hubs} />
