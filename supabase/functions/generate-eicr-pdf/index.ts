@@ -1,6 +1,7 @@
 import 'jsr:@supabase/functions-js/edge-runtime.d.ts';
 import { captureException } from '../_shared/sentry.ts';
 import { validateEICRPayload } from '../_shared/eicr-payload-schema.ts';
+import { persistCertPdf } from '../_shared/persist-cert-pdf.ts';
 
 const PDFMONKEY_API_KEY = Deno.env.get('PDFMONKEY_API_KEY');
 const TEMPLATE_ID = '178C3DA6-99D0-490C-A031-23AD55A1134C';
@@ -136,17 +137,29 @@ Deno.serve(async (req: Request) => {
     const completedDocument = await waitForPDFGeneration(document.id);
     console.log('[generate-eicr-pdf] PDF generated successfully');
 
-    // Calculate expiry (PDF Monkey URLs typically expire after 7 days)
-    const expiresAt = new Date(Date.now() + 7 * 24 * 60 * 60 * 1000).toISOString();
+    // ELE-1082 — PDFMonkey S3 URLs expire in 1 HOUR. Persist to permanent
+    // Supabase storage server-side (reliable) and return THAT as pdfUrl so a
+    // 1-hour link can never reach the client email.
+    const permanentUrl = await persistCertPdf({
+      downloadUrl: completedDocument.download_url,
+      authHeader: req.headers.get('Authorization'),
+      certType: 'EICR',
+      certNumber: formData?.certificateNumber,
+    });
+    if (permanentUrl) {
+      console.log('[generate-eicr-pdf] Persisted to permanent storage:', permanentUrl);
+    } else {
+      console.error('[generate-eicr-pdf] Permanent persist FAILED — returning 1h temp URL as fallback');
+    }
 
     return new Response(
       JSON.stringify({
         success: true,
         documentId: completedDocument.id,
-        pdfUrl: completedDocument.download_url,
+        pdfUrl: permanentUrl || completedDocument.download_url,
         downloadUrl: completedDocument.download_url,
         previewUrl: completedDocument.preview_url,
-        expiresAt,
+        permanent: !!permanentUrl,
       }),
       {
         headers: {

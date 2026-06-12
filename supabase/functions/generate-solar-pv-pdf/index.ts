@@ -1,6 +1,7 @@
 import 'jsr:@supabase/functions-js/edge-runtime.d.ts';
 import { captureException } from '../_shared/sentry.ts';
 import { solarPVPayloadSchema } from '../_shared/solar-pv-payload-schema.ts';
+import { persistCertPdf } from '../_shared/persist-cert-pdf.ts';
 
 const PDFMONKEY_API_KEY = Deno.env.get('PDFMONKEY_API_KEY');
 // TODO: Create template in PDF Monkey and update this ID
@@ -146,13 +147,22 @@ Deno.serve(async (req: Request) => {
     // Wait for generation to complete
     const completedDocument = await waitForPDFGeneration(document.id);
 
+    // ELE-1082 — PDFMonkey URLs expire in 1h; persist server-side, return permanent.
+    const __permUrl = await persistCertPdf({
+      downloadUrl: completedDocument.download_url,
+      authHeader: req.headers.get('Authorization'),
+      certType: 'SolarPV',
+      certNumber: (typeof formData !== 'undefined' && formData?.certificateNumber) || undefined,
+    });
+
     // Calculate expiry (PDF Monkey URLs typically expire after 7 days)
     const expiresAt = new Date(Date.now() + 7 * 24 * 60 * 60 * 1000).toISOString();
 
     return new Response(
       JSON.stringify({
         success: true,
-        pdfUrl: completedDocument.download_url,
+        pdfUrl: __permUrl || completedDocument.download_url,
+        permanent: !!__permUrl,
         previewUrl: completedDocument.preview_url,
         documentId: completedDocument.id,
         expiresAt,
