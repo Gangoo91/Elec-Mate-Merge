@@ -225,7 +225,13 @@ export default function Student360Page() {
       {/* Back link + cohort switcher */}
       <motion.div variants={itemVariants} className="no-print flex items-center gap-3 flex-wrap">
         <button
-          onClick={() => navigate(-1)}
+          onClick={() => {
+            // Explicit parent navigation — never history.back(), which loops
+            // back into Student 360's own sub-pages (ELE-1086). Entry points may
+            // pass { state: { from } }; otherwise fall back to the learner list.
+            const from = (location.state as { from?: string } | null)?.from;
+            navigate(from ?? '/college/students');
+          }}
           className="text-[12px] font-medium text-white hover:text-white/85 transition-colors"
         >
           ← Back

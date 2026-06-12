@@ -65,7 +65,7 @@ export function NewSchemeDialog({ open, onOpenChange, editing }: NewSchemeDialog
     academic_year: '',
     start_date: '',
     end_date: '',
-    status: 'Draft' as SchemeStatus,
+    status: 'draft' as SchemeStatus,
   });
 
   // Load qualifications once when dialog opens.
@@ -119,7 +119,7 @@ export function NewSchemeDialog({ open, onOpenChange, editing }: NewSchemeDialog
         academic_year: defaultAcademicYear(),
         start_date: '',
         end_date: '',
-        status: 'Draft',
+        status: 'draft',
       });
     }
   }, [open, editing]);
@@ -272,9 +272,9 @@ export function NewSchemeDialog({ open, onOpenChange, editing }: NewSchemeDialog
                       <SelectValue />
                     </SelectTrigger>
                     <SelectContent className={selectContentClass}>
-                      <SelectItem value="Draft">Draft</SelectItem>
-                      <SelectItem value="Active">Active</SelectItem>
-                      <SelectItem value="Archived">Archived</SelectItem>
+                      <SelectItem value="draft">Draft</SelectItem>
+                      <SelectItem value="published">Active</SelectItem>
+                      <SelectItem value="archived">Archived</SelectItem>
                     </SelectContent>
                   </Select>
                 </Field>

@@ -480,8 +480,9 @@ export function AcEvidenceLockerSheet({
       >
         <SheetTitle className="sr-only">Evidence locker for {cell.ac_code}</SheetTitle>
         <div className="flex flex-col h-full">
-          {/* Header */}
-          <div className="px-5 py-4 border-b border-white/[0.06]">
+          {/* Header — top padding clears the iOS status bar / notch so the
+              Refresh + Close buttons are never off-screen (ELE-1084). */}
+          <div className="px-5 pb-4 pt-[max(1rem,env(safe-area-inset-top))] border-b border-white/[0.06]">
             <div className="flex items-center justify-between gap-3">
               <div className="text-[10px] font-semibold uppercase tracking-[0.22em] text-elec-yellow">
                 Evidence locker

@@ -11,7 +11,16 @@ import { useAuth } from '@/contexts/AuthContext';
    to keep payloads small.
    ========================================================================== */
 
-export type SchemeStatus = 'Draft' | 'Active' | 'Archived';
+// Values must match the schemes_of_work_status_check DB constraint
+// (draft/review/approved/published/archived). The FE uses the three the
+// workflow needs; 'published' is the in-use ("Active") state.
+export type SchemeStatus = 'draft' | 'published' | 'archived';
+
+export const SCHEME_STATUS_LABEL: Record<SchemeStatus, string> = {
+  draft: 'Draft',
+  published: 'Active',
+  archived: 'Archived',
+};
 
 export interface SchemeOfWorkRow {
   id: string;
@@ -135,7 +144,7 @@ export function useSchemesOfWork() {
           academic_year: vars.academic_year ?? null,
           start_date: vars.start_date ?? null,
           end_date: vars.end_date ?? null,
-          status: vars.status ?? 'Draft',
+          status: vars.status ?? 'draft',
         })
         .select('id')
         .maybeSingle();
@@ -194,7 +203,7 @@ export function useSchemesOfWork() {
         academic_year: src.academic_year,
         start_date: src.start_date,
         end_date: src.end_date,
-        status: 'Draft',
+        status: 'draft',
       });
       if (error) throw error;
     },

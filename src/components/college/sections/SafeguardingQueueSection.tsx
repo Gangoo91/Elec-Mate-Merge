@@ -126,7 +126,10 @@ function ConcernCard({ concern }: { concern: SafeguardingConcern }) {
 
   // Canonical full student profile (Student360Page) — not the thin in-dashboard
   // section duplicate.
-  const openRecord = () => navigate(`/college/students/${concern.studentId}`);
+  const openRecord = () =>
+    navigate(`/college/students/${concern.studentId}`, {
+      state: { from: '/college?section=safeguardingqueue' },
+    });
 
   const acknowledge = async () => {
     setAcking(true);

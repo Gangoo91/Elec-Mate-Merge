@@ -19,6 +19,7 @@ import { cn } from '@/lib/utils';
 import { useToast } from '@/hooks/use-toast';
 import {
   useSchemesOfWork,
+  SCHEME_STATUS_LABEL,
   type SchemeOfWorkRow,
   type SchemeStatus,
 } from '@/hooks/college/useSchemesOfWork';
@@ -26,9 +27,9 @@ import { NewSchemeDialog } from '@/components/college/dialogs/NewSchemeDialog';
 import { ConfirmationDialog } from '@/components/ui/confirmation-dialog';
 
 const STATUS_TONE: Record<SchemeStatus, 'green' | 'amber' | 'yellow'> = {
-  Active: 'green',
-  Draft: 'amber',
-  Archived: 'yellow',
+  published: 'green',
+  draft: 'amber',
+  archived: 'yellow',
 };
 
 export function SchemesOfWorkSection() {
@@ -64,7 +65,7 @@ export function SchemesOfWorkSection() {
   }, [schemes, searchQuery, filterStatus, filterCohort]);
 
   const counts = useMemo(() => {
-    const c = { all: schemes.length, Active: 0, Draft: 0, Archived: 0 } as Record<string, number>;
+    const c = { all: schemes.length, published: 0, draft: 0, archived: 0 } as Record<string, number>;
     for (const s of schemes) c[s.status] = (c[s.status] ?? 0) + 1;
     return c;
   }, [schemes]);
@@ -73,10 +74,10 @@ export function SchemesOfWorkSection() {
     try {
       await update.mutateAsync({
         id: scheme.id,
-        patch: { status: scheme.status === 'Archived' ? 'Active' : 'Archived' },
+        patch: { status: scheme.status === 'archived' ? 'published' : 'archived' },
       });
       toast({
-        title: scheme.status === 'Archived' ? 'Scheme reactivated' : 'Scheme archived',
+        title: scheme.status === 'archived' ? 'Scheme reactivated' : 'Scheme archived',
         description: scheme.title,
       });
     } catch (e) {
@@ -126,7 +127,7 @@ export function SchemesOfWorkSection() {
           description={
             isLoading
               ? 'Loading schemes…'
-              : `${counts.Active ?? 0} active scheme${(counts.Active ?? 0) === 1 ? '' : 's'} of work across cohorts.`
+              : `${counts.published ?? 0} active scheme${(counts.published ?? 0) === 1 ? '' : 's'} of work across cohorts.`
           }
           tone="emerald"
           actions={
@@ -147,9 +148,9 @@ export function SchemesOfWorkSection() {
         <FilterBar
           tabs={[
             { value: 'all', label: 'All', count: counts.all },
-            { value: 'Active', label: 'Active', count: counts.Active ?? 0 },
-            { value: 'Draft', label: 'Draft', count: counts.Draft ?? 0 },
-            { value: 'Archived', label: 'Archived', count: counts.Archived ?? 0 },
+            { value: 'published', label: 'Active', count: counts.published ?? 0 },
+            { value: 'draft', label: 'Draft', count: counts.draft ?? 0 },
+            { value: 'archived', label: 'Archived', count: counts.archived ?? 0 },
           ]}
           activeTab={filterStatus}
           onTabChange={setFilterStatus}
@@ -228,7 +229,7 @@ export function SchemesOfWorkSection() {
                     </h3>
                   </div>
                   <div className="flex items-center gap-1.5 shrink-0">
-                    <Pill tone={STATUS_TONE[scheme.status]}>{scheme.status}</Pill>
+                    <Pill tone={STATUS_TONE[scheme.status]}>{SCHEME_STATUS_LABEL[scheme.status]}</Pill>
                     <DropdownMenu>
                       <DropdownMenuTrigger asChild>
                         <button
@@ -264,7 +265,7 @@ export function SchemesOfWorkSection() {
                           className="h-11"
                           onClick={() => handleArchive(scheme)}
                         >
-                          {scheme.status === 'Archived' ? 'Reactivate' : 'Archive'}
+                          {scheme.status === 'archived' ? 'Reactivate' : 'Archive'}
                         </DropdownMenuItem>
                         <DropdownMenuItem
                           className="h-11 text-red-400 focus:text-red-300"
