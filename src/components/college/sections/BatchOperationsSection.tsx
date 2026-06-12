@@ -166,10 +166,10 @@ export function BatchOperationsSection({ onNavigate: _onNavigate }: BatchOperati
     }
   };
 
-  const handleSendNotification = () => {
-    const recipientCount =
-      notifRecipients === 'all' ? cohortStudents.length : notifSelectedIds.size;
-    if (!notifMessage.trim() || recipientCount === 0) {
+  const handleSendNotification = async () => {
+    const ids =
+      notifRecipients === 'all' ? cohortStudents.map((s) => s.id) : [...notifSelectedIds];
+    if (!notifMessage.trim() || ids.length === 0) {
       toast({
         title: 'Missing information',
         description: 'Enter a message and ensure recipients are selected.',
@@ -178,14 +178,48 @@ export function BatchOperationsSection({ onNavigate: _onNavigate }: BatchOperati
       return;
     }
     setNotifSending(true);
-    setTimeout(() => {
+    try {
+      // Resolve the learners' auth accounts (RLS scopes to this college) —
+      // push_notification_log.user_id is the auth uid, not college_students.id.
+      const { data: rows, error: lookupErr } = await supabase
+        .from('college_students')
+        .select('user_id')
+        .in('id', ids);
+      if (lookupErr) throw lookupErr;
+      const userIds = (rows ?? [])
+        .map((r) => (r as { user_id: string | null }).user_id)
+        .filter((u): u is string => !!u);
+      if (userIds.length === 0) {
+        toast({
+          title: 'No linked accounts',
+          description: 'None of the selected learners have an app account yet.',
+          variant: 'destructive',
+        });
+        return;
+      }
+      const { error } = await supabase.from('push_notification_log').insert(
+        userIds.map((uid) => ({
+          user_id: uid,
+          type: 'college_message',
+          title: 'Message from your college',
+          body: notifMessage.trim(),
+        }))
+      );
+      if (error) throw error;
       toast({
         title: 'Notification sent',
-        description: `Message sent to ${recipientCount} student${recipientCount !== 1 ? 's' : ''}.`,
+        description: `Message sent to ${userIds.length} student${userIds.length !== 1 ? 's' : ''}.`,
       });
       setNotifMessage('');
+    } catch (e) {
+      toast({
+        title: 'Could not send',
+        description: e instanceof Error ? e.message : 'Please try again.',
+        variant: 'destructive',
+      });
+    } finally {
       setNotifSending(false);
-    }, 800);
+    }
   };
 
   const notifRecipientCount =

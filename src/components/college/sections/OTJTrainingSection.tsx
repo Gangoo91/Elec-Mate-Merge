@@ -10,7 +10,6 @@ import type { CollegeSection } from '@/pages/college/CollegeDashboard';
 import type {
   CollegeStudent,
   CollegeCourse,
-  CollegeAttendance,
 } from '@/contexts/CollegeSupabaseContext';
 import {
   PageFrame,
@@ -26,6 +25,9 @@ import {
   type Tone,
 } from '@/components/college/primitives';
 import { cn } from '@/lib/utils';
+import { useQuery } from '@tanstack/react-query';
+import { supabase } from '@/integrations/supabase/client';
+import { DEFAULT_OTJ_STANDARD } from '@/data/otjStandards';
 
 interface OTJTrainingSectionProps {
   onNavigate: (section: CollegeSection) => void;
@@ -45,24 +47,20 @@ interface StudentOTJData {
   status: OTJStatus;
 }
 
-const HOURS_PER_SESSION = 6;
-const HOURS_PER_WEEK = 30;
-const OTJ_PERCENTAGE = 0.2;
-const WEEKS_PER_MONTH = 4.33;
-
+// OTJ hours are a FIXED total per apprenticeship standard (DfE Annex C, post
+// Aug-2025) — NOT 20% of working hours. The required total comes from the
+// course (college_courses.otj_required_hours, inherited by learners), and the
+// completed total is the learner's VERIFIED off-the-job entries.
 function calculateOTJData(
   student: CollegeStudent,
   courses: CollegeCourse[],
-  attendance: CollegeAttendance[]
+  verifiedMinutesByUser: Record<string, number>
 ): StudentOTJData | null {
   const course = courses.find((c) => c.id === student.course_id);
-  if (!course || !course.duration_months) return null;
-  const workingWeeks = course.duration_months * WEEKS_PER_MONTH;
-  const requiredHours = Math.round(workingWeeks * HOURS_PER_WEEK * OTJ_PERCENTAGE);
-  const studentAttendance = attendance.filter(
-    (a) => a.student_id === student.id && (a.status === 'Present' || a.status === 'Late')
-  );
-  const completedHours = studentAttendance.length * HOURS_PER_SESSION;
+  if (!course) return null;
+  const requiredHours = course.otj_required_hours ?? DEFAULT_OTJ_STANDARD.otjHours;
+  const completedMinutes = student.user_id ? (verifiedMinutesByUser[student.user_id] ?? 0) : 0;
+  const completedHours = Math.round(completedMinutes / 60);
   const remainingHours = Math.max(0, requiredHours - completedHours);
   const progressPercent =
     requiredHours > 0 ? Math.min(100, (completedHours / requiredHours) * 100) : 0;
@@ -98,15 +96,40 @@ const statusTone = (status: OTJStatus): Tone =>
   status === 'On Track' ? 'emerald' : status === 'Behind' ? 'amber' : 'red';
 
 export function OTJTrainingSection({ onNavigate }: OTJTrainingSectionProps) {
-  const { students, courses, attendance, isLoading } = useCollegeSupabase();
+  const { students, courses, isLoading } = useCollegeSupabase();
   const [activeFilter, setActiveFilter] = useState<FilterOption>('all');
+
+  // Verified off-the-job minutes per learner. OTJ entries are keyed by the
+  // learner's auth uid (college_otj_entries.student_id = profiles.id =
+  // college_students.user_id), NOT college_students.id.
+  const userIds = useMemo(
+    () => students.filter((s) => s.user_id).map((s) => s.user_id as string),
+    [students]
+  );
+  const { data: verifiedMinutesByUser = {} } = useQuery({
+    queryKey: ['otj-verified-minutes', userIds],
+    enabled: userIds.length > 0,
+    queryFn: async () => {
+      const { data } = await supabase
+        .from('college_otj_entries')
+        .select('student_id, duration_minutes')
+        .in('student_id', userIds)
+        .eq('verification_status', 'verified');
+      const m: Record<string, number> = {};
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      for (const r of (data ?? []) as any[]) {
+        m[r.student_id] = (m[r.student_id] ?? 0) + (r.duration_minutes ?? 0);
+      }
+      return m;
+    },
+  });
 
   const otjData = useMemo(() => {
     const activeStudents = students.filter((s) => s.status === 'Active' && s.course_id);
     return activeStudents
-      .map((s) => calculateOTJData(s, courses, attendance))
+      .map((s) => calculateOTJData(s, courses, verifiedMinutesByUser))
       .filter((d): d is StudentOTJData => d !== null);
-  }, [students, courses, attendance]);
+  }, [students, courses, verifiedMinutesByUser]);
 
   const kpis = useMemo(() => {
     const total = otjData.length;
@@ -142,7 +165,7 @@ export function OTJTrainingSection({ onNavigate }: OTJTrainingSectionProps) {
           <PageHero
             eyebrow="Tools · OTJ Training"
             title="Off-the-job training"
-            description="Track the 20% off-the-job time requirement for apprentices."
+            description="Track each apprentice's off-the-job training hours against their required total."
             tone="emerald"
           />
         </motion.div>
@@ -164,7 +187,7 @@ export function OTJTrainingSection({ onNavigate }: OTJTrainingSectionProps) {
         <PageHero
           eyebrow="Tools · OTJ Training"
           title="Off-the-job training"
-          description="The 20% off-the-job training time tracker for apprentices."
+          description="Off-the-job training hours logged against each apprentice's required total."
           tone="emerald"
         />
       </motion.div>
@@ -293,10 +316,9 @@ export function OTJTrainingSection({ onNavigate }: OTJTrainingSectionProps) {
         <SectionHeader eyebrow="Calculation Basis" title="How OTJ is calculated" />
         <ListCard>
           {[
-            { label: 'Working hours per week', value: '30 hours' },
-            { label: 'OTJ requirement', value: '20% of total' },
-            { label: 'Hours per session', value: '6 hours' },
-            { label: 'Weeks per month', value: '4.33 weeks' },
+            { label: 'Required hours', value: "Per apprenticeship standard" },
+            { label: 'Source of completed hours', value: 'Verified off-the-job entries' },
+            { label: 'Funding rules', value: 'Fixed total (DfE Annex C, 2025/26)' },
           ].map((row) => (
             <div
               key={row.label}

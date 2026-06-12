@@ -600,7 +600,7 @@ const CollegeDashboard = () => {
       case 'ilpmanagement':
         return <ILPManagementSection />;
       case 'epatracking':
-        return <EPATrackingSection />;
+        return <EPATrackingSection onNavigate={handleNavigate} />;
       case 'progresstracking':
         return <ProgressTrackingSection />;
       case 'portfolio':

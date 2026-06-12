@@ -124,8 +124,9 @@ function ConcernCard({ concern }: { concern: SafeguardingConcern }) {
     concern.actionByDate != null &&
     new Date(concern.actionByDate).getTime() < Date.now();
 
-  const openRecord = () =>
-    navigate(`/college?section=student360&studentId=${concern.studentId}`);
+  // Canonical full student profile (Student360Page) — not the thin in-dashboard
+  // section duplicate.
+  const openRecord = () => navigate(`/college/students/${concern.studentId}`);
 
   const acknowledge = async () => {
     setAcking(true);

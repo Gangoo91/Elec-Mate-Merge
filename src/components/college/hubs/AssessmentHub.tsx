@@ -196,6 +196,25 @@ export function AssessmentHub({ onNavigate }: AssessmentHubProps) {
               meta="Many at once"
               onClick={() => onNavigate('batchoperations')}
             />
+            <HubCard
+              number="08"
+              eyebrow="AI-assisted"
+              title="AI ILP Generator"
+              description="Generate a tailored individual learning plan for a learner from their live data."
+              tone="purple"
+              meta="AI"
+              badge={<Pill tone="yellow">AI</Pill>}
+              onClick={() => onNavigate('aiilpgenerator')}
+            />
+            <HubCard
+              number="09"
+              eyebrow="Off-the-job hours"
+              title="OTJ Training"
+              description="Each learner's verified off-the-job hours against their required total."
+              tone="cyan"
+              meta="Hours & progress"
+              onClick={() => onNavigate('otjtraining')}
+            />
           </HubGrid>
         </motion.section>
 

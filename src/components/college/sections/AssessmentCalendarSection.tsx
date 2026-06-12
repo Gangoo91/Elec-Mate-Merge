@@ -4,6 +4,10 @@
  */
 
 import { useState, useMemo } from 'react';
+import { useQuery, useQueryClient } from '@tanstack/react-query';
+import { supabase } from '@/integrations/supabase/client';
+import { useAuth } from '@/contexts/AuthContext';
+import { useToast } from '@/hooks/use-toast';
 import { motion } from 'framer-motion';
 import { cn } from '@/lib/utils';
 import type { CollegeSection } from '@/pages/college/CollegeDashboard';
@@ -72,7 +76,33 @@ export function AssessmentCalendarSection({
   const [selectedDay, setSelectedDay] = useState<number | null>(null);
   const [showAddForm, setShowAddForm] = useState(false);
 
-  const [assessments, setAssessments] = useState<ScheduledAssessment[]>([]);
+  const { profile } = useAuth();
+  const collegeId = profile?.college_id ?? undefined;
+  const { toast } = useToast();
+  const queryClient = useQueryClient();
+
+  // Persisted to college_scheduled_assessments (RLS scopes to this college).
+  const { data: assessments = [] } = useQuery({
+    queryKey: ['scheduled-assessments', collegeId],
+    enabled: !!collegeId,
+    queryFn: async () => {
+      const { data } = await supabase
+        .from('college_scheduled_assessments')
+        .select('id, student_id, assessment_type, scheduled_date, scheduled_time, location, notes')
+        .order('scheduled_date');
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      return ((data ?? []) as any[]).map((r) => ({
+        id: r.id,
+        studentId: r.student_id,
+        studentName: students.find((s) => s.id === r.student_id)?.name ?? 'Learner',
+        assessmentType: r.assessment_type as AssessmentType,
+        date: r.scheduled_date,
+        time: (r.scheduled_time ?? '09:00').slice(0, 5),
+        location: r.location ?? '',
+        notes: r.notes ?? '',
+      })) as ScheduledAssessment[];
+    },
+  });
 
   const [newAssessment, setNewAssessment] = useState({
     studentId: '',
@@ -150,20 +180,24 @@ export function AssessmentCalendarSection({
       });
   }, [assessments]);
 
-  const handleAddAssessment = () => {
-    if (!newAssessment.studentId || !selectedDateStr) return;
-    const student = students.find((s) => s.id === newAssessment.studentId);
-    const assessment: ScheduledAssessment = {
-      id: crypto.randomUUID(),
-      studentId: newAssessment.studentId,
-      studentName: student?.name || 'Unknown',
-      assessmentType: newAssessment.assessmentType,
-      date: selectedDateStr,
-      time: newAssessment.time,
-      location: newAssessment.location,
-      notes: newAssessment.notes,
-    };
-    setAssessments((prev) => [...prev, assessment]);
+  const handleAddAssessment = async () => {
+    if (!newAssessment.studentId || !selectedDateStr || !collegeId) return;
+    const { error } = await supabase.from('college_scheduled_assessments').insert({
+      college_id: collegeId,
+      student_id: newAssessment.studentId,
+      assessment_type: newAssessment.assessmentType,
+      scheduled_date: selectedDateStr,
+      scheduled_time: newAssessment.time,
+      location: newAssessment.location || null,
+      notes: newAssessment.notes || null,
+      status: 'scheduled',
+    });
+    if (error) {
+      toast({ title: 'Could not schedule', description: error.message, variant: 'destructive' });
+      return;
+    }
+    toast({ title: 'Assessment scheduled' });
+    await queryClient.invalidateQueries({ queryKey: ['scheduled-assessments'] });
     setNewAssessment({
       studentId: '',
       assessmentType: 'Observation',
