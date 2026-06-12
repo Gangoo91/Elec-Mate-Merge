@@ -360,6 +360,7 @@ export const useQuoteStorage = () => {
           job_details: quote.jobDetails as any,
           items: quote.items as any,
           settings: quote.settings as any,
+          is_estimate: !!(quote.settings as any)?.isEstimate,
           subtotal: quote.subtotal,
           overhead: quote.overhead,
           profit: quote.profit,

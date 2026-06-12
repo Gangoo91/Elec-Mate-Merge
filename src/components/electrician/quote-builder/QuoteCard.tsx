@@ -123,6 +123,11 @@ export function QuoteCard({ quote, onTap, onDelete, onEdit, onAccept }: QuoteCar
               v{quote.version_number}
             </span>
           )}
+          {((quote as { is_estimate?: boolean }).is_estimate || quote.settings?.isEstimate) && (
+            <span className="text-[9px] font-bold uppercase tracking-[0.08em] px-1.5 py-0.5 rounded bg-amber-500/15 text-amber-400 border border-amber-500/20">
+              Estimate
+            </span>
+          )}
         </div>
 
         {/* Client + job */}

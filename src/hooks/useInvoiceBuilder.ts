@@ -1,4 +1,4 @@
-import { useState, useCallback, useEffect } from 'react';
+import { useState, useCallback, useEffect, useRef } from 'react';
 import { useQuery } from '@tanstack/react-query';
 import { Invoice, InvoiceItem, InvoiceSettings } from '@/types/invoice';
 import { Quote } from '@/types/quote';
@@ -218,6 +218,30 @@ export const useInvoiceBuilder = (sourceQuote?: Quote, existingInvoice?: Partial
       });
     }
   }, [companyProfile, sourceQuote, existingInvoice]);
+
+  // ELE-1083 — apply the user's saved default toggles (VAT / reverse charge /
+  // CIS / summary view) to NEW invoices, once, when the profile loads.
+  const togglesAppliedRef = useRef(false);
+  useEffect(() => {
+    if (existingInvoice || !companyProfile || togglesAppliedRef.current) return;
+    togglesAppliedRef.current = true;
+    setInvoice((prev) => {
+      const vatDefault =
+        companyProfile.default_vat_registered ??
+        !!(companyProfile.vat_number && String(companyProfile.vat_number).trim());
+      return {
+        ...prev,
+        settings: {
+          ...prev.settings!,
+          vatRegistered: vatDefault,
+          reverseCharge: companyProfile.default_reverse_charge ?? prev.settings?.reverseCharge ?? false,
+          cisEnabled: companyProfile.default_cis_enabled ?? prev.settings?.cisEnabled ?? false,
+          showSummaryView:
+            companyProfile.default_invoice_summary_view ?? prev.settings?.showSummaryView ?? false,
+        },
+      };
+    });
+  }, [companyProfile, existingInvoice]);
 
   const addInvoiceItem = useCallback((item: Omit<InvoiceItem, 'id' | 'totalPrice'>) => {
     const base = item.quantity * item.unitPrice;

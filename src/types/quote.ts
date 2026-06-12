@@ -107,6 +107,9 @@ export interface QuoteSettings {
   cisRate?: number;
   // VAT domestic reverse charge (DRC): charge £0 VAT, customer accounts to HMRC.
   reverseCharge?: boolean;
+  // ELE-1081 — document type. true = Estimate (ball-park, may vary), shown
+  // with an ESTIMATE title + disclaimer on the PDF. false/undefined = Quote.
+  isEstimate?: boolean;
 }
 
 export interface Quote {

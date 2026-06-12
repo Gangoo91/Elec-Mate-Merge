@@ -1341,6 +1341,8 @@ serve(async (req) => {
         // Quote details
         quote: {
           quoteNumber: freshQuote?.quote_number || freshQuote?.quoteNumber || '',
+          // ELE-1081 — Estimate variant (title + disclaimer change on the PDF)
+          isEstimate: !!(freshQuote?.is_estimate || freshQuote?.settings?.isEstimate),
           createdAt: createdDate.toLocaleDateString('en-GB', {
             day: '2-digit',
             month: '2-digit',

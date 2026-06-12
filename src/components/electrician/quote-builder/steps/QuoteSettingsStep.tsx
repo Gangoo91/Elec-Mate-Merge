@@ -35,6 +35,7 @@ const settingsSchema = z.object({
   cisEnabled: z.boolean().optional(),
   cisRate: z.number().optional(),
   reverseCharge: z.boolean().optional(),
+  isEstimate: z.boolean().optional(),
 });
 
 interface QuoteSettingsStepProps {
@@ -145,6 +146,48 @@ export const QuoteSettingsStep = ({ settings, items, onUpdate }: QuoteSettingsSt
   return (
     <Form {...form}>
       <div className="space-y-8 text-left">
+        {/* ============ 00 · DOCUMENT TYPE ============ */}
+        <section className="space-y-3">
+          <GroupHeader n="00" title="Document type" sub="Send a fixed quote or a ball-park estimate" />
+          {(() => {
+            const isEst = !!form.watch('isEstimate');
+            return (
+              <>
+                <div className="grid grid-cols-2 gap-2">
+                  {([
+                    [false, 'Quote', 'Fixed price'],
+                    [true, 'Estimate', 'Ball-park · may vary'],
+                  ] as [boolean, string, string][]).map(([val, label, sub]) => {
+                    const active = isEst === val;
+                    return (
+                      <button
+                        key={label}
+                        type="button"
+                        onClick={() => form.setValue('isEstimate', val, { shouldDirty: true })}
+                        className={
+                          'flex flex-col items-start gap-0.5 p-3.5 rounded-xl border text-left touch-manipulation active:scale-[0.98] transition-all ' +
+                          (active
+                            ? 'border-elec-yellow/40 bg-elec-yellow/[0.10]'
+                            : 'border-white/[0.08] bg-white/[0.04] hover:bg-white/[0.06]')
+                        }
+                      >
+                        <span className={'text-[14px] font-semibold ' + (active ? 'text-elec-yellow' : 'text-white')}>{label}</span>
+                        <span className={'text-[11px] ' + (active ? 'text-elec-yellow/70' : 'text-white/50')}>{sub}</span>
+                      </button>
+                    );
+                  })}
+                </div>
+                {isEst && (
+                  <p className="text-[11px] text-white/55 leading-snug px-1">
+                    The PDF is titled <span className="text-white/80 font-medium">ESTIMATE</span> and carries a
+                    guide-only disclaimer — final cost may vary with site conditions and actual scope.
+                  </p>
+                )}
+              </>
+            );
+          })()}
+        </section>
+
         {/* ============ 01 · TAX ============ */}
         <div>
           <GroupHeader n="01" title="Tax" sub="VAT, reverse charge and CIS" />

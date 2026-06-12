@@ -3,6 +3,7 @@ import { Sheet, SheetContent } from '@/components/ui/sheet';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Checkbox } from '@/components/ui/checkbox';
+import { Switch } from '@/components/ui/switch';
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '@/components/ui/collapsible';
 import { cn } from '@/lib/utils';
 import { CompanyProfile } from '@/types/company';
@@ -101,6 +102,11 @@ const InvoiceSettingsSheet = ({
   const [selectedInvoiceTerms, setSelectedInvoiceTerms] = useState<string[]>([]);
   const [customInvoiceTerms, setCustomInvoiceTerms] = useState<CustomTerm[]>([]);
   const [newCustomInvoiceTerm, setNewCustomInvoiceTerm] = useState('');
+  // ELE-1083 — default toggle states for new invoices
+  const [defVatRegistered, setDefVatRegistered] = useState(true);
+  const [defReverseCharge, setDefReverseCharge] = useState(false);
+  const [defCisEnabled, setDefCisEnabled] = useState(false);
+  const [defSummaryView, setDefSummaryView] = useState(false);
   const [expandedInvoiceGroups, setExpandedInvoiceGroups] = useState<string[]>([
     'payment',
     'late_payment',
@@ -121,6 +127,12 @@ const InvoiceSettingsSheet = ({
     setSelectedInvoiceTerms(parsed.selected);
     setCustomInvoiceTerms(parsed.custom);
     setNewCustomInvoiceTerm('');
+    setDefVatRegistered(
+      profile.default_vat_registered ?? !!(profile.vat_number && profile.vat_number.trim())
+    );
+    setDefReverseCharge(profile.default_reverse_charge ?? false);
+    setDefCisEnabled(profile.default_cis_enabled ?? false);
+    setDefSummaryView(profile.default_invoice_summary_view ?? false);
     hydratedForOpenRef.current = true;
   }, [profile, open]);
 
@@ -135,6 +147,10 @@ const InvoiceSettingsSheet = ({
         invoice_terms: invoiceTermsJson,
         late_payment_interest_rate: latePaymentInterestRate,
         preferred_payment_method: preferredPaymentMethod,
+        default_vat_registered: defVatRegistered,
+        default_reverse_charge: defReverseCharge,
+        default_cis_enabled: defCisEnabled,
+        default_invoice_summary_view: defSummaryView,
       });
       if (success) {
         toast.success('Invoice settings saved');
@@ -190,6 +206,33 @@ const InvoiceSettingsSheet = ({
                   className="h-11 bg-[#0a0a0a] border-white/[0.08] text-white focus:border-elec-yellow focus:ring-0 touch-manipulation"
                 />
               </div>
+            </div>
+
+            <div className="h-px bg-white/[0.06]" />
+
+            {/* ELE-1083 — Defaults for new invoices */}
+            <div className="space-y-3">
+              <Eyebrow>Defaults for new invoices</Eyebrow>
+              <p className="text-[12px] text-white/55 -mt-1">
+                These set how each new invoice starts — you can still change them per invoice.
+              </p>
+              {([
+                ['VAT registered', 'Add VAT by default', defVatRegistered, setDefVatRegistered],
+                ['Reverse charge', 'CIS domestic reverse-charge VAT by default', defReverseCharge, setDefReverseCharge],
+                ['CIS deduction', 'Apply CIS to labour by default', defCisEnabled, setDefCisEnabled],
+                ['Summary view', 'Show Labour & Materials totals instead of itemised', defSummaryView, setDefSummaryView],
+              ] as [string, string, boolean, (v: boolean) => void][]).map(([label, hint, val, set]) => (
+                <div
+                  key={label}
+                  className="flex items-center justify-between gap-3 p-3.5 rounded-2xl bg-[hsl(0_0%_12%)] border border-white/[0.06]"
+                >
+                  <div className="min-w-0">
+                    <p className="text-[13px] font-medium text-white">{label}</p>
+                    <p className="text-[11.5px] text-white/55 mt-0.5">{hint}</p>
+                  </div>
+                  <Switch checked={val} onCheckedChange={set} className="flex-shrink-0" />
+                </div>
+              ))}
             </div>
 
             <div className="h-px bg-white/[0.06]" />

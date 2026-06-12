@@ -199,7 +199,7 @@
       <!-- ── Title row: QUOTATION + dates ── -->
       <div class="title-row">
         <div>
-          <div class="doc-title">QUOTATION</div>
+          <div class="doc-title">{% if quote.isEstimate %}ESTIMATE{% else %}QUOTATION{% endif %}</div>
           <div class="doc-number">{{ quote.quoteNumber }}</div>
         </div>
         <div class="meta-cells">
@@ -217,7 +217,7 @@
       <!-- ── Quote-total band: the hero ── -->
       <div class="amount-band">
         <div>
-          <div class="label">{% if totals.cisAmount > 0 %}Quote total (before CIS){% else %}Quote total{% endif %}</div>
+          <div class="label">{% assign _dt = quote.isEstimate | default: false %}{% if totals.cisAmount > 0 %}{% if _dt %}Estimate{% else %}Quote{% endif %} total (before CIS){% else %}{% if _dt %}Estimate{% else %}Quote{% endif %} total{% endif %}</div>
           <div class="amount-figure num">{% if totals.totalFormatted != blank %}{{ totals.totalFormatted }}{% else %}£{{ totals.total | round: 2 }}{% endif %}</div>
           {% if settings.depositPercentage and settings.depositPercentage != 0 %}
           <div style="font-size: 10.5px; color: #374151; margin-top: 3px; font-weight: 600;">
@@ -275,7 +275,7 @@
 
       <!-- ── Items ── -->
       <div class="items-section">
-        <div class="section-title">Quotation breakdown</div>
+        <div class="section-title">{% if quote.isEstimate %}Estimate breakdown{% else %}Quotation breakdown{% endif %}</div>
         <table class="items-table">
           <thead>
             <tr>
@@ -463,7 +463,7 @@
           </div>
           {% endif %}
           <div class="totals-row due" style="background: linear-gradient(90deg, {{ branding.primaryColor | default: '#1e40af' }} 0%, {{ branding.secondaryColor | default: '#1e3a8a' }} 100%);">
-            <span>{% if totals.cisAmount > 0 %}Net payable{% else %}Quote total{% endif %}</span>
+            <span>{% if totals.cisAmount > 0 %}Net payable{% else %}{% if quote.isEstimate %}Estimate{% else %}Quote{% endif %} total{% endif %}</span>
             <span class="amount num">{% if totals.cisAmount > 0 %}{% if totals.netPayableFormatted != blank %}{{ totals.netPayableFormatted }}{% else %}£{{ totals.netPayable | round: 2 }}{% endif %}{% else %}{% if totals.totalFormatted != blank %}{{ totals.totalFormatted }}{% else %}£{{ totals.total | round: 2 }}{% endif %}{% endif %}</span>
           </div>
         </div>
@@ -478,10 +478,19 @@
       </div>
       {% endif %}
 
+      {% if quote.isEstimate %}
+      <div class="callout" style="border-left-color: #b45309;">
+        <strong style="color:#b45309;">Estimate — guide only.</strong>
+        This is an estimate, not a fixed quotation. The figure above is a considered guide based on the
+        information available; the final cost may vary depending on site conditions and the actual scope of
+        work uncovered once started. We’ll always discuss any change before proceeding.
+      </div>
+      {% endif %}
+
       <!-- ── Key facts ── -->
       <div class="facts">
         <div class="fact">
-          <div class="label">Quote valid for</div>
+          <div class="label">{% if quote.isEstimate %}Estimate{% else %}Quote{% endif %} valid for</div>
           <div class="value">{{ settings.quoteValidityDays | default: 30 }} days</div>
         </div>
         <div class="fact">

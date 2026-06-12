@@ -96,6 +96,10 @@ export interface CompanyProfile {
   // Invoice settings
   invoice_terms?: string;
   late_payment_interest_rate?: string;
+  default_vat_registered?: boolean | null;
+  default_reverse_charge?: boolean | null;
+  default_cis_enabled?: boolean | null;
+  default_invoice_summary_view?: boolean | null;
   preferred_payment_method?: string;
 }
 
