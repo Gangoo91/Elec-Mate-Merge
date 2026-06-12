@@ -6,6 +6,7 @@
  */
 
 import { supabase } from '@/integrations/supabase/client';
+import { getMyElecIdProfile } from '@/utils/elecIdLinkage';
 
 // Helper to send push notification (fire and forget)
 const sendPushNotification = async (
@@ -76,17 +77,12 @@ export async function logCertificateToElecId(
   entry: CertificateLogEntry
 ): Promise<{ success: boolean; error?: string }> {
   try {
-    // Check if user has an activated Elec-ID profile
-    const { data: elecIdProfile, error: profileError } = await supabase
-      .from('employer_elec_id_profiles')
-      .select('id, activated, opt_out')
-      .eq('employee_id', userId)
-      .maybeSingle();
-
-    if (profileError) {
-      console.error('Error fetching Elec-ID profile:', profileError);
-      return { success: false, error: 'Failed to fetch Elec-ID profile' };
-    }
+    // Check if user has an activated Elec-ID profile (via the real employee linkage)
+    const elecIdProfile = await getMyElecIdProfile<{
+      id: string;
+      activated: boolean;
+      opt_out: boolean;
+    }>('id, activated, opt_out');
 
     // Don't log if user doesn't have Elec-ID or has opted out
     if (!elecIdProfile || !elecIdProfile.activated || elecIdProfile.opt_out) {

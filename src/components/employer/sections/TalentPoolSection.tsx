@@ -1,9 +1,6 @@
 import { useState, useMemo, useCallback } from 'react';
 import { Sheet, SheetContent, SheetTrigger } from '@/components/ui/sheet';
-import {
-  SparkProfileSheet,
-  type EnhancedElectrician,
-} from '@/components/employer/SparkProfileSheet';
+import { SparkProfileSheet } from '@/components/employer/SparkProfileSheet';
 import { MessageDialog } from '@/components/employer/talent-pool/MessageDialog';
 import { InviteToApplyDialog } from '@/components/employer/talent-pool/InviteToApplyDialog';
 import { TalentFilterChips } from '@/components/employer/talent-pool/TalentFilterChips';
@@ -28,126 +25,23 @@ import {
   fieldLabelClass,
   type Tone,
 } from '@/components/employer/editorial';
-import {
-  SlidersHorizontal,
-  Shield,
-  Check,
-  Award,
-  RefreshCw,
-} from 'lucide-react';
+import { SlidersHorizontal, Shield, Check, Award, RefreshCw } from 'lucide-react';
 import { toast } from '@/hooks/use-toast';
-import { useTalentPool, type TalentPoolWorker, type ExperienceLevel } from '@/hooks/useTalentPool';
-import { addDays, format } from 'date-fns';
+import {
+  useTalentPool,
+  type TalentPoolWorker,
+  type ExperienceLevel,
+} from '@/hooks/useTalentPool';
 import { Slider } from '@/components/ui/slider';
 
-type AvailabilityFilter = 'all' | 'now' | 'week';
+/* ==========================================================================
+   TalentPoolSection — browse Elec-ID candidates. Every signal on screen is
+   real: declared rates, declared skill years, admin-verified documents.
+   ========================================================================== */
+
 type TierFilter = 'all' | 'verified' | 'premium';
 
 const ECS_CARD_TYPES = ['Gold', 'Blue', 'Green', 'Apprentice'];
-
-const COMMON_QUALIFICATIONS = [
-  '18th Edition BS7671',
-  'C&G 2391 Inspection & Testing',
-  'C&G 2382 18th Edition',
-  'EV Charging Installation',
-  'Solar PV Installation',
-  'Part P Competent Person',
-];
-
-const hashCode = (str: string): number => {
-  let hash = 0;
-  for (let i = 0; i < str.length; i++) {
-    const char = str.charCodeAt(i);
-    hash = (hash << 5) - hash + char;
-    hash = hash & hash;
-  }
-  return Math.abs(hash);
-};
-
-const BASE_LAT = 53.4808;
-const BASE_LNG = -2.2426;
-
-const generateStableCoordinates = (id: string, distance: number): { lat: number; lng: number } => {
-  const hash = hashCode(id);
-  const angle = (hash % 360) * (Math.PI / 180);
-  const distanceInDegrees = distance * 0.0145;
-
-  return {
-    lat: BASE_LAT + Math.sin(angle) * distanceInDegrees,
-    lng: BASE_LNG + Math.cos(angle) * distanceInDegrees * 1.6,
-  };
-};
-
-const generateAvailabilitySlots = (id: string) => {
-  const slots: { date: string; slots: ('morning' | 'afternoon' | 'evening')[] }[] = [];
-  const today = new Date();
-  const baseSeed = hashCode(id);
-  const seededRandom = (seed: number) => {
-    const x = Math.sin(seed) * 10000;
-    return x - Math.floor(x);
-  };
-
-  for (let i = 0; i < 14; i++) {
-    const date = addDays(today, i);
-    const dayOfWeek = date.getDay();
-    const daySeed = baseSeed + i * 1000;
-
-    if (dayOfWeek === 0 || dayOfWeek === 6) {
-      if (seededRandom(daySeed) > 0.7) {
-        slots.push({ date: format(date, 'yyyy-MM-dd'), slots: ['morning'] });
-      }
-    } else {
-      const available = seededRandom(daySeed) > 0.3;
-      if (available) {
-        const daySlots: ('morning' | 'afternoon' | 'evening')[] = ['morning', 'afternoon'];
-        if (seededRandom(daySeed + 500) > 0.6) daySlots.push('evening');
-        slots.push({ date: format(date, 'yyyy-MM-dd'), slots: daySlots });
-      }
-    }
-  }
-  return slots;
-};
-
-const convertToEnhancedElectrician = (
-  worker: TalentPoolWorker
-): EnhancedElectrician & {
-  skills: string[];
-  currentRole?: string;
-  totalYearsExperience: number;
-} => ({
-  id: worker.id,
-  name: worker.name,
-  location: worker.location,
-  distance: worker.distance,
-  ecsCardType: worker.ecsCardType,
-  ecsExpiry: worker.ecsExpiry || '',
-  specialisms: worker.specialisms.length > 0 ? worker.specialisms : ['General Electrical'],
-  experience: worker.experience,
-  availability: worker.availability,
-  dayRate: worker.dayRate,
-  hourlyRate: worker.hourlyRate,
-  rating: worker.rating,
-  completedJobs: worker.completedJobs,
-  verified: worker.isVerified,
-  bio:
-    worker.bio ||
-    `Experienced ${worker.role.toLowerCase()} with ${worker.totalYearsExperience || worker.experience} years in the industry.`,
-  qualifications:
-    worker.qualifications.length > 0 ? worker.qualifications : ['18th Edition BS7671'],
-  status: 'Active',
-  avatar: worker.avatar || '',
-  verificationTier: worker.verificationTier,
-  responseTime: worker.responseTime,
-  reviews: [],
-  availabilitySlots: generateAvailabilitySlots(worker.id),
-  coordinates: generateStableCoordinates(worker.id, worker.distance),
-  verifiedDocsCount: worker.verifiedDocsCount,
-  elecIdNumber: worker.elecIdNumber,
-  elecIdProfileId: worker.elecIdProfileId,
-  skills: worker.skills,
-  currentRole: worker.currentRole,
-  totalYearsExperience: worker.totalYearsExperience,
-});
 
 const specialisms = [
   'Commercial',
@@ -166,14 +60,6 @@ const getInitials = (name: string): string => {
   return (parts[0][0] + parts[parts.length - 1][0]).toUpperCase();
 };
 
-const availabilityToneFor = (availability: string): Tone => {
-  const a = availability.toLowerCase();
-  if (a.includes('now') || a.includes('available')) return 'emerald';
-  if (a.includes('week') || a.includes('soon')) return 'amber';
-  if (a.includes('busy') || a.includes('booked')) return 'red';
-  return 'blue';
-};
-
 const tierToneFor = (tier: string | undefined): Tone => {
   if (tier === 'premium') return 'yellow';
   if (tier === 'verified') return 'emerald';
@@ -181,7 +67,7 @@ const tierToneFor = (tier: string | undefined): Tone => {
 };
 
 export function TalentPoolSection() {
-  // Saved list persists per device; the labour-bank booking theatre is gone
+  // Saved list persists per device
   const [savedCandidates, setSavedCandidates] = useState<string[]>(() => {
     try {
       return JSON.parse(localStorage.getItem('talent_saved_candidates') || '[]');
@@ -202,26 +88,22 @@ export function TalentPoolSection() {
   const [messageDialogOpen, setMessageDialogOpen] = useState(false);
   const [inviteDialogOpen, setInviteDialogOpen] = useState(false);
   const [filterSheetOpen, setFilterSheetOpen] = useState(false);
-  const [selectedElectrician, setSelectedElectrician] = useState<EnhancedElectrician | null>(null);
+  const [selectedWorker, setSelectedWorker] = useState<TalentPoolWorker | null>(null);
   const [isRefreshing, setIsRefreshing] = useState(false);
 
-  const [availabilityFilter, setAvailabilityFilter] = useState<AvailabilityFilter>('all');
   const [tierFilter, setTierFilter] = useState<TierFilter>('all');
   const [selectedSpecialisms, setSelectedSpecialisms] = useState<string[]>([]);
   const [experienceFilter, setExperienceFilter] = useState<ExperienceLevel>('all');
   const [selectedEcsCards, setSelectedEcsCards] = useState<string[]>([]);
-  const [selectedQualifications, setSelectedQualifications] = useState<string[]>([]);
   const [rateRange, setRateRange] = useState<[number, number]>([150, 500]);
 
-  const { workers, isLoading, error, availableNowCount, totalCount, refetch } = useTalentPool({
+  const { workers, isLoading, error, verifiedCount, refetch } = useTalentPool({
     searchQuery,
     tierFilter,
-    availabilityFilter,
     specialismsFilter: selectedSpecialisms,
     experienceFilter,
     ecsCardFilter: selectedEcsCards,
-    qualificationsFilter: selectedQualifications,
-    minRate: rateRange[0],
+    minRate: rateRange[0] > 150 ? rateRange[0] : undefined,
     maxRate: rateRange[1] < 500 ? rateRange[1] : undefined,
   });
 
@@ -229,37 +111,22 @@ export function TalentPoolSection() {
     setIsRefreshing(true);
     await refetch();
     setIsRefreshing(false);
-    toast({
-      title: 'Refreshed',
-      description: 'Talent pool updated with latest availability.',
-    });
+    toast({ title: 'Refreshed', description: 'Talent pool updated.' });
   }, [refetch]);
 
-  const enhancedElectricians = useMemo(() => workers.map(convertToEnhancedElectrician), [workers]);
-
-
   const activeFilterCount = [
-    availabilityFilter !== 'all',
     tierFilter !== 'all',
     selectedSpecialisms.length > 0,
     experienceFilter !== 'all',
     selectedEcsCards.length > 0,
-    selectedQualifications.length > 0,
     rateRange[0] > 150 || rateRange[1] < 500,
   ].filter(Boolean).length;
 
-  const filteredElectricians = useMemo(() => {
-    return enhancedElectricians;
-  }, [enhancedElectricians]);
-
-
   const clearFilters = () => {
-    setAvailabilityFilter('all');
     setTierFilter('all');
     setSelectedSpecialisms([]);
     setExperienceFilter('all');
     setSelectedEcsCards([]);
-    setSelectedQualifications([]);
     setRateRange([150, 500]);
   };
 
@@ -269,64 +136,57 @@ export function TalentPoolSection() {
     );
   };
 
-  const handleOpenProfile = (electrician: EnhancedElectrician) => {
-    setSelectedElectrician(electrician);
+  const handleOpenProfile = (worker: TalentPoolWorker) => {
+    setSelectedWorker(worker);
     setProfileSheetOpen(true);
   };
 
-  const handleSave = (electrician: EnhancedElectrician) => {
-    const wasSaved = savedCandidates.includes(electrician.id);
-    toggleSaveCandidate(electrician.id);
+  const handleSave = (worker: TalentPoolWorker) => {
+    const wasSaved = savedCandidates.includes(worker.profileId);
+    toggleSaveCandidate(worker.profileId);
     toast({
       title: wasSaved ? 'Removed from Saved' : 'Candidate Saved',
       description: wasSaved
-        ? `${electrician.name} removed from your saved list.`
-        : `${electrician.name} added to your saved list.`,
+        ? `${worker.name} removed from your saved list.`
+        : `${worker.name} added to your saved list.`,
     });
   };
 
-  const handleMessage = (electrician: EnhancedElectrician) => {
-    setSelectedElectrician(electrician);
+  const handleMessage = (worker: TalentPoolWorker) => {
+    setSelectedWorker(worker);
     setMessageDialogOpen(true);
   };
 
-  const handleInvite = (electrician: EnhancedElectrician) => {
-    setSelectedElectrician(electrician);
+  const handleInvite = (worker: TalentPoolWorker) => {
+    setSelectedWorker(worker);
     setInviteDialogOpen(true);
   };
-
-
 
   const skillTabs = useMemo(
     () => [
       { value: 'all', label: 'All' },
-      { value: 'available', label: 'Available now', count: availableNowCount },
       { value: 'verified', label: 'Verified+' },
       { value: 'premium', label: 'Premium' },
       { value: 'ev', label: 'EV Charging' },
       { value: 'solar', label: 'Solar PV' },
       { value: 'senior', label: 'Senior 8+ yrs' },
     ],
-    [availableNowCount]
+    []
   );
 
   const activeQuickTab: string = useMemo(() => {
-    if (availabilityFilter === 'now') return 'available';
     if (tierFilter === 'verified') return 'verified';
     if (tierFilter === 'premium') return 'premium';
     if (selectedSpecialisms.includes('EV Charging')) return 'ev';
     if (selectedSpecialisms.includes('Solar PV')) return 'solar';
     if (experienceFilter === 'senior') return 'senior';
     return 'list';
-  }, [availabilityFilter, tierFilter, selectedSpecialisms, experienceFilter]);
+  }, [tierFilter, selectedSpecialisms, experienceFilter]);
 
   const handleQuickTab = (value: string) => {
     switch (value) {
       case 'all':
         clearFilters();
-        return;
-      case 'available':
-        setAvailabilityFilter(availabilityFilter === 'now' ? 'all' : 'now');
         return;
       case 'verified':
         setTierFilter(tierFilter === 'verified' ? 'all' : 'verified');
@@ -343,18 +203,18 @@ export function TalentPoolSection() {
       case 'senior':
         setExperienceFilter(experienceFilter === 'senior' ? 'all' : 'senior');
         return;
-        return;
     }
   };
 
   const shortlistedCount = savedCandidates.length;
+  const declaredRateCount = workers.filter((w) => w.dayRate != null).length;
 
   return (
     <PageFrame>
       <PageHero
         eyebrow="Hiring"
         title="Talent Pool"
-        description="Browse available electricians by skill, rate and location."
+        description="Browse Elec-ID verified electricians by skill, rate and credentials."
         tone="blue"
         actions={
           <IconButton onClick={handleRefresh} aria-label="Refresh talent pool">
@@ -375,10 +235,10 @@ export function TalentPoolSection() {
       <StatStrip
         columns={4}
         stats={[
-          { label: 'In the pool', value: filteredElectricians.length, tone: 'blue' },
-          { label: 'Available', value: availableNowCount, tone: 'emerald' },
+          { label: 'In the pool', value: workers.length, tone: 'blue' },
+          { label: 'Verified', value: verifiedCount, tone: 'emerald' },
           { label: 'Shortlisted', value: shortlistedCount, tone: 'yellow' },
-          { label: 'Verified', value: enhancedElectricians.filter((e) => !!e.verificationTier && e.verificationTier !== 'basic').length, accent: true },
+          { label: 'Rate declared', value: declaredRateCount, accent: true },
         ]}
       />
 
@@ -388,7 +248,7 @@ export function TalentPoolSection() {
         onTabChange={handleQuickTab}
         search={searchQuery}
         onSearchChange={setSearchQuery}
-        searchPlaceholder="Search sparkies by name, skill, location…"
+        searchPlaceholder="Search sparkies by name or skill…"
         actions={
           <Sheet open={filterSheetOpen} onOpenChange={setFilterSheetOpen}>
             <SheetTrigger asChild>
@@ -414,7 +274,9 @@ export function TalentPoolSection() {
                   <div className="flex items-end justify-between gap-3">
                     <div>
                       <Eyebrow>Hiring</Eyebrow>
-                      <div className="mt-1 text-[20px] font-semibold text-white leading-tight">Filters</div>
+                      <div className="mt-1 text-[20px] font-semibold text-white leading-tight">
+                        Filters
+                      </div>
                     </div>
                     {activeFilterCount > 0 && (
                       <button
@@ -428,30 +290,6 @@ export function TalentPoolSection() {
                 </div>
 
                 <div className="flex-1 overflow-y-auto overscroll-contain p-5 space-y-4">
-                  <div className="space-y-3">
-                    <label className={fieldLabelClass}>Availability</label>
-                    <div className="flex gap-2 flex-wrap">
-                      {[
-                        { value: 'all', label: 'All' },
-                        { value: 'now', label: 'Available now' },
-                        { value: 'week', label: 'This week' },
-                      ].map((opt) => {
-                        const isActive = availabilityFilter === opt.value;
-                        return (
-                          <button
-                            key={opt.value}
-                            onClick={() => setAvailabilityFilter(opt.value as AvailabilityFilter)}
-                            className={`h-11 px-4 rounded-full text-[12.5px] font-medium border touch-manipulation transition-colors ${isActive ? 'bg-elec-yellow text-black border-elec-yellow' : 'bg-[hsl(0_0%_9%)] text-white border-white/[0.08] hover:bg-white/[0.08]'}`}
-                          >
-                            {opt.label}
-                          </button>
-                        );
-                      })}
-                    </div>
-                  </div>
-
-                  <Divider />
-
                   <div className="space-y-3">
                     <label className={fieldLabelClass}>Elec-ID verification</label>
                     <div className="flex gap-2 flex-wrap">
@@ -474,7 +312,9 @@ export function TalentPoolSection() {
                         );
                       })}
                     </div>
-                    <p className="text-[11.5px] text-white">Verified = ECS + qualification. Premium = full credentials.</p>
+                    <p className="text-[11.5px] text-white">
+                      Verified = ECS + qualification. Premium = full credentials.
+                    </p>
                   </div>
 
                   <Divider />
@@ -501,7 +341,7 @@ export function TalentPoolSection() {
                   <Divider />
 
                   <div className="space-y-3">
-                    <label className={fieldLabelClass}>Experience level</label>
+                    <label className={fieldLabelClass}>Experience (declared on skills)</label>
                     <div className="flex flex-wrap gap-2">
                       {[
                         { value: 'all', label: 'Any' },
@@ -535,7 +375,9 @@ export function TalentPoolSection() {
                             key={card}
                             onClick={() =>
                               setSelectedEcsCards((prev) =>
-                                prev.includes(card) ? prev.filter((c) => c !== card) : [...prev, card]
+                                prev.includes(card)
+                                  ? prev.filter((c) => c !== card)
+                                  : [...prev, card]
                               )
                             }
                             className={`h-11 px-4 rounded-full text-[12.5px] font-medium border touch-manipulation transition-colors inline-flex items-center gap-1.5 ${isActive ? 'bg-elec-yellow text-black border-elec-yellow' : 'bg-[hsl(0_0%_9%)] text-white border-white/[0.08] hover:bg-white/[0.08]'}`}
@@ -551,35 +393,11 @@ export function TalentPoolSection() {
                   <Divider />
 
                   <div className="space-y-3">
-                    <label className={fieldLabelClass}>Qualifications</label>
-                    <div className="flex flex-wrap gap-2">
-                      {COMMON_QUALIFICATIONS.map((qual) => {
-                        const isActive = selectedQualifications.includes(qual);
-                        return (
-                          <button
-                            key={qual}
-                            onClick={() =>
-                              setSelectedQualifications((prev) =>
-                                prev.includes(qual) ? prev.filter((q) => q !== qual) : [...prev, qual]
-                              )
-                            }
-                            className={`h-11 px-4 rounded-full text-[12.5px] font-medium border touch-manipulation transition-colors inline-flex items-center gap-1.5 ${isActive ? 'bg-elec-yellow text-black border-elec-yellow' : 'bg-[hsl(0_0%_9%)] text-white border-white/[0.08] hover:bg-white/[0.08]'}`}
-                          >
-                            {isActive && <Check className="h-3 w-3" />}
-                            {qual}
-                          </button>
-                        );
-                      })}
-                    </div>
-                  </div>
-
-                  <Divider />
-
-                  <div className="space-y-3">
                     <div className="flex items-center justify-between">
-                      <label className={fieldLabelClass}>Day rate</label>
+                      <label className={fieldLabelClass}>Day rate (declared)</label>
                       <span className="text-[12.5px] font-semibold text-white tabular-nums">
-                        £{rateRange[0]} – £{rateRange[1]}{rateRange[1] >= 500 ? '+' : ''}
+                        £{rateRange[0]} – £{rateRange[1]}
+                        {rateRange[1] >= 500 ? '+' : ''}
                       </span>
                     </div>
                     <div className="px-2">
@@ -596,8 +414,10 @@ export function TalentPoolSection() {
                       <span>£150</span>
                       <span>£500+</span>
                     </div>
+                    <p className="text-[11.5px] text-white/50">
+                      Filtering by rate only shows candidates who declared one.
+                    </p>
                   </div>
-
                 </div>
 
                 <div className="flex-shrink-0 border-t border-white/[0.06] p-4 flex flex-row gap-2">
@@ -617,26 +437,20 @@ export function TalentPoolSection() {
       />
 
       <TalentFilterChips
-        availabilityFilter={availabilityFilter}
         tierFilter={tierFilter}
         selectedSpecialisms={selectedSpecialisms}
         experienceFilter={experienceFilter}
         selectedEcsCards={selectedEcsCards}
-        selectedQualifications={selectedQualifications}
         rateRange={rateRange}
-        onRemoveAvailability={() => setAvailabilityFilter('all')}
         onRemoveTier={() => setTierFilter('all')}
         onRemoveSpecialism={(spec) =>
           setSelectedSpecialisms((prev) => prev.filter((s) => s !== spec))
         }
         onRemoveExperience={() => setExperienceFilter('all')}
         onRemoveEcsCard={(card) => setSelectedEcsCards((prev) => prev.filter((c) => c !== card))}
-        onRemoveQualification={(qual) =>
-          setSelectedQualifications((prev) => prev.filter((q) => q !== qual))
-        }
         onResetRateRange={() => setRateRange([150, 500])}
         onOpenFilters={() => setFilterSheetOpen(true)}
-        totalResults={filteredElectricians.length}
+        totalResults={workers.length}
       />
 
       {isLoading && <LoadingBlocks />}
@@ -646,54 +460,57 @@ export function TalentPoolSection() {
           <ListCardHeader
             tone="blue"
             title="Available talent"
-            meta={
-              <span className="inline-flex items-center gap-2">
-                <Pill tone="blue">{filteredElectricians.length}</Pill>
-                {availableNowCount > 0 && (
-                  <Pill tone="emerald">{availableNowCount} now</Pill>
-                )}
-              </span>
-            }
+            meta={<Pill tone="blue">{workers.length}</Pill>}
           />
-          {filteredElectricians.length === 0 ? (
+          {workers.length === 0 ? (
             <div className="px-5 py-10">
               <EmptyState
                 title="No candidates match"
-                description={activeFilterCount > 0 ? 'Try removing a filter or widening the rate range.' : 'No electricians match your search.'}
+                description={
+                  activeFilterCount > 0
+                    ? 'Try removing a filter or widening the rate range.'
+                    : 'No electricians match your search.'
+                }
                 action={activeFilterCount > 0 ? 'Clear filters' : undefined}
                 onAction={activeFilterCount > 0 ? clearFilters : undefined}
               />
             </div>
           ) : (
             <ListBody>
-              {filteredElectricians.map((electrician) => {
-                const isSaved = savedCandidates.includes(electrician.id);
-                const availTone = availabilityToneFor(electrician.availability);
-                const tierTone = tierToneFor(electrician.verificationTier as string | undefined);
-                // eslint-disable-next-line @typescript-eslint/no-explicit-any
-                const role = (electrician as any).currentRole || 'Electrician';
+              {workers.map((worker) => {
+                const isSaved = savedCandidates.includes(worker.profileId);
+                const tierTone = tierToneFor(worker.verificationTier);
+                const subtitleParts = [
+                  worker.jobTitle || 'Electrician',
+                  worker.dayRate != null ? `£${worker.dayRate}/day` : 'Rate on request',
+                ];
+                if (worker.yearsExperience != null) {
+                  subtitleParts.push(`${worker.yearsExperience} yrs`);
+                }
 
                 return (
                   <ListRow
-                    key={electrician.id}
-                    lead={<Avatar initials={getInitials(electrician.name)} />}
+                    key={worker.profileId}
+                    lead={<Avatar initials={getInitials(worker.name)} />}
                     title={
                       <span className="inline-flex items-center gap-2">
-                        <span className="text-white">{electrician.name}</span>
+                        <span className="text-white">{worker.name}</span>
                         {isSaved && <Pill tone="amber">Saved</Pill>}
                       </span>
                     }
-                    subtitle={`${role} · ${electrician.location} · £${electrician.dayRate}/day · ${
-                      // eslint-disable-next-line @typescript-eslint/no-explicit-any
-                      (electrician as any).totalYearsExperience ?? electrician.experience
-                    } yrs`}
+                    subtitle={subtitleParts.join(' · ')}
                     trailing={
                       <>
-                        <Pill tone={tierTone}>{electrician.verificationTier ?? 'verified'}</Pill>
-                        <Pill tone={availTone}>{electrician.availability}</Pill>
+                        <Pill tone={tierTone}>{worker.verificationTier}</Pill>
+                        {worker.verifiedDocuments.length > 0 && (
+                          <Pill tone="emerald">
+                            {worker.verifiedDocuments.length} doc
+                            {worker.verifiedDocuments.length !== 1 ? 's' : ''} ✓
+                          </Pill>
+                        )}
                       </>
                     }
-                    onClick={() => handleOpenProfile(electrician)}
+                    onClick={() => handleOpenProfile(worker)}
                   />
                 );
               })}
@@ -705,26 +522,27 @@ export function TalentPoolSection() {
       <SparkProfileSheet
         open={profileSheetOpen}
         onOpenChange={setProfileSheetOpen}
-        electrician={selectedElectrician}
-        isSaved={selectedElectrician ? savedCandidates.includes(selectedElectrician.id) : false}
-        onSave={() => selectedElectrician && handleSave(selectedElectrician)}
-        onContact={() => selectedElectrician && handleMessage(selectedElectrician)}
+        worker={selectedWorker}
+        isSaved={selectedWorker ? savedCandidates.includes(selectedWorker.profileId) : false}
+        onSave={() => selectedWorker && handleSave(selectedWorker)}
+        onContact={() => selectedWorker && handleMessage(selectedWorker)}
+        onInvite={() => {
+          setProfileSheetOpen(false);
+          if (selectedWorker) handleInvite(selectedWorker);
+        }}
       />
 
       <MessageDialog
         open={messageDialogOpen}
         onOpenChange={setMessageDialogOpen}
         electrician={
-          selectedElectrician
+          selectedWorker
             ? {
-                id: selectedElectrician.id,
-                elecIdProfileId:
-                  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-                  (selectedElectrician as any).elecIdProfileId || selectedElectrician.id,
-                name: selectedElectrician.name,
-                avatar: selectedElectrician.avatar,
-                location: selectedElectrician.location,
-                verificationTier: selectedElectrician.verificationTier,
+                id: selectedWorker.profileId,
+                elecIdProfileId: selectedWorker.profileId,
+                name: selectedWorker.name,
+                location: selectedWorker.jobTitle || 'Electrician',
+                verificationTier: selectedWorker.verificationTier,
               }
             : null
         }
@@ -734,20 +552,16 @@ export function TalentPoolSection() {
         open={inviteDialogOpen}
         onOpenChange={setInviteDialogOpen}
         electrician={
-          selectedElectrician
+          selectedWorker
             ? {
-                id: selectedElectrician.id,
-                elecIdProfileId:
-                  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-                  (selectedElectrician as any).elecIdProfileId || selectedElectrician.id,
-                name: selectedElectrician.name,
-                avatar: selectedElectrician.avatar,
-                location: selectedElectrician.location,
+                id: selectedWorker.profileId,
+                elecIdProfileId: selectedWorker.profileId,
+                name: selectedWorker.name,
+                location: selectedWorker.jobTitle || 'Electrician',
               }
             : null
         }
       />
-
     </PageFrame>
   );
 }

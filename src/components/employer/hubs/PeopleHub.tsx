@@ -100,9 +100,9 @@ function useTodaysActivity() {
         safeQuery(() =>
           supabase
             .from('employer_worker_locations')
-            .select('id, status, updated_at')
-            .gte('updated_at', since)
-            .order('updated_at', { ascending: false })
+            .select('id, status, last_updated')
+            .gte('last_updated', since)
+            .order('last_updated', { ascending: false })
             .limit(5)
         ),
       ]);
@@ -139,7 +139,7 @@ function useTodaysActivity() {
       for (const l of (locationsData ?? []) as Array<{
         id: string;
         status: string;
-        updated_at: string;
+        last_updated: string;
       }>) {
         const detail =
           l.status === 'On Site'
@@ -152,7 +152,7 @@ function useTodaysActivity() {
           kind: 'clock',
           actor: 'Team member',
           detail,
-          when: l.updated_at,
+          when: l.last_updated,
           tone: l.status === 'On Site' ? 'emerald' : 'amber',
         });
       }
@@ -174,7 +174,7 @@ export function PeopleHub({ onNavigate }: PeopleHubProps) {
     isLoading: employeesLoading,
     refetch: refetchEmployees,
   } = useActiveEmployees();
-  const { totalCount: talentCount, availableNowCount, isLoading: talentLoading } = useTalentPool();
+  const { totalCount: talentCount, verifiedCount, isLoading: talentLoading } = useTalentPool();
   const { data: newApplicationsCount = 0, isLoading: appsLoading } = useNewApplicationsCount();
   const {
     data: vacancies = [],
@@ -207,8 +207,7 @@ export function PeopleHub({ onNavigate }: PeopleHubProps) {
   const credentialCount = profiles.length;
   const unreadComms = commStats?.unreadCount || 0;
   const openVacancies = Array.isArray(vacancies)
-    ? vacancies.filter((v: { status?: string }) => v?.status === 'open' || v?.status === 'active')
-        .length
+    ? vacancies.filter((v: { status?: string }) => v?.status === 'Open').length
     : 0;
 
   /* ── Derived insights ────────────────────────────────────────── */
@@ -601,7 +600,7 @@ export function PeopleHub({ onNavigate }: PeopleHubProps) {
             description="Browse vetted sparkies available for work right now."
             meta={
               talentCount > 0
-                ? `${talentCount} in pool · ${availableNowCount} available now`
+                ? `${talentCount} in pool · ${verifiedCount} verified`
                 : 'Build your talent pool'
             }
             cta="Open"

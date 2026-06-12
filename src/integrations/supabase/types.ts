@@ -5051,6 +5051,13 @@ export type Database = {
             foreignKeyName: "college_ac_signoff_proposals_college_id_fkey"
             columns: ["college_id"]
             isOneToOne: false
+            referencedRelation: "v_platform_safeguarding_health"
+            referencedColumns: ["college_id"]
+          },
+          {
+            foreignKeyName: "college_ac_signoff_proposals_college_id_fkey"
+            columns: ["college_id"]
+            isOneToOne: false
             referencedRelation: "v_portfolio_stats_by_college"
             referencedColumns: ["college_id"]
           },
@@ -5127,6 +5134,13 @@ export type Database = {
             foreignKeyName: "college_activity_college_id_fkey"
             columns: ["college_id"]
             isOneToOne: false
+            referencedRelation: "v_platform_safeguarding_health"
+            referencedColumns: ["college_id"]
+          },
+          {
+            foreignKeyName: "college_activity_college_id_fkey"
+            columns: ["college_id"]
+            isOneToOne: false
             referencedRelation: "v_portfolio_stats_by_college"
             referencedColumns: ["college_id"]
           },
@@ -5182,6 +5196,13 @@ export type Database = {
             columns: ["college_id"]
             isOneToOne: false
             referencedRelation: "v_iqa_sampling_status"
+            referencedColumns: ["college_id"]
+          },
+          {
+            foreignKeyName: "college_apprentice_survey_responses_college_id_fkey"
+            columns: ["college_id"]
+            isOneToOne: false
+            referencedRelation: "v_platform_safeguarding_health"
             referencedColumns: ["college_id"]
           },
           {
@@ -5279,6 +5300,13 @@ export type Database = {
             columns: ["college_id"]
             isOneToOne: false
             referencedRelation: "v_iqa_sampling_status"
+            referencedColumns: ["college_id"]
+          },
+          {
+            foreignKeyName: "college_apprentice_surveys_college_id_fkey"
+            columns: ["college_id"]
+            isOneToOne: false
+            referencedRelation: "v_platform_safeguarding_health"
             referencedColumns: ["college_id"]
           },
           {
@@ -5396,6 +5424,13 @@ export type Database = {
             foreignKeyName: "college_benchmark_comparison_cache_college_id_fkey"
             columns: ["college_id"]
             isOneToOne: true
+            referencedRelation: "v_platform_safeguarding_health"
+            referencedColumns: ["college_id"]
+          },
+          {
+            foreignKeyName: "college_benchmark_comparison_cache_college_id_fkey"
+            columns: ["college_id"]
+            isOneToOne: true
             referencedRelation: "v_portfolio_stats_by_college"
             referencedColumns: ["college_id"]
           },
@@ -5463,6 +5498,13 @@ export type Database = {
             foreignKeyName: "college_benchmark_opt_in_college_id_fkey"
             columns: ["college_id"]
             isOneToOne: true
+            referencedRelation: "v_platform_safeguarding_health"
+            referencedColumns: ["college_id"]
+          },
+          {
+            foreignKeyName: "college_benchmark_opt_in_college_id_fkey"
+            columns: ["college_id"]
+            isOneToOne: true
             referencedRelation: "v_portfolio_stats_by_college"
             referencedColumns: ["college_id"]
           },
@@ -5500,6 +5542,13 @@ export type Database = {
             columns: ["college_id"]
             isOneToOne: true
             referencedRelation: "v_iqa_sampling_status"
+            referencedColumns: ["college_id"]
+          },
+          {
+            foreignKeyName: "college_benchmark_tokens_college_id_fkey"
+            columns: ["college_id"]
+            isOneToOne: true
+            referencedRelation: "v_platform_safeguarding_health"
             referencedColumns: ["college_id"]
           },
           {
@@ -5605,6 +5654,13 @@ export type Database = {
             foreignKeyName: "college_calibration_sessions_college_id_fkey"
             columns: ["college_id"]
             isOneToOne: false
+            referencedRelation: "v_platform_safeguarding_health"
+            referencedColumns: ["college_id"]
+          },
+          {
+            foreignKeyName: "college_calibration_sessions_college_id_fkey"
+            columns: ["college_id"]
+            isOneToOne: false
             referencedRelation: "v_portfolio_stats_by_college"
             referencedColumns: ["college_id"]
           },
@@ -5660,6 +5716,13 @@ export type Database = {
             columns: ["college_id"]
             isOneToOne: false
             referencedRelation: "v_iqa_sampling_status"
+            referencedColumns: ["college_id"]
+          },
+          {
+            foreignKeyName: "college_cohorts_college_id_fkey"
+            columns: ["college_id"]
+            isOneToOne: false
+            referencedRelation: "v_platform_safeguarding_health"
             referencedColumns: ["college_id"]
           },
           {
@@ -5834,6 +5897,13 @@ export type Database = {
             foreignKeyName: "college_courses_college_id_fkey"
             columns: ["college_id"]
             isOneToOne: false
+            referencedRelation: "v_platform_safeguarding_health"
+            referencedColumns: ["college_id"]
+          },
+          {
+            foreignKeyName: "college_courses_college_id_fkey"
+            columns: ["college_id"]
+            isOneToOne: false
             referencedRelation: "v_portfolio_stats_by_college"
             referencedColumns: ["college_id"]
           },
@@ -5903,6 +5973,13 @@ export type Database = {
             columns: ["college_id"]
             isOneToOne: true
             referencedRelation: "v_iqa_sampling_status"
+            referencedColumns: ["college_id"]
+          },
+          {
+            foreignKeyName: "college_curriculum_settings_college_id_fkey"
+            columns: ["college_id"]
+            isOneToOne: true
+            referencedRelation: "v_platform_safeguarding_health"
             referencedColumns: ["college_id"]
           },
           {
@@ -6008,6 +6085,13 @@ export type Database = {
             columns: ["college_id"]
             isOneToOne: false
             referencedRelation: "v_iqa_sampling_status"
+            referencedColumns: ["college_id"]
+          },
+          {
+            foreignKeyName: "college_employers_college_id_fkey"
+            columns: ["college_id"]
+            isOneToOne: false
+            referencedRelation: "v_platform_safeguarding_health"
             referencedColumns: ["college_id"]
           },
           {
@@ -6326,6 +6410,13 @@ export type Database = {
             columns: ["college_id"]
             isOneToOne: false
             referencedRelation: "v_iqa_sampling_status"
+            referencedColumns: ["college_id"]
+          },
+          {
+            foreignKeyName: "college_functional_skills_college_id_fkey"
+            columns: ["college_id"]
+            isOneToOne: false
+            referencedRelation: "v_platform_safeguarding_health"
             referencedColumns: ["college_id"]
           },
           {
@@ -6818,6 +6909,13 @@ export type Database = {
             foreignKeyName: "college_inspection_rehearsals_college_id_fkey"
             columns: ["college_id"]
             isOneToOne: false
+            referencedRelation: "v_platform_safeguarding_health"
+            referencedColumns: ["college_id"]
+          },
+          {
+            foreignKeyName: "college_inspection_rehearsals_college_id_fkey"
+            columns: ["college_id"]
+            isOneToOne: false
             referencedRelation: "v_portfolio_stats_by_college"
             referencedColumns: ["college_id"]
           },
@@ -6882,6 +6980,13 @@ export type Database = {
             columns: ["college_id"]
             isOneToOne: false
             referencedRelation: "v_iqa_sampling_status"
+            referencedColumns: ["college_id"]
+          },
+          {
+            foreignKeyName: "college_invites_college_id_fkey"
+            columns: ["college_id"]
+            isOneToOne: false
+            referencedRelation: "v_platform_safeguarding_health"
             referencedColumns: ["college_id"]
           },
           {
@@ -6973,6 +7078,13 @@ export type Database = {
             columns: ["college_id"]
             isOneToOne: false
             referencedRelation: "v_iqa_sampling_status"
+            referencedColumns: ["college_id"]
+          },
+          {
+            foreignKeyName: "college_iqa_eqa_checklist_items_college_id_fkey"
+            columns: ["college_id"]
+            isOneToOne: false
+            referencedRelation: "v_platform_safeguarding_health"
             referencedColumns: ["college_id"]
           },
           {
@@ -7088,6 +7200,13 @@ export type Database = {
             columns: ["college_id"]
             isOneToOne: false
             referencedRelation: "v_iqa_sampling_status"
+            referencedColumns: ["college_id"]
+          },
+          {
+            foreignKeyName: "college_iqa_findings_college_id_fkey"
+            columns: ["college_id"]
+            isOneToOne: false
+            referencedRelation: "v_platform_safeguarding_health"
             referencedColumns: ["college_id"]
           },
           {
@@ -7351,6 +7470,13 @@ export type Database = {
             foreignKeyName: "college_iqa_sampling_college_id_fkey"
             columns: ["college_id"]
             isOneToOne: false
+            referencedRelation: "v_platform_safeguarding_health"
+            referencedColumns: ["college_id"]
+          },
+          {
+            foreignKeyName: "college_iqa_sampling_college_id_fkey"
+            columns: ["college_id"]
+            isOneToOne: false
             referencedRelation: "v_portfolio_stats_by_college"
             referencedColumns: ["college_id"]
           },
@@ -7452,6 +7578,13 @@ export type Database = {
             columns: ["college_id"]
             isOneToOne: false
             referencedRelation: "v_iqa_sampling_status"
+            referencedColumns: ["college_id"]
+          },
+          {
+            foreignKeyName: "college_lesson_plans_college_id_fkey"
+            columns: ["college_id"]
+            isOneToOne: false
+            referencedRelation: "v_platform_safeguarding_health"
             referencedColumns: ["college_id"]
           },
           {
@@ -7892,6 +8025,13 @@ export type Database = {
             foreignKeyName: "college_parent_contacts_college_id_fkey"
             columns: ["college_id"]
             isOneToOne: false
+            referencedRelation: "v_platform_safeguarding_health"
+            referencedColumns: ["college_id"]
+          },
+          {
+            foreignKeyName: "college_parent_contacts_college_id_fkey"
+            columns: ["college_id"]
+            isOneToOne: false
             referencedRelation: "v_portfolio_stats_by_college"
             referencedColumns: ["college_id"]
           },
@@ -8101,6 +8241,13 @@ export type Database = {
             foreignKeyName: "college_policies_college_id_fkey"
             columns: ["college_id"]
             isOneToOne: false
+            referencedRelation: "v_platform_safeguarding_health"
+            referencedColumns: ["college_id"]
+          },
+          {
+            foreignKeyName: "college_policies_college_id_fkey"
+            columns: ["college_id"]
+            isOneToOne: false
             referencedRelation: "v_portfolio_stats_by_college"
             referencedColumns: ["college_id"]
           },
@@ -8231,6 +8378,13 @@ export type Database = {
             foreignKeyName: "college_qip_actions_college_id_fkey"
             columns: ["college_id"]
             isOneToOne: false
+            referencedRelation: "v_platform_safeguarding_health"
+            referencedColumns: ["college_id"]
+          },
+          {
+            foreignKeyName: "college_qip_actions_college_id_fkey"
+            columns: ["college_id"]
+            isOneToOne: false
             referencedRelation: "v_portfolio_stats_by_college"
             referencedColumns: ["college_id"]
           },
@@ -8314,6 +8468,13 @@ export type Database = {
             columns: ["college_id"]
             isOneToOne: false
             referencedRelation: "v_iqa_sampling_status"
+            referencedColumns: ["college_id"]
+          },
+          {
+            foreignKeyName: "college_resource_views_college_id_fkey"
+            columns: ["college_id"]
+            isOneToOne: false
+            referencedRelation: "v_platform_safeguarding_health"
             referencedColumns: ["college_id"]
           },
           {
@@ -8408,6 +8569,13 @@ export type Database = {
             columns: ["college_id"]
             isOneToOne: false
             referencedRelation: "v_iqa_sampling_status"
+            referencedColumns: ["college_id"]
+          },
+          {
+            foreignKeyName: "college_resources_college_id_fkey"
+            columns: ["college_id"]
+            isOneToOne: false
+            referencedRelation: "v_platform_safeguarding_health"
             referencedColumns: ["college_id"]
           },
           {
@@ -8523,6 +8691,13 @@ export type Database = {
             foreignKeyName: "college_sar_drafts_college_id_fkey"
             columns: ["college_id"]
             isOneToOne: false
+            referencedRelation: "v_platform_safeguarding_health"
+            referencedColumns: ["college_id"]
+          },
+          {
+            foreignKeyName: "college_sar_drafts_college_id_fkey"
+            columns: ["college_id"]
+            isOneToOne: false
             referencedRelation: "v_portfolio_stats_by_college"
             referencedColumns: ["college_id"]
           },
@@ -8614,6 +8789,13 @@ export type Database = {
             foreignKeyName: "college_scheduled_assessments_college_id_fkey"
             columns: ["college_id"]
             isOneToOne: false
+            referencedRelation: "v_platform_safeguarding_health"
+            referencedColumns: ["college_id"]
+          },
+          {
+            foreignKeyName: "college_scheduled_assessments_college_id_fkey"
+            columns: ["college_id"]
+            isOneToOne: false
             referencedRelation: "v_portfolio_stats_by_college"
             referencedColumns: ["college_id"]
           },
@@ -8696,6 +8878,13 @@ export type Database = {
             foreignKeyName: "college_settings_college_id_fkey"
             columns: ["college_id"]
             isOneToOne: true
+            referencedRelation: "v_platform_safeguarding_health"
+            referencedColumns: ["college_id"]
+          },
+          {
+            foreignKeyName: "college_settings_college_id_fkey"
+            columns: ["college_id"]
+            isOneToOne: true
             referencedRelation: "v_portfolio_stats_by_college"
             referencedColumns: ["college_id"]
           },
@@ -8760,6 +8949,13 @@ export type Database = {
             columns: ["college_id"]
             isOneToOne: false
             referencedRelation: "v_iqa_sampling_status"
+            referencedColumns: ["college_id"]
+          },
+          {
+            foreignKeyName: "college_spag_checks_college_id_fkey"
+            columns: ["college_id"]
+            isOneToOne: false
+            referencedRelation: "v_platform_safeguarding_health"
             referencedColumns: ["college_id"]
           },
           {
@@ -8896,6 +9092,13 @@ export type Database = {
             foreignKeyName: "college_staff_college_id_fkey"
             columns: ["college_id"]
             isOneToOne: false
+            referencedRelation: "v_platform_safeguarding_health"
+            referencedColumns: ["college_id"]
+          },
+          {
+            foreignKeyName: "college_staff_college_id_fkey"
+            columns: ["college_id"]
+            isOneToOne: false
             referencedRelation: "v_portfolio_stats_by_college"
             referencedColumns: ["college_id"]
           },
@@ -8999,6 +9202,13 @@ export type Database = {
             columns: ["college_id"]
             isOneToOne: false
             referencedRelation: "v_iqa_sampling_status"
+            referencedColumns: ["college_id"]
+          },
+          {
+            foreignKeyName: "college_standardisation_meetings_college_id_fkey"
+            columns: ["college_id"]
+            isOneToOne: false
+            referencedRelation: "v_platform_safeguarding_health"
             referencedColumns: ["college_id"]
           },
           {
@@ -9287,6 +9497,13 @@ export type Database = {
             foreignKeyName: "college_students_college_id_fkey"
             columns: ["college_id"]
             isOneToOne: false
+            referencedRelation: "v_platform_safeguarding_health"
+            referencedColumns: ["college_id"]
+          },
+          {
+            foreignKeyName: "college_students_college_id_fkey"
+            columns: ["college_id"]
+            isOneToOne: false
             referencedRelation: "v_portfolio_stats_by_college"
             referencedColumns: ["college_id"]
           },
@@ -9379,6 +9596,13 @@ export type Database = {
             columns: ["college_id"]
             isOneToOne: false
             referencedRelation: "v_iqa_sampling_status"
+            referencedColumns: ["college_id"]
+          },
+          {
+            foreignKeyName: "college_tripartite_reviews_college_id_fkey"
+            columns: ["college_id"]
+            isOneToOne: false
+            referencedRelation: "v_platform_safeguarding_health"
             referencedColumns: ["college_id"]
           },
           {
@@ -9543,6 +9767,13 @@ export type Database = {
             foreignKeyName: "college_tutor_observations_college_id_fkey"
             columns: ["college_id"]
             isOneToOne: false
+            referencedRelation: "v_platform_safeguarding_health"
+            referencedColumns: ["college_id"]
+          },
+          {
+            foreignKeyName: "college_tutor_observations_college_id_fkey"
+            columns: ["college_id"]
+            isOneToOne: false
             referencedRelation: "v_portfolio_stats_by_college"
             referencedColumns: ["college_id"]
           },
@@ -9650,6 +9881,13 @@ export type Database = {
             foreignKeyName: "college_work_queue_state_college_id_fkey"
             columns: ["college_id"]
             isOneToOne: false
+            referencedRelation: "v_platform_safeguarding_health"
+            referencedColumns: ["college_id"]
+          },
+          {
+            foreignKeyName: "college_work_queue_state_college_id_fkey"
+            columns: ["college_id"]
+            isOneToOne: false
             referencedRelation: "v_portfolio_stats_by_college"
             referencedColumns: ["college_id"]
           },
@@ -9732,6 +9970,13 @@ export type Database = {
             columns: ["college_id"]
             isOneToOne: false
             referencedRelation: "v_iqa_sampling_status"
+            referencedColumns: ["college_id"]
+          },
+          {
+            foreignKeyName: "college_workplace_visits_college_id_fkey"
+            columns: ["college_id"]
+            isOneToOne: false
+            referencedRelation: "v_platform_safeguarding_health"
             referencedColumns: ["college_id"]
           },
           {
@@ -10064,6 +10309,10 @@ export type Database = {
           created_at: string
           currency: string | null
           day_rate: number | null
+          default_cis_enabled: boolean | null
+          default_invoice_summary_view: boolean | null
+          default_reverse_charge: boolean | null
+          default_vat_registered: boolean | null
           deposit_percentage: number | null
           hourly_rate: number | null
           id: string
@@ -10124,6 +10373,10 @@ export type Database = {
           created_at?: string
           currency?: string | null
           day_rate?: number | null
+          default_cis_enabled?: boolean | null
+          default_invoice_summary_view?: boolean | null
+          default_reverse_charge?: boolean | null
+          default_vat_registered?: boolean | null
           deposit_percentage?: number | null
           hourly_rate?: number | null
           id?: string
@@ -10184,6 +10437,10 @@ export type Database = {
           created_at?: string
           currency?: string | null
           day_rate?: number | null
+          default_cis_enabled?: boolean | null
+          default_invoice_summary_view?: boolean | null
+          default_reverse_charge?: boolean | null
+          default_vat_registered?: boolean | null
           deposit_percentage?: number | null
           hourly_rate?: number | null
           id?: string
@@ -12755,6 +13012,47 @@ export type Database = {
           },
         ]
       }
+      elec_id_work_history: {
+        Row: {
+          created_at: string
+          date_recorded: string
+          description: string | null
+          entry_type: string
+          id: string
+          metadata: Json
+          profile_id: string
+          title: string
+        }
+        Insert: {
+          created_at?: string
+          date_recorded?: string
+          description?: string | null
+          entry_type?: string
+          id?: string
+          metadata?: Json
+          profile_id: string
+          title: string
+        }
+        Update: {
+          created_at?: string
+          date_recorded?: string
+          description?: string | null
+          entry_type?: string
+          id?: string
+          metadata?: Json
+          profile_id?: string
+          title?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "elec_id_work_history_profile_id_fkey"
+            columns: ["profile_id"]
+            isOneToOne: false
+            referencedRelation: "employer_elec_id_profiles"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       electrician_site_diary: {
         Row: {
           created_at: string | null
@@ -14236,6 +14534,9 @@ export type Database = {
       employer_invoices: {
         Row: {
           amount: number
+          cis_amount: number | null
+          cis_enabled: boolean
+          cis_rate: number
           client: string
           client_email: string | null
           client_phone: string | null
@@ -14250,11 +14551,18 @@ export type Database = {
           paid_date: string | null
           project: string | null
           quote_id: string | null
+          reverse_charge: boolean
           status: string
+          subtotal: number | null
           updated_at: string
+          vat_amount: number | null
+          vat_rate: number
         }
         Insert: {
           amount?: number
+          cis_amount?: number | null
+          cis_enabled?: boolean
+          cis_rate?: number
           client: string
           client_email?: string | null
           client_phone?: string | null
@@ -14269,11 +14577,18 @@ export type Database = {
           paid_date?: string | null
           project?: string | null
           quote_id?: string | null
+          reverse_charge?: boolean
           status?: string
+          subtotal?: number | null
           updated_at?: string
+          vat_amount?: number | null
+          vat_rate?: number
         }
         Update: {
           amount?: number
+          cis_amount?: number | null
+          cis_enabled?: boolean
+          cis_rate?: number
           client?: string
           client_email?: string | null
           client_phone?: string | null
@@ -14288,8 +14603,12 @@ export type Database = {
           paid_date?: string | null
           project?: string | null
           quote_id?: string | null
+          reverse_charge?: boolean
           status?: string
+          subtotal?: number | null
           updated_at?: string
+          vat_amount?: number | null
+          vat_rate?: number
         }
         Relationships: [
           {
@@ -15457,6 +15776,9 @@ export type Database = {
       }
       employer_quotes: {
         Row: {
+          cis_amount: number | null
+          cis_enabled: boolean
+          cis_rate: number
           client: string
           client_address: string | null
           client_email: string | null
@@ -15472,13 +15794,20 @@ export type Database = {
           line_items: Json | null
           notes: string | null
           quote_number: string
+          reverse_charge: boolean
           sent_date: string | null
           status: string
+          subtotal: number | null
           updated_at: string
           valid_until: string | null
           value: number
+          vat_amount: number | null
+          vat_rate: number
         }
         Insert: {
+          cis_amount?: number | null
+          cis_enabled?: boolean
+          cis_rate?: number
           client: string
           client_address?: string | null
           client_email?: string | null
@@ -15494,13 +15823,20 @@ export type Database = {
           line_items?: Json | null
           notes?: string | null
           quote_number: string
+          reverse_charge?: boolean
           sent_date?: string | null
           status?: string
+          subtotal?: number | null
           updated_at?: string
           valid_until?: string | null
           value?: number
+          vat_amount?: number | null
+          vat_rate?: number
         }
         Update: {
+          cis_amount?: number | null
+          cis_enabled?: boolean
+          cis_rate?: number
           client?: string
           client_address?: string | null
           client_email?: string | null
@@ -15516,11 +15852,15 @@ export type Database = {
           line_items?: Json | null
           notes?: string | null
           quote_number?: string
+          reverse_charge?: boolean
           sent_date?: string | null
           status?: string
+          subtotal?: number | null
           updated_at?: string
           valid_until?: string | null
           value?: number
+          vat_amount?: number | null
+          vat_rate?: number
         }
         Relationships: [
           {
@@ -15837,6 +16177,7 @@ export type Database = {
       }
       employer_vacancies: {
         Row: {
+          applications_count: number
           benefits: string[] | null
           closing_date: string | null
           created_at: string | null
@@ -15859,6 +16200,7 @@ export type Database = {
           views: number | null
         }
         Insert: {
+          applications_count?: number
           benefits?: string[] | null
           closing_date?: string | null
           created_at?: string | null
@@ -15881,6 +16223,7 @@ export type Database = {
           views?: number | null
         }
         Update: {
+          applications_count?: number
           benefits?: string[] | null
           closing_date?: string | null
           created_at?: string | null
@@ -19371,6 +19714,13 @@ export type Database = {
             foreignKeyName: "iqa_samples_college_id_fkey"
             columns: ["college_id"]
             isOneToOne: false
+            referencedRelation: "v_platform_safeguarding_health"
+            referencedColumns: ["college_id"]
+          },
+          {
+            foreignKeyName: "iqa_samples_college_id_fkey"
+            columns: ["college_id"]
+            isOneToOne: false
             referencedRelation: "v_portfolio_stats_by_college"
             referencedColumns: ["college_id"]
           },
@@ -20602,6 +20952,13 @@ export type Database = {
             foreignKeyName: "lti_context_mappings_college_id_fkey"
             columns: ["college_id"]
             isOneToOne: false
+            referencedRelation: "v_platform_safeguarding_health"
+            referencedColumns: ["college_id"]
+          },
+          {
+            foreignKeyName: "lti_context_mappings_college_id_fkey"
+            columns: ["college_id"]
+            isOneToOne: false
             referencedRelation: "v_portfolio_stats_by_college"
             referencedColumns: ["college_id"]
           },
@@ -21047,6 +21404,13 @@ export type Database = {
             columns: ["college_id"]
             isOneToOne: false
             referencedRelation: "v_iqa_sampling_status"
+            referencedColumns: ["college_id"]
+          },
+          {
+            foreignKeyName: "lti_platforms_college_fk"
+            columns: ["college_id"]
+            isOneToOne: false
+            referencedRelation: "v_platform_safeguarding_health"
             referencedColumns: ["college_id"]
           },
           {
@@ -24052,6 +24416,8 @@ export type Database = {
       }
       pastoral_notes: {
         Row: {
+          acknowledged_at: string | null
+          acknowledged_by: string | null
           action_by_date: string | null
           action_completed_at: string | null
           action_required: string | null
@@ -24068,6 +24434,8 @@ export type Database = {
           visibility: string
         }
         Insert: {
+          acknowledged_at?: string | null
+          acknowledged_by?: string | null
           action_by_date?: string | null
           action_completed_at?: string | null
           action_required?: string | null
@@ -24084,6 +24452,8 @@ export type Database = {
           visibility?: string
         }
         Update: {
+          acknowledged_at?: string | null
+          acknowledged_by?: string | null
           action_by_date?: string | null
           action_completed_at?: string | null
           action_required?: string | null
@@ -24133,6 +24503,13 @@ export type Database = {
             columns: ["college_id"]
             isOneToOne: false
             referencedRelation: "v_iqa_sampling_status"
+            referencedColumns: ["college_id"]
+          },
+          {
+            foreignKeyName: "pastoral_notes_college_id_fkey"
+            columns: ["college_id"]
+            isOneToOne: false
+            referencedRelation: "v_platform_safeguarding_health"
             referencedColumns: ["college_id"]
           },
           {
@@ -25007,6 +25384,65 @@ export type Database = {
           status?: string
         }
         Relationships: []
+      }
+      platform_safeguarding_alerts: {
+        Row: {
+          alert_kind: string
+          college_id: string
+          created_at: string
+          id: string
+          metadata: Json
+          resolved_at: string | null
+          updated_at: string
+        }
+        Insert: {
+          alert_kind: string
+          college_id: string
+          created_at?: string
+          id?: string
+          metadata?: Json
+          resolved_at?: string | null
+          updated_at?: string
+        }
+        Update: {
+          alert_kind?: string
+          college_id?: string
+          created_at?: string
+          id?: string
+          metadata?: Json
+          resolved_at?: string | null
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "platform_safeguarding_alerts_college_id_fkey"
+            columns: ["college_id"]
+            isOneToOne: false
+            referencedRelation: "colleges"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "platform_safeguarding_alerts_college_id_fkey"
+            columns: ["college_id"]
+            isOneToOne: false
+            referencedRelation: "v_iqa_sampling_status"
+            referencedColumns: ["college_id"]
+          },
+          {
+            foreignKeyName: "platform_safeguarding_alerts_college_id_fkey"
+            columns: ["college_id"]
+            isOneToOne: false
+            referencedRelation: "v_platform_safeguarding_health"
+            referencedColumns: ["college_id"]
+          },
+          {
+            foreignKeyName: "platform_safeguarding_alerts_college_id_fkey"
+            columns: ["college_id"]
+            isOneToOne: false
+            referencedRelation: "v_portfolio_stats_by_college"
+            referencedColumns: ["college_id"]
+          },
+        ]
       }
       policy_acknowledgements: {
         Row: {
@@ -26911,6 +27347,13 @@ export type Database = {
             foreignKeyName: "fk_profiles_college"
             columns: ["college_id"]
             isOneToOne: false
+            referencedRelation: "v_platform_safeguarding_health"
+            referencedColumns: ["college_id"]
+          },
+          {
+            foreignKeyName: "fk_profiles_college"
+            columns: ["college_id"]
+            isOneToOne: false
             referencedRelation: "v_portfolio_stats_by_college"
             referencedColumns: ["college_id"]
           },
@@ -27965,6 +28408,7 @@ export type Database = {
           invoice_sent_at: string | null
           invoice_status: string | null
           is_active_version: boolean | null
+          is_estimate: boolean
           items: Json
           job_details: Json | null
           last_payment_prompt_pushed_at: string | null
@@ -28051,6 +28495,7 @@ export type Database = {
           invoice_sent_at?: string | null
           invoice_status?: string | null
           is_active_version?: boolean | null
+          is_estimate?: boolean
           items?: Json
           job_details?: Json | null
           last_payment_prompt_pushed_at?: string | null
@@ -28137,6 +28582,7 @@ export type Database = {
           invoice_sent_at?: string | null
           invoice_status?: string | null
           is_active_version?: boolean | null
+          is_estimate?: boolean
           items?: Json
           job_details?: Json | null
           last_payment_prompt_pushed_at?: string | null
@@ -30807,6 +31253,13 @@ export type Database = {
             foreignKeyName: "schemes_of_work_college_id_fkey"
             columns: ["college_id"]
             isOneToOne: false
+            referencedRelation: "v_platform_safeguarding_health"
+            referencedColumns: ["college_id"]
+          },
+          {
+            foreignKeyName: "schemes_of_work_college_id_fkey"
+            columns: ["college_id"]
+            isOneToOne: false
             referencedRelation: "v_portfolio_stats_by_college"
             referencedColumns: ["college_id"]
           },
@@ -32463,6 +32916,13 @@ export type Database = {
             foreignKeyName: "student_message_threads_college_id_fkey"
             columns: ["college_id"]
             isOneToOne: false
+            referencedRelation: "v_platform_safeguarding_health"
+            referencedColumns: ["college_id"]
+          },
+          {
+            foreignKeyName: "student_message_threads_college_id_fkey"
+            columns: ["college_id"]
+            isOneToOne: false
             referencedRelation: "v_portfolio_stats_by_college"
             referencedColumns: ["college_id"]
           },
@@ -33052,6 +33512,13 @@ export type Database = {
             columns: ["college_id"]
             isOneToOne: false
             referencedRelation: "v_iqa_sampling_status"
+            referencedColumns: ["college_id"]
+          },
+          {
+            foreignKeyName: "teaching_resources_college_id_fkey"
+            columns: ["college_id"]
+            isOneToOne: false
+            referencedRelation: "v_platform_safeguarding_health"
             referencedColumns: ["college_id"]
           },
           {
@@ -33649,6 +34116,7 @@ export type Database = {
           lat: number | null
           lng: number | null
           location_text: string | null
+          opportunity_type: string
           postcode: string | null
           published_at: string | null
           raw_data: Json | null
@@ -33691,6 +34159,7 @@ export type Database = {
           lat?: number | null
           lng?: number | null
           location_text?: string | null
+          opportunity_type?: string
           postcode?: string | null
           published_at?: string | null
           raw_data?: Json | null
@@ -33733,6 +34202,7 @@ export type Database = {
           lat?: number | null
           lng?: number | null
           location_text?: string | null
+          opportunity_type?: string
           postcode?: string | null
           published_at?: string | null
           raw_data?: Json | null
@@ -37023,6 +37493,13 @@ export type Database = {
             foreignKeyName: "webhook_configs_college_id_fkey"
             columns: ["college_id"]
             isOneToOne: false
+            referencedRelation: "v_platform_safeguarding_health"
+            referencedColumns: ["college_id"]
+          },
+          {
+            foreignKeyName: "webhook_configs_college_id_fkey"
+            columns: ["college_id"]
+            isOneToOne: false
             referencedRelation: "v_portfolio_stats_by_college"
             referencedColumns: ["college_id"]
           },
@@ -37461,6 +37938,13 @@ export type Database = {
             foreignKeyName: "college_students_college_id_fkey"
             columns: ["college_id"]
             isOneToOne: false
+            referencedRelation: "v_platform_safeguarding_health"
+            referencedColumns: ["college_id"]
+          },
+          {
+            foreignKeyName: "college_students_college_id_fkey"
+            columns: ["college_id"]
+            isOneToOne: false
             referencedRelation: "v_portfolio_stats_by_college"
             referencedColumns: ["college_id"]
           },
@@ -37573,6 +38057,13 @@ export type Database = {
             foreignKeyName: "college_spag_checks_college_id_fkey"
             columns: ["college_id"]
             isOneToOne: false
+            referencedRelation: "v_platform_safeguarding_health"
+            referencedColumns: ["college_id"]
+          },
+          {
+            foreignKeyName: "college_spag_checks_college_id_fkey"
+            columns: ["college_id"]
+            isOneToOne: false
             referencedRelation: "v_portfolio_stats_by_college"
             referencedColumns: ["college_id"]
           },
@@ -37632,6 +38123,13 @@ export type Database = {
             foreignKeyName: "college_tutor_observations_college_id_fkey"
             columns: ["college_id"]
             isOneToOne: false
+            referencedRelation: "v_platform_safeguarding_health"
+            referencedColumns: ["college_id"]
+          },
+          {
+            foreignKeyName: "college_tutor_observations_college_id_fkey"
+            columns: ["college_id"]
+            isOneToOne: false
             referencedRelation: "v_portfolio_stats_by_college"
             referencedColumns: ["college_id"]
           },
@@ -37682,6 +38180,13 @@ export type Database = {
             columns: ["college_id"]
             isOneToOne: false
             referencedRelation: "v_iqa_sampling_status"
+            referencedColumns: ["college_id"]
+          },
+          {
+            foreignKeyName: "college_apprentice_survey_responses_college_id_fkey"
+            columns: ["college_id"]
+            isOneToOne: false
+            referencedRelation: "v_platform_safeguarding_health"
             referencedColumns: ["college_id"]
           },
           {
@@ -38086,6 +38591,13 @@ export type Database = {
             foreignKeyName: "fk_profiles_college"
             columns: ["college_id"]
             isOneToOne: false
+            referencedRelation: "v_platform_safeguarding_health"
+            referencedColumns: ["college_id"]
+          },
+          {
+            foreignKeyName: "fk_profiles_college"
+            columns: ["college_id"]
+            isOneToOne: false
             referencedRelation: "v_portfolio_stats_by_college"
             referencedColumns: ["college_id"]
           },
@@ -38136,6 +38648,33 @@ export type Database = {
           platform_type: string | null
           skipped: number | null
           synced: number | null
+        }
+        Relationships: []
+      }
+      v_platform_safeguarding_health: {
+        Row: {
+          active_students: number | null
+          college_id: string | null
+          college_name: string | null
+          has_routable_dsl: boolean | null
+          open_concerns: number | null
+          unacknowledged_concerns: number | null
+        }
+        Insert: {
+          active_students?: never
+          college_id?: string | null
+          college_name?: string | null
+          has_routable_dsl?: never
+          open_concerns?: never
+          unacknowledged_concerns?: never
+        }
+        Update: {
+          active_students?: never
+          college_id?: string | null
+          college_name?: string | null
+          has_routable_dsl?: never
+          open_concerns?: never
+          unacknowledged_concerns?: never
         }
         Relationships: []
       }
@@ -38236,6 +38775,13 @@ export type Database = {
             foreignKeyName: "college_staff_college_id_fkey"
             columns: ["college_id"]
             isOneToOne: false
+            referencedRelation: "v_platform_safeguarding_health"
+            referencedColumns: ["college_id"]
+          },
+          {
+            foreignKeyName: "college_staff_college_id_fkey"
+            columns: ["college_id"]
+            isOneToOne: false
             referencedRelation: "v_portfolio_stats_by_college"
             referencedColumns: ["college_id"]
           },
@@ -38293,6 +38839,13 @@ export type Database = {
             foreignKeyName: "college_staff_college_id_fkey"
             columns: ["college_id"]
             isOneToOne: false
+            referencedRelation: "v_platform_safeguarding_health"
+            referencedColumns: ["college_id"]
+          },
+          {
+            foreignKeyName: "college_staff_college_id_fkey"
+            columns: ["college_id"]
+            isOneToOne: false
             referencedRelation: "v_portfolio_stats_by_college"
             referencedColumns: ["college_id"]
           },
@@ -38329,6 +38882,10 @@ export type Database = {
           token_param: string
         }
         Returns: boolean
+      }
+      acknowledge_safeguarding_concern: {
+        Args: { p_concern_id: string }
+        Returns: string
       }
       add_share_comment: {
         Args: {
@@ -38566,6 +39123,7 @@ export type Database = {
         Args: { error_msg: string; job_id: string }
         Returns: undefined
       }
+      flag_platform_safeguarding_risks: { Args: never; Returns: number }
       fn_check_price_alerts: {
         Args: { p_user_id: string }
         Returns: {
@@ -38734,6 +39292,10 @@ export type Database = {
           total_chunks: number
         }[]
       }
+      get_job_ad_companies: {
+        Args: { p_employer_ids: string[] }
+        Returns: Json
+      }
       get_my_college_team: { Args: never; Returns: Json }
       get_my_company_profile: {
         Args: never
@@ -38751,6 +39313,10 @@ export type Database = {
           created_at: string
           currency: string | null
           day_rate: number | null
+          default_cis_enabled: boolean | null
+          default_invoice_summary_view: boolean | null
+          default_reverse_charge: boolean | null
+          default_vat_registered: boolean | null
           deposit_percentage: number | null
           hourly_rate: number | null
           id: string
@@ -39136,6 +39702,7 @@ export type Database = {
           invoice_sent_at: string | null
           invoice_status: string | null
           is_active_version: boolean | null
+          is_estimate: boolean
           items: Json
           job_details: Json | null
           last_payment_prompt_pushed_at: string | null
@@ -39292,6 +39859,7 @@ export type Database = {
           total_tables: number
         }[]
       }
+      get_talent_pool: { Args: never; Returns: Json }
       get_tender_sync_config: { Args: never; Returns: Json }
       get_verification_by_token: { Args: { p_token: string }; Returns: Json }
       has_active_worker_seat: { Args: never; Returns: boolean }
@@ -39315,6 +39883,10 @@ export type Database = {
         Returns: undefined
       }
       increment_announcement_tap: { Args: { aid: string }; Returns: undefined }
+      increment_applications_count: {
+        Args: { vacancy_id: string }
+        Returns: undefined
+      }
       increment_cache_hit: {
         Args: { p_cache_key: string; p_last_hit_at: string }
         Returns: undefined
@@ -39329,6 +39901,10 @@ export type Database = {
       }
       increment_share_view: {
         Args: { share_token: string }
+        Returns: undefined
+      }
+      increment_vacancy_views: {
+        Args: { vacancy_id: string }
         Returns: undefined
       }
       is_admin: { Args: never; Returns: boolean }
@@ -39763,6 +40339,10 @@ export type Database = {
         Returns: string
       }
       refresh_community_pricing_aggregates: { Args: never; Returns: undefined }
+      refresh_job_financial_actuals: {
+        Args: { p_job_id: string }
+        Returns: undefined
+      }
       reject_quote_by_token: {
         Args: {
           client_ip?: string
@@ -40322,6 +40902,7 @@ export type Database = {
           lat: number | null
           lng: number | null
           location_text: string | null
+          opportunity_type: string
           postcode: string | null
           published_at: string | null
           raw_data: Json | null

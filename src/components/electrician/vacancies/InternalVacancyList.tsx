@@ -12,10 +12,27 @@ import {
   SelectValue,
 } from '@/components/ui/select';
 import { Sheet, SheetContent, SheetHeader, SheetTitle } from '@/components/ui/sheet';
-import { Search, SlidersHorizontal, Briefcase, MapPin, RefreshCw, X } from 'lucide-react';
+import { Search, SlidersHorizontal, Briefcase, MapPin, RefreshCw, X, Mail, Check } from 'lucide-react';
 import { cn } from '@/lib/utils';
+import { toast } from 'sonner';
 import { InternalVacancyCard, type InternalVacancy } from './InternalVacancyCard';
-import { useInternalVacancies, type VacancyFilters } from '@/hooks/useInternalVacancies';
+import {
+  useInternalVacancies,
+  useMyInvitations,
+  useMyApplications,
+  useRespondToInvitation,
+  type VacancyFilters,
+} from '@/hooks/useInternalVacancies';
+
+const APPLICATION_STATUS_TONE: Record<string, string> = {
+  New: 'bg-blue-500/10 text-blue-400 border-blue-500/30',
+  Reviewing: 'bg-amber-500/10 text-amber-400 border-amber-500/30',
+  Shortlisted: 'bg-purple-500/10 text-purple-400 border-purple-500/30',
+  Interviewed: 'bg-cyan-500/10 text-cyan-400 border-cyan-500/30',
+  Offered: 'bg-emerald-500/10 text-emerald-400 border-emerald-500/30',
+  Hired: 'bg-emerald-500/10 text-emerald-400 border-emerald-500/30',
+  Rejected: 'bg-red-500/10 text-red-400 border-red-500/30',
+};
 
 interface InternalVacancyListProps {
   onApply: (vacancy: InternalVacancy) => void;
@@ -50,6 +67,50 @@ export function InternalVacancyList({
     ...filters,
     searchQuery: searchQuery || undefined,
   });
+  const { data: invitations = [] } = useMyInvitations();
+  const { data: myApplications = [] } = useMyApplications();
+  const respondToInvitation = useRespondToInvitation();
+
+  const handleDeclineInvitation = (invitationId: string) => {
+    respondToInvitation.mutate(
+      { invitationId, response: 'declined' },
+      {
+        onSuccess: () => toast.success('Invitation declined'),
+        onError: () => toast.error('Could not decline the invitation — try again'),
+      }
+    );
+  };
+
+  const handleAcceptInvitation = (inv: {
+    vacancy_id: string;
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    vacancy?: any;
+  }) => {
+    // Find the full vacancy in the open list, else build enough for the dialog
+    const full = (vacancies || []).find((v) => v.id === inv.vacancy_id);
+    if (full) {
+      onApply(full);
+    } else if (inv.vacancy) {
+      onApply({
+        id: inv.vacancy.id,
+        title: inv.vacancy.title,
+        location: inv.vacancy.location,
+        type: inv.vacancy.type || 'Full-time',
+        status: 'Open',
+        salary_min: null,
+        salary_max: null,
+        salary_period: 'annual',
+        description: '',
+        requirements: [],
+        benefits: [],
+        closing_date: null,
+        views: 0,
+        created_at: '',
+        employer: inv.vacancy.employer,
+        has_applied: false,
+      } as InternalVacancy);
+    }
+  };
 
   const handleSearch = (e: React.FormEvent) => {
     e.preventDefault();
@@ -71,6 +132,85 @@ export function InternalVacancyList({
 
   return (
     <div className="space-y-4">
+      {/* Invitations — employers asked YOU to apply */}
+      {invitations.length > 0 && (
+        <div className="space-y-2">
+          {/* eslint-disable-next-line @typescript-eslint/no-explicit-any */}
+          {invitations.map((inv: any) => (
+            <div
+              key={inv.id}
+              className="rounded-2xl border border-elec-yellow/30 bg-elec-yellow/[0.07] p-4"
+            >
+              <div className="flex items-start gap-3">
+                <span className="mt-0.5 flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-elec-yellow/15">
+                  <Mail className="h-4 w-4 text-elec-yellow" />
+                </span>
+                <div className="flex-1 min-w-0">
+                  <p className="text-[13.5px] font-semibold text-white">
+                    {inv.vacancy?.employer?.company_name || 'An employer'} invited you to apply
+                  </p>
+                  <p className="text-[12.5px] text-white/70 mt-0.5 truncate">
+                    {inv.vacancy?.title}
+                    {inv.vacancy?.location ? ` · ${inv.vacancy.location}` : ''}
+                  </p>
+                  {inv.message && (
+                    <p className="text-[12px] text-white/60 mt-2 line-clamp-2">“{inv.message}”</p>
+                  )}
+                </div>
+              </div>
+              <div className="mt-3 flex gap-2">
+                <Button
+                  variant="outline"
+                  className="flex-1 h-11 touch-manipulation"
+                  onClick={() => handleDeclineInvitation(inv.id)}
+                  disabled={respondToInvitation.isPending}
+                >
+                  Decline
+                </Button>
+                <Button
+                  className="flex-1 h-11 bg-elec-yellow text-black hover:bg-elec-yellow/90 touch-manipulation"
+                  onClick={() => handleAcceptInvitation(inv)}
+                >
+                  <Check className="h-4 w-4 mr-1.5" />
+                  View & apply
+                </Button>
+              </div>
+            </div>
+          ))}
+        </div>
+      )}
+
+      {/* My applications — live status */}
+      {myApplications.length > 0 && (
+        <div className="rounded-2xl border border-white/[0.08] bg-[hsl(0_0%_10%)] p-4">
+          <p className="text-[11px] uppercase tracking-[0.14em] text-white/50 font-medium mb-3">
+            Your applications
+          </p>
+          <div className="space-y-2.5">
+            {/* eslint-disable-next-line @typescript-eslint/no-explicit-any */}
+            {myApplications.slice(0, 4).map((app: any) => (
+              <div key={app.id} className="flex items-center justify-between gap-3">
+                <div className="min-w-0 flex-1">
+                  <p className="text-[13px] text-white truncate">{app.vacancy?.title || 'Vacancy'}</p>
+                  <p className="text-[11.5px] text-white/50 truncate">
+                    {app.vacancy?.employer?.company_name || 'Employer'}
+                  </p>
+                </div>
+                <span
+                  className={cn(
+                    'shrink-0 rounded-full border px-2.5 py-1 text-[11px] font-medium',
+                    APPLICATION_STATUS_TONE[app.status] ||
+                      'bg-white/[0.06] text-white/70 border-white/[0.1]'
+                  )}
+                >
+                  {app.status}
+                </span>
+              </div>
+            ))}
+          </div>
+        </div>
+      )}
+
       {/* Search and Filter Bar */}
       <div className="flex gap-2">
         <form onSubmit={handleSearch} className="flex-1">

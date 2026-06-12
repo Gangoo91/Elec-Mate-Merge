@@ -1,6 +1,7 @@
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { useEffect, useState } from 'react';
 import { supabase } from '@/integrations/supabase/client';
+import { realtimeChannelName } from '@/lib/realtimeChannel';
 import {
   teamChannelService,
   teamChannelMessageService,
@@ -139,7 +140,7 @@ export function useTeamDMConversations(employerId: string | undefined) {
     if (!employerId) return;
 
     const channel = supabase
-      .channel(`team-dms-${employerId}`)
+      .channel(realtimeChannelName(`team-dms-${employerId}`))
       .on(
         'postgres_changes',
         {

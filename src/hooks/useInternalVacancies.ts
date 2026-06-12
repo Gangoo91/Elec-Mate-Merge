@@ -2,6 +2,7 @@ import { useQuery, useMutation, useQueryClient, keepPreviousData } from '@tansta
 import { useEffect } from 'react';
 import { supabase } from '@/integrations/supabase/client';
 import { realtimeChannelName } from '@/lib/realtimeChannel';
+import { getMyElecIdProfile, getMyElecIdProfileId } from '@/utils/elecIdLinkage';
 import type { InternalVacancy } from '@/components/electrician/vacancies/InternalVacancyCard';
 
 // Query keys
@@ -62,7 +63,8 @@ export function useInternalVacancies(filters?: VacancyFilters) {
           benefits,
           closing_date,
           views,
-          created_at
+          created_at,
+          employer_id
         `
         )
         .eq('status', 'Open')
@@ -97,25 +99,31 @@ export function useInternalVacancies(filters?: VacancyFilters) {
       // If user is logged in, check their applications
       let applicationVacancyIds: Set<string> = new Set();
       if (user) {
-        // Get user's elec_id_profile
-        const { data: profile } = await supabase
-          .from('employer_elec_id_profiles')
-          .select('id')
-          .eq('employee_id', user.id)
-          .maybeSingle();
-
-        if (profile) {
+        const profileId = await getMyElecIdProfileId();
+        if (profileId) {
           // Get their applications
           const { data: applications } = await supabase
             .from('employer_vacancy_applications')
             .select('vacancy_id')
-            .eq('applicant_profile_id', profile.id);
+            .eq('applicant_profile_id', profileId);
 
           applicationVacancyIds = new Set((applications || []).map((a) => a.vacancy_id));
         }
       }
 
+      // Company branding via the sanctioned RPC (company_profiles is owner-only)
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      const employerIds = [...new Set((vacancies || []).map((v: any) => v.employer_id).filter(Boolean))];
+      let companies: Record<string, { company_name?: string; logo_url?: string }> = {};
+      if (employerIds.length > 0) {
+        const { data: companyData } = await supabase.rpc('get_job_ad_companies', {
+          p_employer_ids: employerIds,
+        });
+        companies = (companyData as typeof companies) || {};
+      }
+
       // Transform data to match InternalVacancy type
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
       return (vacancies || []).map((v: any) => ({
         id: v.id,
         title: v.title,
@@ -131,7 +139,13 @@ export function useInternalVacancies(filters?: VacancyFilters) {
         closing_date: v.closing_date,
         views: v.views || 0,
         created_at: v.created_at,
-        employer: undefined,
+        employer: v.employer_id
+          ? {
+              id: v.employer_id,
+              company_name: companies[v.employer_id]?.company_name || 'Employer',
+              logo_url: companies[v.employer_id]?.logo_url ?? null,
+            }
+          : undefined,
         has_applied: applicationVacancyIds.has(v.id),
       }));
     },
@@ -182,32 +196,21 @@ export function useInternalVacancy(id: string | undefined) {
       // Check if user has applied
       let hasApplied = false;
       if (user) {
-        const { data: profile } = await supabase
-          .from('employer_elec_id_profiles')
-          .select('id')
-          .eq('employee_id', user.id)
-          .maybeSingle();
-
-        if (profile) {
+        const profileId = await getMyElecIdProfileId();
+        if (profileId) {
           const { data: application } = await supabase
             .from('employer_vacancy_applications')
             .select('id')
             .eq('vacancy_id', id)
-            .eq('applicant_profile_id', profile.id)
-            .single();
+            .eq('applicant_profile_id', profileId)
+            .maybeSingle();
 
           hasApplied = !!application;
         }
       }
 
-      // Increment views
-      await supabase.rpc('increment_vacancy_views', { p_vacancy_id: id }).catch(() => {
-        // Fallback - update directly
-        supabase
-          .from('employer_vacancies')
-          .update({ views: (vacancy.views || 0) + 1 })
-          .eq('id', id);
-      });
+      // Increment views (definer RPC — workers can't update employer rows directly)
+      await supabase.rpc('increment_vacancy_views', { vacancy_id: id });
 
       return {
         id: vacancy.id,
@@ -253,17 +256,18 @@ export function useApplyToVacancy() {
       } = await supabase.auth.getUser();
       if (!user) throw new Error('Not authenticated');
 
-      // Get elec_id_profile
-      const { data: profile, error: profileError } = await supabase
-        .from('employer_elec_id_profiles')
-        .select('id, employee:employer_employees(name, email, phone)')
-        .eq('employee_id', user.id)
-        .maybeSingle();
+      // Get elec_id_profile through the real linkage
+      const profile = await getMyElecIdProfile<{
+        id: string;
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        employee: any;
+      }>('id, employee:employer_employees(name, email, phone)');
 
-      if (profileError || !profile) {
+      if (!profile) {
         throw new Error('Please complete your Elec-ID profile first');
       }
 
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
       const employee = (profile as any).employee;
 
       // Create application with optional CV attachment
@@ -289,11 +293,23 @@ export function useApplyToVacancy() {
         throw error;
       }
 
+      // Applying resolves any open invitation to this vacancy automatically
+      await supabase
+        .from('employer_vacancy_invitations')
+        .update({ status: 'applied', responded_at: new Date().toISOString() })
+        .eq('vacancy_id', vacancyId)
+        .eq('electrician_profile_id', profile.id)
+        .in('status', ['pending', 'viewed']);
+
+      // Keep the vacancy's applications counter honest
+      await supabase.rpc('increment_applications_count', { vacancy_id: vacancyId });
+
       return application;
     },
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: INTERNAL_VACANCIES_KEY });
       queryClient.invalidateQueries({ queryKey: MY_APPLICATIONS_KEY });
+      queryClient.invalidateQueries({ queryKey: ['my-invitations'] });
       // Also invalidate conversations as applying unlocks chat
       queryClient.invalidateQueries({ queryKey: ['conversations'] });
     },
@@ -313,14 +329,8 @@ export function useMyApplications() {
       } = await supabase.auth.getUser();
       if (!user) return [];
 
-      // Get elec_id_profile
-      const { data: profile } = await supabase
-        .from('employer_elec_id_profiles')
-        .select('id')
-        .eq('employee_id', user.id)
-        .maybeSingle();
-
-      if (!profile) return [];
+      const profileId = await getMyElecIdProfileId();
+      if (!profileId) return [];
 
       const { data: applications, error } = await supabase
         .from('employer_vacancy_applications')
@@ -337,18 +347,39 @@ export function useMyApplications() {
             location,
             type,
             status,
-            employer:employer_profiles (
-              company_name,
-              logo_url
-            )
+            employer_id
           )
         `
         )
-        .eq('applicant_profile_id', profile.id)
+        .eq('applicant_profile_id', profileId)
         .order('applied_at', { ascending: false });
 
       if (error) throw error;
-      return applications || [];
+
+      const rows = applications || [];
+      const employerIds = [
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        ...new Set(rows.map((a: any) => a.vacancy?.employer_id).filter(Boolean)),
+      ];
+      let companies: Record<string, { company_name?: string; logo_url?: string }> = {};
+      if (employerIds.length > 0) {
+        const { data: companyData } = await supabase.rpc('get_job_ad_companies', {
+          p_employer_ids: employerIds,
+        });
+        companies = (companyData as typeof companies) || {};
+      }
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      return rows.map((a: any) => ({
+        ...a,
+        vacancy: a.vacancy
+          ? {
+              ...a.vacancy,
+              employer: a.vacancy.employer_id
+                ? { id: a.vacancy.employer_id, ...companies[a.vacancy.employer_id] }
+                : undefined,
+            }
+          : a.vacancy,
+      }));
     },
   });
 }
@@ -386,14 +417,8 @@ export function useMyInvitations() {
       } = await supabase.auth.getUser();
       if (!user) return [];
 
-      // Get elec_id_profile
-      const { data: profile } = await supabase
-        .from('employer_elec_id_profiles')
-        .select('id')
-        .eq('employee_id', user.id)
-        .maybeSingle();
-
-      if (!profile) return [];
+      const profileId = await getMyElecIdProfileId();
+      if (!profileId) return [];
 
       const { data: invitations, error } = await supabase
         .from('employer_vacancy_invitations')
@@ -410,19 +435,40 @@ export function useMyInvitations() {
             title,
             location,
             type,
-            employer:employer_profiles (
-              company_name,
-              logo_url
-            )
+            employer_id
           )
         `
         )
-        .eq('electrician_profile_id', profile.id)
+        .eq('electrician_profile_id', profileId)
         .in('status', ['pending', 'viewed'])
         .order('sent_at', { ascending: false });
 
       if (error) throw error;
-      return invitations || [];
+
+      const rows = invitations || [];
+      const employerIds = [
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        ...new Set(rows.map((i: any) => i.vacancy?.employer_id).filter(Boolean)),
+      ];
+      let companies: Record<string, { company_name?: string; logo_url?: string }> = {};
+      if (employerIds.length > 0) {
+        const { data: companyData } = await supabase.rpc('get_job_ad_companies', {
+          p_employer_ids: employerIds,
+        });
+        companies = (companyData as typeof companies) || {};
+      }
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      return rows.map((i: any) => ({
+        ...i,
+        vacancy: i.vacancy
+          ? {
+              ...i.vacancy,
+              employer: i.vacancy.employer_id
+                ? { id: i.vacancy.employer_id, ...companies[i.vacancy.employer_id] }
+                : undefined,
+            }
+          : i.vacancy,
+      }));
     },
   });
 }

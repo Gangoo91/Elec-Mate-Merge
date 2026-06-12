@@ -1,53 +1,46 @@
 import { useState, useEffect, useCallback, useMemo } from 'react';
 import { supabase } from '@/integrations/supabase/client';
 import { realtimeChannelName } from '@/lib/realtimeChannel';
-import { useAuth } from '@/contexts/AuthContext';
 import type { VerificationTier } from '@/components/employer/SparkProfileSheet';
 
-export interface WorkHistoryItem {
-  jobTitle: string;
-  employer: string;
-  startDate: string;
-  endDate?: string;
-  isCurrent: boolean;
+/* ==========================================================================
+   useTalentPool — employer-side candidate browsing.
+   Reads via the sanitised get_talent_pool() RPC: real declared signals only
+   (ECS card, verification tier, declared rate, skills with declared years,
+   verified document types). No contact details until the employer reaches
+   out, and nothing invented client-side.
+   ========================================================================== */
+
+export interface TalentPoolSkill {
+  name: string;
+  level: string | null;
+  years: number | null;
 }
 
 export interface TalentPoolWorker {
-  id: string;
-  elecIdProfileId: string;
-  elecIdNumber: string;
+  profileId: string;
   name: string;
-  email?: string;
-  phone?: string;
-  avatar?: string;
-  role: string;
-  ecsCardType: string;
-  ecsExpiry?: string;
-  verificationTier: VerificationTier;
-  isVerified: boolean;
-  availableForHire: boolean;
-  profileVisibility: string;
+  jobTitle: string | null;
+  bio: string | null;
   specialisms: string[];
-  bio?: string;
-  hourlyRate: number;
-  dayRate: number;
-  qualifications: string[];
+  ecsCardType: string | null;
+  ecsExpiry: string | null;
+  isVerified: boolean;
+  verificationTier: VerificationTier;
+  verificationStatus: string | null;
+  rateType: string | null;
+  rateAmount: number | null;
+  /** Derived from the worker's DECLARED rate only — null when not declared */
+  dayRate: number | null;
+  memberSince: string | null;
+  skills: TalentPoolSkill[];
+  skillNames: string[];
+  /** Highest years-of-experience the worker declared on any skill — null if none declared */
+  yearsExperience: number | null;
   qualificationsCount: number;
-  skills: string[];
-  skillsCount: number;
-  verifiedDocsCount: number;
-  // Work history & experience
-  workHistory: WorkHistoryItem[];
-  currentRole?: string;
-  totalYearsExperience: number;
-  // UI enhancement fields
-  availability: 'Immediate' | '1 week notice' | 'Limited';
-  experience: number;
-  rating: number;
-  completedJobs: number;
-  distance: number;
-  location: string;
-  responseTime: string;
+  /** Real verified document types: ecs_card, qualification, training, driving_licence, insurance */
+  verifiedDocuments: string[];
+  workHistoryCount: number;
 }
 
 export type ExperienceLevel = 'all' | 'entry' | 'mid' | 'senior';
@@ -55,13 +48,10 @@ export type ExperienceLevel = 'all' | 'entry' | 'mid' | 'senior';
 interface UseTalentPoolOptions {
   searchQuery?: string;
   tierFilter?: 'all' | 'verified' | 'premium';
-  availabilityFilter?: 'all' | 'now' | 'week';
   specialismsFilter?: string[];
-  // New filter options
   experienceFilter?: ExperienceLevel;
   ecsCardFilter?: string[];
   skillsFilter?: string[];
-  qualificationsFilter?: string[];
   minRate?: number;
   maxRate?: number;
 }
@@ -72,15 +62,9 @@ interface UseTalentPoolReturn {
   error: string | null;
   refetch: () => Promise<void>;
   totalCount: number;
-  availableNowCount: number;
+  verifiedCount: number;
 }
 
-// Helper to calculate day rate from hourly
-const calculateDayRate = (hourlyRate: number): number => {
-  return Math.round(hourlyRate * 8);
-};
-
-// Helper to convert any rate type to day rate
 const convertToDayRate = (amount: number, type: string): number => {
   switch (type) {
     case 'hourly':
@@ -96,49 +80,7 @@ const convertToDayRate = (amount: number, type: string): number => {
   }
 };
 
-// Helper to determine availability status
-const determineAvailability = (tier: string): 'Immediate' | '1 week notice' | 'Limited' => {
-  // In production, this would come from a schedule/availability table
-  // For now, use tier as a proxy (verified/premium more likely to be available)
-  if (tier === 'premium') return 'Immediate';
-  if (tier === 'verified') return '1 week notice';
-  return 'Limited';
-};
-
-// Generate stable mock values based on ID for demo purposes
-const generateStableValue = (id: string, min: number, max: number): number => {
-  let hash = 0;
-  for (let i = 0; i < id.length; i++) {
-    hash = (hash << 5) - hash + id.charCodeAt(i);
-    hash = hash & hash;
-  }
-  return min + (Math.abs(hash) % (max - min + 1));
-};
-
-// Calculate total years of experience from work history
-const calculateTotalExperience = (workHistory: WorkHistoryItem[]): number => {
-  if (!workHistory || workHistory.length === 0) return 0;
-
-  let totalMonths = 0;
-  const now = new Date();
-
-  for (const job of workHistory) {
-    const startDate = new Date(job.startDate);
-    const endDate = job.endDate ? new Date(job.endDate) : now;
-
-    // Calculate months between dates
-    const months =
-      (endDate.getFullYear() - startDate.getFullYear()) * 12 +
-      (endDate.getMonth() - startDate.getMonth());
-    totalMonths += Math.max(0, months);
-  }
-
-  // Return years (rounded to 1 decimal)
-  return Math.round((totalMonths / 12) * 10) / 10;
-};
-
 export function useTalentPool(options: UseTalentPoolOptions = {}): UseTalentPoolReturn {
-  const { user } = useAuth();
   const [workers, setWorkers] = useState<TalentPoolWorker[]>([]);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
@@ -148,226 +90,79 @@ export function useTalentPool(options: UseTalentPoolOptions = {}): UseTalentPool
     setError(null);
 
     try {
-      // Fetch profiles with employee data
-      const { data: profiles, error: profileError } = await supabase
-        .from('employer_elec_id_profiles')
-        .select(
-          `
-          id,
-          employee_id,
-          elec_id_number,
-          ecs_card_type,
-          ecs_expiry_date,
-          verification_tier,
-          is_verified,
-          available_for_hire,
-          opt_out,
-          profile_visibility,
-          specialisations,
-          bio,
-          rate_type,
-          rate_amount,
-          employer_employees!inner (
-            id,
-            name,
-            email,
-            phone,
-            photo_url,
-            hourly_rate,
-            role,
-            employer_id
-          )
-        `
-        )
-        .eq('opt_out', false)
-        .eq('available_for_hire', true)
-        .in('profile_visibility', ['public', 'employers_only']);
-
-      if (profileError) {
-        console.error('Error fetching talent pool:', profileError);
+      const { data, error: rpcError } = await supabase.rpc('get_talent_pool');
+      if (rpcError) {
+        console.error('Error fetching talent pool:', rpcError);
         setError('Failed to load talent pool');
         return;
       }
 
-      if (!profiles || profiles.length === 0) {
-        setWorkers([]);
-        return;
-      }
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      const rows: any[] = Array.isArray(data) ? data : [];
 
-      // Exclude the current employer's own employees from the talent pool
-      const filteredProfiles = user
-        ? profiles.filter((p: any) => p.employer_employees?.employer_id !== user.id)
-        : profiles;
-
-      if (filteredProfiles.length === 0) {
-        setWorkers([]);
-        return;
-      }
-
-      // Fetch qualifications for all profiles
-      const profileIds = filteredProfiles.map((p: any) => p.id);
-      const { data: qualifications } = await supabase
-        .from('employer_elec_id_qualifications')
-        .select('profile_id, qualification_name, is_verified')
-        .in('profile_id', profileIds);
-
-      // Fetch skills for all profiles
-      const { data: skills } = await supabase
-        .from('employer_elec_id_skills')
-        .select('profile_id, skill_name, is_verified')
-        .in('profile_id', profileIds);
-
-      // Fetch verified documents count
-      const { data: documents } = await supabase
-        .from('elec_id_documents')
-        .select('profile_id, verification_status')
-        .in('profile_id', profileIds)
-        .eq('verification_status', 'verified');
-
-      // Fetch work history for all profiles
-      const { data: workHistoryData } = await supabase
-        .from('employer_elec_id_work_history')
-        .select('profile_id, job_title, employer_name, start_date, end_date, is_current')
-        .in('profile_id', profileIds)
-        .order('start_date', { ascending: false });
-
-      // Map qualifications by profile
-      const qualsByProfile = (qualifications || []).reduce(
-        (acc, q) => {
-          if (!acc[q.profile_id]) acc[q.profile_id] = [];
-          acc[q.profile_id].push(q.qualification_name);
-          return acc;
-        },
-        {} as Record<string, string[]>
-      );
-
-      // Map skills by profile
-      const skillsByProfile = (skills || []).reduce(
-        (acc, s) => {
-          if (!acc[s.profile_id]) acc[s.profile_id] = [];
-          acc[s.profile_id].push(s.skill_name);
-          return acc;
-        },
-        {} as Record<string, string[]>
-      );
-
-      // Count verified docs by profile
-      const verifiedDocsByProfile = (documents || []).reduce(
-        (acc, d) => {
-          acc[d.profile_id] = (acc[d.profile_id] || 0) + 1;
-          return acc;
-        },
-        {} as Record<string, number>
-      );
-
-      // Map work history by profile
-      const workHistoryByProfile = (workHistoryData || []).reduce(
-        (acc, wh) => {
-          if (!acc[wh.profile_id]) acc[wh.profile_id] = [];
-          acc[wh.profile_id].push({
-            jobTitle: wh.job_title,
-            employer: wh.employer_name,
-            startDate: wh.start_date,
-            endDate: wh.end_date,
-            isCurrent: wh.is_current,
-          } as WorkHistoryItem);
-          return acc;
-        },
-        {} as Record<string, WorkHistoryItem[]>
-      );
-
-      // Transform to TalentPoolWorker format
-      const transformedWorkers: TalentPoolWorker[] = filteredProfiles.map((profile: any) => {
-        const employee = profile.employer_employees;
-        const hourlyRate = parseFloat(employee.hourly_rate) || 25;
-        const profileQuals = qualsByProfile[profile.id] || [];
-        const profileSkills = skillsByProfile[profile.id] || [];
-        const profileWorkHistory = workHistoryByProfile[profile.id] || [];
-
-        // Use profile rate if set, otherwise calculate from hourly
-        const dayRate = profile.rate_amount
-          ? convertToDayRate(profile.rate_amount, profile.rate_type || 'daily')
-          : calculateDayRate(hourlyRate);
-
-        // Calculate experience from work history, or fallback to stable demo value
-        const calculatedExperience = calculateTotalExperience(profileWorkHistory);
-        const yearsExperience =
-          calculatedExperience > 0 ? calculatedExperience : generateStableValue(profile.id, 2, 20);
-
-        // Get current role from work history (most recent current job)
-        const currentJob = profileWorkHistory.find((wh) => wh.isCurrent);
-        const currentRole = currentJob?.jobTitle || employee.role || 'Electrician';
+      const transformed: TalentPoolWorker[] = rows.map((row) => {
+        const skills: TalentPoolSkill[] = Array.isArray(row.skills)
+          ? // eslint-disable-next-line @typescript-eslint/no-explicit-any
+            row.skills.map((s: any) => ({
+              name: s.name,
+              level: s.level ?? null,
+              years: s.years != null ? Number(s.years) : null,
+            }))
+          : [];
+        const declaredYears = skills
+          .map((s) => s.years)
+          .filter((y): y is number => y != null && y > 0);
 
         return {
-          id: employee.id,
-          elecIdProfileId: profile.id,
-          elecIdNumber: profile.elec_id_number,
-          name: employee.name,
-          email: employee.email,
-          phone: employee.phone,
-          avatar: employee.photo_url,
-          role: employee.role || 'Electrician',
-          ecsCardType: profile.ecs_card_type || 'gold',
-          ecsExpiry: profile.ecs_expiry_date,
-          verificationTier: (profile.verification_tier || 'basic') as VerificationTier,
-          isVerified: profile.is_verified || false,
-          availableForHire: profile.available_for_hire,
-          profileVisibility: profile.profile_visibility,
-          specialisms: profile.specialisations || [],
-          bio: profile.bio,
-          hourlyRate,
-          dayRate,
-          qualifications: profileQuals,
-          qualificationsCount: profileQuals.length,
-          skills: profileSkills,
-          skillsCount: profileSkills.length,
-          verifiedDocsCount: verifiedDocsByProfile[profile.id] || 0,
-          // Work history & calculated experience
-          workHistory: profileWorkHistory,
-          currentRole,
-          totalYearsExperience: yearsExperience,
-          // UI enhancement fields
-          availability: determineAvailability(profile.verification_tier),
-          experience: yearsExperience, // Keep for backwards compatibility
-          rating: 4 + generateStableValue(profile.id, 0, 10) / 10,
-          completedJobs: generateStableValue(profile.id, 5, 150),
-          distance: generateStableValue(profile.id, 1, 25),
-          location: 'Manchester, UK', // Would come from geolocation in production
-          responseTime:
-            profile.verification_tier === 'premium'
-              ? '< 1hr'
-              : profile.verification_tier === 'verified'
-                ? '< 2hrs'
-                : '< 4hrs',
+          profileId: row.profile_id,
+          name: row.name || 'Unnamed profile',
+          jobTitle: row.job_title ?? null,
+          bio: row.bio ?? null,
+          specialisms: Array.isArray(row.specialisations) ? row.specialisations : [],
+          ecsCardType: row.ecs_card_type ?? null,
+          ecsExpiry: row.ecs_expiry_date ?? null,
+          isVerified: Boolean(row.is_verified),
+          verificationTier: (row.verification_tier || 'basic') as VerificationTier,
+          verificationStatus: row.verification_status ?? null,
+          rateType: row.rate_type ?? null,
+          rateAmount: row.rate_amount != null ? Number(row.rate_amount) : null,
+          dayRate:
+            row.rate_amount != null && Number(row.rate_amount) > 0
+              ? convertToDayRate(Number(row.rate_amount), row.rate_type || 'daily')
+              : null,
+          memberSince: row.member_since ?? null,
+          skills,
+          skillNames: skills.map((s) => s.name),
+          yearsExperience: declaredYears.length > 0 ? Math.max(...declaredYears) : null,
+          qualificationsCount: Number(row.qualifications_count) || 0,
+          verifiedDocuments: Array.isArray(row.verified_documents) ? row.verified_documents : [],
+          workHistoryCount: Number(row.work_history_count) || 0,
         };
       });
 
-      setWorkers(transformedWorkers);
+      setWorkers(transformed);
     } catch (err) {
       console.error('Error in useTalentPool:', err);
       setError('An error occurred while loading talent pool');
     } finally {
       setIsLoading(false);
     }
-  }, [user]);
+  }, []);
 
-  // Apply client-side filters
   const filteredWorkers = useMemo(() => {
     let result = workers;
 
-    // Search filter
     if (options.searchQuery) {
       const query = options.searchQuery.toLowerCase();
       result = result.filter(
         (w) =>
           w.name.toLowerCase().includes(query) ||
-          w.location.toLowerCase().includes(query) ||
+          (w.jobTitle || '').toLowerCase().includes(query) ||
           w.specialisms.some((s) => s.toLowerCase().includes(query)) ||
-          w.role.toLowerCase().includes(query)
+          w.skillNames.some((s) => s.toLowerCase().includes(query))
       );
     }
 
-    // Tier filter
     if (options.tierFilter && options.tierFilter !== 'all') {
       if (options.tierFilter === 'verified') {
         result = result.filter(
@@ -378,72 +173,51 @@ export function useTalentPool(options: UseTalentPoolOptions = {}): UseTalentPool
       }
     }
 
-    // Availability filter
-    if (options.availabilityFilter && options.availabilityFilter !== 'all') {
-      if (options.availabilityFilter === 'now') {
-        result = result.filter((w) => w.availability === 'Immediate');
-      } else if (options.availabilityFilter === 'week') {
-        result = result.filter((w) => w.availability !== 'Limited');
-      }
-    }
-
-    // Specialisms filter
     if (options.specialismsFilter && options.specialismsFilter.length > 0) {
       result = result.filter((w) =>
         options.specialismsFilter!.some((s) => w.specialisms.includes(s))
       );
     }
 
-    // Experience level filter
+    // Experience = years the worker DECLARED on their skills; undeclared only matches 'all'
     if (options.experienceFilter && options.experienceFilter !== 'all') {
       result = result.filter((w) => {
-        const years = w.totalYearsExperience;
+        if (w.yearsExperience == null) return false;
         switch (options.experienceFilter) {
           case 'entry':
-            return years >= 0 && years <= 2;
+            return w.yearsExperience <= 2;
           case 'mid':
-            return years >= 3 && years <= 7;
+            return w.yearsExperience >= 3 && w.yearsExperience <= 7;
           case 'senior':
-            return years >= 8;
+            return w.yearsExperience >= 8;
           default:
             return true;
         }
       });
     }
 
-    // ECS Card type filter
     if (options.ecsCardFilter && options.ecsCardFilter.length > 0) {
       result = result.filter((w) =>
         options.ecsCardFilter!.some(
-          (cardType) => w.ecsCardType.toLowerCase() === cardType.toLowerCase()
+          (cardType) => (w.ecsCardType || '').toLowerCase() === cardType.toLowerCase()
         )
       );
     }
 
-    // Skills filter
     if (options.skillsFilter && options.skillsFilter.length > 0) {
       result = result.filter((w) =>
         options.skillsFilter!.some((skill) =>
-          w.skills.some((s) => s.toLowerCase().includes(skill.toLowerCase()))
+          w.skillNames.some((s) => s.toLowerCase().includes(skill.toLowerCase()))
         )
       );
     }
 
-    // Qualifications filter
-    if (options.qualificationsFilter && options.qualificationsFilter.length > 0) {
-      result = result.filter((w) =>
-        options.qualificationsFilter!.some((qual) =>
-          w.qualifications.some((q) => q.toLowerCase().includes(qual.toLowerCase()))
-        )
-      );
-    }
-
-    // Day rate range filter
+    // Rate filters only apply to workers who declared a rate
     if (options.minRate !== undefined && options.minRate > 0) {
-      result = result.filter((w) => w.dayRate >= options.minRate!);
+      result = result.filter((w) => w.dayRate != null && w.dayRate >= options.minRate!);
     }
     if (options.maxRate !== undefined && options.maxRate > 0) {
-      result = result.filter((w) => w.dayRate <= options.maxRate!);
+      result = result.filter((w) => w.dayRate != null && w.dayRate <= options.maxRate!);
     }
 
     return result;
@@ -451,38 +225,30 @@ export function useTalentPool(options: UseTalentPoolOptions = {}): UseTalentPool
     workers,
     options.searchQuery,
     options.tierFilter,
-    options.availabilityFilter,
     options.specialismsFilter,
     options.experienceFilter,
     options.ecsCardFilter,
     options.skillsFilter,
-    options.qualificationsFilter,
     options.minRate,
     options.maxRate,
   ]);
 
-  // Calculate counts
   const totalCount = filteredWorkers.length;
-  const availableNowCount = filteredWorkers.filter((w) => w.availability === 'Immediate').length;
+  const verifiedCount = filteredWorkers.filter(
+    (w) => w.verificationTier === 'verified' || w.verificationTier === 'premium'
+  ).length;
 
-  // Initial fetch
   useEffect(() => {
     fetchWorkers();
   }, [fetchWorkers]);
 
-  // Set up real-time subscription
   useEffect(() => {
     const channel = supabase
       .channel(realtimeChannelName('talent-pool-changes'))
       .on(
         'postgres_changes',
-        {
-          event: '*',
-          schema: 'public',
-          table: 'employer_elec_id_profiles',
-        },
+        { event: '*', schema: 'public', table: 'employer_elec_id_profiles' },
         () => {
-          // Refetch when profiles change
           fetchWorkers();
         }
       )
@@ -499,6 +265,6 @@ export function useTalentPool(options: UseTalentPoolOptions = {}): UseTalentPool
     error,
     refetch: fetchWorkers,
     totalCount,
-    availableNowCount,
+    verifiedCount,
   };
 }

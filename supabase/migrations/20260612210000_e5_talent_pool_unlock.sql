@@ -1,0 +1,34 @@
+-- E5 Slice 1: unlock the hiring marketplace data layer.
+-- Applied live as DB migrations `e5_talent_pool_unlock` + `e5_fix_applicant_policies`
+-- (2026-06-12; full bodies in the DB migrations of those names).
+--
+-- 1) get_talent_pool() SECURITY DEFINER RPC — the sanctioned, sanitised candidate
+--    read for employer-role callers: name, job title, bio, specialisations, ECS card
+--    + expiry, verification tier/status, declared rate, skills, qualification count,
+--    verified document types, work-history count. NO phone/email/hourly_rate/salary.
+--    Filters: opt_out=false, available_for_hire, visibility public/employers_only,
+--    excludes the caller's own team and self. Verified live: 86 candidates returned
+--    (was 0 for every employer).
+-- 2) employer_vacancy_applications: employer SELECT/UPDATE scoped to OWN vacancies
+--    (was: any employer-role user could read/rewrite every firm's applicants).
+--    Applicant INSERT/SELECT/UPDATE joined through the real linkage
+--    (applicant_profile_id -> employer_elec_id_profiles -> employer_employees.user_id);
+--    the old policies compared an elec-id profile uuid to auth.uid() — zero overlap,
+--    no worker could ever apply.
+-- 3) employer_vacancy_invitations: worker view/respond policies fixed with the same
+--    join (employee_id = auth.uid() matched 0 of 118 rows); employer INSERT now also
+--    requires vacancy ownership.
+-- 4) Elec-ID child tables (qualifications/skills/training/work_history): the
+--    "OR profiles.role='employer'" write hole replaced with owner-or-own-team-employer.
+-- 5) profile_visibility honoured on reads: anon sees 'public' only (was USING(true)
+--    over all 108 profiles incl. 95 'employers_only'); authenticated employers see
+--    public + employers_only. Same gating applied to child tables and verified
+--    elec_id_documents.
+-- 6) increment_vacancy_views / increment_applications_count RPCs created (FE already
+--    called them; they never existed) + employer_vacancies.applications_count column.
+-- 7) Vacancy status canonicalised: 'active' rows -> 'Open'; CHECK constraint
+--    (Open/Closed/Filled/Draft). Application status vocabulary (pre-existing CHECK):
+--    New/Reviewing/Shortlisted/Interviewed/Offered/Hired/Rejected.
+--
+-- NOTE (data, not schema): the 2 pre-existing vacancies had employer_id NULL —
+-- orphans no employer can manage; flagged rather than guessed an owner.

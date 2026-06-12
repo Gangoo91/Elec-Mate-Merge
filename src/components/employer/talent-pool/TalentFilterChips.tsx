@@ -2,99 +2,57 @@ import { Badge } from '@/components/ui/badge';
 import {
   X,
   SlidersHorizontal,
-  Clock,
   Shield,
   Award,
-  Zap,
   Briefcase,
   IdCard,
-  GraduationCap,
   PoundSterling,
 } from 'lucide-react';
 import type { ExperienceLevel } from '@/hooks/useTalentPool';
 
 interface TalentFilterChipsProps {
-  availabilityFilter: 'all' | 'now' | 'week';
   tierFilter: 'all' | 'verified' | 'premium';
   selectedSpecialisms: string[];
   experienceFilter?: ExperienceLevel;
   selectedEcsCards?: string[];
-  selectedQualifications?: string[];
   rateRange?: [number, number];
-  onRemoveAvailability: () => void;
   onRemoveTier: () => void;
   onRemoveSpecialism: (spec: string) => void;
   onRemoveExperience?: () => void;
   onRemoveEcsCard?: (card: string) => void;
-  onRemoveQualification?: (qual: string) => void;
   onResetRateRange?: () => void;
   onOpenFilters: () => void;
   totalResults: number;
 }
 
 export function TalentFilterChips({
-  availabilityFilter,
   tierFilter,
   selectedSpecialisms,
   experienceFilter = 'all',
   selectedEcsCards = [],
-  selectedQualifications = [],
   rateRange = [150, 500],
-  onRemoveAvailability,
   onRemoveTier,
   onRemoveSpecialism,
   onRemoveExperience,
   onRemoveEcsCard,
-  onRemoveQualification,
   onResetRateRange,
   onOpenFilters,
   totalResults,
 }: TalentFilterChipsProps) {
   const hasRateFilter = rateRange[0] > 150 || rateRange[1] < 500;
   const hasFilters =
-    availabilityFilter !== 'all' ||
     tierFilter !== 'all' ||
     selectedSpecialisms.length > 0 ||
     experienceFilter !== 'all' ||
     selectedEcsCards.length > 0 ||
-    selectedQualifications.length > 0 ||
     hasRateFilter;
 
   if (!hasFilters) return null;
 
-  const filterCount = [
-    availabilityFilter !== 'all',
-    tierFilter !== 'all',
-    ...selectedSpecialisms.map(() => true),
-    experienceFilter !== 'all',
-    ...selectedEcsCards.map(() => true),
-    ...selectedQualifications.map(() => true),
-    hasRateFilter,
-  ].filter(Boolean).length;
 
   // Show max 3 chips, then "+N more" button
   const visibleChips: React.ReactNode[] = [];
   let hiddenCount = 0;
-
-  // Availability chip
-  if (availabilityFilter !== 'all') {
-    if (visibleChips.length < 3) {
-      visibleChips.push(
-        <Badge
-          key="availability"
-          variant="secondary"
-          className="h-8 px-3 gap-1.5 bg-success/10 text-success border-success/30 hover:bg-success/20 cursor-pointer touch-manipulation"
-          onClick={onRemoveAvailability}
-        >
-          <Clock className="h-3 w-3" />
-          {availabilityFilter === 'now' ? 'Available Now' : 'This Week'}
-          <X className="h-3 w-3 ml-1" />
-        </Badge>
-      );
-    } else {
-      hiddenCount++;
-    }
-  }
 
   // Tier chip
   if (tierFilter !== 'all') {
@@ -191,26 +149,6 @@ export function TalentFilterChips({
         </Badge>
       );
     } else if (onRemoveEcsCard) {
-      hiddenCount++;
-    }
-  });
-
-  // Qualification chips
-  selectedQualifications.forEach((qual) => {
-    if (visibleChips.length < 3 && onRemoveQualification) {
-      visibleChips.push(
-        <Badge
-          key={`qual-${qual}`}
-          variant="secondary"
-          className="h-8 px-3 gap-1.5 bg-cyan-500/10 text-cyan-400 border-cyan-500/30 hover:bg-cyan-500/20 cursor-pointer touch-manipulation"
-          onClick={() => onRemoveQualification(qual)}
-        >
-          <GraduationCap className="h-3 w-3" />
-          {qual.length > 15 ? qual.substring(0, 15) + '...' : qual}
-          <X className="h-3 w-3 ml-1" />
-        </Badge>
-      );
-    } else if (onRemoveQualification) {
       hiddenCount++;
     }
   });

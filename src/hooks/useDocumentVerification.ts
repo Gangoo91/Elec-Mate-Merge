@@ -1,6 +1,7 @@
 import { useState, useEffect, useCallback } from 'react';
 import { supabase } from '@/integrations/supabase/client';
 import { realtimeChannelName } from '@/lib/realtimeChannel';
+import { getMyElecIdProfile, ensureMyEmployeeId } from '@/utils/elecIdLinkage';
 import { useAuth } from '@/contexts/AuthContext';
 import { toast } from '@/hooks/use-toast';
 
@@ -103,17 +104,7 @@ export function useDocumentVerification() {
     if (!user?.id) return null;
 
     try {
-      const { data, error } = await supabase
-        .from('employer_elec_id_profiles')
-        .select('*')
-        .eq('employee_id', user.id)
-        .single();
-
-      if (error && error.code !== 'PGRST116') {
-        throw error;
-      }
-
-      return data as ElecIdProfile | null;
+      return await getMyElecIdProfile<ElecIdProfile>('*');
     } catch (err: any) {
       console.error('Error fetching Elec-ID profile:', err);
       return null;
@@ -237,10 +228,14 @@ export function useDocumentVerification() {
       // Generate unique Elec-ID number
       const elecIdNumber = `EM-${Math.random().toString(36).substring(2, 8).toUpperCase()}`;
 
+      // The profile must hang off the user's employee stub row, never auth uid
+      const employeeId = await ensureMyEmployeeId();
+      if (!employeeId) throw new Error('Could not create your team record');
+
       const { data, error } = await supabase
         .from('employer_elec_id_profiles')
         .insert({
-          employee_id: user.id,
+          employee_id: employeeId,
           elec_id_number: elecIdNumber,
           verification_tier: 'basic',
           opt_out: false,

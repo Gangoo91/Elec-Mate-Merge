@@ -1,0 +1,23 @@
+-- E5 Slice 3: the worker side of the hiring marketplace.
+-- Applied live as DB migrations `job_ad_company_branding` +
+-- `elec_id_work_history_table` (2026-06-12; full bodies in those DB migrations).
+--
+-- 1) get_job_ad_companies(p_employer_ids uuid[]) SECURITY DEFINER RPC —
+--    returns ONLY {company_name, logo_url} keyed by employer_id, and only for
+--    employers that have an Open vacancy (public job ad) or an existing
+--    application/invitation relationship with the caller. company_profiles is
+--    owner-only under RLS, so this is the sanctioned branding path for the
+--    worker job board. The front-end previously embedded employer_profiles —
+--    a table that does not exist — so every applications/invitations query 400'd.
+-- 2) elec_id_work_history table created — certificateLoggingService and
+--    useElecIdWorkHistory have ALWAYS targeted this nonexistent table; every
+--    certificate logged to a worker's Elec-ID silently failed. RLS: owner
+--    manages own entries; reads follow profile_visibility like the other
+--    Elec-ID child tables (anon = public profiles, employers = hireable).
+--
+-- Front-end in the same batch: src/utils/elecIdLinkage.ts is now the ONE way
+-- to resolve the signed-in user's Elec-ID profile (auth uid -> employer_employees
+-- .user_id -> employee id -> profile.employee_id). Nine call sites fixed that
+-- compared employee_id to auth.uid() (zero overlap, never matched):
+-- useInternalVacancies x5, useDocumentVerification x2 (incl. an insert that
+-- created orphaned profiles), useElecIdWorkHistory, certificateLoggingService.

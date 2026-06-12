@@ -5,6 +5,7 @@
 import { useState, useEffect, useCallback } from 'react';
 import { supabase } from '@/integrations/supabase/client';
 import { useAuth } from '@/contexts/AuthContext';
+import { getMyElecIdProfile } from '@/utils/elecIdLinkage';
 import { WorkHistoryEntry } from '@/services/certificateLoggingService';
 
 interface UseElecIdWorkHistoryReturn {
@@ -33,16 +34,10 @@ export function useElecIdWorkHistory(): UseElecIdWorkHistoryReturn {
     setError(null);
 
     try {
-      // First check if user has Elec-ID profile
-      const { data: elecIdProfile, error: profileError } = await supabase
-        .from('employer_elec_id_profiles')
-        .select('id, activated')
-        .eq('employee_id', user.id)
-        .maybeSingle();
-
-      if (profileError) {
-        throw profileError;
-      }
+      // First check if user has Elec-ID profile (via the real employee linkage)
+      const elecIdProfile = await getMyElecIdProfile<{ id: string; activated: boolean }>(
+        'id, activated'
+      );
 
       if (!elecIdProfile || !elecIdProfile.activated) {
         setHasElecId(false);
@@ -66,7 +61,7 @@ export function useElecIdWorkHistory(): UseElecIdWorkHistoryReturn {
         throw historyError;
       }
 
-      setWorkHistory(history || []);
+      setWorkHistory((history || []) as unknown as WorkHistoryEntry[]);
     } catch (err: any) {
       console.error('Error fetching work history:', err);
       setError(err.message || 'Failed to load work history');

@@ -50,7 +50,8 @@ import {
   useBulkUpdateApplicationStatus,
 } from '@/hooks/useVacancyApplications';
 import { useConversations } from '@/hooks/useConversations';
-import { useQueryClient } from '@tanstack/react-query';
+import { useQueryClient, useQuery } from '@tanstack/react-query';
+import { supabase } from '@/integrations/supabase/client';
 import { toast } from '@/hooks/use-toast';
 
 import { Vacancy, VacancyApplication } from '@/services/vacancyService';
@@ -138,6 +139,35 @@ export function JobVacanciesSection() {
   const [duplicatingVacancy, setDuplicatingVacancy] = useState<Vacancy | null>(null);
   const [viewingVacancy, setViewingVacancy] = useState<Vacancy | null>(null);
   const [viewingApplication, setViewingApplication] = useState<VacancyApplication | null>(null);
+
+  // Full Elec-ID credentials for the open applicant (employer-readable under RLS)
+  const { data: applicantCredentials } = useQuery({
+    queryKey: ['applicant-elec-id', viewingApplication?.applicant_profile_id],
+    enabled: !!viewingApplication?.applicant_profile_id,
+    queryFn: async () => {
+      const pid = viewingApplication!.applicant_profile_id!;
+      const [skills, quals, history] = await Promise.all([
+        supabase
+          .from('employer_elec_id_skills')
+          .select('id, skill_name, skill_level, years_experience')
+          .eq('profile_id', pid),
+        supabase
+          .from('employer_elec_id_qualifications')
+          .select('id, qualification_name, awarding_body, is_verified')
+          .eq('profile_id', pid),
+        supabase
+          .from('employer_elec_id_work_history')
+          .select('id, job_title, employer_name, start_date, end_date, is_current')
+          .eq('profile_id', pid)
+          .order('start_date', { ascending: false }),
+      ]);
+      return {
+        skills: skills.data || [],
+        qualifications: quals.data || [],
+        workHistory: history.data || [],
+      };
+    },
+  });
   const [selectedConversation, setSelectedConversation] = useState<Conversation | null>(null);
 
   const [selectionMode, setSelectionMode] = useState(false);
@@ -912,6 +942,71 @@ export function JobVacanciesSection() {
                           subtitle="ECS card"
                         />
                       )}
+                    </ListBody>
+                  </ListCard>
+                )}
+
+                {applicantCredentials && applicantCredentials.skills.length > 0 && (
+                  <ListCard>
+                    <ListCardHeader
+                      title="Skills"
+                      meta={<Pill tone="blue">{applicantCredentials.skills.length}</Pill>}
+                    />
+                    <ListBody>
+                      {applicantCredentials.skills.map((s) => (
+                        <ListRow
+                          key={s.id}
+                          title={s.skill_name}
+                          subtitle={[s.skill_level, s.years_experience ? `${s.years_experience} yrs` : null]
+                            .filter(Boolean)
+                            .join(' · ')}
+                        />
+                      ))}
+                    </ListBody>
+                  </ListCard>
+                )}
+
+                {applicantCredentials && applicantCredentials.qualifications.length > 0 && (
+                  <ListCard>
+                    <ListCardHeader
+                      title="Qualifications"
+                      meta={
+                        <Pill tone="emerald">{applicantCredentials.qualifications.length}</Pill>
+                      }
+                    />
+                    <ListBody>
+                      {applicantCredentials.qualifications.map((q) => (
+                        <ListRow
+                          key={q.id}
+                          title={q.qualification_name}
+                          subtitle={q.awarding_body || undefined}
+                          trailing={q.is_verified ? <Pill tone="emerald">Verified</Pill> : undefined}
+                        />
+                      ))}
+                    </ListBody>
+                  </ListCard>
+                )}
+
+                {applicantCredentials && applicantCredentials.workHistory.length > 0 && (
+                  <ListCard>
+                    <ListCardHeader
+                      title="Work history"
+                      meta={<Pill tone="purple">{applicantCredentials.workHistory.length}</Pill>}
+                    />
+                    <ListBody>
+                      {applicantCredentials.workHistory.map((w) => (
+                        <ListRow
+                          key={w.id}
+                          title={[w.job_title, w.employer_name].filter(Boolean).join(' — ')}
+                          subtitle={`${w.start_date ? new Date(w.start_date).getFullYear() : ''}${
+                            w.is_current
+                              ? ' – present'
+                              : w.end_date
+                                ? ` – ${new Date(w.end_date).getFullYear()}`
+                                : ''
+                          }`}
+                        />
+                      ))}
                     </ListBody>
                   </ListCard>
                 )}
