@@ -72,7 +72,7 @@ export default function TodayPage() {
   const programme = useOtjProgramme();
   const { breakdown } = useApprenticeOtj(user?.id ?? null);
   const { lastLocation } = useLastStudyLocation();
-  const { nextUp } = useAchievementChecker();
+  const { nextUp: nextBadge } = useAchievementChecker();
 
   const eyebrow = useMemo(() => dateEyebrow(), []);
   const salutation = useMemo(() => partOfDay(), []);
@@ -289,7 +289,7 @@ export default function TodayPage() {
         </section>
 
         {/* 4b · NEXT BADGE — the closest locked achievement, live progress */}
-        {nextUp && (
+        {nextBadge && (
           <section aria-label="Next achievement">
             <button
               type="button"
@@ -302,16 +302,16 @@ export default function TodayPage() {
               <span className="flex-1 min-w-0">
                 <span className="flex items-baseline justify-between gap-2">
                   <span className="text-[13.5px] font-medium text-white truncate">
-                    {nextUp.title}
+                    {nextBadge.title}
                   </span>
                   <span className="text-[11px] font-mono tabular-nums text-white/55 shrink-0">
-                    {nextUp.current}/{nextUp.target}
+                    {nextBadge.current}/{nextBadge.target}
                   </span>
                 </span>
                 <span className="mt-1.5 block h-1 rounded-full bg-white/[0.06] overflow-hidden">
                   <span
                     className="block h-full rounded-full bg-elec-yellow transition-all"
-                    style={{ width: `${nextUp.pct}%` }}
+                    style={{ width: `${nextBadge.pct}%` }}
                   />
                 </span>
               </span>

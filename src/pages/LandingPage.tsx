@@ -913,7 +913,6 @@ const LandingPage = () => {
                   alt={photo.alt}
                   loading="lazy"
                   decoding="async"
-                  decoding="async"
                   className="aspect-[3/4] w-full bg-white/[0.04] object-cover transition-transform duration-500 group-hover:scale-[1.03]"
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/25 to-transparent" />
@@ -987,7 +986,6 @@ const LandingPage = () => {
                   width={560}
                   height={1212}
                   loading="lazy"
-                  decoding="async"
                   decoding="async"
                   className="w-[220px] flex-none snap-start rounded-[1.4rem] border border-white/[0.08] bg-white/[0.04] sm:w-[250px]"
                 />
@@ -1237,7 +1235,6 @@ const LandingPage = () => {
                   alt="Elec-Mate"
                   className="h-10 w-10 rounded-2xl"
                   loading="lazy"
-                  decoding="async"
                   decoding="async"
                 />
                 <div>
