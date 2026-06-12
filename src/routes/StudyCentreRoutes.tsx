@@ -4,6 +4,7 @@ import { supabase } from '@/integrations/supabase/client';
 import { lazyWithRetry } from '@/utils/lazyWithRetry';
 import { CourseSkeleton } from '@/components/ui/page-skeleton';
 import { useLastStudyLocation } from '@/hooks/useLastStudyLocation';
+import { ApprenticeTabBar } from '@/components/apprentice-hub/ApprenticeTabBar';
 import { useCourseProgress } from '@/hooks/useCourseProgress';
 import { useLearningXP } from '@/hooks/useLearningXP';
 import { useLocalStorageMigration } from '@/hooks/useLocalStorageMigration';
@@ -64,7 +65,10 @@ function extractCourseAndSection(parts: string[]): { courseKey: string; sectionK
     // Try to split on -module- pattern: "fire-safety-module-1-section-2" → ["fire-safety", "module-1-section-2"]
     const moduleMatch = firstSeg.match(/^(.+?)-(module-\d+.*)$/);
     if (moduleMatch) {
-      return { courseKey: moduleMatch[1], sectionKey: moduleMatch[2] + (subParts.length > 1 ? '/' + subParts.slice(1).join('/') : '') };
+      return {
+        courseKey: moduleMatch[1],
+        sectionKey: moduleMatch[2] + (subParts.length > 1 ? '/' + subParts.slice(1).join('/') : ''),
+      };
     }
     // No module pattern — first sub-segment is the course, rest is the section
     return { courseKey: subParts[0], sectionKey: subParts.slice(1).join('/') };
@@ -154,12 +158,15 @@ function StudyCentreTracker() {
       void (async () => {
         // Trusted path: the RPC owns the log row and enforces per-entry,
         // per-section-per-day and daily caps server-side.
-        const { data, error } = await supabase.rpc('log_study_activity' as never, {
-          p_course: courseKey,
-          p_section: sectionKey,
-          p_title: sourceTitle,
-          p_active_seconds: seconds,
-        } as never);
+        const { data, error } = await supabase.rpc(
+          'log_study_activity' as never,
+          {
+            p_course: courseKey,
+            p_section: sectionKey,
+            p_title: sourceTitle,
+            p_active_seconds: seconds,
+          } as never
+        );
 
         if (error) {
           // Fall back to the direct insert ONLY when the RPC doesn't exist yet
@@ -173,7 +180,12 @@ function StudyCentreTracker() {
               sourceId: `${courseKey}/${sectionKey}`,
               sourceTitle,
               actualMinutes: minutes,
-              metadata: { course: courseKey, section: sectionKey, active_seconds: seconds, measured: true },
+              metadata: {
+                course: courseKey,
+                section: sectionKey,
+                active_seconds: seconds,
+                measured: true,
+              },
             });
           } else {
             console.warn('[StudyCentreTracker] study log failed:', error.message);
@@ -245,7 +257,9 @@ function StudyCentreTracker() {
     return () => {
       window.removeEventListener('pointerdown', markInteraction);
       window.removeEventListener('keydown', markInteraction);
-      window.removeEventListener('scroll', markInteraction, { capture: true } as EventListenerOptions);
+      window.removeEventListener('scroll', markInteraction, {
+        capture: true,
+      } as EventListenerOptions);
       document.removeEventListener('visibilitychange', onVisibility);
       window.removeEventListener('pagehide', onPageHide);
       // The tracker unmounts whenever the user leaves /study-centre/* (e.g.
@@ -342,6 +356,12 @@ export default function StudyCentreRoutes() {
         <Route path="multi-trade/*" element={<MultiTradeRoutes />} />
         <Route path="personal-development/*" element={<PersonalDevelopmentRoutes />} />
       </Routes>
+
+      {/* Primary apprentice navigation — role-gated inside the component
+          (renders null for non-apprentices, so electricians in the Study
+          Centre are unaffected). It renders its own in-flow h-20 spacer
+          before the fixed bar so course content clears it. */}
+      <ApprenticeTabBar />
     </Suspense>
   );
 }

@@ -5,12 +5,7 @@ export const mockExamQuestions: QuizQuestion[] = [
   {
     id: 1,
     question: 'Which regulation in BS 7671 covers initial verification?',
-    options: [
-      'Regulation 521.8',
-      'Regulation 643.1',
-      'Regulation 411.3.3',
-      'Regulation 314.1',
-    ],
+    options: ['Regulation 521.8', 'Regulation 643.1', 'Regulation 411.3.3', 'Regulation 314.1'],
     correctAnswer: 1,
     explanation:
       'Regulation 643.1 specifically covers the requirements for initial verification of electrical installations.',
@@ -19,12 +14,7 @@ export const mockExamQuestions: QuizQuestion[] = [
     id: 2,
     question:
       'Which regulation requires that circuits supplying portable outdoor equipment be RCD protected?',
-    options: [
-      'Regulation 314.1',
-      'Regulation 643.1',
-      'Regulation 411.3.3',
-      'Regulation 521.8',
-    ],
+    options: ['Regulation 314.1', 'Regulation 643.1', 'Regulation 411.3.3', 'Regulation 521.8'],
     correctAnswer: 2,
     explanation:
       'Regulation 411.3.3 mandates RCD protection for circuits supplying portable outdoor equipment.',
@@ -32,12 +22,7 @@ export const mockExamQuestions: QuizQuestion[] = [
   {
     id: 3,
     question: 'What is the minimum acceptable insulation resistance value for a 230V circuit?',
-    options: [
-      '0.5 MΩ',
-      '5 MΩ',
-      '2 MΩ',
-      '1 MΩ',
-    ],
+    options: ['0.5 MΩ', '5 MΩ', '2 MΩ', '1 MΩ'],
     correctAnswer: 3,
     explanation:
       'BS 7671 requires a minimum insulation resistance of 1 MΩ for circuits up to 500V.',
@@ -45,12 +30,7 @@ export const mockExamQuestions: QuizQuestion[] = [
   {
     id: 4,
     question: 'What is the acceptable maximum disconnection time for a 30mA RCD on a TT system?',
-    options: [
-      '300 milliseconds',
-      '200 milliseconds',
-      '40 milliseconds',
-      '5 seconds',
-    ],
+    options: ['300 milliseconds', '200 milliseconds', '40 milliseconds', '5 seconds'],
     correctAnswer: 0,
     explanation:
       'For TT systems, the maximum disconnection time for RCDs is 300 milliseconds at rated residual current.',
@@ -59,12 +39,7 @@ export const mockExamQuestions: QuizQuestion[] = [
     id: 5,
     question:
       'According to BS 7671, what is the maximum earth fault loop impedance (Zs) for a 32A Type B MCB?',
-    options: [
-      '1.10Ω',
-      '1.37Ω',
-      '1.44Ω',
-      '2.19Ω',
-    ],
+    options: ['1.10Ω', '1.37Ω', '1.44Ω', '2.19Ω'],
     correctAnswer: 1,
     explanation:
       'Table 41.3 gives a maximum Zs of 1.37Ω for a 32A Type B MCB at 230V (includes the Cmin factor of 0.95). 1.44Ω is the old pre-Cmin figure; 1.10Ω is the cold-measured site limit after applying the 0.80 rule-of-thumb factor.',
@@ -100,12 +75,7 @@ export const mockExamQuestions: QuizQuestion[] = [
   {
     id: 8,
     question: 'What should happen when a 30mA RCD is tested at 5x IΔn?',
-    options: [
-      'Trip within 40ms',
-      'Trip within 300ms',
-      'Trip within 200ms',
-      'Not trip at all',
-    ],
+    options: ['Trip within 40ms', 'Trip within 300ms', 'Trip within 200ms', 'Not trip at all'],
     correctAnswer: 0,
     explanation: 'At 5 times rated current, an RCD must trip within 40 milliseconds.',
   },
@@ -140,12 +110,7 @@ export const mockExamQuestions: QuizQuestion[] = [
   {
     id: 11,
     question: 'During visual inspection, what should be checked first?',
-    options: [
-      'Circuit protection',
-      'Earthing arrangements',
-      'Cable routing',
-      'General safety',
-    ],
+    options: ['Circuit protection', 'Earthing arrangements', 'Cable routing', 'General safety'],
     correctAnswer: 3,
     explanation: 'General safety assessment should be the first priority during any inspection.',
   },
@@ -232,12 +197,7 @@ export const mockExamQuestions: QuizQuestion[] = [
   {
     id: 18,
     question: 'When proving dead, the voltage indicator should be tested:',
-    options: [
-      'Once before use',
-      'Only if faulty',
-      'Before and after use',
-      'Once after use',
-    ],
+    options: ['Once before use', 'Only if faulty', 'Before and after use', 'Once after use'],
     correctAnswer: 2,
     explanation: 'Voltage indicators must be proven on a known live source before and after use.',
   },
@@ -406,12 +366,7 @@ export const mockExamQuestions: QuizQuestion[] = [
   {
     id: 31,
     question: 'What coding would you give for no RCD protection on a socket in a domestic kitchen?',
-    options: [
-      'C1',
-      'FI',
-      'C3',
-      'C2',
-    ],
+    options: ['C1', 'FI', 'C3', 'C2'],
     correctAnswer: 3,
     explanation:
       'Missing RCD protection in a kitchen is potentially dangerous, warranting a C2 code.',
@@ -432,12 +387,7 @@ export const mockExamQuestions: QuizQuestion[] = [
   {
     id: 33,
     question: 'During an EICR, you find a lighting circuit with no CPC. What code is applied?',
-    options: [
-      'C1',
-      'C2',
-      'C3',
-      'No code required',
-    ],
+    options: ['C1', 'C2', 'C3', 'No code required'],
     correctAnswer: 1,
     explanation: 'A missing circuit protective conductor poses a potentially dangerous situation.',
   },
@@ -472,12 +422,7 @@ export const mockExamQuestions: QuizQuestion[] = [
   {
     id: 36,
     question: 'What is the test voltage for insulation resistance testing on SELV circuits?',
-    options: [
-      '250V DC',
-      '500V DC',
-      '1000V DC',
-      '1500V DC',
-    ],
+    options: ['250V DC', '500V DC', '1000V DC', '1500V DC'],
     correctAnswer: 0,
     explanation:
       'SELV circuits should be tested at 250V DC to avoid damage to low voltage equipment.',
@@ -485,12 +430,7 @@ export const mockExamQuestions: QuizQuestion[] = [
   {
     id: 37,
     question: 'When testing continuity of protective conductors, the test current should be:',
-    options: [
-      'Not less than 10mA',
-      'Not less than 200mA',
-      'Exactly 1A',
-      'Not more than 10mA',
-    ],
+    options: ['Not less than 10mA', 'Not less than 200mA', 'Exactly 1A', 'Not more than 10mA'],
     correctAnswer: 1,
     explanation:
       'The test current for protective conductor continuity must be not less than 200mA.',
@@ -539,12 +479,7 @@ export const mockExamQuestions: QuizQuestion[] = [
   {
     id: 41,
     question: 'According to BS 7671, what is the maximum Zs for a 20A Type B MCB?',
-    options: [
-      '1.75Ω',
-      '2.19Ω',
-      '2.30Ω',
-      '1.37Ω',
-    ],
+    options: ['1.75Ω', '2.19Ω', '2.30Ω', '1.37Ω'],
     correctAnswer: 1,
     explanation:
       'Table 41.3 gives a maximum Zs of 2.19Ω for a 20A Type B MCB at 230V (includes the Cmin factor of 0.95). 2.30Ω is the old pre-Cmin figure.',
@@ -552,12 +487,7 @@ export const mockExamQuestions: QuizQuestion[] = [
   {
     id: 42,
     question: 'RCD protection is required for all socket outlets up to what rating?',
-    options: [
-      '13A',
-      '32A',
-      '20A',
-      '16A',
-    ],
+    options: ['13A', '32A', '20A', '16A'],
     correctAnswer: 2,
     explanation:
       'BS 7671 requires RCD protection for socket outlets not exceeding 20A in domestic installations.',
@@ -566,12 +496,7 @@ export const mockExamQuestions: QuizQuestion[] = [
     id: 43,
     question:
       'The minimum cross-sectional area for a main earthing conductor in a domestic installation is:',
-    options: [
-      '4mm²',
-      '6mm²',
-      '16mm²',
-      '10mm²',
-    ],
+    options: ['4mm²', '6mm²', '16mm²', '10mm²'],
     correctAnswer: 3,
     explanation:
       'The minimum size for a main earthing conductor is typically 10mm² for domestic installations.',
@@ -579,12 +504,7 @@ export const mockExamQuestions: QuizQuestion[] = [
   {
     id: 44,
     question: 'What is the required IP rating for equipment in bathroom Zone 1?',
-    options: [
-      'IPX4',
-      'IPX6',
-      'IPX5',
-      'IPX7',
-    ],
+    options: ['IPX4', 'IPX6', 'IPX5', 'IPX7'],
     correctAnswer: 0,
     explanation: 'Equipment in bathroom Zone 1 requires a minimum IP rating of IPX4.',
   },
@@ -606,12 +526,7 @@ export const mockExamQuestions: QuizQuestion[] = [
   {
     id: 46,
     question: 'How often should test instruments be calibrated?',
-    options: [
-      'Every 6 months',
-      'Every 2 years',
-      'Annually',
-      'Monthly',
-    ],
+    options: ['Every 6 months', 'Every 2 years', 'Annually', 'Monthly'],
     correctAnswer: 2,
     explanation: 'Test instruments should typically be calibrated annually to maintain accuracy.',
   },
@@ -631,12 +546,7 @@ export const mockExamQuestions: QuizQuestion[] = [
   {
     id: 48,
     question: 'The accuracy class required for earth fault loop impedance testers is:',
-    options: [
-      'Class 2',
-      'Class 1',
-      'Class 3',
-      'Class 4',
-    ],
+    options: ['Class 2', 'Class 1', 'Class 3', 'Class 4'],
     correctAnswer: 0,
     explanation: 'Earth fault loop impedance testers should be accuracy Class 2 or better.',
   },
@@ -655,12 +565,7 @@ export const mockExamQuestions: QuizQuestion[] = [
   {
     id: 50,
     question: 'What test current is used for RCD testing at normal tripping current?',
-    options: [
-      '15mA',
-      '30mA',
-      '100% of IΔn',
-      '50% of IΔn',
-    ],
+    options: ['15mA', '30mA', '100% of IΔn', '50% of IΔn'],
     correctAnswer: 2,
     explanation:
       'RCD testing at normal tripping current uses 100% of the rated residual current (IΔn).',
@@ -683,12 +588,7 @@ export const mockExamQuestions: QuizQuestion[] = [
   {
     id: 52,
     question: 'How long should electrical certificates be retained?',
-    options: [
-      'Life of installation',
-      '5 years',
-      '1 year',
-      '10 years',
-    ],
+    options: ['Life of installation', '5 years', '1 year', '10 years'],
     correctAnswer: 0,
     explanation: 'Electrical certificates should be retained for the life of the installation.',
   },
@@ -893,12 +793,7 @@ export const mockExamQuestions: QuizQuestion[] = [
   {
     id: 68,
     question: 'The maximum length of 2.5mm² cable for a 32A ring final circuit is approximately:',
-    options: [
-      '100 metres',
-      '70 metres',
-      '50 metres',
-      '120 metres',
-    ],
+    options: ['100 metres', '70 metres', '50 metres', '120 metres'],
     correctAnswer: 0,
     explanation:
       'A 32A ring final in 2.5mm² cable should not exceed approximately 100 metres total cable length.',
@@ -906,12 +801,7 @@ export const mockExamQuestions: QuizQuestion[] = [
   {
     id: 69,
     question: 'Type B MCBs are designed to trip between:',
-    options: [
-      '1-2 times In',
-      '3-5 times In',
-      '5-10 times In',
-      '10-20 times In',
-    ],
+    options: ['1-2 times In', '3-5 times In', '5-10 times In', '10-20 times In'],
     correctAnswer: 1,
     explanation:
       'Type B MCBs are designed to trip magnetically between 3-5 times their rated current.',
@@ -934,38 +824,23 @@ export const mockExamQuestions: QuizQuestion[] = [
   {
     id: 71,
     question:
-      'The voltage drop in any circuit should not exceed what percentage of nominal voltage?',
-    options: [
-      '3%',
-      '15%',
-      '10%',
-      '5%',
-    ],
+      'For a circuit other than lighting, voltage drop should not exceed what percentage of nominal voltage?',
+    options: ['3%', '15%', '10%', '5%'],
     correctAnswer: 3,
     explanation:
-      'BS 7671 limits voltage drop to 5% of nominal voltage for lighting and 3% for other circuits in some cases.',
+      'The recommended limits are 3% for lighting circuits and 5% for other uses (for an installation supplied directly from a public distribution network).',
   },
   {
     id: 72,
     question: 'What type of earthing system has the supply transformer star point earthed?',
-    options: [
-      'TN system',
-      'TT system',
-      'IT system',
-      'All systems',
-    ],
+    options: ['TN system', 'TT system', 'IT system', 'All systems'],
     correctAnswer: 0,
     explanation: 'TN systems have the supply transformer star point directly earthed.',
   },
   {
     id: 73,
     question: 'The minimum approach distance to overhead lines up to 33kV is:',
-    options: [
-      '3 metres',
-      '6 metres',
-      '5 metres',
-      '9 metres',
-    ],
+    options: ['3 metres', '6 metres', '5 metres', '9 metres'],
     correctAnswer: 1,
     explanation: 'The minimum approach distance to overhead lines up to 33kV is 6 metres.',
   },
@@ -985,12 +860,7 @@ export const mockExamQuestions: QuizQuestion[] = [
   {
     id: 75,
     question: 'The colour of the neutral conductor in flexible cords should be:',
-    options: [
-      'Green/Yellow',
-      'Black',
-      'Brown',
-      'Blue',
-    ],
+    options: ['Green/Yellow', 'Black', 'Brown', 'Blue'],
     correctAnswer: 3,
     explanation: 'The neutral conductor in flexible cords should be blue.',
   },
@@ -998,24 +868,14 @@ export const mockExamQuestions: QuizQuestion[] = [
     id: 76,
     question:
       "What is the maximum rating for a plug and socket to be considered 'portable equipment'?",
-    options: [
-      '16A',
-      '13A',
-      '10A',
-      '20A',
-    ],
+    options: ['16A', '13A', '10A', '20A'],
     correctAnswer: 0,
     explanation: 'Portable equipment is typically limited to 16A maximum rating.',
   },
   {
     id: 77,
     question: 'Fire barriers in cable routes should be provided at intervals not exceeding:',
-    options: [
-      '3m',
-      '5m',
-      '10m',
-      '20m',
-    ],
+    options: ['3m', '5m', '10m', '20m'],
     correctAnswer: 1,
     explanation:
       'Fire barriers should be provided at intervals not exceeding 5 metres in cable routes.',
@@ -1049,12 +909,7 @@ export const mockExamQuestions: QuizQuestion[] = [
   {
     id: 80,
     question: 'The touch voltage in accessible areas should not exceed:',
-    options: [
-      '50V',
-      '25V',
-      '110V',
-      '230V',
-    ],
+    options: ['50V', '25V', '110V', '230V'],
     correctAnswer: 0,
     explanation: 'Touch voltage should generally not exceed 50V in dry conditions for safety.',
   },
@@ -1100,12 +955,7 @@ export const mockExamQuestions: QuizQuestion[] = [
   {
     id: 84,
     question: 'The maximum operating temperature for PVC insulated cables is:',
-    options: [
-      '70°C',
-      '85°C',
-      '90°C',
-      '60°C',
-    ],
+    options: ['70°C', '85°C', '90°C', '60°C'],
     correctAnswer: 0,
     explanation: 'Standard PVC insulated cables have a maximum operating temperature of 70°C.',
   },
@@ -1125,12 +975,7 @@ export const mockExamQuestions: QuizQuestion[] = [
   {
     id: 86,
     question: 'The minimum IP rating for equipment in outdoor locations is:',
-    options: [
-      'IP54',
-      'IP55',
-      'IP65',
-      'IP67',
-    ],
+    options: ['IP54', 'IP55', 'IP65', 'IP67'],
     correctAnswer: 2,
     explanation:
       'Outdoor equipment typically requires a minimum IP rating of IP65 for weather protection.',
@@ -1191,12 +1036,7 @@ export const mockExamQuestions: QuizQuestion[] = [
     id: 91,
     question:
       'What is the maximum earth fault loop impedance for a lighting circuit protected by a 6A Type B MCB?',
-    options: [
-      '15.3Ω',
-      '7.67Ω',
-      '11.5Ω',
-      '7.28Ω',
-    ],
+    options: ['15.3Ω', '7.67Ω', '11.5Ω', '7.28Ω'],
     correctAnswer: 3,
     explanation:
       'Table 41.3 gives a maximum Zs of 7.28Ω for a 6A Type B MCB at 230V (includes the Cmin factor of 0.95). 7.67Ω is the old pre-Cmin figure.',
@@ -1244,12 +1084,7 @@ export const mockExamQuestions: QuizQuestion[] = [
   {
     id: 95,
     question: 'What type of RCD should be used where there are electronic loads?',
-    options: [
-      'AC type',
-      'Any type',
-      'B type',
-      'A type',
-    ],
+    options: ['AC type', 'Any type', 'B type', 'A type'],
     correctAnswer: 3,
     explanation:
       'Type A RCDs should be used where electronic loads may produce DC components in earth fault current.',
@@ -1270,12 +1105,7 @@ export const mockExamQuestions: QuizQuestion[] = [
   {
     id: 97,
     question: 'What is the maximum length of a 1.5mm² lighting circuit protected by a B10 MCB?',
-    options: [
-      '73m',
-      '37m',
-      '22m',
-      '55m',
-    ],
+    options: ['73m', '37m', '22m', '55m'],
     correctAnswer: 1,
     explanation:
       'A 1.5mm² lighting circuit with B10 MCB has a maximum length of approximately 37 metres.',
@@ -1283,12 +1113,7 @@ export const mockExamQuestions: QuizQuestion[] = [
   {
     id: 98,
     question: 'The frequency of supply in the UK is:',
-    options: [
-      '40Hz',
-      '60Hz',
-      '50Hz',
-      '100Hz',
-    ],
+    options: ['40Hz', '60Hz', '50Hz', '100Hz'],
     correctAnswer: 2,
     explanation: 'The UK mains supply frequency is 50Hz.',
   },
@@ -1308,12 +1133,7 @@ export const mockExamQuestions: QuizQuestion[] = [
   {
     id: 100,
     question: 'The maximum current rating for domestic ring final circuits is:',
-    options: [
-      '32A',
-      '25A',
-      '30A',
-      '20A',
-    ],
+    options: ['32A', '25A', '30A', '20A'],
     correctAnswer: 0,
     explanation: 'Domestic ring final circuits are typically protected by 32A protective devices.',
   },
@@ -1323,12 +1143,7 @@ export const mockExamQuestions: QuizQuestion[] = [
     id: 101,
     question:
       'According to BS 7671, what is the maximum disconnection time for a TN system final circuit not exceeding 32A?',
-    options: [
-      '0.2 seconds',
-      '0.4 seconds',
-      '5 seconds',
-      '1 second',
-    ],
+    options: ['0.2 seconds', '0.4 seconds', '5 seconds', '1 second'],
     correctAnswer: 1,
     explanation:
       'For TN systems, final circuits not exceeding 32A must disconnect within 0.4 seconds according to Table 41.1 of BS 7671.',
@@ -1337,12 +1152,7 @@ export const mockExamQuestions: QuizQuestion[] = [
     id: 102,
     question:
       'Which regulation in BS 7671 covers the selection and installation of devices for protection against electric shock?',
-    options: [
-      'Part 5',
-      'Part 7',
-      'Part 4',
-      'Part 6',
-    ],
+    options: ['Part 5', 'Part 7', 'Part 4', 'Part 6'],
     correctAnswer: 2,
     explanation:
       'Part 4 of BS 7671 covers protection for safety, including devices for protection against electric shock.',
@@ -1351,12 +1161,7 @@ export const mockExamQuestions: QuizQuestion[] = [
     id: 103,
     question:
       'Under the CDM Regulations 2015, who must ensure electrical installation designs are coordinated?',
-    options: [
-      'Client',
-      'Principal contractor',
-      'CDM coordinator',
-      'Principal designer',
-    ],
+    options: ['Client', 'Principal contractor', 'CDM coordinator', 'Principal designer'],
     correctAnswer: 3,
     explanation:
       'The principal designer has the duty to coordinate design work and ensure designs are properly integrated under CDM 2015.',
@@ -1377,12 +1182,7 @@ export const mockExamQuestions: QuizQuestion[] = [
   {
     id: 105,
     question: 'What is the minimum earth electrode resistance for a TT system?',
-    options: [
-      '200Ω',
-      'No specific requirement',
-      '100Ω',
-      '20Ω',
-    ],
+    options: ['200Ω', 'No specific requirement', '100Ω', '20Ω'],
     correctAnswer: 1,
     explanation:
       'BS 7671 does not specify a minimum earth electrode resistance; the requirement is that RCD protection operates correctly.',
@@ -1391,12 +1191,7 @@ export const mockExamQuestions: QuizQuestion[] = [
     id: 106,
     question:
       'According to Regulation 134.1.1, what must be selected to suit the characteristics of the circuit?',
-    options: [
-      'Cable size only',
-      'Accessories only',
-      'Protective devices',
-      'Installation method',
-    ],
+    options: ['Cable size only', 'Accessories only', 'Protective devices', 'Installation method'],
     correctAnswer: 2,
     explanation:
       'Regulation 134.1.1 requires protective devices to be selected to suit the characteristics of the circuit they protect.',
@@ -1417,12 +1212,7 @@ export const mockExamQuestions: QuizQuestion[] = [
   {
     id: 108,
     question: 'What is the maximum Zs for a C16 MCB according to BS 7671?',
-    options: [
-      '2.87Ω',
-      '2.30Ω',
-      '1.37Ω',
-      '1.44Ω',
-    ],
+    options: ['2.87Ω', '2.30Ω', '1.37Ω', '1.44Ω'],
     correctAnswer: 2,
     explanation:
       'A Type C MCB trips at 10×In, so for a C16: Zs = (Cmin × Uo)/Ia = (0.95 × 230)/160 = 1.37Ω per Table 41.3.',
@@ -1451,12 +1241,7 @@ export const mockExamQuestions: QuizQuestion[] = [
   {
     id: 111,
     question: 'What is the required minimum height for overhead power lines crossing a road?',
-    options: [
-      '5.2m',
-      '6.7m',
-      '6.0m',
-      '5.8m',
-    ],
+    options: ['5.2m', '6.7m', '6.0m', '5.8m'],
     correctAnswer: 3,
     explanation:
       'ESQCR requires overhead lines crossing roads to be at least 5.8m high to ensure vehicle clearance.',
@@ -1464,12 +1249,7 @@ export const mockExamQuestions: QuizQuestion[] = [
   {
     id: 112,
     question: 'According to BS 7671, SELV systems must not exceed:',
-    options: [
-      '50V AC',
-      '25V AC',
-      '120V DC',
-      '60V DC',
-    ],
+    options: ['50V AC', '25V AC', '120V DC', '60V DC'],
     correctAnswer: 0,
     explanation:
       'SELV (Safety Extra Low Voltage) systems must not exceed 50V AC or 120V ripple-free DC under normal conditions.',
@@ -1490,12 +1270,7 @@ export const mockExamQuestions: QuizQuestion[] = [
   {
     id: 114,
     question: 'What classification is given to equipment that can be moved while energised?',
-    options: [
-      'Hand-held',
-      'Stationary',
-      'Portable',
-      'Moveable',
-    ],
+    options: ['Hand-held', 'Stationary', 'Portable', 'Moveable'],
     correctAnswer: 2,
     explanation:
       'Portable equipment is defined as equipment intended to be moved while energised or connected to the supply.',
@@ -1862,12 +1637,7 @@ export const mockExamQuestions: QuizQuestion[] = [
     id: 142,
     question:
       'RCDs protecting socket outlets in domestic premises must have a rating not exceeding:',
-    options: [
-      '10mA',
-      '100mA',
-      '30mA',
-      '300mA',
-    ],
+    options: ['10mA', '100mA', '30mA', '300mA'],
     correctAnswer: 2,
     explanation:
       'Domestic socket outlets require RCD protection not exceeding 30mA for additional protection against electric shock.',
@@ -1888,12 +1658,7 @@ export const mockExamQuestions: QuizQuestion[] = [
   {
     id: 144,
     question: 'The earth leakage current in a circuit protected by a 30mA RCD should not exceed:',
-    options: [
-      '9mA',
-      '3mA',
-      '15mA',
-      '30mA',
-    ],
+    options: ['9mA', '3mA', '15mA', '30mA'],
     correctAnswer: 0,
     explanation:
       'Combined earth leakage should not exceed 30% of RCD rating (9mA for 30mA RCD) to prevent nuisance tripping.',
@@ -1929,12 +1694,7 @@ export const mockExamQuestions: QuizQuestion[] = [
   {
     id: 147,
     question: 'The formula for calculating R1 + R2 in a ring final circuit is:',
-    options: [
-      '(r1 + r2) ÷ 2',
-      'r1 + r2',
-      '(r1 × r2) ÷ (r1 + r2)',
-      '(r1 + r2) ÷ 4',
-    ],
+    options: ['(r1 + r2) ÷ 2', 'r1 + r2', '(r1 × r2) ÷ (r1 + r2)', '(r1 + r2) ÷ 4'],
     correctAnswer: 3,
     explanation:
       'For a ring circuit, R1 + R2 = (r1 + r2) ÷ 4, where r1 and r2 are the resistance values of each leg of the ring.',
@@ -1982,9 +1742,9 @@ export const mockExamQuestions: QuizQuestion[] = [
     id: 151,
     question: 'The no-trip loop test method is preferred because:',
     options: [
-      "Moisture ingress or cable damage",
-      "Double or reinforced insulation",
-      "Earth leakage or N-E fault",
+      'Moisture ingress or cable damage',
+      'Double or reinforced insulation',
+      'Earth leakage or N-E fault',
       "It doesn't cause supply interruption",
     ],
     correctAnswer: 3,
@@ -2007,12 +1767,7 @@ export const mockExamQuestions: QuizQuestion[] = [
   {
     id: 153,
     question: "When using the 'rule of thumb' for voltage drop calculations, Zs is approximately:",
-    options: [
-      'Ze + R1',
-      'Ze + (R1 + R2) × 1.67',
-      '1.67 × (R1 + R2)',
-      'R1 + R2',
-    ],
+    options: ['Ze + R1', 'Ze + (R1 + R2) × 1.67', '1.67 × (R1 + R2)', 'R1 + R2'],
     correctAnswer: 1,
     explanation:
       'The rule of thumb: Zs ≈ Ze + (R1 + R2) × 1.67, where 1.67 accounts for the relationship between line and earth impedance.',
@@ -2061,12 +1816,7 @@ export const mockExamQuestions: QuizQuestion[] = [
   {
     id: 157,
     question: 'The test voltage for insulation resistance testing on 400V three-phase circuits is:',
-    options: [
-      '250V DC',
-      '500V DC',
-      '1000V DC',
-      '1500V DC',
-    ],
+    options: ['250V DC', '500V DC', '1000V DC', '1500V DC'],
     correctAnswer: 1,
     explanation: 'Circuits with nominal voltage between 50V and 500V should be tested at 500V DC.',
   },
@@ -2113,12 +1863,7 @@ export const mockExamQuestions: QuizQuestion[] = [
     id: 161,
     question:
       'The minimum insulation resistance for motor circuits at 500V test voltage is typically:',
-    options: [
-      '0.5 MΩ',
-      '1 MΩ',
-      '2 MΩ',
-      '5 MΩ',
-    ],
+    options: ['0.5 MΩ', '1 MΩ', '2 MΩ', '5 MΩ'],
     correctAnswer: 1,
     explanation:
       'Motor circuits should achieve minimum 1 MΩ insulation resistance, though manufacturer specifications may vary.',
@@ -2379,12 +2124,7 @@ export const mockExamQuestions: QuizQuestion[] = [
   {
     id: 181,
     question: 'Schedule of Inspections forms part of:',
-    options: [
-      'EIC only',
-      'Both EIC and EICR',
-      "Designer's records only",
-      'MEIWC only',
-    ],
+    options: ['EIC only', 'Both EIC and EICR', "Designer's records only", 'MEIWC only'],
     correctAnswer: 1,
     explanation:
       'Schedule of Inspections is required for both Electrical Installation Certificates and Electrical Installation Condition Reports.',
@@ -2483,12 +2223,7 @@ export const mockExamQuestions: QuizQuestion[] = [
   {
     id: 189,
     question: 'The recommended interval between EICRs for commercial offices is typically:',
-    options: [
-      '3 years',
-      '5 years',
-      '10 years',
-      '1 year',
-    ],
+    options: ['3 years', '5 years', '10 years', '1 year'],
     correctAnswer: 1,
     explanation:
       'Commercial offices typically require EICR every 5 years, though this may vary based on risk assessment.',
@@ -2541,7 +2276,7 @@ export const mockExamQuestions: QuizQuestion[] = [
       'DC isolation and specific safety procedures',
       'Gathering information and visual inspection',
       'Communication functionality and load profile accuracy',
-      'It doesn\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'t cause supply interruption',
+      "It doesn\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\'t cause supply interruption",
     ],
     correctAnswer: 1,
     explanation:
@@ -3328,12 +3063,7 @@ export const mockExamQuestions: QuizQuestion[] = [
   {
     id: 253,
     question: 'What is the minimum safe approach distance for 11kV overhead lines?',
-    options: [
-      '1 metre',
-      '3 metres',
-      '2 metres',
-      '5 metres',
-    ],
+    options: ['1 metre', '3 metres', '2 metres', '5 metres'],
     correctAnswer: 1,
     explanation:
       'The minimum safe approach distance for 11kV overhead lines is 3 metres for unqualified persons.',
@@ -3381,12 +3111,7 @@ export const mockExamQuestions: QuizQuestion[] = [
     id: 257,
     question:
       'What is the maximum recommended duration for emergency response after electric shock?',
-    options: [
-      '1 minute',
-      '4 minutes',
-      '30 seconds',
-      '10 minutes',
-    ],
+    options: ['1 minute', '4 minutes', '30 seconds', '10 minutes'],
     correctAnswer: 1,
     explanation:
       'Brain damage from cardiac arrest begins after 4 minutes, making rapid response critical.',
@@ -3407,12 +3132,7 @@ export const mockExamQuestions: QuizQuestion[] = [
   {
     id: 259,
     question: 'What environmental factor most increases electrical safety risk?',
-    options: [
-      'Bright sunlight',
-      'Windy conditions',
-      'High temperature',
-      'Wet or damp conditions',
-    ],
+    options: ['Bright sunlight', 'Windy conditions', 'High temperature', 'Wet or damp conditions'],
     correctAnswer: 3,
     explanation:
       'Moisture significantly reduces insulation effectiveness and increases shock risk.',

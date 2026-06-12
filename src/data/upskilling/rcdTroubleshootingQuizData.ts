@@ -25,12 +25,7 @@ export const rcdTroubleshootingQuizData: QuizQuestion[] = [
     id: 2,
     question:
       'Which test voltage should be used for insulation resistance testing when locating earth faults?',
-    options: [
-      '250V DC',
-      '1000V DC',
-      '500V DC',
-      '240V AC',
-    ],
+    options: ['250V DC', '1000V DC', '500V DC', '240V AC'],
     correctAnswer: 2,
     explanation:
       'BS 7671 specifies 500V DC for insulation resistance testing of low voltage installations to ensure appropriate stress testing of insulation systems.',
@@ -66,15 +61,10 @@ export const rcdTroubleshootingQuizData: QuizQuestion[] = [
     id: 5,
     question:
       'What is the minimum acceptable insulation resistance value indicating no earth fault?',
-    options: [
-      '0.1MΩ',
-      '0.5MΩ',
-      '1.0MΩ',
-      '2.0MΩ',
-    ],
-    correctAnswer: 1,
+    options: ['0.1MΩ', '0.5MΩ', '1.0MΩ', '2.0MΩ'],
+    correctAnswer: 2,
     explanation:
-      'BS 7671 specifies a minimum insulation resistance of 0.5MΩ for circuits. Values below this indicate potential earth fault conditions.',
+      'Table 64 sets a minimum insulation resistance of 1.0MΩ for circuits up to and including 500V (tested at 500V DC). 0.5MΩ applies only to SELV/PELV circuits tested at 250V DC.',
   },
   {
     id: 6,

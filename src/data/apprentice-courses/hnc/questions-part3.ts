@@ -20,12 +20,7 @@ export const questionsPart3 = [
   {
     id: 252,
     question: 'According to BS 7671, what relationship must exist between Ib, In, and Iz?',
-    options: [
-      'Ib ≤ In ≤ Iz',
-      'Ib ≤ Iz ≤ In',
-      'In ≤ Ib ≤ Iz',
-      'Iz ≤ In ≤ Ib',
-    ],
+    options: ['Ib ≤ In ≤ Iz', 'Ib ≤ Iz ≤ In', 'In ≤ Ib ≤ Iz', 'Iz ≤ In ≤ Ib'],
     correctAnswer: 0,
     explanation:
       'BS 7671 requires that the design current (Ib) must be less than or equal to the nominal rating of the protective device (In), which must be less than or equal to the current-carrying capacity of the cable (Iz).',
@@ -55,12 +50,7 @@ export const questionsPart3 = [
     id: 254,
     question:
       'A single-phase circuit supplies a 3kW resistive load at 230V. What is the design current?',
-    options: [
-      '15.65A',
-      '10.87A',
-      '13.04A',
-      '11.54A',
-    ],
+    options: ['15.65A', '10.87A', '13.04A', '11.54A'],
     correctAnswer: 2,
     explanation:
       'For a resistive load: Ib = P/V = 3000/230 = 13.04A. As the load is purely resistive, there is no power factor to consider.',
@@ -124,12 +114,7 @@ export const questionsPart3 = [
   {
     id: 258,
     question: 'A three-phase balanced load draws 50A per phase. What is the neutral current?',
-    options: [
-      '150A',
-      '50A',
-      '0A',
-      '86.6A',
-    ],
+    options: ['150A', '50A', '0A', '86.6A'],
     correctAnswer: 2,
     explanation:
       'In a perfectly balanced three-phase system, the neutral current is zero because the three phase currents are equal in magnitude and 120° apart, causing them to cancel out.',
@@ -194,12 +179,7 @@ export const questionsPart3 = [
     id: 262,
     question:
       'When calculating cable size for a motor circuit, what factor should be applied to the full load current?',
-    options: [
-      '1.0 (100%)',
-      '0.8 (80%)',
-      '1.25 (125%)',
-      '1.5 (150%)',
-    ],
+    options: ['1.0 (100%)', '0.8 (80%)', '1.25 (125%)', '1.5 (150%)'],
     correctAnswer: 2,
     explanation:
       'Motor circuits should be designed for 125% of the motor full load current to account for starting currents and ensure the cable can handle continuous motor operation without overheating.',
@@ -229,12 +209,7 @@ export const questionsPart3 = [
     id: 264,
     question:
       'A 6mm² twin and earth cable has a tabulated current rating of 47A (Reference Method C). If the ambient temperature is 40°C, what is the corrected current rating?',
-    options: [
-      '40.42A',
-      '47A',
-      '54.05A',
-      '35.25A',
-    ],
+    options: ['40.42A', '47A', '54.05A', '35.25A'],
     correctAnswer: 0,
     explanation:
       'At 40°C ambient, the Ca factor for PVC cables is 0.86. Corrected rating = 47 × 0.86 = 40.42A. Higher temperatures reduce current-carrying capacity.',
@@ -247,12 +222,7 @@ export const questionsPart3 = [
     id: 265,
     question:
       'What is the maximum disconnection time for a 230V final circuit not exceeding 32A according to BS 7671?',
-    options: [
-      '0.2 seconds',
-      '0.4 seconds',
-      '5 seconds',
-      '1 second',
-    ],
+    options: ['0.2 seconds', '0.4 seconds', '5 seconds', '1 second'],
     correctAnswer: 1,
     explanation:
       'BS 7671 requires a maximum disconnection time of 0.4 seconds for final circuits not exceeding 32A in TN systems to ensure safety from electric shock.',
@@ -265,12 +235,7 @@ export const questionsPart3 = [
     id: 266,
     question:
       'A three-phase motor has a rating of 15kW at 400V with a power factor of 0.85. What is the line current?',
-    options: [
-      '37.5A',
-      '21.7A',
-      '25.5A',
-      '30.6A',
-    ],
+    options: ['37.5A', '21.7A', '25.5A', '30.6A'],
     correctAnswer: 2,
     explanation:
       'For three-phase: I = P / (√3 × V × pf) = 15000 / (1.732 × 400 × 0.85) = 15000 / 588.88 = 25.5A.',
@@ -318,12 +283,7 @@ export const questionsPart3 = [
     id: 269,
     question:
       'When designing a ring final circuit, what is the maximum floor area that can be served?',
-    options: [
-      '50m²',
-      '100m²',
-      '150m²',
-      '75m²',
-    ],
+    options: ['50m²', '100m²', '150m²', '75m²'],
     correctAnswer: 1,
     explanation:
       'The conventional design for a ring final circuit limits it to serve a maximum floor area of 100m² to ensure adequate current-carrying capacity for the expected load.',
@@ -388,12 +348,7 @@ export const questionsPart3 = [
     id: 273,
     question:
       'What is the minimum cross-sectional area for a main protective bonding conductor in a TN-S system with a 25mm² line conductor?',
-    options: [
-      '25mm²',
-      '10mm²',
-      '6mm²',
-      '16mm²',
-    ],
+    options: ['25mm²', '10mm²', '6mm²', '16mm²'],
     correctAnswer: 1,
     explanation:
       'According to BS 7671, the main protective bonding conductor should be at least half the CSA of the supply neutral, with a minimum of 6mm² and maximum of 25mm². For a 25mm² line conductor, 10mm² is typically adequate.',
@@ -441,12 +396,7 @@ export const questionsPart3 = [
     id: 276,
     question:
       'A cable run of 35m supplies a 7.2kW shower at 230V. Using 10mm² cable with mV/A/m of 4.4, what is the voltage drop?',
-    options: [
-      '4.82V (2.1%)',
-      '11.0V (4.8%)',
-      '5.39V (2.3%)',
-      '7.70V (3.3%)',
-    ],
+    options: ['4.82V (2.1%)', '11.0V (4.8%)', '5.39V (2.3%)', '7.70V (3.3%)'],
     correctAnswer: 0,
     explanation:
       'Ib = 7200/230 = 31.3A. Vd = (4.4 × 31.3 × 35)/1000 = 4.82V, which is 4.82/230 × 100 = 2.1% of nominal voltage.',
@@ -459,12 +409,7 @@ export const questionsPart3 = [
     id: 277,
     question:
       'In a TN-C-S system, what is the maximum earth fault loop impedance for a 32A Type B MCB to achieve 0.4s disconnection?',
-    options: [
-      '1.37Ω',
-      '1.44Ω',
-      '2.30Ω',
-      '0.72Ω',
-    ],
+    options: ['1.37Ω', '1.44Ω', '2.30Ω', '0.72Ω'],
     correctAnswer: 0,
     explanation:
       'For a Type B MCB, the instantaneous trip current is 5 × In = 160A. Zs = (Cmin × Uo)/Ia = (0.95 × 230)/160 = 1.37Ω maximum per Table 41.3. 1.44Ω is the old pre-Cmin figure.',
@@ -477,12 +422,7 @@ export const questionsPart3 = [
     id: 278,
     question:
       'What is the formula for calculating prospective fault current at a point in an installation?',
-    options: [
-      'IPFC = Uo / (R1 + R2)',
-      'IPFC = Uo × Zs',
-      'IPFC = Uo / Zs',
-      'IPFC = In × Zs',
-    ],
+    options: ['IPFC = Uo / (R1 + R2)', 'IPFC = Uo × Zs', 'IPFC = Uo / Zs', 'IPFC = In × Zs'],
     correctAnswer: 2,
     explanation:
       'Prospective fault current is calculated as IPFC = Uo/Zs, where Uo is the nominal voltage to earth and Zs is the earth fault loop impedance at the fault location.',
@@ -513,12 +453,7 @@ export const questionsPart3 = [
     id: 280,
     question:
       'A 50m cable run in conduit (method B) uses 6mm² copper conductors. The ambient temperature is 35°C and 6 circuits are grouped. Calculate the minimum required It value for a 32A circuit.',
-    options: [
-      '43.4A',
-      '32A',
-      '38.1A',
-      '52.5A',
-    ],
+    options: ['43.4A', '32A', '38.1A', '52.5A'],
     correctAnswer: 0,
     explanation:
       'Ca (35°C) = 0.94, Cg (6 circuits) = 0.57. It = In / (Ca × Cg) = 32 / (0.94 × 0.57) = 32 / 0.536 = 59.7A minimum. Checking: 6mm² method B = 36A which is insufficient.',
@@ -566,12 +501,7 @@ export const questionsPart3 = [
     id: 283,
     question:
       'What is the external earth fault loop impedance (Ze) typically assumed for a TN-S supply?',
-    options: [
-      '0.2Ω',
-      '1.0Ω',
-      '0.35Ω',
-      '0.8Ω',
-    ],
+    options: ['0.2Ω', '1.0Ω', '0.35Ω', '0.8Ω'],
     correctAnswer: 3,
     explanation:
       'For design purposes, BS 7671 suggests a typical Ze value of 0.8Ω for TN-S systems. The actual value should be obtained from the DNO or measured during installation.',
@@ -584,12 +514,7 @@ export const questionsPart3 = [
     id: 284,
     question:
       'A three-phase unbalanced load has phase currents of 40A, 35A, and 25A. What is the approximate neutral current?',
-    options: [
-      '13.2A',
-      '100A',
-      '33.3A',
-      '0A',
-    ],
+    options: ['13.2A', '100A', '33.3A', '0A'],
     correctAnswer: 0,
     explanation:
       'For unbalanced loads, the neutral current can be calculated using vector addition. Using the formula with 120° phase displacement gives approximately 13.2A neutral current.',
@@ -688,15 +613,10 @@ export const questionsPart3 = [
   {
     id: 290,
     question: 'What is the maximum Zs value for a 6A Type B MCB at 0.4s disconnection?',
-    options: [
-      '2.30Ω',
-      '4.60Ω',
-      '7.67Ω',
-      '11.5Ω',
-    ],
-    correctAnswer: 2,
+    options: ['2.30Ω', '7.28Ω', '7.67Ω', '11.5Ω'],
+    correctAnswer: 1,
     explanation:
-      'For a Type B MCB, Ia = 5 × In = 30A. Zs = Uo/Ia = 230/30 = 7.67Ω maximum. This relatively high value makes Type B MCBs suitable for long cable runs.',
+      'For a Type B MCB, Ia = 5 × In = 30A. Zs = (Cmin × Uo)/Ia = (0.95 × 230)/30 = 7.28Ω maximum per Table 41.3 (7.67Ω is the old pre-Cmin figure). This relatively high value makes Type B MCBs suitable for long cable runs.',
     section: 'Fault Protection',
     difficulty: 'intermediate',
     topic: 'Earth Fault Loop Impedance',
@@ -758,12 +678,7 @@ export const questionsPart3 = [
   {
     id: 294,
     question: 'What is the minimum IP rating required for socket outlets in bathrooms Zone 2?',
-    options: [
-      'IPX1',
-      'IPX7',
-      'IPX4',
-      'IP20',
-    ],
+    options: ['IPX1', 'IPX7', 'IPX4', 'IP20'],
     correctAnswer: 2,
     explanation:
       'BS 7671 requires a minimum rating of IPX4 (protected against water splashing) for equipment installed in bathroom Zone 2, unless the zone is subject to water jets (IPX5).',
@@ -845,12 +760,7 @@ export const questionsPart3 = [
   {
     id: 299,
     question: 'What is the maximum permitted touch voltage in normal dry conditions?',
-    options: [
-      '230V AC',
-      '25V AC',
-      '120V DC',
-      '50V AC',
-    ],
+    options: ['230V AC', '25V AC', '120V DC', '50V AC'],
     correctAnswer: 3,
     explanation:
       'BS 7671 specifies 50V AC as the maximum permitted touch voltage in normal dry conditions. Lower values apply in more hazardous situations such as construction sites.',
@@ -881,12 +791,7 @@ export const questionsPart3 = [
     id: 301,
     question:
       'A Type C MCB operates at how many times its rated current for instantaneous tripping?',
-    options: [
-      '3 to 5 times In',
-      '5 to 10 times In',
-      '10 to 20 times In',
-      '2 to 3 times In',
-    ],
+    options: ['3 to 5 times In', '5 to 10 times In', '10 to 20 times In', '2 to 3 times In'],
     correctAnswer: 1,
     explanation:
       'Type C MCBs have an instantaneous trip range of 5 to 10 times their rated current, making them suitable for circuits with moderate inrush currents such as small motors.',
@@ -984,12 +889,7 @@ export const questionsPart3 = [
   {
     id: 307,
     question: 'What standard covers the design requirements for fire alarm systems?',
-    options: [
-      'BS 7671',
-      'BS 7430',
-      'BS 5266',
-      'BS 5839',
-    ],
+    options: ['BS 7671', 'BS 7430', 'BS 5266', 'BS 5839'],
     correctAnswer: 3,
     explanation:
       'BS 5839 covers fire detection and alarm systems for buildings. Part 1 covers systems in non-domestic premises, while Part 6 covers domestic dwellings.',
@@ -1347,12 +1247,7 @@ export const questionsPart3 = [
   {
     id: 328,
     question: 'What procurement approach uses pre-agreed contractors for repeat work?',
-    options: [
-      'Framework agreement',
-      'Single-stage tendering',
-      'Design and build',
-      'Novation',
-    ],
+    options: ['Framework agreement', 'Single-stage tendering', 'Design and build', 'Novation'],
     correctAnswer: 0,
     explanation:
       'A framework agreement establishes terms with approved contractors for a defined period, allowing call-off contracts for repeat work without full tendering each time.',
