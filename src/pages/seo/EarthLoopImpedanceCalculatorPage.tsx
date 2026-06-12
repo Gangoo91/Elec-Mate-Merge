@@ -143,9 +143,9 @@ const howToSchema = {
 
 export default function EarthLoopImpedanceCalculatorPage() {
   useSEO({
-    title: 'Earth Loop Impedance Calculator (Zs) | BS 7671',
+    title: 'Zs Calculator — Fault Loop Impedance: Zs = Ze + (R1+R2)',
     description:
-      'Calculate earth fault loop impedance (Zs) to BS 7671. Verify Ze + R1+R2, check maximum Zs values for MCBs and RCBOs, temperature correction.',
+      'Free earth fault loop impedance calculator: enter Ze and R1+R2 to get Zs, checked instantly against BS 7671 maximum Zs for your MCB or RCBO — with temperature correction built in.',
   });
 
   return (

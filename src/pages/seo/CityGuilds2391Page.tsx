@@ -20,7 +20,7 @@ import {
   Target,
 } from 'lucide-react';
 
-const PAGE_TITLE = '2391 Inspection & Testing Course Online | C&G 2391-52';
+const PAGE_TITLE = '2391 Course Online — 2391-52 Lessons, Mock Exams & Revision';
 const PAGE_DESCRIPTION =
   'Study C&G 2391-52 Inspection & Testing online: AI quiz prep, GN3 testing sequence walkthroughs, mock exams, practical guidance. From £5.99/mo.';
 
@@ -157,7 +157,7 @@ const breadcrumbSchema = {
 
 export default function CityGuilds2391Page() {
   useSEO({
-    title: '2391 Inspection and Testing Course Online | C&G 2391-52',
+    title: '2391 Course Online — 2391-52 Lessons, Mock Exams & Revision',
     description: PAGE_DESCRIPTION,
     schema: courseSchema,
   });
@@ -234,7 +234,8 @@ export default function CityGuilds2391Page() {
               inspection and testing of new installations or alterations before they are energised
               and handed over to the client. The second is periodic inspection and testing — the
               assessment of existing installations that are already in service, to identify
-              deterioration, damage, defects, and departures from the current edition of BS 7671:2018+A4:2026.
+              deterioration, damage, defects, and departures from the current edition of BS
+              7671:2018+A4:2026.
             </p>
             <p>
               The qualification is essential for any electrician who wants to work independently and
@@ -639,7 +640,6 @@ export default function CityGuilds2391Page() {
       </section>
 
       {/* CTA */}
-      
 
       {/* Related pages — auto-injected for internal-link health (audit criterion #7).
           Topic-matched via token-Jaccard against the broader SEO corpus. */}
@@ -647,12 +647,24 @@ export default function CityGuilds2391Page() {
         <div className="max-w-4xl mx-auto">
           <h2 className="text-xl font-bold text-white mb-4">Related electrical pages</h2>
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 text-sm">
-            <SEOInternalLink href="/city-guilds-level3-guide">City & Guilds Level 3 Electrical Installation Guide</SEOInternalLink>
-            <SEOInternalLink href="/guides/city-guilds-2365-electrical">City & Guilds 2365</SEOInternalLink>
-            <SEOInternalLink href="/guides/city-guilds-2382-exam-guide">City & Guilds 2382 Exam Guide</SEOInternalLink>
-            <SEOInternalLink href="/guides/city-guilds-2365-unit-201">City & Guilds 2365 Unit 201 — Health and Safety</SEOInternalLink>
-            <SEOInternalLink href="/guides/city-guilds-2365-unit-202">City & Guilds 2365 Unit 202 — Electrical Principles</SEOInternalLink>
-            <SEOInternalLink href="/guides/city-guilds-2396-design-course">City & Guilds 2396 Design Course</SEOInternalLink>
+            <SEOInternalLink href="/city-guilds-level3-guide">
+              City & Guilds Level 3 Electrical Installation Guide
+            </SEOInternalLink>
+            <SEOInternalLink href="/guides/city-guilds-2365-electrical">
+              City & Guilds 2365
+            </SEOInternalLink>
+            <SEOInternalLink href="/guides/city-guilds-2382-exam-guide">
+              City & Guilds 2382 Exam Guide
+            </SEOInternalLink>
+            <SEOInternalLink href="/guides/city-guilds-2365-unit-201">
+              City & Guilds 2365 Unit 201 — Health and Safety
+            </SEOInternalLink>
+            <SEOInternalLink href="/guides/city-guilds-2365-unit-202">
+              City & Guilds 2365 Unit 202 — Electrical Principles
+            </SEOInternalLink>
+            <SEOInternalLink href="/guides/city-guilds-2396-design-course">
+              City & Guilds 2396 Design Course
+            </SEOInternalLink>
           </div>
         </div>
       </section>

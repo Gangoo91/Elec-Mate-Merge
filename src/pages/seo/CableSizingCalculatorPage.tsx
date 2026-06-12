@@ -19,9 +19,9 @@ import {
   Database,
 } from 'lucide-react';
 
-const PAGE_TITLE = 'Cable Sizing Calculator UK 2026 | BS 7671 Free Tool';
+const PAGE_TITLE = 'Cable Size Calculator UK: T&E + SWA Current Ratings (Free)';
 const PAGE_DESCRIPTION =
-  'Free UK cable sizing calculator to BS 7671:2018+A4:2026. Cable size, voltage drop + thermal limits in seconds. Twin & earth, SWA, singles, all methods.';
+  'Enter load, length and installation method — get the right cable size to BS 7671:2018+A4:2026 with current rating, volt drop and Ca/Cg/Ci correction factors applied. Twin & earth, SWA and singles.';
 
 const faqs = [
   {
@@ -191,7 +191,7 @@ const howToSchema = {
 
 export default function CableSizingCalculatorPage() {
   useSEO({
-    title: 'Cable Sizing Calculator BS 7671 | Free Online Tool',
+    title: PAGE_TITLE,
     description: PAGE_DESCRIPTION,
     schema: softwareAppSchema,
   });

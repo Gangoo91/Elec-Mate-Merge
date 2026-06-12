@@ -148,9 +148,9 @@ const howToSchema = {
 
 export default function ConduitFillCalculatorPage() {
   useSEO({
-    title: 'Conduit Fill Calculator | Cable Factor Method BS 7671',
+    title: 'Conduit Size Calculator UK — Cable Factors (BS 7671)',
     description:
-      'Calculate conduit fill using the cable factor method to BS 7671. Check maximum cables per conduit size, supports 16mm to 50mm, all standard cable types.',
+      'Free conduit fill calculator using the cable-factor method: pick your cables, get the factor total and the right conduit size from 16mm to 50mm — bends and run length included.',
   });
 
   return (
