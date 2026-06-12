@@ -144,7 +144,8 @@ export function useMarkInvoicePaid() {
 export function useSendInvoice() {
   const queryClient = useQueryClient();
   return useMutation({
-    mutationFn: (id: string) => financeService.sendInvoice(id),
+    mutationFn: ({ id, email }: { id: string; email?: string }) =>
+      financeService.sendInvoice(id, email),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['invoices'] });
       toast.success('Invoice sent successfully');

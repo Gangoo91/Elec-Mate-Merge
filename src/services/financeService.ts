@@ -263,7 +263,10 @@ export async function getOverdueInvoices(): Promise<Invoice[]> {
   return data || [];
 }
 
-export async function sendInvoice(id: string): Promise<{ portalUrl: string; accessToken: string }> {
+export async function sendInvoice(
+  id: string,
+  recipientEmail?: string
+): Promise<{ portalUrl: string; accessToken: string }> {
   // First get the invoice to get client details
   const { data: invoice, error: invoiceError } = await supabase
     .from('employer_invoices')
@@ -273,9 +276,19 @@ export async function sendInvoice(id: string): Promise<{ portalUrl: string; acce
 
   if (invoiceError) throw invoiceError;
 
+  // A real email address is required — the client NAME is not one
+  const targetEmail = recipientEmail?.trim() || invoice.client_email?.trim();
+  if (!targetEmail || !/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(targetEmail)) {
+    throw new Error('NEEDS_CLIENT_EMAIL');
+  }
+  // Remember it for next time
+  if (recipientEmail && recipientEmail !== invoice.client_email) {
+    await supabase.from('employer_invoices').update({ client_email: targetEmail }).eq('id', id);
+  }
+
   // Generate the invoice link
   const { data, error } = await supabase.functions.invoke('generate-invoice-link', {
-    body: { invoiceId: id, baseUrl: window.location.origin },
+    body: { invoiceId: id, baseUrl: window.location.origin, clientEmail: targetEmail },
   });
 
   if (error) throw error;
@@ -285,7 +298,7 @@ export async function sendInvoice(id: string): Promise<{ portalUrl: string; acce
     body: {
       type: 'invoice',
       documentId: id,
-      recipientEmail: invoice.client, // This would ideally be a client email field
+      recipientEmail: targetEmail,
       recipientName: invoice.client,
       invoicePortalLink: data.portalUrl,
     },

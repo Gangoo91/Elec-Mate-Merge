@@ -1,3 +1,5 @@
+import { openPrintRegister } from '@/utils/printRegister';
+import { toast } from '@/hooks/use-toast';
 import { useMemo, useState } from 'react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
@@ -225,6 +227,27 @@ export function TrainingRecordsSection() {
         actions={
           <>
             <PrimaryButton onClick={() => setShowNewTraining(true)}>Log training</PrimaryButton>
+            <SecondaryButton
+              onClick={async () => {
+                const ok = await openPrintRegister({
+                  title: 'Training Matrix',
+                  subtitle: 'Training, certifications and expiry register',
+                  columns: ['Team member', 'Training', 'Provider', 'Completed', 'Expires', 'Status'],
+                  rows: (trainingRecords || []).map((r) => [
+                    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+                    (r as any).employee?.name || 'Unassigned',
+                    r.training_name,
+                    r.provider,
+                    r.completed_date,
+                    r.expiry_date,
+                    r.status,
+                  ]),
+                });
+                if (!ok) toast({ title: 'Pop-up blocked', variant: 'destructive' });
+              }}
+            >
+              Export matrix
+            </SecondaryButton>
             <IconButton onClick={() => refetch()} aria-label="Refresh">
               <RefreshCw className="h-4 w-4" />
             </IconButton>

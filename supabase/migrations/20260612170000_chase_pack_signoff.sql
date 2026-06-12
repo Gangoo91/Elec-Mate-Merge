@@ -1,0 +1,3 @@
+-- E3b: chase_pack_signoff(p_ack_id) — owner-checked one-tap reminder push to
+-- a worker with an unsigned pack (deep-links to their sign-off). Full body
+-- in DB migration chase_pack_signoff.

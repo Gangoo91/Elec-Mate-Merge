@@ -1,3 +1,4 @@
+import { openPrintRegister } from '@/utils/printRegister';
 import { useMemo, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Sheet, SheetContent, SheetHeader, SheetTitle } from '@/components/ui/sheet';
@@ -60,6 +61,33 @@ export function QSReviewsSection() {
         title="QS Reviews"
         meta={pendingCount > 0 ? `${pendingCount} awaiting sign-off` : 'Nothing waiting'}
       />
+
+      {scope === 'all' && items.length > 0 && (
+        <button
+          type="button"
+          onClick={async () => {
+            const ok = await openPrintRegister({
+              title: 'QS Review Register',
+              subtitle: 'Qualifying Supervisor certificate sign-off record',
+              columns: ['Certificate', 'Type', 'Client', 'Electrician', 'Submitted', 'Status', 'Reviewed by', 'Reviewed'],
+              rows: items.map((it) => [
+                it.report_id,
+                it.report_type.toUpperCase(),
+                it.client_name,
+                it.electrician_name,
+                it.submitted_at ? new Date(it.submitted_at).toLocaleDateString('en-GB') : null,
+                it.status,
+                it.reviewer_name,
+                it.reviewed_at ? new Date(it.reviewed_at).toLocaleDateString('en-GB') : null,
+              ]),
+            });
+            if (!ok) toast({ title: 'Pop-up blocked', variant: 'destructive' });
+          }}
+          className="h-10 px-4 rounded-lg text-[12.5px] font-semibold bg-white/[0.05] border border-white/[0.08] text-white touch-manipulation active:scale-[0.98]"
+        >
+          Export register — assessment-ready
+        </button>
+      )}
 
       {/* Scope toggle */}
       <div className="grid grid-cols-2 gap-2">

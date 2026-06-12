@@ -1,6 +1,7 @@
 import { useMemo, useState } from 'react';
 import { RefreshCw } from 'lucide-react';
-import { useQueryClient } from '@tanstack/react-query';
+import { useQueryClient, useQuery } from '@tanstack/react-query';
+import { supabase } from '@/integrations/supabase/client';
 import {
   useBusinessMetrics,
   useMonthlyRevenue,
@@ -162,28 +163,48 @@ export function ReportsSection() {
 
   const expenseColours = ['#facc15', 'rgba(255,255,255,0.85)', 'rgba(255,255,255,0.55)', 'rgba(255,255,255,0.35)', 'rgba(255,255,255,0.22)', 'rgba(255,255,255,0.12)'];
 
+  // Real aging: every unpaid invoice bucketed by how long past due,
+  // grouped per client — the chase-priority list, not three abstract sums
+  const { data: unpaidInvoices = [] } = useQuery({
+    queryKey: ['debtor-aging'],
+    queryFn: async () => {
+      const { data } = await supabase
+        .from('employer_invoices')
+        .select('client, amount, due_date, status')
+        .neq('status', 'Paid');
+      return data || [];
+    },
+    staleTime: 60 * 1000,
+  });
+
   const debtorRows = useMemo(() => {
-    return [
-      {
-        label: 'Paid (last 30 days)',
-        bucket: 'Current',
-        amount: paymentSummary?.paidLast30Days ?? 0,
-        tone: 'emerald' as const,
-      },
-      {
-        label: 'Pending invoices',
-        bucket: '1-30 days',
-        amount: paymentSummary?.pending ?? 0,
-        tone: 'amber' as const,
-      },
-      {
-        label: 'Overdue invoices',
-        bucket: '30+ days',
-        amount: paymentSummary?.overdue ?? 0,
-        tone: 'red' as const,
-      },
+    const today = Date.now();
+    const buckets = [
+      { label: 'Not yet due', max: 0, tone: 'emerald' as const },
+      { label: '1–30 days overdue', max: 30, tone: 'amber' as const },
+      { label: '31–60 days overdue', max: 60, tone: 'orange' as const },
+      { label: '61+ days overdue', max: Infinity, tone: 'red' as const },
     ];
-  }, [paymentSummary]);
+    return buckets.map((b, i) => {
+      const min = i === 0 ? -Infinity : i === 1 ? 1 : buckets[i - 1].max + 1;
+      const rows = unpaidInvoices.filter((inv) => {
+        const days = inv.due_date
+          ? Math.floor((today - new Date(inv.due_date).getTime()) / 86400000)
+          : 0;
+        return days >= min && days <= b.max;
+      });
+      const clients = [...new Set(rows.map((r) => r.client).filter(Boolean))];
+      return {
+        label: b.label,
+        bucket:
+          clients.length > 0
+            ? clients.slice(0, 3).join(', ') + (clients.length > 3 ? ` +${clients.length - 3}` : '')
+            : '—',
+        amount: rows.reduce((s, r) => s + Number(r.amount || 0), 0),
+        tone: b.tone,
+      };
+    });
+  }, [unpaidInvoices]);
 
   const totalRevenueK = metrics?.revenue.current
     ? `£${(metrics.revenue.current / 1000).toFixed(0)}k`

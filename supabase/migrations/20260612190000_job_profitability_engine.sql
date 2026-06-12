@@ -1,0 +1,5 @@
+-- E4: self-maintaining job profitability. refresh_job_financial_actuals
+-- (labour = approved timesheet hours × worker rate; materials = approved
+-- expenses + delivered orders; budget status pill recomputed) fired by
+-- triggers on timesheets/expenses/orders. Full bodies in DB migration
+-- job_profitability_engine.

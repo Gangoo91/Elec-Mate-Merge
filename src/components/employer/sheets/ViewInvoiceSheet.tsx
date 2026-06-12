@@ -61,13 +61,24 @@ export function ViewInvoiceSheet({ open, onOpenChange, invoice }: ViewInvoiceShe
   };
 
   const handleSendInvoice = async () => {
-    sendInvoiceMutation.mutate(invoice.id, {
-      onSuccess: (data) => {
-        if (data?.portalUrl) {
-          setInvoiceLink(data.portalUrl);
-        }
-      },
-    });
+    // Invoices need a real client email — stored one wins, otherwise ask
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    let email: string | undefined = (invoice as any).client_email || undefined;
+    if (!email) {
+      const entered = window.prompt(`Email address for ${invoice.client}:`);
+      if (!entered?.trim()) return;
+      email = entered.trim();
+    }
+    sendInvoiceMutation.mutate(
+      { id: invoice.id, email },
+      {
+        onSuccess: (data) => {
+          if (data?.portalUrl) {
+            setInvoiceLink(data.portalUrl);
+          }
+        },
+      }
+    );
   };
 
   const handleCopyLink = async () => {

@@ -15,6 +15,8 @@ import { useIsMobile } from '@/hooks/use-mobile';
 import { useQueryClient } from '@tanstack/react-query';
 import { sortQuotes, sortInvoices } from '@/utils/financeSorting';
 import type { Quote, Invoice } from '@/services/financeService';
+import { sendInvoice as sendInvoiceService } from '@/services/financeService';
+import { toast } from '@/hooks/use-toast';
 import {
   PageFrame,
   PageHero,
@@ -224,6 +226,25 @@ export function QuotesInvoicesSection() {
     return [...qRows, ...iRows].sort((a, b) => b.timestamp - a.timestamp);
   }, [sortedQuotes, sortedInvoices]);
 
+  const handleChaseInvoice = async (inv: { id: string; client: string; client_email?: string | null }) => {
+    let email = inv.client_email || undefined;
+    if (!email) {
+      const entered = window.prompt(`Email address for ${inv.client}:`);
+      if (!entered?.trim()) return;
+      email = entered.trim();
+    }
+    try {
+      await sendInvoiceService(inv.id, email);
+      toast({ title: 'Reminder sent', description: `${inv.client} has been chased.` });
+    } catch (err) {
+      toast({
+        title: 'Could not send',
+        description: err instanceof Error ? err.message : 'Try again.',
+        variant: 'destructive',
+      });
+    }
+  };
+
   const filteredRows = useMemo(() => {
     const needle = searchQuery.trim().toLowerCase();
     return combined.filter((row) => {
@@ -322,18 +343,53 @@ export function QuotesInvoicesSection() {
               </div>
             ) : (
               <ListBody>
-                {filteredRows.map((row) => (
-                  <ListRow
-                    key={row.id}
-                    lead={<Avatar initials={getInitials(row.client)} />}
-                    title={`${row.kind.toUpperCase()} #${row.number} — ${row.client}`}
-                    subtitle={`${row.jobTitle ? `${row.jobTitle} · ` : ''}£${formatMoney(
-                      row.total
-                    )} · ${row.timeAgo}`}
-                    trailing={<Pill tone={row.statusTone}>{row.status}</Pill>}
-                    onClick={() => openRow(row)}
-                  />
-                ))}
+                {filteredRows.map((row) => {
+                  const overdue =
+                    row.kind === 'invoice' &&
+                    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+                    isOverdueInvoice(row.raw as any);
+                  const daysOver = overdue
+                    ? Math.max(
+                        1,
+                        Math.floor(
+                          (Date.now() -
+                            // eslint-disable-next-line @typescript-eslint/no-explicit-any
+                            new Date((row.raw as any).due_date).getTime()) /
+                            86400000
+                        )
+                      )
+                    : 0;
+                  return (
+                    <ListRow
+                      key={row.id}
+                      lead={<Avatar initials={getInitials(row.client)} />}
+                      title={`${row.kind.toUpperCase()} #${row.number} — ${row.client}`}
+                      subtitle={`${row.jobTitle ? `${row.jobTitle} · ` : ''}£${formatMoney(
+                        row.total
+                      )} · ${overdue ? `${daysOver}d overdue` : row.timeAgo}`}
+                      trailing={
+                        overdue ? (
+                          <div className="flex items-center gap-2">
+                            <Pill tone="red">{daysOver}d overdue</Pill>
+                            <SecondaryButton
+                              size="sm"
+                              onClick={(e) => {
+                                e.stopPropagation();
+                                // eslint-disable-next-line @typescript-eslint/no-explicit-any
+                                handleChaseInvoice(row.raw as any);
+                              }}
+                            >
+                              Chase
+                            </SecondaryButton>
+                          </div>
+                        ) : (
+                          <Pill tone={row.statusTone}>{row.status}</Pill>
+                        )
+                      }
+                      onClick={() => openRow(row)}
+                    />
+                  );
+                })}
               </ListBody>
             )}
           </ListCard>

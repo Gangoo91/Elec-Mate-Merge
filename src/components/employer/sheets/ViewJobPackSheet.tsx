@@ -769,9 +769,36 @@ export function ViewJobPackSheet({ jobPack, open, onOpenChange }: ViewJobPackShe
                                 </div>
                               </div>
                               {!ack && (
-                                <span className="text-[11px] text-white/40">
-                                  Awaiting signature
-                                </span>
+                                <SecondaryButton
+                                  size="sm"
+                                  onClick={async () => {
+                                    const pending = acknowledgements.find(
+                                      (a) => a.employee_id === emp.id && !a.acknowledged_at
+                                    );
+                                    if (!pending) {
+                                      toast({
+                                        title: 'Send the pack first',
+                                        description: 'Chasing works once the pack has been sent.',
+                                      });
+                                      return;
+                                    }
+                                    const { data, error } = await supabase.rpc(
+                                      'chase_pack_signoff',
+                                      { p_ack_id: pending.id }
+                                    );
+                                    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+                                    if (error || (data as any)?.error) {
+                                      toast({ title: 'Could not chase', variant: 'destructive' });
+                                    } else {
+                                      toast({
+                                        title: 'Reminder sent',
+                                        description: `${emp.name} has been nudged to sign.`,
+                                      });
+                                    }
+                                  }}
+                                >
+                                  Chase
+                                </SecondaryButton>
                               )}
                             </div>
                           );
