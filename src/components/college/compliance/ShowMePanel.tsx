@@ -328,28 +328,38 @@ function MatchRow({ match }: { match: SearchMatch }) {
         <span className="text-purple-300/80 text-[14px] shrink-0">→</span>
       </div>
 
+      {/* Per-item cards — readable hierarchy on mobile instead of one dense
+          wrapping line (ELE-1087). Badge + title + date on top, summary below. */}
       <div className="flex flex-col gap-1.5">
         {match.evidence.map((ev, i) => (
           <div
             key={`${match.learner_id}-${i}`}
-            className="flex items-start gap-2 text-[12px] text-white leading-snug"
+            className="rounded-lg bg-white/[0.02] border border-white/[0.05] px-3 py-2"
           >
-            <span
-              className={cn(
-                'inline-flex items-center h-5 px-1.5 rounded-md border text-[10px] font-semibold uppercase tracking-[0.16em] shrink-0',
-                KIND_TONE[ev.kind]
-              )}
-            >
-              {KIND_LABEL[ev.kind]}
-            </span>
-            <span className="text-white font-medium">{ev.title}</span>
-            <span className="text-white">— {ev.summary}</span>
-            <time className="text-white tabular-nums shrink-0 ml-auto">
-              {new Date(ev.occurred_at).toLocaleDateString('en-GB', {
-                day: 'numeric',
-                month: 'short',
-              })}
-            </time>
+            <div className="flex items-center gap-2">
+              <span
+                className={cn(
+                  'inline-flex items-center h-5 px-1.5 rounded-md border text-[10px] font-semibold uppercase tracking-[0.16em] shrink-0',
+                  KIND_TONE[ev.kind]
+                )}
+              >
+                {KIND_LABEL[ev.kind]}
+              </span>
+              <span className="min-w-0 flex-1 text-[12.5px] font-medium text-white truncate">
+                {ev.title}
+              </span>
+              <time className="text-[10.5px] text-white/55 tabular-nums shrink-0">
+                {new Date(ev.occurred_at).toLocaleDateString('en-GB', {
+                  day: 'numeric',
+                  month: 'short',
+                })}
+              </time>
+            </div>
+            {ev.summary && (
+              <div className="mt-1 text-[11.5px] text-white/65 leading-snug">
+                {ev.summary.replace(/_/g, ' ')}
+              </div>
+            )}
           </div>
         ))}
       </div>

@@ -5,6 +5,7 @@ import { cn } from '@/lib/utils';
 import { supabase } from '@/integrations/supabase/client';
 import { useToast } from '@/hooks/use-toast';
 import type { CollegeResource } from '@/hooks/useCollegeResources';
+import { recordResourceEvent } from '@/hooks/useResourceAnalytics';
 
 /* ==========================================================================
    ResourcePreviewSheet — inline viewer for any college resource.
@@ -70,6 +71,19 @@ export function ResourcePreviewSheet({
     };
   }, [open, resource, signedUrl, toast]);
 
+  // Record a view (or open_link) once each time the sheet opens for a resource,
+  // so Resource Analytics actually populates (ELE-1101). Keyed on the resource
+  // id so re-renders don't double-count.
+  useEffect(() => {
+    if (!open || !resource) return;
+    void recordResourceEvent({
+      resourceId: resource.id,
+      eventKind: resource.external_url ? 'open_link' : 'view',
+      context: 'resource_library',
+    });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [open, resource?.id]);
+
   const download = useCallback(async () => {
     if (!resource?.file_path) return;
     try {
@@ -78,7 +92,14 @@ export function ResourcePreviewSheet({
         .createSignedUrl(resource.file_path, 60 * 10, {
           download: resource.title,
         });
-      if (data?.signedUrl) window.open(data.signedUrl, '_blank', 'noopener');
+      if (data?.signedUrl) {
+        window.open(data.signedUrl, '_blank', 'noopener');
+        void recordResourceEvent({
+          resourceId: resource.id,
+          eventKind: 'download',
+          context: 'resource_library',
+        });
+      }
     } catch (e) {
       toast({
         title: 'Download failed',

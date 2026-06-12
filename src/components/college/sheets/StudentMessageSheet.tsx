@@ -1,6 +1,7 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { Sheet, SheetContent, SheetHeader, SheetTitle } from '@/components/ui/sheet';
 import { useIsMobile } from '@/hooks/use-mobile';
+import { useMobileKeyboard } from '@/hooks/use-mobile-keyboard';
 import { cn } from '@/lib/utils';
 import { supabase } from '@/integrations/supabase/client';
 import { realtimeChannelName } from '@/lib/realtimeChannel';
@@ -46,6 +47,7 @@ export function StudentMessageSheet({
   studentName,
 }: Props) {
   const isMobile = useIsMobile();
+  const keyboard = useMobileKeyboard();
   const { toast } = useToast();
 
   const [threads, setThreads] = useState<Thread[]>([]);
@@ -540,8 +542,16 @@ export function StudentMessageSheet({
               )}
             </div>
 
-            {/* Composer */}
-            <div className="shrink-0 border-t border-white/[0.08] p-3 sm:p-4">
+            {/* Composer — lift above the on-screen keyboard so the textarea and
+                Send button stay visible on mobile (ELE-1085). */}
+            <div
+              className="shrink-0 border-t border-white/[0.08] p-3 sm:p-4"
+              style={
+                keyboard.isVisible
+                  ? { paddingBottom: keyboard.height + 12 }
+                  : undefined
+              }
+            >
               <div className="flex items-end gap-2">
                 <textarea
                   value={draft}

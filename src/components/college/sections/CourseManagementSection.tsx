@@ -257,14 +257,18 @@ function CourseFormSheet({
 
   const onPickQualification = (qid: string) => {
     const q = quals.find((x) => x.id === qid);
+    // The qualification is the primary selector (ELE-1089): picking one drives
+    // name / code / awarding body / level from the catalogue (and links the
+    // LO/AC via qualification_id). The college can still edit any field after.
+    // OTJ hours stay on the apprenticeship-standard picker — OTJ is a property
+    // of the standard, and qualifications carry no OTJ/standard data to infer it.
     setForm((f) => ({
       ...f,
       qualification_id: qid,
-      // prefill from the qualification, but never overwrite a value already typed
-      name: f.name || (q?.title ?? f.name),
-      code: f.code || (q?.code ?? f.code),
-      awarding_body: f.awarding_body || (q?.awarding_body ?? f.awarding_body),
-      level: f.level || (q?.level ?? f.level),
+      name: q?.title ?? f.name,
+      code: q?.code ?? f.code,
+      awarding_body: q?.awarding_body ?? f.awarding_body,
+      level: q?.level ?? f.level,
     }));
   };
 

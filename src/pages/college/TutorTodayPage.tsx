@@ -37,6 +37,13 @@ const RISK_TONE: Record<'medium' | 'high' | 'critical', string> = {
   critical: 'border-rose-300/30 text-rose-200 bg-rose-500/[0.06]',
 };
 
+// Left-edge accent for instant risk triage (ELE-1088).
+const RISK_BORDER: Record<'medium' | 'high' | 'critical', string> = {
+  medium: 'border-l-amber-400/60',
+  high: 'border-l-orange-400/70',
+  critical: 'border-l-rose-400/80',
+};
+
 function greeting(): string {
   const h = new Date().getHours();
   if (h < 5) return 'Good evening';
@@ -703,63 +710,71 @@ function AtRiskRow({
   onMarkAttendance: () => void;
 }) {
   return (
-    <li className="px-4 sm:px-5 py-3 hover:bg-white/[0.02] transition-colors">
-      <div className="flex items-start justify-between gap-3 flex-wrap">
-        <div className="min-w-0 flex-1">
-          <div className="flex items-center gap-2 flex-wrap">
-            <button
-              type="button"
-              onClick={onOpenLearner}
-              className="text-[14px] font-semibold text-white hover:text-elec-yellow transition-colors touch-manipulation"
-            >
-              {row.student_name}
-            </button>
-            <span
-              className={cn(
-                'inline-flex items-center h-5 px-1.5 rounded-md border text-[10.5px] font-semibold uppercase tracking-[0.16em]',
-                RISK_TONE[row.level]
-              )}
-            >
-              {row.level}
-            </span>
-            {row.cohort_name && <span className="text-[11px] text-white">· {row.cohort_name}</span>}
-          </div>
-          {row.top_factors.length > 0 && (
-            <div className="mt-1 flex flex-wrap gap-1">
-              {row.top_factors.map((f, i) => (
-                <span
-                  key={i}
-                  className="inline-flex items-center rounded-md bg-white/[0.06] border border-white/[0.08] px-1.5 py-0.5 text-[10.5px] text-white/85 leading-snug"
-                >
-                  {f}
-                </span>
-              ))}
-            </div>
+    <li
+      className={cn(
+        'px-4 sm:px-5 py-3.5 hover:bg-white/[0.02] transition-colors border-l-2',
+        RISK_BORDER[row.level]
+      )}
+    >
+      {/* Name + risk badge */}
+      <div className="flex items-start justify-between gap-2">
+        <button
+          type="button"
+          onClick={onOpenLearner}
+          className="min-w-0 text-left text-[14.5px] font-semibold text-white hover:text-elec-yellow transition-colors touch-manipulation truncate"
+        >
+          {row.student_name}
+        </button>
+        <span
+          className={cn(
+            'shrink-0 inline-flex items-center h-5 px-1.5 rounded-md border text-[10.5px] font-semibold uppercase tracking-[0.16em]',
+            RISK_TONE[row.level]
           )}
+        >
+          {row.level}
+        </span>
+      </div>
+      {row.cohort_name && (
+        <div className="mt-0.5 text-[11px] text-white/55">{row.cohort_name}</div>
+      )}
+
+      {/* Reason chips — full width, no column constraint */}
+      {row.top_factors.length > 0 && (
+        <div className="mt-2 flex flex-wrap gap-1">
+          {row.top_factors.map((f, i) => (
+            <span
+              key={i}
+              className="inline-flex items-center rounded-full bg-white/[0.04] px-2 py-0.5 text-[10.5px] text-white/75 leading-snug"
+            >
+              {f}
+            </span>
+          ))}
         </div>
-        <div className="flex items-center gap-1.5 shrink-0 flex-wrap">
-          <button
-            type="button"
-            onClick={onMarkAttendance}
-            className="inline-flex items-center h-7 px-2.5 rounded-md text-[11px] font-semibold text-emerald-200 bg-emerald-500/[0.10] border border-emerald-300/30 hover:bg-emerald-500/[0.18] transition-colors touch-manipulation"
-          >
-            Register
-          </button>
-          <button
-            type="button"
-            onClick={onAddNote}
-            className="inline-flex items-center h-7 px-2.5 rounded-md text-[11px] font-semibold text-amber-200 bg-amber-500/[0.10] border border-amber-300/30 hover:bg-amber-500/[0.18] transition-colors touch-manipulation"
-          >
-            + Note
-          </button>
-          <button
-            type="button"
-            onClick={onOpenEvidence}
-            className="inline-flex items-center h-7 px-2.5 rounded-md text-[11px] font-semibold text-white bg-white/[0.06] border border-white/[0.12] hover:bg-white/[0.12] transition-colors touch-manipulation"
-          >
-            Evidence →
-          </button>
-        </div>
+      )}
+
+      {/* Action row — full width, distributed */}
+      <div className="mt-3 flex items-center gap-1.5">
+        <button
+          type="button"
+          onClick={onMarkAttendance}
+          className="flex-1 inline-flex items-center justify-center h-8 rounded-lg text-[11.5px] font-semibold text-emerald-200 bg-emerald-500/[0.10] border border-emerald-300/30 hover:bg-emerald-500/[0.18] transition-colors touch-manipulation"
+        >
+          Register
+        </button>
+        <button
+          type="button"
+          onClick={onAddNote}
+          className="flex-1 inline-flex items-center justify-center h-8 rounded-lg text-[11.5px] font-semibold text-amber-200 bg-amber-500/[0.10] border border-amber-300/30 hover:bg-amber-500/[0.18] transition-colors touch-manipulation"
+        >
+          + Note
+        </button>
+        <button
+          type="button"
+          onClick={onOpenEvidence}
+          className="flex-1 inline-flex items-center justify-center h-8 rounded-lg text-[11.5px] font-semibold text-white bg-white/[0.06] border border-white/[0.12] hover:bg-white/[0.12] transition-colors touch-manipulation"
+        >
+          Evidence →
+        </button>
       </div>
     </li>
   );
