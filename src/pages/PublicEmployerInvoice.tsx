@@ -116,10 +116,44 @@ export default function PublicEmployerInvoice() {
             </div>
           )}
 
+          {invoice.subtotal != null && (
+            <div className="space-y-1.5 border-t border-white/[0.08] pt-4">
+              <div className="flex justify-between text-[12.5px] text-white/60">
+                <span>Subtotal</span>
+                <span className="tabular-nums">{money(invoice.subtotal)}</span>
+              </div>
+              <div className="flex justify-between text-[12.5px] text-white/60">
+                <span>
+                  {invoice.reverse_charge
+                    ? 'VAT — reverse charge'
+                    : `VAT (${Number(invoice.vat_rate ?? 20)}%)`}
+                </span>
+                <span className="tabular-nums">{money(invoice.vat_amount)}</span>
+              </div>
+              {Number(invoice.cis_amount) > 0 && (
+                <div className="flex justify-between text-[12.5px] text-white/60">
+                  <span>Less CIS deduction ({Number(invoice.cis_rate ?? 20)}% of labour)</span>
+                  <span className="tabular-nums text-red-400">−{money(invoice.cis_amount)}</span>
+                </div>
+              )}
+            </div>
+          )}
+
           <div className="border-t border-white/[0.08] pt-4 flex justify-between items-baseline">
             <span className="text-[13px] text-white/60">{isPaid ? 'Amount paid' : 'Amount due'}</span>
-            <span className="text-[26px] font-bold tabular-nums">{money(invoice.amount)}</span>
+            <span className="text-[26px] font-bold tabular-nums">
+              {money(Number(invoice.amount) - (Number(invoice.cis_amount) || 0))}
+            </span>
           </div>
+
+          {invoice.reverse_charge && (
+            <p className="text-[11px] text-white/40 leading-relaxed">
+              VAT reverse charge applies. Customer to account to HMRC for the VAT of{' '}
+              {money(Number(invoice.subtotal || 0) * (Number(invoice.vat_rate ?? 20) / 100))} (
+              {Number(invoice.vat_rate ?? 20)}%). This invoice shows £0 VAT — do not pay the VAT to
+              the supplier. VAT Act 1994, s.55A.
+            </p>
+          )}
           {invoice.due_date && !isPaid && (
             <p className="text-[12px] text-white/50">
               Due{' '}

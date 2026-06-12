@@ -23,6 +23,9 @@ import {
   X,
 } from 'lucide-react';
 import { useCreateQuote, useNextQuoteNumber, usePriceBook } from '@/hooks/useFinance';
+import { Switch } from '@/components/ui/switch';
+import { cn } from '@/lib/utils';
+import { calcEmployerTotals } from '@/utils/employerMoney';
 import { supabase } from '@/integrations/supabase/client';
 import { toast } from 'sonner';
 import { useOptionalVoiceFormContext } from '@/contexts/VoiceFormContext';
@@ -85,6 +88,9 @@ export function CreateQuoteDialog({
   const [description, setDescription] = useState('');
   const [validityDays, setValidityDays] = useState('30');
   const [vatRate, setVatRate] = useState('20');
+  const [reverseCharge, setReverseCharge] = useState(false);
+  const [cisEnabled, setCisEnabled] = useState(false);
+  const [cisRate, setCisRate] = useState('20');
   const [notes, setNotes] = useState('');
   const [lineItems, setLineItems] = useState<LineItem[]>([]);
   const [labourItems, setLabourItems] = useState<LabourItem[]>([]);
@@ -245,9 +251,19 @@ export function CreateQuoteDialog({
 
   const labourTotal = labourItems.reduce((sum, item) => sum + item.total, 0);
   const materialsTotal = lineItems.reduce((sum, item) => sum + item.total, 0);
-  const subtotal = labourTotal + materialsTotal;
-  const vatAmount = subtotal * (Number(vatRate) / 100);
-  const total = subtotal + vatAmount;
+  const money = calcEmployerTotals(
+    [
+      { total: labourTotal, type: 'labour' },
+      { total: materialsTotal, type: 'material' },
+    ],
+    {
+      vatRate: Number(vatRate),
+      reverseCharge,
+      cisEnabled,
+      cisRate: Number(cisRate),
+    }
+  );
+  const { subtotal, vatAmount, notionalVat, cisAmount, total, amountDue } = money;
 
   const addLabourItem = () => {
     if (!newLabour.description) return;
@@ -371,6 +387,13 @@ export function CreateQuoteDialog({
       created_by: 'Admin',
       line_items: allLineItems,
       notes,
+      vat_rate: Number(vatRate),
+      reverse_charge: reverseCharge,
+      cis_enabled: cisEnabled,
+      cis_rate: Number(cisRate),
+      subtotal,
+      vat_amount: vatAmount,
+      cis_amount: cisAmount,
     } as any);
 
     resetForm();
@@ -387,6 +410,9 @@ export function CreateQuoteDialog({
     setDescription('');
     setValidityDays('30');
     setVatRate('20');
+    setReverseCharge(false);
+    setCisEnabled(false);
+    setCisRate('20');
     setNotes('');
     setLineItems([]);
     setLabourItems([]);
@@ -569,6 +595,56 @@ export function CreateQuoteDialog({
                   </Select>
                 </Field>
               </FormGrid>
+            </FormCard>
+
+            <FormCard eyebrow="VAT & CIS">
+              <div className="flex items-center justify-between gap-3 min-h-[44px]">
+                <div className="flex-1 min-w-0">
+                  <p className="text-[13.5px] font-medium text-white">Domestic reverse charge</p>
+                  <p className="text-[11.5px] text-white/50 mt-0.5">
+                    For VAT-registered contractor chains — the quote shows £0 VAT and the customer
+                    accounts to HMRC.
+                  </p>
+                </div>
+                <Switch checked={reverseCharge} onCheckedChange={setReverseCharge} />
+              </div>
+              <div className="flex items-center justify-between gap-3 min-h-[44px]">
+                <div className="flex-1 min-w-0">
+                  <p className="text-[13.5px] font-medium text-white">CIS deduction</p>
+                  <p className="text-[11.5px] text-white/50 mt-0.5">
+                    Deducted from labour only — shown so the client knows the amount payable.
+                  </p>
+                </div>
+                <Switch checked={cisEnabled} onCheckedChange={setCisEnabled} />
+              </div>
+              {cisEnabled && (
+                <div className="flex gap-2">
+                  {[
+                    { value: '20', label: '20% — registered' },
+                    { value: '30', label: '30% — unverified' },
+                  ].map((opt) => (
+                    <button
+                      key={opt.value}
+                      type="button"
+                      onClick={() => setCisRate(opt.value)}
+                      className={cn(
+                        'h-11 flex-1 rounded-xl text-[12.5px] font-medium border transition-colors touch-manipulation',
+                        cisRate === opt.value
+                          ? 'bg-elec-yellow text-black border-elec-yellow'
+                          : 'bg-white/[0.04] text-white border-white/[0.08]'
+                      )}
+                    >
+                      {opt.label}
+                    </button>
+                  ))}
+                </div>
+              )}
+              {cisEnabled && labourItems.length === 0 && (
+                <p className="rounded-xl border border-amber-500/30 bg-amber-500/10 px-3 py-2.5 text-[12px] text-amber-300">
+                  No labour items yet — CIS only deducts from labour, so the deduction will be £0
+                  until you add labour in the next step.
+                </p>
+              )}
             </FormCard>
           </div>
         );
@@ -889,18 +965,47 @@ export function CreateQuoteDialog({
                     £{subtotal.toFixed(2)}
                   </span>
                 </div>
-                <div className="flex justify-between">
-                  <span className="text-[12px] text-white">VAT ({vatRate}%)</span>
-                  <span className="text-[12px] text-white tabular-nums">
-                    £{vatAmount.toFixed(2)}
-                  </span>
-                </div>
+                {reverseCharge ? (
+                  <div className="flex justify-between">
+                    <span className="text-[12px] text-white">VAT — reverse charge</span>
+                    <span className="text-[12px] text-white tabular-nums">£0.00</span>
+                  </div>
+                ) : (
+                  <div className="flex justify-between">
+                    <span className="text-[12px] text-white">VAT ({vatRate}%)</span>
+                    <span className="text-[12px] text-white tabular-nums">
+                      £{vatAmount.toFixed(2)}
+                    </span>
+                  </div>
+                )}
                 <div className="flex justify-between pt-2 border-t border-white/[0.06]">
                   <span className="text-[14px] font-semibold text-white">Total</span>
                   <span className="text-[22px] font-semibold text-elec-yellow tabular-nums">
                     £{total.toFixed(2)}
                   </span>
                 </div>
+                {cisAmount > 0 && (
+                  <>
+                    <div className="flex justify-between">
+                      <span className="text-[12px] text-white">Less CIS ({cisRate}% of labour)</span>
+                      <span className="text-[12px] text-red-400 tabular-nums">
+                        −£{cisAmount.toFixed(2)}
+                      </span>
+                    </div>
+                    <div className="flex justify-between">
+                      <span className="text-[13px] font-medium text-white">Amount payable</span>
+                      <span className="text-[15px] font-semibold text-white tabular-nums">
+                        £{amountDue.toFixed(2)}
+                      </span>
+                    </div>
+                  </>
+                )}
+                {reverseCharge && (
+                  <p className="text-[11px] text-white/50 leading-relaxed pt-1">
+                    Reverse charge: customer to account to HMRC for the VAT of £
+                    {notionalVat.toFixed(2)} ({vatRate}%). VAT Act 1994, s.55A.
+                  </p>
+                )}
               </div>
             </FormCard>
 

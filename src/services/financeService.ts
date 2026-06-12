@@ -36,6 +36,13 @@ export interface Quote {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   line_items: any[];
   notes: string | null;
+  vat_rate?: number;
+  reverse_charge?: boolean;
+  cis_enabled?: boolean;
+  cis_rate?: number;
+  subtotal?: number | null;
+  vat_amount?: number | null;
+  cis_amount?: number | null;
   created_at: string;
   updated_at: string;
 }
@@ -54,6 +61,13 @@ export interface Invoice {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   line_items: any[];
   notes: string | null;
+  vat_rate?: number;
+  reverse_charge?: boolean;
+  cis_enabled?: boolean;
+  cis_rate?: number;
+  subtotal?: number | null;
+  vat_amount?: number | null;
+  cis_amount?: number | null;
   created_at: string;
   updated_at: string;
 }

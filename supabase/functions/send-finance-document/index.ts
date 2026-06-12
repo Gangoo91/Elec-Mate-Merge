@@ -79,7 +79,8 @@ Deno.serve(async (req) => {
 
     const companyName = company?.company_name?.trim() || 'Your Electrician';
     const docNumber = doc[numberCol] || '';
-    const amount = type === 'quote' ? doc.value : doc.amount;
+    const cisAmount = Number(doc.cis_amount) || 0;
+    const amount = Number(type === 'quote' ? doc.value : doc.amount) - cisAmount;
     const link = type === 'quote' ? acceptLink : invoicePortalLink;
     const heading = type === 'quote' ? `Quote ${docNumber}` : `Invoice ${docNumber}`;
     const cta = type === 'quote' ? 'View & accept quote' : 'View invoice & pay';
@@ -94,8 +95,10 @@ Deno.serve(async (req) => {
         <p>Hi ${recipientName || 'there'},</p>
         <p>${intro}</p>
         <div style="background: #f8f8f8; border-radius: 8px; padding: 16px 20px; margin: 20px 0;">
-          <p style="margin: 0; font-size: 14px; color: #666;">${type === 'quote' ? 'Quote total' : 'Amount due'}</p>
+          <p style="margin: 0; font-size: 14px; color: #666;">${cisAmount > 0 ? 'Amount payable' : type === 'quote' ? 'Quote total' : 'Amount due'}</p>
           <p style="margin: 4px 0 0; font-size: 28px; font-weight: 700;">${money(amount)}</p>
+          ${cisAmount > 0 ? `<p style="margin: 8px 0 0; font-size: 13px; color: #666;">After CIS deduction of ${money(cisAmount)}</p>` : ''}
+          ${doc.reverse_charge ? `<p style="margin: 8px 0 0; font-size: 13px; color: #666;">VAT reverse charge applies — see the ${type} for details.</p>` : ''}
           ${doc.due_date && type === 'invoice' ? `<p style="margin: 8px 0 0; font-size: 13px; color: #666;">Due ${new Date(doc.due_date).toLocaleDateString('en-GB', { day: 'numeric', month: 'long', year: 'numeric' })}</p>` : ''}
         </div>
         ${

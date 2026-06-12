@@ -140,7 +140,20 @@ export function ViewQuoteSheet({
   if (!quote) return null;
 
   const lineItems = Array.isArray(quote.line_items) ? quote.line_items : [];
-  const subtotal = lineItems.reduce((sum: number, item: any) => sum + (item.total || 0), 0);
+  const subtotal =
+    quote.subtotal != null
+      ? Number(quote.subtotal)
+      : lineItems.reduce((sum: number, item: any) => sum + (item.total || 0), 0);
+  const vatRate = Number(quote.vat_rate ?? 20);
+  const reverseCharge = Boolean(quote.reverse_charge);
+  const vatAmount =
+    quote.vat_amount != null
+      ? Number(quote.vat_amount)
+      : reverseCharge
+        ? 0
+        : subtotal * (vatRate / 100);
+  const cisAmount = Number(quote.cis_amount) || 0;
+  const amountPayable = Number(quote.value) - cisAmount;
 
   const statusTone: Record<string, 'amber' | 'blue' | 'emerald' | 'red' | 'yellow'> = {
     Draft: 'amber',
@@ -567,9 +580,11 @@ export function ViewQuoteSheet({
                 <span className="font-medium text-white tabular-nums">£{subtotal.toFixed(2)}</span>
               </div>
               <div className="flex justify-between items-center text-sm">
-                <span className="text-white">VAT @ 20%</span>
+                <span className="text-white">
+                  {reverseCharge ? 'VAT — reverse charge' : `VAT @ ${vatRate}%`}
+                </span>
                 <span className="font-medium text-white tabular-nums">
-                  £{(subtotal * 0.2).toFixed(2)}
+                  £{vatAmount.toFixed(2)}
                 </span>
               </div>
               <div className="h-px w-full bg-white/[0.08] my-2" />
@@ -579,6 +594,28 @@ export function ViewQuoteSheet({
                   £{Number(quote.value).toLocaleString('en-GB', { minimumFractionDigits: 2 })}
                 </span>
               </div>
+              {cisAmount > 0 && (
+                <>
+                  <div className="flex justify-between items-center text-sm">
+                    <span className="text-white">Less CIS ({Number(quote.cis_rate ?? 20)}% of labour)</span>
+                    <span className="font-medium text-red-400 tabular-nums">
+                      −£{cisAmount.toFixed(2)}
+                    </span>
+                  </div>
+                  <div className="flex justify-between items-center">
+                    <span className="text-sm font-medium text-white">Amount payable</span>
+                    <span className="text-lg font-semibold text-white tabular-nums">
+                      £{amountPayable.toFixed(2)}
+                    </span>
+                  </div>
+                </>
+              )}
+              {reverseCharge && (
+                <p className="text-[11px] text-white/50 leading-relaxed pt-1">
+                  Reverse charge: customer to account to HMRC for the VAT of £
+                  {(subtotal * (vatRate / 100)).toFixed(2)} ({vatRate}%). VAT Act 1994, s.55A.
+                </p>
+              )}
             </div>
 
             {quote.notes && (
@@ -625,7 +662,10 @@ export function ViewQuoteSheet({
 <style>body{font-family:-apple-system,'Segoe UI',Roboto,sans-serif;color:#0f172a;max-width:760px;margin:0 auto;padding:40px}h1{font-size:22px}table{width:100%;border-collapse:collapse;margin:20px 0}th,td{text-align:left;padding:10px 0;border-bottom:1px solid #e2e8f0;font-size:14px}th{font-size:11px;text-transform:uppercase;color:#64748b}.total{font-size:24px;font-weight:700;text-align:right;margin-top:16px}.actions{position:fixed;bottom:24px;right:24px}.actions button{padding:12px 24px;font-weight:600;border-radius:10px;border:none;cursor:pointer;background:#f59e0b}@media print{.actions{display:none}}</style></head>
 <body><h1>Quote ${quote.quote_number}</h1><p>${quote.client}${quote.description ? ` — ${quote.description}` : ''}</p>
 ${rows ? `<table><thead><tr><th>Description</th><th>Qty</th><th style="text-align:right">Amount</th></tr></thead><tbody>${rows}</tbody></table>` : ''}
+<p style="text-align:right;font-size:14px;color:#475569;margin:4px 0">Subtotal: ${money(subtotal)}<br/>${reverseCharge ? 'VAT — reverse charge: £0.00' : `VAT (${vatRate}%): ${money(vatAmount)}`}</p>
 <p class="total">Total: ${money(Number(quote.value))}</p>
+${cisAmount > 0 ? `<p style="text-align:right;font-size:14px;color:#475569;margin:4px 0">Less CIS (${Number(quote.cis_rate ?? 20)}% of labour): −${money(cisAmount)}<br/><strong>Amount payable: ${money(amountPayable)}</strong></p>` : ''}
+${reverseCharge ? `<p style="font-size:12px;color:#64748b;margin-top:16px">VAT reverse charge applies. Customer to account to HMRC for the VAT of ${money(subtotal * (vatRate / 100))} (${vatRate}%). This quotation shows £0 VAT — do not pay the VAT to the supplier. VAT Act 1994, s.55A.</p>` : ''}
 <div class="actions"><button onclick="window.print()">Print / Save as PDF</button></div></body></html>`;
                   const viewWindow = window.open('', '_blank');
                   if (viewWindow) {

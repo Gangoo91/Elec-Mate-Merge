@@ -1,0 +1,15 @@
+-- VAT (incl. domestic reverse charge) + CIS on employer quotes & invoices.
+-- Applied live as DB migration `employer_vat_cis` (2026-06-12).
+--
+-- employer_quotes + employer_invoices each gain:
+--   vat_rate numeric not null default 20
+--   reverse_charge boolean not null default false
+--   cis_enabled boolean not null default false
+--   cis_rate numeric not null default 20          -- 20 registered / 30 unverified
+--   subtotal numeric                              -- net of VAT
+--   vat_amount numeric                            -- 0 when reverse_charge
+--   cis_amount numeric                            -- deduction on labour lines only
+-- value/amount remains the gross total inc. VAT; amount due = gross - cis_amount.
+--
+-- get_employer_invoice_by_token / get_employer_quote_by_token now return the
+-- new fields (full bodies in the DB migration of the same name).

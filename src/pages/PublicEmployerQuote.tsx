@@ -128,10 +128,49 @@ export default function PublicEmployerQuote() {
             </div>
           )}
 
+          {quote.subtotal != null && (
+            <div className="space-y-1.5 border-t border-white/[0.08] pt-4">
+              <div className="flex justify-between text-[12.5px] text-white/60">
+                <span>Subtotal</span>
+                <span className="tabular-nums">{money(quote.subtotal)}</span>
+              </div>
+              <div className="flex justify-between text-[12.5px] text-white/60">
+                <span>
+                  {quote.reverse_charge ? 'VAT — reverse charge' : `VAT (${Number(quote.vat_rate ?? 20)}%)`}
+                </span>
+                <span className="tabular-nums">{money(quote.vat_amount)}</span>
+              </div>
+            </div>
+          )}
+
           <div className="border-t border-white/[0.08] pt-4 flex justify-between items-baseline">
             <span className="text-[13px] text-white/60">Quote total</span>
             <span className="text-[26px] font-bold tabular-nums">{money(quote.value)}</span>
           </div>
+
+          {Number(quote.cis_amount) > 0 && (
+            <div className="space-y-1.5">
+              <div className="flex justify-between text-[12.5px] text-white/60">
+                <span>Less CIS deduction ({Number(quote.cis_rate ?? 20)}% of labour)</span>
+                <span className="tabular-nums text-red-400">−{money(quote.cis_amount)}</span>
+              </div>
+              <div className="flex justify-between items-baseline">
+                <span className="text-[13px] font-medium text-white/80">Amount payable</span>
+                <span className="text-[18px] font-semibold tabular-nums">
+                  {money(Number(quote.value) - Number(quote.cis_amount))}
+                </span>
+              </div>
+            </div>
+          )}
+
+          {quote.reverse_charge && (
+            <p className="text-[11px] text-white/40 leading-relaxed">
+              VAT reverse charge applies. Customer to account to HMRC for the VAT of{' '}
+              {money(Number(quote.subtotal || 0) * (Number(quote.vat_rate ?? 20) / 100))} (
+              {Number(quote.vat_rate ?? 20)}%). This quotation shows £0 VAT — do not pay the VAT to
+              the supplier. VAT Act 1994, s.55A.
+            </p>
+          )}
         </div>
 
         {decided ? (

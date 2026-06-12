@@ -23,6 +23,8 @@ import {
   X,
 } from 'lucide-react';
 import { useCreateInvoice, useNextInvoiceNumber, useQuotes } from '@/hooks/useFinance';
+import { Switch } from '@/components/ui/switch';
+import { calcEmployerTotals, isLabourItem } from '@/utils/employerMoney';
 import type { Quote } from '@/services/financeService';
 import { useOptionalVoiceFormContext } from '@/contexts/VoiceFormContext';
 import { cn } from '@/lib/utils';
@@ -47,6 +49,7 @@ interface LineItem {
   unit: string;
   unitPrice: number;
   total: number;
+  type?: string;
 }
 
 interface CreateInvoiceDialogProps {
@@ -61,6 +64,9 @@ export function CreateInvoiceDialog({ open, onOpenChange, fromQuote }: CreateInv
   const [project, setProject] = useState('');
   const [paymentTerms, setPaymentTerms] = useState('30');
   const [vatRate, setVatRate] = useState('20');
+  const [reverseCharge, setReverseCharge] = useState(false);
+  const [cisEnabled, setCisEnabled] = useState(false);
+  const [cisRate, setCisRate] = useState('20');
   const [notes, setNotes] = useState('');
   const [lineItems, setLineItems] = useState<LineItem[]>([]);
   const [selectedQuoteId, setSelectedQuoteId] = useState<string | null>(null);
@@ -69,6 +75,7 @@ export function CreateInvoiceDialog({ open, onOpenChange, fromQuote }: CreateInv
     quantity: '',
     unit: 'each',
     unitPrice: '',
+    type: 'material',
   });
   const [itemQuantityInputs, setItemQuantityInputs] = useState<Record<string, string>>({});
 
@@ -83,6 +90,10 @@ export function CreateInvoiceDialog({ open, onOpenChange, fromQuote }: CreateInv
       setClient(fromQuote.client);
       setProject(fromQuote.description || '');
       setSelectedQuoteId(fromQuote.id);
+      setVatRate(String(fromQuote.vat_rate ?? 20));
+      setReverseCharge(Boolean(fromQuote.reverse_charge));
+      setCisEnabled(Boolean(fromQuote.cis_enabled));
+      setCisRate(String(fromQuote.cis_rate ?? 20));
       if (Array.isArray(fromQuote.line_items)) {
         setLineItems(
           fromQuote.line_items.map((item: any) => ({
@@ -92,6 +103,7 @@ export function CreateInvoiceDialog({ open, onOpenChange, fromQuote }: CreateInv
             unit: item.unit,
             unitPrice: item.unitPrice,
             total: item.total,
+            type: item.type,
           }))
         );
       }
@@ -167,6 +179,10 @@ export function CreateInvoiceDialog({ open, onOpenChange, fromQuote }: CreateInv
       setClient(quote.client);
       setProject(quote.description || '');
       setSelectedQuoteId(quote.id);
+      setVatRate(String(quote.vat_rate ?? 20));
+      setReverseCharge(Boolean(quote.reverse_charge));
+      setCisEnabled(Boolean(quote.cis_enabled));
+      setCisRate(String(quote.cis_rate ?? 20));
       if (Array.isArray(quote.line_items)) {
         setLineItems(
           quote.line_items.map((item: any) => ({
@@ -176,15 +192,21 @@ export function CreateInvoiceDialog({ open, onOpenChange, fromQuote }: CreateInv
             unit: item.unit,
             unitPrice: item.unitPrice,
             total: item.total,
+            type: item.type,
           }))
         );
       }
     }
   };
 
-  const subtotal = lineItems.reduce((sum, item) => sum + item.total, 0);
-  const vatAmount = subtotal * (Number(vatRate) / 100);
-  const total = subtotal + vatAmount;
+  const money = calcEmployerTotals(lineItems, {
+    vatRate: Number(vatRate),
+    reverseCharge,
+    cisEnabled,
+    cisRate: Number(cisRate),
+  });
+  const { subtotal, vatAmount, notionalVat, cisAmount, total, amountDue } = money;
+  const hasLabour = lineItems.some(isLabourItem);
 
   const addLineItem = () => {
     if (!newItem.description) return;
@@ -197,9 +219,10 @@ export function CreateInvoiceDialog({ open, onOpenChange, fromQuote }: CreateInv
       unit: newItem.unit,
       unitPrice: price,
       total: qty * price,
+      type: newItem.type,
     };
     setLineItems([...lineItems, item]);
-    setNewItem({ description: '', quantity: '', unit: 'each', unitPrice: '' });
+    setNewItem({ description: '', quantity: '', unit: 'each', unitPrice: '', type: 'material' });
   };
 
   const removeLineItem = (id: string) => {
@@ -234,7 +257,15 @@ export function CreateInvoiceDialog({ open, onOpenChange, fromQuote }: CreateInv
       quote_id: selectedQuoteId,
       line_items: lineItems,
       notes,
-    });
+      vat_rate: Number(vatRate),
+      reverse_charge: reverseCharge,
+      cis_enabled: cisEnabled,
+      cis_rate: Number(cisRate),
+      subtotal,
+      vat_amount: vatAmount,
+      cis_amount: cisAmount,
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    } as any);
 
     resetForm();
     onOpenChange(false);
@@ -246,10 +277,13 @@ export function CreateInvoiceDialog({ open, onOpenChange, fromQuote }: CreateInv
     setProject('');
     setPaymentTerms('30');
     setVatRate('20');
+    setReverseCharge(false);
+    setCisEnabled(false);
+    setCisRate('20');
     setNotes('');
     setLineItems([]);
     setSelectedQuoteId(null);
-    setNewItem({ description: '', quantity: '', unit: 'each', unitPrice: '' });
+    setNewItem({ description: '', quantity: '', unit: 'each', unitPrice: '', type: 'material' });
     setItemQuantityInputs({});
   };
 
@@ -383,6 +417,52 @@ export function CreateInvoiceDialog({ open, onOpenChange, fromQuote }: CreateInv
                       </Field>
                     </FormGrid>
                   </FormCard>
+
+                  <FormCard eyebrow="VAT & CIS">
+                    <div className="flex items-center justify-between gap-3 min-h-[44px]">
+                      <div className="flex-1 min-w-0">
+                        <p className="text-[13.5px] font-medium text-white">
+                          Domestic reverse charge
+                        </p>
+                        <p className="text-[11.5px] text-white/50 mt-0.5">
+                          Invoice shows £0 VAT — the customer accounts to HMRC. For VAT-registered
+                          contractor chains.
+                        </p>
+                      </div>
+                      <Switch checked={reverseCharge} onCheckedChange={setReverseCharge} />
+                    </div>
+                    <div className="flex items-center justify-between gap-3 min-h-[44px]">
+                      <div className="flex-1 min-w-0">
+                        <p className="text-[13.5px] font-medium text-white">CIS deduction</p>
+                        <p className="text-[11.5px] text-white/50 mt-0.5">
+                          Deducted from labour lines only — tag items as labour when adding them.
+                        </p>
+                      </div>
+                      <Switch checked={cisEnabled} onCheckedChange={setCisEnabled} />
+                    </div>
+                    {cisEnabled && (
+                      <div className="flex gap-2">
+                        {[
+                          { value: '20', label: '20% — registered' },
+                          { value: '30', label: '30% — unverified' },
+                        ].map((opt) => (
+                          <button
+                            key={opt.value}
+                            type="button"
+                            onClick={() => setCisRate(opt.value)}
+                            className={cn(
+                              'h-11 flex-1 rounded-xl text-[12.5px] font-medium border transition-colors touch-manipulation',
+                              cisRate === opt.value
+                                ? 'bg-elec-yellow text-black border-elec-yellow'
+                                : 'bg-white/[0.04] text-white border-white/[0.08]'
+                            )}
+                          >
+                            {opt.label}
+                          </button>
+                        ))}
+                      </div>
+                    )}
+                  </FormCard>
                 </div>
               )}
 
@@ -400,6 +480,11 @@ export function CreateInvoiceDialog({ open, onOpenChange, fromQuote }: CreateInv
                               <div className="flex-1 min-w-0">
                                 <p className="font-medium text-[13px] text-white truncate">
                                   {item.description}
+                                  {isLabourItem(item) && (
+                                    <span className="ml-2 inline-block rounded-full bg-elec-yellow/15 border border-elec-yellow/25 px-2 py-0.5 text-[10px] font-medium text-elec-yellow align-middle">
+                                      Labour
+                                    </span>
+                                  )}
                                 </p>
                                 <div className="flex items-center gap-3 mt-2">
                                   <Input
@@ -496,11 +581,38 @@ export function CreateInvoiceDialog({ open, onOpenChange, fromQuote }: CreateInv
                         />
                       </Field>
                     </div>
+                    <div className="flex gap-2">
+                      {[
+                        { value: 'labour', label: 'Labour' },
+                        { value: 'material', label: 'Materials' },
+                      ].map((opt) => (
+                        <button
+                          key={opt.value}
+                          type="button"
+                          onClick={() => setNewItem({ ...newItem, type: opt.value })}
+                          className={cn(
+                            'h-11 flex-1 rounded-xl text-[12.5px] font-medium border transition-colors touch-manipulation',
+                            newItem.type === opt.value
+                              ? 'bg-elec-yellow text-black border-elec-yellow'
+                              : 'bg-white/[0.04] text-white border-white/[0.08]'
+                          )}
+                        >
+                          {opt.label}
+                        </button>
+                      ))}
+                    </div>
                     <SecondaryButton onClick={addLineItem} disabled={!newItem.description} fullWidth>
                       <Plus className="h-4 w-4 mr-2" />
                       Add Item
                     </SecondaryButton>
                   </div>
+
+                  {cisEnabled && !hasLabour && lineItems.length > 0 && (
+                    <p className="rounded-xl border border-amber-500/30 bg-amber-500/10 px-3 py-2.5 text-[12px] text-amber-300">
+                      CIS is on but no items are tagged as labour — the deduction will be £0. Tag
+                      labour items using the Labour toggle above.
+                    </p>
+                  )}
 
                   {lineItems.length === 0 && (
                     <p className="text-[12.5px] text-white text-center py-2">
@@ -536,18 +648,43 @@ export function CreateInvoiceDialog({ open, onOpenChange, fromQuote }: CreateInv
                           £{subtotal.toFixed(2)}
                         </span>
                       </div>
-                      <div className="flex justify-between">
-                        <span className="text-[12.5px] text-white">VAT ({vatRate}%)</span>
-                        <span className="text-[12.5px] text-white tabular-nums">
-                          £{vatAmount.toFixed(2)}
-                        </span>
-                      </div>
+                      {reverseCharge ? (
+                        <div className="flex justify-between">
+                          <span className="text-[12.5px] text-white">VAT — reverse charge</span>
+                          <span className="text-[12.5px] text-white tabular-nums">£0.00</span>
+                        </div>
+                      ) : (
+                        <div className="flex justify-between">
+                          <span className="text-[12.5px] text-white">VAT ({vatRate}%)</span>
+                          <span className="text-[12.5px] text-white tabular-nums">
+                            £{vatAmount.toFixed(2)}
+                          </span>
+                        </div>
+                      )}
+                      {cisAmount > 0 && (
+                        <div className="flex justify-between">
+                          <span className="text-[12.5px] text-white">
+                            Less CIS ({cisRate}% of labour)
+                          </span>
+                          <span className="text-[12.5px] text-red-400 tabular-nums">
+                            −£{cisAmount.toFixed(2)}
+                          </span>
+                        </div>
+                      )}
                       <div className="flex justify-between pt-2 border-t border-white/[0.1]">
-                        <span className="text-lg font-bold text-white">Total Due</span>
+                        <span className="text-lg font-bold text-white">
+                          {cisAmount > 0 ? 'Due after CIS' : 'Total Due'}
+                        </span>
                         <span className="text-2xl font-bold text-elec-yellow tabular-nums">
-                          £{total.toFixed(2)}
+                          £{amountDue.toFixed(2)}
                         </span>
                       </div>
+                      {reverseCharge && (
+                        <p className="text-[11px] text-white/60 leading-relaxed pt-1">
+                          Reverse charge: customer to account to HMRC for the VAT of £
+                          {notionalVat.toFixed(2)} ({vatRate}%). VAT Act 1994, s.55A.
+                        </p>
+                      )}
                     </div>
                   </div>
 
@@ -592,10 +729,12 @@ export function CreateInvoiceDialog({ open, onOpenChange, fromQuote }: CreateInv
               <div className="flex items-center justify-between">
                 <div className="flex items-center gap-2">
                   <Calculator className="h-4 w-4 text-white" />
-                  <span className="text-[12.5px] text-white">Total Due</span>
+                  <span className="text-[12.5px] text-white">
+                    {cisAmount > 0 ? 'Due after CIS' : 'Total Due'}
+                  </span>
                 </div>
                 <span className="text-xl font-bold text-elec-yellow tabular-nums">
-                  £{total.toFixed(2)}
+                  £{amountDue.toFixed(2)}
                 </span>
               </div>
             </div>

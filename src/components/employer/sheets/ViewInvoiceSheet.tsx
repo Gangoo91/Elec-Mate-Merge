@@ -282,13 +282,62 @@ export function ViewInvoiceSheet({ open, onOpenChange, invoice }: ViewInvoiceShe
             </FormCard>
           )}
 
-          <div className="rounded-2xl p-4 bg-elec-yellow/10 border border-elec-yellow/30">
+          <div className="rounded-2xl p-4 bg-elec-yellow/10 border border-elec-yellow/30 space-y-2">
+            {invoice.subtotal != null && (
+              <>
+                <div className="flex justify-between items-center text-sm">
+                  <span className="text-white">Subtotal</span>
+                  <span className="font-medium text-white tabular-nums">
+                    £{Number(invoice.subtotal).toFixed(2)}
+                  </span>
+                </div>
+                <div className="flex justify-between items-center text-sm">
+                  <span className="text-white">
+                    {invoice.reverse_charge
+                      ? 'VAT — reverse charge'
+                      : `VAT @ ${Number(invoice.vat_rate ?? 20)}%`}
+                  </span>
+                  <span className="font-medium text-white tabular-nums">
+                    £{(Number(invoice.vat_amount) || 0).toFixed(2)}
+                  </span>
+                </div>
+                <div className="h-px w-full bg-white/[0.08] my-2" />
+              </>
+            )}
             <div className="flex justify-between items-center">
               <span className="text-lg font-medium text-white">Total amount</span>
               <span className="text-2xl font-bold text-elec-yellow tabular-nums">
                 £{Number(invoice.amount).toLocaleString()}
               </span>
             </div>
+            {(Number(invoice.cis_amount) || 0) > 0 && (
+              <>
+                <div className="flex justify-between items-center text-sm">
+                  <span className="text-white">
+                    Less CIS ({Number(invoice.cis_rate ?? 20)}% of labour)
+                  </span>
+                  <span className="font-medium text-red-400 tabular-nums">
+                    −£{Number(invoice.cis_amount).toFixed(2)}
+                  </span>
+                </div>
+                <div className="flex justify-between items-center">
+                  <span className="text-sm font-medium text-white">Due after CIS</span>
+                  <span className="text-lg font-semibold text-white tabular-nums">
+                    £{(Number(invoice.amount) - Number(invoice.cis_amount)).toFixed(2)}
+                  </span>
+                </div>
+              </>
+            )}
+            {invoice.reverse_charge && (
+              <p className="text-[11px] text-white/50 leading-relaxed pt-1">
+                Reverse charge: customer to account to HMRC for the VAT of £
+                {(
+                  (Number(invoice.subtotal) || 0) *
+                  (Number(invoice.vat_rate ?? 20) / 100)
+                ).toFixed(2)}{' '}
+                ({Number(invoice.vat_rate ?? 20)}%). VAT Act 1994, s.55A.
+              </p>
+            )}
           </div>
 
           {invoice.notes && (

@@ -71,8 +71,22 @@ Deno.serve(async (req) => {
     };
 
     const lineItems: LineItem[] = Array.isArray(invoice.line_items) ? invoice.line_items : [];
-    const subtotal = lineItems.reduce((s, i) => s + (i.total || 0), 0);
-    const vatAmount = subtotal * 0.2;
+    // Stored breakdown wins; legacy rows fall back to the old computed 20%
+    const subtotal =
+      invoice.subtotal != null
+        ? Number(invoice.subtotal)
+        : lineItems.reduce((s, i) => s + (i.total || 0), 0);
+    const vatRate = Number(invoice.vat_rate ?? 20);
+    const reverseCharge = Boolean(invoice.reverse_charge);
+    const vatAmount =
+      invoice.vat_amount != null
+        ? Number(invoice.vat_amount)
+        : reverseCharge
+          ? 0
+          : subtotal * (vatRate / 100);
+    const cisAmount = Number(invoice.cis_amount) || 0;
+    const amountDue = Number(invoice.amount) - cisAmount;
+    const notionalVat = subtotal * (vatRate / 100);
     const createdDate = new Date(invoice.created_at).toLocaleDateString('en-GB', {
       day: 'numeric',
       month: 'long',
@@ -95,7 +109,8 @@ Deno.serve(async (req) => {
 <div class="meta"><div><label>Bill to</label><div class="v">${invoice.client}</div>${invoice.project ? `<p style="font-size:13px;color:#64748b">${invoice.project}</p>` : ''}</div>
 <div style="text-align:right"><label>Invoice date</label><div class="v">${createdDate}</div><label style="margin-top:10px">${isPaid ? 'Status' : 'Due'}</label><div class="v">${isPaid ? 'Paid' : dueDate}</div></div></div>
 ${lineItems.length > 0 ? `<table><thead><tr><th>Description</th><th>Qty</th><th>Unit</th><th>Amount</th></tr></thead><tbody>${lineItems.map((i) => `<tr><td>${i.description}</td><td>${i.quantity}</td><td>${money(i.unitPrice)}</td><td>${money(i.total)}</td></tr>`).join('')}</tbody></table>` : ''}
-<div class="totals">${lineItems.length > 0 ? `<div class="trow"><span>Subtotal</span><span>${money(subtotal)}</span></div><div class="trow"><span>VAT (20%)</span><span>${money(vatAmount)}</span></div>` : ''}<div class="trow grand"><span>${isPaid ? 'Amount paid' : 'Amount due'}</span><span>${money(Number(invoice.amount))}</span></div></div>
+<div class="totals">${lineItems.length > 0 ? `<div class="trow"><span>Subtotal</span><span>${money(subtotal)}</span></div><div class="trow"><span>${reverseCharge ? 'VAT — reverse charge' : `VAT (${vatRate}%)`}</span><span>${money(vatAmount)}</span></div>` : ''}${cisAmount > 0 ? `<div class="trow"><span>Total inc. VAT</span><span>${money(Number(invoice.amount))}</span></div><div class="trow"><span>Less CIS deduction (${Number(invoice.cis_rate ?? 20)}% of labour)</span><span>−${money(cisAmount)}</span></div>` : ''}<div class="trow grand"><span>${isPaid ? 'Amount paid' : cisAmount > 0 ? 'Amount due after CIS' : 'Amount due'}</span><span>${money(amountDue)}</span></div></div>
+${reverseCharge ? `<p style="margin-top:16px;font-size:12px;color:#64748b">VAT reverse charge applies. Customer to account to HMRC for the VAT of ${money(notionalVat)} (${vatRate}%). This invoice shows £0 VAT — do not pay the VAT to the supplier. VAT Act 1994, s.55A.</p>` : ''}
 ${!isPaid && (bank.accountName || bank.sortCode || bank.accountNumber) ? `<div class="bank"><h4>Payment details</h4><div class="grid">${bank.accountName ? `<div><label>Account name</label>${bank.accountName}</div>` : ''}${bank.sortCode ? `<div><label>Sort code</label>${bank.sortCode}</div>` : ''}${bank.accountNumber ? `<div><label>Account number</label>${bank.accountNumber}</div>` : ''}</div><p style="margin-top:12px;font-size:13px;color:#64748b">Reference: <strong>${invoice.invoice_number}</strong></p></div>` : ''}
 ${invoice.notes ? `<p style="margin-top:24px;font-size:13px;white-space:pre-wrap">${invoice.notes}</p>` : ''}
 <div class="footer">${companyName}${company?.company_website ? ` · ${String(company.company_website).replace(/^https?:\/\//, '')}` : ''}</div>
