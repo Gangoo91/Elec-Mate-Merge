@@ -1,7 +1,10 @@
 import { useEffect, useRef, useState } from 'react';
+import { Mic, Square } from 'lucide-react';
 import { Sheet, SheetContent, SheetTitle } from '@/components/ui/sheet';
 import { useToast } from '@/hooks/use-toast';
 import { supabase } from '@/integrations/supabase/client';
+import { useSpeechToText } from '@/hooks/useSpeechToText';
+import { parseOtjSpeech } from '@/lib/parseOtjSpeech';
 import { cn } from '@/lib/utils';
 
 /* ==========================================================================
@@ -96,6 +99,56 @@ export function SubmitWorkOtjSheet({ open, onOpenChange, onSubmitted, prefill }:
   const [hasCollege, setHasCollege] = useState<boolean | null>(null);
   const fileRef = useRef<HTMLInputElement>(null);
   const { toast } = useToast();
+
+  // Voice-first entry: speak the activity, the deterministic parser fills the
+  // form (duration/date/type/title/description), the learner reviews + submits.
+  const speech = useSpeechToText({ continuous: true });
+
+  const handleVoiceStart = () => {
+    speech.resetTranscript();
+    speech.startListening();
+  };
+
+  const handleVoiceStop = () => {
+    speech.stopListening();
+    const said = `${speech.transcript} ${speech.interimTranscript}`.trim();
+    if (said.length < 8) {
+      if (said.length > 0) {
+        toast({ title: 'Too short to fill from', description: 'Say what you did, how long and when.' });
+      }
+      return;
+    }
+    const parsed = parseOtjSpeech(said);
+    setForm((f) => ({
+      ...f,
+      title: parsed.title ?? f.title,
+      description: f.description
+        ? `${f.description}\n${parsed.description}`
+        : parsed.description,
+      duration_minutes: parsed.duration_minutes
+        ? String(parsed.duration_minutes)
+        : f.duration_minutes,
+      activity_date: parsed.activity_date ?? f.activity_date,
+      activity_type: parsed.activity_type ?? f.activity_type,
+    }));
+    const filled = parsed.detected.length > 0 ? parsed.detected.join(', ') : 'description';
+    toast({
+      title: 'Filled from voice',
+      description: `Set: ${filled}. Check it over, then submit.`,
+    });
+  };
+
+  // Mic lifecycle: never leave it hot when the sheet closes, and don't show
+  // a previous session's transcript when it reopens (the component stays
+  // mounted across opens, so hook state persists).
+  useEffect(() => {
+    if (open) {
+      speech.resetTranscript();
+    } else if (speech.isListening) {
+      speech.stopListening();
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [open]);
 
   // Resolve college link when the sheet opens so the copy + CTA match reality.
   useEffect(() => {
@@ -310,6 +363,58 @@ export function SubmitWorkOtjSheet({ open, onOpenChange, onSubmitted, prefill }:
           </header>
 
           <div className="flex-1 overflow-y-auto px-4 sm:px-5 py-4 space-y-5">
+            {/* Voice-first entry — speak it, the parser fills the form, you
+                check it. Gloves-friendly: one tap to start, one to stop. */}
+            {speech.isSupported && (
+              <div
+                className={cn(
+                  'rounded-2xl border p-3.5 space-y-2.5 transition-colors',
+                  speech.isListening
+                    ? 'border-elec-yellow/40 bg-elec-yellow/[0.05]'
+                    : 'border-white/[0.08] bg-[hsl(0_0%_10%)]'
+                )}
+              >
+                <button
+                  type="button"
+                  onClick={speech.isListening ? handleVoiceStop : handleVoiceStart}
+                  className={cn(
+                    'w-full h-11 rounded-xl inline-flex items-center justify-center gap-2 text-[13px] font-medium touch-manipulation transition-colors',
+                    speech.isListening
+                      ? 'bg-elec-yellow text-black'
+                      : 'border border-elec-yellow/25 bg-elec-yellow/10 text-elec-yellow hover:bg-elec-yellow/20'
+                  )}
+                >
+                  {speech.isListening ? (
+                    <>
+                      <span className="relative flex h-2.5 w-2.5">
+                        <span className="absolute inline-flex h-full w-full rounded-full bg-black/60 animate-ping" />
+                        <span className="relative inline-flex h-2.5 w-2.5 rounded-full bg-black" />
+                      </span>
+                      <Square className="h-3.5 w-3.5" />
+                      Stop &amp; fill the form
+                    </>
+                  ) : (
+                    <>
+                      <Mic className="h-4 w-4" />
+                      Speak it — what, how long, when
+                    </>
+                  )}
+                </button>
+                {(speech.isListening || speech.interimTranscript || speech.transcript) && (
+                  <p className="text-[12.5px] text-white/70 leading-snug min-h-[18px]">
+                    {speech.transcript}
+                    <span className="text-white/40">{speech.interimTranscript}</span>
+                    {speech.isListening && !speech.transcript && !speech.interimTranscript && (
+                      <span className="text-white/40">
+                        Listening… e.g. &ldquo;Two hours second fix wiring at the Hartlepool job
+                        yesterday&rdquo;
+                      </span>
+                    )}
+                  </p>
+                )}
+              </div>
+            )}
+
             <Field label="Date">
               <input
                 type="date"

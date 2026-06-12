@@ -40,79 +40,65 @@ const YEARS = [
 ];
 
 const inputClass =
-  'h-12 w-full touch-manipulation rounded-2xl border border-white/[0.12] bg-white/[0.04] px-5 text-[16px] text-white placeholder:text-white/40 outline-none transition-all duration-150 focus:border-yellow-400/70 focus:bg-white/[0.06] focus:ring-2 focus:ring-yellow-400/20';
+  'h-11 w-full touch-manipulation rounded-xl border border-white/[0.10] bg-white/[0.04] px-4 text-[16px] text-white placeholder:text-white/40 outline-none transition-all duration-150 focus:border-yellow-400/60 focus:bg-white/[0.06] focus:ring-1 focus:ring-yellow-400/20';
+
+const chipClass = (active: boolean) =>
+  [
+    'h-10 touch-manipulation rounded-xl border px-2.5 text-[13px] font-medium transition-colors',
+    active
+      ? 'border-elec-yellow/60 bg-elec-yellow/10 text-elec-yellow'
+      : 'border-white/[0.10] bg-white/[0.04] text-white/85 hover:border-white/25',
+  ].join(' ');
 
 export function ApprenticeQuickStep({ formData, onChange }: ApprenticeStepProps) {
   return (
-    <div className="space-y-6">
-      <div>
-        <h3 className="text-[1.5rem] font-bold leading-[1.1] tracking-[-0.02em] text-white sm:text-[1.75rem]">
-          What are you <span className="text-yellow-400">studying?</span>
+    <div className="space-y-5">
+      <div className="space-y-1">
+        <h3 className="text-[18px] font-semibold tracking-tight text-white leading-tight">
+          What are you studying?
         </h3>
-        <p className="mt-2 text-[14px] leading-[1.6] text-white sm:text-[15px]">
-          One question, then you&apos;re in. We&apos;ll line up the right mock tests,
-          flashcards and AI mentor for your level.
+        <p className="text-[12.5px] leading-snug text-white/55">
+          Two taps and you&apos;re in — this targets your mock tests, flashcards and AI
+          mentor to the right level.
         </p>
       </div>
 
       <div className="space-y-4">
         {/* Course */}
         <div>
-          <label
-            htmlFor="apprentice-course"
-            className="mb-2 block text-[13px] font-medium text-white"
-          >
+          <span className="mb-1.5 block text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
             Course
-          </label>
-          <div className="grid grid-cols-2 gap-2">
-            {COURSES.map((c) => {
-              const active = formData.apprenticeCourse === c.value;
-              return (
-                <button
-                  key={c.value}
-                  type="button"
-                  onClick={() => onChange({ ...formData, apprenticeCourse: c.value })}
-                  className={[
-                    'h-12 touch-manipulation rounded-2xl border px-3 text-[14px] font-medium transition-all',
-                    active
-                      ? 'border-yellow-400/70 bg-yellow-400/10 text-yellow-300'
-                      : 'border-white/[0.12] bg-white/[0.04] text-white hover:border-white/25',
-                  ].join(' ')}
-                >
-                  {c.label}
-                </button>
-              );
-            })}
+          </span>
+          <div className="grid grid-cols-2 gap-1.5">
+            {COURSES.map((c) => (
+              <button
+                key={c.value}
+                type="button"
+                onClick={() => onChange({ ...formData, apprenticeCourse: c.value })}
+                className={chipClass(formData.apprenticeCourse === c.value)}
+              >
+                {c.label}
+              </button>
+            ))}
           </div>
         </div>
 
         {/* Year */}
         <div>
-          <label
-            htmlFor="apprentice-year"
-            className="mb-2 block text-[13px] font-medium text-white"
-          >
+          <span className="mb-1.5 block text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
             Where are you up to?
-          </label>
-          <div className="grid grid-cols-2 gap-2">
-            {YEARS.map((y) => {
-              const active = formData.apprenticeYear === y.value;
-              return (
-                <button
-                  key={y.value}
-                  type="button"
-                  onClick={() => onChange({ ...formData, apprenticeYear: y.value })}
-                  className={[
-                    'h-12 touch-manipulation rounded-2xl border px-3 text-[14px] font-medium transition-all',
-                    active
-                      ? 'border-yellow-400/70 bg-yellow-400/10 text-yellow-300'
-                      : 'border-white/[0.12] bg-white/[0.04] text-white hover:border-white/25',
-                  ].join(' ')}
-                >
-                  {y.label}
-                </button>
-              );
-            })}
+          </span>
+          <div className="grid grid-cols-2 gap-1.5">
+            {YEARS.map((y) => (
+              <button
+                key={y.value}
+                type="button"
+                onClick={() => onChange({ ...formData, apprenticeYear: y.value })}
+                className={chipClass(formData.apprenticeYear === y.value)}
+              >
+                {y.label}
+              </button>
+            ))}
           </div>
         </div>
 
@@ -120,10 +106,9 @@ export function ApprenticeQuickStep({ formData, onChange }: ApprenticeStepProps)
         <div>
           <label
             htmlFor="apprentice-college"
-            className="mb-2 block text-[13px] font-medium text-white"
+            className="mb-1.5 block text-[10px] font-medium uppercase tracking-[0.18em] text-white/55"
           >
-            College or training provider{' '}
-            <span className="font-normal text-white/50">(optional)</span>
+            College or provider <span className="normal-case tracking-normal text-white/40">(optional)</span>
           </label>
           <input
             id="apprentice-college"
@@ -133,19 +118,14 @@ export function ApprenticeQuickStep({ formData, onChange }: ApprenticeStepProps)
             placeholder="e.g. JTL, Newcastle College"
             className={inputClass}
           />
-          <p className="mt-2 text-[12px] leading-[1.5] text-white/55">
-            Helps us point you to peers on the same course and unlock college features later.
-          </p>
         </div>
       </div>
 
-      <div className="rounded-2xl border border-yellow-500/20 bg-yellow-500/[0.06] p-4">
-        <p className="text-[13px] font-semibold text-yellow-400">Why we ask</p>
-        <p className="mt-1 text-[13px] leading-[1.6] text-white">
-          Your level decides which mock papers, flashcards and AI mentor responses we
-          show you. Get this right and the app does the rest.
-        </p>
-      </div>
+      {/* One quiet line, not a box — this screen shouldn't shout */}
+      <p className="text-[11.5px] leading-snug text-white/45">
+        Your level decides which mock papers, flashcards and AI answers you see — get
+        this right and the app does the rest.
+      </p>
     </div>
   );
 }

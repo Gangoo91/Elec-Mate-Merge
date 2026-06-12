@@ -34,11 +34,22 @@ interface AchievementStats {
   flashcardSetMastery: Record<string, number>;
 }
 
+export interface NextUpAchievement {
+  id: string;
+  title: string;
+  description: string;
+  current: number;
+  target: number;
+  pct: number;
+}
+
 export function useAchievementChecker() {
   const { user } = useAuth();
   const [unlocked, setUnlocked] = useState<Set<string>>(new Set());
   const [recentUnlock, setRecentUnlock] = useState<AchievementDef | null>(null);
+  const [nextUp, setNextUp] = useState<NextUpAchievement | null>(null);
   const hasLoadedRef = useRef(false);
+  const initialCheckRef = useRef(false);
 
   // Load already-unlocked achievements
   const loadUnlocked = useCallback(async () => {
@@ -63,6 +74,15 @@ export function useAchievementChecker() {
   useEffect(() => {
     loadUnlocked();
   }, [loadUnlocked]);
+
+  // One check on load — without this, achievements (and nextUp) only update
+  // after the NEXT activity event, so a returning user's state lags a session.
+  useEffect(() => {
+    if (!hasLoadedRef.current || initialCheckRef.current) return;
+    initialCheckRef.current = true;
+    void checkAchievements();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [unlocked]);
 
   // Gather stats from various sources
   const gatherStats = useCallback(async (): Promise<AchievementStats | null> => {
@@ -206,6 +226,44 @@ export function useAchievementChecker() {
     }
   };
 
+  /**
+   * Progress toward a countable condition — current vs target. Null for
+   * non-countable conditions (perfect score, set mastery, EPA stubs).
+   */
+  const conditionProgress = (
+    def: AchievementDef,
+    stats: AchievementStats
+  ): { current: number; target: number } | null => {
+    const p = def.conditionParams;
+    switch (def.conditionKey) {
+      case 'total_cards_reviewed':
+        return { current: stats.totalCardsReviewed, target: p.count as number };
+      case 'total_quizzes':
+        return { current: stats.totalQuizzes, target: p.count as number };
+      case 'streak_days':
+        return {
+          current: Math.max(stats.currentStreak, stats.longestStreak),
+          target: p.days as number,
+        };
+      case 'daily_goal_streak':
+        return { current: stats.currentStreak, target: p.days as number };
+      case 'ojt_hours':
+        return { current: Math.floor(stats.ojtHoursLogged), target: p.hours as number };
+      case 'portfolio_count':
+        return { current: stats.portfolioCount, target: p.count as number };
+      case 'all_portfolio_categories':
+        return { current: stats.portfolioCount, target: 8 };
+      case 'diary_count':
+        return { current: stats.diaryCount, target: p.count as number };
+      case 'level_reached':
+        return { current: stats.level, target: p.level as number };
+      case 'total_xp':
+        return { current: stats.totalXP, target: p.xp as number };
+      default:
+        return null;
+    }
+  };
+
   // Run all achievement checks
   const checkAchievements = useCallback(async () => {
     if (!user) return;
@@ -213,6 +271,29 @@ export function useAchievementChecker() {
 
     const stats = await gatherStats();
     if (!stats) return;
+
+    // "Next badge" — the closest locked countable achievement. Computed from
+    // the same stats pass so the progress shown always matches what the
+    // checker would actually unlock against.
+    let best: NextUpAchievement | null = null;
+    for (const def of ACHIEVEMENT_DEFINITIONS) {
+      if (unlocked.has(def.id)) continue;
+      const prog = conditionProgress(def, stats);
+      if (!prog || prog.target <= 0) continue;
+      const pct = Math.min(99, Math.round((prog.current / prog.target) * 100));
+      if (pct >= 100) continue;
+      if (!best || pct > best.pct) {
+        best = {
+          id: def.id,
+          title: def.title,
+          description: def.description,
+          current: Math.min(prog.current, prog.target),
+          target: prog.target,
+          pct,
+        };
+      }
+    }
+    setNextUp(best);
 
     const newUnlocks: AchievementDef[] = [];
 
@@ -291,6 +372,7 @@ export function useAchievementChecker() {
     getUnlockedCount,
     getTotalCount,
     recentUnlock,
+    nextUp,
     clearRecentUnlock: () => setRecentUnlock(null),
   };
 }

@@ -426,22 +426,25 @@ export function UnifiedDashboard({ onNavigate, onCapture }: UnifiedDashboardProp
       {/* Selection ≠ enrolment: we now track the college's course (authoritative);
           nudge the learner to align their own selection. */}
       {divergesFromCollege && (
-        <div className="rounded-xl border border-orange-400/40 bg-orange-400/[0.08] p-4 space-y-1.5">
-          <p className="text-[13px] font-semibold text-orange-200">
-            Your saved course doesn't match your college
-          </p>
-          <p className="text-[12px] text-orange-100/80 leading-relaxed">
-            You selected <span className="font-mono text-orange-100">{selectionCode}</span>, but
-            your college enrolled you on{' '}
-            <span className="font-mono text-orange-100">{collegeCourseCode}</span>. We're tracking
-            your college's course — update your selection to match.
-          </p>
-          <button
-            onClick={() => setShowCourseSelector(true)}
-            className="text-[12px] font-semibold text-orange-200 underline underline-offset-2 touch-manipulation"
-          >
-            Update selection →
-          </button>
+        <div className="relative rounded-2xl border border-white/[0.08] bg-[hsl(0_0%_10%)] overflow-hidden">
+          <div className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-elec-yellow/0 via-elec-yellow/60 to-elec-yellow/0 pointer-events-none" />
+          <div className="p-4 sm:p-5 space-y-2.5">
+            <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-elec-yellow/80">
+              Course updated by your college
+            </span>
+            <p className="text-[13px] text-white/70 leading-snug">
+              Your college enrolled you on{' '}
+              <span className="font-mono text-white">{collegeCourseCode}</span> — we're tracking
+              that. Your own selection still says{' '}
+              <span className="font-mono text-white/70">{selectionCode}</span>.
+            </p>
+            <button
+              onClick={() => setShowCourseSelector(true)}
+              className="w-full h-11 rounded-xl border border-elec-yellow/25 bg-elec-yellow/10 hover:bg-elec-yellow/20 text-elec-yellow text-[13px] font-medium inline-flex items-center justify-center touch-manipulation transition-colors"
+            >
+              Switch my selection to {collegeCourseCode}
+            </button>
+          </div>
         </div>
       )}
 
@@ -651,13 +654,21 @@ export function UnifiedDashboard({ onNavigate, onCapture }: UnifiedDashboardProp
 
       {/* Course selector */}
       <Sheet open={showCourseSelector} onOpenChange={setShowCourseSelector}>
-        <SheetContent side="bottom" className="h-[85vh] rounded-t-3xl">
-          <div className="w-12 h-1 bg-muted rounded-full mx-auto mb-4" />
-          <SheetHeader className="pb-4">
-            <SheetTitle>Change qualification</SheetTitle>
+        {/* Full content-column width (house rule: no centred trays) and a
+            REAL scroll region — overflow-y-auto only works with the flex
+            column + min-h-0 constraint; without it the list just clipped. */}
+        <SheetContent
+          side="bottom"
+          className="h-[85vh] w-full sm:max-w-none rounded-t-3xl p-0 flex flex-col overflow-hidden"
+        >
+          <div className="w-12 h-1 bg-muted rounded-full mx-auto mt-3 mb-2 shrink-0" />
+          <SheetHeader className="px-4 sm:px-6 pb-3 shrink-0 text-left">
+            <SheetTitle>
+              {collegeCourseCode ? 'Your course' : 'Change qualification'}
+            </SheetTitle>
           </SheetHeader>
-          <div className="overflow-y-auto pb-20 sm:pb-8">
-            <QualificationSelector />
+          <div className="flex-1 min-h-0 overflow-y-auto px-4 sm:px-6 pb-[max(env(safe-area-inset-bottom),24px)]">
+            <QualificationSelector lockedToCode={collegeCourseCode} />
           </div>
         </SheetContent>
       </Sheet>

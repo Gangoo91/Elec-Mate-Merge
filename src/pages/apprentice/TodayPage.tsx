@@ -30,9 +30,11 @@ import {
   Flame,
   GraduationCap,
   HeartHandshake,
+  Trophy,
 } from 'lucide-react';
 import { useAuth } from '@/contexts/AuthContext';
 import { useApprenticeData } from '@/hooks/useApprenticeData';
+import { useAchievementChecker } from '@/hooks/useAchievementChecker';
 import { useMyAssignedQuizzes } from '@/hooks/useMyAssignedQuizzes';
 import { useMyIlp } from '@/hooks/useMyIlp';
 import { useOtjProgramme } from '@/hooks/useOtjProgramme';
@@ -70,6 +72,7 @@ export default function TodayPage() {
   const programme = useOtjProgramme();
   const { breakdown } = useApprenticeOtj(user?.id ?? null);
   const { lastLocation } = useLastStudyLocation();
+  const { nextUp } = useAchievementChecker();
 
   const eyebrow = useMemo(() => dateEyebrow(), []);
   const salutation = useMemo(() => partOfDay(), []);
@@ -284,6 +287,38 @@ export default function TodayPage() {
             ))}
           </div>
         </section>
+
+        {/* 4b · NEXT BADGE — the closest locked achievement, live progress */}
+        {nextUp && (
+          <section aria-label="Next achievement">
+            <button
+              type="button"
+              onClick={() => navigate('/apprentice/hub?tab=progress')}
+              className="group w-full flex items-center gap-3 rounded-2xl border border-white/[0.06] bg-[hsl(0_0%_10%)] px-4 py-3.5 text-left touch-manipulation hover:bg-elec-yellow/[0.04] transition-colors"
+            >
+              <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg border border-elec-yellow/20 bg-elec-yellow/[0.06]">
+                <Trophy className="h-4 w-4 text-elec-yellow" strokeWidth={2} />
+              </span>
+              <span className="flex-1 min-w-0">
+                <span className="flex items-baseline justify-between gap-2">
+                  <span className="text-[13.5px] font-medium text-white truncate">
+                    {nextUp.title}
+                  </span>
+                  <span className="text-[11px] font-mono tabular-nums text-white/55 shrink-0">
+                    {nextUp.current}/{nextUp.target}
+                  </span>
+                </span>
+                <span className="mt-1.5 block h-1 rounded-full bg-white/[0.06] overflow-hidden">
+                  <span
+                    className="block h-full rounded-full bg-elec-yellow transition-all"
+                    style={{ width: `${nextUp.pct}%` }}
+                  />
+                </span>
+              </span>
+              <ArrowRight className="h-4 w-4 shrink-0 text-white/35 group-hover:text-elec-yellow group-hover:translate-x-0.5 transition-all" />
+            </button>
+          </section>
+        )}
 
         {/* 5 · FROM YOUR COLLEGE — college-linked apprentices only */}
         {hasCollegeLink && (

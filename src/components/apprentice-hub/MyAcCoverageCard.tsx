@@ -6,6 +6,7 @@ import { realtimeChannelName } from '@/lib/realtimeChannel';
 import { Dialog, DialogContent, DialogTitle } from '@/components/ui/dialog';
 import { JobIdeasPanel } from '@/components/college/assessor/JobIdeasPanel';
 import { UnifiedCaptureSheet, type CaptureSeed } from './UnifiedCaptureSheet';
+import { useStudentQualification } from '@/hooks/useStudentQualification';
 
 /* ==========================================================================
    MyAcCoverageCard — apprentice-side qualification progress. Buckets
@@ -15,7 +16,12 @@ import { UnifiedCaptureSheet, type CaptureSeed } from './UnifiedCaptureSheet';
 
    Renders an editorial stacked progress bar (no rainbow), the headline
    "X of Y ACs confirmed", and a unit-level breakdown showing the units
-   with the most outstanding work.
+   with the most outstanding work. Each gappy unit shows its uncovered AC
+   codes and a one-tap "Capture for this unit" that seeds the capture sheet.
+
+   Learners with NO college roll row (standalone) get a funnel-lite variant
+   instead: claimed ACs across their own portfolio_items vs the
+   qualification_requirements catalogue for their active qualification.
 
    Powers the "I can see myself getting somewhere" loop — apprentices need
    to feel the qualification shrinking as they evidence things.
@@ -25,6 +31,7 @@ type AcStatus = 'not_started' | 'in_progress' | 'evidenced' | 'assessed' | 'conf
 
 interface CoverageRow {
   unit_code: string;
+  ac_code: string;
   status: AcStatus | string;
 }
 
@@ -36,7 +43,20 @@ interface UnitBucket {
   evidenced: number;
   assessed: number;
   confirmed: number;
+  /** AC codes still uncovered (not started / in progress), sorted. */
+  gapAcs: string[];
 }
+
+interface StandaloneUnit {
+  unit_code: string;
+  total: number;
+  claimed: number;
+  gapAcs: string[];
+}
+
+const AC_REF_RE = /^(.+?)\s+AC\s+(.+)$/;
+
+const codeSort = (a: string, b: string) => a.localeCompare(b, undefined, { numeric: true });
 
 const STATUS_TONE: Record<AcStatus, string> = {
   not_started: 'bg-white/[0.10]',
@@ -58,10 +78,16 @@ export function MyAcCoverageCard() {
   const navigate = useNavigate();
   const [rows, setRows] = useState<CoverageRow[]>([]);
   const [loading, setLoading] = useState(true);
-  const [studentId, setStudentId] = useState<string | null>(null);
+  // undefined = not resolved yet; null = resolved, no college roll row.
+  const [studentId, setStudentId] = useState<string | null | undefined>(undefined);
   const [ideasOpen, setIdeasOpen] = useState(false);
   const [captureOpen, setCaptureOpen] = useState(false);
   const [captureSeed, setCaptureSeed] = useState<CaptureSeed | null>(null);
+
+  // Standalone variant (no college roll row) — claimed ACs vs the
+  // qualification catalogue. null = not loaded yet.
+  const { qualificationCode, isLoading: qualLoading } = useStudentQualification();
+  const [saUnits, setSaUnits] = useState<StandaloneUnit[] | null>(null);
 
   const fetchAll = useCallback(async () => {
     const { data: u } = await supabase.auth.getUser();
@@ -83,7 +109,7 @@ export function MyAcCoverageCard() {
     }
     const { data } = await supabase
       .from('student_ac_coverage')
-      .select('unit_code, status')
+      .select('unit_code, ac_code, status')
       .eq('student_id', csId);
     setRows((data ?? []) as CoverageRow[]);
     setLoading(false);
@@ -92,6 +118,72 @@ export function MyAcCoverageCard() {
   useEffect(() => {
     fetchAll();
   }, [fetchAll]);
+
+  // Standalone path — per-unit claimed-AC counts from the learner's own
+  // portfolio_items vs qualification_requirements totals for their active
+  // qualification. Only runs once we know there's no college roll row.
+  const fetchStandalone = useCallback(async () => {
+    if (!qualificationCode) {
+      setSaUnits([]);
+      return;
+    }
+    const { data: u } = await supabase.auth.getUser();
+    const uid = u.user?.id;
+    if (!uid) {
+      setSaUnits([]);
+      return;
+    }
+    const [reqsRes, itemsRes] = await Promise.all([
+      supabase
+        .from('qualification_requirements')
+        .select('unit_code, ac_code')
+        .eq('qualification_code', qualificationCode),
+      supabase.from('portfolio_items').select('assessment_criteria_met').eq('user_id', uid),
+    ]);
+    if (reqsRes.error || itemsRes.error) {
+      setSaUnits([]);
+      return;
+    }
+    // Catalogue: distinct AC codes per unit.
+    const catalogue = new Map<string, Set<string>>();
+    for (const r of reqsRes.data ?? []) {
+      const set = catalogue.get(r.unit_code) ?? new Set<string>();
+      set.add(r.ac_code);
+      catalogue.set(r.unit_code, set);
+    }
+    // Claimed: distinct AC refs across the portfolio, parsed by unit prefix
+    // and intersected with the catalogue so claims never exceed totals.
+    const claimed = new Map<string, Set<string>>();
+    for (const item of itemsRes.data ?? []) {
+      for (const ref of item.assessment_criteria_met ?? []) {
+        const m = AC_REF_RE.exec(ref);
+        if (!m) continue;
+        if (!catalogue.get(m[1])?.has(m[2])) continue;
+        const set = claimed.get(m[1]) ?? new Set<string>();
+        set.add(m[2]);
+        claimed.set(m[1], set);
+      }
+    }
+    const units: StandaloneUnit[] = Array.from(catalogue.entries()).map(([unit, acs]) => {
+      const got = claimed.get(unit) ?? new Set<string>();
+      return {
+        unit_code: unit,
+        total: acs.size,
+        claimed: got.size,
+        gapAcs: Array.from(acs)
+          .filter((ac) => !got.has(ac))
+          .sort(codeSort),
+      };
+    });
+    units.sort(
+      (a, b) => b.total - b.claimed - (a.total - a.claimed) || codeSort(a.unit_code, b.unit_code)
+    );
+    setSaUnits(units);
+  }, [qualificationCode]);
+
+  useEffect(() => {
+    if (studentId === null && !qualLoading) fetchStandalone();
+  }, [studentId, qualLoading, fetchStandalone]);
 
   // Realtime — when a tutor signs off an AC, this card should update live.
   useEffect(() => {
@@ -151,12 +243,17 @@ export function MyAcCoverageCard() {
           evidenced: 0,
           assessed: 0,
           confirmed: 0,
+          gapAcs: [],
         };
         byUnit.set(row.unit_code, u);
       }
       u.total += 1;
       u[s] += 1;
+      if ((s === 'not_started' || s === 'in_progress') && row.ac_code) {
+        u.gapAcs.push(row.ac_code);
+      }
     }
+    for (const u of byUnit.values()) u.gapAcs.sort(codeSort);
     const total = rows.length;
     const completedish = buckets.evidenced + buckets.assessed + buckets.confirmed;
     const pct = total > 0 ? Math.round((completedish / total) * 100) : 0;
@@ -170,7 +267,97 @@ export function MyAcCoverageCard() {
     return { buckets, total, pct, completedish, units };
   }, [rows]);
 
+  // One-tap "Capture for this unit" — seeds the capture sheet with up to
+  // three of the unit's uncovered ACs (shown as toggleable chips in the
+  // sheet, so nothing is claimed invisibly).
+  const captureForUnit = (unitCode: string, gapAcs: string[]) => {
+    setCaptureSeed({
+      acRefs: gapAcs.slice(0, 3).map((ac) => `${unitCode} AC ${ac}`),
+    });
+    setCaptureOpen(true);
+  };
+
+  const handleCaptureComplete = () => {
+    setCaptureOpen(false);
+    setCaptureSeed(null);
+    if (studentId) fetchAll();
+    else fetchStandalone();
+  };
+
   if (loading) return <Skeleton />;
+
+  // ── Standalone variant — no college roll row ─────────────────────────
+  if (studentId === null) {
+    if (qualLoading || (qualificationCode && saUnits === null)) return <Skeleton />;
+    // No active qualification selection either — nothing to measure against.
+    if (!qualificationCode) return null;
+
+    const units = saUnits ?? [];
+    const totalAcs = units.reduce((s, x) => s + x.total, 0);
+    if (totalAcs === 0) return null;
+    const totalClaimed = units.reduce((s, x) => s + x.claimed, 0);
+    const pct = Math.round((totalClaimed / totalAcs) * 100);
+    const gapUnits = units.filter((x) => x.claimed < x.total).slice(0, 3);
+
+    return (
+      <section className="rounded-2xl border border-white/[0.06] bg-[hsl(0_0%_10%)] overflow-hidden">
+        <div className="px-4 sm:px-5 py-4 sm:py-5">
+          <div className="flex items-baseline justify-between gap-3 flex-wrap">
+            <div className="text-[11px] sm:text-[11.5px] font-medium uppercase tracking-[0.18em] text-purple-300/85">
+              Qualification progress
+            </div>
+            <span className="text-[10.5px] tabular-nums text-white/85">
+              {totalClaimed} / {totalAcs} ACs evidenced
+            </span>
+          </div>
+
+          <div className="mt-3 flex items-baseline gap-2.5">
+            <span className="text-[28px] sm:text-[32px] font-semibold tabular-nums text-white leading-none">
+              {pct}%
+            </span>
+            <span className="text-[11px] uppercase tracking-[0.14em] text-white/95">
+              of your course has evidence
+            </span>
+          </div>
+
+          <div className="mt-4 h-2.5 rounded-full bg-white/[0.05] overflow-hidden">
+            <div
+              className="h-full rounded-full bg-white/[0.20]"
+              style={{ width: `${totalClaimed > 0 ? Math.max(2, pct) : 0}%` }}
+            />
+          </div>
+
+          {gapUnits.length > 0 && (
+            <div className="mt-5 -mx-1">
+              <div className="px-1 text-[10.5px] font-medium uppercase tracking-[0.16em] text-white/95">
+                Biggest gaps
+              </div>
+              <ul className="mt-2 space-y-2">
+                {gapUnits.map((u) => (
+                  <UnitGapRow
+                    key={u.unit_code}
+                    unitCode={u.unit_code}
+                    done={u.claimed}
+                    total={u.total}
+                    gapAcs={u.gapAcs}
+                    onCapture={() => captureForUnit(u.unit_code, u.gapAcs)}
+                  />
+                ))}
+              </ul>
+            </div>
+          )}
+        </div>
+
+        {/* Capture pre-loaded for a gappy unit — closes the loop */}
+        <UnifiedCaptureSheet
+          open={captureOpen}
+          onOpenChange={setCaptureOpen}
+          seed={captureSeed}
+          onComplete={handleCaptureComplete}
+        />
+      </section>
+    );
+  }
 
   if (summary.total === 0) {
     return (
@@ -265,34 +452,16 @@ export function MyAcCoverageCard() {
               By unit
             </div>
             <ul className="mt-2 space-y-2">
-              {summary.units.slice(0, 4).map((u) => {
-                const done = u.evidenced + u.assessed + u.confirmed;
-                const pct = u.total > 0 ? Math.round((done / u.total) * 100) : 0;
-                return (
-                  <li key={u.unit_code} className="px-1 py-1">
-                    <div className="flex items-baseline justify-between gap-3">
-                      <span className="text-[12px] font-medium text-white">{u.unit_code}</span>
-                      <span className="text-[10.5px] tabular-nums text-white/85">
-                        {done} / {u.total}
-                      </span>
-                    </div>
-                    <div className="mt-1 h-1.5 rounded-full bg-white/[0.05] overflow-hidden">
-                      <div
-                        className={cn('h-full rounded-full',
-                          pct >= 80
-                            ? 'bg-white/[0.02]'
-                            : pct >= 50
-                              ? 'bg-white/[0.02]'
-                              : pct >= 25
-                                ? 'bg-white/[0.02]'
-                                : 'bg-white/[0.20]'
-                        )}
-                        style={{ width: `${Math.max(2, pct)}%` }}
-                      />
-                    </div>
-                  </li>
-                );
-              })}
+              {summary.units.slice(0, 4).map((u) => (
+                <UnitGapRow
+                  key={u.unit_code}
+                  unitCode={u.unit_code}
+                  done={u.evidenced + u.assessed + u.confirmed}
+                  total={u.total}
+                  gapAcs={u.gapAcs}
+                  onCapture={() => captureForUnit(u.unit_code, u.gapAcs)}
+                />
+              ))}
             </ul>
           </div>
         )}
@@ -359,18 +528,73 @@ export function MyAcCoverageCard() {
         </DialogContent>
       </Dialog>
 
-      {/* Capture pre-loaded from a chosen job idea — closes the loop */}
+      {/* Capture pre-loaded from a chosen job idea or a gappy unit — closes the loop */}
       <UnifiedCaptureSheet
         open={captureOpen}
         onOpenChange={setCaptureOpen}
         seed={captureSeed}
-        onComplete={() => {
-          setCaptureOpen(false);
-          setCaptureSeed(null);
-          fetchAll();
-        }}
+        onComplete={handleCaptureComplete}
       />
     </section>
+  );
+}
+
+/* Per-unit row shared by the college funnel and the standalone variant —
+   "X of Y evidenced", a quiet progress bar, up to three uncovered AC codes
+   as mono chips, and a one-tap capture seeded for the unit. */
+function UnitGapRow({
+  unitCode,
+  done,
+  total,
+  gapAcs,
+  onCapture,
+}: {
+  unitCode: string;
+  done: number;
+  total: number;
+  gapAcs: string[];
+  onCapture: () => void;
+}) {
+  const pct = total > 0 ? Math.round((done / total) * 100) : 0;
+  return (
+    <li className="px-1 py-1">
+      <div className="flex items-baseline justify-between gap-3">
+        <span className="text-[12px] font-medium text-white">{unitCode}</span>
+        <span className="text-[10.5px] tabular-nums text-white/85">
+          {done} / {total} evidenced
+        </span>
+      </div>
+      <div className="mt-1 h-1.5 rounded-full bg-white/[0.05] overflow-hidden">
+        <div
+          className={cn('h-full rounded-full', pct >= 25 ? 'bg-white/[0.02]' : 'bg-white/[0.20]')}
+          style={{ width: `${Math.max(2, pct)}%` }}
+        />
+      </div>
+      {gapAcs.length > 0 && (
+        <div className="mt-0.5 flex items-center justify-between gap-3 flex-wrap">
+          <div className="flex items-center gap-1.5 flex-wrap min-w-0">
+            {gapAcs.slice(0, 3).map((ac) => (
+              <span
+                key={ac}
+                className="text-[10px] font-mono text-white/45 px-1.5 py-0.5 rounded-md border border-white/[0.08] bg-white/[0.02]"
+              >
+                {ac}
+              </span>
+            ))}
+            {gapAcs.length > 3 && (
+              <span className="text-[10px] font-mono text-white/35">+{gapAcs.length - 3}</span>
+            )}
+          </div>
+          <button
+            type="button"
+            onClick={onCapture}
+            className="inline-flex items-center h-11 text-[11.5px] font-semibold text-elec-yellow hover:text-elec-yellow/85 transition-colors touch-manipulation"
+          >
+            Capture for this unit →
+          </button>
+        </div>
+      )}
+    </li>
   );
 }
 

@@ -10,7 +10,10 @@ import { createClient } from 'https://esm.sh/@supabase/supabase-js@2.57.4';
 const corsHeaders = {
   'Access-Control-Allow-Origin': '*',
   'Access-Control-Allow-Methods': 'POST, OPTIONS',
-  'Access-Control-Allow-Headers': 'authorization, x-client-info, apikey, content-type',
+  // Keep in step with _shared/cors.ts — the client sends x-request-id
+  // (tracing) on every call; omitting it fails the whole request at preflight.
+  'Access-Control-Allow-Headers':
+    'authorization, x-client-info, apikey, content-type, x-supabase-timeout, x-request-id',
 };
 
 const CHAT_MODEL = 'gpt-5.4-mini-2026-03-17';

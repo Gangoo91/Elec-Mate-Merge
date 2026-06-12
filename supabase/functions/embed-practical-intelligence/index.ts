@@ -16,7 +16,7 @@ import { captureException } from '../_shared/sentry.ts';
 
 const CORS = {
   'Access-Control-Allow-Origin': '*',
-  'Access-Control-Allow-Headers': 'authorization, x-client-info, apikey, content-type',
+  'Access-Control-Allow-Headers': 'authorization, x-client-info, apikey, content-type, x-supabase-timeout, x-request-id',
 };
 
 const EMBED_MODEL = 'text-embedding-3-large';

@@ -5,7 +5,7 @@
  * Grouped by awarding body. Shows yellow ring on selected card.
  */
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useMemo } from 'react';
 import { CalendarDays, Loader2 } from 'lucide-react';
 import { useQualifications } from '@/hooks/qualification/useQualifications';
 import { Qualification } from '@/types/qualification';
@@ -20,7 +20,16 @@ interface RequirementStats {
   unitCount: number;
 }
 
-const QualificationSelector = () => {
+interface QualificationSelectorProps {
+  /**
+   * College-enrolled apprentices don't free-pick — their college's course is
+   * authoritative. When set, the list locks to that course code so the only
+   * action available is aligning the portfolio to the college's choice.
+   */
+  lockedToCode?: string | null;
+}
+
+const QualificationSelector = ({ lockedToCode }: QualificationSelectorProps = {}) => {
   const {
     qualifications,
     awardingBodies,
@@ -35,6 +44,20 @@ const QualificationSelector = () => {
   const [isSettingUp, setIsSettingUp] = useState(false);
   const [isChanging, setIsChanging] = useState(false);
   const [requirementStats, setRequirementStats] = useState<Record<string, RequirementStats>>({});
+
+  // College-locked mode: only the college's course is offered.
+  const visibleBodies = useMemo(() => {
+    if (!lockedToCode) return awardingBodies;
+    const out: Record<string, Qualification[]> = {};
+    for (const [body, quals] of Object.entries(awardingBodies)) {
+      const matches = (quals as Qualification[]).filter((q) => q.code === lockedToCode);
+      if (matches.length > 0) out[body] = matches;
+    }
+    return out;
+  }, [awardingBodies, lockedToCode]);
+  const lockedMatchCount = lockedToCode
+    ? Object.values(visibleBodies).reduce((n, quals) => n + quals.length, 0)
+    : 0;
 
   // Load AC counts per requirement code
   useEffect(() => {
@@ -133,53 +156,68 @@ const QualificationSelector = () => {
   }
 
   if (userSelection && !isChanging) {
+    const pct = userSelection.progress_percentage ?? 0;
     return (
-      <div className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-4 sm:p-5 space-y-4">
-        <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
-          Current qualification
-        </span>
-        <p className="text-[12px] text-white/55 leading-relaxed">
-          Your portfolio is tailored to these requirements
-        </p>
+      <div className="space-y-4">
+        <div className="space-y-1">
+          <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-elec-yellow/80">
+            Current qualification
+          </span>
+          <p className="text-[12px] text-white/55 leading-relaxed">
+            {lockedToCode
+              ? 'Set by your college — your portfolio is tailored to these requirements.'
+              : 'Your portfolio is tailored to these requirements.'}
+          </p>
+        </div>
 
-        <div className="rounded-lg border border-white/[0.06] bg-white/[0.02] p-4 space-y-3">
-          <div className="flex items-start justify-between gap-3">
-            <div className="space-y-1 flex-1">
-              <div className="flex items-center gap-2 flex-wrap">
-                <span className="text-[12px] text-white/85 px-2 py-0.5 rounded-md border border-white/10 bg-white/[0.03] font-mono">
-                  {userSelection.qualification?.level}
-                </span>
-                <span className="text-[11px] text-white/55 font-mono">
-                  {userSelection.qualification?.awarding_body}
-                </span>
-              </div>
-              <h3 className="text-[15px] font-medium text-white leading-tight">
-                {userSelection.qualification?.title}
-              </h3>
-              <p className="text-[11px] text-white/55 font-mono">
-                Code: {userSelection.qualification?.code}
-              </p>
-            </div>
-            <div className="text-right flex-shrink-0">
-              <div className="text-2xl font-mono text-white">
-                {userSelection.progress_percentage}%
-              </div>
-              <span className="text-[10px] uppercase tracking-[0.18em] text-white/55 mt-0.5">
-                Complete
+        <div className="relative rounded-2xl border border-white/[0.08] bg-[hsl(0_0%_10%)] overflow-hidden">
+          <div className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-elec-yellow/0 via-elec-yellow/60 to-elec-yellow/0 pointer-events-none" />
+          <div className="p-4 sm:p-5 space-y-3">
+            {/* One meta line — never fights the title for width */}
+            <div className="flex items-center gap-2 text-[11px] font-mono">
+              <span className="text-white/85 px-1.5 py-0.5 rounded border border-elec-yellow/25 bg-elec-yellow/[0.06] text-elec-yellow">
+                Level {userSelection.qualification?.level}
               </span>
+              <span className="text-white/55 truncate">
+                {userSelection.qualification?.awarding_body}
+              </span>
+              <span className="text-white/35">·</span>
+              <span className="text-white/55">{userSelection.qualification?.code}</span>
             </div>
+
+            {/* Title gets the full width */}
+            <h3 className="text-[17px] font-semibold text-white leading-snug tracking-tight">
+              {userSelection.qualification?.title}
+            </h3>
+
+            {/* Progress as a bar, not a shouting number */}
+            <div className="space-y-1.5 pt-1">
+              <div className="flex items-baseline justify-between">
+                <span className="text-[10px] uppercase tracking-[0.18em] text-white/55">
+                  Progress
+                </span>
+                <span className="text-[13px] font-mono tabular-nums text-white">{pct}%</span>
+              </div>
+              <div className="h-1.5 rounded-full bg-white/[0.06] overflow-hidden">
+                <div
+                  className="h-full rounded-full bg-elec-yellow transition-all"
+                  style={{ width: `${Math.min(100, Math.max(0, pct))}%` }}
+                />
+              </div>
+            </div>
+
+            {userSelection.target_completion_date && (
+              <div className="flex items-center gap-2 text-[12px] text-white/55 pt-2 border-t border-white/[0.05] font-mono">
+                <CalendarDays className="h-3 w-3" />
+                Target:{' '}
+                {new Date(userSelection.target_completion_date).toLocaleDateString('en-GB', {
+                  day: 'numeric',
+                  month: 'short',
+                  year: 'numeric',
+                })}
+              </div>
+            )}
           </div>
-          {userSelection.target_completion_date && (
-            <div className="flex items-center gap-2 text-[12px] text-white/55 pt-2 border-t border-white/[0.06] font-mono">
-              <CalendarDays className="h-3 w-3" />
-              Target:{' '}
-              {new Date(userSelection.target_completion_date).toLocaleDateString('en-GB', {
-                day: 'numeric',
-                month: 'short',
-                year: 'numeric',
-              })}
-            </div>
-          )}
         </div>
 
         <div className="flex gap-2">
@@ -187,8 +225,11 @@ const QualificationSelector = () => {
             onClick={() => setIsChanging(true)}
             className="flex-1 h-11 rounded-xl bg-elec-yellow text-black font-semibold text-[14px] touch-manipulation active:scale-[0.97] transition-transform"
           >
-            Change course
+            {lockedToCode ? 'View course' : 'Change course'}
           </button>
+          {/* College-enrolled apprentices can't remove their course — the
+              college manages it. */}
+          {!lockedToCode && (
           <button
             onClick={async () => {
               const cleared = await clearQualificationSelection();
@@ -200,6 +241,7 @@ const QualificationSelector = () => {
           >
             Remove
           </button>
+          )}
         </div>
       </div>
     );
@@ -209,14 +251,24 @@ const QualificationSelector = () => {
     <div className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-4 sm:p-5 space-y-5">
       <div className="space-y-1">
         <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
-          Select your qualification
+          {lockedToCode ? 'Your college course' : 'Select your qualification'}
         </span>
         <p className="text-[12px] text-white/55 leading-relaxed">
-          Choose your course to get a tailored portfolio experience
+          {lockedToCode
+            ? `Your college enrolled you on ${lockedToCode} — your course is managed by them. Confirm it below to align your portfolio.`
+            : 'Choose your course to get a tailored portfolio experience'}
         </p>
       </div>
 
-      {Object.entries(awardingBodies).map(([body, quals]) => (
+      {lockedToCode && lockedMatchCount === 0 && (
+        <p className="text-[12px] text-white/55 leading-relaxed rounded-xl border border-white/[0.08] bg-[hsl(0_0%_10%)] p-4">
+          Your college's course (<span className="font-mono text-white">{lockedToCode}</span>)
+          isn't in the course library yet — ask your tutor, or contact{' '}
+          <span className="text-white">info@elec-mate.com</span>.
+        </p>
+      )}
+
+      {Object.entries(visibleBodies).map(([body, quals]) => (
         <div key={body} className="space-y-2">
           <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55 px-1">
             {body}

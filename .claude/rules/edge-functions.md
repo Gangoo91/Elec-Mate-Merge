@@ -17,10 +17,16 @@ paths:
 
 ## Standard CORS pattern:
 
+Prefer importing from `_shared/cors.ts`. If inlining, the Allow-Headers list
+MUST include `x-supabase-timeout` and `x-request-id` — the client sends
+`x-request-id` (tracing) on every call; omitting it fails the entire request
+at preflight (bit us on ai-apprentice-today, 2026-06-12).
+
 ```ts
 const corsHeaders = {
   'Access-Control-Allow-Origin': '*',
-  'Access-Control-Allow-Headers': 'authorization, x-client-info, apikey, content-type',
+  'Access-Control-Allow-Headers':
+    'authorization, x-client-info, apikey, content-type, x-supabase-timeout, x-request-id',
 };
 if (req.method === 'OPTIONS') return new Response('ok', { headers: corsHeaders });
 ```

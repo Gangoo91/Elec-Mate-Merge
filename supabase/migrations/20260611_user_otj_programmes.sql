@@ -37,7 +37,7 @@ CREATE POLICY "Own programme delete" ON public.user_otj_programmes
   FOR DELETE USING (auth.uid() = user_id);
 
 CREATE OR REPLACE FUNCTION public._touch_user_otj_programmes()
-RETURNS trigger LANGUAGE plpgsql AS $$
+RETURNS trigger LANGUAGE plpgsql SET search_path TO 'public' AS $$
 BEGIN
   NEW.updated_at := now();
   RETURN NEW;

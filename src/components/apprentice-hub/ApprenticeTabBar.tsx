@@ -52,7 +52,13 @@ export function ApprenticeTabBar() {
   // Let other apprentice surfaces open the capture sheet without mounting
   // their own copy (TodayPage quick action dispatches this).
   useEffect(() => {
-    const openCapture = () => setCaptureOpen(true);
+    const openCapture = () => {
+      // Blur whatever button triggered this — Radix aria-hides the app root
+      // while the sheet is open, and a still-focused trigger underneath it
+      // trips the aria-hidden/focus accessibility violation.
+      (document.activeElement as HTMLElement | null)?.blur?.();
+      setCaptureOpen(true);
+    };
     window.addEventListener('elecmate:open-capture', openCapture);
     return () => window.removeEventListener('elecmate:open-capture', openCapture);
   }, []);
@@ -98,7 +104,10 @@ export function ApprenticeTabBar() {
           <div className="flex items-center justify-center">
             <button
               type="button"
-              onClick={() => setCaptureOpen(true)}
+              onClick={(e) => {
+                e.currentTarget.blur();
+                setCaptureOpen(true);
+              }}
               aria-label="Capture evidence"
               className="h-14 w-14 -translate-y-4 rounded-full bg-elec-yellow text-black shadow-lg shadow-black/40 flex items-center justify-center touch-manipulation active:scale-95 transition-transform"
             >

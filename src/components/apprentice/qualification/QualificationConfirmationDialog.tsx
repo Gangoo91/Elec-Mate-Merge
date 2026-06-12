@@ -13,17 +13,7 @@ import { Badge } from '@/components/ui/badge';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '@/components/ui/collapsible';
-import {
-  CalendarDays,
-  GraduationCap,
-  Clock,
-  ChevronDown,
-  ChevronRight,
-  BookOpen,
-  Layers,
-  FileText,
-  Loader2,
-} from 'lucide-react';
+import { CalendarDays, Clock, ChevronDown, ChevronRight, Loader2 } from 'lucide-react';
 import { Qualification, QualificationCategory } from '@/types/qualification';
 import { supabase } from '@/integrations/supabase/client';
 import { toast } from 'sonner';
@@ -222,24 +212,27 @@ const QualificationConfirmationDialog = ({
             </SheetTitle>
           </SheetHeader>
 
-          {/* Stats bar */}
-          <div className="flex items-center gap-4 px-5 pb-4 flex-shrink-0">
-            <div className="flex items-center gap-1.5">
-              <Layers className="h-4 w-4 text-elec-yellow" />
-              <span className="text-sm font-semibold text-white">{units.length}</span>
-              <span className="text-xs text-white">units</span>
-            </div>
-            <div className="w-px h-4 bg-white/10" />
-            <div className="flex items-center gap-1.5">
-              <BookOpen className="h-4 w-4 text-blue-400" />
-              <span className="text-sm font-semibold text-white">{totalLOs}</span>
-              <span className="text-xs text-white">outcomes</span>
-            </div>
-            <div className="w-px h-4 bg-white/10" />
-            <div className="flex items-center gap-1.5">
-              <FileText className="h-4 w-4 text-green-400" />
-              <span className="text-sm font-semibold text-white">{totalACs}</span>
-              <span className="text-xs text-white">ACs</span>
+          {/* Stats bar — three even cells, one accent colour (house rule:
+              no rainbow icons), hairline-divided like every other stat strip */}
+          <div className="px-5 pb-4 flex-shrink-0">
+            <div className="grid grid-cols-3 gap-[2px] bg-black border border-white/[0.08] rounded-xl overflow-hidden">
+              {[
+                { value: units.length, label: 'Units' },
+                { value: totalLOs, label: 'Outcomes' },
+                { value: totalACs, label: 'ACs' },
+              ].map((s) => (
+                <div
+                  key={s.label}
+                  className="bg-[hsl(0_0%_10%)] px-2 py-2.5 flex flex-col items-center justify-center gap-0.5"
+                >
+                  <span className="text-[16px] font-semibold tabular-nums leading-none text-white">
+                    {s.value}
+                  </span>
+                  <span className="text-[9px] font-medium uppercase tracking-[0.14em] text-white/55">
+                    {s.label}
+                  </span>
+                </div>
+              ))}
             </div>
           </div>
 
@@ -381,32 +374,31 @@ const QualificationConfirmationDialog = ({
 
           {/* Sticky footer */}
           <div className="flex-shrink-0 px-5 py-4 border-t border-white/[0.06] bg-background/95 backdrop-blur-xl pb-[max(1rem,env(safe-area-inset-bottom))]">
-            <div className="flex gap-3">
-              <Button
-                variant="outline"
+            <div className="flex gap-2">
+              {/* Cancel stays quiet and fixed — the primary owns the row */}
+              <button
+                type="button"
                 onClick={() => onOpenChange(false)}
                 disabled={isConfirming}
-                className="flex-1 h-12 rounded-xl touch-manipulation active:scale-[0.97] border-white/15"
+                className="h-12 px-5 rounded-xl border border-white/[0.10] bg-white/[0.04] text-white/85 text-[14px] font-medium touch-manipulation active:scale-[0.97] transition-transform disabled:opacity-50"
               >
                 Cancel
-              </Button>
-              <Button
+              </button>
+              <button
+                type="button"
                 onClick={handleConfirm}
                 disabled={isConfirming}
-                className="flex-[2] h-12 rounded-xl bg-elec-yellow text-black hover:bg-elec-yellow/90 font-semibold touch-manipulation active:scale-[0.97]"
+                className="flex-1 h-12 rounded-xl bg-elec-yellow text-black text-[15px] font-semibold touch-manipulation active:scale-[0.97] transition-transform hover:bg-elec-yellow/90 disabled:opacity-60 inline-flex items-center justify-center gap-2"
               >
                 {isConfirming ? (
                   <>
-                    <Loader2 className="h-4 w-4 mr-2 animate-spin" />
-                    Setting Up...
+                    <Loader2 className="h-4 w-4 animate-spin" />
+                    Setting up…
                   </>
                 ) : (
-                  <>
-                    <GraduationCap className="h-4 w-4 mr-2" />
-                    Confirm & Start Portfolio
-                  </>
+                  'Confirm & start portfolio'
                 )}
-              </Button>
+              </button>
             </div>
           </div>
         </div>

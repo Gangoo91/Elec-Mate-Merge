@@ -93,7 +93,10 @@ interface UploadedFile {
   storageUrl?: string;
   uploading: boolean;
   analysis?: FileAnalysis;
+  /** Upload failure — blocks save, offers re-upload. */
   error?: string;
+  /** AI analysis failure — file is safely stored; never re-upload for this. */
+  analysisError?: string;
 }
 
 const GRADE_TONE: Record<'A' | 'B' | 'C' | 'D', string> = {
@@ -146,6 +149,108 @@ const READINESS_FIX: Record<string, string> = {
 
 const FIELD_CLS =
   'h-11 touch-manipulation bg-[hsl(0_0%_10%)] border-white/[0.08] text-[13px] text-white placeholder:text-white/40 focus:border-elec-yellow/40 focus:ring-1 focus:ring-elec-yellow/20';
+
+/* ─── Coverage moment ──────────────────────────────────────────────────
+   After a save that claimed ≥1 AC, work out where the claimed unit now
+   stands so the toast can say "Unit 304 — 5 of 17 criteria now have
+   evidence." rather than a flat "saved".
+
+   College-linked learners read the server-maintained student_ac_coverage
+   (a trigger on portfolio_items keeps it in sync — the just-claimed ACs
+   are counted client-side in case that flip hasn't landed yet).
+   Standalone learners fall back to distinct claimed ACs across
+   portfolio_items vs the qualification_requirements catalogue.
+
+   Returns the toast description, or null on any failure so the caller
+   silently keeps the original toast. */
+
+const AC_REF_RE = /^(.+?)\s+AC\s+(.+)$/;
+const EVIDENCED_STATUSES = new Set(['evidenced', 'assessed', 'confirmed']);
+
+async function buildCoverageMoment(
+  userId: string,
+  qualificationCode: string | null,
+  claimedRefs: string[]
+): Promise<string | null> {
+  try {
+    // Group claimed refs by unit, preserving claim order.
+    const byUnit = new Map<string, Set<string>>();
+    for (const ref of claimedRefs) {
+      const m = AC_REF_RE.exec(ref);
+      if (!m) continue;
+      const set = byUnit.get(m[1]) ?? new Set<string>();
+      set.add(m[2]);
+      byUnit.set(m[1], set);
+    }
+    const first = byUnit.entries().next();
+    if (first.done) return null;
+    const [unit, claimedAcs] = first.value;
+    const moreUnits = byUnit.size - 1;
+
+    let covered = 0;
+    let total = 0;
+
+    const { data: cs } = await supabase
+      .from('college_students')
+      .select('id')
+      .eq('user_id', userId)
+      .maybeSingle();
+
+    if (cs?.id) {
+      // College-linked — the server-maintained coverage table is truth.
+      const { data: rows, error } = await supabase
+        .from('student_ac_coverage')
+        .select('ac_code, status')
+        .eq('student_id', cs.id as string)
+        .eq('unit_code', unit);
+      if (error || !rows?.length) return null;
+      total = rows.length;
+      covered = rows.filter((r) => EVIDENCED_STATUSES.has(r.status as string)).length;
+      // The sync trigger may not have flipped the just-claimed ACs yet —
+      // count them client-side so the number never reads low.
+      for (const ac of claimedAcs) {
+        const row = rows.find((r) => r.ac_code === ac);
+        if (row && !EVIDENCED_STATUSES.has(row.status as string)) covered += 1;
+      }
+      covered = Math.min(covered, total);
+    } else {
+      // Standalone — distinct claimed ACs across the portfolio vs the
+      // qualification catalogue for this unit.
+      if (!qualificationCode) return null;
+      const [reqsRes, itemsRes] = await Promise.all([
+        supabase
+          .from('qualification_requirements')
+          .select('ac_code')
+          .eq('qualification_code', qualificationCode)
+          .eq('unit_code', unit),
+        supabase.from('portfolio_items').select('assessment_criteria_met').eq('user_id', userId),
+      ]);
+      if (reqsRes.error || itemsRes.error) return null;
+      const catalogue = new Set((reqsRes.data ?? []).map((r) => r.ac_code as string));
+      if (catalogue.size === 0) return null;
+      total = catalogue.size;
+      const claimed = new Set<string>();
+      for (const item of itemsRes.data ?? []) {
+        for (const ref of item.assessment_criteria_met ?? []) {
+          const m = AC_REF_RE.exec(ref);
+          if (m && m[1] === unit && catalogue.has(m[2])) claimed.add(m[2]);
+        }
+      }
+      // The just-saved row should already be in the read, but include its
+      // claims client-side in case the read raced the insert.
+      for (const ac of claimedAcs) if (catalogue.has(ac)) claimed.add(ac);
+      covered = claimed.size;
+    }
+
+    if (total === 0) return null;
+    const unitLabel = /^unit\b/i.test(unit) ? unit : `Unit ${unit}`;
+    const suffix =
+      moreUnits > 0 ? ` + ${moreUnits} more ${moreUnits === 1 ? 'unit' : 'units'}.` : '';
+    return `${unitLabel} — ${covered} of ${total} criteria now have evidence.${suffix}`;
+  } catch {
+    return null;
+  }
+}
 
 export function UnifiedCaptureSheet({
   open,
@@ -550,9 +655,12 @@ export function UnifiedCaptureSheet({
         },
 
         onError: (msg, fileId) => {
+          // Analysis failing is NOT an upload failure — the file is already
+          // safely in storage. Setting `error` here used to show
+          // "Failed — retry", whose retry re-uploaded a duplicate object.
           if (fileId) {
             setFiles((prev) =>
-              prev.map((f) => (f.id === fileId ? { ...f, error: msg } : f))
+              prev.map((f) => (f.id === fileId ? { ...f, analysisError: msg } : f))
             );
           }
         },
@@ -672,7 +780,21 @@ export function UnifiedCaptureSheet({
 
       // Only now is it actually saved.
       haptic.success();
-      toast({ title: 'Evidence saved', description: toastMsg });
+      // Coverage moment — when ACs were claimed, say where that unit now
+      // stands instead of a flat "saved". Fire-and-forget so a slow query
+      // never delays the sheet closing; falls back silently on any failure.
+      if (snap.selectedACs.length > 0 && user?.id) {
+        const uid = user.id;
+        void buildCoverageMoment(uid, qualificationCode, snap.selectedACs).then((moment) => {
+          if (moment) {
+            toast({ title: 'Added to portfolio ⚡', description: moment });
+          } else {
+            toast({ title: 'Evidence saved', description: toastMsg });
+          }
+        });
+      } else {
+        toast({ title: 'Evidence saved', description: toastMsg });
+      }
       resetForm();
       onComplete();
     } catch (error) {
@@ -729,11 +851,13 @@ export function UnifiedCaptureSheet({
         <div className="w-12 h-1 bg-white/15 rounded-full mx-auto mt-3 mb-2" />
         <div className="flex flex-col h-full">
           <SheetHeader className="px-4 sm:px-6 pb-4">
+            {/* SheetTitle already renders an <h2> — inner heading must not
+                nest another one (validateDOMNesting). */}
             <SheetTitle className="text-left">
               <Eyebrow>Capture · Evidence</Eyebrow>
-              <h2 className="text-[22px] sm:text-[26px] font-semibold tracking-tight text-white mt-1 leading-none">
+              <span className="block text-[22px] sm:text-[26px] font-semibold tracking-tight text-white mt-1 leading-none">
                 {step === 'capture' ? 'Capture on site' : 'Review &amp; tag'}
-              </h2>
+              </span>
             </SheetTitle>
             <SheetDescription className="text-left text-[13px] text-white/70 leading-snug">
               {step === 'capture'
@@ -812,11 +936,11 @@ export function UnifiedCaptureSheet({
                           Criteria this covers — tap to remove any
                         </p>
                         <div className="flex flex-wrap gap-1.5">
-                          {briefACs.map((ref) => {
+                          {briefACs.map((ref, refIdx) => {
                             const on = selectedACs.includes(ref);
                             return (
                               <button
-                                key={ref}
+                                key={`${ref}-${refIdx}`}
                                 type="button"
                                 onClick={() => toggleAC(ref)}
                                 className={cn(
@@ -914,6 +1038,11 @@ export function UnifiedCaptureSheet({
                                 >
                                   Failed — retry
                                 </button>
+                              )}
+                              {!f.error && f.analysisError && (
+                                <span className="text-[10px] text-amber-200/80">
+                                  Stored — AI check didn't run
+                                </span>
                               )}
                             </div>
                           </div>
@@ -1022,9 +1151,10 @@ export function UnifiedCaptureSheet({
                         <span className="text-[10px] uppercase tracking-[0.18em] text-white/40">
                           Reg sources
                         </span>
-                        {meta.regNumbers.slice(0, 6).map((r) => (
+                        {/* reg numbers can repeat across files — index the key */}
+                        {meta.regNumbers.slice(0, 6).map((r, rIdx) => (
                           <span
-                            key={r}
+                            key={`${r}-${rIdx}`}
                             className="text-[10px] font-mono text-elec-yellow/85 px-1.5 py-0 rounded-md border border-elec-yellow/20 bg-elec-yellow/[0.04]"
                           >
                             {r}
@@ -1062,12 +1192,13 @@ export function UnifiedCaptureSheet({
                       </span>
                     </div>
                     <ul className="space-y-1.5">
-                      {allMatches.map((m) => {
+                      {/* same AC can be matched by two files — index the key */}
+                      {allMatches.map((m, i) => {
                         const ref = `${m.unitCode} AC ${m.acCode}`;
                         const selected = selectedACs.includes(ref);
                         const recommended = m.confidence >= 80;
                         return (
-                          <li key={ref}>
+                          <li key={`${ref}-${i}`}>
                             <button
                               type="button"
                               onClick={() => toggleAC(ref)}

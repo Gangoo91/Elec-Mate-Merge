@@ -1,4 +1,5 @@
 import { useCallback, useEffect, useRef, useState } from 'react';
+import { MessageCircle } from 'lucide-react';
 import { Sheet, SheetContent, SheetTitle } from '@/components/ui/sheet';
 import { useToast } from '@/hooks/use-toast';
 import { supabase } from '@/integrations/supabase/client';
@@ -34,6 +35,11 @@ interface Message {
   read_at: string | null;
 }
 
+interface TeamMember {
+  role: 'Tutor' | 'Assessor' | 'IQA';
+  name: string;
+}
+
 export function ApprenticeMessageSheet({ open, onOpenChange }: Props) {
   const { toast } = useToast();
 
@@ -49,7 +55,24 @@ export function ApprenticeMessageSheet({ open, onOpenChange }: Props) {
   const [newSubject, setNewSubject] = useState('');
   const [mode, setMode] = useState<'list' | 'thread' | 'new'>('list');
   const [sending, setSending] = useState(false);
+  const [team, setTeam] = useState<TeamMember[]>([]);
   const scrollRef = useRef<HTMLDivElement>(null);
+
+  // Who actually reads these messages — tutor / assessor / IQA names so the
+  // header isn't an anonymous void. Returns [] when nothing is assigned yet.
+  useEffect(() => {
+    if (!open) return;
+    let cancelled = false;
+    (async () => {
+      const { data } = await supabase.rpc('get_my_college_team' as never);
+      if (cancelled) return;
+      const rows = data as unknown as TeamMember[] | null;
+      setTeam(Array.isArray(rows) ? rows : []);
+    })();
+    return () => {
+      cancelled = true;
+    };
+  }, [open]);
 
   // Resolve identity once on mount
   useEffect(() => {
@@ -224,7 +247,12 @@ export function ApprenticeMessageSheet({ open, onOpenChange }: Props) {
             student_id: collegeStudentId,
             college_id: collegeId,
             subject: subjForNew || null,
-            created_by: authUid,
+            // created_by FKs to college_staff.id (staff-initiated threads
+            // only) — an auth uid here violates the FK and broke every
+            // apprentice-started conversation. Apprentice threads carry null;
+            // the student_id + sender_kind='student' on the message identify
+            // the learner.
+            created_by: null,
             // No counter seeding — the bump_thread_counters trigger
             // bumps unread_count_tutor when the message is inserted
             // immediately after.
@@ -267,35 +295,50 @@ export function ApprenticeMessageSheet({ open, onOpenChange }: Props) {
     }
   };
 
-  const headerTitle =
-    mode === 'list'
-      ? 'Messages with your tutor'
-      : mode === 'new'
-        ? 'New message to your tutor'
-        : (threads.find((t) => t.id === activeThreadId)?.subject ?? 'Conversation');
+  const tutor = team.find((m) => m.role === 'Tutor') ?? null;
+  const others = team.filter((m) => m !== tutor);
 
   return (
     <Sheet open={open} onOpenChange={onOpenChange}>
       <SheetContent
         side="bottom"
-        className="h-[92vh] sm:max-w-2xl sm:mx-auto p-0 rounded-t-2xl overflow-hidden border-white/10 bg-[hsl(0_0%_8%)]"
+        className="h-[92vh] sm:max-w-2xl sm:mx-auto p-0 rounded-t-2xl overflow-hidden border-white/[0.08] bg-[hsl(0_0%_10%)]"
       >
-        <SheetTitle className="sr-only">Messages with your tutor</SheetTitle>
+        <SheetTitle className="sr-only">Messages — college team</SheetTitle>
         <div className="flex h-full flex-col">
-          <header className="px-4 sm:px-5 pt-5 pb-4 border-b border-white/[0.06] flex items-baseline justify-between gap-3 flex-wrap">
+          <header className="px-4 sm:px-5 pt-5 pb-4 border-b border-white/[0.06] flex items-start justify-between gap-3">
             <div className="min-w-0">
-              <div className="text-[11px] font-medium uppercase tracking-[0.18em] text-blue-300/85">
-                Tutor messages
+              <div className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/40">
+                Messages · College team
               </div>
-              <h2 className="mt-1 text-[16px] sm:text-[18px] font-semibold text-white leading-tight truncate">
-                {headerTitle}
+              <h2 className="mt-1 text-[18px] font-semibold text-white leading-tight truncate">
+                {tutor ? (
+                  <>
+                    {tutor.name}
+                    <span className="ml-2 align-middle inline-block text-[9px] font-medium uppercase tracking-[0.14em] border border-elec-yellow/30 bg-elec-yellow/10 text-elec-yellow px-1.5 py-0.5 rounded">
+                      Tutor
+                    </span>
+                  </>
+                ) : (
+                  'Your college team'
+                )}
               </h2>
+              {others.length > 0 && (
+                <p className="mt-1 text-[11px] text-white/45 truncate">
+                  Also sees this: {others.map((m) => `${m.name} · ${m.role}`).join(', ')}
+                </p>
+              )}
+              {team.length === 0 && (
+                <p className="mt-1 text-[11px] text-white/45 leading-snug">
+                  Messages go to your college — a tutor will be assigned soon.
+                </p>
+              )}
             </div>
             {mode === 'thread' && threads.length > 1 && (
               <button
                 type="button"
                 onClick={() => setMode('list')}
-                className="text-[11.5px] font-medium text-white/85 hover:text-white transition-colors"
+                className="shrink-0 h-11 px-2 text-[11.5px] font-medium text-white/60 hover:text-white transition-colors touch-manipulation"
               >
                 ← All threads
               </button>
@@ -307,7 +350,7 @@ export function ApprenticeMessageSheet({ open, onOpenChange }: Props) {
                   setActiveThreadId(null);
                   setMode('new');
                 }}
-                className="h-9 px-3 rounded-lg bg-white/[0.02] text-white text-[12px] font-semibold hover:bg-white/[0.02] transition-colors touch-manipulation"
+                className="shrink-0 h-11 px-3.5 rounded-xl border border-white/[0.08] bg-white/[0.04] text-white/85 text-[12px] font-semibold hover:bg-white/[0.08] transition-colors touch-manipulation"
               >
                 New thread
               </button>
@@ -327,39 +370,39 @@ export function ApprenticeMessageSheet({ open, onOpenChange }: Props) {
             )}
             {mode === 'thread' && <MessageList messages={messages} />}
             {mode === 'new' && (
-              <div className="space-y-3">
+              <div className="flex h-full flex-col gap-3">
                 <input
                   type="text"
                   value={newSubject}
                   onChange={(e) => setNewSubject(e.target.value)}
                   placeholder="Subject (optional)"
-                  className="w-full h-11 px-3 rounded-lg bg-white/[0.03] border border-white/[0.08] text-[13px] text-white placeholder:text-white/50 focus:outline-none focus:border-white/[0.06] focus:ring-1 focus:ring-white/10 touch-manipulation"
+                  className="w-full h-11 px-3.5 rounded-xl bg-[hsl(0_0%_8%)] border border-white/[0.10] text-[14px] text-white placeholder:text-white/40 focus:outline-none focus:border-elec-yellow/40 touch-manipulation"
                 />
-                <p className="text-[11.5px] text-white/85 leading-snug">
-                  Drop your tutor a message. They'll see it the next time they open Student 360.
-                </p>
+                <div className="flex-1 flex items-center justify-center">
+                  <EmptyThreadState />
+                </div>
               </div>
             )}
           </div>
 
           {(mode === 'thread' || mode === 'new') && (
-            <footer className="border-t border-white/[0.06] px-4 sm:px-5 py-3 bg-[hsl(0_0%_6%)]">
+            <footer className="border-t border-white/[0.06] px-4 sm:px-5 py-3 bg-[hsl(0_0%_8%)]">
               <div className="flex items-end gap-2">
                 <textarea
                   value={draft}
                   onChange={(e) => setDraft(e.target.value)}
                   rows={2}
                   placeholder="Write a message…"
-                  className="flex-1 px-3 py-2.5 rounded-lg bg-white/[0.03] border border-white/[0.08] text-[13px] text-white placeholder:text-white/50 leading-relaxed focus:outline-none focus:border-white/[0.06] focus:ring-1 focus:ring-white/10 touch-manipulation resize-none"
+                  className="flex-1 px-3.5 py-2.5 rounded-xl bg-[hsl(0_0%_8%)] border border-white/[0.10] text-[14px] text-white placeholder:text-white/40 leading-relaxed focus:outline-none focus:border-elec-yellow/40 touch-manipulation resize-none"
                 />
                 <button
                   type="button"
                   onClick={handleSend}
                   disabled={!draft.trim() || sending}
-                  className={cn('shrink-0 h-11 px-4 rounded-lg text-[13px] font-semibold transition-colors touch-manipulation',
+                  className={cn('shrink-0 h-11 px-5 rounded-xl text-[13px] font-semibold transition-colors touch-manipulation',
                     draft.trim() && !sending
-                      ? 'bg-white/[0.02] text-white hover:bg-white/[0.02]'
-                      : 'bg-white/[0.05] text-white/40'
+                      ? 'bg-elec-yellow text-black hover:bg-elec-yellow/90'
+                      : 'bg-white/[0.08] text-white/35'
                   )}
                 >
                   {sending ? '…' : 'Send'}
@@ -382,15 +425,15 @@ function ThreadList({
   loading: boolean;
   onPick: (id: string) => void;
 }) {
-  if (loading) return <div className="text-[12.5px] text-white/85">Loading…</div>;
+  if (loading) return <div className="text-[12px] text-white/50">Loading…</div>;
   if (threads.length === 0)
     return (
-      <p className="text-[12.5px] text-white/85 leading-snug">
-        No conversations yet. Start one — your tutor sees it instantly.
+      <p className="text-[12px] text-white/50 leading-snug">
+        No conversations yet. Start one — your college team sees it instantly.
       </p>
     );
   return (
-    <ul className="divide-y divide-white/[0.05]">
+    <ul className="divide-y divide-white/[0.06]">
       {threads.map((t) => (
         <li key={t.id}>
           <button
@@ -403,12 +446,12 @@ function ThreadList({
                 {t.subject ?? 'Conversation'}
               </div>
               {t.unread_count_student > 0 && (
-                <div className="mt-0.5 text-[10.5px] text-white/85 tabular-nums">
+                <div className="mt-0.5 text-[10px] font-medium text-elec-yellow tabular-nums">
                   {t.unread_count_student} unread
                 </div>
               )}
             </div>
-            <span className="text-[10.5px] text-white/95 tabular-nums whitespace-nowrap">
+            <span className="text-[10px] text-white/40 tabular-nums whitespace-nowrap">
               {new Date(t.last_message_at).toLocaleDateString('en-GB', {
                 day: 'numeric',
                 month: 'short',
@@ -421,9 +464,25 @@ function ThreadList({
   );
 }
 
+function EmptyThreadState() {
+  return (
+    <div className="flex flex-col items-center gap-2 px-6 text-center">
+      <MessageCircle className="h-6 w-6 text-white/25" strokeWidth={1.5} />
+      <p className="text-[14px] font-medium text-white/85">Start the conversation</p>
+      <p className="text-[12px] text-white/50 leading-snug">
+        Your college team sees this instantly — replies land right here.
+      </p>
+    </div>
+  );
+}
+
 function MessageList({ messages }: { messages: Message[] }) {
   if (messages.length === 0)
-    return <p className="text-[12.5px] text-white/85">Start typing below…</p>;
+    return (
+      <div className="h-full flex items-center justify-center">
+        <EmptyThreadState />
+      </div>
+    );
   return (
     <div className="space-y-3">
       {messages.map((m) => {
@@ -431,16 +490,16 @@ function MessageList({ messages }: { messages: Message[] }) {
         return (
           <div key={m.id} className={cn('flex', isMe ? 'justify-end' : 'justify-start')}>
             <div
-              className={cn('max-w-[80%] rounded-2xl px-3.5 py-2.5 text-[13px] leading-snug',
+              className={cn('max-w-[78%] rounded-2xl px-3.5 py-2.5 text-[13.5px] leading-snug text-white',
                 isMe
-                  ? 'bg-white/[0.02] text-white rounded-br-md'
-                  : 'bg-white/[0.06] text-white border border-white/[0.06] rounded-bl-md'
+                  ? 'bg-elec-yellow/[0.08] border border-elec-yellow/20 rounded-br-md'
+                  : 'bg-white/[0.06] border border-white/[0.06] rounded-bl-md'
               )}
             >
               <div className="whitespace-pre-wrap break-words">{m.body}</div>
               <div
-                className={cn('mt-1 text-[10px] tabular-nums',
-                  isMe ? 'text-blue-100/85' : 'text-white/95'
+                className={cn('mt-1 text-[10px] text-white/40 tabular-nums',
+                  isMe ? 'text-right' : 'text-left'
                 )}
               >
                 {new Date(m.created_at).toLocaleTimeString('en-GB', {

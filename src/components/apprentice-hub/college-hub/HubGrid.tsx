@@ -94,7 +94,7 @@ export function HubGrid({ stats }: HubGridProps) {
     {
       eyebrow: 'OTJ',
       title: 'Off-the-job hours',
-      description: 'Verified hours toward the 20% rule. Submit new entries with photos and reflection.',
+      description: 'Verified hours toward your fixed OTJ target. Submit new entries with photos and reflection.',
       meta:
         stats.rejected_otj_minutes > 0
           ? `${fmtHours(stats.rejected_otj_minutes)} returned`
@@ -139,19 +139,59 @@ export function HubGrid({ stats }: HubGridProps) {
     >
       <motion.div variants={itemVariants}>
         <div className="text-[10px] font-medium uppercase tracking-[0.18em] text-elec-yellow/80">
-          Your college · everything tutor-driven
+          Your college
         </div>
       </motion.div>
 
+      {/* MOBILE — a directory should scan like one: compact rows, one
+          hairline cell, whole list fits in under a screen and a half. */}
+      <motion.div
+        variants={itemVariants}
+        className="sm:hidden relative bg-[hsl(0_0%_10%)] border border-white/[0.08] rounded-2xl overflow-hidden"
+      >
+        <div className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-elec-yellow/0 via-elec-yellow/60 to-elec-yellow/0 pointer-events-none" />
+        <ul className="divide-y divide-white/[0.05]">
+          {cards.map((card, i) => (
+            <li key={card.eyebrow}>
+              <button
+                type="button"
+                onClick={() => navigate(card.route)}
+                className="group w-full flex items-center gap-3 px-4 py-3.5 text-left touch-manipulation hover:bg-elec-yellow/[0.04] transition-colors"
+              >
+                <span className="w-6 shrink-0 text-[11px] font-mono text-elec-yellow/70 tabular-nums">
+                  {String(i + 1).padStart(2, '0')}
+                </span>
+                <span className="flex-1 min-w-0">
+                  <span className="block text-[14px] font-medium text-white leading-snug truncate">
+                    {card.title}
+                  </span>
+                  <span
+                    className={cn(
+                      'mt-0.5 block text-[11px] leading-tight truncate tabular-nums',
+                      card.alert ? 'text-red-300' : 'text-white/50'
+                    )}
+                  >
+                    {card.meta === 'Open' ? card.eyebrow : card.meta}
+                  </span>
+                </span>
+                {card.alert && (
+                  <span className="shrink-0 h-1.5 w-1.5 rounded-full bg-red-400" aria-hidden />
+                )}
+                <ArrowRight className="h-4 w-4 shrink-0 text-white/35 group-hover:text-elec-yellow group-hover:translate-x-0.5 transition-all" />
+              </button>
+            </li>
+          ))}
+        </ul>
+      </motion.div>
+
+      {/* TABLET+ — connected card grid, natural height (no min-h dead space),
+          single footer line. */}
       <motion.div
         variants={itemVariants}
         className={cn(
-          // Content-driven rows + default stretch keeps same-row cards
-          // equal-height. Cards each carry their own min-h so the layout
-          // never crops the "Open" CTA at the bottom.
-          'relative grid gap-[2px]',
+          'hidden sm:grid relative gap-[2px]',
           'bg-black border border-white/[0.08] rounded-2xl overflow-hidden',
-          'grid-cols-1 sm:grid-cols-2 lg:grid-cols-4'
+          'sm:grid-cols-2 lg:grid-cols-4'
         )}
       >
         <div className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-elec-yellow/0 via-elec-yellow/60 to-elec-yellow/0 pointer-events-none z-10" />
@@ -161,7 +201,7 @@ export function HubGrid({ stats }: HubGridProps) {
             key={card.eyebrow}
             type="button"
             onClick={() => navigate(card.route)}
-            className="group relative bg-[hsl(0_0%_10%)] hover:bg-elec-yellow/[0.04] transition-colors p-5 sm:p-6 lg:p-7 text-left touch-manipulation flex flex-col h-full min-h-[280px] sm:min-h-[300px] lg:min-h-[320px]"
+            className="group relative bg-[hsl(0_0%_10%)] hover:bg-elec-yellow/[0.04] transition-colors p-5 lg:p-6 text-left touch-manipulation flex flex-col h-full"
           >
             <div className="flex items-baseline justify-between gap-2 flex-wrap">
               <div className="flex items-baseline gap-2">
@@ -179,26 +219,18 @@ export function HubGrid({ stats }: HubGridProps) {
               )}
             </div>
 
-            <h3 className="mt-3 sm:mt-4 text-[18px] sm:text-[20px] lg:text-[22px] font-semibold tracking-tight leading-[1.15] text-white group-hover:text-elec-yellow transition-colors">
+            <h3 className="mt-3 text-[17px] lg:text-[18px] font-semibold tracking-tight leading-[1.15] text-white group-hover:text-elec-yellow transition-colors">
               {card.title}
             </h3>
-            <p className="mt-2 text-[12.5px] leading-relaxed text-white/65 line-clamp-3">
+            <p className="mt-1.5 text-[12px] leading-relaxed text-white/60 line-clamp-2">
               {card.description}
             </p>
 
-            <div className="flex-grow min-h-[8px]" />
-
-            {/* Footer — stacks vertically by default so the Open CTA
-                always has its own line. Inline only at lg+ (and even there
-                with 4 cols cards are narrow, so we keep stacked). */}
-            <div className="mt-4 pt-3 border-t border-white/[0.05] flex flex-col gap-2">
-              <span className="text-[11px] text-white/55 tabular-nums leading-tight">
-                {card.meta}
+            <div className="mt-4 pt-3 border-t border-white/[0.05] flex items-center justify-between gap-2">
+              <span className="text-[11px] text-white/55 tabular-nums leading-tight truncate">
+                {card.meta === 'Open' ? card.eyebrow : card.meta}
               </span>
-              <span className="inline-flex items-center gap-1.5 text-[12px] font-semibold text-elec-yellow shrink-0 self-start">
-                Open
-                <ArrowRight className="h-3.5 w-3.5 group-hover:translate-x-0.5 transition-transform" />
-              </span>
+              <ArrowRight className="h-3.5 w-3.5 shrink-0 text-elec-yellow group-hover:translate-x-0.5 transition-transform" />
             </div>
           </button>
         ))}
