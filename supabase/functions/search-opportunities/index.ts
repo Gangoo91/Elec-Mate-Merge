@@ -453,12 +453,14 @@ Deno.serve(async (req) => {
       };
     });
 
-    // Filter by radius if location provided
-    // Only include opportunities that have valid coordinates AND are within radius
-    // Opportunities without coordinates are excluded when searching by location
+    // Filter by radius if location provided.
+    // Keep opportunities WITHIN radius, PLUS coordinate-less national
+    // frameworks / UK-wide contracts (distance null) — those are relevant
+    // everywhere and shouldn't vanish from a location search (audit fix).
     if (searchLat && searchLng) {
       opportunities = opportunities.filter(
-        (opp) => opp.distance_miles !== null && opp.distance_miles <= radius_miles
+        (opp) =>
+          opp.distance_miles === null || opp.distance_miles <= radius_miles
       );
     }
 

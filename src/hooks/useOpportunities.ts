@@ -5,6 +5,7 @@ import { useToast } from '@/hooks/use-toast';
 // Types
 export interface TenderOpportunity {
   id: string;
+  opportunity_type?: 'tender' | 'planning' | 'award';
   external_id: string;
   source: string;
   source_url: string;

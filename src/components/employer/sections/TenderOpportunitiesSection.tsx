@@ -510,6 +510,20 @@ function OpportunityCard({
             <div className="flex items-start gap-2 mb-2">
               <Zap className="h-4 w-4 text-elec-yellow mt-1 flex-shrink-0" />
               <div className="min-w-0">
+                {(() => {
+                  const t = opportunity.opportunity_type || 'tender';
+                  const badge =
+                    t === 'planning'
+                      ? { label: 'Planning lead · approach early', cls: 'bg-purple-500/15 text-purple-300 border-purple-500/25' }
+                      : t === 'award'
+                        ? { label: 'Award · pitch as subcontractor', cls: 'bg-blue-500/15 text-blue-300 border-blue-500/25' }
+                        : { label: 'Tender · open to bid', cls: 'bg-elec-yellow/15 text-elec-yellow border-elec-yellow/25' };
+                  return (
+                    <span className={`inline-block mb-1 text-[10px] font-semibold px-2 py-0.5 rounded-full border ${badge.cls}`}>
+                      {badge.label}
+                    </span>
+                  );
+                })()}
                 <h4 className="font-medium text-sm line-clamp-2 text-white">{opportunity.title}</h4>
                 <p className="text-xs text-white truncate">{opportunity.client_name}</p>
               </div>
@@ -535,7 +549,9 @@ function OpportunityCard({
                 className={`flex items-center gap-1 ${deadline.urgent ? 'text-orange-400' : ''}`}
               >
                 <Clock className="h-3 w-3" />
-                {deadline.text}
+                {(opportunity.opportunity_type === 'planning' && !opportunity.deadline)
+                  ? 'Pre-tender'
+                  : deadline.text}
               </span>
             </div>
 
