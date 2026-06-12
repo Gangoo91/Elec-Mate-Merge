@@ -1,8 +1,9 @@
-import { useState, useEffect, useMemo } from 'react';
+import { useState, useEffect, useMemo, useRef } from 'react';
 import { Textarea } from '@/components/ui/textarea';
 import { JobPackSelector } from '@/components/employer/smart-docs/JobPackSelector';
 import { useJobPacks, useUpdateJobPack } from '@/hooks/useJobPacks';
 import { supabase } from '@/integrations/supabase/client';
+import { persistPackDocument } from '@/utils/persistPackDocument';
 import { useToast } from '@/hooks/use-toast';
 import type { Section } from '@/pages/employer/EmployerDashboard';
 import {
@@ -22,7 +23,7 @@ import {
   SecondaryButton,
   textareaClass,
 } from '@/components/employer/editorial';
-import { RefreshCw, Download, Sparkles } from 'lucide-react';
+import { RefreshCw, Download, Sparkles, Loader2 } from 'lucide-react';
 
 interface AIMethodStatementSectionProps {
   onNavigate: (section: Section) => void;
@@ -70,72 +71,128 @@ export function AIMethodStatementSection({ onNavigate }: AIMethodStatementSectio
     setError(null);
     setResult(null);
 
-    const progressInterval = setInterval(() => {
-      setProgress((prev) => {
-        if (prev >= 90) return prev;
-        return prev + Math.random() * 10;
-      });
-    }, 500);
-
     try {
-      const { data, error: invokeError } = await supabase.functions.invoke(
-        'generate-method-statement-pdf',
-        {
-          body: {
-            jobDescription: scopeDescription,
-            projectInfo: {
-              projectName: selectedJobPack?.title || 'Untitled Project',
-              location: selectedJobPack?.location || '',
-              contractor: '',
-              supervisor: '',
-            },
+      // The real AI is rams-generator's method agent (generate-method-
+      // statement-pdf is just a renderer and 400s without method data).
+      // Create the job, then poll — the table is not in the realtime
+      // publication.
+      const { data, error: invokeError } = await supabase.functions.invoke('rams-generator', {
+        body: {
+          action: 'create',
+          jobDescription: scopeDescription,
+          projectInfo: {
+            projectName: selectedJobPack?.title || 'Untitled Project',
+            location: selectedJobPack?.location || '',
           },
+          jobScale: 'commercial',
+        },
+      });
+      if (invokeError || !data?.jobId) {
+        throw new Error(invokeError?.message || data?.error || 'Could not start generation');
+      }
+
+      const jobId = data.jobId as string;
+      if (pollRef.current) clearInterval(pollRef.current);
+      const poll = setInterval(async () => {
+        const { data: job } = await supabase
+          .from('rams_generation_jobs')
+          .select('status, progress, current_step, method_data, error_message')
+          .eq('id', jobId)
+          .maybeSingle();
+        if (!job) return;
+        setProgress(job.progress || 0);
+        setCurrentStep(job.current_step || 'Working…');
+
+        if (job.status === 'complete') {
+          clearInterval(poll);
+          pollRef.current = null;
+          setProgress(100);
+          setResult(job.method_data);
+          setIsGenerating(false);
+          toast({
+            title: 'Method statement generated',
+            description: 'Your method statement has been created successfully.',
+          });
+          if (selectedJobPackId) {
+            updateJobPack.mutate({
+              id: selectedJobPackId,
+              updates: { method_statement_generated: true },
+            });
+          }
+        } else if (job.status === 'failed') {
+          clearInterval(poll);
+          pollRef.current = null;
+          setIsGenerating(false);
+          setError(job.error_message || 'Generation failed');
+          toast({
+            title: 'Error',
+            description: job.error_message || 'Generation failed',
+            variant: 'destructive',
+          });
         }
-      );
-
-      clearInterval(progressInterval);
-
-      if (invokeError) {
-        throw invokeError;
-      }
-
-      setProgress(100);
-      setResult(data);
+      }, 3000);
+      pollRef.current = poll;
+    } catch (err) {
       setIsGenerating(false);
-
-      toast({
-        title: 'Method statement generated',
-        description: 'Your method statement has been created successfully.',
-      });
-
-      if (selectedJobPackId) {
-        updateJobPack.mutate({
-          id: selectedJobPackId,
-          updates: { method_statement_generated: true },
-        });
-      }
-    } catch (err: any) {
-      clearInterval(progressInterval);
-      setIsGenerating(false);
-      setError(err.message);
-      toast({
-        title: 'Error',
-        description: err.message,
-        variant: 'destructive',
-      });
+      const msg = err instanceof Error ? err.message : 'Generation failed';
+      setError(msg);
+      toast({ title: 'Error', description: msg, variant: 'destructive' });
     }
   };
 
-  const handleDownload = () => {
+  const pollRef = useRef<ReturnType<typeof setInterval> | null>(null);
+  useEffect(
+    () => () => {
+      if (pollRef.current) clearInterval(pollRef.current);
+    },
+    []
+  );
+  const [isDownloading, setIsDownloading] = useState(false);
+  const handleDownload = async () => {
     if (!result) return;
-    const content = JSON.stringify(result, null, 2);
-    const blob = new Blob([content], { type: 'application/json' });
-    const url = URL.createObjectURL(blob);
-    const a = document.createElement('a');
-    a.href = url;
-    a.download = `MethodStatement-${selectedJobPack?.title || 'document'}.json`;
-    a.click();
-    URL.revokeObjectURL(url);
+    setIsDownloading(true);
+    try {
+      // Real branded PDF via the renderer (the same one site-safety uses)
+      const { data, error } = await supabase.functions.invoke('generate-method-statement-pdf', {
+        body: {
+          methodData: {
+            ...result,
+            projectName: selectedJobPack?.title || 'Method Statement',
+          },
+        },
+      });
+      if (data?.success && data?.downloadUrl) {
+        const a = document.createElement('a');
+        a.href = data.downloadUrl;
+        a.download = `Method_Statement_${(selectedJobPack?.title || 'document').replace(/[^a-z0-9]/gi, '_')}.pdf`;
+        a.click();
+
+        // Persist DURABLY (renderer URLs expire within the hour)
+        let saved = false;
+        if (selectedJobPackId) {
+          saved = await persistPackDocument({
+            jobPackId: selectedJobPackId,
+            title: `Method Statement — ${selectedJobPack?.title || 'document'}`,
+            documentType: 'method_statement',
+            transientUrl: data.downloadUrl,
+          });
+        }
+        toast({
+          title: 'PDF downloaded',
+          description: saved ? 'Saved to the job pack for worker sign-off.' : undefined,
+        });
+      } else {
+        throw new Error(error?.message || data?.error || 'PDF generation failed');
+      }
+    } catch (err) {
+      toast({
+        title: 'Could not generate the PDF',
+        description: err instanceof Error ? err.message : 'Try again.',
+        variant: 'destructive',
+      });
+    } finally {
+      setIsDownloading(false);
+    }
   };
 
   const handleReset = () => {
@@ -280,8 +337,12 @@ export function AIMethodStatementSection({ onNavigate }: AIMethodStatementSectio
                   </div>
 
                   <div className="flex gap-2">
-                    <PrimaryButton onClick={handleDownload} fullWidth>
-                      <Download className="h-4 w-4 mr-2" />
+                    <PrimaryButton onClick={handleDownload} disabled={isDownloading} fullWidth>
+                      {isDownloading ? (
+                        <Loader2 className="h-4 w-4 mr-2 animate-spin" />
+                      ) : (
+                        <Download className="h-4 w-4 mr-2" />
+                      )}
                       Download
                     </PrimaryButton>
                     <SecondaryButton onClick={handleReset}>

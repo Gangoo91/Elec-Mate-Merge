@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import { JobPackSelector } from '@/components/employer/smart-docs/JobPackSelector';
 import { useJobPacks, useUpdateJobPack } from '@/hooks/useJobPacks';
 import { supabase } from '@/integrations/supabase/client';
+import { persistPackDocument } from '@/utils/persistPackDocument';
 import { useToast } from '@/hooks/use-toast';
 import type { Section } from '@/pages/employer/EmployerDashboard';
 import { RefreshCw, Sparkles, Download } from 'lucide-react';
@@ -181,16 +182,50 @@ export function AIRAMSSection({ onNavigate }: AIRAMSSectionProps) {
     }
   };
 
-  const handleDownload = () => {
+  const [isDownloading, setIsDownloading] = useState(false);
+  const handleDownload = async () => {
     if (!result?.ramsData) return;
-    const content = JSON.stringify(result.ramsData, null, 2);
-    const blob = new Blob([content], { type: 'application/json' });
-    const url = URL.createObjectURL(blob);
-    const a = document.createElement('a');
-    a.href = url;
-    a.download = `RAMS-${selectedJobPack?.title || 'document'}.json`;
-    a.click();
-    URL.revokeObjectURL(url);
+    setIsDownloading(true);
+    try {
+      // Real branded PDF via the same renderer the site-safety flow uses
+      const {
+        data: { user },
+      } = await supabase.auth.getUser();
+      const { data, error } = await supabase.functions.invoke('generate-rams-pdf', {
+        body: { ramsData: result.ramsData, userId: user?.id },
+      });
+      if (data?.success && data?.downloadUrl) {
+        const a = document.createElement('a');
+        a.href = data.downloadUrl;
+        a.download = `Risk_Assessment_${(selectedJobPack?.title || 'document').replace(/[^a-z0-9]/gi, '_')}.pdf`;
+        a.click();
+
+        // Persist DURABLY (renderer URLs expire within the hour)
+        let saved = false;
+        if (selectedJobPackId) {
+          saved = await persistPackDocument({
+            jobPackId: selectedJobPackId,
+            title: `Risk Assessment — ${selectedJobPack?.title || 'document'}`,
+            documentType: 'rams',
+            transientUrl: data.downloadUrl,
+          });
+        }
+        toast({
+          title: 'PDF downloaded',
+          description: saved ? 'Saved to the job pack for worker sign-off.' : undefined,
+        });
+      } else {
+        throw new Error(error?.message || data?.error || 'PDF generation failed');
+      }
+    } catch (err) {
+      toast({
+        title: 'Could not generate the PDF',
+        description: err instanceof Error ? err.message : 'Try again.',
+        variant: 'destructive',
+      });
+    } finally {
+      setIsDownloading(false);
+    }
   };
 
   const handleReset = () => {
@@ -374,12 +409,34 @@ className={`${textareaClass} min-h-[110px]`}
 
                 <Divider label="Document" />
 
-                <pre className="font-mono text-[12px] leading-relaxed text-white whitespace-pre-wrap break-words bg-[hsl(0_0%_8%)] border border-white/[0.06] rounded-xl p-4 max-h-[360px] overflow-auto">
-                  {JSON.stringify(result.ramsData, null, 2)}
-                </pre>
+                <div className="space-y-2 max-h-[360px] overflow-auto">
+                  {/* eslint-disable-next-line @typescript-eslint/no-explicit-any */}
+                  {(result.ramsData.risks || []).map((risk: any, i: number) => (
+                    <div
+                      key={i}
+                      className="rounded-xl bg-[hsl(0_0%_10%)] border border-white/[0.06] p-3"
+                    >
+                      <p className="text-[13px] font-medium text-white">
+                        {i + 1}. {risk.hazard || risk.title || 'Hazard'}
+                      </p>
+                      {risk.controlMeasures && (
+                        <p className="text-[12px] text-white/60 mt-1">
+                          {Array.isArray(risk.controlMeasures)
+                            ? risk.controlMeasures.join(' · ')
+                            : String(risk.controlMeasures)}
+                        </p>
+                      )}
+                    </div>
+                  ))}
+                  {(!result.ramsData.risks || result.ramsData.risks.length === 0) && (
+                    <p className="text-[12px] text-white/40">
+                      Generated — download the PDF for the full document.
+                    </p>
+                  )}
+                </div>
 
                 <div className="flex flex-col sm:flex-row gap-2">
-                  <PrimaryButton onClick={handleDownload} fullWidth>
+                  <PrimaryButton onClick={handleDownload} disabled={isDownloading} fullWidth>
                     <Download className="h-4 w-4 mr-2" />
                     Download
                   </PrimaryButton>

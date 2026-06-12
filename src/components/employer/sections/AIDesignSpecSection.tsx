@@ -83,20 +83,38 @@ export function AIDesignSpecSection({ onNavigate }: AIDesignSpecSectionProps) {
     setResult(null);
 
     try {
-      const { data: job, error: createError } = await supabase
-        .from('circuit_design_jobs')
-        .insert({
-          query: designQuery,
-          property_type: propertyType,
-          status: 'pending',
-          progress: 0,
-        })
-        .select()
-        .single();
-
-      if (createError || !job) {
-        throw new Error(createError?.message || 'Failed to create design job');
+      // The fn creates its own job row — send the REAL design payload (the
+      // old client-side insert hit phantom columns and never ran)
+      const { data: created, error: createError } = await supabase.functions.invoke(
+        'circuit-designer',
+        {
+          body: {
+            mode: 'direct-design',
+            projectInfo: {
+              projectName: selectedJobPack?.title || 'Design specification',
+              location: selectedJobPack?.location || 'Not specified',
+              installationType: propertyType || 'domestic',
+            },
+            supply: {
+              voltage: 230,
+              phases: 'single',
+              pfc: 16000,
+              ze: 0.35,
+              earthingSystem: 'TN-C-S',
+              consumerUnitType: 'split-load',
+              mainSwitchRating: 100,
+            },
+            circuits: [],
+            additionalPrompt: designQuery,
+            specialRequirements: [],
+            installationConstraints: { ambientTemp: 30, groupingFactor: 1, budget: 'standard' },
+          },
+        }
+      );
+      if (createError || !created?.jobId) {
+        throw new Error(createError?.message || created?.error || 'Failed to create design job');
       }
+      const job = { id: created.jobId as string };
 
       const channel = supabase
         .channel(realtimeChannelName(`design-job-${job.id}`))
@@ -135,14 +153,6 @@ export function AIDesignSpecSection({ onNavigate }: AIDesignSpecSectionProps) {
         )
         .subscribe();
 
-      const { error: invokeError } = await supabase.functions.invoke('circuit-designer', {
-        body: { jobId: job.id },
-      });
-
-      if (invokeError) {
-        supabase.removeChannel(channel);
-        throw invokeError;
-      }
     } catch (err: any) {
       setIsGenerating(false);
       setError(err.message);

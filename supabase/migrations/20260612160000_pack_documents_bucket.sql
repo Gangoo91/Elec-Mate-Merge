@@ -1,0 +1,3 @@
+-- E3: private pack-documents bucket (own-folder insert, authenticated signed
+-- reads, own delete) — generated PDFs persisted durably; PDFMonkey URLs
+-- expire within the hour. Full SQL in DB migration pack_documents_bucket.
