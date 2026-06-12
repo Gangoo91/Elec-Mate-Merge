@@ -1,4 +1,5 @@
 import { useState, useCallback, useMemo } from 'react';
+import { useQuery } from '@tanstack/react-query';
 import { RefreshCw, MessageSquare, Briefcase, X, CheckSquare, Square, Send } from 'lucide-react';
 import { PullToRefresh } from '@/components/ui/pull-to-refresh';
 import { Sheet, SheetContent, SheetHeader, SheetTitle } from '@/components/ui/sheet';
@@ -13,6 +14,7 @@ import { AssignToJobDialog } from '@/components/employer/dialogs/AssignToJobDial
 import { SendMessageDialog } from '@/components/employer/dialogs/SendMessageDialog';
 import { BulkAssignDialog } from '@/components/employer/dialogs/BulkAssignDialog';
 import { toast } from '@/hooks/use-toast';
+import { supabase } from '@/integrations/supabase/client';
 import { Textarea } from '@/components/ui/textarea';
 import { createCommunication } from '@/services/communicationService';
 import {
@@ -40,7 +42,6 @@ import type { Employee } from '@/services/employeeService';
 type TeamRole = 'QS' | 'Supervisor' | 'Operative' | 'Apprentice' | 'Project Manager';
 type AvailabilityStatus = 'Available' | 'On Job' | 'On Leave' | 'Unavailable';
 type FilterTab = 'all' | 'active' | 'leave' | 'pending';
-
 
 const ROLE_TONE: Record<TeamRole, Tone> = {
   QS: 'yellow',
@@ -81,6 +82,17 @@ const getInitials = (name: string): string => {
 
 export function EmployeesSection() {
   const { data: employees = [], isLoading, error, refetch, isRefetching } = useEmployees();
+  const { data: activeSeatCount = 0 } = useQuery({
+    queryKey: ['employer-seat-count'],
+    queryFn: async () => {
+      const { count } = await supabase
+        .from('employer_seats')
+        .select('id', { count: 'exact', head: true })
+        .eq('status', 'active');
+      return count ?? 0;
+    },
+    staleTime: 60 * 1000,
+  });
 
   const handleRefresh = useCallback(async () => {
     await refetch();
@@ -201,7 +213,11 @@ export function EmployeesSection() {
       clearEmployeeSelection();
       setMultiSelectMode(false);
     } catch {
-      toast({ title: 'Send failed', description: 'Could not send the message.', variant: 'destructive' });
+      toast({
+        title: 'Send failed',
+        description: 'Could not send the message.',
+        variant: 'destructive',
+      });
     }
   };
 
@@ -219,7 +235,11 @@ export function EmployeesSection() {
         <PageHero
           eyebrow="People"
           title="Team"
-          description="Manage every operative, supervisor and PM on your books."
+          description={`Manage every operative, supervisor and PM on your books.${
+            activeSeatCount > 0
+              ? ` ${activeSeatCount} linked seat${activeSeatCount === 1 ? '' : 's'} on your plan.`
+              : ''
+          }`}
           tone="blue"
         />
         <LoadingBlocks />
@@ -393,9 +413,7 @@ export function EmployeesSection() {
                           />
                         )}
                         <Avatar
-                          initials={
-                            employee.avatar_initials || getInitials(employee.name)
-                          }
+                          initials={employee.avatar_initials || getInitials(employee.name)}
                           online={availability === 'Available' || availability === 'On Job'}
                         />
                       </div>
@@ -492,7 +510,6 @@ export function EmployeesSection() {
                     </ListBody>
                   </ListCard>
                 </div>
-
               </div>
             </ScrollArea>
 
@@ -534,10 +551,7 @@ export function EmployeesSection() {
           </SheetContent>
         </Sheet>
 
-        <AddEmployeeDialog
-          open={addEmployeeDialogOpen}
-          onOpenChange={setAddEmployeeDialogOpen}
-        />
+        <AddEmployeeDialog open={addEmployeeDialogOpen} onOpenChange={setAddEmployeeDialogOpen} />
 
         <TeamMemberSheet
           employee={

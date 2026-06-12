@@ -1,0 +1,4 @@
+-- E1: employer_seats entitlement (full SQL in DB migration employer_seats).
+-- £49.99 base + £9.99/seat model: linked workers get Worker Tools WITHOUT
+-- their own sub. Seats auto-grant on roster link (trigger), suspend on
+-- archive, has_active_worker_seat() feeds the subscription gate. Backfilled.

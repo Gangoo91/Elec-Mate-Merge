@@ -21,6 +21,8 @@ interface OverviewSectionProps {
   onNavigate: (section: Section) => void;
 }
 
+import { FirstRunChecklist } from '@/components/employer/FirstRunChecklist';
+
 export function OverviewSection({ onNavigate }: OverviewSectionProps) {
   const { stats, isLoading, refetch } = useEmployerDashboardStats();
   const { data: vacancyStats } = useVacancyStats();
@@ -119,6 +121,8 @@ export function OverviewSection({ onNavigate }: OverviewSectionProps) {
           </IconButton>
         }
       />
+
+      <FirstRunChecklist onNavigate={(sec) => onNavigate(sec as never)} />
 
       <StatStrip
         columns={4}

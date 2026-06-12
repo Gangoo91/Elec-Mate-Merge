@@ -132,9 +132,13 @@ export function TeamInviteSheet({ open, onOpenChange, companyName }: Props) {
           </SheetHeader>
 
           <p className="text-sm text-white/60">
-            Share this code with your team — WhatsApp group, text, however you like. They enter
-            it in Worker Tools and they're linked: assigned jobs, clock-in, timesheets and
-            expenses, all from their phone.
+            Share this code with your team — WhatsApp group, text, however you like. They enter it
+            in Worker Tools and they're linked: assigned jobs, clock-in, timesheets and expenses,
+            all from their phone.
+          </p>
+          <p className="text-[12px] text-white/45">
+            Each linked team member adds a seat to your subscription at £9.99/month — their access
+            is covered, they don't pay anything.
           </p>
 
           <div className="rounded-xl border border-elec-yellow/30 bg-elec-yellow/10 px-4 py-5 text-center">

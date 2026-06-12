@@ -21,13 +21,7 @@ import { Checkbox } from '@/components/ui/checkbox';
 import { useCreateEmployee } from '@/hooks/useEmployees';
 import { useCreateElecIdProfile } from '@/hooks/useElecId';
 import { toast } from '@/hooks/use-toast';
-import {
-  Plus,
-  UserPlus,
-  Camera,
-  User,
-  Loader2,
-} from 'lucide-react';
+import { Plus, UserPlus, Camera, User, Loader2 } from 'lucide-react';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { supabase } from '@/integrations/supabase/client';
 import { PayType } from '@/services/employeeService';
@@ -387,6 +381,10 @@ export function AddEmployeeDialog({
                     placeholder="john@example.com"
                     className={inputClass}
                   />
+                  <p className="text-[11.5px] text-white/40 mt-1.5">
+                    They sign in with this email and link automatically. Each linked team member
+                    adds a £9.99/month seat to your subscription — they don't pay anything.
+                  </p>
                 </Field>
                 <Field label="Phone">
                   <Input

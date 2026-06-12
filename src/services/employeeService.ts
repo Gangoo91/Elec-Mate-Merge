@@ -84,6 +84,10 @@ export const createEmployee = async (
     throw error;
   }
 
+  // Seat sync (dormant until billing is configured) — quantity follows the
+  // active linked roster
+  supabase.functions.invoke('manage-employer-seats').catch(() => {});
+
   // Tell the person they've been added and how to link (fire-and-forget —
   // roster creation never fails because an email didn't send)
   if (data?.email) {

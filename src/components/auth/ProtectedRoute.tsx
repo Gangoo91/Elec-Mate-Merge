@@ -2,6 +2,7 @@ import { ReactNode, useRef, useEffect } from 'react';
 import { Navigate, useLocation } from 'react-router-dom';
 import { useAuth } from '@/contexts/AuthContext';
 import { useRevenueCat } from '@/hooks/useRevenueCat';
+import { useWorkerSeat } from '@/hooks/useWorkerSeat';
 import { Loader2 } from 'lucide-react';
 import TrialExpiredPaywall from './TrialExpiredPaywall';
 
@@ -12,6 +13,8 @@ interface ProtectedRouteProps {
 const ProtectedRoute = ({ children }: ProtectedRouteProps) => {
   const { user, profile, isLoading, isSubscribed, hasCompletedInitialCheck } = useAuth();
   const { isProEntitled, isNative } = useRevenueCat(user?.id);
+  // E1: a seat from an employer-tier company covers the worker's access
+  const { data: hasWorkerSeat = false } = useWorkerSeat(user?.id);
   const location = useLocation();
   const isMounted = useRef(true);
   useEffect(
@@ -40,6 +43,7 @@ const ProtectedRoute = ({ children }: ProtectedRouteProps) => {
     isSubscribed ||
     hasProfileAccess ||
     isProEntitled ||
+    hasWorkerSeat ||
     isSubscriptionPage ||
     isCheckoutPage ||
     isPaymentPage;

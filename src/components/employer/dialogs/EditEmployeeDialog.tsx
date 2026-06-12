@@ -1,3 +1,4 @@
+import { supabase } from '@/integrations/supabase/client';
 import { useState, useEffect, useRef } from 'react';
 import {
   ResponsiveFormModal,
@@ -90,8 +91,8 @@ export function EditEmployeeDialog({ employee, open, onOpenChange }: EditEmploye
 
   useEffect(() => {
     if (employee) {
-      let hourlyRate = employee.hourly_rate?.toString() || '25';
-      let annualSalary = employee.annual_salary?.toString() || '';
+      const hourlyRate = employee.hourly_rate?.toString() || '25';
+      const annualSalary = employee.annual_salary?.toString() || '';
       let dayRate = '';
 
       if (employee.pay_type === 'day_rate' && employee.hourly_rate) {
@@ -246,6 +247,7 @@ export function EditEmployeeDialog({ employee, open, onOpenChange }: EditEmploye
       // Archive = status change. Never a hard delete — that would destroy
       // timesheet/payroll/credential history (DB now RESTRICTs it anyway).
       await updateEmployee.mutateAsync({ id: employee.id, updates: { status: 'Archived' } });
+      supabase.functions.invoke('manage-employer-seats').catch(() => {});
       toast({
         title: 'Employee Archived',
         description: `${employee.name} has been archived.`,
@@ -503,7 +505,9 @@ export function EditEmployeeDialog({ employee, open, onOpenChange }: EditEmploye
               <PrimaryButton
                 type="submit"
                 onClick={() => {
-                  const form = document.getElementById('edit-employee-form') as HTMLFormElement | null;
+                  const form = document.getElementById(
+                    'edit-employee-form'
+                  ) as HTMLFormElement | null;
                   form?.requestSubmit();
                 }}
                 disabled={updateEmployee.isPending}
