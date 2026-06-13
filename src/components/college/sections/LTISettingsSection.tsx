@@ -778,27 +778,30 @@ export function LTISettingsSection() {
             <div className="text-[10px] font-medium uppercase tracking-[0.16em] text-white">
               Security Settings
             </div>
+            <p className="mt-1 text-[11.5px] text-white/50">
+              Platform-enforced defaults — not configurable per college yet.
+            </p>
             <div className="mt-4 divide-y divide-white/[0.06]">
               {[
                 {
                   label: 'Require state parameter',
                   desc: 'Enforce state validation for the OIDC flow.',
-                  default: true,
+                  on: true,
                 },
                 {
                   label: 'Validate nonce',
                   desc: 'Prevents replay attacks on authentication tokens.',
-                  default: true,
+                  on: true,
                 },
                 {
                   label: 'Auto-provision users',
                   desc: 'Create accounts automatically on first LTI launch.',
-                  default: true,
+                  on: true,
                 },
                 {
                   label: 'Sync grades automatically',
                   desc: 'Push grades to LMS when recorded in Elec-Mate.',
-                  default: false,
+                  on: false,
                 },
               ].map((setting, idx) => (
                 <div key={idx} className="flex items-center justify-between gap-4 py-4">
@@ -806,7 +809,15 @@ export function LTISettingsSection() {
                     <div className="text-[13.5px] font-medium text-white">{setting.label}</div>
                     <div className="mt-0.5 text-[11.5px] text-white">{setting.desc}</div>
                   </div>
-                  <Switch defaultChecked={setting.default} />
+                  <span
+                    className={`shrink-0 rounded-full px-2.5 py-1 text-[11px] font-medium ${
+                      setting.on
+                        ? 'bg-emerald-500/15 text-emerald-300'
+                        : 'bg-white/[0.06] text-white/45'
+                    }`}
+                  >
+                    {setting.on ? 'Enforced' : 'Off'}
+                  </span>
                 </div>
               ))}
             </div>
