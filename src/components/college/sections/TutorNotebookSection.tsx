@@ -114,7 +114,10 @@ export function TutorNotebookSection() {
         .select('id, name, college_cohorts(name)')
         .eq('college_id', collegeId)
         .order('name');
-      if (assignedIds.length > 0) q = q.in('id', assignedIds);
+      // assignments.student_id FKs to profiles.id (the auth uid), which on
+      // college_students is `user_id` — NOT the table's own PK `id`. Filtering
+      // by id here matched nothing, so an assigned tutor saw an empty list.
+      if (assignedIds.length > 0) q = q.in('user_id', assignedIds);
 
       const { data, error: studentsErr } = await q;
       if (cancelled) return;

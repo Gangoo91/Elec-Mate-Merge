@@ -44,26 +44,24 @@ interface DocumentLibrarySectionProps {
 }
 
 const KIND_LABEL: Record<ResourceKind, string> = {
-  pdf: 'Documents',
-  doc: 'Documents',
-  slides: 'Slides',
+  document: 'Documents',
+  slide: 'Slides',
+  sheet: 'Spreadsheets',
   image: 'Images',
   video: 'Videos',
   audio: 'Audio',
   link: 'Links',
-  note: 'Notes',
   other: 'Other',
 };
 
 const KIND_TONE: Record<ResourceKind, Tone> = {
-  pdf: 'blue',
-  doc: 'blue',
-  slides: 'orange',
+  document: 'blue',
+  slide: 'orange',
+  sheet: 'yellow',
   image: 'emerald',
   video: 'red',
   audio: 'amber',
   link: 'purple',
-  note: 'yellow',
   other: 'cyan',
 };
 

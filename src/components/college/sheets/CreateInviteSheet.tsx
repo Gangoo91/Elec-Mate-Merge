@@ -185,6 +185,10 @@ export function CreateInviteSheet({ open, onOpenChange, onCreated }: Props) {
     }
   };
 
+  const joinLink = createdCode
+    ? `${typeof window !== 'undefined' ? window.location.origin : 'https://elec-mate.com'}/college/join/${createdCode}`
+    : '';
+
   const copyCode = async () => {
     if (!createdCode) return;
     try {
@@ -192,6 +196,16 @@ export function CreateInviteSheet({ open, onOpenChange, onCreated }: Props) {
       toast({ title: 'Copied', description: `${createdCode} copied to clipboard.` });
     } catch {
       /* clipboard may be blocked; the code is shown on screen regardless */
+    }
+  };
+
+  const copyLink = async () => {
+    if (!joinLink) return;
+    try {
+      await navigator.clipboard.writeText(joinLink);
+      toast({ title: 'Join link copied', description: 'One tap for them — no code to type.' });
+    } catch {
+      /* clipboard may be blocked; the link is shown on screen regardless */
     }
   };
 
@@ -206,7 +220,7 @@ export function CreateInviteSheet({ open, onOpenChange, onCreated }: Props) {
           title={createdCode ? 'Invite ready' : 'Create an invite code'}
           description={
             createdCode
-              ? 'Share this code. The recipient enters it on their dashboard to join.'
+              ? 'Send the join link — one tap signs them in and links them automatically.'
               : 'Generate a code for a learner or staff member to join this college.'
           }
           footer={
@@ -246,12 +260,21 @@ export function CreateInviteSheet({ open, onOpenChange, onCreated }: Props) {
                   {' · '}
                   {expiryDays === '0' ? 'No expiry' : `Expires in ${expiryDays} days`}
                 </div>
-                <button
-                  onClick={copyCode}
-                  className="mt-4 h-11 px-5 rounded-full border border-white/[0.12] bg-white/[0.04] text-sm font-medium text-white hover:border-white/25 transition-colors touch-manipulation"
-                >
-                  Copy code
-                </button>
+                <div className="mt-4 flex flex-col items-center gap-2">
+                  <button
+                    onClick={copyLink}
+                    className="h-11 px-6 rounded-full bg-elec-yellow text-sm font-semibold text-black hover:bg-elec-yellow/90 transition-colors touch-manipulation"
+                  >
+                    Copy join link
+                  </button>
+                  <button
+                    onClick={copyCode}
+                    className="h-9 px-4 text-[12.5px] font-medium text-white/55 hover:text-white transition-colors touch-manipulation"
+                  >
+                    or copy the code only
+                  </button>
+                </div>
+                <p className="mt-3 text-[11px] text-white/40 break-all px-2">{joinLink}</p>
               </div>
             </FormCard>
           ) : (

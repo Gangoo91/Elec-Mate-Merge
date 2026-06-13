@@ -11,6 +11,7 @@ import { SentryErrorBoundary } from '@/components/common/SentryErrorBoundary';
 // Core components that should load immediately (small, critical path)
 import Layout from '@/components/layout/Layout';
 import ProtectedRoute from '@/components/auth/ProtectedRoute';
+import PendingCollegeInviteRedeemer from '@/components/college/PendingCollegeInviteRedeemer';
 const CollegeGuard = lazy(() => import('@/components/auth/CollegeGuard'));
 
 // Critical pages use lazyWithRetry for automatic retry on chunk failures
@@ -280,6 +281,7 @@ const ElectricalSymbolsChartPage = lazy(() => import('@/pages/seo/ElectricalSymb
 const ApprenticeRoutes = lazyWithRetry(() => import('@/routes/ApprenticeRoutes'));
 const AttestOJT = lazyWithRetry(() => import('@/pages/AttestOJT'));
 const EmployerPortalView = lazyWithRetry(() => import('@/pages/public/EmployerPortalView'));
+const CollegeJoinPage = lazyWithRetry(() => import('@/pages/college/CollegeJoinPage'));
 const CohortComparePage = lazyWithRetry(() => import('@/pages/college/CohortComparePage'));
 const ElectricianHubRoutes = lazyWithRetry(() => import('@/routes/ElectricianHubRoutes'));
 const ElectricianRoutes = lazyWithRetry(() => import('@/routes/ElectricianRoutes'));
@@ -301,6 +303,8 @@ const AppRouter = () => {
   const location = useLocation();
 
   return (
+    <>
+    <PendingCollegeInviteRedeemer />
     <AnimatePresence mode="sync">
       <Routes location={location} key={location.pathname}>
         {/* Walkthrough (first launch only) */}
@@ -340,6 +344,17 @@ const AppRouter = () => {
           element={
             <LazyRoute>
               <EmployerPortalView />
+            </LazyRoute>
+          }
+        />
+        {/* College one-tap join — public. Apprentice/staff open the shared
+            invite link; redeems if logged in, else stashes the code through
+            signup. See PendingCollegeInviteRedeemer. */}
+        <Route
+          path="/college/join/:code"
+          element={
+            <LazyRoute>
+              <CollegeJoinPage />
             </LazyRoute>
           }
         />
@@ -2412,6 +2427,7 @@ const AppRouter = () => {
         </Route>
       </Routes>
     </AnimatePresence>
+    </>
   );
 };
 

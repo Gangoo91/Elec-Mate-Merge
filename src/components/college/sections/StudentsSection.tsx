@@ -15,6 +15,7 @@ import { StudentDetailSheet } from '@/components/college/sheets/StudentDetailShe
 import { EditStudentSheet } from '@/components/college/sheets/EditStudentSheet';
 import { AssignStaffSheet } from '@/components/college/sheets/AssignStaffSheet';
 import { CreateInviteSheet } from '@/components/college/sheets/CreateInviteSheet';
+import { StudentActivationStrip } from '@/components/college/widgets/StudentActivationStrip';
 import { WithdrawStudentDialog } from '@/components/college/dialogs/WithdrawStudentDialog';
 import { PullToRefresh } from '@/components/college/ui/PullToRefresh';
 import { StudentCardSkeletonList } from '@/components/college/ui/StudentCardSkeleton';
@@ -197,6 +198,14 @@ export function StudentsSection() {
               </button>
             </div>
           }
+        />
+      </motion.div>
+
+      {/* ACTIVATION — how many enrolled learners are actually in the app */}
+      <motion.div variants={itemVariants}>
+        <StudentActivationStrip
+          collegeId={students[0]?.college_id ?? undefined}
+          onShareInvite={() => setInviteOpen(true)}
         />
       </motion.div>
 

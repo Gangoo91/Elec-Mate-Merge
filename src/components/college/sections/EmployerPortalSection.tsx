@@ -11,6 +11,7 @@ import { useCollegeSupabase } from '@/contexts/CollegeSupabaseContext';
 import { useToast } from '@/hooks/use-toast';
 import { useCollegeEmployers } from '@/hooks/useCollegeEmployers';
 import { EmployerLinkSheet } from '@/components/college/sheets/EmployerLinkSheet';
+import { DEFAULT_OTJ_STANDARD } from '@/data/otjStandards';
 import {
   SectionHeader,
   ListCard,
@@ -129,9 +130,13 @@ export function EmployerPortalSection() {
       // Progress
       const progress = s.progress_percent ?? 0;
 
-      // OTJ: 20% of programme duration (assume 370h target, scaled by progress for completed)
-      const otjTarget = 370;
-      const otjCompleted = Math.round(progress * 3.7);
+      // OTJ: fixed required total per apprenticeship standard (DfE Annex C),
+      // inherited onto the course as otj_required_hours — NOT a % of duration.
+      // completed is proxied from headline progress until per-learner OTJ
+      // minutes are wired in (OTJTrainingSection holds the real source).
+      const course = courses.find((c) => c.id === s.course_id);
+      const otjTarget = course?.otj_required_hours ?? DEFAULT_OTJ_STANDARD.otjHours;
+      const otjCompleted = Math.round((progress / 100) * otjTarget);
       const expectedOtjAtThisPoint =
         s.start_date && s.expected_end_date
           ? (() => {
@@ -151,8 +156,6 @@ export function EmployerPortalSection() {
       const daysSinceReview = lastReviewDate
         ? daysBetween(new Date(lastReviewDate), now)
         : null;
-
-      const course = courses.find((c) => c.id === s.course_id);
 
       const row: ApprenticeRow = {
         id: s.id,
