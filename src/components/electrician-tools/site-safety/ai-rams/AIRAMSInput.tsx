@@ -20,6 +20,7 @@ import { QuoteSelectorSheet, type QuotePickerRow } from './QuoteSelectorSheet';
 import { supabase } from '@/integrations/supabase/client';
 import { useAuth } from '@/contexts/AuthContext';
 import { toast } from '@/hooks/use-toast';
+import { useLocation, useNavigate } from 'react-router-dom';
 
 const MIN_DESCRIPTION = 50;
 const INPUT_DRAFT_KEY = 'rams-input-draft-v1';
@@ -74,6 +75,9 @@ function loadInputDraft() {
 
 export const AIRAMSInput: React.FC<AIRAMSInputProps> = ({ onGenerate, isProcessing }) => {
   const { user } = useAuth();
+  const location = useLocation();
+  const navigate = useNavigate();
+  const seededFromQuote = useRef(false);
 
   // Restore from localStorage draft if available
   const savedDraft = loadInputDraft();
@@ -206,6 +210,18 @@ export const AIRAMSInput: React.FC<AIRAMSInputProps> = ({ onGenerate, isProcessi
         : 'Quote details applied.',
     });
   };
+
+  // Seed from a quote when arriving via the quote's "Create RAMS" action.
+  // One-shot: apply once, then clear route state so a refresh won't re-seed.
+  useEffect(() => {
+    if (seededFromQuote.current) return;
+    const seed = (location.state as { ramsSeed?: QuotePickerRow } | null)?.ramsSeed;
+    if (!seed) return;
+    seededFromQuote.current = true;
+    handlePickQuote(seed);
+    navigate(location.pathname, { replace: true, state: null });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   const examplePrompts: Record<'domestic' | 'commercial' | 'industrial', string[]> = {
     domestic: [

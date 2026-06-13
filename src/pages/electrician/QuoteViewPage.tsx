@@ -2,7 +2,7 @@ import { useEffect, useState, useMemo, Fragment } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { Quote } from '@/types/quote';
 import { supabase } from '@/integrations/supabase/client';
-import { Loader2, ArrowLeft, MoreHorizontal, Mail, Phone, Pencil, Copy, Download, Check, Bell, Undo2, Trash2, Receipt, Link2, XCircle, CalendarPlus, FolderPlus, Folder } from 'lucide-react';
+import { Loader2, ArrowLeft, MoreHorizontal, Mail, Phone, Pencil, Copy, Download, Check, Bell, Undo2, Trash2, Receipt, Link2, XCircle, CalendarPlus, FolderPlus, Folder, ShieldCheck } from 'lucide-react';
 import { Sheet, SheetContent } from '@/components/ui/sheet';
 import { toast } from '@/hooks/use-toast';
 import CertificateGenerationDialog from '@/components/inspection/CertificateGenerationDialog';
@@ -1098,6 +1098,37 @@ const QuoteViewPage = () => {
                   <span className="block text-[11px] text-white/55 mt-0.5">
                     {linkedProject ? 'In project — tap to change' : 'Track it with tasks & costs'}
                   </span>
+                </span>
+              </button>
+
+              <button
+                onClick={() => {
+                  setShowActionsSheet(false);
+                  navigate('/electrician-tools/site-safety/ai-rams', {
+                    state: {
+                      ramsSeed: {
+                        job_details: {
+                          title: quote.jobDetails?.title,
+                          description: quote.jobDetails?.description,
+                          location: quote.jobDetails?.location,
+                        },
+                        client_data: {
+                          name: quote.client?.name,
+                          address: quote.client?.address,
+                          postcode: quote.client?.postcode,
+                        },
+                      },
+                    },
+                  });
+                }}
+                className="flex flex-col items-start gap-2.5 p-3.5 rounded-xl bg-white/[0.04] border border-white/[0.08] hover:bg-white/[0.06] active:scale-[0.98] touch-manipulation transition-all text-left select-none"
+              >
+                <span className="h-10 w-10 rounded-xl bg-white/[0.06] border border-white/[0.08] flex items-center justify-center">
+                  <ShieldCheck className="h-4 w-4 text-white/85" />
+                </span>
+                <span className="min-w-0">
+                  <span className="block text-[13px] font-semibold text-white truncate">Create RAMS</span>
+                  <span className="block text-[11px] text-white/55 mt-0.5">Risk assessment from this job</span>
                 </span>
               </button>
 
