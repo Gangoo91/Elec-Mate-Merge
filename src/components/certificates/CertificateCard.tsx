@@ -1,7 +1,7 @@
 import React from 'react';
 import { Checkbox } from '@/components/ui/checkbox';
 import { SwipeableCard } from '@/components/ui/SwipeableCard';
-import { Trash2, Edit, ArrowRight, MapPin } from 'lucide-react';
+import { Trash2, Edit, ArrowRight, MapPin, Lock } from 'lucide-react';
 import { cn } from '@/lib/utils';
 
 export interface CertificateData {
@@ -11,6 +11,8 @@ export interface CertificateData {
   installationAddress?: string;
   inspectionDate?: string;
   status: string;
+  /** Set when the cert has been issued & locked (signed off). Null/undefined = unlocked. */
+  lockedAt?: string;
   lastModified: number;
   customerId?: string;
   canExportToEICR?: boolean;
@@ -168,6 +170,15 @@ export const CertificateCard: React.FC<CertificateCardProps> = ({
           />
         )}
         <span className="flex items-center gap-1.5 shrink-0">
+          {certificate.lockedAt && (
+            <span
+              className="inline-flex items-center gap-1 text-[9px] font-semibold uppercase tracking-[0.14em] border border-emerald-400/40 text-emerald-300 rounded px-1.5 py-0.5"
+              title="Issued & locked — signed off"
+            >
+              <Lock className="h-2.5 w-2.5" aria-hidden />
+              Locked
+            </span>
+          )}
           {certificate.qsReviewStatus && QS_CHIP[certificate.qsReviewStatus] && (
             <span
               className={cn(

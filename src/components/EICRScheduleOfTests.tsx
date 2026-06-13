@@ -89,7 +89,7 @@ import { createCircuitWithDefaults, pickCableSize } from '@/utils/circuitDefault
 import { resolveFieldName } from '@/utils/voiceFieldAliases';
 import { resolveDropdownValue } from '@/utils/voiceDropdownResolver';
 import { calculatePointsServed } from '@/types/autoFillTypes';
-import { getMaxZsFromDeviceDetails, getMaxZsWithRcd } from '@/utils/zsCalculations';
+import { getMaxZsFromDeviceDetails, getMaxZsWithRcd, calculateZs } from '@/utils/zsCalculations';
 import { getDefaultBsStandard } from '@/types/protectiveDeviceTypes';
 
 interface EICRScheduleOfTestsProps {
@@ -1576,13 +1576,45 @@ const EICRScheduleOfTests = ({ formData, onUpdate, onOpenBoardScan }: EICRSchedu
             }
           }
 
+          // ELE-1108 — calculator: derive ring R1+R2 (end-to-end) and Zs from the
+          // measured values. Auto-fills EMPTY fields only, so a manually entered /
+          // measured value is never overwritten.
+          const isRing = (updatedResult.circuitType || '').toLowerCase().includes('ring');
+
+          // Ring final: estimated R1+R2 at the furthest point ≈ (r1 + r2) / 4,
+          // where r1 = ring R1 end-to-end (line) and r2 = ring R2 end-to-end (cpc).
+          if (
+            isRing &&
+            (field === 'ringR1' || field === 'ringR2' || field === 'ringRn') &&
+            !String(updatedResult.r1r2 || '').trim()
+          ) {
+            const rr1 = parseFloat(updatedResult.ringR1 || '');
+            const rr2 = parseFloat(updatedResult.ringR2 || '');
+            if (rr1 > 0 && rr2 > 0) {
+              updatedResult.r1r2 = ((rr1 + rr2) / 4).toFixed(2);
+            }
+          }
+
+          // Zs = Ze + (R1+R2). Ze is the installation's external earth fault loop
+          // impedance from the supply section (formData.externalZe).
+          if (
+            (field === 'r1r2' || field === 'ringR1' || field === 'ringR2' || field === 'ringRn') &&
+            !String(updatedResult.zs || '').trim()
+          ) {
+            const ze = parseFloat(String(formData?.externalZe ?? '').replace(/[^0-9.]/g, ''));
+            const r1r2Val = parseFloat(updatedResult.r1r2 || '');
+            if (r1r2Val > 0 && !isNaN(ze)) {
+              updatedResult.zs = calculateZs(r1r2Val, ze).toFixed(2);
+            }
+          }
+
           return updatedResult;
         }
         return result;
       });
       return updatedResults;
     });
-  }, []);
+  }, [formData?.externalZe]);
 
   // Bulk infill handler
   const handleBulkInfill = (value: string, mode: 'all' | 'empty') => {
@@ -3124,13 +3156,13 @@ const EICRScheduleOfTests = ({ formData, onUpdate, onOpenBoardScan }: EICRSchedu
           <TestInstrumentInfo formData={formData} onUpdate={onUpdate} />
         </div>
 
-        {/* Test Method & Notes */}
+        {/* Test Voltage & Notes — Test Method removed for EICR (ELE-1109) */}
         <div className={useMobileView ? 'px-4 py-5' : 'p-4'}>
           <div className="h-[2px] w-full rounded-full bg-gradient-to-r from-elec-yellow/40 to-elec-yellow/10 mb-3" />
           <h3 className="text-xs font-medium text-white uppercase tracking-wider mb-4">
-            Test Method & Notes
+            Test Voltage & Notes
           </h3>
-          <TestMethodInfo formData={formData} onUpdate={onUpdate} />
+          <TestMethodInfo formData={formData} onUpdate={onUpdate} showTestMethod={false} />
         </div>
 
         {/* Tested By (A4:2026 — Schedule of Test Results) */}

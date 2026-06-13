@@ -367,6 +367,9 @@ export const eicrPayloadSchema = z
         same_as_client_address: boolish.default(false),
         occupier: stringish.default(''),
         installation_type: stringish.default(''),
+        // ELE-1105 — EICR property details (replace installation type in the UI)
+        property_type: stringish.default(''),
+        number_of_bedrooms: stringish.default(''),
         description: stringish.default(''),
         premises_type: stringish.default(''),
         other_premises_description: stringish.default(''),

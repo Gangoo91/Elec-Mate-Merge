@@ -376,6 +376,7 @@ const MyReports: React.FC<MyReportsProps> = ({ onBack, onNavigate, onEditReport 
     installationAddress: report.installation_address || undefined,
     inspectionDate: report.data?.inspectionDate || report.data?.dateOfInspection || undefined,
     status: report.status,
+    lockedAt: report.locked_at || undefined,
     lastModified: new Date(report.updated_at).getTime(),
     customerId: report.customer_id,
     canExportToEICR:

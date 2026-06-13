@@ -131,7 +131,7 @@ const ElectricalInstallationSectionInner = ({
       <div>
         <SectionTitle title="Distribution Boards" />
         <div className={cn('py-4', '')}>
-          <MultiboardSetup boards={boards} onBoardsChange={handleBoardsChange} />
+          <MultiboardSetup boards={boards} onBoardsChange={handleBoardsChange} certType="eicr" />
           {/* Board ways vs circuits warnings */}
           {boards.map((b) => getWarningsForField(`board-${b.id}`).map((w, i) => (
             <p key={`${b.id}-${i}`} className="text-[10px] text-amber-400/80 mt-1">{w.message}</p>

@@ -101,7 +101,7 @@ export const reportCloud = {
     const LIST_SELECT =
       'id, report_id, report_type, certificate_number, client_name, ' +
       'installation_address, inspector_name, inspection_date, status, ' +
-      'updated_at, customer_id, edit_version, pdf_url, pdf_generated_at, ' +
+      'updated_at, customer_id, edit_version, pdf_url, pdf_generated_at, locked_at, ' +
       'data_inspectionDate:data->inspectionDate, ' +
       'data_dateOfInspection:data->dateOfInspection, ' +
       'data_satisfactoryForContinuedUse:data->satisfactoryForContinuedUse, ' +

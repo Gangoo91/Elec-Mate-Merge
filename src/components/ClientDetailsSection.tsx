@@ -16,6 +16,11 @@ import { useMultiFieldSync } from '@/hooks/useFieldSync';
 interface ClientDetailsSectionProps {
   formData: any;
   onUpdate: (field: string, value: string) => void;
+  /**
+   * Which certificate is rendering this shared section. EICR drops "Installation
+   * Type" (always existing) in favour of property details; EIC keeps it. ELE-1105.
+   */
+  certType?: 'eicr' | 'eic';
 }
 
 // Section header — fire alarm pattern (gradient accent line + uppercase title)
@@ -62,6 +67,8 @@ const CLIENT_SECTION_FIELDS = [
   'description',
   'otherPremisesDescription',
   'installationType',
+  'propertyType',
+  'numberOfBedrooms',
   'estimatedAge',
   'ageUnit',
   'lastInspectionType',
@@ -85,7 +92,7 @@ type ClientSectionFields = {
  * - Wrapped with React.memo for selective re-rendering
  * - Only re-renders when CLIENT_SECTION_FIELDS change
  */
-const ClientDetailsSectionInner = ({ formData, onUpdate }: ClientDetailsSectionProps) => {
+const ClientDetailsSectionInner = ({ formData, onUpdate, certType }: ClientDetailsSectionProps) => {
   const isMobile = useIsMobile();
   const haptic = useHaptic();
   const [clientType, setClientType] = useState<'new' | 'existing'>('new');
@@ -298,25 +305,66 @@ const ClientDetailsSectionInner = ({ formData, onUpdate }: ClientDetailsSectionP
               />
             </FormField>
 
-            <FormField label="Installation Type">
-              <FormSelectSheet
-                value={localValues.installationType || ''}
-                onValueChange={(value) => {
-                  handleFieldChange('installationType', value);
-                  flush();
-                }}
-                label="Installation Type"
-                placeholder="Select type"
-                options={[
-                  { value: 'new-installation', label: 'New Installation' },
-                  { value: 'existing-installation', label: 'Existing Installation' },
-                  { value: 'extended-installation', label: 'Extended Installation' },
-                  { value: 'altered-installation', label: 'Altered Installation' },
-                ]}
-                allowCustom
-                customLabel="Other (specify)"
-              />
-            </FormField>
+            {/* EICR is always an existing installation, so the Installation Type
+                field is redundant — swap it for property details (ELE-1105).
+                EIC keeps Installation Type (new/addition/alteration matters there). */}
+            {certType === 'eicr' ? (
+              <>
+                <FormField label="Property Type">
+                  <FormSelectSheet
+                    value={localValues.propertyType || ''}
+                    onValueChange={(value) => {
+                      handleFieldChange('propertyType', value);
+                      flush();
+                    }}
+                    label="Property Type"
+                    placeholder="Select type"
+                    options={[
+                      { value: 'house', label: 'House' },
+                      { value: 'flat', label: 'Flat' },
+                      { value: 'maisonette', label: 'Maisonette' },
+                      { value: 'bungalow', label: 'Bungalow' },
+                      { value: 'hmo', label: 'HMO' },
+                      { value: 'commercial', label: 'Commercial' },
+                    ]}
+                    allowCustom
+                    customLabel="Other (specify)"
+                  />
+                </FormField>
+                <FormField label="No. of Bedrooms">
+                  <Input
+                    type="number"
+                    min="0"
+                    max="50"
+                    value={localValues.numberOfBedrooms || ''}
+                    onChange={(e) => handleFieldChange('numberOfBedrooms', e.target.value)}
+                    placeholder="Bedrooms"
+                    className="h-11 text-base touch-manipulation bg-white/[0.06] border-white/[0.08]"
+                    inputMode="numeric"
+                  />
+                </FormField>
+              </>
+            ) : (
+              <FormField label="Installation Type">
+                <FormSelectSheet
+                  value={localValues.installationType || ''}
+                  onValueChange={(value) => {
+                    handleFieldChange('installationType', value);
+                    flush();
+                  }}
+                  label="Installation Type"
+                  placeholder="Select type"
+                  options={[
+                    { value: 'new-installation', label: 'New Installation' },
+                    { value: 'existing-installation', label: 'Existing Installation' },
+                    { value: 'extended-installation', label: 'Extended Installation' },
+                    { value: 'altered-installation', label: 'Altered Installation' },
+                  ]}
+                  allowCustom
+                  customLabel="Other (specify)"
+                />
+              </FormField>
+            )}
           </div>
         </div>
       </div>

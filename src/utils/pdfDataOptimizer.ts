@@ -54,21 +54,35 @@ export const findBase64Images = (data: any, path = ''): Array<{ path: string; si
   return images;
 };
 
+// Signatures and scheme/company logos are stored as small base64 data URLs and
+// MUST survive the strip step — otherwise locked certs (whose only download path
+// is the optimiser-based one) lose every signature box and their branding. Photos
+// are the large payload the size guard actually targets; signatures and logos are
+// tiny by comparison and are needed on every render. ELE-1103.
+//   - /signat/i  → inspector_signature, signatories[].signature, schedule_*_by_signature, …
+//   - /logo/i    → registration_scheme_logo, company_logo, schemeLogo, companyLogo, …
+const PRESERVE_KEY_RE = /signat|logo/i;
+
+const shouldPreserveDataUrl = (key: string): boolean => PRESERVE_KEY_RE.test(key);
+
 /**
- * Strip base64 images from data (for PDF generation fallback)
+ * Strip base64 images from data (for PDF generation fallback).
+ * Signature and logo data URLs (matched by key) are preserved; everything else
+ * base64 (photos — the heavy payload) is removed so the size guard still bites.
  */
-export const stripBase64Images = (data: any): any => {
+export const stripBase64Images = (data: any, key = ''): any => {
   if (typeof data === 'string' && isBase64DataUrl(data)) {
-    return ''; // Remove base64 image
+    return shouldPreserveDataUrl(key) ? data : ''; // Strip photos; keep signatures + logos
   } else if (typeof data === 'string') {
     // Preserve all non-base64 strings (required fields like names, addresses)
     return data;
   } else if (Array.isArray(data)) {
-    return data.map((item) => stripBase64Images(item));
+    // Carry the parent key down so e.g. signatories[].signature stays preserved.
+    return data.map((item) => stripBase64Images(item, key));
   } else if (typeof data === 'object' && data !== null) {
     const result: any = {};
-    Object.entries(data).forEach(([key, value]) => {
-      result[key] = stripBase64Images(value);
+    Object.entries(data).forEach(([k, value]) => {
+      result[k] = stripBase64Images(value, k);
     });
     return result;
   }

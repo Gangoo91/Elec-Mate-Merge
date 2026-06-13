@@ -27,6 +27,8 @@ interface BoardSetupCardProps {
   isLast?: boolean;
   isRemovable?: boolean;
   className?: string;
+  /** EICR hides Model/From (ELE-1106) and the duplicate Incoming Device section (ELE-1107). */
+  certType?: 'eicr' | 'eic';
 }
 
 // BS EN Standards
@@ -142,7 +144,9 @@ const BoardSetupCard: React.FC<BoardSetupCardProps> = ({
   isLast = false,
   isRemovable = true,
   className,
+  certType,
 }) => {
+  const isEicr = certType === 'eicr';
   // ELE-830: Main-ness is position-based (order === 0), not ID-based.
   // The dual-check preserves backwards compatibility with legacy certs where
   // the main always had id='main-cu'.
@@ -232,19 +236,24 @@ const BoardSetupCard: React.FC<BoardSetupCardProps> = ({
           </div>
         </div>
 
-        <div className="grid grid-cols-3 gap-2 items-end">
+        {/* EICR drops Model + From to streamline the board (ELE-1106). EIC keeps them. */}
+        <div className={cn('grid gap-2 items-end', isEicr ? 'grid-cols-1' : 'grid-cols-3')}>
           <div>
             <label className="text-[10px] text-white block mb-1">Make</label>
             <MobileSelectPicker value={board.make || ''} onValueChange={(value) => onUpdate('make', value)} options={BOARD_MANUFACTURERS.map((m) => ({ value: m, label: m }))} placeholder="Select" title="Manufacturer" triggerClassName="text-white" />
           </div>
-          <div>
-            <label className="text-[10px] text-white block mb-1">Model</label>
-            <Input value={board.model || ''} onChange={(e) => onUpdate('model', e.target.value)} placeholder="VML110" className={inputCn} />
-          </div>
-          <div>
-            <label className="text-[10px] text-white block mb-1">From</label>
-            <Input value={board.suppliedFrom || ''} onChange={(e) => onUpdate('suppliedFrom', e.target.value)} placeholder={isMainBoard ? 'DNO' : 'DB'} className={inputCn} />
-          </div>
+          {!isEicr && (
+            <div>
+              <label className="text-[10px] text-white block mb-1">Model</label>
+              <Input value={board.model || ''} onChange={(e) => onUpdate('model', e.target.value)} placeholder="VML110" className={inputCn} />
+            </div>
+          )}
+          {!isEicr && (
+            <div>
+              <label className="text-[10px] text-white block mb-1">From</label>
+              <Input value={board.suppliedFrom || ''} onChange={(e) => onUpdate('suppliedFrom', e.target.value)} placeholder={isMainBoard ? 'DNO' : 'DB'} className={inputCn} />
+            </div>
+          )}
         </div>
 
         {/* Ways as toggle buttons + custom */}
@@ -339,8 +348,10 @@ const BoardSetupCard: React.FC<BoardSetupCardProps> = ({
         </div>
       </div>
 
-      {/* Incoming Device — Smart Cascading */}
-      {(() => {
+      {/* Incoming Device — Smart Cascading.
+          Hidden on EICR (ELE-1107): duplicates the main protective device captured
+          in the supply/main-switch section. Mapping retained so old certs still render. */}
+      {!isEicr && (() => {
         const incomingTypeOptions = getTypeOptionsForBsEn(board.incomingDeviceBsEn || '');
         const incomingRatings = getRatingOptionsForBsEn(board.incomingDeviceBsEn || '');
         const isRCD = board.incomingDeviceBsEn === '61008';

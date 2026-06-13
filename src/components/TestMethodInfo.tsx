@@ -7,6 +7,8 @@ import { insulationTestVoltageOptions } from '@/types/testOptions';
 interface TestMethodInfoProps {
   formData: any;
   onUpdate: (field: string, value: string) => void;
+  /** EICR removes the Test Method field (ELE-1109); keep Test Voltage + Notes. */
+  showTestMethod?: boolean;
 }
 
 const testMethodOptions = [
@@ -17,23 +19,25 @@ const testMethodOptions = [
   { value: 'Method 2 & 3', label: 'Method 2 & 3 — Combined' },
 ];
 
-const TestMethodInfo = ({ formData, onUpdate }: TestMethodInfoProps) => {
+const TestMethodInfo = ({ formData, onUpdate, showTestMethod = true }: TestMethodInfoProps) => {
   return (
     <div className="space-y-4">
-      <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-        <div className="space-y-2">
-          <Label htmlFor="testMethod" className="text-xs text-white">
-            Test Method Applied
-          </Label>
-          <MobileSelectPicker
-            value={formData.testMethod || ''}
-            onValueChange={(value) => onUpdate('testMethod', value)}
-            options={testMethodOptions}
-            placeholder="Select BS 7671 method..."
-            title="Test Method Applied"
-            triggerClassName="bg-white/[0.06] border-white/[0.08] text-white"
-          />
-        </div>
+      <div className={`grid grid-cols-1 gap-4 ${showTestMethod ? 'sm:grid-cols-2' : ''}`}>
+        {showTestMethod && (
+          <div className="space-y-2">
+            <Label htmlFor="testMethod" className="text-xs text-white">
+              Test Method Applied
+            </Label>
+            <MobileSelectPicker
+              value={formData.testMethod || ''}
+              onValueChange={(value) => onUpdate('testMethod', value)}
+              options={testMethodOptions}
+              placeholder="Select BS 7671 method..."
+              title="Test Method Applied"
+              triggerClassName="bg-white/[0.06] border-white/[0.08] text-white"
+            />
+          </div>
+        )}
         <div className="space-y-2">
           <Label htmlFor="testVoltage" className="text-xs text-white">
             Test Voltage Applied

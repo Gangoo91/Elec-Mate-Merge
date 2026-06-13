@@ -18,6 +18,8 @@ interface MultiboardSetupProps {
   onBoardsChange: (boards: DistributionBoard[]) => void;
   className?: string;
   maxBoards?: number;
+  /** EICR hides Model/From and the duplicate Incoming Device section (ELE-1106/1107). */
+  certType?: 'eicr' | 'eic';
 }
 
 /**
@@ -29,6 +31,7 @@ const MultiboardSetup: React.FC<MultiboardSetupProps> = ({
   onBoardsChange,
   className,
   maxBoards = 10,
+  certType,
 }) => {
   // Ensure we always have at least a main board
   const currentBoards = useMemo(() => {
@@ -139,6 +142,7 @@ const MultiboardSetup: React.FC<MultiboardSetupProps> = ({
             isFirst={index === 0}
             isLast={index === currentBoards.length - 1}
             isRemovable={!isMainBoard(board)}
+            certType={certType}
           />
         ))}
       </div>

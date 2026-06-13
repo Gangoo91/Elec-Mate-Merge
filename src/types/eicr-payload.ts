@@ -201,6 +201,9 @@ export interface EICRPayload {
     same_as_client_address: boolean;
     occupier: string;
     installation_type: string;
+    /** EICR property details (ELE-1105) — replaces installation type in the UI. */
+    property_type?: string;
+    number_of_bedrooms?: string;
     description: string;
     premises_type: string;
     other_premises_description: string;
