@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import { offlineStorage } from '@/utils/offlineStorage';
+import { supabase } from '@/integrations/supabase/client';
 
 export interface SignatureProfile {
   id: string;
@@ -9,6 +10,34 @@ export interface SignatureProfile {
   isDefault: boolean;
 }
 
+// Row shape of public.user_signatures (not yet in the generated Supabase types —
+// cast the client locally to avoid regenerating the whole types file).
+interface SignatureRow {
+  id: string;
+  user_id: string;
+  name: string | null;
+  signature_data: string;
+  is_default: boolean;
+  created_at: string;
+}
+
+const rowToProfile = (r: SignatureRow): SignatureProfile => ({
+  id: r.id,
+  name: r.name ?? '',
+  signatureData: r.signature_data,
+  createdAt: r.created_at,
+  isDefault: !!r.is_default,
+});
+
+const profileToRow = (p: SignatureProfile, userId: string) => ({
+  id: p.id,
+  user_id: userId,
+  name: p.name,
+  signature_data: p.signatureData,
+  is_default: p.isDefault,
+  created_at: p.createdAt,
+});
+
 export const useSignatureProfiles = () => {
   const [signatures, setSignatures] = useState<SignatureProfile[]>([]);
   const [isLoading, setIsLoading] = useState(true);
@@ -17,26 +46,104 @@ export const useSignatureProfiles = () => {
     loadSignatures();
   }, []);
 
+  // The database is the source of truth — durable, survives mobile-WebView storage
+  // eviction, and syncs across devices. IndexedDB (offlineStorage) is only an offline
+  // cache / fallback. Previously this hook touched IndexedDB ONLY, so users lost their
+  // saved signatures every time the app was closed and the WebView store was reclaimed.
   const loadSignatures = async () => {
+    let profiles: SignatureProfile[] | null = null;
+
     try {
-      const stored = await offlineStorage.getSignatureProfiles();
-      setSignatures(stored);
+      const {
+        data: { user },
+      } = await supabase.auth.getUser();
+
+      if (user) {
+        const { data, error } = await (supabase as any)
+          .from('user_signatures')
+          .select('*')
+          .eq('user_id', user.id)
+          .order('created_at', { ascending: true });
+
+        if (!error && Array.isArray(data)) {
+          if (data.length > 0) {
+            profiles = (data as SignatureRow[]).map(rowToProfile);
+            // Mirror the server into the offline cache.
+            try {
+              for (const p of profiles) await offlineStorage.saveSignatureProfile(p);
+            } catch {
+              /* cache refresh is best-effort */
+            }
+          } else {
+            // Server has none yet — migrate anything still in the local cache up to
+            // the server (one-time) so existing users don't lose what's in IndexedDB.
+            const cached = await offlineStorage
+              .getSignatureProfiles()
+              .catch(() => [] as SignatureProfile[]);
+            if (cached.length > 0) {
+              profiles = cached;
+              try {
+                await (supabase as any)
+                  .from('user_signatures')
+                  .upsert(cached.map((p) => profileToRow(p, user.id)), { onConflict: 'id' });
+              } catch (e) {
+                console.error('Failed to migrate cached signatures to server:', e);
+              }
+            } else {
+              profiles = [];
+            }
+          }
+        }
+      }
     } catch (error) {
-      console.error('Failed to load signature profiles:', error);
-    } finally {
-      setIsLoading(false);
+      console.error('Failed to load signatures from server:', error);
     }
+
+    // Offline / signed-out / server error → fall back to the local cache.
+    if (!profiles) {
+      try {
+        profiles = await offlineStorage.getSignatureProfiles();
+      } catch (error) {
+        console.error('Failed to load signature profiles:', error);
+        profiles = [];
+      }
+    }
+
+    setSignatures(profiles);
+    setIsLoading(false);
   };
 
-  const saveSignatures = async (newSignatures: SignatureProfile[]) => {
+  // Write-through: update React state, the offline cache, and the server together.
+  const persist = async (list: SignatureProfile[], removedId?: string) => {
+    setSignatures(list);
+
     try {
-      // Save each profile to IndexedDB
-      for (const profile of newSignatures) {
-        await offlineStorage.saveSignatureProfile(profile);
-      }
-      setSignatures(newSignatures);
+      for (const profile of list) await offlineStorage.saveSignatureProfile(profile);
+      if (removedId) await offlineStorage.deleteSignatureProfile(removedId);
     } catch (error) {
-      console.error('Failed to save signature profiles:', error);
+      console.error('Failed to cache signature profiles:', error);
+    }
+
+    try {
+      const {
+        data: { user },
+      } = await supabase.auth.getUser();
+      if (!user) return;
+
+      if (removedId) {
+        await (supabase as any)
+          .from('user_signatures')
+          .delete()
+          .eq('id', removedId)
+          .eq('user_id', user.id);
+      }
+      if (list.length > 0) {
+        await (supabase as any)
+          .from('user_signatures')
+          .upsert(list.map((p) => profileToRow(p, user.id)), { onConflict: 'id' });
+      }
+    } catch (error) {
+      console.error('Failed to sync signatures to server:', error);
     }
   };
 
@@ -56,7 +163,7 @@ export const useSignatureProfiles = () => {
       });
     }
 
-    saveSignatures(updatedSignatures);
+    persist(updatedSignatures);
     return newSignature;
   };
 
@@ -72,12 +179,12 @@ export const useSignatureProfiles = () => {
       });
     }
 
-    saveSignatures(updatedSignatures);
+    persist(updatedSignatures);
   };
 
   const deleteSignature = (id: string) => {
     const updatedSignatures = signatures.filter((signature) => signature.id !== id);
-    saveSignatures(updatedSignatures);
+    persist(updatedSignatures, id);
   };
 
   const getDefaultSignature = (): SignatureProfile | null => {
@@ -89,7 +196,7 @@ export const useSignatureProfiles = () => {
       ...signature,
       isDefault: signature.id === id,
     }));
-    saveSignatures(updatedSignatures);
+    persist(updatedSignatures);
   };
 
   return {

@@ -173,17 +173,20 @@ const validateInsulationResistance = (value: string): ValidationResult => {
     };
   }
 
-  // Handle >999 format
-  if (value.includes('>')) {
-    const numValue = parseFloat(value.replace('>', ''));
-    if (!isNaN(numValue) && numValue >= 999) {
-      return { isValid: true, level: 'pass', message: 'Excellent insulation resistance' };
-    }
-  }
-
-  const numValue = parseFloat(value);
+  // A ">" reading (e.g. ">200", ">999") means the result is off the top of the
+  // meter's range. Strip < / > before parsing so ">200" doesn't fall through to
+  // parseFloat(">200") = NaN and wrongly fail. It passes as long as the figure
+  // meets the BS 7671 minimum — regardless of where the meter's ceiling sits.
+  const numValue = parseFloat(value.replace(/[<>]/g, '').trim());
   if (isNaN(numValue)) {
     return { isValid: false, level: 'fail', message: 'Invalid insulation resistance format' };
+  }
+
+  if (
+    value.includes('>') &&
+    numValue >= BS7671_LIMITS.INSULATION_RESISTANCE.nominal_voltage_up_to_500V
+  ) {
+    return { isValid: true, level: 'pass', message: 'Excellent insulation resistance' };
   }
 
   if (numValue < BS7671_LIMITS.INSULATION_RESISTANCE.nominal_voltage_up_to_500V) {

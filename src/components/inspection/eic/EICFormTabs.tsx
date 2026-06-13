@@ -6,7 +6,6 @@ import EICInstallationDetails from './EICInstallationDetails';
 import EICScheduleOfInspections from './EICScheduleOfInspections';
 import EICScheduleOfTesting from './EICScheduleOfTesting';
 import EICDeclarations from './EICDeclarations';
-import EICTabNavigation from './EICTabNavigation';
 import EICCertificateActions from './EICCertificateActions';
 import EICObservationsSection from './EICObservationsSection';
 import { EICObservation } from '@/hooks/useEICObservations';
@@ -68,7 +67,6 @@ const EICFormTabs: React.FC<EICFormTabsProps> = ({
   canAccessTab,
   formData,
   onUpdate,
-  tabNavigationProps,
   observationsProps,
   onGenerateCertificate,
   onSaveDraft,
@@ -83,9 +81,7 @@ const EICFormTabs: React.FC<EICFormTabsProps> = ({
       icon: <Home className="h-4 w-4" />,
       content: (
         <div className="space-y-6">
-          <EICInstallationDetails formData={formData} onUpdate={onUpdate} />
-          <EICTabNavigation {...tabNavigationProps} />
-        </div>
+          <EICInstallationDetails formData={formData} onUpdate={onUpdate} />        </div>
       ),
     },
     {
@@ -108,9 +104,7 @@ const EICFormTabs: React.FC<EICFormTabsProps> = ({
             onRemoveObservation={observationsProps.onRemoveObservation}
             onSyncToInspectionItem={observationsProps.onSyncToInspectionItem}
             className="mt-6"
-          />
-          <EICTabNavigation {...tabNavigationProps} />
-        </div>
+          />        </div>
       ),
     },
     {
@@ -119,9 +113,7 @@ const EICFormTabs: React.FC<EICFormTabsProps> = ({
       icon: <TestTube className="h-4 w-4" />,
       content: (
         <div className="w-full max-w-none space-y-6">
-          <EICScheduleOfTesting formData={formData} onUpdate={onUpdate} />
-          <EICTabNavigation {...tabNavigationProps} />
-        </div>
+          <EICScheduleOfTesting formData={formData} onUpdate={onUpdate} />        </div>
       ),
     },
     {
@@ -130,9 +122,7 @@ const EICFormTabs: React.FC<EICFormTabsProps> = ({
       icon: <FileText className="h-4 w-4" />,
       content: (
         <div className="space-y-6">
-          <EICDeclarations formData={formData} onUpdate={onUpdate} />
-          <EICTabNavigation {...tabNavigationProps} />
-          <EICCertificateActions
+          <EICDeclarations formData={formData} onUpdate={onUpdate} />          <EICCertificateActions
             formData={formData}
             reportId={observationsProps.reportId}
             onGenerateCertificate={onGenerateCertificate}
