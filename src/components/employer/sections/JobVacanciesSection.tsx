@@ -285,6 +285,53 @@ export function JobVacanciesSection() {
     }
   };
 
+  const [isHiring, setIsHiring] = useState(false);
+
+  // The hire hinge: marks Hired, records the finder's fee, pulls the worker
+  // into the team roster and unlocks the conversation — one atomic RPC.
+  const handleHire = async (app: VacancyApplication) => {
+    setIsHiring(true);
+    try {
+      const { data, error } = await supabase.rpc('hire_applicant', {
+        p_application_id: app.id,
+      });
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      const r = data as any;
+      if (error || r?.error) throw error || new Error(r?.error);
+
+      // Raise the £250 finder's fee. Dormant until launch (no-ops as
+      // 'not_enabled'); fire-and-forget so billing never blocks the hire —
+      // the fee row already exists and can be collected/retried server-side.
+      // hire_record_id is null on a re-hire, which guards against double-charge.
+      if (r?.hire_record_id) {
+        supabase.functions
+          .invoke('charge-finder-fee', {
+            body: { hire_record_id: r.hire_record_id, worker_name: app.applicant_name },
+          })
+          .catch(() => {});
+      }
+
+      // Notify the worker through the existing pipeline
+      await updateApplicationStatus.mutateAsync({ id: app.id, status: 'Hired' }).catch(() => {});
+
+      toast({
+        title: 'Hired & onboarded',
+        description: `${app.applicant_name} is now on your team. They'll appear in People.`,
+      });
+      queryClient.invalidateQueries({ queryKey: ['vacancy-applications'] });
+      queryClient.invalidateQueries({ queryKey: ['employees'] });
+      setViewingApplication(null);
+    } catch {
+      toast({
+        title: 'Could not complete the hire',
+        description: 'Please try again.',
+        variant: 'destructive',
+      });
+    } finally {
+      setIsHiring(false);
+    }
+  };
+
   const handleToggleVacancy = async (vacancy: Vacancy) => {
     try {
       await toggleVacancyStatus.mutateAsync({ id: vacancy.id, currentStatus: vacancy.status });
@@ -1100,16 +1147,10 @@ export function JobVacanciesSection() {
                 {viewingApplication.status === 'Offered' && (
                   <PrimaryButton
                     fullWidth
-                    onClick={() => {
-                      handleUpdateStatus(
-                        viewingApplication.id,
-                        'Hired',
-                        viewingApplication.applicant_name
-                      );
-                      setViewingApplication(null);
-                    }}
+                    disabled={isHiring}
+                    onClick={() => handleHire(viewingApplication)}
                   >
-                    Mark as hired
+                    {isHiring ? 'Hiring…' : 'Hire & onboard'}
                   </PrimaryButton>
                 )}
               </SheetFooter>

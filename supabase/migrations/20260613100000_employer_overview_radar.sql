@@ -1,0 +1,20 @@
+-- E6: the Overview radar. Applied live as DB migrations `employer_overview_radar`
+-- + `employer_overview_radar_fix` (2026-06-13; full body in those DB migrations).
+--
+-- get_employer_overview() SECURITY DEFINER RPC — one caller-scoped aggregation
+-- returning:
+--   cash:  invoiced_this_month, paid_this_month, overdue_total, overdue_count
+--          (from employer_invoices; the figure the old Overview fetched then
+--           discarded entirely)
+--   items: up to 12 NAMED, severity-sorted attention rows across —
+--          • cert/card expiries  → "Dave Smith — ECS Gold · Expires in 12 days"
+--          • overdue invoices     → "INV-204 — Mrs Patel · £4,200 · 14 days overdue"
+--          • jobs past end_date
+--          • unsigned job packs (sent, awaiting signature)
+--          • vehicle MOT / road tax / insurance expiries
+--          severity red→orange→amber, each with a section to route to.
+--   counts: pending_timesheets (the aggregate), total_attention
+--
+-- Mismatched ownership columns (invoices/packs = employer_id, jobs/vehicles =
+-- user_id, certs/timesheets via the employee join) all resolve to auth.uid()
+-- because employer_id = user_id = the caller in this hub.

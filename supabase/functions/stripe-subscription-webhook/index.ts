@@ -1792,6 +1792,29 @@ serve(async (req) => {
       case 'invoice.paid': {
         const invoice = event.data.object as Stripe.Invoice;
 
+        // Finder's fee (a one-off invoice, no subscription) — settle the hire
+        // record. Must run BEFORE the subscription-only skip below.
+        if (invoice.metadata?.kind === 'finder_fee') {
+          const hireId = invoice.metadata.hire_record_id;
+          if (hireId) {
+            const { error: feeErr } = await supabase
+              .from('elec_id_hire_records')
+              .update({ fee_status: 'paid', paid_at: new Date().toISOString() })
+              .eq('id', hireId)
+              .eq('fee_status', 'invoiced');
+            if (feeErr) {
+              logger.warn('Finder fee mark-paid failed (non-fatal)', {
+                hireId,
+                invoiceId: invoice.id,
+                error: feeErr.message,
+              });
+            } else {
+              logger.info('Finder fee invoice paid', { hireId, invoiceId: invoice.id });
+            }
+          }
+          break;
+        }
+
         // Only handle subscription invoices
         if (!invoice.subscription) {
           logger.debug('Not a subscription invoice, skipping', { invoiceId: invoice.id });
@@ -1915,6 +1938,33 @@ serve(async (req) => {
 
       case 'invoice.payment_failed': {
         const invoice = event.data.object as Stripe.Invoice;
+
+        // Finder's fee — mark the hire record failed and nudge the employer.
+        // Must run BEFORE the subscription-only skip below.
+        if (invoice.metadata?.kind === 'finder_fee') {
+          const hireId = invoice.metadata.hire_record_id;
+          const employerId = invoice.metadata.employer_id;
+          if (hireId) {
+            await supabase
+              .from('elec_id_hire_records')
+              .update({ fee_status: 'failed', failed_at: new Date().toISOString() })
+              .eq('id', hireId)
+              .eq('fee_status', 'invoiced');
+            logger.warn('Finder fee payment failed', { hireId, invoiceId: invoice.id });
+            if (employerId) {
+              await supabase.from('notifications').insert({
+                user_id: employerId,
+                type: 'finder_fee_failed',
+                title: "Finder's fee payment failed",
+                message:
+                  "We couldn't collect the finder's fee for your recent hire. Please update your payment method.",
+                data: { invoice_id: invoice.id, hire_record_id: hireId },
+                read: false,
+              });
+            }
+          }
+          break;
+        }
 
         // Only handle subscription invoices
         if (!invoice.subscription) {

@@ -1,0 +1,25 @@
+-- E5b: the hire hinge + reply-unlock. Applied live as DB migrations
+-- `employer_hire_hinge` + `employer_hire_hinge_fix` (2026-06-13; full bodies in
+-- those DB migrations).
+--
+-- hire_applicant(p_application_id, p_fee_amount default null) SECURITY DEFINER —
+-- the single atomic pivot when an employer hires an applicant:
+--   1. marks the application 'Hired'
+--   2. pulls the worker into the employer's team roster (creates an
+--      employer_employees row owned by the employer, linked by the worker's
+--      user_id; idempotent on user_id/email)
+--   3. records the flat finder's fee in elec_id_hire_records (£250 per hire,
+--      fee_status 'pending'; idempotent per worker+employer — no double-charge)
+--   4. unlocks the conversation (electrician_can_reply = true)
+-- Owner-checked (caller must own the vacancy). Verified live: +1 roster, £50
+-- fee, status Hired, second call is a no-op.
+--
+-- trg_unlock_replies_on_apply: AFTER INSERT on employer_vacancy_applications —
+-- flips electrician_can_reply=true on any conversation the employer already
+-- started with that applicant. This is the "reply once they apply" promise the
+-- UI showed but the code never wired (the apply flow only invalidated a query).
+-- Verified live: gate false → true on apply.
+--
+-- Fee MODEL decided by Andrew 2026-06-13: flat £250 per hire (migration
+-- finders_fee_250 sets the table default + the RPC default). Billing collection
+-- is dormant until the employer tier launches.
