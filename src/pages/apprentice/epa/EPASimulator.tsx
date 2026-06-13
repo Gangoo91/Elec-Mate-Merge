@@ -30,6 +30,23 @@ const TABS: { id: TabId; label: string }[] = [
   { id: 'history', label: 'History' },
 ];
 
+/** Shown on every tab that's built around the apprentice's qualification when
+ *  none is set — without it the readiness, discussion and knowledge questions
+ *  would silently generate generic ('unknown') content. */
+function SetupNeeded() {
+  return (
+    <div className="px-4 sm:px-6 py-12 space-y-2">
+      <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+        Setup needed
+      </span>
+      <p className="text-[14px] text-white/85 leading-relaxed max-w-md">
+        Set your qualification in your profile to use the EPA simulator — the readiness check,
+        professional discussion and knowledge questions are all built around it.
+      </p>
+    </div>
+  );
+}
+
 const EPASimulator = () => {
   const navigate = useNavigate();
   const [searchParams, setSearchParams] = useSearchParams();
@@ -197,36 +214,32 @@ const EPASimulator = () => {
           />
         )}
 
-        {activeTab === 'readiness' && !qualificationCode && (
-          <div className="px-4 sm:px-6 py-12 space-y-2">
-            <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
-              Setup needed
-            </span>
-            <p className="text-[14px] text-white/85 leading-relaxed max-w-md">
-              Set your qualification in your profile to see EPA readiness data.
-            </p>
-          </div>
-        )}
+        {activeTab === 'readiness' && !qualificationCode && <SetupNeeded />}
 
-        {activeTab === 'discussion' && (
-          <EPAProfessionalDiscussion
-            portfolioEntries={portfolioEntries}
-            qualificationCode={qualificationCode || ''}
-            onSessionComplete={invalidateReadiness}
-          />
-        )}
+        {activeTab === 'discussion' &&
+          (qualificationCode ? (
+            <EPAProfessionalDiscussion
+              portfolioEntries={portfolioEntries}
+              qualificationCode={qualificationCode}
+              onSessionComplete={invalidateReadiness}
+            />
+          ) : (
+            <SetupNeeded />
+          ))}
 
-        {activeTab === 'knowledge' && (
-          <EPAKnowledgeQuiz
-            qualificationCode={qualificationCode || ''}
-            targetAC={targetAC}
-            onClearTargetAC={() => setTargetAC(null)}
-            onSessionComplete={invalidateReadiness}
-          />
-        )}
+        {activeTab === 'knowledge' &&
+          (qualificationCode ? (
+            <EPAKnowledgeQuiz
+              qualificationCode={qualificationCode}
+              targetAC={targetAC}
+              onClearTargetAC={() => setTargetAC(null)}
+              onSessionComplete={invalidateReadiness}
+            />
+          ) : (
+            <SetupNeeded />
+          ))}
 
         {activeTab === 'history' && <HistoryTab items={history} isLoading={isLoadingHistory} />}
-
       </div>
     </div>
   );
@@ -242,16 +255,35 @@ interface HistoryItem {
   timeSpent: number;
 }
 
-const GRADE_COLOURS: Record<string, string> = {
-  distinction: 'text-elec-yellow',
-  pass: 'text-white/85',
-  fail: 'text-red-300',
-};
+/** Canonical EPA grade → display label + colour. Mocks write
+ *  distinction | merit | pass | fail (legacy: not_yet_ready / not_yet_pass).
+ *  Single source so the label and the colour can never disagree — merit is a
+ *  grade above pass (not "Pass"), and a fail must read red. */
+function gradeDisplay(grade: string | null | undefined): { label: string; className: string } {
+  switch (grade) {
+    case 'distinction':
+      return { label: 'Distinction', className: 'text-elec-yellow' };
+    case 'merit':
+      return { label: 'Merit', className: 'text-elec-yellow/80' };
+    case 'pass':
+      return { label: 'Pass', className: 'text-white/85' };
+    case 'fail':
+    case 'not_yet_ready':
+    case 'not_yet_pass':
+      return { label: 'Fail', className: 'text-red-300' };
+    default:
+      return { label: grade ? grade.replace(/_/g, ' ') : '—', className: 'text-white/85' };
+  }
+}
 
 function HistoryTab({ items, isLoading }: { items: HistoryItem[]; isLoading: boolean }) {
   const { user } = useAuth();
   const { toast } = useToast();
-  const [collegeStudent, setCollegeStudent] = useState<{ id: string; college_id: string; name: string } | null>(null);
+  const [collegeStudent, setCollegeStudent] = useState<{
+    id: string;
+    college_id: string;
+    name: string;
+  } | null>(null);
   const [submittedSessionId, setSubmittedSessionId] = useState<string | null>(null);
   const [submitting, setSubmitting] = useState<string | null>(null);
 
@@ -294,7 +326,13 @@ function HistoryTab({ items, isLoading }: { items: HistoryItem[]; isLoading: boo
       try {
         // Map mock score → verdict + grade for the self-judgement row
         const verdict =
-          item.score >= 80 ? 'ready' : item.score >= 60 ? 'almost' : item.score >= 40 ? 'not_yet' : 'refer';
+          item.score >= 80
+            ? 'ready'
+            : item.score >= 60
+              ? 'almost'
+              : item.score >= 40
+                ? 'not_yet'
+                : 'refer';
         const grade =
           item.grade === 'distinction'
             ? 'distinction'
@@ -373,28 +411,81 @@ function HistoryTab({ items, isLoading }: { items: HistoryItem[]; isLoading: boo
     );
   }
 
+  // Trajectory — best score (+ its grade), latest, and the move since the
+  // previous session. `items` are already newest-first.
+  const latest = items[0];
+  const best = items.reduce((b, x) => (x.score > b.score ? x : b), items[0]);
+  const bestG = gradeDisplay(best.grade);
+  const prevScore = items[1]?.score ?? null;
+  const delta = prevScore !== null ? latest.score - prevScore : null;
+
   return (
     <div className="px-4 sm:px-6 py-6 space-y-3">
-      <div className="flex items-baseline justify-between gap-3">
-        <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
-          Past sessions · {items.length}
-        </span>
+      <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+        Your trajectory · {items.length} session{items.length === 1 ? '' : 's'}
+      </span>
+
+      {/* Trajectory strip — best / latest / move */}
+      <div className="grid grid-cols-3 gap-[2px] bg-black border border-white/[0.08] rounded-2xl overflow-hidden">
+        <div className="bg-[hsl(0_0%_10%)] px-3 py-3.5 flex flex-col items-center gap-1 text-center">
+          <span className="text-[9px] font-medium uppercase tracking-[0.14em] text-white/45">
+            Best
+          </span>
+          <span className="text-[20px] font-mono font-semibold tabular-nums leading-none text-white">
+            {best.score}
+          </span>
+          <span className={cn('text-[10.5px] font-medium', bestG.className)}>{bestG.label}</span>
+        </div>
+        <div className="bg-[hsl(0_0%_10%)] px-3 py-3.5 flex flex-col items-center gap-1 text-center">
+          <span className="text-[9px] font-medium uppercase tracking-[0.14em] text-white/45">
+            Latest
+          </span>
+          <span className="text-[20px] font-mono font-semibold tabular-nums leading-none text-white">
+            {latest.score}
+          </span>
+          <span
+            className={cn(
+              'text-[10.5px] font-medium tabular-nums',
+              delta === null
+                ? 'text-white/40'
+                : delta > 0
+                  ? 'text-elec-yellow'
+                  : delta < 0
+                    ? 'text-red-300'
+                    : 'text-white/50'
+            )}
+          >
+            {delta === null
+              ? 'first run'
+              : delta > 0
+                ? `▲ +${delta}`
+                : delta < 0
+                  ? `▼ ${delta}`
+                  : 'no change'}
+          </span>
+        </div>
+        <div className="bg-[hsl(0_0%_10%)] px-3 py-3.5 flex flex-col items-center gap-1 text-center">
+          <span className="text-[9px] font-medium uppercase tracking-[0.14em] text-white/45">
+            Sessions
+          </span>
+          <span className="text-[20px] font-mono font-semibold tabular-nums leading-none text-white">
+            {items.length}
+          </span>
+          <span className="text-[10.5px] font-medium text-white/50">logged</span>
+        </div>
       </div>
+
       {collegeStudent && (
         <p className="text-[12px] text-white/55 leading-snug">
-          Submit a session to surface it as your self-assessment alongside the tutor and AI verdicts.
+          Your latest mock already feeds your tutor's EPA readiness view. Submit a session to log it
+          as a formal self-assessment alongside the tutor and AI verdicts.
         </p>
       )}
       <ul className="space-y-2">
         {items.map((item) => {
           const isSubmitted = submittedSessionId === item.id;
           const isWorking = submitting === item.id;
-          const gradeLabel =
-            item.grade === 'not_yet_ready'
-              ? 'Fail'
-              : item.grade === 'merit'
-                ? 'Pass'
-                : item.grade?.replace('_', ' ');
+          const g = gradeDisplay(item.grade);
           return (
             <li
               key={item.id}
@@ -412,14 +503,7 @@ function HistoryTab({ items, isLoading }: { items: HistoryItem[]; isLoading: boo
                     {item.type === 'professional_discussion' ? 'Discussion' : 'Knowledge'} ·{' '}
                     {Math.floor(item.timeSpent / 60)}m
                   </span>
-                  <span
-                    className={cn(
-                      'text-[13px] capitalize font-medium',
-                      GRADE_COLOURS[item.grade] || 'text-white/85'
-                    )}
-                  >
-                    {gradeLabel}
-                  </span>
+                  <span className={cn('text-[13px] font-medium', g.className)}>{g.label}</span>
                 </div>
                 <div className="text-right shrink-0">
                   <span className="text-[24px] font-mono font-semibold text-white tabular-nums leading-none">

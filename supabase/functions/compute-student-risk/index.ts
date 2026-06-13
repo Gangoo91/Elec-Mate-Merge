@@ -448,6 +448,50 @@ Deno.serve(async (req) => {
         }
       }
 
+      // 10. EPA mock under-performance — the learner has practised but their
+      // dry-runs aren't reaching pass level as the end date nears. Gated to a
+      // PATTERN (>=2 scored runs, best <50%) and a near end date (<=6 months)
+      // so early-journey practice scores never flag. Softer weight than the
+      // gateway factor — it's a leading indicator, not a hard blocker.
+      if (student.user_id) {
+        const { data: mk } = await sb
+          .from('epa_mock_sessions')
+          .select('overall_score, predicted_grade, completed_at')
+          .eq('user_id', student.user_id)
+          .eq('status', 'completed')
+          .not('overall_score', 'is', null)
+          .order('completed_at', { ascending: false })
+          .limit(5);
+        const runs = (mk ?? []) as Array<{ overall_score: number | null }>;
+        const scores = runs.map((r) => Number(r.overall_score) || 0);
+        if (scores.length >= 2) {
+          const best = Math.max(...scores);
+          const recentAvg = Math.round(scores.reduce((s, v) => s + v, 0) / scores.length);
+          const monthsToEnd = student.expected_end_date
+            ? (new Date(student.expected_end_date).getTime() - now.getTime()) / (30 * 86400_000)
+            : null;
+          if (best < 50 && monthsToEnd !== null && monthsToEnd <= 6) {
+            const sev = Math.min(
+              1,
+              0.35 +
+                (best < 35 ? 0.25 : 0) +
+                (monthsToEnd <= 3 ? 0.2 : 0) +
+                (recentAvg < 40 ? 0.15 : 0)
+            );
+            signals.epa_mock_best = best;
+            signals.epa_mock_recent_avg = recentAvg;
+            signals.epa_mock_runs = scores.length;
+            factors.push({
+              key: 'epa_mock_underperforming',
+              label: `EPA mocks not reaching pass level (best ${best}% over ${scores.length} runs)`,
+              severity: sev,
+              detail: 'Dry-run scores suggest targeted EPA prep is needed before the gateway.',
+            });
+            score += sev * 16;
+          }
+        }
+      }
+
       // Normalise score 0..100 (cap)
       score = Math.max(0, Math.min(100, score));
 

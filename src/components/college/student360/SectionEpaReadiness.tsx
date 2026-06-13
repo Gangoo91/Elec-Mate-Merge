@@ -3,11 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { cn } from '@/lib/utils';
 import { Wand2, ShieldCheck, AlertTriangle, Sparkles, User2, Bot } from 'lucide-react';
 import { useStudentEpa } from '@/hooks/useStudentEpa';
-import {
-  useEpaReadiness,
-  type EpaJudgement,
-  type EpaSource,
-} from '@/hooks/useEpaReadiness';
+import { useEpaReadiness, type EpaJudgement, type EpaSource } from '@/hooks/useEpaReadiness';
 import { TutorEpaJudgementSheet } from '@/components/college/sheets/TutorEpaJudgementSheet';
 import { AiEpaReadinessSheet } from '@/components/college/sheets/AiEpaReadinessSheet';
 import { AiSignalsInspectorSheet } from '@/components/college/sheets/AiSignalsInspectorSheet';
@@ -35,7 +31,10 @@ function formatDate(iso: string | null): string {
   });
 }
 
-const GATEWAY_LABELS: { key: keyof NonNullable<ReturnType<typeof useStudentEpa>['checklist']>; label: string }[] = [
+const GATEWAY_LABELS: {
+  key: keyof NonNullable<ReturnType<typeof useStudentEpa>['checklist']>;
+  label: string;
+}[] = [
   { key: 'portfolio_complete', label: 'Portfolio complete' },
   { key: 'portfolio_signed_off', label: 'Portfolio signed off' },
   { key: 'ojt_hours_verified', label: 'OTJ hours verified' },
@@ -67,9 +66,7 @@ export function SectionEpaReadiness({
   const [briefOpen, setBriefOpen] = useState(false);
   const [mockOpen, setMockOpen] = useState(false);
   const [tutorSheet, setTutorSheet] = useState<
-    | null
-    | { mode: 'create' | 'edit' }
-    | { mode: 'cosign' | 'override'; aiTarget: EpaJudgement }
+    null | { mode: 'create' | 'edit' } | { mode: 'cosign' | 'override'; aiTarget: EpaJudgement }
   >(null);
 
   // Mock-derived "learner self-assessment" — use latest mock if no formal submission yet.
@@ -79,12 +76,35 @@ export function SectionEpaReadiness({
     if (!m) return null;
     return {
       __synthetic: true as const,
-      verdict: (m.predicted_grade === 'fail' ? 'not_yet' : m.overall_score && m.overall_score >= 75 ? 'ready' : 'almost') as EpaJudgement['verdict'],
+      verdict: (m.predicted_grade === 'fail'
+        ? 'not_yet'
+        : m.overall_score && m.overall_score >= 75
+          ? 'ready'
+          : 'almost') as EpaJudgement['verdict'],
       predicted_grade: (m.predicted_grade as EpaJudgement['predicted_grade']) ?? null,
       confidence: m.overall_score ?? null,
       created_at: m.completed_at ?? null,
     };
   }, [judge.learner, judge.mocks]);
+
+  // Best / latest / move across the learner's scored mocks — gives the tutor
+  // the trajectory at a glance, not just the latest-mock inference. mocks are
+  // newest-first; null scores (e.g. unscored discussions) are excluded.
+  const mockTrend = useMemo(() => {
+    const scored = judge.mocks.filter((m) => m.overall_score != null);
+    if (scored.length === 0) return null;
+    const score = (m: (typeof scored)[number]) => m.overall_score as number;
+    const latest = scored[0];
+    const best = scored.reduce((b, x) => (score(x) > score(b) ? x : b), scored[0]);
+    const delta = scored[1] ? score(latest) - score(scored[1]) : null;
+    return {
+      latest: score(latest),
+      best: score(best),
+      bestGrade: best.predicted_grade,
+      delta,
+      count: scored.length,
+    };
+  }, [judge.mocks]);
 
   if (!collegeStudentId) {
     return (
@@ -128,14 +148,16 @@ export function SectionEpaReadiness({
           voices={[
             {
               source: 'learner',
-              judgement: judge.learner ?? (inferredLearner
-                ? {
-                    verdict: inferredLearner.verdict,
-                    predicted_grade: inferredLearner.predicted_grade,
-                    confidence: inferredLearner.confidence,
-                    source_name_snapshot: studentName,
-                  }
-                : null),
+              judgement:
+                judge.learner ??
+                (inferredLearner
+                  ? {
+                      verdict: inferredLearner.verdict,
+                      predicted_grade: inferredLearner.predicted_grade,
+                      confidence: inferredLearner.confidence,
+                      source_name_snapshot: studentName,
+                    }
+                  : null),
               synthetic: !judge.learner && !!inferredLearner,
               subtitle: judge.learner
                 ? 'Submitted as self-assessment'
@@ -264,17 +286,23 @@ export function SectionEpaReadiness({
               AI gap analysis
             </div>
             <div className="text-[10.5px] text-white/55 tabular-nums">
-              {judge.ai.citations?.length ?? 0} citation{(judge.ai.citations?.length ?? 0) === 1 ? '' : 's'}
+              {judge.ai.citations?.length ?? 0} citation
+              {(judge.ai.citations?.length ?? 0) === 1 ? '' : 's'}
             </div>
           </div>
           <ul className="divide-y divide-white/[0.04]">
             {judge.ai.blockers.map((b, i) => {
               const matched = (judge.ai!.citations ?? []).filter((c) =>
-                b.toLowerCase().includes((c.applies_to ?? '').toLowerCase().split(' ').slice(0, 3).join(' '))
+                b
+                  .toLowerCase()
+                  .includes((c.applies_to ?? '').toLowerCase().split(' ').slice(0, 3).join(' '))
               );
               return (
                 <li key={i} className="px-5 py-3 flex items-start gap-3">
-                  <span aria-hidden className="mt-1.5 inline-block h-1.5 w-1.5 rounded-full bg-amber-400/85 flex-shrink-0" />
+                  <span
+                    aria-hidden
+                    className="mt-1.5 inline-block h-1.5 w-1.5 rounded-full bg-amber-400/85 flex-shrink-0"
+                  />
                   <div className="min-w-0 flex-1">
                     <p className="text-[12.5px] text-white/85 leading-snug">{b}</p>
                     {matched.length > 0 && (
@@ -331,7 +359,9 @@ export function SectionEpaReadiness({
                     aria-hidden
                     className={cn(
                       'inline-flex items-center justify-center h-5 w-5 rounded-full text-[10px] font-bold flex-shrink-0',
-                      complete ? 'bg-emerald-500/20 text-emerald-300' : 'bg-white/[0.04] text-white/35'
+                      complete
+                        ? 'bg-emerald-500/20 text-emerald-300'
+                        : 'bg-white/[0.04] text-white/35'
                     )}
                   >
                     {complete ? '✓' : '·'}
@@ -343,7 +373,8 @@ export function SectionEpaReadiness({
                   </div>
                   {key === 'ojt_hours_verified' && epa.checklist?.ojt_hours_required != null && (
                     <div className="text-[10.5px] text-white/55 tabular-nums">
-                      {Math.round(epa.checklist.ojt_hours_completed ?? 0)}h / {Math.round(epa.checklist.ojt_hours_required)}h
+                      {Math.round(epa.checklist.ojt_hours_completed ?? 0)}h /{' '}
+                      {Math.round(epa.checklist.ojt_hours_required)}h
                     </div>
                   )}
                 </li>
@@ -375,33 +406,84 @@ export function SectionEpaReadiness({
         </div>
         {judge.mocks.length === 0 ? (
           <div className="px-5 py-6 text-[11.5px] text-white/45 leading-snug">
-            No mock sessions yet. Record a tutor-led mock (portfolio walkthrough, professional discussion, practical or knowledge review) to start tracking dry-run performance.
+            No mock sessions yet. Record a tutor-led mock (portfolio walkthrough, professional
+            discussion, practical or knowledge review) to start tracking dry-run performance.
           </div>
         ) : (
-          <ul className="divide-y divide-white/[0.04]">
-            {judge.mocks.slice(0, 5).map((m) => (
-              <li key={m.id} className="px-5 py-3 flex items-center gap-3">
-                <div className="min-w-0 flex-1">
-                  <div className="text-[12.5px] text-white capitalize">
-                    {m.session_type.replace(/_/g, ' ')}
-                    {m.predicted_grade && (
-                      <span className="ml-2 text-[11px] font-medium text-elec-yellow/85 capitalize">
-                        {m.predicted_grade}
-                      </span>
-                    )}
-                  </div>
-                  <div className="text-[10.5px] text-white/55 tabular-nums">
-                    {formatDate(m.completed_at)}
-                  </div>
+          <>
+            {mockTrend && (
+              <div className="px-5 py-3 border-b border-white/[0.04] grid grid-cols-3 gap-3 text-center">
+                <div className="flex flex-col gap-0.5">
+                  <span className="text-[9px] uppercase tracking-[0.14em] text-white/45">Best</span>
+                  <span className="text-[15px] font-semibold tabular-nums text-white leading-none">
+                    {mockTrend.best}%
+                  </span>
+                  {mockTrend.bestGrade && (
+                    <span className="text-[10px] font-medium text-elec-yellow/85 capitalize">
+                      {mockTrend.bestGrade}
+                    </span>
+                  )}
                 </div>
-                {m.overall_score != null && (
-                  <div className="text-[14px] font-semibold text-white tabular-nums">
-                    {m.overall_score}%
+                <div className="flex flex-col gap-0.5">
+                  <span className="text-[9px] uppercase tracking-[0.14em] text-white/45">
+                    Latest
+                  </span>
+                  <span className="text-[15px] font-semibold tabular-nums text-white leading-none">
+                    {mockTrend.latest}%
+                  </span>
+                  {mockTrend.delta !== null && (
+                    <span
+                      className={cn(
+                        'text-[10px] font-medium tabular-nums',
+                        mockTrend.delta > 0
+                          ? 'text-elec-yellow'
+                          : mockTrend.delta < 0
+                            ? 'text-red-300'
+                            : 'text-white/45'
+                      )}
+                    >
+                      {mockTrend.delta > 0
+                        ? `▲ +${mockTrend.delta}`
+                        : mockTrend.delta < 0
+                          ? `▼ ${mockTrend.delta}`
+                          : 'no change'}
+                    </span>
+                  )}
+                </div>
+                <div className="flex flex-col gap-0.5">
+                  <span className="text-[9px] uppercase tracking-[0.14em] text-white/45">Runs</span>
+                  <span className="text-[15px] font-semibold tabular-nums text-white leading-none">
+                    {mockTrend.count}
+                  </span>
+                  <span className="text-[10px] text-white/45">scored</span>
+                </div>
+              </div>
+            )}
+            <ul className="divide-y divide-white/[0.04]">
+              {judge.mocks.slice(0, 5).map((m) => (
+                <li key={m.id} className="px-5 py-3 flex items-center gap-3">
+                  <div className="min-w-0 flex-1">
+                    <div className="text-[12.5px] text-white capitalize">
+                      {m.session_type.replace(/_/g, ' ')}
+                      {m.predicted_grade && (
+                        <span className="ml-2 text-[11px] font-medium text-elec-yellow/85 capitalize">
+                          {m.predicted_grade}
+                        </span>
+                      )}
+                    </div>
+                    <div className="text-[10.5px] text-white/55 tabular-nums">
+                      {formatDate(m.completed_at)}
+                    </div>
                   </div>
-                )}
-              </li>
-            ))}
-          </ul>
+                  {m.overall_score != null && (
+                    <div className="text-[14px] font-semibold text-white tabular-nums">
+                      {m.overall_score}%
+                    </div>
+                  )}
+                </li>
+              ))}
+            </ul>
+          </>
         )}
       </div>
 
@@ -576,7 +658,12 @@ function AgreementBanner({
       : 'border-white/[0.06] bg-[hsl(0_0%_12%)]';
   return (
     <div className={cn('mt-5 rounded-2xl border px-5 py-3 flex items-center gap-3', tone)}>
-      <Sparkles className={cn('h-4 w-4 flex-shrink-0', consensus ? 'text-emerald-300' : outlier ? 'text-amber-300' : 'text-white/55')} />
+      <Sparkles
+        className={cn(
+          'h-4 w-4 flex-shrink-0',
+          consensus ? 'text-emerald-300' : outlier ? 'text-amber-300' : 'text-white/55'
+        )}
+      />
       <p className="text-[12.5px] text-white/90 leading-snug">{headline}</p>
     </div>
   );
@@ -586,7 +673,10 @@ function AgreementBanner({
    Verdict column
    ──────────────────────────────────────────────────────── */
 
-const SOURCE_META: Record<EpaSource, { label: string; icon: React.ComponentType<{ className?: string }>; tint: string }> = {
+const SOURCE_META: Record<
+  EpaSource,
+  { label: string; icon: React.ComponentType<{ className?: string }>; tint: string }
+> = {
   learner: { label: 'Learner', icon: User2, tint: 'text-blue-200' },
   tutor: { label: 'Tutor', icon: ShieldCheck, tint: 'text-elec-yellow' },
   ai: { label: 'AI', icon: Bot, tint: 'text-purple-200' },
@@ -657,7 +747,13 @@ function VerdictColumn({
           {conf != null && (
             <div className="mt-2 flex items-center gap-2 text-[11px] text-white/55">
               <div className="h-1.5 w-full max-w-[100px] rounded-full bg-white/[0.06] overflow-hidden">
-                <div className={cn('h-full rounded-full', conf >= 70 ? 'bg-emerald-400' : conf >= 40 ? 'bg-elec-yellow' : 'bg-amber-400')} style={{ width: `${conf}%` }} />
+                <div
+                  className={cn(
+                    'h-full rounded-full',
+                    conf >= 70 ? 'bg-emerald-400' : conf >= 40 ? 'bg-elec-yellow' : 'bg-amber-400'
+                  )}
+                  style={{ width: `${conf}%` }}
+                />
               </div>
               <span className="tabular-nums">{conf}%</span>
             </div>
@@ -668,7 +764,9 @@ function VerdictColumn({
       )}
       {subtitle && <p className="mt-2 text-[10.5px] text-white/45">{subtitle}</p>}
       {judgement?.rationale && (
-        <p className="mt-3 text-[12px] text-white/85 leading-relaxed line-clamp-4">{judgement.rationale}</p>
+        <p className="mt-3 text-[12px] text-white/85 leading-relaxed line-clamp-4">
+          {judgement.rationale}
+        </p>
       )}
       {action && (
         <button
@@ -676,7 +774,9 @@ function VerdictColumn({
           onClick={action.onClick}
           className={cn(
             'mt-3 text-[11.5px] font-semibold tracking-tight transition-colors touch-manipulation',
-            action.accent ? 'text-elec-yellow hover:text-elec-yellow/85' : 'text-white/85 hover:text-white'
+            action.accent
+              ? 'text-elec-yellow hover:text-elec-yellow/85'
+              : 'text-white/85 hover:text-white'
           )}
         >
           {action.label}
