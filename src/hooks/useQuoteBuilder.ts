@@ -403,9 +403,10 @@ export const useQuoteBuilder = (onQuoteGenerated?: () => void, initialQuote?: Qu
 
         const url = pdfDownloadUrl;
         const num = pdfQuoteNumber;
+        const docLabel = updatedQuote.settings?.isEstimate ? 'Estimate' : 'Quote';
         toast({
-          title: 'Quote Generated Successfully',
-          description: `Quote ${updatedQuote.quoteNumber} has been generated and saved.`,
+          title: `${docLabel} Generated Successfully`,
+          description: `${docLabel} ${updatedQuote.quoteNumber} has been generated and saved.`,
           variant: 'success',
           ...(url
             ? {
@@ -414,7 +415,7 @@ export const useQuoteBuilder = (onQuoteGenerated?: () => void, initialQuote?: Qu
                   {
                     altText: 'Download PDF',
                     className: 'touch-manipulation',
-                    onClick: () => openOrDownloadPdf(url, `Quote-${num}.pdf`),
+                    onClick: () => openOrDownloadPdf(url, `${docLabel}-${num}.pdf`),
                   },
                   'Download PDF'
                 ),
@@ -426,9 +427,10 @@ export const useQuoteBuilder = (onQuoteGenerated?: () => void, initialQuote?: Qu
           quoteId: updatedQuote.id,
           quoteNumber: updatedQuote.quoteNumber,
         });
+        const docLabel = updatedQuote.settings?.isEstimate ? 'Estimate' : 'Quote';
         toast({
-          title: 'Quote Generated',
-          description: `Quote ${updatedQuote.quoteNumber} has been generated but could not be saved. Please try again from the quotes page.`,
+          title: `${docLabel} Generated`,
+          description: `${docLabel} ${updatedQuote.quoteNumber} has been generated but could not be saved. Please try again from the quotes page.`,
           variant: 'destructive',
         });
       }

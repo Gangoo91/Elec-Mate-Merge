@@ -283,10 +283,11 @@ export const useQuoteStorage = () => {
             const isInvoice = !!newRecord.invoice_number;
             const clientName = newRecord.client_data?.name || 'Client';
             const total = parseFloat(newRecord.total || 0).toFixed(2);
+            const quoteLabel = newRecord.is_estimate ? 'Estimate' : 'Quote';
 
             // Show toast notification for new quote or invoice (likely from voice)
             toast({
-              title: isInvoice ? 'Invoice Created' : 'Quote Created',
+              title: isInvoice ? 'Invoice Created' : `${quoteLabel} Created`,
               description: `${isInvoice ? newRecord.invoice_number : newRecord.quote_number} for ${clientName} - £${total}`,
               duration: 5000,
             });
@@ -305,18 +306,19 @@ export const useQuoteStorage = () => {
           },
           (payload) => {
             const updatedQuote = payload.new as any;
+            const docLabel = updatedQuote.is_estimate ? 'Estimate' : 'Quote';
 
             // Show toast notification for acceptance/rejection
             if (updatedQuote.acceptance_status === 'accepted') {
               toast({
-                title: 'Quote Accepted!',
-                description: `${updatedQuote.client_data?.name || 'Client'} accepted quote ${updatedQuote.quote_number}`,
+                title: `${docLabel} Accepted!`,
+                description: `${updatedQuote.client_data?.name || 'Client'} accepted ${docLabel.toLowerCase()} ${updatedQuote.quote_number}`,
                 duration: 5000,
               });
             } else if (updatedQuote.acceptance_status === 'rejected') {
               toast({
-                title: 'Quote Declined',
-                description: `${updatedQuote.client_data?.name || 'Client'} declined quote ${updatedQuote.quote_number}`,
+                title: `${docLabel} Declined`,
+                description: `${updatedQuote.client_data?.name || 'Client'} declined ${docLabel.toLowerCase()} ${updatedQuote.quote_number}`,
                 variant: 'destructive',
                 duration: 5000,
               });

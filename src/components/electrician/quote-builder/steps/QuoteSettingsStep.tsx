@@ -1,4 +1,5 @@
 import { useForm } from 'react-hook-form';
+import { DecimalInput } from '@/components/ui/decimal-input';
 import { zodResolver } from '@hookform/resolvers/zod';
 import * as z from 'zod';
 import { Form, FormControl, FormField, FormItem, FormMessage } from '@/components/ui/form';
@@ -102,6 +103,15 @@ export const QuoteSettingsStep = ({ settings, items, onUpdate }: QuoteSettingsSt
     return () => subscription.unsubscribe();
   }, [form, onUpdate]);
 
+  // The wizard header now owns the Quote/Estimate toggle. Keep this form's
+  // isEstimate in lockstep with the parent so form.watch can't push a stale
+  // value back and silently flip the document type.
+  useEffect(() => {
+    if (!!settings?.isEstimate !== !!form.getValues('isEstimate')) {
+      form.setValue('isEstimate', !!settings?.isEstimate);
+    }
+  }, [settings?.isEstimate, form]);
+
   const isVatRegistered = form.watch('vatRegistered');
   const isDiscountEnabled = form.watch('discountEnabled');
   const discountType = form.watch('discountType');
@@ -146,47 +156,8 @@ export const QuoteSettingsStep = ({ settings, items, onUpdate }: QuoteSettingsSt
   return (
     <Form {...form}>
       <div className="space-y-8 text-left">
-        {/* ============ 00 · DOCUMENT TYPE ============ */}
-        <section className="space-y-3">
-          <GroupHeader n="00" title="Document type" sub="Send a fixed quote or a ball-park estimate" />
-          {(() => {
-            const isEst = !!form.watch('isEstimate');
-            return (
-              <>
-                <div className="grid grid-cols-2 gap-2">
-                  {([
-                    [false, 'Quote', 'Fixed price'],
-                    [true, 'Estimate', 'Ball-park · may vary'],
-                  ] as [boolean, string, string][]).map(([val, label, sub]) => {
-                    const active = isEst === val;
-                    return (
-                      <button
-                        key={label}
-                        type="button"
-                        onClick={() => form.setValue('isEstimate', val, { shouldDirty: true })}
-                        className={
-                          'flex flex-col items-start gap-0.5 p-3.5 rounded-xl border text-left touch-manipulation active:scale-[0.98] transition-all ' +
-                          (active
-                            ? 'border-elec-yellow/40 bg-elec-yellow/[0.10]'
-                            : 'border-white/[0.08] bg-white/[0.04] hover:bg-white/[0.06]')
-                        }
-                      >
-                        <span className={'text-[14px] font-semibold ' + (active ? 'text-elec-yellow' : 'text-white')}>{label}</span>
-                        <span className={'text-[11px] ' + (active ? 'text-elec-yellow/70' : 'text-white/50')}>{sub}</span>
-                      </button>
-                    );
-                  })}
-                </div>
-                {isEst && (
-                  <p className="text-[11px] text-white/55 leading-snug px-1">
-                    The PDF is titled <span className="text-white/80 font-medium">ESTIMATE</span> and carries a
-                    guide-only disclaimer — final cost may vary with site conditions and actual scope.
-                  </p>
-                )}
-              </>
-            );
-          })()}
-        </section>
+        {/* Document type (Quote / Estimate) now lives in the wizard header so
+            it stays visible on every step. */}
 
         {/* ============ 01 · TAX ============ */}
         <div>
@@ -391,13 +362,11 @@ export const QuoteSettingsStep = ({ settings, items, onUpdate }: QuoteSettingsSt
                         {discountType === 'percentage' ? 'Percentage (%)' : 'Amount (£)'}
                       </label>
                       <FormControl>
-                        <Input
-                          type="number"
-                          inputMode="decimal"
+                        <DecimalInput
                           placeholder={discountType === 'percentage' ? '20' : '50.00'}
                           className={inputClass}
-                          value={field.value || ''}
-                          onChange={(e) => field.onChange(e.target.value === '' ? 0 : parseFloat(e.target.value) || 0)}
+                          value={(field.value as number) || 0}
+                          onChange={(val) => field.onChange(val)}
                         />
                       </FormControl>
                     </FormItem>

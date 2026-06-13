@@ -1,5 +1,5 @@
 import { Check, Sparkles, AlertTriangle, MessageSquare, FileText, Zap, X } from 'lucide-react';
-import { Sheet, SheetContent } from '@/components/ui/sheet';
+import { Sheet, SheetContent, SheetTitle } from '@/components/ui/sheet';
 import { useNotifications, Notification } from '@/components/notifications/NotificationProvider';
 import { cn } from '@/lib/utils';
 import { formatDistanceToNow, format, isToday, isYesterday } from 'date-fns';
@@ -238,6 +238,10 @@ export function NotificationsSheet({ open, onOpenChange }: NotificationsSheetPro
           isMobile ? 'h-[85vh] rounded-t-2xl overflow-hidden' : 'w-[400px] max-w-[400px]'
         )}
       >
+        {/* Accessible title for screen readers (Radix Dialog requirement);
+            the styled <h2> below remains the visible heading. */}
+        <SheetTitle className="sr-only">Notifications</SheetTitle>
+
         {/* Drag handle on mobile */}
         {isMobile && (
           <div className="flex justify-center pt-2.5 pb-1 flex-shrink-0">
@@ -285,7 +289,7 @@ export function NotificationsSheet({ open, onOpenChange }: NotificationsSheetPro
             </div>
           ) : (
             <AnimatePresence>
-              <Section label="Today" count={grouped.today.length}>
+              <Section key="today" label="Today" count={grouped.today.length}>
                 <div className="divide-y divide-white/[0.04]">
                   {grouped.today.map((n, i) => (
                     <NotificationRow
@@ -298,7 +302,7 @@ export function NotificationsSheet({ open, onOpenChange }: NotificationsSheetPro
                   ))}
                 </div>
               </Section>
-              <Section label="Yesterday" count={grouped.yesterday.length}>
+              <Section key="yesterday" label="Yesterday" count={grouped.yesterday.length}>
                 <div className="divide-y divide-white/[0.04]">
                   {grouped.yesterday.map((n, i) => (
                     <NotificationRow
@@ -311,7 +315,7 @@ export function NotificationsSheet({ open, onOpenChange }: NotificationsSheetPro
                   ))}
                 </div>
               </Section>
-              <Section label="Earlier" count={grouped.earlier.length}>
+              <Section key="earlier" label="Earlier" count={grouped.earlier.length}>
                 <div className="divide-y divide-white/[0.04]">
                   {grouped.earlier.map((n, i) => (
                     <NotificationRow

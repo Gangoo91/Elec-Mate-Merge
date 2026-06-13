@@ -423,13 +423,18 @@ export const QuoteWizard = ({
 
   const isLastStep = step === STEPS.length - 1;
 
+  // Document-aware wording so the whole wizard reflects Quote vs Estimate.
+  const isEstimate = !!quote.settings?.isEstimate;
+  const DocWord = isEstimate ? 'Estimate' : 'Quote';
+  const docWord = isEstimate ? 'estimate' : 'quote';
+
   return (
     <div ref={contentRef} className="pb-40 px-3 sm:px-4 lg:px-6">
       {/* Recovery Banner */}
       {showRecoveryBanner && recoveredDraft && (
         <div className="flex items-center justify-between p-3 mb-4 rounded-xl bg-amber-500/[0.06] border border-amber-500/15">
           <div>
-            <p className="text-[13px] font-semibold text-amber-400">Recover unsaved quote?</p>
+            <p className="text-[13px] font-semibold text-amber-400">Recover unsaved {docWord}?</p>
             <p className="text-[11px] text-white">
               {(recoveredDraft.client as QuoteClient | undefined)?.name
                 ? `Draft for ${(recoveredDraft.client as QuoteClient).name}`
@@ -454,6 +459,45 @@ export const QuoteWizard = ({
       )}
 
       {FEATURES.EMAIL_INTEGRATION_ENABLED && <EmailStatusBanner />}
+
+      {/* === DOCUMENT TYPE — always visible so Quote vs Estimate is never missed === */}
+      <div className="flex items-center gap-3 pt-2">
+        <span className="text-[11px] font-medium uppercase tracking-wider text-white/55">
+          Creating
+        </span>
+        <div className="inline-flex p-1 rounded-xl bg-white/[0.05] border border-white/[0.10]">
+          {([
+            [false, 'Quote'],
+            [true, 'Estimate'],
+          ] as [boolean, string][]).map(([val, label]) => {
+            const active = !!quote.settings?.isEstimate === val;
+            return (
+              <button
+                key={label}
+                type="button"
+                onClick={() =>
+                  updateSettings({ ...quote.settings, isEstimate: val } as QuoteSettings)
+                }
+                className={cn(
+                  'h-9 px-4 rounded-lg text-[13px] font-semibold touch-manipulation transition-all',
+                  active
+                    ? val
+                      ? 'bg-amber-500 text-black'
+                      : 'bg-elec-yellow text-black'
+                    : 'text-white/55'
+                )}
+              >
+                {label}
+              </button>
+            );
+          })}
+        </div>
+        {quote.settings?.isEstimate && (
+          <span className="text-[11px] text-amber-400/80 hidden sm:block">
+            Ball-park — PDF carries a guide-only disclaimer
+          </span>
+        )}
+      </div>
 
       {/* === STEP RAIL — spans the column === */}
       <div className="pt-3 pb-6">
@@ -503,7 +547,9 @@ export const QuoteWizard = ({
       {/* Mobile: flat + full width. sm+: elevated panel matching the quotes pages. */}
       <div className="sm:rounded-2xl sm:border sm:border-white/[0.10] sm:bg-gradient-to-b sm:from-white/[0.05] sm:to-white/[0.02] sm:shadow-[0_8px_24px_rgba(0,0,0,0.35)] sm:p-6 lg:p-8">
         <div className="mb-5 pb-4 border-b border-white/[0.08]">
-          <h2 className="text-[20px] font-bold text-white leading-tight">{STEPS[step].title}</h2>
+          <h2 className="text-[20px] font-bold text-white leading-tight">
+            {isEstimate ? STEPS[step].title.replace(/quote/g, 'estimate') : STEPS[step].title}
+          </h2>
           <p className="text-[12px] text-white/60 mt-1">{STEPS[step].sub}</p>
         </div>
         <section className={cn(step !== 0 && 'hidden')}>
@@ -642,7 +688,7 @@ export const QuoteWizard = ({
                     Saving…
                   </>
                 ) : canSave ? (
-                  'Save Quote'
+                  `Save ${DocWord}`
                 ) : (
                   'Add a client name to save'
                 )}
