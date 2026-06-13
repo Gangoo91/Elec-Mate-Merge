@@ -6,12 +6,10 @@ import { cn } from '@/lib/utils';
 import useSEO from '@/hooks/useSEO';
 import { supabase } from '@/integrations/supabase/client';
 import { fmtHours, fmtRel } from '@/lib/format';
-import {
-  useTutorOtjInbox,
-  type InboxRow,
-  type InboxScope,
-} from '@/hooks/useTutorOtjInbox';
+import { useTutorOtjInbox, type InboxRow, type InboxScope } from '@/hooks/useTutorOtjInbox';
 import { SpagCheckButton } from '@/components/college/widgets/SpagCheckButton';
+import { EvidenceImage } from '@/components/shared/EvidenceImage';
+import { openEvidence } from '@/lib/evidenceUrl';
 import { useToast } from '@/hooks/use-toast';
 
 /* ==========================================================================
@@ -154,8 +152,7 @@ export default function OtjInboxPage() {
     });
   }, [filteredRows]);
 
-  const allSelected =
-    filteredRows.length > 0 && filteredRows.every((r) => selected.has(r.id));
+  const allSelected = filteredRows.length > 0 && filteredRows.every((r) => selected.has(r.id));
 
   const toggleSelectAll = () => {
     if (allSelected) setSelected(new Set());
@@ -237,11 +234,7 @@ export default function OtjInboxPage() {
         >
           <ScopeToggle value={inbox.scope} onChange={inbox.setScope} />
           {cohorts.length > 1 && (
-            <CohortFilter
-              cohorts={cohorts}
-              value={cohortFilter}
-              onChange={setCohortFilter}
-            />
+            <CohortFilter cohorts={cohorts} value={cohortFilter} onChange={setCohortFilter} />
           )}
           <div className="ml-auto text-[11.5px] tabular-nums text-white/85">
             {filteredRows.length} {filteredRows.length === 1 ? 'submission' : 'submissions'}
@@ -357,10 +350,7 @@ export default function OtjInboxPage() {
                   onReject={(rationale) => inbox.reject(row.id, rationale)}
                   onOpenStudent={
                     row.college_student_row_id
-                      ? () =>
-                          navigate(
-                            `/college/students/${row.college_student_row_id}#otj`
-                          )
+                      ? () => navigate(`/college/students/${row.college_student_row_id}#otj`)
                       : null
                   }
                 />
@@ -389,9 +379,7 @@ function ScopeToggle({
           onClick={() => onChange(s)}
           className={cn(
             'h-7 px-3 rounded-md text-[11.5px] font-medium tabular-nums touch-manipulation transition-colors',
-            value === s
-              ? 'bg-white text-black'
-              : 'text-white/85 hover:text-white'
+            value === s ? 'bg-white text-black' : 'text-white/85 hover:text-white'
           )}
         >
           {s === 'mine' ? 'Assigned to me' : 'All college'}
@@ -530,9 +518,7 @@ function InboxRowCard({
             >
               {row.student_name ?? 'Apprentice'}
               {row.cohort_name && (
-                <span className="text-[11px] font-normal text-white/85">
-                  · {row.cohort_name}
-                </span>
+                <span className="text-[11px] font-normal text-white/85">· {row.cohort_name}</span>
               )}
               <span
                 aria-hidden
@@ -558,9 +544,7 @@ function InboxRowCard({
         </div>
 
         {/* Title + description */}
-        <div className="mt-1.5 text-[14px] font-medium text-white leading-snug">
-          {row.title}
-        </div>
+        <div className="mt-1.5 text-[14px] font-medium text-white leading-snug">{row.title}</div>
         {row.description && (
           <p className="mt-2 text-[12.5px] text-white/95 leading-snug whitespace-pre-wrap">
             {row.description}
@@ -599,16 +583,18 @@ function InboxRowCard({
         {photos.length > 0 && (
           <div className="mt-3 flex items-center gap-2 flex-wrap">
             {photos.map((url, i) => (
-              <a
+              <button
                 key={`${url}-${i}`}
-                href={url}
-                target="_blank"
-                rel="noopener noreferrer"
+                type="button"
+                onClick={() => void openEvidence(url)}
                 className="block h-16 w-16 rounded-lg overflow-hidden border border-white/[0.08] hover:border-white/[0.22] transition-colors touch-manipulation"
               >
-                {/* eslint-disable-next-line jsx-a11y/img-redundant-alt */}
-                <img src={url} alt={`Evidence ${i + 1}`} className="h-full w-full object-cover" />
-              </a>
+                <EvidenceImage
+                  src={url}
+                  alt={`Evidence ${i + 1}`}
+                  className="h-full w-full object-cover"
+                />
+              </button>
             ))}
           </div>
         )}
@@ -740,7 +726,7 @@ function EmptyState({ scope, hasAny }: { scope: InboxScope; hasAny: boolean }) {
           ? 'Nothing pending in this cohort filter.'
           : scope === 'mine'
             ? "No apprentice-submitted OTJ pending for the learners assigned to you. When they submit work activities you'll see them here."
-            : "No apprentice-submitted OTJ pending across this college."}
+            : 'No apprentice-submitted OTJ pending across this college.'}
       </p>
     </div>
   );

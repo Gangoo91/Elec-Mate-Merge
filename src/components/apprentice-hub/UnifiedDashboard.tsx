@@ -27,6 +27,7 @@ import {
   SheetDescription,
 } from '@/components/ui/sheet';
 import type { PortfolioEntry } from '@/types/portfolio';
+import { EvidenceImage } from '@/components/shared/EvidenceImage';
 import { parseEvidencedACs } from '@/utils/parseEvidencedACs';
 import { useHaptic } from '@/hooks/useHaptic';
 import { useAuth } from '@/contexts/AuthContext';
@@ -70,7 +71,12 @@ function EvidenceThumbnail({ entry }: { entry: PortfolioEntry }) {
   if (imageFile?.url) {
     return (
       <div className="w-10 h-10 rounded-lg overflow-hidden bg-white/[0.06] flex-shrink-0">
-        <img src={imageFile.url} alt="" className="w-full h-full object-cover" loading="lazy" />
+        <EvidenceImage
+          src={imageFile.url}
+          alt=""
+          className="w-full h-full object-cover"
+          loading="lazy"
+        />
       </div>
     );
   }
@@ -663,9 +669,7 @@ export function UnifiedDashboard({ onNavigate, onCapture }: UnifiedDashboardProp
         >
           <div className="w-12 h-1 bg-muted rounded-full mx-auto mt-3 mb-2 shrink-0" />
           <SheetHeader className="px-4 sm:px-6 pb-3 shrink-0 text-left">
-            <SheetTitle>
-              {collegeCourseCode ? 'Your course' : 'Change qualification'}
-            </SheetTitle>
+            <SheetTitle>{collegeCourseCode ? 'Your course' : 'Change qualification'}</SheetTitle>
           </SheetHeader>
           <div className="flex-1 min-h-0 overflow-y-auto px-4 sm:px-6 pb-[max(env(safe-area-inset-bottom),24px)]">
             <QualificationSelector lockedToCode={collegeCourseCode} />

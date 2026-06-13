@@ -4,6 +4,7 @@ import { motion } from 'framer-motion';
 import { cn } from '@/lib/utils';
 import { useToast } from '@/hooks/use-toast';
 import { supabase } from '@/integrations/supabase/client';
+import { openEvidence } from '@/lib/evidenceUrl';
 import {
   PageFrame,
   LoadingState,
@@ -62,6 +63,8 @@ export default function IqaSamplingPlanPage() {
   const [visibleEligible, setVisibleEligible] = useState(50);
   const [visibleEligibleOtj, setVisibleEligibleOtj] = useState(50);
   const [findingPrefill, setFindingPrefill] = useState<AddIqaFindingPrefill | null>(null);
+  const [pickingObs, setPickingObs] = useState(false);
+  const [pickingOtj, setPickingOtj] = useState(false);
 
   if (!id) {
     return (
@@ -131,9 +134,6 @@ export default function IqaSamplingPlanPage() {
   // we don't trigger a thundering-herd of inserts and so toast progress
   // reads in order. Default 5 — the awarding-body benchmark for routine
   // sampling on a quarterly plan.
-  const [pickingObs, setPickingObs] = useState(false);
-  const [pickingOtj, setPickingOtj] = useState(false);
-
   const pickRandomObservations = async (n: number) => {
     if (eligible.length === 0 || pickingObs) return;
     setPickingObs(true);
@@ -222,7 +222,7 @@ export default function IqaSamplingPlanPage() {
         });
         return;
       }
-      window.open(url, '_blank', 'noopener,noreferrer');
+      await openEvidence(url);
       return;
     }
 
@@ -394,13 +394,15 @@ export default function IqaSamplingPlanPage() {
                   // description / rationale. Disagree → "action required",
                   // refer → "concern". The IQA can override before saving.
                   const findingType =
-                    s.verdict === 'disagree' ? 'action' : s.verdict === 'refer' ? 'concern' : 'observation';
+                    s.verdict === 'disagree'
+                      ? 'action'
+                      : s.verdict === 'refer'
+                        ? 'concern'
+                        : 'observation';
                   const what = s.otj_id
                     ? (s.otj_title_snapshot ?? 'OTJ entry')
                     : (s.observation_title_snapshot ?? 'Observation');
-                  const rationale = s.comments?.trim()
-                    ? `Rationale: ${s.comments.trim()}`
-                    : '';
+                  const rationale = s.comments?.trim() ? `Rationale: ${s.comments.trim()}` : '';
                   const description = [
                     `Raised from IQA sample — verdict: ${VERDICT_LABEL[s.verdict].toLowerCase()}`,
                     `Sample: ${what}`,
@@ -685,7 +687,8 @@ function SampleCard({
       tabIndex={0}
       onKeyDown={handleKeyDown}
       aria-label={`Sample ${sample.observation_title_snapshot ?? sample.otj_title_snapshot ?? 'untitled'} — keyboard 1/2/3/4 to set verdict`}
-      className="bg-[hsl(0_0%_12%)] border border-white/[0.06] rounded-2xl px-5 sm:px-6 py-4 focus-visible:border-elec-yellow/40 focus-visible:ring-1 focus-visible:ring-elec-yellow/20 outline-none">
+      className="bg-[hsl(0_0%_12%)] border border-white/[0.06] rounded-2xl px-5 sm:px-6 py-4 focus-visible:border-elec-yellow/40 focus-visible:ring-1 focus-visible:ring-elec-yellow/20 outline-none"
+    >
       <div className="flex items-start justify-between gap-3 flex-wrap">
         <div className="min-w-0 flex-1">
           <div className="flex items-center gap-2 flex-wrap">

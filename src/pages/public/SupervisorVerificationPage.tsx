@@ -145,7 +145,32 @@ const SupervisorVerificationPage = () => {
         return;
       }
 
-      setVerification(data as VerificationData);
+      const vd = data as VerificationData;
+
+      // Anon can't mint signed storage URLs, so once portfolio-evidence is
+      // private the stored public photo URLs 403. Ask the server to sign the
+      // photos that belong to THIS token's snapshot. Best-effort: on any
+      // failure we keep the stored URLs (which work while the bucket is public).
+      const photos = vd?.evidence_snapshot?.photos;
+      if (Array.isArray(photos) && photos.length > 0) {
+        try {
+          const { data: signRes } = await anonClient.functions.invoke(
+            'sign-verification-evidence',
+            { body: { token } }
+          );
+          const signed = (signRes as { signed?: Record<string, string> } | null)?.signed;
+          if (signed) {
+            vd.evidence_snapshot = {
+              ...vd.evidence_snapshot,
+              photos: photos.map((u) => signed[u] ?? u),
+            };
+          }
+        } catch {
+          /* leave stored URLs as-is */
+        }
+      }
+
+      setVerification(vd);
     } catch (err: unknown) {
       console.error('Error loading verification:', err);
       setError('Could not load verification. The link may be invalid.');

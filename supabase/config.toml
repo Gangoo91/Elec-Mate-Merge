@@ -8,6 +8,10 @@ enable_confirmations = false
 [functions.email-open]
 verify_jwt = false
 
+# sign-verification-evidence — public supervisor-verification page (anon, no login)
+[functions.sign-verification-evidence]
+verify_jwt = false
+
 # MINIMAL DEPLOY: Only 2 functions to fix bundle timeout
 [functions.health-safety-v3]
 verify_jwt = false
