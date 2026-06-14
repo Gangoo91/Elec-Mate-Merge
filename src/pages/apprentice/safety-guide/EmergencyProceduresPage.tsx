@@ -1,18 +1,17 @@
 import { useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
-import { ArrowLeft, CheckCircle2222, AlertTriangle, Phone } from 'lucide-react';
-import {
-  PageFrame,
-  PageHero,
-  itemVariants,
-} from '@/components/college/primitives';
+import { ArrowLeft, CheckCircle2, AlertTriangle, Phone } from 'lucide-react';
+import { PageFrame, PageHero, itemVariants } from '@/components/college/primitives';
 
 const EmergencyProceduresPage = () => {
   const navigate = useNavigate();
   return (
     <PageFrame className="px-4 sm:px-6 lg:px-8">
       <motion.div variants={itemVariants}>
-        <button onClick={() => navigate('/apprentice/safety-fundamentals')} className="inline-flex items-center gap-2 h-11 -ml-2 px-2 rounded-md text-[12px] uppercase tracking-[0.18em] text-white/55 hover:text-white/85 transition-colors touch-manipulation">
+        <button
+          onClick={() => navigate('/apprentice/safety-fundamentals')}
+          className="inline-flex items-center gap-2 h-11 -ml-2 px-2 rounded-md text-[12px] uppercase tracking-[0.18em] text-white/55 hover:text-white/85 transition-colors touch-manipulation"
+        >
           <ArrowLeft className="h-4 w-4" />
           Back
         </button>
@@ -37,27 +36,23 @@ const EmergencyProceduresPage = () => {
             </h2>
           </div>
           <p className="text-white text-sm leading-relaxed">
-            In an emergency, you will not have time to look up what to do. You
-            need to know these procedures{' '}
-            <span className="font-bold text-red-400">before</span> you need them.
-            Read through each section, understand the steps, and practise them
-            mentally. When you arrive on a new site, always find out where the
-            first aid kit, fire extinguishers, assembly point, and nearest phone
-            are located.
+            In an emergency, you will not have time to look up what to do. You need to know these
+            procedures <span className="font-bold text-red-400">before</span> you need them. Read
+            through each section, understand the steps, and practise them mentally. When you arrive
+            on a new site, always find out where the first aid kit, fire extinguishers, assembly
+            point, and nearest phone are located.
           </p>
-        </div></div>
+        </div>
+      </div>
 
       {/* Electric Shock */}
       <div className="rounded-xl border border-red-500/25 bg-red-500/[0.04]">
         <div className="p-4 sm:p-5 space-y-4">
-          <h2 className="text-lg font-semibold text-red-400">
-            Electric Shock Response
-          </h2>
+          <h2 className="text-lg font-semibold text-red-400">Electric Shock Response</h2>
           <p className="text-white text-sm leading-relaxed">
-            Electric shock can cause cardiac arrest, burns, muscle contractions,
-            and falls. The severity depends on the current path through the body,
-            the duration of contact, and the voltage level. A current as low as
-            30mA across the heart can be fatal.
+            Electric shock can cause cardiac arrest, burns, muscle contractions, and falls. The
+            severity depends on the current path through the body, the duration of contact, and the
+            voltage level. A current as low as 30mA across the heart can be fatal.
           </p>
 
           <div className="rounded-md border border-red-500/25 bg-red-500/[0.04] p-3 sm:p-4">
@@ -65,66 +60,107 @@ const EmergencyProceduresPage = () => {
               DO NOT TOUCH THE CASUALTY UNTIL THE SUPPLY IS ISOLATED
             </h3>
             <p className="text-white text-sm">
-              If someone is in contact with a live conductor, touching them will
-              make you a second casualty. You must break the contact first.
+              If someone is in contact with a live conductor, touching them will make you a second
+              casualty. You must break the contact first.
+            </p>
+            <p className="text-white text-sm mt-3">
+              <span className="font-bold text-red-400">High voltage is different. </span>
+              If the casualty is near overhead lines, a substation, or any high-voltage equipment,
+              do <span className="font-bold">not</span> approach. HV can arc several metres through
+              the air. Stay back at least 10 metres, keep others away, and call 999 — the
+              electricity is not safe until the network operator (call 105) confirms it is isolated
+              and earthed.
             </p>
           </div>
 
-          <div className="space-y-3">
-            <h3 className="font-semibold text-white text-sm">
-              Step-by-Step Response
+          <div className="rounded-md border border-elec-yellow/20 bg-elec-yellow/[0.04] p-3 sm:p-4 space-y-2">
+            <h3 className="text-[13.5px] font-semibold text-elec-yellow tracking-tight">
+              The Primary Survey — DR ABC
             </h3>
+            <p className="text-white text-xs leading-relaxed">
+              Once the supply is isolated, work through the primary survey in order. It is the
+              framework that sits behind the steps below:
+            </p>
+            <ul className="space-y-1 text-white text-xs leading-relaxed">
+              <li>
+                <span className="font-bold text-elec-yellow">D — Danger:</span> Is the scene safe?
+                Supply isolated, no other live parts, no fire or fumes.
+              </li>
+              <li>
+                <span className="font-bold text-elec-yellow">R — Response:</span> Shout and gently
+                shake the shoulders. Any response?
+              </li>
+              <li>
+                <span className="font-bold text-elec-yellow">A — Airway:</span> Open the airway —
+                tilt the head back, lift the chin.
+              </li>
+              <li>
+                <span className="font-bold text-elec-yellow">B — Breathing:</span> Look, listen and
+                feel for normal breathing for up to 10 seconds.
+              </li>
+              <li>
+                <span className="font-bold text-elec-yellow">C — Circulation/CPR:</span> Not
+                breathing normally? Start CPR and get the AED. Control any severe bleeding.
+              </li>
+            </ul>
+          </div>
+
+          <div className="space-y-3">
+            <h3 className="font-semibold text-white text-sm">Step-by-Step Response</h3>
             {[
               {
                 step: 1,
                 title: 'Ensure Your Own Safety',
-                detail: 'Do not rush in. Assess the scene. Is the supply still on? Is there water on the floor? Are there other hazards? You cannot help anyone if you become a casualty yourself.',
+                detail:
+                  'Do not rush in. Assess the scene. Is the supply still on? Is there water on the floor? Are there other hazards? You cannot help anyone if you become a casualty yourself.',
               },
               {
                 step: 2,
                 title: 'Isolate the Supply',
-                detail: 'Switch off the power at the nearest isolator, consumer unit, or distribution board. If you cannot reach the switch, pull the plug out. If you cannot isolate, use a dry, non-conductive object (wooden broom handle, dry clothing, rubber mat) to push the casualty away from the source. NEVER use anything metal or wet.',
+                detail:
+                  'Switch off the power at the nearest isolator, consumer unit, or distribution board. If you cannot reach the switch, pull the plug out. If you cannot isolate, use a dry, non-conductive object (wooden broom handle, dry clothing, rubber mat) to push the casualty away from the source. NEVER use anything metal or wet.',
               },
               {
                 step: 3,
-                title: 'Call 999 Immediately',
-                detail: 'Ask for an ambulance. Tell them it is an electrical injury. State the location clearly. If on a construction site, send someone to meet the ambulance at the site entrance and guide them in.',
+                title: 'Call 999 (or 112) Immediately',
+                detail:
+                  'Ask for an ambulance. Tell them it is an electrical injury and whether the casualty is breathing. State the location clearly — give a postcode or what3words if you have it. If anyone else is present, send one person to call while you start treatment, and another to fetch the AED and meet the ambulance at the site entrance. If you are alone, put the phone on speaker so you can follow the call handler’s instructions while you work.',
               },
               {
                 step: 4,
-                title: 'Check for Response',
-                detail: "Tap the casualty's shoulders and shout \"Are you okay?\" If there is no response, check for breathing by tilting the head back, lifting the chin, and looking, listening, and feeling for breaths for up to 10 seconds.",
+                title: 'Check for Response and Breathing',
+                detail:
+                  'Tap the casualty\'s shoulders and shout "Are you okay?" If there is no response, open the airway (tilt the head back, lift the chin) and look, listen, and feel for normal breathing for no more than 10 seconds. Occasional gasps or noisy, irregular breaths (agonal breathing) are NOT normal breathing — treat the casualty as not breathing and start CPR.',
               },
               {
                 step: 5,
-                title: 'Start CPR if Needed',
-                detail: 'If the casualty is not breathing normally, start CPR immediately. Give 30 chest compressions followed by 2 rescue breaths. Push hard and fast in the centre of the chest at a rate of 100–120 compressions per minute, at a depth of 5–6cm. Continue the 30:2 cycle until help arrives or the casualty starts breathing.',
+                title: 'Start CPR if Not Breathing Normally',
+                detail:
+                  'If the casualty is not breathing normally, start CPR immediately. Push hard and fast in the centre of the chest at a rate of 100–120 compressions per minute, at a depth of 5–6cm, allowing the chest to recoil fully between compressions. Give 30 compressions then 2 rescue breaths, and continue the 30:2 cycle. If you are untrained or unwilling to give rescue breaths, give continuous chest compressions (hands-only CPR). Do not stop until help takes over or the casualty starts breathing normally.',
               },
               {
                 step: 6,
                 title: 'Use an AED if Available',
-                detail: 'If an Automated External Defibrillator (AED) is available, send someone to fetch it immediately. Turn it on and follow the voice prompts. AEDs are safe to use — they will only deliver a shock if the heart rhythm requires it. Do not stop CPR while waiting for the AED. Attach the pads as shown on the device.',
+                detail:
+                  'If an Automated External Defibrillator (AED) is available, send someone to fetch it immediately. Turn it on and follow the voice prompts. AEDs are safe to use — they will only deliver a shock if the heart rhythm requires it. Do not stop CPR while waiting for the AED. Attach the pads as shown on the device.',
               },
               {
                 step: 7,
                 title: 'Treat for Shock and Burns',
-                detail: 'Once the casualty is breathing, place them in the recovery position. Keep them warm with a blanket or jacket. Check for entry and exit burns (current enters and exits the body at different points). Do not apply creams or remove stuck clothing from burns. Cover burns loosely with cling film or a clean, non-fluffy dressing.',
+                detail:
+                  'Once the casualty is breathing, place them in the recovery position. Keep them warm with a blanket or jacket. Check for entry and exit burns (current enters and exits the body at different points). Do not apply creams or remove stuck clothing from burns. Cover burns loosely with cling film or a clean, non-fluffy dressing.',
               },
               {
                 step: 8,
                 title: 'Do Not Leave the Casualty',
-                detail: 'Stay with the casualty until the ambulance arrives. Monitor their breathing. Be prepared to restart CPR if they stop breathing. Note the time of the incident and what happened — the paramedics will need this information.',
+                detail:
+                  'Stay with the casualty until the ambulance arrives. Monitor their breathing. Be prepared to restart CPR if they stop breathing. Note the time of the incident and what happened — the paramedics will need this information.',
               },
             ].map((item) => (
-              <div
-                key={item.step}
-                className="border border-red-500/20 rounded-lg p-4 space-y-2"
-              >
+              <div key={item.step} className="border border-red-500/20 rounded-lg p-4 space-y-2">
                 <div className="flex items-center gap-3">
                   <div className="w-8 h-8 rounded-full bg-red-500/20 flex items-center justify-center flex-shrink-0">
-                    <span className="text-red-400 font-bold text-sm">
-                      {item.step}
-                    </span>
+                    <span className="text-red-400 font-bold text-sm">{item.step}</span>
                   </div>
                   <h4 className="font-semibold text-white">{item.title}</h4>
                 </div>
@@ -135,26 +171,24 @@ const EmergencyProceduresPage = () => {
 
           <div className="rounded-md border border-elec-yellow/20 bg-elec-yellow/[0.04] p-3">
             <p className="text-white text-xs">
-              <span className="font-semibold text-blue-400">Important: </span>
+              <span className="font-semibold text-elec-yellow">Important: </span>
               Even if the casualty seems fine after an electric shock, they{' '}
-              <span className="font-bold">must</span> go to hospital. Cardiac
-              arrhythmias can develop hours after the initial shock. All electric
-              shock casualties should be monitored with an ECG.
+              <span className="font-bold">must</span> go to hospital. Cardiac arrhythmias can
+              develop hours after the initial shock. All electric shock casualties should be
+              monitored with an ECG.
             </p>
           </div>
-        </div></div>
+        </div>
+      </div>
 
       {/* Electrical Fire */}
-      <div className="rounded-xl border border-white/[0.06] bg-[hsl(0_0%_10%)]">
+      <div className="rounded-xl border border-red-500/25 bg-red-500/[0.04]">
         <div className="p-4 sm:p-5 space-y-4">
-          <h2 className="text-lg font-semibold text-orange-400">
-            Electrical Fire Response
-          </h2>
+          <h2 className="text-lg font-semibold text-red-400">Electrical Fire Response</h2>
           <p className="text-white text-sm leading-relaxed">
-            Electrical fires can be caused by overloaded circuits, damaged wiring,
-            loose connections, or faulty equipment. They require specific handling
-            because water and some extinguishers can conduct electricity and make
-            the situation much worse.
+            Electrical fires can be caused by overloaded circuits, damaged wiring, loose
+            connections, or faulty equipment. They require specific handling because water and some
+            extinguishers can conduct electricity and make the situation much worse.
           </p>
 
           <div className="rounded-md border border-red-500/25 bg-red-500/[0.04] p-3 sm:p-4">
@@ -162,9 +196,9 @@ const EmergencyProceduresPage = () => {
               NEVER USE WATER ON AN ELECTRICAL FIRE
             </h3>
             <p className="text-white text-sm">
-              Water conducts electricity. Using a water extinguisher on a live
-              electrical fire can cause electrocution. Only use water-based
-              extinguishers on electrical fires if the supply is confirmed isolated.
+              Water conducts electricity. Using a water extinguisher on a live electrical fire can
+              cause electrocution. Only use water-based extinguishers on electrical fires if the
+              supply is confirmed isolated.
             </p>
           </div>
 
@@ -181,22 +215,15 @@ const EmergencyProceduresPage = () => {
               'Account for all personnel — report anyone unaccounted for',
               'Do not re-enter the building until the fire service gives the all-clear',
             ].map((item, idx) => (
-              <div
-                key={idx}
-                className="flex items-start gap-2 text-sm text-white"
-              >
-                <span className="text-orange-400 font-bold text-xs mt-0.5">
-                  {idx + 1}.
-                </span>
+              <div key={idx} className="flex items-start gap-2 text-sm text-white">
+                <span className="text-red-400 font-bold text-xs mt-0.5">{idx + 1}.</span>
                 {item}
               </div>
             ))}
           </div>
 
           <div className="space-y-3">
-            <h3 className="font-semibold text-white text-sm">
-              Fire Extinguisher Types
-            </h3>
+            <h3 className="font-semibold text-white text-sm">Fire Extinguisher Types</h3>
             {[
               {
                 type: 'CO2 (Black Label)',
@@ -205,7 +232,7 @@ const EmergencyProceduresPage = () => {
               },
               {
                 type: 'Dry Powder (Blue Label)',
-                use: 'Safe for electrical fires. Smothers the fire with a fine chemical powder. Effective but creates a large cloud that reduces visibility. Can damage electrical equipment.',
+                use: 'Safe on electrical fires. Smothers the fire with a fine chemical powder. The cloud badly reduces visibility and can be harmful to breathe, so it is not recommended indoors or in confined spaces — use CO2 instead where possible. Can also damage electrical equipment.',
                 safe: true,
               },
               {
@@ -224,10 +251,14 @@ const EmergencyProceduresPage = () => {
                 className={`${item.safe ? 'bg-green-500/10 border-green-500/20' : 'bg-red-500/10 border-red-500/20'} border rounded-lg p-3`}
               >
                 <div className="flex items-center justify-between mb-1">
-                  <h4 className={`font-semibold text-sm ${item.safe ? 'text-green-400' : 'text-red-400'}`}>
+                  <h4
+                    className={`font-semibold text-sm ${item.safe ? 'text-green-400' : 'text-red-400'}`}
+                  >
                     {item.type}
                   </h4>
-                  <span className={`text-xs font-bold ${item.safe ? 'text-green-400' : 'text-red-400'}`}>
+                  <span
+                    className={`text-xs font-bold ${item.safe ? 'text-green-400' : 'text-red-400'}`}
+                  >
                     {item.safe ? 'SAFE for electrical' : 'NOT SAFE for electrical'}
                   </span>
                 </div>
@@ -235,20 +266,18 @@ const EmergencyProceduresPage = () => {
               </div>
             ))}
           </div>
-        </div></div>
+        </div>
+      </div>
 
       {/* Arc Flash */}
-      <div className="rounded-xl border border-white/[0.06] bg-[hsl(0_0%_10%)]">
+      <div className="rounded-xl border border-red-500/25 bg-red-500/[0.04]">
         <div className="p-4 sm:p-5 space-y-4">
-          <h2 className="text-lg font-semibold text-purple-400">
-            Arc Flash Incident
-          </h2>
+          <h2 className="text-lg font-semibold text-red-400">Arc Flash Incident</h2>
           <p className="text-white text-sm leading-relaxed">
-            An arc flash is an explosive release of energy caused by an electrical
-            fault between conductors or between a conductor and earth. Temperatures
-            can reach 19,000°C (four times the temperature of the sun's surface).
-            The blast can throw a person across a room, cause severe burns, damage
-            hearing, and cause blindness.
+            An arc flash is an explosive release of energy caused by an electrical fault between
+            conductors or between a conductor and earth. Temperatures can reach 19,000°C (four times
+            the temperature of the sun's surface). The blast can throw a person across a room, cause
+            severe burns, damage hearing, and cause blindness.
           </p>
 
           <div className="space-y-3">
@@ -264,30 +293,23 @@ const EmergencyProceduresPage = () => {
               'Check for eye injuries — arc flash can cause flash burns to the cornea',
               'All arc flash casualties need hospital treatment regardless of apparent severity',
             ].map((item, idx) => (
-              <div
-                key={idx}
-                className="flex items-start gap-2 text-sm text-white"
-              >
-                <span className="text-purple-400 font-bold text-xs mt-0.5">
-                  {idx + 1}.
-                </span>
+              <div key={idx} className="flex items-start gap-2 text-sm text-white">
+                <span className="text-red-400 font-bold text-xs mt-0.5">{idx + 1}.</span>
                 {item}
               </div>
             ))}
           </div>
-        </div></div>
+        </div>
+      </div>
 
       {/* Burns Treatment */}
-      <div className="rounded-xl border border-white/[0.06] bg-[hsl(0_0%_10%)]">
+      <div className="rounded-xl border border-red-500/25 bg-red-500/[0.04]">
         <div className="p-4 sm:p-5 space-y-4">
-          <h2 className="text-lg font-semibold text-amber-400">
-            Burns Treatment
-          </h2>
+          <h2 className="text-lg font-semibold text-red-400">Burns Treatment</h2>
           <p className="text-white text-sm leading-relaxed">
-            Electrical burns are often more serious than they appear. Current
-            passing through the body can cause deep tissue damage that is not
-            visible on the surface. Entry and exit wounds may look small but the
-            internal damage can be extensive.
+            Electrical burns are often more serious than they appear. Current passing through the
+            body can cause deep tissue damage that is not visible on the surface. Entry and exit
+            wounds may look small but the internal damage can be extensive.
           </p>
 
           <div className="space-y-3">
@@ -302,25 +324,19 @@ const EmergencyProceduresPage = () => {
               'Give the casualty small sips of water if they are conscious and able to swallow',
               'For electrical burns, always call 999 — internal damage may be severe even if the skin looks okay',
             ].map((item, idx) => (
-              <div
-                key={idx}
-                className="flex items-start gap-2 text-sm text-white"
-              >
-                <span className="text-amber-400 font-bold text-xs mt-0.5">
-                  {idx + 1}.
-                </span>
+              <div key={idx} className="flex items-start gap-2 text-sm text-white">
+                <span className="text-red-400 font-bold text-xs mt-0.5">{idx + 1}.</span>
                 {item}
               </div>
             ))}
           </div>
-        </div></div>
+        </div>
+      </div>
 
       {/* Falls */}
-      <div className="rounded-xl border border-white/[0.06] bg-[hsl(0_0%_10%)]">
+      <div className="rounded-xl border border-red-500/25 bg-red-500/[0.04]">
         <div className="p-4 sm:p-5 space-y-4">
-          <h2 className="text-lg font-semibold text-blue-400">
-            Falls from Height
-          </h2>
+          <h2 className="text-lg font-semibold text-red-400">Falls from Height</h2>
           <div className="space-y-3">
             {[
               'Do not move the casualty unless they are in immediate danger (fire, further collapse)',
@@ -332,37 +348,28 @@ const EmergencyProceduresPage = () => {
               'Control any visible bleeding with direct pressure using a clean pad or clothing',
               'Note the height they fell from and what surface they landed on — the paramedics will need this',
             ].map((item, idx) => (
-              <div
-                key={idx}
-                className="flex items-start gap-2 text-sm text-white"
-              >
-                <span className="text-blue-400 font-bold text-xs mt-0.5">
-                  {idx + 1}.
-                </span>
+              <div key={idx} className="flex items-start gap-2 text-sm text-white">
+                <span className="text-red-400 font-bold text-xs mt-0.5">{idx + 1}.</span>
                 {item}
               </div>
             ))}
           </div>
-        </div></div>
+        </div>
+      </div>
 
       {/* RIDDOR */}
       <div className="rounded-xl border border-white/[0.06] bg-[hsl(0_0%_10%)]">
         <div className="p-4 sm:p-5 space-y-4">
-          <h2 className="text-lg font-semibold text-green-400">
-            RIDDOR Reporting
-          </h2>
+          <h2 className="text-lg font-semibold text-elec-yellow">RIDDOR Reporting</h2>
           <p className="text-white text-sm leading-relaxed">
-            The Reporting of Injuries, Diseases and Dangerous Occurrences
-            Regulations 2013 (RIDDOR) requires employers and people in control of
-            work premises to report certain serious workplace incidents to the HSE.
-            As an apprentice, you need to know what is reportable so you can alert
-            your supervisor.
+            The Reporting of Injuries, Diseases and Dangerous Occurrences Regulations 2013 (RIDDOR)
+            requires employers and people in control of work premises to report certain serious
+            workplace incidents to the HSE. As an apprentice, you need to know what is reportable so
+            you can alert your supervisor.
           </p>
 
           <div className="space-y-3">
-            <h3 className="font-semibold text-white text-sm">
-              What Must Be Reported
-            </h3>
+            <h3 className="font-semibold text-white text-sm">What Must Be Reported</h3>
             {[
               'Deaths at work',
               'Specified injuries: fractures (except fingers/thumbs/toes), amputations, crush injuries, loss of consciousness from head injury or asphyxia, chemical or hot metal burns to the eye, any injury requiring resuscitation or 24-hour hospitalisation',
@@ -371,10 +378,7 @@ const EmergencyProceduresPage = () => {
               'Dangerous occurrences — near misses with serious potential: electrical short circuit or overload causing fire, collapse of scaffolding, explosion, accidental release of a substance that could cause injury',
               'Occupational diseases — including carpal tunnel syndrome, hand-arm vibration syndrome, occupational dermatitis, and occupational asthma',
             ].map((item) => (
-              <div
-                key={item}
-                className="flex items-start gap-2 text-sm text-white"
-              >
+              <div key={item} className="flex items-start gap-2 text-sm text-white">
                 <CheckCircle2 className="h-3.5 w-3.5 text-elec-yellow/85 flex-shrink-0 mt-0.5" />
                 {item}
               </div>
@@ -390,28 +394,23 @@ const EmergencyProceduresPage = () => {
               'Dangerous occurrences must be reported without delay',
               'Your employer is responsible for making the report, but you should alert your supervisor immediately',
             ].map((item, idx) => (
-              <div
-                key={idx}
-                className="flex items-start gap-2 text-sm text-white"
-              >
-                <span className="text-green-400 font-bold text-xs mt-0.5">
-                  {idx + 1}.
-                </span>
+              <div key={idx} className="flex items-start gap-2 text-sm text-white">
+                <span className="text-elec-yellow font-bold text-xs mt-0.5">{idx + 1}.</span>
                 {item}
               </div>
             ))}
           </div>
-        </div></div>
+        </div>
+      </div>
 
       {/* First Aid on Site */}
       <div className="rounded-xl border border-white/[0.06] bg-[hsl(0_0%_10%)]">
         <div className="p-4 sm:p-5 space-y-4">
-          <h2 className="text-lg font-semibold text-blue-400">
-            First Aid Awareness on Site
-          </h2>
+          <h2 className="text-lg font-semibold text-elec-yellow">First Aid Awareness on Site</h2>
           <p className="text-white text-sm leading-relaxed">
-            Every construction site must have adequate first aid arrangements. When
-            you arrive on a new site, you should identify:
+            The Health and Safety (First-Aid) Regulations 1981 require every employer to provide
+            adequate first aid equipment, facilities, and trained people so anyone injured or taken
+            ill at work can be helped. When you arrive on a new site, you should identify:
           </p>
 
           <div className="space-y-2">
@@ -425,10 +424,7 @@ const EmergencyProceduresPage = () => {
               'The nearest hospital with an A&E department and how to get there',
               'The site accident book — all injuries must be recorded, even minor ones',
             ].map((item) => (
-              <div
-                key={item}
-                className="flex items-start gap-2 text-sm text-white"
-              >
+              <div key={item} className="flex items-start gap-2 text-sm text-white">
                 <CheckCircle2 className="h-3.5 w-3.5 text-elec-yellow/85 flex-shrink-0 mt-0.5" />
                 {item}
               </div>
@@ -437,55 +433,92 @@ const EmergencyProceduresPage = () => {
 
           <div className="rounded-md border border-elec-yellow/20 bg-elec-yellow/[0.04] p-3">
             <p className="text-white text-xs">
-              <span className="font-semibold text-blue-400">Tip: </span>
-              Consider getting a first aid at work certificate (3-day course or
-              1-day emergency first aid). It is valuable for your career, looks
-              good on your CV, and could save a colleague's life. Many employers
-              will pay for this training.
+              <span className="font-semibold text-elec-yellow">Tip: </span>
+              Consider getting a first aid at work certificate (3-day course or 1-day emergency
+              first aid). It is valuable for your career, looks good on your CV, and could save a
+              colleague's life. Many employers will pay for this training.
             </p>
           </div>
-        </div></div>
+        </div>
+      </div>
 
       {/* Emergency Contacts */}
       <div className="rounded-xl border border-red-500/30 bg-red-500/[0.04]">
         <div className="p-4 sm:p-5 space-y-3">
           <div className="flex items-center gap-2">
             <Phone className="h-5 w-5 text-red-400" />
-            <h3 className="text-sm font-semibold text-red-400">
-              Key Emergency Numbers
-            </h3>
+            <h3 className="text-sm font-semibold text-red-400">Key Emergency Numbers</h3>
           </div>
-          <div className="space-y-2">
+          <p className="text-white/70 text-xs">
+            Tap a number to call. On a mobile, 999 and 112 both reach UK emergency services — 112
+            works across the EU and on locked phones with no signal from your own network.
+          </p>
+          <div className="space-y-1.5">
             {[
-              { label: 'Emergency Services', number: '999', note: 'Police, Fire, Ambulance' },
-              { label: 'HSE Incident Contact Centre', number: '0345 300 9923', note: 'Report RIDDOR incidents' },
-              { label: 'National Gas Emergency', number: '0800 111 999', note: 'Gas leaks or damage to gas pipes' },
-              { label: 'Electrical Safety First', number: '020 3463 5100', note: 'Electrical safety charity advice line' },
+              {
+                label: 'Emergency Services (999 or 112)',
+                number: '999',
+                note: 'Ambulance, Fire, Police',
+              },
+              {
+                label: 'HSE Incident Contact Centre',
+                number: '0345 300 9923',
+                note: 'Report RIDDOR incidents',
+              },
+              {
+                label: 'Power Cut / Network Operator',
+                number: '105',
+                note: 'Power cuts, damaged overhead lines, substation incidents',
+              },
+              {
+                label: 'National Gas Emergency Service',
+                number: '0800 111 999',
+                note: 'Gas leaks or damage to gas pipes',
+              },
+              {
+                label: 'Electrical Safety First',
+                number: '020 3463 5100',
+                note: 'Electrical safety charity advice line',
+              },
               { label: 'NHS 111', number: '111', note: 'Non-emergency medical advice' },
-              { label: 'National Poisons Information', number: '0344 892 0111', note: 'Chemical exposure advice (healthcare professionals)' },
+              {
+                label: 'National Poisons Information Service',
+                number: '0344 892 0111',
+                note: 'Poisoning and chemical exposure advice',
+              },
             ].map((contact) => (
-              <div key={contact.label} className="flex items-center justify-between py-1">
+              <a
+                key={contact.label}
+                href={`tel:${contact.number.replace(/\s/g, '')}`}
+                className="flex items-center justify-between gap-3 min-h-11 py-2 px-2 -mx-2 rounded-md hover:bg-white/[0.04] transition-colors touch-manipulation"
+              >
                 <div>
                   <p className="text-white text-sm font-medium">{contact.label}</p>
-                  <p className="text-white text-xs">{contact.note}</p>
+                  <p className="text-white/70 text-xs">{contact.note}</p>
                 </div>
-                <span className="text-red-400 font-bold text-sm">{contact.number}</span>
-              </div>
+                <span className="inline-flex items-center gap-1.5 text-red-400 font-bold text-sm whitespace-nowrap">
+                  <Phone className="h-3.5 w-3.5" />
+                  {contact.number}
+                </span>
+              </a>
             ))}
           </div>
-        </div></div>
+        </div>
+      </div>
 
       {/* Footer */}
       <div className="rounded-xl border border-white/[0.06] bg-[hsl(0_0%_10%)]">
         <div className="p-4 sm:p-5">
           <p className="text-white text-xs leading-relaxed">
-            Emergency procedures based on Resuscitation Council UK guidelines
-            (2021), HSE first aid at work guidance (INDG214), RIDDOR 2013, and
-            Electrical Safety First guidance. CPR ratios: 30 compressions to 2
-            breaths for adults. Always follow your employer's emergency procedures
-            and attend refresher training regularly.
+            Emergency procedures based on Resuscitation Council UK Guidelines (2021), the Health and
+            Safety (First-Aid) Regulations 1981, HSE first aid guidance (INDG214), and RIDDOR 2013.
+            Adult CPR ratio: 30 chest compressions to 2 rescue breaths (or continuous compressions
+            if untrained). This guidance does not replace a recognised first aid at work
+            qualification. Always follow your employer's emergency procedures and attend refresher
+            training regularly.
           </p>
-        </div></div>
+        </div>
+      </div>
     </PageFrame>
   );
 };

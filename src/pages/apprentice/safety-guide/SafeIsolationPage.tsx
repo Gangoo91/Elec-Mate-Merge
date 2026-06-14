@@ -1,18 +1,17 @@
 import { useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
-import { ArrowLeft, AlertTriangle, CheckCircle2222, Lock, Zap } from 'lucide-react';
-import {
-  PageFrame,
-  PageHero,
-  itemVariants,
-} from '@/components/college/primitives';
+import { ArrowLeft, AlertTriangle, CheckCircle2, Lock, Zap } from 'lucide-react';
+import { PageFrame, PageHero, itemVariants } from '@/components/college/primitives';
 
 const SafeIsolationPage = () => {
   const navigate = useNavigate();
   return (
     <PageFrame className="px-4 sm:px-6 lg:px-8">
       <motion.div variants={itemVariants}>
-        <button onClick={() => navigate('/apprentice/safety-fundamentals')} className="inline-flex items-center gap-2 h-11 -ml-2 px-2 rounded-md text-[12px] uppercase tracking-[0.18em] text-white/55 hover:text-white/85 transition-colors touch-manipulation">
+        <button
+          onClick={() => navigate('/apprentice/safety-fundamentals')}
+          className="inline-flex items-center gap-2 h-11 -ml-2 px-2 rounded-md text-[12px] uppercase tracking-[0.18em] text-white/55 hover:text-white/85 transition-colors touch-manipulation"
+        >
           <ArrowLeft className="h-4 w-4" />
           Back
         </button>
@@ -37,55 +36,46 @@ const SafeIsolationPage = () => {
             </h2>
           </div>
           <p className="text-white text-sm leading-relaxed">
-            Safe isolation is the single most critical safety procedure in
-            electrical work. Failing to isolate correctly has killed electricians.
-            Every time you work on a circuit, you{' '}
-            <span className="font-bold text-red-400">must</span> follow this
-            procedure — no shortcuts, no exceptions, no matter how simple the job
-            seems.
+            Safe isolation is the single most critical safety procedure in electrical work. Failing
+            to isolate correctly has killed electricians. Every time you work on a circuit, you{' '}
+            <span className="font-bold text-red-400">must</span> follow this procedure — no
+            shortcuts, no exceptions, no matter how simple the job seems.
           </p>
-        </div></div>
+        </div>
+      </div>
 
       {/* What is Safe Isolation */}
       <div className="rounded-xl border border-white/[0.06] bg-[hsl(0_0%_10%)]">
         <div className="p-4 sm:p-5 space-y-4">
-          <h2 className="text-lg font-semibold text-white">
-            What Is Safe Isolation?
-          </h2>
+          <h2 className="text-lg font-semibold text-white">What Is Safe Isolation?</h2>
           <p className="text-white text-sm leading-relaxed">
-            Safe isolation is the process of disconnecting a circuit or piece of
-            equipment from all sources of electrical supply and ensuring it cannot
-            be accidentally re-energised while work is being carried out. It is
-            required by the{' '}
-            <span className="font-semibold text-blue-400">
-              Electricity at Work Regulations 1989 (Regulation 13)
-            </span>{' '}
-            and{' '}
-            <span className="font-semibold text-blue-400">
-              BS 7671 Regulation 132.15
-            </span>
-            .
+            Safe isolation is the process of disconnecting a circuit or piece of equipment from all
+            sources of electrical supply and ensuring it cannot be accidentally re-energised while
+            work is being carried out. It is a legal duty under the{' '}
+            <span className="font-semibold text-white">Electricity at Work Regulations 1989</span> —
+            Regulation 12 (means for cutting off the supply and for isolation), Regulation 13
+            (precautions for work on equipment made dead) and Regulation 14 (work on or near live
+            conductors). The means of isolation itself is required by{' '}
+            <span className="font-semibold text-white">BS 7671 Regulation 132.15.201</span> and
+            Section 537 (Isolation and switching).
           </p>
           <p className="text-white text-sm leading-relaxed">
-            The principle is simple: prove it is dead before you touch it. But
-            doing it correctly requires a specific, repeatable procedure every
-            single time.
+            The principle is simple: prove it is dead before you touch it. But doing it correctly
+            requires a specific, repeatable procedure every single time.
           </p>
-        </div></div>
+        </div>
+      </div>
 
       {/* The 6-Step Procedure */}
       <div className="rounded-xl border border-red-500/25 bg-red-500/[0.04]">
         <div className="p-4 sm:p-5 space-y-4">
           <div className="flex items-center gap-2">
             <Lock className="h-5 w-5 text-red-400" />
-            <h2 className="text-lg font-semibold text-red-400">
-              The Safe Isolation Procedure
-            </h2>
+            <h2 className="text-lg font-semibold text-red-400">The Safe Isolation Procedure</h2>
           </div>
           <p className="text-white text-sm leading-relaxed">
-            Follow these steps in order, every time, without exception. This is
-            the procedure you will be tested on in your End Point Assessment and
-            AM2 practical exam.
+            Follow these steps in order, every time, without exception. This is the procedure you
+            will be tested on in your End Point Assessment and AM2 practical exam.
           </p>
 
           <div className="space-y-4">
@@ -95,7 +85,7 @@ const SafeIsolationPage = () => {
                 title: 'Identify the Circuit',
                 detail:
                   'Use the circuit chart or distribution board schedule to identify which device (MCB, RCBO, fuse, or isolator) controls the circuit you need to work on. If there is no schedule, you must trace the circuit. Never guess.',
-                tip: 'Check the schedule matches reality — schedules are often out of date. If in doubt, use a non-contact voltage detector to narrow down which circuit is which.',
+                tip: 'Check the schedule matches reality — schedules are often out of date. A non-contact detector can help narrow down which circuit is which, but it only tells you where to switch off. It is never a substitute for proving dead with a two-pole voltage indicator (Steps 4–6).',
               },
               {
                 step: 2,
@@ -133,24 +123,17 @@ const SafeIsolationPage = () => {
                 tip: 'This step is often forgotten but is critical. If your tester battery died mid-test, it would show zero volts on a live circuit — the "test after" catches this.',
               },
             ].map((item) => (
-              <div
-                key={item.step}
-                className="border border-red-500/20 rounded-lg p-4 space-y-3"
-              >
+              <div key={item.step} className="border border-red-500/20 rounded-lg p-4 space-y-3">
                 <div className="flex items-center gap-3">
                   <div className="w-8 h-8 rounded-full bg-red-500/20 flex items-center justify-center flex-shrink-0">
-                    <span className="text-red-400 font-bold text-sm">
-                      {item.step}
-                    </span>
+                    <span className="text-red-400 font-bold text-sm">{item.step}</span>
                   </div>
                   <h3 className="font-semibold text-white">{item.title}</h3>
                 </div>
-                <p className="text-white text-sm leading-relaxed">
-                  {item.detail}
-                </p>
+                <p className="text-white text-sm leading-relaxed">{item.detail}</p>
                 <div className="rounded-md border border-elec-yellow/20 bg-elec-yellow/[0.04] p-3">
                   <p className="text-white text-xs">
-                    <span className="font-semibold text-blue-400">Tip: </span>
+                    <span className="font-semibold text-elec-yellow">Tip: </span>
                     {item.tip}
                   </p>
                 </div>
@@ -164,33 +147,71 @@ const SafeIsolationPage = () => {
               Memory Aid — "Identify, Isolate, Lock, Prove, Test, Prove"
             </h3>
             <p className="text-white text-sm">
-              Remember the sequence: <span className="font-bold text-amber-400">I-I-L-P-T-P</span>.
-              Some electricians use the phrase{' '}
-              <span className="italic text-amber-400">"I Isolate, Lock, Prove, Test, Prove"</span> to
-              remember the six steps. Whatever works for you — just never skip a step.
+              Remember the sequence: <span className="font-bold text-elec-yellow">I-I-L-P-T-P</span>
+              . Some electricians use the phrase{' '}
+              <span className="italic text-elec-yellow">"I Isolate, Lock, Prove, Test, Prove"</span>{' '}
+              to remember the six steps. Whatever works for you — just never skip a step.
             </p>
           </div>
-        </div></div>
+        </div>
+      </div>
+
+      {/* Other sources of supply */}
+      <div className="rounded-xl border border-red-500/25 bg-red-500/[0.04]">
+        <div className="p-4 sm:p-5 space-y-4">
+          <div className="flex items-center gap-2">
+            <AlertTriangle className="h-5 w-5 text-red-400 flex-shrink-0" />
+            <h2 className="text-lg font-semibold text-red-400">
+              Isolating the Board Is Not Always Enough
+            </h2>
+          </div>
+          <p className="text-white text-sm leading-relaxed">
+            A circuit can still be live after you have switched off and locked off the distribution
+            board. This is why you always prove dead at the point of work, not just at the board.
+            Look out for:
+          </p>
+          <div className="space-y-2">
+            {[
+              'Solar PV — the DC side stays energised in daylight even when the AC supply is isolated. Treat PV conductors as live, follow the DC isolation procedure, and never rely on AC-side isolation alone.',
+              'Battery storage, UPS and standby generators — these can back-feed a circuit the instant the mains drops.',
+              'Borrowed or shared neutrals — a neutral shared with another circuit can stay live even when your line is dead.',
+              'Capacitors and other stored energy — power-factor capacitors and large drives can hold a charge after disconnection; allow time to discharge.',
+              'Two ways of feeding the same point — three-plate lighting, two-way switching and ring finals can be fed from more than one direction.',
+            ].map((item) => (
+              <div key={item} className="flex items-start gap-2 text-sm text-white">
+                <AlertTriangle className="h-4 w-4 text-red-400 flex-shrink-0 mt-0.5" />
+                {item}
+              </div>
+            ))}
+          </div>
+          <div className="rounded-md border border-red-500/25 bg-red-500/[0.04] p-3">
+            <p className="text-white text-xs">
+              <span className="font-semibold text-red-400">PV note: </span>
+              BS 7671 requires that PV DC equipment be treated as energised even when the inverter
+              or AC side is disconnected. Prove dead on the DC side separately, and never assume an
+              isolated AC supply has made the array safe.
+            </p>
+          </div>
+        </div>
+      </div>
 
       {/* GS38 Requirements */}
       <div className="rounded-xl border border-white/[0.06] bg-[hsl(0_0%_10%)]">
         <div className="p-4 sm:p-5 space-y-4">
-          <h2 className="text-lg font-semibold text-blue-400">
+          <h2 className="text-lg font-semibold text-elec-yellow">
             HSE Guidance Note GS38 — Test Equipment
           </h2>
           <p className="text-white text-sm leading-relaxed">
-            GS38 sets out the HSE's recommendations for electrical test equipment
-            used by electricians. Your voltage indicator and test leads must meet
-            these requirements. Using non-compliant equipment is dangerous and could
-            make you liable in the event of an accident.
+            GS38 sets out the HSE's recommendations for electrical test equipment used by
+            electricians. Your voltage indicator and test leads must meet these requirements. Using
+            non-compliant equipment is dangerous and could make you liable in the event of an
+            accident.
           </p>
 
           <div className="space-y-3">
-            <h3 className="font-semibold text-white text-sm">
-              GS38 Requirements for Test Leads
-            </h3>
+            <h3 className="font-semibold text-white text-sm">GS38 Requirements for Test Leads</h3>
             {[
-              'Fused test leads with a maximum fuse rating of 500mA',
+              'Fused test leads, or built-in current-limiting resistors — where fuses are used they should be low-rated HBC (high breaking capacity) types, typically 500mA or less',
               'Shrouded connectors — no exposed metal beyond 2mm (finger-safe)',
               'Test probes with spring-loaded retractable tips — maximum 4mm exposed tip',
               'Insulated to the voltage being tested',
@@ -198,10 +219,7 @@ const SafeIsolationPage = () => {
               'Leads must be flexible, undamaged, and not excessively long',
               'All probes, leads, and connectors must be in good condition — replace if damaged',
             ].map((item) => (
-              <div
-                key={item}
-                className="flex items-start gap-2 text-sm text-white"
-              >
+              <div key={item} className="flex items-start gap-2 text-sm text-white">
                 <CheckCircle2 className="h-3.5 w-3.5 text-elec-yellow/85 flex-shrink-0 mt-0.5" />
                 {item}
               </div>
@@ -209,35 +227,33 @@ const SafeIsolationPage = () => {
           </div>
 
           <div className="space-y-3">
-            <h3 className="font-semibold text-white text-sm">
-              Voltage Indicators vs Multimeters
-            </h3>
+            <h3 className="font-semibold text-white text-sm">Voltage Indicators vs Multimeters</h3>
             <p className="text-white text-sm leading-relaxed">
-              For safe isolation, a two-pole voltage indicator (such as a Fluke T150
-              or Kewtech KT1780) is preferred over a multimeter. Voltage indicators
-              are simpler, more robust, and less likely to give a false reading due
-              to incorrect settings.
+              For safe isolation, a two-pole voltage indicator (such as a Fluke T150 or Kewtech
+              KT1780) is preferred over a multimeter. Voltage indicators are simpler, more robust,
+              and less likely to give a false reading due to incorrect settings.
             </p>
             <div className="rounded-md border border-red-500/25 bg-red-500/[0.04] p-3">
               <p className="text-white text-xs">
                 <span className="font-semibold text-red-400">Warning: </span>
-                Never use a neon screwdriver or non-contact voltage detector
-                as your primary means of proving a circuit is dead. These are
-                indication tools only — not proof of isolation.
+                Never use a neon screwdriver or non-contact voltage detector as your primary means
+                of proving a circuit is dead. These are indication tools only — not proof of
+                isolation.
               </p>
             </div>
           </div>
-        </div></div>
+        </div>
+      </div>
 
       {/* Proving Units */}
       <div className="rounded-xl border border-white/[0.06] bg-[hsl(0_0%_10%)]">
         <div className="p-4 sm:p-5 space-y-4">
-          <h2 className="text-lg font-semibold text-green-400">Proving Units</h2>
+          <h2 className="text-lg font-semibold text-elec-yellow">Proving Units</h2>
           <p className="text-white text-sm leading-relaxed">
-            A proving unit is a battery-powered device that provides a known voltage
-            output to verify your voltage indicator is working correctly. Using a
-            proving unit is the safest way to perform the "prove before" and
-            "prove after" steps because it avoids the need to test on a live circuit.
+            A proving unit is a battery-powered device that provides a known voltage output to
+            verify your voltage indicator is working correctly. Using a proving unit is the safest
+            way to perform the "prove before" and "prove after" steps because it avoids the need to
+            test on a live circuit.
           </p>
 
           <div className="space-y-3">
@@ -245,34 +261,27 @@ const SafeIsolationPage = () => {
             {[
               'Connect your voltage indicator test leads to the proving unit',
               'Press the test button on the proving unit',
-              'Your voltage indicator should show the rated output voltage (typically 230V or 690V depending on model)',
+              'Your voltage indicator should respond and show the proving unit’s output (commonly a stepped output around 200–250V, depending on the model)',
               'If the indicator does not respond, the indicator is faulty — do not use it',
               'Repeat after testing the isolated circuit to confirm the indicator still works',
             ].map((item, idx) => (
-              <div
-                key={idx}
-                className="flex items-start gap-2 text-sm text-white"
-              >
-                <span className="text-green-400 font-bold text-xs mt-0.5">
-                  {idx + 1}.
-                </span>
+              <div key={idx} className="flex items-start gap-2 text-sm text-white">
+                <span className="text-elec-yellow font-bold text-xs mt-0.5">{idx + 1}.</span>
                 {item}
               </div>
             ))}
           </div>
-        </div></div>
+        </div>
+      </div>
 
       {/* Lock-Off Devices */}
       <div className="rounded-xl border border-white/[0.06] bg-[hsl(0_0%_10%)]">
         <div className="p-4 sm:p-5 space-y-4">
-          <h2 className="text-lg font-semibold text-purple-400">
-            Lock-Off Devices and Tagging
-          </h2>
+          <h2 className="text-lg font-semibold text-elec-yellow">Lock-Off Devices and Tagging</h2>
           <p className="text-white text-sm leading-relaxed">
-            Lock-off devices physically prevent a circuit from being re-energised.
-            They are an essential part of the safe isolation procedure. Simply
-            switching off an MCB is not enough — it must be locked off with a
-            padlock and tagged with your details.
+            Lock-off devices physically prevent a circuit from being re-energised. They are an
+            essential part of the safe isolation procedure. Simply switching off an MCB is not
+            enough — it must be locked off with a padlock and tagged with your details.
           </p>
 
           <div className="space-y-3">
@@ -299,19 +308,18 @@ const SafeIsolationPage = () => {
                 desc: 'Allows multiple padlocks on a single lock-off point. Used when multiple people are working on the same circuit — each person adds their own lock.',
               },
             ].map((item) => (
-              <div key={item.type} className="rounded-md border border-elec-yellow/20 bg-elec-yellow/[0.04] p-3">
-                <h4 className="text-purple-400 font-semibold text-sm mb-1">
-                  {item.type}
-                </h4>
+              <div
+                key={item.type}
+                className="rounded-md border border-elec-yellow/20 bg-elec-yellow/[0.04] p-3"
+              >
+                <h4 className="text-white font-semibold text-sm mb-1">{item.type}</h4>
                 <p className="text-white text-xs">{item.desc}</p>
               </div>
             ))}
           </div>
 
           <div className="space-y-3">
-            <h3 className="font-semibold text-white text-sm">
-              Warning Tags Must Include
-            </h3>
+            <h3 className="font-semibold text-white text-sm">Warning Tags Must Include</h3>
             {[
               'Your name',
               'Date and time of isolation',
@@ -319,37 +327,33 @@ const SafeIsolationPage = () => {
               '"DANGER — DO NOT SWITCH ON" warning text',
               'A contact number if others need to reach you',
             ].map((item) => (
-              <div
-                key={item}
-                className="flex items-start gap-2 text-sm text-white"
-              >
+              <div key={item} className="flex items-start gap-2 text-sm text-white">
                 <CheckCircle2 className="h-3.5 w-3.5 text-elec-yellow/85 flex-shrink-0 mt-0.5" />
                 {item}
               </div>
             ))}
           </div>
-        </div></div>
+        </div>
+      </div>
 
       {/* When You Cannot Isolate */}
-      <div className="rounded-xl border border-white/[0.06] bg-[hsl(0_0%_10%)]">
+      <div className="rounded-xl border border-red-500/25 bg-red-500/[0.04]">
         <div className="p-4 sm:p-5 space-y-4">
           <div className="flex items-center gap-2">
-            <Zap className="h-5 w-5 text-orange-400" />
-            <h2 className="text-lg font-semibold text-orange-400">
+            <Zap className="h-5 w-5 text-red-400" />
+            <h2 className="text-lg font-semibold text-red-400">
               Live Working — Almost Never Acceptable
             </h2>
           </div>
           <p className="text-white text-sm leading-relaxed">
-            The Electricity at Work Regulations 1989 (Regulation 14) states that
-            no person shall work on or near live conductors{' '}
-            <span className="font-bold text-orange-400">unless</span> it is
-            unreasonable in all circumstances for the conductor to be dead, it is
-            reasonable to work on it while live, and suitable precautions are taken
-            to prevent injury.
+            The Electricity at Work Regulations 1989 (Regulation 14) states that no person shall
+            work on or near live conductors <span className="font-bold text-red-400">unless</span>{' '}
+            it is unreasonable in all circumstances for the conductor to be dead, it is reasonable
+            to work on it while live, and suitable precautions are taken to prevent injury.
           </p>
           <p className="text-white text-sm leading-relaxed">
-            In practice, this means live working is almost never justified for an
-            apprentice. If someone asks you to work on a live circuit:
+            In practice, this means live working is almost never justified for an apprentice. If
+            someone asks you to work on a live circuit:
           </p>
 
           <div className="space-y-2">
@@ -361,23 +365,19 @@ const SafeIsolationPage = () => {
               'As an apprentice, you are NOT considered competent for live working',
               'The only common exception is testing and fault-finding, which requires a live supply — but even then, barriers, insulated tools, and supervision are required',
             ].map((item) => (
-              <div
-                key={item}
-                className="flex items-start gap-2 text-sm text-white"
-              >
-                <AlertTriangle className="h-4 w-4 text-orange-400 flex-shrink-0 mt-0.5" />
+              <div key={item} className="flex items-start gap-2 text-sm text-white">
+                <AlertTriangle className="h-4 w-4 text-red-400 flex-shrink-0 mt-0.5" />
                 {item}
               </div>
             ))}
           </div>
-        </div></div>
+        </div>
+      </div>
 
       {/* Common Mistakes */}
       <div className="rounded-xl border border-white/[0.06] bg-[hsl(0_0%_10%)]">
         <div className="p-4 sm:p-5 space-y-4">
-          <h2 className="text-lg font-semibold text-amber-400">
-            Common Mistakes to Avoid
-          </h2>
+          <h2 className="text-lg font-semibold text-elec-yellow">Common Mistakes to Avoid</h2>
           <div className="space-y-3">
             {[
               {
@@ -390,68 +390,74 @@ const SafeIsolationPage = () => {
               },
               {
                 mistake: 'Using tape instead of a lock-off device',
-                consequence: 'Tape can be removed by anyone. A lock with your personal padlock cannot.',
+                consequence:
+                  'Tape can be removed by anyone. A lock with your personal padlock cannot.',
               },
               {
                 mistake: 'Not checking for other supply sources',
-                consequence: 'Solar PV, generators, UPS systems, or borrowed neutrals from other circuits can re-energise a "dead" circuit.',
+                consequence:
+                  'Solar PV, generators, UPS systems, or borrowed neutrals from other circuits can re-energise a "dead" circuit.',
               },
               {
                 mistake: 'Relying on a non-contact voltage detector',
-                consequence: 'NCVDs can give false negatives (missing voltage) or false positives. They are an indication tool only.',
+                consequence:
+                  'NCVDs can give false negatives (missing voltage) or false positives. They are an indication tool only.',
               },
               {
                 mistake: 'Letting someone else remove your lock',
-                consequence: 'Only you should remove your own lock. If multiple people are working, each person needs their own lock on a multi-lock hasp.',
+                consequence:
+                  'Only you should remove your own lock. If multiple people are working, each person needs their own lock on a multi-lock hasp.',
               },
               {
                 mistake: 'Testing only Line–Neutral',
-                consequence: 'A shared neutral or incorrect wiring could still present a shock risk. You must test L–N, L–E, and N–E.',
+                consequence:
+                  'A shared neutral or incorrect wiring could still present a shock risk. You must test L–N, L–E, and N–E.',
               },
               {
                 mistake: 'Rushing because the job seems simple',
-                consequence: 'Many fatal accidents happen on "routine" jobs. The procedure takes 2 minutes — your life is worth more than that.',
+                consequence:
+                  'Many fatal accidents happen on "routine" jobs. The procedure takes 2 minutes — your life is worth more than that.',
               },
             ].map((item) => (
               <div
                 key={item.mistake}
                 className="rounded-md border border-elec-yellow/20 bg-elec-yellow/[0.04] p-3"
               >
-                <p className="text-amber-400 font-semibold text-sm">
-                  {item.mistake}
-                </p>
+                <p className="text-white font-semibold text-sm">{item.mistake}</p>
                 <p className="text-white text-xs mt-1">{item.consequence}</p>
               </div>
             ))}
           </div>
-        </div></div>
+        </div>
+      </div>
 
       {/* AM2 / EPA Note */}
       <div className="rounded-xl border border-elec-yellow/25 bg-elec-yellow/[0.04]">
         <div className="p-4 sm:p-5 space-y-3">
-          <h2 className="text-sm font-semibold text-green-400">
+          <h2 className="text-sm font-semibold text-elec-yellow">
             Safe Isolation in Your AM2 and EPA
           </h2>
           <p className="text-white text-sm leading-relaxed">
-            You will be assessed on the full safe isolation procedure during your
-            AM2 practical assessment and End Point Assessment. Failure to correctly
-            carry out safe isolation is an automatic fail in the AM2. You must
-            demonstrate every step, including proving the tester before and after.
-            Practise until it becomes second nature.
+            Safe isolation is assessed in your end-point assessment — the integrated AM2S practical.
+            Failing to carry out safe isolation correctly is an automatic fail: assessors watch for
+            every step, including proving the indicator before and after, locking off, and proving
+            dead at all conductor combinations. Practise until it becomes second nature long before
+            your assessment day.
           </p>
-        </div></div>
+        </div>
+      </div>
 
       {/* Footer */}
       <div className="rounded-xl border border-white/[0.06] bg-[hsl(0_0%_10%)]">
         <div className="p-4 sm:p-5">
           <p className="text-white text-xs leading-relaxed">
-            Based on the Electricity at Work Regulations 1989, BS 7671:2018+A4:2026
-            (Regulation 132.15), HSE Guidance Note GS38 (4th edition), and IET Code
-            of Practice for In-Service Inspection and Testing of Electrical
-            Equipment. Always follow your employer's specific safe isolation
-            procedures and risk assessments.
+            Based on the Electricity at Work Regulations 1989 (Regulations 12–14), BS
+            7671:2018+A4:2026 (Regulation 132.15.201 and Section 537), and HSE Guidance Note GS38
+            (electrical test equipment for use by electricians). Always follow your employer's
+            specific safe isolation procedures and risk assessments.
           </p>
-        </div></div>
+        </div>
+      </div>
     </PageFrame>
   );
 };
