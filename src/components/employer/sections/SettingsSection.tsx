@@ -86,18 +86,25 @@ export function SettingsSection() {
   const [qsApprovalRequired, setQsApprovalRequired] = useState(false);
   const [qsToggleSaving, setQsToggleSaving] = useState(false);
 
+  // "I am my own Qualifying Supervisor" — lets the owner countersign their OWN
+  // certificates (company_profiles.owner_is_qs). For sole traders / registration holders.
+  const [ownerIsQs, setOwnerIsQs] = useState(false);
+  const [ownerQsSaving, setOwnerQsSaving] = useState(false);
+
   useEffect(() => {
     (async () => {
       const {
         data: { user },
       } = await supabase.auth.getUser();
       if (!user) return;
-      const { data } = await supabase
+      // owner_is_qs is a newly-added column not yet in the generated types — cast.
+      const { data } = await (supabase as any)
         .from('company_profiles')
-        .select('qs_approval_required')
+        .select('qs_approval_required, owner_is_qs')
         .eq('user_id', user.id)
         .maybeSingle();
       setQsApprovalRequired(!!data?.qs_approval_required);
+      setOwnerIsQs(!!data?.owner_is_qs);
     })();
   }, []);
 
@@ -139,6 +146,46 @@ export function SettingsSection() {
       toast({ title: 'Could not save setting', variant: 'destructive' });
     } finally {
       setQsToggleSaving(false);
+    }
+  };
+
+  const handleToggleOwnerIsQs = async (checked: boolean) => {
+    const previous = ownerIsQs;
+    setOwnerIsQs(checked);
+    setOwnerQsSaving(true);
+    try {
+      const {
+        data: { user },
+      } = await supabase.auth.getUser();
+      if (!user) throw new Error('Not authenticated');
+
+      // owner_is_qs is not yet in the generated types — cast the writes.
+      const { data: updated, error } = await (supabase as any)
+        .from('company_profiles')
+        .update({ owner_is_qs: checked })
+        .eq('user_id', user.id)
+        .select('id');
+      if (error) throw error;
+
+      if (!updated || updated.length === 0) {
+        const { error: insertError } = await (supabase as any)
+          .from('company_profiles')
+          .insert({ user_id: user.id, company_name: '', owner_is_qs: checked });
+        if (insertError) throw insertError;
+      }
+
+      toast({
+        title: checked ? "You're set as your own QS" : 'Self sign-off turned off',
+        description: checked
+          ? 'You can now review and countersign your own certificates as Qualifying Supervisor.'
+          : 'Your own certificates will need a separate QS to sign them off.',
+      });
+    } catch (err) {
+      console.error('[Settings] owner-QS toggle failed:', err);
+      setOwnerIsQs(previous);
+      toast({ title: 'Could not save setting', variant: 'destructive' });
+    } finally {
+      setOwnerQsSaving(false);
     }
   };
 
@@ -574,6 +621,17 @@ export function SettingsSection() {
             meta={<Pill tone="yellow">{qsApprovalRequired ? 'Required' : 'Optional'}</Pill>}
           />
           <ListBody>
+            <ListRow
+              title="I am my own Qualifying Supervisor"
+              subtitle="Lets you review and countersign your own certificates as the QS. For sole traders and registration-holding owners."
+              trailing={
+                <Switch
+                  checked={ownerIsQs}
+                  onCheckedChange={handleToggleOwnerIsQs}
+                  disabled={ownerQsSaving}
+                />
+              }
+            />
             <ListRow
               title="Require QS approval before issue"
               subtitle="Team EICR, EIC and Minor Works certificates must be countersigned by a Qualifying Supervisor before the PDF can be issued."
