@@ -30,7 +30,7 @@ const HUB_CARDS: HubCard[] = [
     eyebrow: 'Design',
     title: 'Renewable Design Suite',
     description:
-      'Solar PV, battery, EV and heat pump — real kit to a compliant plan, single-line diagram and a pre-filled certificate.',
+      'Solar PV, battery, EV and heat pump — real kit to a design checked against BS 7671, MCS and G98/G99, with a single-line diagram and a pre-filled certificate.',
     to: '/electrician/renewables/design',
     meta: '4 designers',
   },
@@ -47,7 +47,7 @@ const HUB_CARDS: HubCard[] = [
     eyebrow: 'Money',
     title: 'Quote & costing',
     description: 'Price a renewable job — materials, labour and 0% domestic VAT.',
-    to: '/electrician/business',
+    to: '/electrician/quote-builder/create',
     meta: 'Build a quote',
   },
   {

@@ -158,6 +158,20 @@ export default function RenewableCertificates() {
         animate="visible"
         className="px-4 sm:px-6 py-4 mx-auto w-full max-w-5xl space-y-6"
       >
+        {/* Design first → these arrive pre-filled */}
+        <motion.button
+          variants={item}
+          type="button"
+          onClick={() => navigate('/electrician/renewables/design')}
+          className="group w-full flex items-center justify-between gap-3 rounded-2xl border border-elec-yellow/25 bg-elec-yellow/[0.05] hover:bg-elec-yellow/[0.09] px-4 py-3.5 text-left transition-colors touch-manipulation"
+        >
+          <span className="text-[13px] leading-snug text-white">
+            <span className="font-semibold text-elec-yellow">Start in the Design Suite</span> — the
+            design checks the kit and these certificates arrive pre-filled.
+          </span>
+          <ArrowRight className="h-4 w-4 text-elec-yellow shrink-0 group-hover:translate-x-0.5 transition-transform" />
+        </motion.button>
+
         <motion.section variants={item}>
           <SectionLabel count={INSTALL_CERTS.length}>Installation certificates</SectionLabel>
           <TileGrid tiles={INSTALL_CERTS} />
