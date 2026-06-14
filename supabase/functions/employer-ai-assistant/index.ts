@@ -40,6 +40,8 @@ ACTIONS — you can SET UP and RUN the firm directly. Tools: add team members, s
 
 BE PROACTIVE — never just execute silently. After any action, add a short, business-aware observation: what it means for the firm and the obvious next step, drawn from your live oversight (e.g. "Added CEF — but you've still no price book, so you can't cost a job properly yet; want me to add your common rates?"; "Raised that invoice — your overdue total is now £X across N invoices; I'd chase the oldest two first"). Surface risks and opportunities unprompted: cashflow exposure, a compliance gap, an unfilled vacancy on a job starting soon. You are a partner who thinks, not a form-filler.
 
+ESTIMATING & PLANNING — when asked to plan, quote, price or "set up" a job, orchestrate the WHOLE thing from a one-line brief: (1) break the work into the real trade tasks (a rewire = first fix, plaster liaison, second fix, test, certify); (2) cost LABOUR using THE FIRM'S RATES below × your honest hour/day estimate per task; (3) price MATERIALS by calling get_material_prices for the key items — these are LIVE supplier prices refreshed daily, so USE them, never guess a material price; (4) add the firm's materials markup + overhead + profit; (5) give a realistic timeline (labour hours → working days). Present a clear breakdown — tasks, materials (with the live prices + supplier), labour, and the total — and ground the method via search_employer_knowledge (NRM1, daywork, markup) where it sharpens it. Then offer to build it for real: create_job, add_task for each task, assign people from list_team, and create_quote. If the firm's rates aren't set, ask once or state your assumption.
+
 SAFEGUARDS: you advise, but flag when something high-stakes warrants an accountant or solicitor rather than relying on you. Stay strictly within this employer's own data.`;
 
 const TOOLS = [
@@ -216,6 +218,47 @@ const TOOLS = [
       },
     },
   },
+  {
+    type: 'function',
+    function: {
+      name: 'get_material_prices',
+      description: 'Look up LIVE supplier prices for a material (cable, consumer unit, sockets, EV charger, etc.) from the daily-refreshed price feed. Call this to price materials for an estimate — never guess.',
+      parameters: {
+        type: 'object',
+        properties: {
+          query: { type: 'string', description: 'The item to price, e.g. "6242Y 2.5mm twin and earth 100m" or "Hager 10-way consumer unit".' },
+        },
+        required: ['query'],
+      },
+    },
+  },
+  {
+    type: 'function',
+    function: {
+      name: 'list_team',
+      description: 'List the team members with their ids — use before assigning anyone to a task.',
+      parameters: { type: 'object', properties: {} },
+    },
+  },
+  {
+    type: 'function',
+    function: {
+      name: 'add_task',
+      description: 'Add a task to a job. job_id is the id returned by create_job. Optionally assign a team member (assignee_employee_id from list_team).',
+      parameters: {
+        type: 'object',
+        properties: {
+          job_id: { type: 'string' },
+          title: { type: 'string' },
+          description: { type: 'string' },
+          priority: { type: 'string', enum: ['low', 'medium', 'high'] },
+          due_date: { type: 'string', description: 'YYYY-MM-DD' },
+          assignee_employee_id: { type: 'string' },
+        },
+        required: ['job_id', 'title'],
+      },
+    },
+  },
 ];
 
 async function embed(text: string, key: string): Promise<string> {
@@ -292,14 +335,105 @@ async function getSnapshot(admin: any, uid: string): Promise<string> {
   return 'LIVE BUSINESS SNAPSHOT (this firm, right now — your full oversight of the hub):\n' + lines.join('\n');
 }
 
-function chunkStream(text: string): ReadableStream {
-  const enc = new TextEncoder();
-  return new ReadableStream({
-    start(c) {
-      for (let i = 0; i < text.length; i += 40) c.enqueue(enc.encode(text.slice(i, i + 40)));
-      c.close();
-    },
-  });
+// Execute one tool call and return a short result string for the model.
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+async function runTool(admin: any, uid: string, openAiKey: string, name: string, argsJson: string): Promise<string> {
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  let args: Record<string, any>;
+  try {
+    args = JSON.parse(argsJson || '{}');
+  } catch {
+    return 'Could not parse the tool arguments.';
+  }
+  try {
+    if (name === 'search_employer_knowledge') {
+      const qEmb = await embed(args.query, openAiKey);
+      const { data: hits } = await admin.rpc('search_employer_knowledge', { query_embedding: qEmb, query_text: args.query, match_count: 6 });
+      return (hits ?? [])
+        .map((h: { source: string; topic: string; content: string }) => `[${h.source} — ${h.topic}]\n${h.content}`)
+        .join('\n\n---\n\n') || 'No matching knowledge found.';
+    } else if (name === 'add_team_member') {
+      const { error } = await admin.from('employer_employees').insert({
+        employer_id: uid, status: 'active', name: args.name, role: args.role ?? 'Electrician', team_role: args.team_role ?? 'Operative',
+        pay_type: args.pay_type ?? null, hourly_rate: args.hourly_rate ?? null, annual_salary: args.annual_salary ?? null,
+        email: args.email ?? null, phone: args.phone ?? null, avatar_initials: initials(args.name),
+      });
+      return error ? `Failed to add ${args.name}: ${error.message}` : `Added ${args.name} to the team.`;
+    } else if (name === 'add_supplier') {
+      const { error } = await admin.from('employer_suppliers').insert({
+        employer_id: uid, name: args.name, category: args.category ?? null, contact_name: args.contact_name ?? null,
+        phone: args.phone ?? null, email: args.email ?? null, account_number: args.account_number ?? null,
+        address: args.address ?? null, delivery_days: args.delivery_days ?? null,
+      });
+      return error ? `Failed to add supplier ${args.name}: ${error.message}` : `Added supplier ${args.name}.`;
+    } else if (name === 'add_price_book_item') {
+      const buy = args.buy_price ?? null;
+      const sell = args.sell_price ?? null;
+      const markup = buy && sell ? Math.round(((sell - buy) / buy) * 100) : null;
+      const { error } = await admin.from('employer_price_book').insert({
+        employer_id: uid, name: args.name, category: args.category ?? 'General', buy_price: buy, sell_price: sell, markup,
+        unit: args.unit ?? 'each', sku: args.sku ?? null,
+      });
+      return error ? `Failed to add ${args.name}: ${error.message}` : `Added price-book item: ${args.name}.`;
+    } else if (name === 'create_job') {
+      const { data: jobRow, error } = await admin.from('employer_jobs').insert({
+        user_id: uid, status: 'active', title: args.title, client: args.client ?? '', location: args.location ?? '',
+        value: args.value ?? null, start_date: args.start_date ?? null, description: args.description ?? null,
+        client_phone: args.client_phone ?? null, client_email: args.client_email ?? null,
+      }).select('id').single();
+      return error ? `Failed to create job: ${error.message}` : `Created job: ${args.title} (job_id: ${jobRow?.id}).`;
+    } else if (name === 'create_quote') {
+      const { count } = await admin.from('employer_quotes').select('id', { count: 'exact', head: true }).eq('employer_id', uid);
+      const num = `QTE-${String((count ?? 0) + 1).padStart(4, '0')}`;
+      const { error } = await admin.from('employer_quotes').insert({
+        employer_id: uid, quote_number: num, client: args.client, status: 'Draft', description: args.description ?? null,
+        value: args.value ?? null, job_title: args.job_title ?? null, valid_until: args.valid_until ?? null,
+        client_email: args.client_email ?? null, client_phone: args.client_phone ?? null,
+      });
+      return error ? `Failed to create quote: ${error.message}` : `Created quote ${num} for ${args.client}.`;
+    } else if (name === 'create_invoice') {
+      const { count } = await admin.from('employer_invoices').select('id', { count: 'exact', head: true }).eq('employer_id', uid);
+      const num = `INV-${String((count ?? 0) + 1).padStart(4, '0')}`;
+      const { error } = await admin.from('employer_invoices').insert({
+        employer_id: uid, invoice_number: num, client: args.client, status: 'Draft', amount: args.amount ?? null,
+        project: args.project ?? null, due_date: args.due_date ?? null, notes: args.notes ?? null, client_email: args.client_email ?? null,
+      });
+      return error ? `Failed to create invoice: ${error.message}` : `Created draft invoice ${num} for ${args.client}.`;
+    } else if (name === 'create_job_pack') {
+      const { error } = await admin.from('employer_job_packs').insert({
+        employer_id: uid, title: args.title, client: args.client, location: args.location, scope: args.scope ?? null,
+        status: 'draft', start_date: args.start_date ?? null, estimated_value: args.estimated_value ?? null,
+      });
+      return error ? `Failed to create job pack: ${error.message}` : `Created job pack: ${args.title}.`;
+    } else if (name === 'create_vacancy') {
+      const { error } = await admin.from('employer_vacancies').insert({
+        employer_id: uid, title: args.title, location: args.location, type: args.type ?? 'Full-time', status: 'open',
+        salary_min: args.salary_min ?? null, salary_max: args.salary_max ?? null, salary_period: args.salary_period ?? 'year',
+        description: args.description ?? null,
+      });
+      return error ? `Failed to post vacancy: ${error.message}` : `Posted vacancy: ${args.title}.`;
+    } else if (name === 'get_material_prices') {
+      const { data: prods } = await admin.from('marketplace_products')
+        .select('name, brand, current_price, currency, stock_status')
+        .textSearch('search_vector', args.query, { type: 'websearch' }).limit(6);
+      return (prods ?? [])
+        .map((p: { name: string; brand: string; current_price: number; stock_status: string }) =>
+          `${p.name}${p.brand ? ' (' + p.brand + ')' : ''} — £${p.current_price}${p.stock_status ? ' [' + p.stock_status + ']' : ''}`)
+        .join('\n') || 'No live prices found for that — estimate it or ask the user.';
+    } else if (name === 'list_team') {
+      const { data: tm } = await admin.from('employer_employees').select('id, name, role').eq('employer_id', uid);
+      return (tm ?? []).map((e: { id: string; name: string; role: string }) => `${e.name} (${e.role}) — id ${e.id}`).join('\n') || 'No team members yet.';
+    } else if (name === 'add_task') {
+      const { error } = await admin.from('employer_job_tasks').insert({
+        employer_id: uid, job_id: args.job_id, title: args.title, description: args.description ?? null,
+        priority: args.priority ?? null, due_date: args.due_date ?? null, assignee_employee_id: args.assignee_employee_id ?? null,
+      });
+      return error ? `Failed to add task: ${error.message}` : `Added task: ${args.title}.`;
+    }
+    return 'Unknown tool.';
+  } catch (e) {
+    return 'Tool error: ' + (e instanceof Error ? e.message : 'unknown');
+  }
 }
 
 Deno.serve(async (req) => {
@@ -318,7 +452,16 @@ Deno.serve(async (req) => {
     const { messages = [], page_context = null } = await req.json();
     const admin = createClient(supabaseUrl, serviceKey);
     const snapshot = await getSnapshot(admin, user.id);
-    const system = SOUL + '\n\n' + snapshot + (page_context ? `\n\nThe user is currently viewing: ${page_context}.` : '');
+    const { data: rp } = await admin
+      .from('company_profiles')
+      .select('day_rate, hourly_rate, markup, overhead_percentage, profit_margin')
+      .eq('user_id', user.id)
+      .maybeSingle();
+    const rates = rp
+      ? `\n\nFIRM RATES (use for labour & estimates): day rate £${rp.day_rate ?? '?'}, hourly £${rp.hourly_rate ?? '?'}, materials markup ${rp.markup ?? '?'}%, overhead ${rp.overhead_percentage ?? '?'}%, profit ${rp.profit_margin ?? '?'}%.`
+      : '\n\nFIRM RATES: not set yet — ask the user their day rate / markup, or state your assumption when estimating.';
+    const system =
+      SOUL + '\n\n' + snapshot + rates + (page_context ? `\n\nThe user is currently viewing: ${page_context}.` : '');
 
     const convo: Array<Record<string, unknown>> = [
       { role: 'system', content: system },
@@ -326,155 +469,72 @@ Deno.serve(async (req) => {
     ];
     const oaHeaders = { Authorization: `Bearer ${openAiKey}`, 'Content-Type': 'application/json' };
 
-    // --- Phase 1: tool resolution (non-streamed) ---
-    const first = await fetch(OPENAI_CHAT, {
-      method: 'POST',
-      headers: oaHeaders,
-      body: JSON.stringify({ model: CHAT_MODEL, messages: convo, tools: TOOLS, tool_choice: 'auto', max_completion_tokens: 1400 }),
-    });
-    if (!first.ok) return json({ error: 'llm_failed', detail: await first.text() }, 502);
-    const fmsg = (await first.json()).choices?.[0]?.message;
-    if (!fmsg) return json({ error: 'no_response' }, 502);
-
-    const calls = fmsg.tool_calls ?? [];
-    if (!calls.length) {
-      // Answered directly — stream the already-complete text in chunks.
-      return new Response(chunkStream(fmsg.content ?? ''), { headers: streamHeaders });
-    }
-
-    convo.push(fmsg);
-    for (const call of calls) {
-      let result = '';
-      try {
-        const args = JSON.parse(call.function.arguments || '{}');
-        if (call.function.name === 'search_employer_knowledge') {
-          const qEmb = await embed(args.query, openAiKey);
-          const { data: hits } = await admin.rpc('search_employer_knowledge', {
-            query_embedding: qEmb,
-            query_text: args.query,
-            match_count: 6,
-          });
-          result =
-            (hits ?? [])
-              .map((h: { source: string; topic: string; content: string }) => `[${h.source} — ${h.topic}]\n${h.content}`)
-              .join('\n\n---\n\n') || 'No matching knowledge found.';
-        } else if (call.function.name === 'add_team_member') {
-          const { error } = await admin.from('employer_employees').insert({
-            employer_id: user.id, status: 'active', name: args.name,
-            role: args.role ?? 'Electrician', team_role: args.team_role ?? 'Operative',
-            pay_type: args.pay_type ?? null, hourly_rate: args.hourly_rate ?? null,
-            annual_salary: args.annual_salary ?? null, email: args.email ?? null,
-            phone: args.phone ?? null, avatar_initials: initials(args.name),
-          });
-          result = error ? `Failed to add ${args.name}: ${error.message}` : `Added ${args.name} to the team.`;
-        } else if (call.function.name === 'add_supplier') {
-          const { error } = await admin.from('employer_suppliers').insert({
-            employer_id: user.id, name: args.name, category: args.category ?? null,
-            contact_name: args.contact_name ?? null, phone: args.phone ?? null, email: args.email ?? null,
-            account_number: args.account_number ?? null, address: args.address ?? null,
-            delivery_days: args.delivery_days ?? null,
-          });
-          result = error ? `Failed to add supplier ${args.name}: ${error.message}` : `Added supplier ${args.name}.`;
-        } else if (call.function.name === 'add_price_book_item') {
-          const buy = args.buy_price ?? null;
-          const sell = args.sell_price ?? null;
-          const markup = buy && sell ? Math.round(((sell - buy) / buy) * 100) : null;
-          const { error } = await admin.from('employer_price_book').insert({
-            employer_id: user.id, name: args.name, category: args.category ?? 'General',
-            buy_price: buy, sell_price: sell, markup, unit: args.unit ?? 'each', sku: args.sku ?? null,
-          });
-          result = error ? `Failed to add ${args.name}: ${error.message}` : `Added price-book item: ${args.name}.`;
-        } else if (call.function.name === 'create_job') {
-          const { error } = await admin.from('employer_jobs').insert({
-            user_id: user.id, status: 'active', title: args.title, client: args.client ?? '',
-            location: args.location ?? '', value: args.value ?? null, start_date: args.start_date ?? null,
-            description: args.description ?? null, client_phone: args.client_phone ?? null,
-            client_email: args.client_email ?? null,
-          });
-          result = error ? `Failed to create job: ${error.message}` : `Created job: ${args.title}.`;
-        } else if (call.function.name === 'create_quote') {
-          const { count } = await admin.from('employer_quotes').select('id', { count: 'exact', head: true }).eq('employer_id', user.id);
-          const num = `QTE-${String((count ?? 0) + 1).padStart(4, '0')}`;
-          const { error } = await admin.from('employer_quotes').insert({
-            employer_id: user.id, quote_number: num, client: args.client, status: 'Draft',
-            description: args.description ?? null, value: args.value ?? null, job_title: args.job_title ?? null,
-            valid_until: args.valid_until ?? null, client_email: args.client_email ?? null, client_phone: args.client_phone ?? null,
-          });
-          result = error ? `Failed to create quote: ${error.message}` : `Created quote ${num} for ${args.client}.`;
-        } else if (call.function.name === 'create_invoice') {
-          const { count } = await admin.from('employer_invoices').select('id', { count: 'exact', head: true }).eq('employer_id', user.id);
-          const num = `INV-${String((count ?? 0) + 1).padStart(4, '0')}`;
-          const { error } = await admin.from('employer_invoices').insert({
-            employer_id: user.id, invoice_number: num, client: args.client, status: 'Draft',
-            amount: args.amount ?? null, project: args.project ?? null, due_date: args.due_date ?? null,
-            notes: args.notes ?? null, client_email: args.client_email ?? null,
-          });
-          result = error ? `Failed to create invoice: ${error.message}` : `Created draft invoice ${num} for ${args.client}.`;
-        } else if (call.function.name === 'create_job_pack') {
-          const { error } = await admin.from('employer_job_packs').insert({
-            employer_id: user.id, title: args.title, client: args.client, location: args.location,
-            scope: args.scope ?? null, status: 'draft', start_date: args.start_date ?? null,
-            estimated_value: args.estimated_value ?? null,
-          });
-          result = error ? `Failed to create job pack: ${error.message}` : `Created job pack: ${args.title}.`;
-        } else if (call.function.name === 'create_vacancy') {
-          const { error } = await admin.from('employer_vacancies').insert({
-            employer_id: user.id, title: args.title, location: args.location, type: args.type ?? 'Full-time',
-            status: 'open', salary_min: args.salary_min ?? null, salary_max: args.salary_max ?? null,
-            salary_period: args.salary_period ?? 'year', description: args.description ?? null,
-          });
-          result = error ? `Failed to post vacancy: ${error.message}` : `Posted vacancy: ${args.title}.`;
-        } else {
-          result = 'Unknown tool.';
-        }
-      } catch (e) {
-        result = 'Tool error: ' + (e instanceof Error ? e.message : 'unknown');
-      }
-      convo.push({ role: 'tool', tool_call_id: call.id, content: result });
-    }
-
-    // --- Phase 2: stream the grounded answer (no further tools) ---
-    const streamResp = await fetch(OPENAI_CHAT, {
-      method: 'POST',
-      headers: oaHeaders,
-      body: JSON.stringify({ model: CHAT_MODEL, messages: convo, stream: true, max_completion_tokens: 1400 }),
-    });
-    if (!streamResp.ok || !streamResp.body) {
-      // Fallback: non-streamed final answer, chunked out, so the user always gets a reply.
-      const fb = await fetch(OPENAI_CHAT, {
-        method: 'POST',
-        headers: oaHeaders,
-        body: JSON.stringify({ model: CHAT_MODEL, messages: convo, max_completion_tokens: 1400 }),
-      });
-      const fbContent = (await fb.json())?.choices?.[0]?.message?.content ?? 'Sorry — I couldn\'t generate that. Try again.';
-      return new Response(chunkStream(fbContent), { headers: streamHeaders });
-    }
-
+    // --- Multi-round agentic loop: stream the answer live, run tools across
+    // rounds until the model stops calling them (so it can chain create_job ->
+    // add_task -> create_quote, etc.). ---
     const enc = new TextEncoder();
     const stream = new ReadableStream({
       async start(controller) {
-        const reader = streamResp.body!.getReader();
-        const decoder = new TextDecoder();
-        let buf = '';
         try {
-          while (true) {
-            const { done, value } = await reader.read();
-            if (done) break;
-            buf += decoder.decode(value, { stream: true });
-            const lines = buf.split('\n');
-            buf = lines.pop() ?? '';
-            for (const line of lines) {
-              const l = line.trim();
-              if (!l.startsWith('data:')) continue;
-              const d = l.slice(5).trim();
-              if (d === '[DONE]') { controller.close(); return; }
-              try {
-                const delta = JSON.parse(d).choices?.[0]?.delta?.content;
-                if (delta) controller.enqueue(enc.encode(delta));
-              } catch { /* skip keep-alive / partial */ }
+          for (let round = 0; round < 8; round++) {
+            const resp = await fetch(OPENAI_CHAT, {
+              method: 'POST',
+              headers: oaHeaders,
+              body: JSON.stringify({ model: CHAT_MODEL, messages: convo, tools: TOOLS, tool_choice: 'auto', stream: true, max_completion_tokens: 1400 }),
+            });
+            if (!resp.ok || !resp.body) {
+              controller.enqueue(enc.encode('Sorry — I hit a problem reaching the model. Try again.'));
+              break;
+            }
+            const reader = resp.body.getReader();
+            const decoder = new TextDecoder();
+            let buf = '';
+            // Accumulate streamed tool-call fragments by index.
+            const acc: Record<number, { id: string; name: string; arguments: string }> = {};
+            let contentAcc = '';
+            while (true) {
+              const { done, value } = await reader.read();
+              if (done) break;
+              buf += decoder.decode(value, { stream: true });
+              const parts = buf.split('\n');
+              buf = parts.pop() ?? '';
+              for (const line of parts) {
+                const l = line.trim();
+                if (!l.startsWith('data:')) continue;
+                const d = l.slice(5).trim();
+                if (d === '[DONE]') continue;
+                // eslint-disable-next-line @typescript-eslint/no-explicit-any
+                let j: any;
+                try { j = JSON.parse(d); } catch { continue; }
+                const delta = j.choices?.[0]?.delta;
+                if (delta?.content) { contentAcc += delta.content; controller.enqueue(enc.encode(delta.content)); }
+                if (delta?.tool_calls) {
+                  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+                  for (const tc of delta.tool_calls as any[]) {
+                    const i = tc.index ?? 0;
+                    if (!acc[i]) acc[i] = { id: '', name: '', arguments: '' };
+                    if (tc.id) acc[i].id = tc.id;
+                    if (tc.function?.name) acc[i].name = tc.function.name;
+                    if (tc.function?.arguments) acc[i].arguments += tc.function.arguments;
+                  }
+                }
+              }
+            }
+            const toolCalls = Object.values(acc);
+            if (!toolCalls.length) break; // model produced its final answer (already streamed)
+            convo.push({
+              role: 'assistant',
+              content: contentAcc || null,
+              tool_calls: toolCalls.map((t) => ({ id: t.id, type: 'function', function: { name: t.name, arguments: t.arguments } })),
+            });
+            for (const t of toolCalls) {
+              const result = await runTool(admin, user.id, openAiKey, t.name, t.arguments);
+              convo.push({ role: 'tool', tool_call_id: t.id, content: result });
             }
           }
-        } catch { /* upstream closed */ }
+        } catch {
+          try { controller.enqueue(enc.encode('\n\n[Mate hit an error completing that — try again.]')); } catch { /* ignore */ }
+        }
         controller.close();
       },
     });
