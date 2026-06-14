@@ -19,9 +19,7 @@ const Section = ({
       <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
         {eyebrow}
       </span>
-      {description && (
-        <p className="text-[14px] text-white/70 leading-relaxed">{description}</p>
-      )}
+      {description && <p className="text-[14px] text-white/70 leading-relaxed">{description}</p>}
     </div>
     {children}
   </div>
@@ -203,13 +201,12 @@ const DifficultSituationsTab = () => {
     },
     {
       situation: 'Someone pressures you to work unsafely',
-      approach:
-        'Never compromise on safety — you have the legal right to refuse unsafe work.',
+      approach: 'Never compromise on safety — you have the legal right to refuse unsafe work.',
       example:
         'I understand we are under time pressure, but I am not willing to work on this circuit without isolating it. If something goes wrong, it is me who gets hurt.',
       tips: [
         'Your safety is more important than any deadline',
-        'You cannot be disciplined for refusing unsafe work',
+        'The law protects workers who refuse work they reasonably believe is seriously and imminently dangerous (Employment Rights Act 1996, s.44)',
         'Report it to your supervisor and training provider',
       ],
     },
@@ -294,8 +291,9 @@ const DifficultSituationsTab = () => {
     },
     {
       who: 'ACAS (Advisory, Conciliation and Arbitration Service)',
-      detail:
-        'Free, impartial advice on workplace disputes. Call 0300 123 1100 or visit acas.org.uk.',
+      detail: 'Free, impartial advice on workplace disputes. Visit acas.org.uk.',
+      tel: '03001231100',
+      telLabel: '0300 123 1100',
     },
     {
       who: 'Citizens Advice',
@@ -304,18 +302,48 @@ const DifficultSituationsTab = () => {
     },
     {
       who: 'National Apprenticeship Helpline',
-      detail:
-        'Call 0800 015 0400 for advice and support with any apprenticeship-related issues.',
+      detail: 'Advice and support with any apprenticeship-related issues.',
+      tel: '08000150400',
+      telLabel: '0800 015 0400',
     },
     {
       who: 'Health and Safety Executive (HSE)',
       detail:
-        'If you are being asked to work unsafely and your employer will not act, contact HSE. Call 0300 003 1647.',
+        'If you are being asked to work unsafely and your employer will not act, contact HSE.',
+      tel: '03000031647',
+      telLabel: '0300 003 1647',
     },
     {
       who: 'Unite the Union / GMB',
       detail:
         'Trade unions offer support and representation for construction workers, including apprentices.',
+    },
+  ];
+
+  const wellbeingLines = [
+    {
+      who: 'Electrical Industries Charity',
+      detail: 'Free, confidential support for people in the electrical trades.',
+      href: 'tel:08006521618',
+      action: '0800 652 1618 — tap to call',
+    },
+    {
+      who: 'Lighthouse Construction Industry Charity',
+      detail: '24/7 support line for the construction community.',
+      href: 'tel:03456051956',
+      action: '0345 605 1956 — tap to call',
+    },
+    {
+      who: 'Lighthouse text line',
+      detail: 'Text-based support if you would rather not talk.',
+      href: 'sms:85258?&body=HARDHAT',
+      action: 'Text HARDHAT to 85258 — tap to text',
+    },
+    {
+      who: 'Samaritans',
+      detail: 'If things feel overwhelming, someone is there any time, day or night.',
+      href: 'tel:116123',
+      action: '116 123 — free, 24/7, tap to call',
     },
   ];
 
@@ -344,8 +372,8 @@ const DifficultSituationsTab = () => {
           Bullying, harassment and pressure
         </span>
         <p className="text-[14px] text-white/85 leading-relaxed">
-          Unfortunately, bullying and harassment still happen in construction. As an apprentice
-          you may feel you cannot speak up. You can, and you should.
+          Unfortunately, bullying and harassment still happen in construction. As an apprentice you
+          may feel you cannot speak up. You can, and you should.
         </p>
         <div className="space-y-3">
           {bullyingScenarios.map((scenario, scenarioIndex) => (
@@ -436,7 +464,34 @@ const DifficultSituationsTab = () => {
             >
               <p className="text-[14px] text-white">{item.who}</p>
               <p className="text-[13px] text-white/70 leading-relaxed">{item.detail}</p>
+              {item.tel && (
+                <a
+                  href={`tel:${item.tel}`}
+                  className="inline-flex items-center min-h-11 text-[13px] font-semibold text-elec-yellow touch-manipulation"
+                >
+                  {item.telLabel} — tap to call
+                </a>
+              )}
             </div>
+          ))}
+        </div>
+      </Section>
+
+      <Section
+        eyebrow="Need to talk to someone?"
+        description="Difficult situations on site can take a toll. These free, confidential lines are there for people in the electrical and construction trades."
+      >
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
+          {wellbeingLines.map((item, index) => (
+            <a
+              key={index}
+              href={item.href}
+              className="flex flex-col justify-center min-h-11 rounded-lg border border-white/10 bg-white/[0.03] px-3 py-2 hover:bg-white/[0.06] touch-manipulation"
+            >
+              <span className="text-[13px] font-semibold text-white">{item.who}</span>
+              <span className="text-[12px] text-white/70">{item.action}</span>
+              <span className="text-[12px] text-white/55 leading-relaxed">{item.detail}</span>
+            </a>
           ))}
         </div>
       </Section>

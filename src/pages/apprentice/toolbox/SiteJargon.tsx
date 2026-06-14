@@ -1,69 +1,31 @@
+/**
+ * SiteJargon — editorial site-jargon index.
+ *
+ * Browse by category, quick-search across every term, or jump into the
+ * flashcard study mode. Rebuilt on the editorial primitives system to
+ * match its sibling pages (no shadcn cards, no per-category colour map).
+ */
+
 import { useState, useMemo } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
-import { Card, CardContent } from '@/components/ui/card';
-import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { ArrowLeft, ChevronRight, Search, X, GraduationCap } from 'lucide-react';
 import { siteJargonTerms, siteJargonCategories } from '@/data/apprentice/siteJargonData';
-import {
-  PageFrame,
-  PageHero,
-  itemVariants,
-} from '@/components/college/primitives';
+import { PageFrame, PageHero, itemVariants } from '@/components/college/primitives';
+import { Eyebrow, SectionHeader } from '@/components/apprentice-hub/portfolio/PortfolioPrimitives';
 import JargonTermCard from '@/components/apprentice/site-jargon/JargonTermCard';
 
-const categoryStyles: Record<string, { emoji: string; colour: string; border: string; bg: string }> =
-  {
-    'electrical-terms': {
-      emoji: '⚡',
-      colour: 'text-blue-400',
-      border: 'border-blue-500/30',
-      bg: 'bg-blue-500/10',
-    },
-    'tools-equipment': {
-      emoji: '🔧',
-      colour: 'text-orange-400',
-      border: 'border-orange-500/30',
-      bg: 'bg-orange-500/10',
-    },
-    'safety-terms': {
-      emoji: '🛡',
-      colour: 'text-red-400',
-      border: 'border-red-500/30',
-      bg: 'bg-red-500/10',
-    },
-    'site-language': {
-      emoji: '💬',
-      colour: 'text-green-400',
-      border: 'border-green-500/30',
-      bg: 'bg-green-500/10',
-    },
-    'regulations-standards': {
-      emoji: '📋',
-      colour: 'text-purple-400',
-      border: 'border-purple-500/30',
-      bg: 'bg-purple-500/10',
-    },
-    'installation-methods': {
-      emoji: '🔌',
-      colour: 'text-cyan-400',
-      border: 'border-cyan-500/30',
-      bg: 'bg-cyan-500/10',
-    },
-    'testing-terminology': {
-      emoji: '🔬',
-      colour: 'text-amber-400',
-      border: 'border-amber-500/30',
-      bg: 'bg-amber-500/10',
-    },
-    'commercial-industrial': {
-      emoji: '🏭',
-      colour: 'text-indigo-400',
-      border: 'border-indigo-500/30',
-      bg: 'bg-indigo-500/10',
-    },
-  };
+const categoryEmoji: Record<string, string> = {
+  'electrical-terms': '⚡',
+  'tools-equipment': '🔧',
+  'safety-terms': '🛡',
+  'site-language': '💬',
+  'regulations-standards': '📋',
+  'installation-methods': '🔌',
+  'testing-terminology': '🔬',
+  'commercial-industrial': '🏭',
+};
 
 const SiteJargon = () => {
   const navigate = useNavigate();
@@ -96,14 +58,13 @@ const SiteJargon = () => {
   return (
     <PageFrame className="px-4 sm:px-6 lg:px-8">
       <motion.div variants={itemVariants}>
-        <Button
-          variant="ghost"
+        <button
           onClick={() => navigate('/apprentice/toolbox')}
-          className="text-white hover:text-white hover:bg-white/[0.05] active:bg-white/[0.08] -ml-2 h-11 touch-manipulation"
+          className="inline-flex items-center gap-2 h-11 -ml-2 px-2 rounded-md text-[12px] uppercase tracking-[0.18em] text-white/55 hover:text-white/85 transition-colors touch-manipulation"
         >
-          <ArrowLeft className="mr-2 h-5 w-5" />
+          <ArrowLeft className="h-4 w-4" />
           Back
-        </Button>
+        </button>
       </motion.div>
 
       <motion.div variants={itemVariants}>
@@ -115,128 +76,144 @@ const SiteJargon = () => {
         />
       </motion.div>
 
-      {/* Intro Card */}
-      <Card className="border-elec-yellow/20 bg-white/5">
-        <CardContent className="p-4 space-y-3">
-          <p className="text-sm text-white">
-            Every trade has its own language and the electrical industry is no different. From your
-            first day on site you will hear terms like "bang", "spur", and "first fix" — knowing
-            what they mean helps you stay safe, communicate clearly, and avoid looking lost.
-          </p>
-          <div className="grid grid-cols-3 gap-3">
-            <div className="p-2 bg-green-500/10 border border-green-500/20 rounded-lg text-center">
-              <div className="text-lg font-bold text-green-400">{basicCount}</div>
-              <div className="text-xs text-white">Basic</div>
-            </div>
-            <div className="p-2 bg-yellow-500/10 border border-yellow-500/20 rounded-lg text-center">
-              <div className="text-lg font-bold text-yellow-400">{intermediateCount}</div>
-              <div className="text-xs text-white">Intermediate</div>
-            </div>
-            <div className="p-2 bg-red-500/10 border border-red-500/20 rounded-lg text-center">
-              <div className="text-lg font-bold text-red-400">{advancedCount}</div>
-              <div className="text-xs text-white">Advanced</div>
-            </div>
+      {/* ── Glossary overview ───────────────────────────────────── */}
+      <motion.div variants={itemVariants}>
+        <div className="rounded-xl border border-white/[0.06] bg-[hsl(0_0%_10%)] p-4 sm:p-5 space-y-3">
+          <div className="flex items-baseline justify-between gap-3 flex-wrap">
+            <Eyebrow>Glossary overview</Eyebrow>
+            <span className="text-[12px] font-mono tabular-nums text-elec-yellow">
+              {siteJargonTerms.length} terms
+            </span>
           </div>
-        </CardContent>
-      </Card>
+          <div className="flex flex-wrap gap-1.5">
+            {basicCount > 0 && (
+              <span className="inline-flex items-center h-7 px-2 rounded-md border border-elec-yellow/30 bg-elec-yellow/[0.06] text-[11px] font-medium text-elec-yellow">
+                <span className="font-mono tabular-nums mr-1">{basicCount}</span> basic
+              </span>
+            )}
+            {intermediateCount > 0 && (
+              <span className="inline-flex items-center h-7 px-2 rounded-md border border-white/[0.10] bg-white/[0.03] text-[11px] font-medium text-white/85">
+                <span className="font-mono tabular-nums mr-1">{intermediateCount}</span>{' '}
+                intermediate
+              </span>
+            )}
+            {advancedCount > 0 && (
+              <span className="inline-flex items-center h-7 px-2 rounded-md border border-red-500/30 bg-red-500/[0.04] text-[11px] font-medium text-red-300">
+                <span className="font-mono tabular-nums mr-1">{advancedCount}</span> advanced
+              </span>
+            )}
+          </div>
+        </div>
+      </motion.div>
 
-      {/* Quick Search */}
-      <div className="relative">
-        {!searchTerm && (
-          <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-white pointer-events-none" />
-        )}
-        <Input
-          placeholder="Search any term, definition, or usage..."
-          value={searchTerm}
-          onChange={(e) => setSearchTerm(e.target.value)}
-          className={`h-11 touch-manipulation ${!searchTerm ? 'pl-10' : ''}`}
-        />
-        {searchTerm && (
-          <Button
-            variant="ghost"
-            size="sm"
-            onClick={() => setSearchTerm('')}
-            className="absolute right-1 top-1/2 -translate-y-1/2 h-8 w-8 p-0 touch-manipulation"
-          >
-            <X className="h-4 w-4" />
-          </Button>
-        )}
-      </div>
-
-      {/* Search Results OR Category Cards */}
-      {searchTerm ? (
-        <div className="space-y-3">
-          <p className="text-sm text-white">
-            {searchResults.length} result{searchResults.length !== 1 ? 's' : ''} for "
-            {searchTerm}"
-          </p>
-          {searchResults.length > 0 ? (
-            searchResults.map((term, i) => <JargonTermCard key={i} term={term} />)
-          ) : (
-            <Card className="border-elec-yellow/20 bg-white/5">
-              <CardContent className="text-center py-8">
-                <p className="text-white">No terms found. Try a different search.</p>
-              </CardContent>
-            </Card>
+      {/* ── Quick search ────────────────────────────────────────── */}
+      <motion.div variants={itemVariants}>
+        <div className="relative">
+          <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-white/40 pointer-events-none" />
+          <Input
+            placeholder="Search any term, definition, or usage…"
+            value={searchTerm}
+            onChange={(e) => setSearchTerm(e.target.value)}
+            className="h-11 pl-10 pr-10 touch-manipulation bg-[hsl(0_0%_10%)] border border-white/[0.08] text-[13px] focus:border-elec-yellow/40 focus:ring-1 focus:ring-elec-yellow/20 placeholder:text-white/40"
+          />
+          {searchTerm && (
+            <button
+              onClick={() => setSearchTerm('')}
+              className="absolute right-2 top-1/2 -translate-y-1/2 h-9 w-9 flex items-center justify-center rounded-full active:bg-white/[0.06] touch-manipulation"
+              aria-label="Clear search"
+            >
+              <X className="h-4 w-4 text-white/55" />
+            </button>
           )}
         </div>
+      </motion.div>
+
+      {/* ── Search results OR category browse ───────────────────── */}
+      {searchTerm ? (
+        <motion.section variants={itemVariants} className="space-y-3">
+          <Eyebrow>
+            {searchResults.length} result{searchResults.length !== 1 ? 's' : ''} for “{searchTerm}”
+          </Eyebrow>
+          {searchResults.length > 0 ? (
+            <div className="space-y-2.5">
+              {searchResults.map((term, i) => (
+                <JargonTermCard key={i} term={term} />
+              ))}
+            </div>
+          ) : (
+            <div className="rounded-xl border border-white/[0.06] bg-[hsl(0_0%_10%)] p-6 text-center space-y-2">
+              <Search className="h-5 w-5 text-white/40 mx-auto" />
+              <p className="text-[13px] text-white/55">No terms found. Try a different search.</p>
+            </div>
+          )}
+        </motion.section>
       ) : (
         <>
-          {/* Category Cards */}
-          <div className="space-y-3">
-            <h2 className="text-lg font-semibold text-white">Browse by Category</h2>
-            {siteJargonCategories.map((cat) => {
-              const style = categoryStyles[cat.id];
-              const count = categoryCounts[cat.id] || 0;
-              return (
-                <button
-                  key={cat.id}
-                  onClick={() => navigate(`/apprentice/toolbox/site-jargon/${cat.id}`)}
-                  className={`w-full text-left p-4 rounded-lg border ${style.border} ${style.bg} flex items-center gap-3 touch-manipulation active:scale-[0.98] transition-transform`}
-                >
-                  <span className="text-2xl flex-shrink-0">{style.emoji}</span>
-                  <div className="flex-1 min-w-0">
-                    <h3 className={`font-semibold ${style.colour}`}>{cat.name}</h3>
-                    <p className="text-xs text-white line-clamp-1">{cat.description}</p>
-                  </div>
-                  <div className="flex items-center gap-2 flex-shrink-0">
-                    <span className="text-sm font-medium text-white">{count}</span>
-                    <ChevronRight className="h-4 w-4 text-white" />
-                  </div>
-                </button>
-              );
-            })}
-          </div>
+          {/* ── Browse by category ──────────────────────────────── */}
+          <motion.section variants={itemVariants} className="space-y-3">
+            <SectionHeader
+              eyebrow="Browse"
+              title="Browse by category"
+              meta={`${siteJargonCategories.length} categories`}
+            />
+            <div className="space-y-2.5">
+              {siteJargonCategories.map((cat) => {
+                const emoji = categoryEmoji[cat.id] || '📘';
+                const count = categoryCounts[cat.id] || 0;
+                return (
+                  <button
+                    key={cat.id}
+                    onClick={() => navigate(`/apprentice/toolbox/site-jargon/${cat.id}`)}
+                    className="w-full text-left rounded-xl border border-white/[0.06] bg-[hsl(0_0%_10%)] p-4 flex items-center gap-3 touch-manipulation active:scale-[0.99] transition-transform"
+                  >
+                    <span className="text-2xl flex-shrink-0">{emoji}</span>
+                    <div className="flex-1 min-w-0 space-y-0.5">
+                      <h3 className="text-[15px] font-semibold text-white">{cat.name}</h3>
+                      <p className="text-[12px] text-white/55 line-clamp-1">{cat.description}</p>
+                    </div>
+                    <div className="flex items-center gap-2 flex-shrink-0">
+                      <span className="text-[12px] font-mono tabular-nums text-elec-yellow">
+                        {count}
+                      </span>
+                      <ChevronRight className="h-4 w-4 text-white/40" />
+                    </div>
+                  </button>
+                );
+              })}
+            </div>
+          </motion.section>
 
-          {/* Study Mode */}
-          <Card className="border-elec-yellow/20 bg-elec-yellow/5">
-            <CardContent className="p-4 space-y-3">
+          {/* ── Study mode ──────────────────────────────────────── */}
+          <motion.div variants={itemVariants}>
+            <div className="rounded-xl border border-elec-yellow/25 bg-elec-yellow/[0.04] p-4 sm:p-5 space-y-3">
               <div className="flex items-center gap-2">
-                <GraduationCap className="h-5 w-5 text-elec-yellow" />
-                <h3 className="font-semibold text-elec-yellow">Study Mode</h3>
+                <GraduationCap className="h-4 w-4 text-elec-yellow" />
+                <Eyebrow className="text-elec-yellow/85">Study mode</Eyebrow>
               </div>
-              <p className="text-sm text-white">
+              <p className="text-[13px] text-white/85 leading-relaxed">
                 Test your knowledge with interactive flashcards. Terms are shuffled randomly — see
                 the term first, then tap to reveal the definition, context, and usage examples.
               </p>
-              <Button
+              <button
                 onClick={() => navigate('/apprentice/toolbox/site-jargon/study')}
-                className="w-full h-11 touch-manipulation active:scale-[0.98]"
+                className="w-full inline-flex items-center justify-center gap-2 h-11 rounded-md border border-elec-yellow/30 bg-elec-yellow/[0.06] text-[13px] font-medium text-elec-yellow hover:bg-elec-yellow/[0.10] active:scale-[0.98] transition-all touch-manipulation"
               >
-                <GraduationCap className="h-4 w-4 mr-2" />
-                Start Flashcards ({siteJargonTerms.length} terms)
-              </Button>
-            </CardContent>
-          </Card>
+                <GraduationCap className="h-3.5 w-3.5" />
+                Start flashcards ({siteJargonTerms.length} terms)
+              </button>
+            </div>
+          </motion.div>
 
-          {/* Tip */}
-          <div className="p-3 bg-elec-yellow/10 border border-elec-yellow/20 rounded-lg">
-            <p className="text-xs text-white">
-              <strong className="text-elec-yellow">New to site?</strong> Start with Basic level
-              terms in Electrical Terms and Site Language — these are the ones you will hear most
-              on your first day.
-            </p>
-          </div>
+          {/* ── Tip ─────────────────────────────────────────────── */}
+          <motion.div variants={itemVariants}>
+            <div className="rounded-md border border-elec-yellow/20 bg-elec-yellow/[0.04] p-3">
+              <p className="text-[12.5px] text-white/85 leading-relaxed">
+                <span className="font-semibold text-elec-yellow">New to site?</span> Start with
+                Basic terms in Electrical Terms and Site Language — these are the ones you'll hear
+                most on your first day.
+              </p>
+            </div>
+          </motion.div>
         </>
       )}
     </PageFrame>

@@ -117,7 +117,7 @@ export const siteJargonTerms: JargonTerm[] = [
       'Circuit Protective Conductor — the earth wire within a cable that provides a fault current path back to the source',
     category: 'electrical-terms',
     context: 'Every circuit must have a CPC for safety',
-    commonUsage: "What size is the CPC in that 2.5mm T&E?",
+    commonUsage: 'What size is the CPC in that 2.5mm T&E?',
     relatedTerms: ['Earth wire', 'Protective conductor', 'Earthing', 'Bonding'],
     difficulty: 'basic',
     tags: ['safety', 'conductor', 'protection'],
@@ -219,15 +219,6 @@ export const siteJargonTerms: JargonTerm[] = [
     relatedTerms: ['Tails', 'Consumer unit', 'Service head', 'Supply'],
     difficulty: 'intermediate',
     tags: ['supply', 'distribution'],
-  },
-  {
-    term: 'HEMP',
-    definition: 'House Electrical Main Panel - older term for consumer unit',
-    category: 'electrical-terms',
-    context: 'Older electrical terminology',
-    commonUsage: 'The HEMP is in the garage',
-    relatedTerms: ['Consumer unit', 'Main panel', 'Board'],
-    difficulty: 'intermediate',
   },
   {
     term: 'Isolator',
@@ -462,11 +453,59 @@ export const siteJargonTerms: JargonTerm[] = [
     definition:
       'Surge Protection Device — protects installations against transient overvoltages from lightning strikes or switching surges',
     category: 'electrical-terms',
-    context: 'Required by BS 7671 Amendment 2 where consequences of overvoltage are serious',
+    context:
+      'BS 7671 (Section 443) requires SPDs to be assessed and, in most cases, fitted unless a documented risk assessment shows they can be omitted; rules tightened across the 18th Edition and its amendments.',
     commonUsage: 'Fit an SPD in the new consumer unit',
     relatedTerms: ['Type 1', 'Type 2', 'Transient', 'Lightning protection'],
     difficulty: 'intermediate',
     tags: ['protection', 'regulations'],
+  },
+  {
+    term: 'AFDD',
+    definition:
+      'Arc Fault Detection Device — detects dangerous arcing faults in a circuit (a common cause of electrical fires) and disconnects the supply',
+    category: 'electrical-terms',
+    context:
+      'BS 7671:2018+A4:2026 expands where AFDDs are required, including certain higher-risk premises such as those with sleeping accommodation (Regulation 421.1.7).',
+    commonUsage: 'These bedroom circuits need AFDDs under the latest amendment',
+    relatedTerms: ['Arc fault', 'RCBO', 'Fire safety', 'A4:2026'],
+    difficulty: 'advanced',
+    tags: ['protection', 'regulations', 'fire safety'],
+  },
+  {
+    term: 'PNB',
+    definition:
+      'Protective Neutral Bonding — a TN-C-S earthing variant where the supply neutral and earth are bonded at a single point, common on private transformer supplies',
+    category: 'electrical-terms',
+    context: 'BS 7671:2018+A4:2026 sets out the PNB arrangement as a recognised variant of TN-C-S.',
+    commonUsage: "It's a PNB supply off the on-site transformer",
+    relatedTerms: ['TN-C-S', 'PME', 'Earthing', 'A4:2026'],
+    difficulty: 'advanced',
+    tags: ['earthing', 'supply', 'regulations'],
+  },
+  {
+    term: 'Stationary Secondary Battery',
+    definition:
+      'A fixed battery installation (e.g. home battery storage) that stores electrical energy — increasingly common alongside solar PV',
+    category: 'electrical-terms',
+    context:
+      'BS 7671:2018+A4:2026 introduces guidance for stationary secondary battery (energy storage) installations.',
+    commonUsage: 'Wire the stationary battery into the storage system',
+    relatedTerms: ['Battery storage', 'Solar PV', 'Energy storage', 'A4:2026'],
+    difficulty: 'advanced',
+    tags: ['installation', 'regulations', 'renewables'],
+  },
+  {
+    term: 'PoE',
+    definition:
+      'Power over Ethernet — supplies low-voltage DC power and data over a single Ethernet cable, used for cameras, access points, and LED lighting',
+    category: 'electrical-terms',
+    context:
+      'BS 7671:2018+A4:2026 addresses the heat-rise and cable-bundling considerations for PoE supplies.',
+    commonUsage: 'Run a PoE cable to the camera so it takes power and data on one run',
+    relatedTerms: ['Ethernet', 'Data cable', 'LED lighting', 'A4:2026'],
+    difficulty: 'intermediate',
+    tags: ['installation', 'data', 'regulations'],
   },
   {
     term: 'ADS',
@@ -484,7 +523,8 @@ export const siteJargonTerms: JargonTerm[] = [
     definition:
       'Prospective Fault Current — the maximum current that would flow in a dead short circuit at any point in the installation',
     category: 'electrical-terms',
-    context: 'Must be measured at the origin and recorded on certificates — protective devices must be rated to break this current',
+    context:
+      'Must be measured at the origin and recorded on certificates — protective devices must be rated to break this current',
     commonUsage: "What's the PFC at the board?",
     relatedTerms: ['PSCC', 'Breaking capacity', 'Fault current', 'kA rating'],
     difficulty: 'intermediate',
@@ -504,7 +544,7 @@ export const siteJargonTerms: JargonTerm[] = [
   {
     term: 'Consumer Unit',
     definition:
-      'The main distribution board in a domestic property housing MCBs, RCDs, or RCBOs — must be non-combustible (metal) since Amendment 3',
+      'The main distribution board in a domestic property housing MCBs, RCDs, or RCBOs — must be non-combustible (e.g. metal), a requirement since the 17th Edition Amendment 3 (2015), Regulation 421.1.201, and retained in BS 7671:2018',
     category: 'electrical-terms',
     context: 'The heart of every domestic installation',
     commonUsage: 'The CU needs upgrading to a metal board',
@@ -649,7 +689,8 @@ export const siteJargonTerms: JargonTerm[] = [
     definition:
       'Device that changes voltage from one level to another — step-down transformers reduce mains voltage for doorbells, garden lighting, etc.',
     category: 'electrical-terms',
-    context: 'Used wherever voltage needs to be changed — ELV lighting, shaver sockets, control circuits',
+    context:
+      'Used wherever voltage needs to be changed — ELV lighting, shaver sockets, control circuits',
     commonUsage: 'Fit a transformer for the 12V garden lights',
     relatedTerms: ['Step-down', 'Step-up', 'Voltage', 'ELV', 'SELV'],
     difficulty: 'basic',
@@ -671,7 +712,8 @@ export const siteJargonTerms: JargonTerm[] = [
     definition:
       'Protective device containing a wire or element that melts and breaks the circuit when too much current flows — types include rewirable, cartridge, and HRC',
     category: 'electrical-terms',
-    context: 'Older protection method — mostly replaced by MCBs but still found in older installations and some commercial applications',
+    context:
+      'Older protection method — mostly replaced by MCBs but still found in older installations and some commercial applications',
     commonUsage: 'The fuse has blown, check the circuit',
     relatedTerms: ['MCB', 'Rewirable fuse', 'Cartridge fuse', 'HRC', 'BS 88'],
     difficulty: 'basic',
@@ -737,7 +779,8 @@ export const siteJargonTerms: JargonTerm[] = [
     definition:
       'Plastic clip with a nail used to secure cables to surfaces — sized to match the cable (e.g. 1.0mm, 1.5mm, 2.5mm, 4.0mm)',
     category: 'electrical-terms',
-    context: 'Must be spaced at correct intervals — typically 300mm horizontal, 400mm vertical for T&E',
+    context:
+      'Must be spaced at correct intervals — typically 300mm horizontal, 400mm vertical for T&E',
     commonUsage: 'Clip that cable properly, every 300mm',
     relatedTerms: ['Clipping direct', 'Cable fixing', 'Spacing', 'P clips'],
     difficulty: 'basic',
@@ -748,7 +791,8 @@ export const siteJargonTerms: JargonTerm[] = [
     definition:
       'The reduction in voltage along a cable due to its resistance — BS 7671 limits this to 3% for lighting and 5% for other circuits from the origin',
     category: 'electrical-terms',
-    context: 'Long cable runs or undersized cables cause excessive volt drop — lights dim, motors run slow',
+    context:
+      'Long cable runs or undersized cables cause excessive volt drop — lights dim, motors run slow',
     commonUsage: 'Check the volt drop on that long run to the garage',
     relatedTerms: ['Cable sizing', 'Resistance', 'Derating', 'On-Site Guide'],
     difficulty: 'intermediate',
@@ -759,7 +803,8 @@ export const siteJargonTerms: JargonTerm[] = [
     definition:
       'The maximum current a cable can safely carry continuously without overheating — depends on cable size, installation method, grouping, and ambient temperature',
     category: 'electrical-terms',
-    context: 'Tables in the On-Site Guide and Appendix 4 of BS 7671 give the values for each cable type and installation method',
+    context:
+      'Tables in the On-Site Guide and Appendix 4 of BS 7671 give the values for each cable type and installation method',
     commonUsage: 'What is the current carrying capacity of 2.5mm in clipped direct?',
     relatedTerms: ['Iz', 'Cable sizing', 'Derating factor', 'Installation method'],
     difficulty: 'intermediate',
@@ -768,9 +813,10 @@ export const siteJargonTerms: JargonTerm[] = [
   {
     term: 'Derating Factor',
     definition:
-      'A multiplier applied to reduce a cable\'s current carrying capacity — accounts for grouping with other cables, high ambient temperature, or thermal insulation contact',
+      "A multiplier applied to reduce a cable's current carrying capacity — accounts for grouping with other cables, high ambient temperature, or thermal insulation contact",
     category: 'electrical-terms',
-    context: 'Multiple derating factors are multiplied together — grouping AND insulation contact can significantly reduce capacity',
+    context:
+      'Multiple derating factors are multiplied together — grouping AND insulation contact can significantly reduce capacity',
     commonUsage: 'Derate those cables, they are grouped together in the loft insulation',
     relatedTerms: ['Cable sizing', 'Grouping factor', 'Ambient temperature', 'Thermal insulation'],
     difficulty: 'advanced',
@@ -781,7 +827,8 @@ export const siteJargonTerms: JargonTerm[] = [
     definition:
       'Any current exceeding the rated value — includes both overload (gradual increase) and short circuit (sudden massive current)',
     category: 'electrical-terms',
-    context: 'MCBs and fuses protect against overcurrent by disconnecting the circuit automatically',
+    context:
+      'MCBs and fuses protect against overcurrent by disconnecting the circuit automatically',
     commonUsage: 'That MCB is there for overcurrent protection',
     relatedTerms: ['Overload', 'Short circuit', 'MCB', 'Fuse', 'Protection'],
     difficulty: 'intermediate',
@@ -792,7 +839,8 @@ export const siteJargonTerms: JargonTerm[] = [
     definition:
       'A fault where current flows between live conductors (line to neutral or line to line) bypassing the load — causes very high currents that can start fires',
     category: 'electrical-terms',
-    context: 'The breaking capacity of the protective device must be rated to safely interrupt the prospective short circuit current',
+    context:
+      'The breaking capacity of the protective device must be rated to safely interrupt the prospective short circuit current',
     commonUsage: 'That cable has a short circuit, the insulation is damaged',
     relatedTerms: ['Overcurrent', 'PFC', 'Breaking capacity', 'Fault'],
     difficulty: 'intermediate',
@@ -803,7 +851,8 @@ export const siteJargonTerms: JargonTerm[] = [
     definition:
       'Total opposition to current flow in an AC circuit — combines resistance and reactance. Measured in ohms.',
     category: 'electrical-terms',
-    context: 'Earth fault loop impedance (Zs) is critical for ensuring protective devices disconnect fast enough',
+    context:
+      'Earth fault loop impedance (Zs) is critical for ensuring protective devices disconnect fast enough',
     commonUsage: 'The loop impedance is too high on that circuit',
     relatedTerms: ['Resistance', 'Reactance', 'Zs', 'Ze', 'Ohms'],
     difficulty: 'advanced',
@@ -814,7 +863,8 @@ export const siteJargonTerms: JargonTerm[] = [
     definition:
       'The brief surge of current when equipment is first switched on — can be many times higher than the normal running current, especially for motors and transformers',
     category: 'electrical-terms',
-    context: 'Can cause MCBs to trip on start-up — Type C or D MCBs are used where high inrush is expected',
+    context:
+      'Can cause MCBs to trip on start-up — Type C or D MCBs are used where high inrush is expected',
     commonUsage: 'Use a Type C MCB, the motor has a high inrush current',
     relatedTerms: ['Starting current', 'MCB type', 'Motor', 'Surge'],
     difficulty: 'advanced',
@@ -825,7 +875,8 @@ export const siteJargonTerms: JargonTerm[] = [
     definition:
       'Mineral Insulated Copper Clad cable (also called Pyro) — fire-resistant cable with copper conductors insulated by compressed magnesium oxide powder inside a copper sheath',
     category: 'electrical-terms',
-    context: 'Used for fire alarm circuits, emergency lighting, and anywhere fire resistance is required',
+    context:
+      'Used for fire alarm circuits, emergency lighting, and anywhere fire resistance is required',
     commonUsage: 'Use MICC for the fire alarm circuit, it needs to be fire rated',
     relatedTerms: ['Pyro', 'Fire rated', 'FP200', 'Emergency lighting', 'BS 5839'],
     difficulty: 'advanced',
@@ -836,7 +887,8 @@ export const siteJargonTerms: JargonTerm[] = [
     definition:
       'Fire Performance 200 — a fire-resistant cable that maintains circuit integrity during a fire. Easier to install than MICC and commonly used for fire alarms and emergency lighting.',
     category: 'electrical-terms',
-    context: 'Has become the go-to fire-rated cable on most sites due to ease of termination compared to MICC',
+    context:
+      'Has become the go-to fire-rated cable on most sites due to ease of termination compared to MICC',
     commonUsage: 'Run FP200 for the emergency lighting circuit',
     relatedTerms: ['MICC', 'Fire rated', 'Fire alarm', 'Emergency lighting'],
     difficulty: 'intermediate',
@@ -847,7 +899,8 @@ export const siteJargonTerms: JargonTerm[] = [
     definition:
       'Low Smoke and Fume — cable sheathing that produces minimal toxic smoke when burning. Required in escape routes and public buildings.',
     category: 'electrical-terms',
-    context: 'Standard PVC cable produces thick toxic smoke in a fire — LSF cable reduces this danger in enclosed spaces',
+    context:
+      'Standard PVC cable produces thick toxic smoke in a fire — LSF cable reduces this danger in enclosed spaces',
     commonUsage: 'Use LSF cable in the corridors, it is an escape route',
     relatedTerms: ['LSOH', 'Fire safety', 'Escape route', 'PVC'],
     difficulty: 'intermediate',
@@ -858,7 +911,8 @@ export const siteJargonTerms: JargonTerm[] = [
     definition:
       'Recessed ceiling light fitting that shines downward — very common in modern homes and commercial spaces. Must consider fire rating and thermal insulation contact.',
     category: 'electrical-terms',
-    context: 'Fire-rated downlighters are required where they penetrate a fire compartment (e.g. between floors)',
+    context:
+      'Fire-rated downlighters are required where they penetrate a fire compartment (e.g. between floors)',
     commonUsage: 'Put fire-rated downlighters in the kitchen ceiling',
     relatedTerms: ['Recessed light', 'Fire rated', 'LED', 'Ceiling rose', 'Transformer'],
     difficulty: 'basic',
@@ -869,7 +923,8 @@ export const siteJargonTerms: JargonTerm[] = [
     definition:
       'Power supply that converts mains voltage to the low voltage DC required by LED lights — equivalent of a transformer for LEDs',
     category: 'electrical-terms',
-    context: 'Each LED installation needs a compatible driver — check the wattage rating matches the total LED load',
+    context:
+      'Each LED installation needs a compatible driver — check the wattage rating matches the total LED load',
     commonUsage: 'The LED driver is rated for 60W, we can only put 5 panels on it',
     relatedTerms: ['LED', 'Transformer', 'Driver', 'Low voltage', 'Constant current'],
     difficulty: 'intermediate',
@@ -880,7 +935,8 @@ export const siteJargonTerms: JargonTerm[] = [
     definition:
       'Standard metal rail used to mount MCBs, RCBOs, timers, contactors, and other devices inside distribution boards and control panels',
     category: 'electrical-terms',
-    context: 'Universal mounting standard — devices clip on and off easily for installation and replacement',
+    context:
+      'Universal mounting standard — devices clip on and off easily for installation and replacement',
     commonUsage: 'Clip the timer onto the DIN rail next to the contactor',
     relatedTerms: ['Distribution board', 'MCB', 'RCBO', 'Contactor', 'Consumer unit'],
     difficulty: 'basic',
@@ -889,11 +945,13 @@ export const siteJargonTerms: JargonTerm[] = [
   {
     term: 'TN-C-S',
     definition:
-      'Combined neutral and earth supply system (also called PME — Protective Multiple Earthing). The most common earthing arrangement in the UK.',
+      'Combined neutral and earth supply system (also called PME — Protective Multiple Earthing, or PNB where a single bond is used). The most common earthing arrangement in the UK.',
     category: 'electrical-terms',
-    context: 'The neutral and earth are combined in the supply cable and separated at the consumer unit. Has restrictions for outdoor installations.',
-    commonUsage: 'This is a TN-C-S supply so we cannot use it for the outside socket without extra earthing',
-    relatedTerms: ['PME', 'TN-S', 'TT', 'Earthing', 'DNO'],
+    context:
+      'The neutral and earth are combined in the supply cable and separated at the consumer unit. Has restrictions for outdoor installations. BS 7671:2018+A4:2026 clarifies the PNB (Protective Neutral Bonding) variant.',
+    commonUsage:
+      'This is a TN-C-S supply so we cannot use it for the outside socket without extra earthing',
+    relatedTerms: ['PME', 'PNB', 'TN-S', 'TT', 'Earthing', 'DNO'],
     difficulty: 'advanced',
     tags: ['earthing', 'supply'],
   },
@@ -934,7 +992,8 @@ export const siteJargonTerms: JargonTerm[] = [
   },
   {
     term: 'Spirit Level',
-    definition: 'Tool for checking horizontal and vertical alignment — essential for neat installation work',
+    definition:
+      'Tool for checking horizontal and vertical alignment — essential for neat installation work',
     category: 'tools-equipment',
     context: 'Used when fitting back boxes, trunking, containment, and consumer units',
     commonUsage: 'Use the spirit level to get that trunking straight',
@@ -1155,7 +1214,8 @@ export const siteJargonTerms: JargonTerm[] = [
     definition:
       'Two-pole tester used to confirm presence or absence of voltage — must comply with GS38 and be proved before and after use',
     category: 'tools-equipment',
-    context: 'The ONLY acceptable method for proving dead — neon screwdrivers and multimeters are not sufficient alone',
+    context:
+      'The ONLY acceptable method for proving dead — neon screwdrivers and multimeters are not sufficient alone',
     commonUsage: 'Prove dead with the voltage indicator',
     relatedTerms: ['GS38', 'Proving unit', 'Safe isolation', 'Two-pole tester'],
     difficulty: 'basic',
@@ -1176,7 +1236,8 @@ export const siteJargonTerms: JargonTerm[] = [
     definition:
       'Self-supporting A-frame ladder — must be fully opened with all four feet on a level surface and in good condition',
     category: 'tools-equipment',
-    context: 'Most common access equipment for electricians — check before use and follow Work at Height regs',
+    context:
+      'Most common access equipment for electricians — check before use and follow Work at Height regs',
     commonUsage: 'Get the steps up, I need to get at that JB',
     relatedTerms: ['WAH', 'Platform step', 'Ladder', 'Access equipment'],
     difficulty: 'basic',
@@ -1198,7 +1259,8 @@ export const siteJargonTerms: JargonTerm[] = [
     definition:
       'Test instrument that measures current by clamping around a conductor without breaking the circuit — used for measuring load current on live circuits',
     category: 'tools-equipment',
-    context: 'Essential for checking load balancing on three-phase and measuring individual circuit currents',
+    context:
+      'Essential for checking load balancing on three-phase and measuring individual circuit currents',
     commonUsage: 'Clamp the meter on the live to see how many amps',
     relatedTerms: ['Current measurement', 'Tong tester', 'Load', 'Amps'],
     difficulty: 'intermediate',
@@ -1209,7 +1271,8 @@ export const siteJargonTerms: JargonTerm[] = [
     definition:
       'Hand tool used to compress a metal crimp connector onto a cable end — creates a solid mechanical and electrical connection without soldering',
     category: 'tools-equipment',
-    context: 'Essential for terminating larger cables and making reliable connections in distribution boards',
+    context:
+      'Essential for terminating larger cables and making reliable connections in distribution boards',
     commonUsage: 'Use the crimping tool on those 10mm tails',
     relatedTerms: ['Crimp', 'Lug', 'Termination', 'Bootlace ferrule'],
     difficulty: 'basic',
@@ -1231,7 +1294,8 @@ export const siteJargonTerms: JargonTerm[] = [
     definition:
       'Circular cutting attachment for drills — used to cut large round holes in wood, plasterboard, and metal for cable entries, downlighters, and glands',
     category: 'tools-equipment',
-    context: 'Available in many sizes — 20mm for conduit entries, 75mm for downlighters, various for gland plates',
+    context:
+      'Available in many sizes — 20mm for conduit entries, 75mm for downlighters, various for gland plates',
     commonUsage: 'Use the 75mm hole saw for the downlighter positions',
     relatedTerms: ['Tank cutter', 'Drill', 'Downlighter', 'Gland plate'],
     difficulty: 'basic',
@@ -1253,7 +1317,8 @@ export const siteJargonTerms: JargonTerm[] = [
     definition:
       'Portable printer for creating adhesive labels — used for labelling circuits in distribution boards, cables, and equipment',
     category: 'tools-equipment',
-    context: 'Professional labelling is required by BS 7671 and looks much better than handwritten labels',
+    context:
+      'Professional labelling is required by BS 7671 and looks much better than handwritten labels',
     commonUsage: 'Print the circuit labels for the DB before we close it up',
     relatedTerms: ['Circuit chart', 'Distribution board', 'Identification', 'Labelling'],
     difficulty: 'basic',
@@ -1264,7 +1329,8 @@ export const siteJargonTerms: JargonTerm[] = [
     definition:
       'Step-down transformer that converts 230V mains to 110V CTE (Centre Tapped Earth) — required on most construction sites for power tools to reduce electric shock risk',
     category: 'tools-equipment',
-    context: 'The yellow plugs and sockets on site are 110V. Maximum shock voltage is 55V to earth.',
+    context:
+      'The yellow plugs and sockets on site are 110V. Maximum shock voltage is 55V to earth.',
     commonUsage: 'Plug the drill into the 110V transformer, you cannot use 230V on site',
     relatedTerms: ['Site supply', 'Yellow plug', 'CTE', 'Safety'],
     difficulty: 'basic',
@@ -1296,7 +1362,8 @@ export const siteJargonTerms: JargonTerm[] = [
   },
   {
     term: 'WAH',
-    definition: 'Work at Height — any work where a person could fall and be injured, including using ladders and platforms',
+    definition:
+      'Work at Height — any work where a person could fall and be injured, including using ladders and platforms',
     category: 'safety-terms',
     context: 'Work at Height Regulations 2005 apply — risk assess and use correct equipment',
     commonUsage: 'That ceiling rose is WAH, get the tower up',
@@ -1309,7 +1376,8 @@ export const siteJargonTerms: JargonTerm[] = [
     definition:
       'Portable Appliance Testing — inspection and testing of electrical appliances to check they are safe to use',
     category: 'safety-terms',
-    context: 'Required in workplaces and rented properties — technically called "in-service inspection"',
+    context:
+      'Required in workplaces and rented properties — technically called "in-service inspection"',
     commonUsage: 'The kettle needs PAT testing',
     relatedTerms: ['Appliance testing', 'In-service inspection', 'Class I', 'Class II'],
     difficulty: 'basic',
@@ -1406,7 +1474,8 @@ export const siteJargonTerms: JargonTerm[] = [
     definition:
       'Any enclosed area with limited access where there is a risk of injury from hazardous substances, lack of oxygen, or entrapment',
     category: 'safety-terms',
-    context: 'Examples include risers, ceiling voids, tanks, and some loft spaces — special procedures required',
+    context:
+      'Examples include risers, ceiling voids, tanks, and some loft spaces — special procedures required',
     commonUsage: "That riser is a confined space, you'll need a permit",
     relatedTerms: ['Permit to work', 'Risk assessment', 'Ventilation', 'Rescue plan'],
     difficulty: 'intermediate',
@@ -1417,7 +1486,8 @@ export const siteJargonTerms: JargonTerm[] = [
     definition:
       'Lifting, carrying, pushing, or pulling loads by hand — the biggest cause of workplace injury in construction',
     category: 'safety-terms',
-    context: 'Cable drums, distribution boards, and trunking are all heavy — use correct technique or mechanical aids',
+    context:
+      'Cable drums, distribution boards, and trunking are all heavy — use correct technique or mechanical aids',
     commonUsage: 'Get help with that board, think about your manual handling',
     relatedTerms: ['Lifting', 'TILE assessment', 'Back injury', 'Mechanical aids'],
     difficulty: 'basic',
@@ -1450,7 +1520,8 @@ export const siteJargonTerms: JargonTerm[] = [
     definition:
       'Lock Out Tag Out — safety procedure for isolating equipment so it cannot be accidentally re-energised during maintenance or repair',
     category: 'safety-terms',
-    context: 'Each worker applies their own lock and tag to the isolator — no one else can remove it',
+    context:
+      'Each worker applies their own lock and tag to the isolator — no one else can remove it',
     commonUsage: 'Put your LOTO lock on before you start working',
     relatedTerms: ['Safe isolation', 'Permit to work', 'Isolation', 'Lock'],
     difficulty: 'intermediate',
@@ -1505,7 +1576,8 @@ export const siteJargonTerms: JargonTerm[] = [
     definition:
       'Reporting of Injuries, Diseases and Dangerous Occurrences Regulations — requires employers to report certain serious workplace incidents to the HSE',
     category: 'safety-terms',
-    context: 'Major injuries, over-7-day injuries, dangerous occurrences, and work-related diseases must all be reported',
+    context:
+      'Major injuries, over-7-day injuries, dangerous occurrences, and work-related diseases must all be reported',
     commonUsage: 'That broken arm is RIDDOR reportable',
     relatedTerms: ['HSE', 'Accident report', 'Near miss', 'Major injury'],
     difficulty: 'intermediate',
@@ -1516,7 +1588,8 @@ export const siteJargonTerms: JargonTerm[] = [
     definition:
       'Any work that produces heat, sparks, or flame — welding, cutting, soldering, or using a heat gun near combustible materials',
     category: 'safety-terms',
-    context: 'Requires a hot works permit on most sites and a fire watch for at least 60 minutes after',
+    context:
+      'Requires a hot works permit on most sites and a fire watch for at least 60 minutes after',
     commonUsage: 'Get a hot works permit before you start soldering up there',
     relatedTerms: ['Permit to work', 'Fire watch', 'Fire extinguisher', 'Combustible'],
     difficulty: 'intermediate',
@@ -1527,7 +1600,8 @@ export const siteJargonTerms: JargonTerm[] = [
     definition:
       'Mandatory safety briefing given to every worker before they start on a new site — covers emergency procedures, hazards, welfare, and site rules',
     category: 'safety-terms',
-    context: 'You cannot start work on any site without completing the induction — your card is marked on the register',
+    context:
+      'You cannot start work on any site without completing the induction — your card is marked on the register',
     commonUsage: 'Go to the office for your site induction before you do anything else',
     relatedTerms: ['Toolbox talk', 'CSCS card', 'Site rules', 'Emergency procedures'],
     difficulty: 'basic',
@@ -1538,7 +1612,8 @@ export const siteJargonTerms: JargonTerm[] = [
     definition:
       'Explosive release of energy caused by an electrical fault — produces extreme heat (up to 20,000C), blinding light, blast pressure, and molten metal',
     category: 'safety-terms',
-    context: 'Arc flash is a major risk when working on or near live switchgear — proper PPE and safe working distances are essential',
+    context:
+      'Arc flash is a major risk when working on or near live switchgear — proper PPE and safe working distances are essential',
     commonUsage: 'Wear arc flash rated PPE when working on the main switchboard',
     relatedTerms: ['Flash', 'PPE', 'Live working', 'Switchgear', 'Burns'],
     difficulty: 'advanced',
@@ -1549,8 +1624,9 @@ export const siteJargonTerms: JargonTerm[] = [
     definition:
       'Construction Skills Certification Scheme card — proves you have the right training and qualifications to work on construction sites. Required for site access on most projects.',
     category: 'safety-terms',
-    context: 'Apprentices get a red CSCS card, qualified electricians get a blue (skilled worker) card via JIB/ECS',
-    commonUsage: 'You need your CSCS card to get on site',
+    context:
+      'Electricians carry the ECS card (managed by the JIB), which is the CSCS-Alliance-recognised card for the electrical trade — rather than a generic CSCS skilled-worker card. CSCS is the general construction scheme.',
+    commonUsage: 'You need your ECS card to get on site',
     relatedTerms: ['ECS card', 'JIB', 'Site induction', 'Competence'],
     difficulty: 'basic',
     tags: ['competence', 'site access'],
@@ -1560,7 +1636,8 @@ export const siteJargonTerms: JargonTerm[] = [
     definition:
       'Electrotechnical Certification Scheme card — the electrical industry equivalent of a CSCS card, issued by JIB. Proves your electrical qualifications and competence.',
     category: 'safety-terms',
-    context: 'Available in different grades: Apprentice (red), Electrician (gold), Approved Electrician (gold with stripe)',
+    context:
+      'Available in different grades: Apprentice (red), Electrician (gold), Approved Electrician (gold with stripe)',
     commonUsage: 'I have got my ECS gold card now I am qualified',
     relatedTerms: ['CSCS card', 'JIB', 'Qualification', 'Competence'],
     difficulty: 'basic',
@@ -1571,8 +1648,10 @@ export const siteJargonTerms: JargonTerm[] = [
     definition:
       'Continuous, on-the-spot assessment of risks as conditions change during work — supplements the formal written risk assessment',
     category: 'safety-terms',
-    context: 'Conditions on site change constantly — weather, other trades, access. You should be assessing risks continuously.',
-    commonUsage: 'The weather has changed, do a dynamic risk assessment before going back up the ladder',
+    context:
+      'Conditions on site change constantly — weather, other trades, access. You should be assessing risks continuously.',
+    commonUsage:
+      'The weather has changed, do a dynamic risk assessment before going back up the ladder',
     relatedTerms: ['Risk assessment', 'Hazard', 'Control measure', 'Situational awareness'],
     difficulty: 'intermediate',
     tags: ['procedure', 'ongoing'],
@@ -1582,7 +1661,8 @@ export const siteJargonTerms: JargonTerm[] = [
     definition:
       'Toilets, washing facilities, drinking water, rest areas, and drying rooms that must be provided on every construction site by law',
     category: 'safety-terms',
-    context: 'CDM Regulations require adequate welfare facilities — find out where they are during your site induction',
+    context:
+      'CDM Regulations require adequate welfare facilities — find out where they are during your site induction',
     commonUsage: 'Where are the welfare facilities on this site?',
     relatedTerms: ['CDM', 'Site induction', 'Rest area', 'Canteen'],
     difficulty: 'basic',
@@ -1624,7 +1704,8 @@ export const siteJargonTerms: JargonTerm[] = [
   },
   {
     term: 'Carcassing',
-    definition: 'The first fix stage on a new build — running all cables and containment before the walls are closed up',
+    definition:
+      'The first fix stage on a new build — running all cables and containment before the walls are closed up',
     category: 'site-language',
     context: 'Must be done before the plasterer or dry-liner arrives',
     commonUsage: 'We are carcassing this week, second fix next month',
@@ -1886,7 +1967,8 @@ export const siteJargonTerms: JargonTerm[] = [
     definition:
       'To leave sufficient cable length at each point for termination — typically 300mm minimum beyond the back box',
     category: 'site-language',
-    context: 'Not leaving enough tail means the cable is too short to terminate and may need replacing',
+    context:
+      'Not leaving enough tail means the cable is too short to terminate and may need replacing',
     commonUsage: 'Leave plenty of tail at each point, at least 300mm',
     relatedTerms: ['Terminate', 'Make off', 'Cable length', 'Slack'],
     difficulty: 'basic',
@@ -1897,7 +1979,8 @@ export const siteJargonTerms: JargonTerm[] = [
     definition:
       'To cut a rectangular hole in a wall for a back box using a bolster and hammer or an SDS drill',
     category: 'site-language',
-    context: 'First fix task — done before plastering so the boxes sit flush with the finished wall',
+    context:
+      'First fix task — done before plastering so the boxes sit flush with the finished wall',
     commonUsage: 'Chop out for 20 singles and 10 doubles on this floor',
     relatedTerms: ['Back box', 'First fix', 'Chase', 'SDS drill', 'Bolster'],
     difficulty: 'basic',
@@ -1919,7 +2002,8 @@ export const siteJargonTerms: JargonTerm[] = [
     definition:
       'Testing and verifying that an installation works correctly before handover — includes functional tests, setting timers, programming controls, and demonstrating to the client',
     category: 'site-language',
-    context: 'Done after all installation and testing is complete — the final check that everything works as intended',
+    context:
+      'Done after all installation and testing is complete — the final check that everything works as intended',
     commonUsage: 'We are commissioning the lighting controls tomorrow',
     relatedTerms: ['Handover', 'Functional test', 'Setting to work', 'Final circuit'],
     difficulty: 'intermediate',
@@ -1930,7 +2014,8 @@ export const siteJargonTerms: JargonTerm[] = [
     definition:
       'To draw accessory positions, cable routes, and containment layouts on walls, floors, or ceilings before installation begins — usually done with a chalk line and pencil',
     category: 'site-language',
-    context: 'Accurate marking up is the foundation of a neat installation — take time getting it right',
+    context:
+      'Accurate marking up is the foundation of a neat installation — take time getting it right',
     commonUsage: 'Mark up the socket positions before you start chopping out',
     relatedTerms: ['Set out', 'First fix', 'Layout', 'Chalk line'],
     difficulty: 'basic',
@@ -1941,7 +2026,8 @@ export const siteJargonTerms: JargonTerm[] = [
     definition:
       'The project schedule showing when each task must be completed — usually a Gantt chart showing dependencies between trades',
     category: 'site-language',
-    context: 'The programme drives everything on site — being behind programme causes serious problems',
+    context:
+      'The programme drives everything on site — being behind programme causes serious problems',
     commonUsage: 'We are behind programme on the second floor, need to catch up',
     relatedTerms: ['Schedule', 'Gantt chart', 'Deadline', 'Coordination'],
     difficulty: 'basic',
@@ -1952,7 +2038,8 @@ export const siteJargonTerms: JargonTerm[] = [
     definition:
       'A percentage of the contract value (usually 5%) held back by the client until the defects period is complete — typically released after 12 months',
     category: 'site-language',
-    context: 'Retention ensures you come back to fix any defects — you only get it back when the job is signed off',
+    context:
+      'Retention ensures you come back to fix any defects — you only get it back when the job is signed off',
     commonUsage: 'We will not get our retention back until the defects period is up',
     relatedTerms: ['Defects', 'Contract', 'Payment', 'Final account'],
     difficulty: 'intermediate',
@@ -2020,7 +2107,8 @@ export const siteJargonTerms: JargonTerm[] = [
     definition:
       'Electrical work that must be notified to Building Control under Part P — includes new circuits, consumer unit changes, and work in special locations',
     category: 'regulations-standards',
-    context: 'Can be self-certified by registered competent persons (NICEIC, NAPIT, etc.) or notified via building control',
+    context:
+      'Can be self-certified by registered competent persons (NICEIC, NAPIT, etc.) or notified via building control',
     commonUsage: "That's notifiable work, make sure it gets signed off",
     relatedTerms: ['Part P', 'Building control', 'Competent person', 'Self-certification'],
     difficulty: 'intermediate',
@@ -2028,11 +2116,24 @@ export const siteJargonTerms: JargonTerm[] = [
   },
   {
     term: '18th Edition',
-    definition: 'Current edition of BS 7671 wiring regulations',
+    definition:
+      'The 18th Edition of BS 7671, the UK wiring regulations. Currently in force as BS 7671:2018+A4:2026 (Amendment 4, published 15 April 2026).',
     category: 'regulations-standards',
-    context: 'Current UK electrical standard',
+    context:
+      'The current UK electrical standard, now incorporating Amendment 4 (BS 7671:2018+A4:2026).',
     commonUsage: "That's not 18th Edition compliant",
     relatedTerms: ['BS 7671', 'Wiring regs', 'Current standard'],
+    difficulty: 'basic',
+    tags: ['standards', 'regulations'],
+  },
+  {
+    term: 'Orange Book',
+    definition:
+      'Nickname for the printed copy of BS 7671 (the IET Wiring Regulations), after its distinctive orange cover',
+    category: 'regulations-standards',
+    context: 'The current edition is BS 7671:2018+A4:2026 (Amendment 4, published 15 April 2026).',
+    commonUsage: 'Grab the orange book and check the max Zs',
+    relatedTerms: ['BS 7671', '18th Edition', 'Wiring Regulations', 'A4:2026'],
     difficulty: 'basic',
     tags: ['standards', 'regulations'],
   },
@@ -2116,8 +2217,9 @@ export const siteJargonTerms: JargonTerm[] = [
     definition:
       'Areas where the risk of electric shock is increased and additional regulations apply — bathrooms, swimming pools, saunas, construction sites',
     category: 'regulations-standards',
-    context: 'BS 7671 Part 7 covers special locations — stricter requirements for RCD protection, IP ratings, and zones',
-    commonUsage: "The bathroom is a special location, check the zones",
+    context:
+      'BS 7671 Part 7 covers special locations — stricter requirements for RCD protection, IP ratings, and zones',
+    commonUsage: 'The bathroom is a special location, check the zones',
     relatedTerms: ['Zones', 'Bathroom', 'Swimming pool', 'Part 7'],
     difficulty: 'intermediate',
     tags: ['regulations', 'safety'],
@@ -2149,7 +2251,8 @@ export const siteJargonTerms: JargonTerm[] = [
     definition:
       'Part P of the Building Regulations — covers electrical safety in dwellings. Notifiable work must be certified by a competent person or building control.',
     category: 'regulations-standards',
-    context: 'New circuits, consumer unit changes, and work in bathrooms/kitchens are all notifiable under Part P',
+    context:
+      'New circuits, consumer unit changes, and work in bathrooms/kitchens are all notifiable under Part P',
     commonUsage: 'That CU change is Part P notifiable, it needs a certificate',
     relatedTerms: ['Building Regulations', 'Competent person', 'NICEIC', 'Notifiable work'],
     difficulty: 'intermediate',
@@ -2171,7 +2274,8 @@ export const siteJargonTerms: JargonTerm[] = [
     definition:
       'Construction (Design and Management) Regulations 2015 — the main set of regulations for managing health and safety on construction projects',
     category: 'regulations-standards',
-    context: 'Applies to all construction projects — defines duties of clients, designers, principal contractors, and workers',
+    context:
+      'Applies to all construction projects — defines duties of clients, designers, principal contractors, and workers',
     commonUsage: 'Under CDM, the principal contractor manages site safety',
     relatedTerms: ['Health and safety', 'Principal contractor', 'Construction phase plan', 'HSE'],
     difficulty: 'advanced',
@@ -2180,9 +2284,10 @@ export const siteJargonTerms: JargonTerm[] = [
   {
     term: 'EAL',
     definition:
-      'Excellence Achievement and Learning — the main awarding body for electrical apprenticeship qualifications in England, providing Level 2 and Level 3 diplomas',
+      'Excellence, Achievement and Learning — a main awarding body for electrical apprenticeship qualifications in England, providing Level 2 and Level 3 diplomas',
     category: 'regulations-standards',
-    context: 'Most electrical apprenticeships lead to EAL qualifications as the knowledge component',
+    context:
+      'Most electrical apprenticeships lead to EAL qualifications as the knowledge component',
     commonUsage: 'I am doing my EAL Level 3 at college',
     relatedTerms: ['City & Guilds', 'Apprenticeship', 'Level 3', 'Qualification'],
     difficulty: 'basic',
@@ -2204,8 +2309,10 @@ export const siteJargonTerms: JargonTerm[] = [
     definition:
       'The Electricity at Work Regulations 1989 — the legal framework requiring all electrical systems to be constructed, maintained, and used safely',
     category: 'regulations-standards',
-    context: 'The basis for safe isolation procedures and the legal requirement to maintain electrical installations',
-    commonUsage: 'Under the Electricity at Work Regulations, you must prove the circuit is dead before working on it',
+    context:
+      'The basis for safe isolation procedures and the legal requirement to maintain electrical installations',
+    commonUsage:
+      'Under the Electricity at Work Regulations, you must prove the circuit is dead before working on it',
     relatedTerms: ['Safe isolation', 'HSE', 'Legal requirement', 'Regulation 14'],
     difficulty: 'intermediate',
     tags: ['legal', 'safety'],
@@ -2215,7 +2322,8 @@ export const siteJargonTerms: JargonTerm[] = [
     definition:
       'British Standard for fire detection and fire alarm systems — Part 1 covers commercial buildings, Part 6 covers domestic dwellings',
     category: 'regulations-standards',
-    context: 'Specifies fire alarm categories (L1-L5 for life protection, P1-P2 for property protection) and system design requirements',
+    context:
+      'Specifies fire alarm categories (L1-L5 for life protection, P1-P2 for property protection) and system design requirements',
     commonUsage: 'The building needs a Category L2 system to BS 5839 Part 1',
     relatedTerms: ['Fire alarm', 'Category L', 'Detection', 'Approved Document B'],
     difficulty: 'advanced',
@@ -2226,7 +2334,8 @@ export const siteJargonTerms: JargonTerm[] = [
     definition:
       'British Standard for emergency lighting — covers system design, installation, testing, and maintenance of emergency escape lighting',
     category: 'regulations-standards',
-    context: 'Requires emergency lighting on all escape routes, changes of direction, and at fire safety signs',
+    context:
+      'Requires emergency lighting on all escape routes, changes of direction, and at fire safety signs',
     commonUsage: 'Check BS 5266 for the spacing of the emergency lights along the corridor',
     relatedTerms: ['Emergency lighting', 'Escape route', 'Lux level', 'Duration'],
     difficulty: 'advanced',
@@ -2237,7 +2346,8 @@ export const siteJargonTerms: JargonTerm[] = [
     definition:
       'National Association of Professional Inspectors and Testers — a competent person scheme for electricians, similar to NICEIC',
     category: 'regulations-standards',
-    context: 'Registration with NAPIT allows self-certification of notifiable electrical work under Part P',
+    context:
+      'Registration with NAPIT allows self-certification of notifiable electrical work under Part P',
     commonUsage: 'We are NAPIT registered so we can self-certify the work',
     relatedTerms: ['NICEIC', 'ELECSA', 'Competent person', 'Part P', 'Self-certification'],
     difficulty: 'basic',
@@ -2246,9 +2356,10 @@ export const siteJargonTerms: JargonTerm[] = [
   {
     term: 'Wiring Regulations',
     definition:
-      'Common name for BS 7671 — the national standard for electrical installations in the UK. Currently the 18th Edition (BS 7671:2018+A2:2022).',
+      'Common name for BS 7671 — the national standard for electrical installations in the UK. Currently the 18th Edition (BS 7671:2018+A4:2026).',
     category: 'regulations-standards',
-    context: 'Every electrician needs to know the wiring regulations — they govern how all electrical work must be carried out',
+    context:
+      'Every electrician needs to know the wiring regulations — they govern how all electrical work must be carried out',
     commonUsage: 'Check the wiring regs for the maximum Zs value on that circuit',
     relatedTerms: ['BS 7671', '18th Edition', 'IET', 'On-Site Guide'],
     difficulty: 'basic',
@@ -2404,9 +2515,10 @@ export const siteJargonTerms: JargonTerm[] = [
   {
     term: 'Safe Zones',
     definition:
-      'Prescribed areas in walls where concealed cables should be run — within 150mm of corners, edges, and accessories',
+      'Prescribed areas in walls where concealed cables may be run — within 150 mm of the top of the wall or of an angle/edge, or horizontally/vertically in line with an accessory',
     category: 'installation-methods',
-    context: 'Cables outside safe zones must be protected by an RCD or mechanically protected — BS 7671 Regulation 522.6.6',
+    context:
+      'Cables shallower than 50 mm outside a safe zone need RCD (≤30 mA) or mechanical protection — BS 7671 Regulation 522.6.202',
     commonUsage: 'Keep the cable in the safe zone or fit an RCD',
     relatedTerms: ['Concealed cables', 'RCD protection', 'Cable routes', 'Regulation 522'],
     difficulty: 'intermediate',
@@ -2428,7 +2540,8 @@ export const siteJargonTerms: JargonTerm[] = [
     definition:
       'Open mesh or perforated metal tray used to support cables in commercial and industrial installations — allows ventilation and easy access',
     category: 'installation-methods',
-    context: 'Common above suspended ceilings and in risers — cables are laid on top, not pulled through',
+    context:
+      'Common above suspended ceilings and in risers — cables are laid on top, not pulled through',
     commonUsage: 'Run the cables along the tray and drop down at each point',
     relatedTerms: ['Containment', 'Cable ladder', 'Basket tray', 'Support'],
     difficulty: 'basic',
@@ -2439,7 +2552,8 @@ export const siteJargonTerms: JargonTerm[] = [
     definition:
       'Heavy-duty metal support system for large cables — looks like a ladder laid flat. Used for submains and heavy power cables.',
     category: 'installation-methods',
-    context: 'Found in plant rooms, risers, and industrial environments where cables are too heavy for tray',
+    context:
+      'Found in plant rooms, risers, and industrial environments where cables are too heavy for tray',
     commonUsage: 'The submains will run on cable ladder from the switch room',
     relatedTerms: ['Cable tray', 'Containment', 'Submain', 'Support'],
     difficulty: 'intermediate',
@@ -2461,7 +2575,8 @@ export const siteJargonTerms: JargonTerm[] = [
     definition:
       'Cable gland specifically designed for terminating Steel Wire Armoured cable — provides earth continuity through the armour and a weatherproof seal',
     category: 'installation-methods',
-    context: 'Must be correctly tightened and the armour properly seated for both earthing and weatherproofing',
+    context:
+      'Must be correctly tightened and the armour properly seated for both earthing and weatherproofing',
     commonUsage: 'Make sure the SWA gland is tight and the armour is seated properly',
     relatedTerms: ['SWA', 'Cable termination', 'Gland plate', 'Armour'],
     difficulty: 'intermediate',
@@ -2483,7 +2598,8 @@ export const siteJargonTerms: JargonTerm[] = [
     definition:
       'Recessed box installed flush in the floor to provide power, data, and phone outlets — common in open-plan offices where desks are not against walls',
     category: 'installation-methods',
-    context: 'Must be installed level with the finished floor and have a proper cover to prevent trip hazards',
+    context:
+      'Must be installed level with the finished floor and have a proper cover to prevent trip hazards',
     commonUsage: 'Put a floor box under each desk cluster for power and data',
     relatedTerms: ['Dado trunking', 'Office', 'Power', 'Data outlet'],
     difficulty: 'basic',
@@ -2494,7 +2610,8 @@ export const siteJargonTerms: JargonTerm[] = [
     definition:
       'The maximum distance between cable clips or fixings for different cable types — specified in the On-Site Guide and manufacturer guidance',
     category: 'installation-methods',
-    context: 'Flat cable every 250mm horizontal / 400mm vertical, round cable every 300mm horizontal / 400mm vertical',
+    context:
+      'Flat cable every 250mm horizontal / 400mm vertical, round cable every 300mm horizontal / 400mm vertical',
     commonUsage: 'Keep the clip spacing right or it will look untidy and fail inspection',
     relatedTerms: ['Cable clip', 'Fixing', 'Neat work', 'On-Site Guide'],
     difficulty: 'basic',
@@ -2527,7 +2644,8 @@ export const siteJargonTerms: JargonTerm[] = [
     definition:
       'Small PVC trunking (typically 16x16mm or 25x16mm) used for surface-mounted cable management — common for adding circuits in existing buildings without chasing walls',
     category: 'installation-methods',
-    context: 'Quick and clean way to add wiring where flush installation is not practical — self-adhesive or screw-fixed',
+    context:
+      'Quick and clean way to add wiring where flush installation is not practical — self-adhesive or screw-fixed',
     commonUsage: 'Run mini trunking along the skirting board to the new socket',
     relatedTerms: ['Trunking', 'Surface mounting', 'Cable management', 'Retrofit'],
     difficulty: 'basic',
@@ -2573,7 +2691,8 @@ export const siteJargonTerms: JargonTerm[] = [
     definition:
       'Routine inspection and testing of an existing installation to check it remains safe — results recorded on an EICR',
     category: 'testing-terminology',
-    context: 'Required every 5 years for rented properties (England) and recommended at intervals depending on installation type',
+    context:
+      'Required at intervals of no more than 5 years for privately rented homes in England (Electrical Safety Standards 2020) — or sooner if the report recommends. Scotland and Wales have their own rules.',
     commonUsage: 'The landlord needs a periodic inspection doing',
     relatedTerms: ['EICR', 'Condition report', 'C1', 'C2', 'C3'],
     difficulty: 'intermediate',
@@ -2658,8 +2777,9 @@ export const siteJargonTerms: JargonTerm[] = [
     definition:
       'Danger present — risk of injury. Immediate remedial action required. The most serious observation code on an EICR.',
     category: 'testing-terminology',
-    context: 'Inspector must recommend the defective part is made safe before leaving — may involve isolating the circuit',
-    commonUsage: "That exposed live connection is a C1",
+    context:
+      'Inspector must recommend the defective part is made safe before leaving — may involve isolating the circuit',
+    commonUsage: 'That exposed live connection is a C1',
     relatedTerms: ['EICR', 'C2', 'C3', 'Unsatisfactory', 'Danger'],
     difficulty: 'intermediate',
     tags: ['inspection', 'coding'],
@@ -2680,7 +2800,8 @@ export const siteJargonTerms: JargonTerm[] = [
     definition:
       'Improvement recommended — not dangerous but does not fully comply with current standards. Does not make the EICR unsatisfactory.',
     category: 'testing-terminology',
-    context: 'Advisory only — existing installations are judged against the standard when they were installed',
+    context:
+      'Advisory only — existing installations are judged against the standard when they were installed',
     commonUsage: "No RCD on the sockets is a C3, it's a recommendation",
     relatedTerms: ['EICR', 'C1', 'C2', 'Satisfactory', 'Recommendation'],
     difficulty: 'intermediate',
@@ -2702,7 +2823,8 @@ export const siteJargonTerms: JargonTerm[] = [
     definition:
       'The total impedance of the earth fault loop path — measured as Zs (external + internal) or Ze (external only). Must be low enough for protective devices to operate within required times.',
     category: 'testing-terminology',
-    context: 'High Zs means the protective device may not trip fast enough in a fault — the circuit fails',
+    context:
+      'High Zs means the protective device may not trip fast enough in a fault — the circuit fails',
     commonUsage: 'What is the Zs on that circuit? It needs to be under 1.37 ohms for a B32',
     relatedTerms: ['Zs', 'Ze', 'Earth fault', 'Disconnection time', 'Protective device'],
     difficulty: 'intermediate',
@@ -2713,7 +2835,8 @@ export const siteJargonTerms: JargonTerm[] = [
     definition:
       'The maximum current that would flow in the event of a short circuit or earth fault at any given point — abbreviated as PFC or PSCC/PEFC',
     category: 'testing-terminology',
-    context: 'Must be measured at the origin and at distribution boards — protective devices must be rated to break this current',
+    context:
+      'Must be measured at the origin and at distribution boards — protective devices must be rated to break this current',
     commonUsage: 'The PFC at the board is 4.2kA, so the MCBs are fine at 6kA',
     relatedTerms: ['Short circuit', 'Breaking capacity', 'kA rating', 'Origin'],
     difficulty: 'advanced',
@@ -2735,7 +2858,8 @@ export const siteJargonTerms: JargonTerm[] = [
     definition:
       'Test to confirm that line, neutral, and earth conductors are correctly connected throughout the installation — wrong polarity is extremely dangerous',
     category: 'testing-terminology',
-    context: 'Done at every point during initial verification — a reversed polarity socket could kill someone',
+    context:
+      'Done at every point during initial verification — a reversed polarity socket could kill someone',
     commonUsage: 'Check the polarity on every socket and switch before we energise',
     relatedTerms: ['Continuity', 'Line', 'Neutral', 'Earth', 'Initial verification'],
     difficulty: 'basic',
@@ -2746,7 +2870,8 @@ export const siteJargonTerms: JargonTerm[] = [
     definition:
       'Resistance of an earth electrode (rod or plate) to the general mass of earth — measured with a dedicated earth electrode tester using the fall of potential method',
     category: 'testing-terminology',
-    context: 'Required for TT earthing systems — must be low enough for the RCD to operate within required times',
+    context:
+      'Required for TT earthing systems — must be low enough for the RCD to operate within required times',
     commonUsage: 'The earth rod is reading 45 ohms, that should be fine with a 30mA RCD',
     relatedTerms: ['Earth rod', 'TT system', 'RCD', 'Fall of potential'],
     difficulty: 'advanced',
@@ -2768,7 +2893,8 @@ export const siteJargonTerms: JargonTerm[] = [
     definition:
       'Any electrical test carried out with the supply energised — loop impedance, RCD testing, and PFC are all live tests',
     category: 'testing-terminology',
-    context: 'Done after dead tests are satisfactory and the supply has been restored — requires extra care',
+    context:
+      'Done after dead tests are satisfactory and the supply has been restored — requires extra care',
     commonUsage: 'We can do the live tests now the supply is back on',
     relatedTerms: ['Dead test', 'Loop impedance', 'RCD', 'PFC', 'GS38'],
     difficulty: 'basic',
@@ -2779,7 +2905,8 @@ export const siteJargonTerms: JargonTerm[] = [
     definition:
       'The process of checking and adjusting test instruments against known reference values — ensures your readings are accurate and legally valid',
     category: 'testing-terminology',
-    context: 'Test instruments should be calibrated annually — always check the calibration date sticker before testing',
+    context:
+      'Test instruments should be calibrated annually — always check the calibration date sticker before testing',
     commonUsage: 'When was this tester last calibrated? The sticker has expired.',
     relatedTerms: ['Test instrument', 'Accuracy', 'Multifunction tester', 'Certificate'],
     difficulty: 'intermediate',
@@ -2790,7 +2917,8 @@ export const siteJargonTerms: JargonTerm[] = [
     definition:
       'A checklist used during visual inspection before testing — covers wiring methods, connections, protective devices, labelling, and compliance with design',
     category: 'testing-terminology',
-    context: 'Must be completed as part of both initial verification and periodic inspection — identifies visible defects',
+    context:
+      'Must be completed as part of both initial verification and periodic inspection — identifies visible defects',
     commonUsage: 'Fill in the schedule of inspections before you start the tests',
     relatedTerms: ['Visual inspection', 'EICR', 'Initial verification', 'Checklist'],
     difficulty: 'intermediate',
@@ -2801,7 +2929,8 @@ export const siteJargonTerms: JargonTerm[] = [
     definition:
       'A note on an EICR recording any part of the installation that could not be inspected or tested — usually due to access issues or the installation being in use',
     category: 'testing-terminology',
-    context: 'Common limitations include inaccessible wiring, concealed connections, and circuits that could not be isolated',
+    context:
+      'Common limitations include inaccessible wiring, concealed connections, and circuits that could not be isolated',
     commonUsage: 'Add a limitation for the wiring above the false ceiling, we could not access it',
     relatedTerms: ['EICR', 'Inspection', 'Access', 'Observation'],
     difficulty: 'intermediate',
@@ -2812,7 +2941,8 @@ export const siteJargonTerms: JargonTerm[] = [
     definition:
       'A note on an EICR recording something observed during inspection that does not warrant a C1, C2, or C3 code — informational only',
     category: 'testing-terminology',
-    context: 'Used for things like the age of the installation, original wiring colours, or the presence of asbestos',
+    context:
+      'Used for things like the age of the installation, original wiring colours, or the presence of asbestos',
     commonUsage: 'I will add an observation that the installation uses old wiring colours',
     relatedTerms: ['EICR', 'C1', 'C2', 'C3', 'Limitation'],
     difficulty: 'intermediate',
@@ -2823,8 +2953,10 @@ export const siteJargonTerms: JargonTerm[] = [
     definition:
       'Further Investigation code on an EICR — means further investigation is required to determine the extent of a defect and the work needed to fix it',
     category: 'testing-terminology',
-    context: 'Used when you can see something wrong but cannot fully assess it without opening up or further testing',
-    commonUsage: 'There is burning at the connection but I cannot see the full extent, I will code it FI',
+    context:
+      'Used when you can see something wrong but cannot fully assess it without opening up or further testing',
+    commonUsage:
+      'There is burning at the connection but I cannot see the full extent, I will code it FI',
     relatedTerms: ['EICR', 'C1', 'C2', 'Investigation', 'Defect'],
     difficulty: 'intermediate',
     tags: ['inspection', 'coding'],
@@ -2847,7 +2979,8 @@ export const siteJargonTerms: JargonTerm[] = [
     definition:
       'Battery-backed lighting that activates during mains failure to illuminate escape routes — must provide 3 hours maintained or non-maintained',
     category: 'commercial-industrial',
-    context: 'Required in all commercial and public buildings — tested monthly (function) and annually (full duration)',
+    context:
+      'Required in all commercial and public buildings — tested monthly (function) and annually (full duration)',
     commonUsage: 'Test the emergency lighting before the fire inspection',
     relatedTerms: ['Maintained', 'Non-maintained', 'BS 5266', 'Escape route'],
     difficulty: 'intermediate',
@@ -2858,7 +2991,8 @@ export const siteJargonTerms: JargonTerm[] = [
     definition:
       'Direct On Line starter — the simplest motor starting method, applies full voltage directly to the motor terminals',
     category: 'commercial-industrial',
-    context: 'Used for small motors up to about 7.5kW — larger motors need soft starters or star-delta',
+    context:
+      'Used for small motors up to about 7.5kW — larger motors need soft starters or star-delta',
     commonUsage: 'Wire the pump on a DOL starter',
     relatedTerms: ['Motor starter', 'Contactor', 'Overload', 'Star-delta'],
     difficulty: 'advanced',
@@ -2944,7 +3078,8 @@ export const siteJargonTerms: JargonTerm[] = [
     definition:
       'Motor starting method that connects windings in star for starting (reduced voltage) then switches to delta for running — reduces starting current',
     category: 'commercial-industrial',
-    context: 'Used for larger motors (typically 7.5kW+) where DOL starting would cause excessive voltage dip',
+    context:
+      'Used for larger motors (typically 7.5kW+) where DOL starting would cause excessive voltage dip',
     commonUsage: 'Wire the compressor on star-delta',
     relatedTerms: ['DOL', 'Motor starter', 'Contactor', 'Overload'],
     difficulty: 'advanced',
@@ -2988,7 +3123,8 @@ export const siteJargonTerms: JargonTerm[] = [
     definition:
       'Ratio of real power to apparent power — a measure of how efficiently electrical power is being used. PF of 1.0 is ideal.',
     category: 'commercial-industrial',
-    context: 'Low power factor wastes energy and can incur penalty charges from the electricity supplier',
+    context:
+      'Low power factor wastes energy and can incur penalty charges from the electricity supplier',
     commonUsage: 'The power factor is low, we might need correction capacitors',
     relatedTerms: ['kW', 'kVA', 'kVAr', 'Correction', 'Capacitor bank'],
     difficulty: 'advanced',
@@ -2999,7 +3135,8 @@ export const siteJargonTerms: JargonTerm[] = [
     definition:
       'Solid copper or aluminium bar used to distribute power within switchgear, distribution boards, and busbar trunking systems — carries high currents efficiently',
     category: 'commercial-industrial',
-    context: 'Found in main switchboards and used as busbar trunking for high-current distribution in large buildings',
+    context:
+      'Found in main switchboards and used as busbar trunking for high-current distribution in large buildings',
     commonUsage: 'The busbar trunking runs from the transformer room to each floor',
     relatedTerms: ['Switchgear', 'Distribution', 'Tap-off', 'Rising main'],
     difficulty: 'intermediate',
@@ -3010,7 +3147,8 @@ export const siteJargonTerms: JargonTerm[] = [
     definition:
       'Vertical busbar trunking or cable system running through a multi-storey building to distribute power to each floor — tap-off units connect at each level',
     category: 'commercial-industrial',
-    context: 'Common in blocks of flats and office buildings — usually installed in the electrical riser',
+    context:
+      'Common in blocks of flats and office buildings — usually installed in the electrical riser',
     commonUsage: 'The rising main feeds the distribution board on each floor',
     relatedTerms: ['Busbar', 'Riser', 'Tap-off unit', 'Distribution'],
     difficulty: 'intermediate',
@@ -3032,7 +3170,8 @@ export const siteJargonTerms: JargonTerm[] = [
     definition:
       'Current Transformer metering — uses CTs clamped around cables to measure high currents indirectly. Common on three phase commercial supplies where direct metering is impractical.',
     category: 'commercial-industrial',
-    context: 'The CTs step down the current to a measurable level for the meter — typically 5A secondary',
+    context:
+      'The CTs step down the current to a measurable level for the meter — typically 5A secondary',
     commonUsage: 'This site has CT metering on the incoming supply',
     relatedTerms: ['Current transformer', 'Meter', 'Three phase', 'kWh'],
     difficulty: 'advanced',
@@ -3054,7 +3193,8 @@ export const siteJargonTerms: JargonTerm[] = [
     definition:
       'Uninterruptible Power Supply — battery backup system that provides instant power during mains failure. Protects critical equipment like servers and medical devices.',
     category: 'commercial-industrial',
-    context: 'Common in server rooms, hospitals, and anywhere a power cut would cause serious problems',
+    context:
+      'Common in server rooms, hospitals, and anywhere a power cut would cause serious problems',
     commonUsage: 'The server room is on a UPS so it stays running during a power cut',
     relatedTerms: ['Battery backup', 'Generator', 'Critical power', 'Server room'],
     difficulty: 'intermediate',
@@ -3065,7 +3205,8 @@ export const siteJargonTerms: JargonTerm[] = [
     definition:
       'Standby engine-driven alternator that provides emergency power when the mains supply fails — common on hospitals, data centres, and large commercial sites',
     category: 'commercial-industrial',
-    context: 'Typically starts automatically via an ATS (Automatic Transfer Switch) within seconds of mains failure',
+    context:
+      'Typically starts automatically via an ATS (Automatic Transfer Switch) within seconds of mains failure',
     commonUsage: 'The generator kicked in when the power went off',
     relatedTerms: ['UPS', 'ATS', 'Standby power', 'Emergency supply'],
     difficulty: 'intermediate',
@@ -3076,7 +3217,8 @@ export const siteJargonTerms: JargonTerm[] = [
     definition:
       'Building Management System — computerised system that monitors and controls building services including HVAC, lighting, fire alarms, and access control',
     category: 'commercial-industrial',
-    context: 'Electricians often need to interface with the BMS when installing or modifying building services',
+    context:
+      'Electricians often need to interface with the BMS when installing or modifying building services',
     commonUsage: 'The lighting is controlled by the BMS, not local switches',
     relatedTerms: ['HVAC', 'Controls', 'Automation', 'Smart building'],
     difficulty: 'advanced',
@@ -3087,7 +3229,8 @@ export const siteJargonTerms: JargonTerm[] = [
     definition:
       'Moulded Case Circuit Breaker — a larger protective device used in commercial and industrial distribution boards for higher current circuits (100A+)',
     category: 'commercial-industrial',
-    context: 'Found in main switchboards and sub-distribution boards — adjustable trip settings for different loads',
+    context:
+      'Found in main switchboards and sub-distribution boards — adjustable trip settings for different loads',
     commonUsage: 'The MCCB on the submain has tripped, check the load',
     relatedTerms: ['MCB', 'Circuit breaker', 'Switchgear', 'Protection'],
     difficulty: 'intermediate',
@@ -3098,7 +3241,8 @@ export const siteJargonTerms: JargonTerm[] = [
     definition:
       'Automatic Transfer Switch — automatically switches the electrical supply from mains to generator (or vice versa) when a power failure is detected',
     category: 'commercial-industrial',
-    context: 'Essential component of standby power systems — ensures seamless changeover in critical installations',
+    context:
+      'Essential component of standby power systems — ensures seamless changeover in critical installations',
     commonUsage: 'The ATS switched over to the generator automatically when the mains failed',
     relatedTerms: ['Generator', 'Standby power', 'Changeover', 'UPS'],
     difficulty: 'advanced',
@@ -3109,7 +3253,8 @@ export const siteJargonTerms: JargonTerm[] = [
     definition:
       'Enclosed rack (typically 19-inch standard) housing network switches, patch panels, servers, and telecommunications equipment',
     category: 'commercial-industrial',
-    context: 'Every commercial building has at least one data cabinet — needs dedicated power, cooling, and earthing',
+    context:
+      'Every commercial building has at least one data cabinet — needs dedicated power, cooling, and earthing',
     commonUsage: 'Run the Cat6 cables back to the data cabinet in the comms room',
     relatedTerms: ['Patch panel', 'Cat6', 'Network', 'Structured cabling', 'Server room'],
     difficulty: 'basic',
@@ -3120,7 +3265,8 @@ export const siteJargonTerms: JargonTerm[] = [
     definition:
       'A panel with rows of RJ45 ports mounted in a data cabinet — provides a central termination point for all data cables in a structured cabling system',
     category: 'commercial-industrial',
-    context: 'Each Cat6 cable from the floor is terminated at the patch panel, then patched through to a network switch',
+    context:
+      'Each Cat6 cable from the floor is terminated at the patch panel, then patched through to a network switch',
     commonUsage: 'Terminate the data cables at the patch panel and label them all',
     relatedTerms: ['Data cabinet', 'Cat6', 'RJ45', 'Structured cabling'],
     difficulty: 'basic',
@@ -3131,8 +3277,10 @@ export const siteJargonTerms: JargonTerm[] = [
     definition:
       'System of air terminals, down conductors, and earth electrodes designed to safely conduct lightning strikes to earth — protects the building structure and occupants',
     category: 'commercial-industrial',
-    context: 'Designed to BS EN 62305 — tall buildings, exposed structures, and buildings with flammable contents may require it',
-    commonUsage: 'Check the lightning protection earth connection before you start work on the roof',
+    context:
+      'Designed to BS EN 62305 — tall buildings, exposed structures, and buildings with flammable contents may require it',
+    commonUsage:
+      'Check the lightning protection earth connection before you start work on the roof',
     relatedTerms: ['Earth electrode', 'SPD', 'BS EN 62305', 'Down conductor'],
     difficulty: 'advanced',
     tags: ['protection', 'earthing'],
@@ -3142,7 +3290,8 @@ export const siteJargonTerms: JargonTerm[] = [
     definition:
       'Electronic system controlling who can enter a building or area — uses key fobs, cards, PIN codes, or biometrics to release magnetic door locks',
     category: 'commercial-industrial',
-    context: 'Electricians install the wiring, locks, and readers — the system is usually programmed by a specialist',
+    context:
+      'Electricians install the wiring, locks, and readers — the system is usually programmed by a specialist',
     commonUsage: 'Wire the mag lock and the reader for the new access control on the front door',
     relatedTerms: ['Mag lock', 'Key fob', 'Security', 'Door entry', 'Intercom'],
     difficulty: 'intermediate',
@@ -3153,7 +3302,8 @@ export const siteJargonTerms: JargonTerm[] = [
     definition:
       'Closed Circuit Television — surveillance camera systems for security. Modern systems use IP cameras connected via Cat6 with PoE (Power over Ethernet).',
     category: 'commercial-industrial',
-    context: 'Increasingly installed by electricians as systems become IP-based rather than traditional coaxial',
+    context:
+      'Increasingly installed by electricians as systems become IP-based rather than traditional coaxial',
     commonUsage: 'Run Cat6 to each CCTV camera position and connect them to the NVR',
     relatedTerms: ['IP camera', 'NVR', 'PoE', 'Cat6', 'Security'],
     difficulty: 'intermediate',
@@ -3164,7 +3314,8 @@ export const siteJargonTerms: JargonTerm[] = [
     definition:
       'Inspection using a thermal imaging camera to detect hot spots in electrical connections and equipment — identifies loose connections, overloaded cables, and failing components before they cause fires',
     category: 'commercial-industrial',
-    context: 'Recommended annually for commercial switchgear and distribution boards — catches problems early',
+    context:
+      'Recommended annually for commercial switchgear and distribution boards — catches problems early',
     commonUsage: 'The thermographic survey found a hot connection on the main busbar',
     relatedTerms: ['Thermal imaging', 'Hot spot', 'Preventive maintenance', 'Switchgear'],
     difficulty: 'advanced',

@@ -18,15 +18,8 @@ import {
   Shield,
 } from 'lucide-react';
 import type { LucideIcon } from 'lucide-react';
-import {
-  PageFrame,
-  PageHero,
-  itemVariants,
-} from '@/components/college/primitives';
-import {
-  Eyebrow,
-  SectionHeader,
-} from '@/components/apprentice-hub/portfolio/PortfolioPrimitives';
+import { PageFrame, PageHero, itemVariants } from '@/components/college/primitives';
+import { Eyebrow, SectionHeader } from '@/components/apprentice-hub/portfolio/PortfolioPrimitives';
 
 interface SectorGuide {
   sector: string;
@@ -61,10 +54,10 @@ const sectors: SectorGuide[] = [
       'Schedule of Test Results (R1+R2, Zs, IR, RCD times)',
       'Customer testimonials about your professionalism',
       'Before/during/after installation photos',
-      'Wiring diagrams and circuit charts you\'ve produced',
+      "Wiring diagrams and circuit charts you've produced",
     ],
     regulations: [
-      'BS 7671 (18th Edition Wiring Regulations)',
+      'BS 7671:2018+A4:2026 (18th Edition Wiring Regulations)',
       'Part P of the Building Regulations (England and Wales)',
       'BS 5839-6 (domestic fire detection and fire alarm systems)',
       'NICEIC / NAPIT / ELECSA scheme requirements',
@@ -89,7 +82,7 @@ const sectors: SectorGuide[] = [
       'External lighting — car parks, building facades, pathways',
     ],
     evidenceTypes: [
-      'Periodic inspection reports (5-yearly for commercial)',
+      'Periodic inspection reports (commonly recommended at 5-yearly intervals for commercial — see IET GN3 for the recommended maximum periods)',
       'Commissioning test results and handover documents',
       'Emergency lighting certificates (BS 5266)',
       'Fire alarm commissioning records (BS 5839-1)',
@@ -98,7 +91,7 @@ const sectors: SectorGuide[] = [
       'Snagging lists and completion records',
     ],
     regulations: [
-      'BS 7671 (18th Edition Wiring Regulations)',
+      'BS 7671:2018+A4:2026 (18th Edition Wiring Regulations)',
       'BS 5266 (Emergency lighting)',
       'BS 5839-1 (Fire detection and fire alarm systems)',
       'CDM Regulations 2015',
@@ -133,7 +126,7 @@ const sectors: SectorGuide[] = [
       'Lock-out / tag-out (LOTO) procedure evidence',
     ],
     regulations: [
-      'BS 7671 (18th Edition Wiring Regulations)',
+      'BS 7671:2018+A4:2026 (18th Edition Wiring Regulations)',
       'BS EN 60079 (Explosive atmospheres — equipment classification)',
       'DSEAR (Dangerous Substances and Explosive Atmospheres Regulations)',
       'PUWER (Provision and Use of Work Equipment Regulations)',
@@ -170,7 +163,7 @@ const universalRequirements = [
   {
     category: 'Professional standards',
     items: [
-      'BS 7671 (18th Edition) compliance in all work',
+      'BS 7671:2018+A4:2026 (18th Edition) compliance in all work',
       'IET Guidance Note understanding and application',
       'On-Site Guide reference and use',
       'Building Regulations awareness and compliance',
@@ -187,13 +180,13 @@ const maximisingExposure = [
   'Discuss exposure gaps with your training provider at reviews',
   'If you only do domestic work, focus heavily on domestic evidence requirements',
   'Some EPAOs accept college-based evidence if site exposure is limited',
-  'Your pathway choice (Installation vs Maintenance) affects what\'s expected',
+  "Your pathway choice (Installation vs Maintenance) affects what's expected",
 ];
 
 const assessorsLookFor = [
   'Evidence that is authentic, verifiable, and clearly your own work',
   'Dates, witness signatures, and location details on all evidence',
-  'Progression and development over the 4-year programme',
+  'Progression and development across your apprenticeship',
   'Coverage of ALL required KSBs, not just the easy ones',
   'Quality over quantity in evidence selection',
   'Clear organisation and easy navigation',
@@ -227,7 +220,7 @@ const IndustryGuidancePage = () => {
         <PageHero
           eyebrow="Apprentice · Portfolio"
           title="Industry guidance"
-          description="Different sectors have different work, evidence, and regulations. Domestic, commercial, industrial — whatever you work in, here\'s what to collect."
+          description="Different sectors have different work, evidence, and regulations. Domestic, commercial, industrial — whatever you work in, here’s what to collect."
           tone="yellow"
         />
       </motion.div>
@@ -237,9 +230,9 @@ const IndustryGuidancePage = () => {
         <div className="rounded-xl border border-white/[0.06] bg-[hsl(0_0%_10%)] p-4 sm:p-5 space-y-2">
           <Eyebrow>Why sector matters</Eyebrow>
           <p className="text-[13.5px] text-white/85 leading-relaxed">
-            Different sectors have different evidence types and regulations.
-            Most apprentices experience a mix — collect evidence from all
-            areas you work in to build a well-rounded portfolio.
+            Different sectors have different evidence types and regulations. Most apprentices
+            experience a mix — collect evidence from all areas you work in to build a well-rounded
+            portfolio.
           </p>
         </div>
       </motion.div>
@@ -248,11 +241,7 @@ const IndustryGuidancePage = () => {
       {sectors.map((sector) => {
         const Icon = sector.icon;
         return (
-          <motion.section
-            key={sector.sector}
-            variants={itemVariants}
-            className="space-y-3"
-          >
+          <motion.section key={sector.sector} variants={itemVariants} className="space-y-3">
             <SectionHeader
               eyebrow={sector.sector.split(' ').slice(0, 1).join(' ')}
               title={sector.sector}
@@ -370,9 +359,9 @@ const IndustryGuidancePage = () => {
         <SectionHeader
           eyebrow="Portfolio assessment tips"
           title="What they look for vs what weakens"
-          meta="The difference between Pass and Distinction at portfolio level"
+          meta="A portfolio that confirms gateway readiness vs one that gets sent back"
         />
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-2.5">
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
           <div className="rounded-xl border border-elec-yellow/25 bg-elec-yellow/[0.04] p-4 sm:p-5 space-y-3">
             <Eyebrow className="text-elec-yellow/85">What assessors look for</Eyebrow>
             <ul className="space-y-1.5">
@@ -409,10 +398,14 @@ const IndustryGuidancePage = () => {
         <div className="rounded-xl border border-elec-yellow/25 bg-elec-yellow/[0.04] p-4 sm:p-5 space-y-1.5">
           <Eyebrow className="text-elec-yellow/85">Client confidentiality</Eyebrow>
           <p className="text-[13.5px] text-white/85 leading-relaxed">
-            Always respect client confidentiality. Remove or redact client
-            names, addresses, and personal details from certificates and
-            photos. Never share portfolio evidence publicly on social media.
-            If in doubt, ask your employer and the client for permission first.
+            Always respect client confidentiality. Remove or redact client names, addresses, and
+            personal details from certificates and photos. Never share portfolio evidence publicly
+            on social media. If in doubt, ask your employer and the client for permission first.
+          </p>
+          <p className="text-[12.5px] text-white/70 leading-relaxed">
+            Client addresses and personal details are personal data under UK GDPR and the Data
+            Protection Act 2018 — redact them before adding a certificate or photo to your
+            portfolio.
           </p>
         </div>
       </motion.section>

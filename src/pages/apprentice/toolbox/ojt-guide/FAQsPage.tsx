@@ -4,7 +4,7 @@ const faqs = [
   {
     question: 'How many hours of OJT do I need?',
     answer:
-      'Since August 2025, it is no longer a flat 20% — your training plan specifies a fixed number of hours based on your apprenticeship standard (ST0152 v1.2). Ask your training provider for your exact figure.',
+      'Since August 2025, it is no longer a flat 20% — your training plan specifies a fixed number of hours set by your apprenticeship standard. For an Installation & Maintenance Electrician (ST0152) that is 1,066 hours, with an absolute floor of 187 hours that delivery can never fall below. Ask your training provider for your exact figure.',
   },
   {
     question: 'Does college count as OJT?',
@@ -59,7 +59,7 @@ const faqs = [
   {
     question: 'What grade can I get in my EPA?',
     answer:
-      'Pass, Merit, or Distinction. Each EPA component (knowledge test, practical assessment, professional discussion) is graded separately, and your overall grade is based on the combination.',
+      'Pass, Merit, or Distinction. For an Installation & Maintenance Electrician (ST0152) the EPA is the integrated AM2S — a single assessment covering installation, inspection & testing, safe isolation, fault diagnosis, and an online knowledge test. A fail in any single section fails the whole AM2S, so you must pass every element.',
   },
   {
     question: 'Can I change my training provider during my apprenticeship?',
@@ -69,87 +69,157 @@ const faqs = [
   {
     question: 'What is ST0152?',
     answer:
-      'ST0152 is the apprenticeship standard reference number for the Installation Electrician / Maintenance Electrician apprenticeship at Level 3. Version 1.2 is the current version.',
+      'ST0152 is the apprenticeship standard reference number for the Installation & Maintenance Electrician apprenticeship at Level 3. Check the live version on the Skills England standard page — a temporary dispensation has kept the earlier version live for apprentices still on it.',
+  },
+  {
+    question: 'How much should I be paid?',
+    answer:
+      'The apprentice National Minimum Wage is £8.00 per hour from 1 April 2026. This minimum applies to apprentices aged under 19, or aged 19+ in the first year of the apprenticeship. Once you are 19+ and past your first year you must be paid at least the age-appropriate National Minimum Wage, and apprentices aged 21+ must get at least the National Living Wage. Many electrical apprentices are paid above the minimum on JIB rates.',
   },
 ];
 
 const glossary = [
-  { term: 'OJT', definition: 'Off-the-Job Training — structured learning away from normal work duties during paid hours' },
-  { term: 'EPA', definition: 'End Point Assessment — the final assessment at the end of your apprenticeship' },
-  { term: 'KSB', definition: 'Knowledge, Skills, and Behaviours — the three areas assessed in your apprenticeship standard' },
-  { term: 'ESFA', definition: 'Education and Skills Funding Agency — the government body that funds and regulates apprenticeships' },
+  {
+    term: 'OJT',
+    definition:
+      'Off-the-Job Training — structured learning away from normal work duties during paid hours',
+  },
+  {
+    term: 'EPA',
+    definition: 'End Point Assessment — the final assessment at the end of your apprenticeship',
+  },
+  {
+    term: 'KSB',
+    definition:
+      'Knowledge, Skills, and Behaviours — the three areas assessed in your apprenticeship standard',
+  },
+  {
+    term: 'ESFA',
+    definition:
+      'Education and Skills Funding Agency — the former government body that funded apprenticeships; it merged into the Department for Education in 2025, with apprenticeship policy now under Skills England',
+  },
   { term: 'Gateway', definition: 'The formal readiness check before you can sit your EPA' },
-  { term: 'ST0152', definition: 'The reference number for the Installation Electrician / Maintenance Electrician apprenticeship standard' },
-  { term: 'AM2', definition: 'The practical assessment run by NET (National Electrotechnical Training) that tests installation competence' },
-  { term: 'BS 7671', definition: 'The IET Wiring Regulations — the national standard for electrical installations in the UK' },
-  { term: 'EPAO', definition: 'End Point Assessment Organisation — the independent body that carries out your EPA' },
-  { term: 'Skills England', definition: 'The new government body (replacing part of IfATE) responsible for apprenticeship standards and skills policy' },
-  { term: 'Training Plan', definition: 'The document that sets out your planned OJT hours, activities, and timeline' },
-  { term: 'Progress Review', definition: 'Regular meetings (minimum 12-weekly) between you, your employer, and your training provider to check development' },
-  { term: 'Levy', definition: 'The Apprenticeship Levy — a tax paid by large employers (payroll over £3m) that funds apprenticeship training' },
-  { term: 'Co-investment', definition: 'For non-levy employers, the government pays 95% of training costs and the employer pays 5%' },
-  { term: 'Break in Learning', definition: 'A formal pause in your apprenticeship (e.g. due to long-term sickness or maternity). Your end date is extended.' },
-  { term: 'Initial Assessment', definition: 'The assessment at the start of your apprenticeship that identifies your prior learning and sets your training plan' },
-  { term: 'Functional Skills', definition: 'English and Maths qualifications at Level 2 — required for apprenticeship completion if you do not already have GCSEs grade 4+' },
+  {
+    term: 'ST0152',
+    definition:
+      'The reference number for the Installation Electrician / Maintenance Electrician apprenticeship standard',
+  },
+  {
+    term: 'AM2S',
+    definition:
+      'The integrated practical assessment run by NET that forms the End Point Assessment for ST0152 — installation, inspection & testing, safe isolation, fault diagnosis, and an online knowledge test in one assessment',
+  },
+  {
+    term: 'BS 7671',
+    definition:
+      'The IET Wiring Regulations — the national standard for electrical installations in the UK',
+  },
+  {
+    term: 'EPAO',
+    definition:
+      'End Point Assessment Organisation — the independent body that carries out your EPA',
+  },
+  {
+    term: 'Skills England',
+    definition:
+      'The new government body (replacing part of IfATE) responsible for apprenticeship standards and skills policy',
+  },
+  {
+    term: 'Training Plan',
+    definition: 'The document that sets out your planned OJT hours, activities, and timeline',
+  },
+  {
+    term: 'Progress Review',
+    definition:
+      'Regular meetings (minimum 12-weekly) between you, your employer, and your training provider to check development',
+  },
+  {
+    term: 'Levy',
+    definition:
+      'The Apprenticeship Levy — paid by employers with an annual pay bill over £3 million, now operating within the Growth & Skills Levy reforms (2025/26)',
+  },
+  {
+    term: 'Co-investment',
+    definition:
+      'Government funding for non-levy employers: government pays 95% and the employer 5% for many starts, but apprentices under 25 at non-levy SMEs are 100% government-funded (from 1 Aug 2026), and employers with fewer than 50 staff are often 100% funded',
+  },
+  {
+    term: 'Break in Learning',
+    definition:
+      'A formal pause in your apprenticeship (e.g. due to long-term sickness or maternity). Your end date is extended.',
+  },
+  {
+    term: 'Initial Assessment',
+    definition:
+      'The assessment at the start of your apprenticeship that identifies your prior learning and sets your training plan',
+  },
+  {
+    term: 'Functional Skills',
+    definition:
+      'English and Maths qualifications at Level 2 — required for apprenticeship completion if you do not already have GCSEs grade 4+',
+  },
 ];
 import { useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
-import {
-  PageFrame,
-  PageHero,
-  itemVariants,
-} from '@/components/college/primitives';
+import { PageFrame, PageHero, SectionHeader, itemVariants } from '@/components/college/primitives';
 
 const FAQsPage = () => {
   const navigate = useNavigate();
   return (
     <PageFrame className="px-4 sm:px-6 lg:px-8">
       <motion.div variants={itemVariants}>
-        <button onClick={() => navigate('/apprentice/toolbox/off-job-training-guide')} className="inline-flex items-center gap-2 h-11 -ml-2 px-2 rounded-md text-[12px] uppercase tracking-[0.18em] text-white/55 hover:text-white/85 transition-colors touch-manipulation">
+        <button
+          onClick={() => navigate('/apprentice/toolbox/off-job-training-guide')}
+          className="inline-flex items-center gap-2 h-11 -ml-2 px-2 rounded-md text-[12px] uppercase tracking-[0.18em] text-white/55 hover:text-white/85 transition-colors touch-manipulation"
+        >
           <ArrowLeft className="h-4 w-4" />
           Back
         </button>
       </motion.div>
 
       <motion.div variants={itemVariants}>
-        <PageHero
-          eyebrow="Apprentice · OJT"
-          title="FAQs & Glossary"
-          tone="yellow"
-        />
+        <PageHero eyebrow="Apprentice · OJT" title="FAQs & Glossary" tone="yellow" />
       </motion.div>
 
       {/* FAQs */}
       <div className="space-y-3">
-        <div className="flex items-center gap-2">
-          <div className="w-2 h-2 rounded-full bg-elec-yellow" />
-          <h2 className="text-base font-semibold text-white">Frequently Asked Questions</h2>
-        </div>
+        <SectionHeader eyebrow="Reference" title="Frequently asked questions" />
 
         {faqs.map((faq) => (
-          <div key={faq.question} className="rounded-xl border border-elec-yellow/25 bg-elec-yellow/[0.04]">
-            <div className="p-4 sm:p-5 space-y-2">
+          <div
+            key={faq.question}
+            className="sm:rounded-xl sm:border sm:border-elec-yellow/25 sm:bg-elec-yellow/[0.04]"
+          >
+            <div className="sm:p-5 py-4 space-y-2">
               <h3 className="font-medium text-elec-yellow text-sm">{faq.question}</h3>
               <p className="text-white text-sm">{faq.answer}</p>
-            </div></div>
+            </div>
+          </div>
         ))}
       </div>
 
       {/* Glossary */}
       <div className="space-y-3">
-        <div className="flex items-baseline justify-between gap-3 pb-1"><div className="space-y-1 min-w-0"><span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">Glossary of Terms</span></div></div>
+        <div className="flex items-baseline justify-between gap-3 pb-1">
+          <div className="space-y-1 min-w-0">
+            <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+              Glossary of Terms
+            </span>
+          </div>
+        </div>
 
-        <div className="rounded-xl border border-white/[0.06] bg-[hsl(0_0%_10%)]">
-          <div className="p-4 sm:p-5 space-y-3">
+        <div className="sm:rounded-xl sm:border sm:border-white/[0.06] sm:bg-[hsl(0_0%_10%)]">
+          <div className="sm:p-5 space-y-3">
             {glossary.map((item) => (
               <div key={item.term} className="flex items-start gap-2">
-                <span className="text-purple-400 font-semibold text-sm min-w-[80px] flex-shrink-0">
+                <span className="text-elec-yellow font-semibold text-sm min-w-[80px] flex-shrink-0">
                   {item.term}
                 </span>
                 <span className="text-white text-sm">{item.definition}</span>
               </div>
             ))}
-          </div></div>
+          </div>
+        </div>
       </div>
     </PageFrame>
   );

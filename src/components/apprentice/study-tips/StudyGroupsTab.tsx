@@ -1,5 +1,3 @@
-import { Button } from '@/components/ui/button';
-
 const Section = ({
   eyebrow,
   description,
@@ -14,9 +12,7 @@ const Section = ({
       <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
         {eyebrow}
       </span>
-      {description && (
-        <p className="text-[14px] text-white/70 leading-relaxed">{description}</p>
-      )}
+      {description && <p className="text-[14px] text-white/70 leading-relaxed">{description}</p>}
     </div>
     {children}
   </div>
@@ -29,50 +25,30 @@ const Pill = ({ children }: { children: React.ReactNode }) => (
 );
 
 const StudyGroupsTab = () => {
-  const studyGroups = [
+  const whereToFind = [
     {
-      name: '18th Edition Warriors',
-      members: 24,
-      location: 'Manchester',
-      nextSession: 'Tomorrow, 7:00 PM',
-      level: 'Intermediate',
-      rating: 4.8,
+      name: 'Your own college cohort',
       description:
-        'Dedicated group focusing on mastering BS 7671:2018+A4:2026. Weekly sessions with mock exams and regulation deep-dives.',
-      tags: ['BS 7671', 'Mock exams', 'Regulations'],
+        'The people on your day-release are sitting the same units and the same end-point assessment. Swap numbers and agree a weekly slot.',
+      tags: ['Same spec', 'Local', 'Free'],
     },
     {
-      name: 'Level 3 Theory Masters',
-      members: 18,
-      location: 'Birmingham',
-      nextSession: 'Saturday, 10:00 AM',
-      level: 'Advanced',
-      rating: 4.9,
+      name: 'On-site colleagues and other apprentices',
       description:
-        'Advanced theory group tackling complex calculations and AC principles. Perfect for Level 3 diploma preparation.',
-      tags: ['Level 3', 'AC theory', 'Calculations'],
+        'Other apprentices at your employer or on the same projects make ideal partners — you can revise the practical work you both do day to day.',
+      tags: ['Practical', 'Workplace'],
     },
     {
-      name: 'AM2 Practice Squad',
-      members: 12,
-      location: 'London',
-      nextSession: 'Sunday, 2:00 PM',
-      level: 'Advanced',
-      rating: 4.7,
+      name: 'Online electrical communities',
       description:
-        'Hands-on practice group for AM2 preparation. Access to practice rigs and testing equipment.',
-      tags: ['AM2', 'Practical', 'Testing'],
+        'Established forums and Discord/WhatsApp groups for UK sparks run revision threads. Look for ones tied to your qualification rather than general chat.',
+      tags: ['Online', 'BS 7671', 'AM2S'],
     },
     {
-      name: 'Apprentice Beginners',
-      members: 35,
-      location: 'Online',
-      nextSession: 'Tonight, 8:00 PM',
-      level: 'Beginner',
-      rating: 4.6,
+      name: 'Start your own',
       description:
-        'Welcoming group for new apprentices. Covers basic electrical principles and industry knowledge.',
-      tags: ['Beginners', 'Online', 'Fundamentals'],
+        'Three or four committed people beats a big inactive group. Set a fixed weekly time, a topic per session, and rotate who leads it.',
+      tags: ['Beginner-friendly', 'Accountability'],
     },
   ];
 
@@ -112,7 +88,12 @@ const StudyGroupsTab = () => {
     {
       platform: 'Zoom study sessions',
       description: 'Organised video calls with structured learning activities.',
-      features: ['Recorded sessions', 'Breakout rooms', 'Whiteboard sharing', 'Calendar integration'],
+      features: [
+        'Recorded sessions',
+        'Breakout rooms',
+        'Whiteboard sharing',
+        'Calendar integration',
+      ],
     },
     {
       platform: 'WhatsApp groups',
@@ -185,54 +166,22 @@ const StudyGroupsTab = () => {
         </p>
       </div>
 
-      <Section eyebrow="Find your study group">
+      <Section
+        eyebrow="Where to find a study group"
+        description="There is no perfect group waiting for you — the best ones come from people already around you. Start with these."
+      >
         <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
-          {studyGroups.map((group, index) => (
+          {whereToFind.map((group, index) => (
             <div
               key={index}
               className="rounded-md border border-white/[0.06] bg-white/[0.02] p-4 space-y-3"
             >
-              <div className="flex items-start justify-between gap-2">
-                <div className="space-y-1">
-                  <h4 className="text-[14px] font-semibold text-white">{group.name}</h4>
-                  <div className="flex items-center gap-3 text-[12px] text-white/55">
-                    <span>{group.members} members</span>
-                    <span>·</span>
-                    <span>{group.location}</span>
-                    <span>·</span>
-                    <span>Rated {group.rating}</span>
-                  </div>
-                </div>
-                <Pill>{group.level}</Pill>
-              </div>
-
+              <h4 className="text-[14px] font-semibold text-white">{group.name}</h4>
               <p className="text-[13px] text-white/85 leading-relaxed">{group.description}</p>
-
-              <div className="text-[13px] text-white/85">
-                <span className="text-white/55">Next: </span>
-                {group.nextSession}
-              </div>
-
               <div className="flex flex-wrap gap-1.5">
                 {group.tags.map((tag, tagIndex) => (
                   <Pill key={tagIndex}>{tag}</Pill>
                 ))}
-              </div>
-
-              <div className="flex gap-2">
-                <Button
-                  size="sm"
-                  className="flex-1 h-9 bg-elec-yellow text-black hover:bg-elec-yellow/90 touch-manipulation"
-                >
-                  Join group
-                </Button>
-                <Button
-                  size="sm"
-                  variant="outline"
-                  className="h-9 border-white/10 bg-white/[0.03] text-white hover:bg-white/[0.06] touch-manipulation"
-                >
-                  View details
-                </Button>
               </div>
             </div>
           ))}
@@ -322,27 +271,11 @@ const StudyGroupsTab = () => {
         </div>
       </Section>
 
-      <Section eyebrow="Ready to join a study group?">
+      <Section eyebrow="Ready to start?">
         <p className="text-[14px] text-white/85 leading-relaxed">
-          Connect with fellow apprentices and accelerate your learning through collaborative study.
+          Message two people from your cohort today, agree one weekly slot, and pick a topic for the
+          first session. A small, consistent group beats a big one that never meets.
         </p>
-        <div className="flex flex-wrap gap-2">
-          <Button className="h-10 bg-elec-yellow text-black hover:bg-elec-yellow/90 touch-manipulation">
-            Find groups near me
-          </Button>
-          <Button
-            variant="outline"
-            className="h-10 border-white/10 bg-white/[0.03] text-white hover:bg-white/[0.06] touch-manipulation"
-          >
-            Create new group
-          </Button>
-          <Button
-            variant="outline"
-            className="h-10 border-white/10 bg-white/[0.03] text-white hover:bg-white/[0.06] touch-manipulation"
-          >
-            Join online session
-          </Button>
-        </div>
       </Section>
     </div>
   );

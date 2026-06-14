@@ -19,15 +19,8 @@ import {
   Compass,
 } from 'lucide-react';
 import type { LucideIcon } from 'lucide-react';
-import {
-  PageFrame,
-  PageHero,
-  itemVariants,
-} from '@/components/college/primitives';
-import {
-  Eyebrow,
-  SectionHeader,
-} from '@/components/apprentice-hub/portfolio/PortfolioPrimitives';
+import { PageFrame, PageHero, itemVariants } from '@/components/college/primitives';
+import { Eyebrow, SectionHeader } from '@/components/apprentice-hub/portfolio/PortfolioPrimitives';
 
 const knowledgeTips = [
   'Start with BS 7671 — Part 4 (Protection for Safety) and Part 6 (Inspection & Testing) are heavily tested. Know where to find key regs quickly',
@@ -35,7 +28,7 @@ const knowledgeTips = [
   'Study Guidance Note 3 (Inspection & Testing, 9th edition) for detailed testing procedures and expected results',
   'Practice cable sizing — voltage drop (Table 4Ab), current-carrying capacity (Section 523), correction factors',
   'Learn the fault current formulas — Zs = Ze + (R1+R2), PFC, max Zs from Tables 41.2 / 41.3',
-  'Flashcards for key reg numbers — 411.3.3 (max disconnection), 415.1.1 (RCD), 612 (testing sequence)',
+  'Flashcards for key reg numbers — 411.3.3 (max disconnection), 411.3.4 (socket RCD), 415.1.1 (additional protection), 643.1 (testing sequence)',
   'Practice past papers or mock exams under timed conditions — use the EPA Simulator in this app',
 ];
 
@@ -44,7 +37,7 @@ const knowledgeAreas = [
   'Protection against thermal effects (Part 421)',
   'Protection against overcurrent (Part 432)',
   'Earthing arrangements and protective conductors (Parts 542–544)',
-  'Initial verification testing sequence (Regulation 612)',
+  'Initial verification testing sequence (Regulation 643.1)',
   'Special locations (Part 7) — bathrooms, pools, sites',
   'Isolation and switching (Section 537)',
   'Selection and erection of wiring systems (Parts 521–529)',
@@ -57,7 +50,7 @@ const practicalTips = [
   'Practise interpreting drawings — circuit diagrams, wiring diagrams, layouts',
   'Work methodically — plan, gather materials, work systematically, test, inspect your own work before moving on',
   'Quality of workmanship — neat cable runs, consistent bends, correct gland sizes, proper terminations, labelling',
-  'Time yourself — practical is 6–8 hours but goes quickly. Steady, efficient pace without rushing',
+  'Time yourself — the AM2S practical runs across the day and time is tight. Steady, efficient pace without rushing',
 ];
 
 const instruments = [
@@ -74,15 +67,27 @@ const discussionTips = [
   'Include a variety of evidence types — photos, test results, witness testimonies, reflective accounts, CPD, certs',
   'Write reflective accounts for significant work — what happened, what you did, why those decisions, what you learned',
   'Prepare 3–5 strong examples covering multiple KSBs — know these inside out',
-  'Practise answering questions — get your employer, supervisor, or provider to run mock discussions',
+  'Practise explaining your decisions out loud — useful for Gateway and when the AM2S assessor asks you to talk through a step',
   'Use the STAR method — Situation, Task, Action, Result',
 ];
 
 const starExample = [
-  { label: 'Situation', text: 'I was asked to investigate an intermittent tripping RCD on a domestic consumer unit.' },
-  { label: 'Task', text: 'I needed to identify the fault, determine the cause, and carry out a safe repair.' },
-  { label: 'Action', text: 'I safely isolated the supply, then systematically tested each circuit using IR testing. I found a low IR reading on the kitchen circuit. Traced it to a damaged cable in the plinth area where moisture had penetrated a junction box. Replaced the damaged section, re-tested, and all readings were satisfactory.' },
-  { label: 'Result', text: 'The RCD stopped tripping and all test results met BS 7671. I documented the repair and advised the customer to relocate the junction box to prevent future moisture ingress.' },
+  {
+    label: 'Situation',
+    text: 'I was asked to investigate an intermittent tripping RCD on a domestic consumer unit.',
+  },
+  {
+    label: 'Task',
+    text: 'I needed to identify the fault, determine the cause, and carry out a safe repair.',
+  },
+  {
+    label: 'Action',
+    text: 'I safely isolated the supply, then systematically tested each circuit using IR testing. I found a low IR reading on the kitchen circuit. Traced it to a damaged cable in the plinth area where moisture had penetrated a junction box. Replaced the damaged section, re-tested, and all readings were satisfactory.',
+  },
+  {
+    label: 'Result',
+    text: 'The RCD stopped tripping and all test results met BS 7671. I documented the repair and advised the customer to relocate the junction box to prevent future moisture ingress.',
+  },
 ];
 
 const timeline = [
@@ -101,7 +106,7 @@ const timeline = [
       'Complete your portfolio — all KSBs should be covered',
       'Start mock tests — past papers or the EPA Simulator',
       'Practise full testing sequences with your instruments',
-      'Have your first mock professional discussion with your training provider',
+      'Start rehearsing fault diagnosis — get faults introduced for you to find',
     ],
   },
   {
@@ -110,16 +115,16 @@ const timeline = [
       'Intensify revision — focus on weak areas identified in mock tests',
       'Check all test instruments are calibrated and working correctly',
       'Practise timed practical tasks — build confidence in your speed',
-      'Have a final mock professional discussion — refine your answers',
+      'Run final timed fault-diagnosis drills — sharpen your logical approach',
       'Review your portfolio one final time — well-organised and indexed',
     ],
   },
   {
     period: '1 week before',
     tasks: [
-      'Light revision only — don\'t cram, trust your preparation',
+      "Light revision only — don't cram, trust your preparation",
       'Check you have everything: instruments, PPE, tools, portfolio',
-      'Get a good night\'s sleep before each assessment',
+      "Get a good night's sleep before each assessment",
       'Confirm times, locations, and what to bring with your training provider',
     ],
   },
@@ -153,21 +158,20 @@ const calculations = [
   {
     title: 'Diversity',
     formula: 'Assessed demand = connected load × diversity factor',
-    explanation:
-      'Used to calculate maximum demand. Diversity factors in On-Site Guide Table 1B.',
+    explanation: 'Used to calculate maximum demand. Diversity factors in On-Site Guide Table 1B.',
   },
   {
     title: 'Power calculations',
     formula: 'P = V × I, P = I² × R, P = V² / R',
-    explanation:
-      'Single-phase and three-phase. For three-phase: P = √3 × VL × IL × cos φ.',
+    explanation: 'Single-phase and three-phase. For three-phase: P = √3 × VL × IL × cos φ.',
   },
 ];
 
 const regs = [
   { reg: '411.3.3', topic: 'Maximum disconnection times for final circuits (0.4s TN, 0.2s TT)' },
-  { reg: '411.4.9', topic: 'Socket outlets up to 32A require 30mA RCD protection' },
+  { reg: '411.3.4', topic: 'Socket outlets and luminaires — 30mA RCD additional protection' },
   { reg: '415.1.1', topic: 'Additional protection by RCD — requirements and applications' },
+  { reg: '421.1.7', topic: 'Arc fault detection devices (AFDDs) — where required (A4:2026)' },
   { reg: '421.1.201', topic: 'Protection against fire — cable selection in escape routes' },
   { reg: '432.1', topic: 'Protection against overcurrent — overload and fault current' },
   { reg: '522.6.201', topic: 'Cables in walls — safe zones and RCD protection' },
@@ -186,7 +190,7 @@ const mentalPrep = [
   {
     title: 'Trust your training',
     description:
-      'You\'ve been learning and practising for 3–4 years. The skills are there. EPA is about demonstrating what you already know, not learning something new.',
+      "You've been learning and practising for 3–4 years. The skills are there. EPA is about demonstrating what you already know, not learning something new.",
   },
   {
     title: 'Visualise success',
@@ -196,7 +200,7 @@ const mentalPrep = [
   {
     title: 'Control what you can control',
     description:
-      'You can\'t control the questions or tasks. You can control your preparation, your attitude, and your response to challenges.',
+      "You can't control the questions or tasks. You can control your preparation, your attitude, and your response to challenges.",
   },
   {
     title: 'Manage nerves',
@@ -219,7 +223,7 @@ const resources = [
   {
     title: 'BS 7671:2018+A4:2026',
     description:
-      'The Wiring Regulations — your primary reference. A3:2024 is a free supplement adding Reg 530.3.201.',
+      "The current Wiring Regulations — your primary reference. Make sure you're working from the A4:2026 edition, not an older amendment.",
   },
   {
     title: 'IET On-Site Guide',
@@ -228,13 +232,11 @@ const resources = [
   },
   {
     title: 'IET Guidance Note 3 (9th edition)',
-    description:
-      'Inspection & Testing — detailed procedures, expected results, and documentation.',
+    description: 'Inspection & Testing — detailed procedures, expected results, and documentation.',
   },
   {
     title: 'IET Guidance Note 1',
-    description:
-      'Selection & Erection — cable selection, protection, and installation methods.',
+    description: 'Selection & Erection — cable selection, protection, and installation methods.',
   },
   {
     title: 'IET Guidance Note 8',
@@ -243,13 +245,12 @@ const resources = [
   },
   {
     title: "Electrician's Guide to the Building Regulations",
-    description:
-      'Part P requirements and how electrical work interacts with building regulations.',
+    description: 'Part P requirements and how electrical work interacts with building regulations.',
   },
   {
     title: 'EPA Readiness Simulator (this app)',
     description:
-      'AI-powered mock knowledge tests and professional discussions. Practise anytime on your phone.',
+      'Mock applied-knowledge tests and AM2S-style scenarios. Practise anytime on your phone.',
   },
   {
     title: 'AM2 Simulator (this app)',
@@ -258,8 +259,7 @@ const resources = [
   },
   {
     title: 'Your training provider materials',
-    description:
-      'Course notes, handouts, and mock papers tailored specifically to your EPA.',
+    description: 'Course notes, handouts, and mock papers tailored specifically to your EPA.',
   },
 ];
 
@@ -295,11 +295,11 @@ const PreparationPage = () => {
         />
       </motion.div>
 
-      {/* ── Knowledge test prep ─────────────────────────────────── */}
+      {/* ── Applied-knowledge prep ──────────────────────────────── */}
       <ComponentBlock
-        eyebrow="Knowledge test"
+        eyebrow="Applied-knowledge test"
         title="Study strategy"
-        meta="2 hours · multiple choice + short answer · BS 7671 permitted"
+        meta="~1 hour · online multiple choice · ~30 questions"
         icon={BookOpen}
         tips={knowledgeTips}
         extra={
@@ -320,11 +320,11 @@ const PreparationPage = () => {
         }
       />
 
-      {/* ── Practical observation prep ──────────────────────────── */}
+      {/* ── Practical sections prep ─────────────────────────────── */}
       <ComponentBlock
-        eyebrow="Practical observation"
+        eyebrow="Practical sections"
         title="Practice strategy"
-        meta="6–8 hours · observed by EPAO assessor"
+        meta="~15 hours · observed at a NET assessment centre"
         icon={Wrench}
         tips={practicalTips}
         extra={
@@ -350,10 +350,9 @@ const PreparationPage = () => {
               <div className="flex items-start gap-2">
                 <AlertTriangle className="h-3.5 w-3.5 text-red-300 flex-shrink-0 mt-0.5" />
                 <p className="text-[12.5px] text-white/85 leading-relaxed">
-                  <span className="font-semibold text-red-300">Calibration:</span>{' '}
-                  All test instruments must be in calibration (within the last
-                  12 months). Check the calibration sticker before the day.
-                  Out-of-cal = invalid results.
+                  <span className="font-semibold text-red-300">Calibration:</span> All test
+                  instruments must be in calibration (within the last 12 months). Check the
+                  calibration sticker before the day. Out-of-cal = invalid results.
                 </p>
               </div>
             </div>
@@ -361,16 +360,16 @@ const PreparationPage = () => {
         }
       />
 
-      {/* ── Professional discussion prep ────────────────────────── */}
+      {/* ── Portfolio & Gateway prep ────────────────────────────── */}
       <ComponentBlock
-        eyebrow="Professional discussion"
-        title="Portfolio & discussion strategy"
-        meta="60 minutes · 1-to-1 · portfolio-based conversation"
+        eyebrow="Portfolio & Gateway"
+        title="Portfolio & evidence strategy"
+        meta="Built across your apprenticeship · confirmed at Gateway"
         icon={MessageSquare}
         tips={discussionTips}
         extra={
           <div className="rounded-md border border-elec-yellow/20 bg-elec-yellow/[0.04] p-3 space-y-2">
-            <Eyebrow className="text-elec-yellow/85">Example STAR response</Eyebrow>
+            <Eyebrow className="text-elec-yellow/85">Talking through your work — STAR</Eyebrow>
             {starExample.map((s) => (
               <div key={s.label} className="space-y-0.5">
                 <span className="text-[10.5px] font-medium uppercase tracking-[0.14em] text-elec-yellow/85">
@@ -435,9 +434,7 @@ const PreparationPage = () => {
                 </h3>
               </div>
               <p className="text-[12.5px] font-mono text-elec-yellow">{calc.formula}</p>
-              <p className="text-[12.5px] text-white/85 leading-relaxed">
-                {calc.explanation}
-              </p>
+              <p className="text-[12.5px] text-white/85 leading-relaxed">{calc.explanation}</p>
             </li>
           ))}
         </ul>
@@ -447,8 +444,8 @@ const PreparationPage = () => {
       <motion.section variants={itemVariants} className="space-y-3">
         <SectionHeader
           eyebrow="BS 7671 regulations"
-          title="15 to know where to find quickly"
-          meta="Bookmark these pages in your Regs book"
+          title={`${regs.length} to know where to find quickly`}
+          meta="Bookmark these pages in your Regs book (BS 7671:2018+A4:2026)"
         />
         <div className="rounded-xl border border-white/[0.06] bg-[hsl(0_0%_10%)] p-4 sm:p-5">
           <ul className="space-y-2">
@@ -457,9 +454,7 @@ const PreparationPage = () => {
                 <span className="text-[12px] font-mono font-semibold text-elec-yellow tabular-nums min-w-[60px] flex-shrink-0">
                   {item.reg}
                 </span>
-                <span className="text-[12.5px] text-white/85 leading-relaxed">
-                  {item.topic}
-                </span>
+                <span className="text-[12.5px] text-white/85 leading-relaxed">{item.topic}</span>
               </li>
             ))}
           </ul>
@@ -485,9 +480,7 @@ const PreparationPage = () => {
                   <h3 className="text-[14px] font-semibold text-elec-yellow tracking-tight">
                     {item.title}
                   </h3>
-                  <p className="text-[13px] text-white/85 leading-relaxed">
-                    {item.description}
-                  </p>
+                  <p className="text-[13px] text-white/85 leading-relaxed">{item.description}</p>
                 </div>
               </div>
             </li>
@@ -553,9 +546,7 @@ function ComponentBlock({ eyebrow, title, meta, icon: Icon, tips, extra }: Compo
               <span className="inline-flex items-center justify-center w-6 h-6 rounded-md border border-elec-yellow/25 bg-elec-yellow/[0.06] text-[11px] font-mono font-semibold tabular-nums text-elec-yellow flex-shrink-0">
                 {i + 1}
               </span>
-              <span className="text-[12.5px] text-white/85 leading-relaxed">
-                {tip}
-              </span>
+              <span className="text-[12.5px] text-white/85 leading-relaxed">{tip}</span>
             </li>
           ))}
         </ol>

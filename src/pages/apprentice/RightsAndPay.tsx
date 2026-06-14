@@ -1,8 +1,8 @@
 import { useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
-import { Card, CardContent } from '@/components/ui/card';
 import { ArrowLeft, CheckCircle } from 'lucide-react';
 import { Button } from '@/components/ui/button';
+import { DEFAULT_OTJ_STANDARD, OTJ_HOURS_FLOOR } from '@/data/otjStandards';
 import {
   PageFrame,
   PageHero,
@@ -32,7 +32,7 @@ const SECTIONS: Section[] = [
     description:
       "Apprentice rate, JIB rates by stage, what you should be paid for, the red flags that mean something's wrong.",
     meta: '8 min read',
-    tone: 'emerald',
+    tone: 'yellow',
   },
   {
     number: '02',
@@ -40,9 +40,9 @@ const SECTIONS: Section[] = [
     title: 'Your rights',
     slug: 'your-rights',
     description:
-      'Core employment rights, training rights, additional protections if under 18, and what to do when they\'re not being met.',
+      "Core employment rights, training rights, additional protections if under 18, and what to do when they're not being met.",
     meta: '7 min read',
-    tone: 'blue',
+    tone: 'yellow',
   },
   {
     number: '03',
@@ -52,7 +52,7 @@ const SECTIONS: Section[] = [
     description:
       'Free, confidential numbers — ACAS, National Apprenticeship Helpline, Citizens Advice, HSE, mental health support.',
     meta: '6 min read',
-    tone: 'orange',
+    tone: 'yellow',
   },
   {
     number: '04',
@@ -62,7 +62,7 @@ const SECTIONS: Section[] = [
     description:
       'Practical checklists for pay, training and progress, plus letter templates for raising issues formally.',
     meta: '5 min read',
-    tone: 'purple',
+    tone: 'yellow',
   },
 ];
 
@@ -98,27 +98,110 @@ export default function RightsAndPay() {
         />
       </motion.div>
 
-      <motion.div variants={itemVariants}>
-        <Card className="border-emerald-500/20 bg-emerald-500/[0.04]">
-          <CardContent className="p-5 space-y-3">
-            <div className="flex items-baseline gap-2">
-              <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-emerald-300/85">
-                Key facts
-              </span>
-            </div>
-            <ul className="space-y-2.5">
-              {KEY_FACTS.map((item) => (
-                <li
-                  key={item}
-                  className="flex items-start gap-2.5 text-[13px] text-white/85 leading-relaxed"
-                >
-                  <CheckCircle className="h-4 w-4 text-emerald-400 flex-shrink-0 mt-0.5" />
-                  {item}
-                </li>
-              ))}
-            </ul>
-          </CardContent>
-        </Card>
+      <motion.div
+        variants={itemVariants}
+        className="border-0 bg-transparent px-0 py-0 sm:rounded-2xl sm:border sm:border-white/[0.06] sm:bg-[hsl(0_0%_10%)] sm:px-5 sm:py-5"
+      >
+        <div className="flex items-baseline gap-2 mb-3">
+          <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+            Key facts
+          </span>
+        </div>
+        <ul className="space-y-2.5">
+          {KEY_FACTS.map((item) => (
+            <li
+              key={item}
+              className="flex items-start gap-2.5 text-[13px] text-white/85 leading-relaxed"
+            >
+              <CheckCircle className="h-4 w-4 text-elec-yellow flex-shrink-0 mt-0.5" />
+              {item}
+            </li>
+          ))}
+        </ul>
+      </motion.div>
+
+      <motion.div
+        variants={itemVariants}
+        className="border-0 bg-transparent px-0 py-0 sm:rounded-2xl sm:border sm:border-elec-yellow/25 sm:bg-elec-yellow/[0.04] sm:px-5 sm:py-5"
+      >
+        <div className="flex items-baseline gap-2 mb-2">
+          <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-elec-yellow/85">
+            Off-the-job training
+          </span>
+          <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+            · Fixed hours, not 20%
+          </span>
+        </div>
+        <p className="text-[13px] leading-relaxed text-white/85 max-w-3xl">
+          Since 1 August 2025, off-the-job training is a fixed number of hours set by your
+          apprenticeship standard — not 20% of your working hours. The {DEFAULT_OTJ_STANDARD.name} (
+          {DEFAULT_OTJ_STANDARD.code}) carries{' '}
+          <span className="text-elec-yellow font-semibold tabular-nums">
+            {DEFAULT_OTJ_STANDARD.otjHours.toLocaleString('en-GB')} hours
+          </span>
+          , delivered over the apprenticeship. The absolute floor for any standard is{' '}
+          {OTJ_HOURS_FLOOR} hours. This is paid time — it counts as part of your working week.
+        </p>
+      </motion.div>
+
+      <motion.div
+        variants={itemVariants}
+        className="border-0 bg-transparent px-0 py-0 sm:rounded-2xl sm:border sm:border-white/[0.06] sm:bg-[hsl(0_0%_10%)] sm:px-5 sm:py-5 space-y-4"
+      >
+        <div className="flex items-baseline gap-2">
+          <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+            Essentials
+          </span>
+          <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-elec-yellow/85">
+            · The basics worth knowing
+          </span>
+        </div>
+        <dl className="space-y-3.5">
+          <div>
+            <dt className="text-[12px] font-semibold text-elec-yellow mb-0.5">Holiday pay</dt>
+            <dd className="text-[13px] leading-relaxed text-white/80 max-w-3xl">
+              You build up paid holiday from your first day. The statutory minimum is 5.6 weeks a
+              year — 28 days for a five-day week, which your employer can count bank holidays
+              towards. Holiday is paid at your normal rate, not a reduced one.
+            </dd>
+          </div>
+          <div>
+            <dt className="text-[12px] font-semibold text-elec-yellow mb-0.5">Sick pay</dt>
+            <dd className="text-[13px] leading-relaxed text-white/80 max-w-3xl">
+              If you're off sick and meet the earnings threshold, you're entitled to Statutory Sick
+              Pay from the fourth qualifying day, for up to 28 weeks. Many employers pay more than
+              the statutory minimum — check your contract. Report sickness the way your contract
+              sets out and keep a record.
+            </dd>
+          </div>
+          <div>
+            <dt className="text-[12px] font-semibold text-elec-yellow mb-0.5">
+              If you're not being trained
+            </dt>
+            <dd className="text-[13px] leading-relaxed text-white/80 max-w-3xl">
+              Being used as cheap labour instead of being taught is a genuine problem, not just bad
+              luck. Raise it first with your training provider — they're responsible for the quality
+              of your on-the-job learning and can speak to your employer. Keep your own dated notes
+              of what you're given to do. If it isn't resolved, escalate to your provider's quality
+              team or the National Apprenticeship Helpline.
+            </dd>
+          </div>
+          <div>
+            <dt className="text-[12px] font-semibold text-elec-yellow mb-0.5">Unions & ACAS</dt>
+            <dd className="text-[13px] leading-relaxed text-white/80 max-w-3xl">
+              You have the right to join a trade union — Unite the Union represents many electrical
+              workers and can advise and represent you. For free, impartial guidance on any
+              workplace issue before it escalates, ACAS is on{' '}
+              <a
+                href="tel:03001231100"
+                className="text-elec-yellow underline underline-offset-2 touch-manipulation"
+              >
+                0300 123 1100
+              </a>
+              .
+            </dd>
+          </div>
+        </dl>
       </motion.div>
 
       <motion.section variants={itemVariants} className="space-y-5 sm:space-y-6">
@@ -152,9 +235,22 @@ export default function RightsAndPay() {
           </span>
         </div>
         <p className="text-[13px] leading-relaxed text-white/80 max-w-3xl">
-          In immediate danger? Call 999. For non-emergency workplace issues, ACAS is free and
-          confidential on 0300 123 1100. Exploitation, unsafe conditions and unfair treatment
-          aren't normal — using support shows strength, not weakness.
+          In immediate danger? Call{' '}
+          <a
+            href="tel:999"
+            className="text-red-300 underline underline-offset-2 touch-manipulation"
+          >
+            999
+          </a>
+          . For non-emergency workplace issues, ACAS is free and confidential on{' '}
+          <a
+            href="tel:03001231100"
+            className="text-red-300 underline underline-offset-2 touch-manipulation"
+          >
+            0300 123 1100
+          </a>
+          . Exploitation, unsafe conditions and unfair treatment aren't normal — using support shows
+          strength, not weakness.
         </p>
       </motion.div>
     </PageFrame>

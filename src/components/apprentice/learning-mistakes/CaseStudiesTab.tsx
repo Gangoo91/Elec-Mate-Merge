@@ -1,5 +1,3 @@
-import { Button } from '@/components/ui/button';
-import { ExternalLink } from 'lucide-react';
 import { useState } from 'react';
 
 const CaseStudiesTab = () => {
@@ -16,9 +14,10 @@ const CaseStudiesTab = () => {
       discovery:
         'During testing, the electrician noticed the wrong rating and questioned Jamie about it. The error was caught before the installation was energised.',
       consequences: [
-        'Circuit would have been under-protected — 32A MCB allows more current than a 20A-rated cable can safely carry',
+        'Breaks the BS 7671 Chapter 43 overload rule — the device rating (In) must be coordinated with the cable so the cable’s current-carrying capacity (Iz) is not less than In',
+        'A 32A MCB on a circuit designed for 20A means the cable can overheat before the device trips',
         'Potential fire risk from cable overload',
-        'Non-compliance with BS 7671',
+        'Non-compliance with BS 7671:2018+A4:2026',
         'Time lost replacing the correct MCB',
       ],
       lessons: [
@@ -96,18 +95,18 @@ const CaseStudiesTab = () => {
           {caseStudies.map((caseStudy) => {
             const isSelected = selectedCase === caseStudy.id;
             const containerClass = caseStudy.isSafety
-              ? 'rounded-xl border border-red-500/30 bg-red-500/[0.04] p-4 cursor-pointer transition-all touch-manipulation space-y-2'
-              : `rounded-xl border bg-white/[0.02] p-4 cursor-pointer transition-all touch-manipulation space-y-2 ${
+              ? 'w-full text-left rounded-xl border border-red-500/30 bg-red-500/[0.04] p-4 cursor-pointer transition-all touch-manipulation space-y-2'
+              : `w-full text-left rounded-xl border bg-white/[0.02] p-4 cursor-pointer transition-all touch-manipulation space-y-2 ${
                   isSelected ? 'border-elec-yellow' : 'border-white/[0.06] hover:border-white/15'
                 }`;
 
             return (
-              <div
+              <button
+                type="button"
                 key={caseStudy.id}
+                aria-expanded={isSelected}
                 className={containerClass}
-                onClick={() =>
-                  setSelectedCase(selectedCase === caseStudy.id ? null : caseStudy.id)
-                }
+                onClick={() => setSelectedCase(selectedCase === caseStudy.id ? null : caseStudy.id)}
               >
                 <div className="flex items-start justify-between gap-2">
                   <h3 className="text-[14px] font-semibold text-white">{caseStudy.title}</h3>
@@ -130,17 +129,10 @@ const CaseStudiesTab = () => {
                   {caseStudy.scenario}
                 </p>
 
-                {isSelected && (
-                  <Button
-                    size="sm"
-                    className="mt-2 w-full h-10 bg-elec-yellow hover:bg-elec-yellow/90 text-black font-semibold touch-manipulation"
-                    onClick={(e) => e.stopPropagation()}
-                  >
-                    <ExternalLink className="h-3 w-3 mr-1" />
-                    View full case
-                  </Button>
-                )}
-              </div>
+                <span className="text-[11px] font-medium uppercase tracking-[0.18em] text-elec-yellow">
+                  {isSelected ? 'Tap to collapse' : 'Tap to read full case'}
+                </span>
+              </button>
             );
           })}
         </div>
@@ -221,9 +213,7 @@ const CaseStudiesTab = () => {
                   <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
                     Final outcome
                   </span>
-                  <p className="text-[14px] text-white/85 leading-relaxed">
-                    {currentCase.outcome}
-                  </p>
+                  <p className="text-[14px] text-white/85 leading-relaxed">{currentCase.outcome}</p>
                 </div>
 
                 <div className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-4 space-y-2">
@@ -234,6 +224,23 @@ const CaseStudiesTab = () => {
                     {currentCase.prevention}
                   </p>
                 </div>
+
+                {currentCase.isSafety && (
+                  <div className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-4 space-y-2">
+                    <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-elec-yellow">
+                      Reporting honestly is safe
+                    </span>
+                    <p className="text-[14px] text-white/85 leading-relaxed">
+                      A near miss like this must be reported straight away — owning up early
+                      protects you and your colleagues. Good employers run a just culture: honest
+                      reporting of a genuine mistake is encouraged, not punished, because it lets
+                      the team fix the cause before someone is hurt. An electric shock or arc flash
+                      that needed (or could have needed) treatment is also reportable to the HSE
+                      under RIDDOR — your supervisor handles the formal report, but it starts with
+                      you speaking up.
+                    </p>
+                  </div>
+                )}
               </>
             );
           })()}

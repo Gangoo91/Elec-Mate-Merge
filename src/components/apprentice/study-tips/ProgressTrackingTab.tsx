@@ -1,6 +1,3 @@
-import { Button } from '@/components/ui/button';
-import { Progress } from '@/components/ui/progress';
-
 const Section = ({
   eyebrow,
   description,
@@ -15,9 +12,7 @@ const Section = ({
       <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
         {eyebrow}
       </span>
-      {description && (
-        <p className="text-[14px] text-white/70 leading-relaxed">{description}</p>
-      )}
+      {description && <p className="text-[14px] text-white/70 leading-relaxed">{description}</p>}
     </div>
     {children}
   </div>
@@ -61,29 +56,29 @@ const ProgressTrackingTab = () => {
     },
   ];
 
-  const studyMetrics = [
+  const whatToTrack = [
     {
       category: 'Time management',
-      metrics: [
-        { name: 'Daily study time', target: '2 hours', current: '1.8 hours', progress: 90 },
-        { name: 'Weekly goals', target: '14 hours', current: '12.6 hours', progress: 90 },
-        { name: 'Consistency streak', target: '30 days', current: '18 days', progress: 60 },
+      items: [
+        'Daily study time — minutes actually spent, not planned',
+        'Weekly hours across each subject area',
+        'Consistency streak — days studied in a row',
       ],
     },
     {
       category: 'Knowledge retention',
-      metrics: [
-        { name: 'BS 7671:2018+A4:2026', target: '85%', current: '78%', progress: 78 },
-        { name: 'Level 3 theory', target: '80%', current: '72%', progress: 72 },
-        { name: 'Practical skills', target: '90%', current: '85%', progress: 85 },
+      items: [
+        'BS 7671:2018+A4:2026 — regulation recall and navigation speed',
+        'Level 3 theory — calculations and AC principles',
+        'Practical skills — testing sequence and fault finding',
       ],
     },
     {
       category: 'Goal achievement',
-      metrics: [
-        { name: 'Monthly targets', target: '100%', current: '85%', progress: 85 },
-        { name: 'Assessment prep', target: 'Ready', current: '75%', progress: 75 },
-        { name: 'Portfolio progress', target: 'Complete', current: '60%', progress: 60 },
+      items: [
+        'Monthly learning targets met',
+        'Assessment readiness against the spec',
+        'Portfolio / OTJ evidence logged',
       ],
     },
   ];
@@ -184,27 +179,28 @@ const ProgressTrackingTab = () => {
         </p>
       </div>
 
-      <Section eyebrow="Your current progress">
+      <Section
+        eyebrow="What to track"
+        description="Pick a handful of measures across these three areas and review them weekly. Track your own numbers — the value is in the trend, not a target someone else set."
+      >
         <div className="space-y-3">
-          {studyMetrics.map((category, index) => (
+          {whatToTrack.map((category, index) => (
             <div
               key={index}
-              className="rounded-md border border-white/[0.06] bg-white/[0.02] p-4 space-y-3"
+              className="rounded-md border border-white/[0.06] bg-white/[0.02] p-4 space-y-2"
             >
               <h4 className="text-[14px] font-semibold text-white">{category.category}</h4>
-              <div className="space-y-3">
-                {category.metrics.map((metric, metricIndex) => (
-                  <div key={metricIndex} className="space-y-1">
-                    <div className="flex items-baseline justify-between text-[13px]">
-                      <span className="text-white/85">{metric.name}</span>
-                      <span className="text-white/55 font-mono">
-                        {metric.current} / {metric.target}
-                      </span>
-                    </div>
-                    <Progress value={metric.progress} className="h-1 bg-white/5" />
-                  </div>
+              <ul className="space-y-1.5">
+                {category.items.map((item, itemIndex) => (
+                  <li
+                    key={itemIndex}
+                    className="text-[13px] text-white/85 leading-relaxed flex items-start gap-2"
+                  >
+                    <span className="w-1 h-1 rounded-full bg-white/55 mt-2 flex-shrink-0" />
+                    <span>{item}</span>
+                  </li>
                 ))}
-              </div>
+              </ul>
             </div>
           ))}
         </div>
@@ -375,26 +371,9 @@ const ProgressTrackingTab = () => {
 
       <Section eyebrow="Start tracking your progress today">
         <p className="text-[14px] text-white/85 leading-relaxed">
-          Choose your preferred tracking method and begin monitoring your learning journey for
-          better results.
+          Pick one tracking method above and start this week. A simple notebook or a free habit app
+          beats a perfect system you never open — the habit matters more than the tool.
         </p>
-        <div className="flex flex-wrap gap-2">
-          <Button className="h-10 bg-elec-yellow text-black hover:bg-elec-yellow/90 touch-manipulation">
-            Set up progress dashboard
-          </Button>
-          <Button
-            variant="outline"
-            className="h-10 border-white/10 bg-white/[0.03] text-white hover:bg-white/[0.06] touch-manipulation"
-          >
-            Download templates
-          </Button>
-          <Button
-            variant="outline"
-            className="h-10 border-white/10 bg-white/[0.03] text-white hover:bg-white/[0.06] touch-manipulation"
-          >
-            Join tracking group
-          </Button>
-        </div>
       </Section>
     </div>
   );

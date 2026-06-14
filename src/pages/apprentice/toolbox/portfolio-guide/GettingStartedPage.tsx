@@ -8,23 +8,16 @@
 import { useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { ArrowLeft, CheckCircle2, AlertTriangle } from 'lucide-react';
-import {
-  PageFrame,
-  PageHero,
-  itemVariants,
-} from '@/components/college/primitives';
-import {
-  Eyebrow,
-  SectionHeader,
-} from '@/components/apprentice-hub/portfolio/PortfolioPrimitives';
+import { PageFrame, PageHero, itemVariants } from '@/components/college/primitives';
+import { Eyebrow, SectionHeader } from '@/components/apprentice-hub/portfolio/PortfolioPrimitives';
 
 const whyMatters = [
-  'Required for EPA gateway sign-off — without it you can\'t progress to assessment',
+  'Required for gateway sign-off — without it your provider can’t put you forward for End-Point Assessment',
   'Demonstrates competence against all KSBs in the standard',
-  'Provides evidence for your Professional Discussion — assessors use it to guide questions',
+  'Evidences your on-programme NVQ competence for your training provider and assessor',
   'Creates a permanent record of your professional development for future employers',
-  'Proves to your EPAO that you have met all requirements',
-  'Shows progression from beginner tasks to complex, independent work over 4 years',
+  'Proves to your provider that you have met all gateway requirements',
+  'Shows progression from beginner tasks to complex, independent work across your apprenticeship',
 ];
 
 const evidenceTypes = [
@@ -56,19 +49,19 @@ const evidenceTypes = [
 
 const ksbAreas = [
   {
-    code: 'K1–K15',
+    code: 'K',
     title: 'Knowledge',
     description:
       'What you understand — electrical science, BS 7671, health and safety legislation, environmental requirements, testing principles, fault-finding methods, and how electrical systems work.',
   },
   {
-    code: 'S1–S15',
+    code: 'S',
     title: 'Skills',
     description:
       'What you can do — install wiring systems, terminate cables, test and inspect circuits, diagnose faults, read drawings, use instruments correctly, work safely at height and in confined spaces.',
   },
   {
-    code: 'B1–B6',
+    code: 'B',
     title: 'Behaviours',
     description:
       'How you conduct yourself — working safely, taking responsibility, communicating effectively, working as part of a team, showing initiative, maintaining a professional approach.',
@@ -79,14 +72,14 @@ const timeline = [
   'Week 1: Set up your portfolio folder (digital or physical)',
   'Month 1: Start collecting induction evidence, safety records, first photos',
   'Every week: Add at least one new piece of evidence',
-  'Every month: Write a reflective account on what you\'ve learned',
+  'Every month: Write a reflective account on what you’ve learned',
   'Every quarter: Review your KSB mapping — are there gaps?',
-  'Year 3–4: Focus on filling KSB gaps and polishing presentation',
+  'Final year: Focus on filling KSB gaps and polishing presentation',
   'Gateway: Final review with your training provider before EPA',
 ];
 
 const digitalPros = [
-  'Easy to back up and can\'t be lost in a fire or flood',
+  "Easy to back up and can't be lost in a fire or flood",
   'Searchable — quickly find evidence for specific KSBs',
   'Photos and videos easily included',
   'Can share instantly with assessors and training providers',
@@ -157,15 +150,17 @@ const GettingStartedPage = () => {
         />
         <div className="rounded-xl border border-white/[0.06] bg-[hsl(0_0%_10%)] p-4 sm:p-5 space-y-2">
           <p className="text-[13.5px] text-white/85 leading-relaxed">
-            Your apprenticeship portfolio is a structured collection of evidence
-            proving you're competent against the Level 3 Installation /
-            Maintenance Electrician standard (ST0152 v1.2). It tells the story
-            of your development from day one to EPA readiness.
+            Your apprenticeship portfolio is a structured collection of evidence proving you're
+            competent against the Level 3 Installation / Maintenance Electrician standard (ST0152
+            v1.2). It tells the story of your development from day one to gateway readiness,
+            typically across 3.5–4 years (42–48 months).
           </p>
           <p className="text-[13px] text-white/85 leading-relaxed">
-            Reviewed during your End Point Assessment — specifically in the
-            Professional Discussion. The assessor will use it as a starting
-            point for questions about your knowledge, skills, and behaviours.
+            It's an on-programme record. Your training provider and assessor use it to confirm your
+            NVQ competence and sign you off at gateway. The End-Point Assessment itself is the AM2S
+            practical assessment — a synoptic test of safe isolation, installation, inspection and
+            testing, fault diagnosis and an embedded applied-knowledge test, not a review of your
+            portfolio.
           </p>
         </div>
       </motion.section>
@@ -219,7 +214,7 @@ const GettingStartedPage = () => {
         <SectionHeader
           eyebrow="Understanding KSBs"
           title="Knowledge · Skills · Behaviours"
-          meta="Every piece of evidence should map to at least one"
+          meta="Every piece of evidence should map to at least one — see your ST0152 v1.2 standard for the full numbered KSB list"
         />
         <ul className="space-y-2">
           {ksbAreas.map((area) => (
@@ -250,8 +245,8 @@ const GettingStartedPage = () => {
         />
         <div className="rounded-xl border border-elec-yellow/25 bg-elec-yellow/[0.04] p-4 sm:p-5 space-y-3">
           <p className="text-[13.5px] text-white/85 leading-relaxed">
-            By Year 3 or 4 you've forgotten details, lost photos, and can't get
-            witness statements for work done years ago. Start now.
+            By Year 3 or 4 you've forgotten details, lost photos, and can't get witness statements
+            for work done years ago. Start now.
           </p>
           <div className="space-y-2 pt-2 border-t border-elec-yellow/15">
             <Eyebrow className="text-elec-yellow/85">Recommended timeline</Eyebrow>

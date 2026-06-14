@@ -31,7 +31,7 @@ const SECTIONS: Section[] = [
     description:
       'Talking to supervisors, joining toolbox talks, asking the right questions, handling banter without losing the plot.',
     meta: '10 min read',
-    tone: 'blue',
+    tone: 'yellow',
   },
   {
     number: '02',
@@ -41,7 +41,7 @@ const SECTIONS: Section[] = [
     description:
       'Customer-facing language, explaining technical work in plain English, writing handover notes that actually help the next sparky.',
     meta: '10 min read',
-    tone: 'emerald',
+    tone: 'yellow',
   },
   {
     number: '03',
@@ -51,7 +51,7 @@ const SECTIONS: Section[] = [
     description:
       'Disagreements, complaints, unsafe instructions, mistakes you have to own — how to handle the conversations no one wants.',
     meta: '12 min read',
-    tone: 'amber',
+    tone: 'yellow',
   },
   {
     number: '04',
@@ -61,7 +61,7 @@ const SECTIONS: Section[] = [
     description:
       "The phrases, frameworks and small habits that make you sound — and feel — like you've been on site for years.",
     meta: '12 min read',
-    tone: 'purple',
+    tone: 'yellow',
   },
 ];
 
@@ -101,9 +101,7 @@ const CommunicationSkills = () => {
               description={s.description}
               meta={s.meta}
               tone={s.tone}
-              onClick={() =>
-                navigate(`/apprentice/toolbox/communication-skills/${s.slug}`)
-              }
+              onClick={() => navigate(`/apprentice/toolbox/communication-skills/${s.slug}`)}
             />
           ))}
         </HubGrid>

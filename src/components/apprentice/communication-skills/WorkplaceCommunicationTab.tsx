@@ -1,4 +1,4 @@
-import { Users, Wrench, Shield, Clock, HardHat, Briefcase, LucideIcon } from 'lucide-react';
+import { Users, Wrench, Shield, HardHat, Briefcase, LucideIcon } from 'lucide-react';
 
 const Section = ({
   eyebrow,
@@ -14,9 +14,7 @@ const Section = ({
       <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
         {eyebrow}
       </span>
-      {description && (
-        <p className="text-[14px] text-white/70 leading-relaxed">{description}</p>
-      )}
+      {description && <p className="text-[14px] text-white/70 leading-relaxed">{description}</p>}
     </div>
     {children}
   </div>
@@ -54,17 +52,29 @@ const WorkplaceCommunicationTab = () => {
         {
           situation: 'Reporting problems',
           good: "I've found an issue with the cable run behind the kitchen units. There's a gas pipe in the way. I've stopped work and marked the area. What's the best alternative route?",
-          tips: ['Stop work immediately', 'Be specific about the problem', 'Suggest solutions if possible'],
+          tips: [
+            'Stop work immediately',
+            'Be specific about the problem',
+            'Suggest solutions if possible',
+          ],
         },
         {
           situation: 'Asking for help',
           good: 'I want to make sure I terminate this DB correctly. Could you check my work before I energise the circuit?',
-          tips: ['Ask before making mistakes', 'Show initiative', 'Be specific about what you need'],
+          tips: [
+            'Ask before making mistakes',
+            'Show initiative',
+            'Be specific about what you need',
+          ],
         },
         {
           situation: 'Requesting time off or adjustments',
           good: "I have a college assessment on Thursday that I need to prepare for. Would it be possible to finish an hour early on Wednesday so I can revise? I'll make sure my current work is at a good stopping point.",
-          tips: ['Give plenty of notice', 'Show you have considered the impact on the job', 'Offer solutions to cover the time'],
+          tips: [
+            'Give plenty of notice',
+            'Show you have considered the impact on the job',
+            'Offer solutions to cover the time',
+          ],
         },
         {
           situation: 'End of day handover',
@@ -80,7 +90,11 @@ const WorkplaceCommunicationTab = () => {
         {
           situation: 'Learning techniques',
           good: "I've seen you do that cable termination really quickly. Could you show me your technique when you have a spare minute?",
-          tips: ['Show respect for their experience', "Don't interrupt their work", 'Be specific about what you want to learn'],
+          tips: [
+            'Show respect for their experience',
+            "Don't interrupt their work",
+            'Be specific about what you want to learn',
+          ],
         },
         {
           situation: 'Working as a team',
@@ -90,12 +104,20 @@ const WorkplaceCommunicationTab = () => {
         {
           situation: 'Sharing information',
           good: "Just so you know, the client mentioned they want an extra socket in the study. I've told them we'll discuss it with you first.",
-          tips: ['Keep everyone informed', "Don't make promises you can't keep", 'Be clear about what was said'],
+          tips: [
+            'Keep everyone informed',
+            "Don't make promises you can't keep",
+            'Be clear about what was said',
+          ],
         },
         {
           situation: 'When you disagree',
-          good: "I understand why you would run it that way. I was taught a different method at college — would it be worth trying it this way to see if it works better here?",
-          tips: ['Respect their experience', 'Frame as a question not a challenge', 'Be open to learning why their way works'],
+          good: 'I understand why you would run it that way. I was taught a different method at college — would it be worth trying it this way to see if it works better here?',
+          tips: [
+            'Respect their experience',
+            'Frame as a question not a challenge',
+            'Be open to learning why their way works',
+          ],
         },
       ],
     },
@@ -111,17 +133,29 @@ const WorkplaceCommunicationTab = () => {
         {
           situation: 'Dealing with concerns',
           good: "I understand you're worried about the dust. We'll lay dust sheets and use a vacuum as we work. Is there anything specific you'd like us to be extra careful with?",
-          tips: ['Listen to their concerns', 'Explain your precautions', 'Ask about their priorities'],
+          tips: [
+            'Listen to their concerns',
+            'Explain your precautions',
+            'Ask about their priorities',
+          ],
         },
         {
           situation: 'Changes to work',
           good: "We've found some old wiring that needs updating for safety. I'll need to discuss this with my supervisor and get back to you with options and costs.",
-          tips: ["Don't make decisions beyond your authority", 'Explain the safety implications', 'Be clear about next steps'],
+          tips: [
+            "Don't make decisions beyond your authority",
+            'Explain the safety implications',
+            'Be clear about next steps',
+          ],
         },
         {
           situation: 'Saying no politely',
-          good: "I understand you would like us to add sockets to the garage as well, but that was not included in the original quote. I can ask my supervisor to price it up for you — would that be helpful?",
-          tips: ['Never do extra work without authorisation', 'Be helpful but firm', 'Offer the correct next step'],
+          good: 'I understand you would like us to add sockets to the garage as well, but that was not included in the original quote. I can ask my supervisor to price it up for you — would that be helpful?',
+          tips: [
+            'Never do extra work without authorisation',
+            'Be helpful but firm',
+            'Offer the correct next step',
+          ],
         },
       ],
     },
@@ -131,18 +165,30 @@ const WorkplaceCommunicationTab = () => {
       scenarios: [
         {
           situation: 'Coordinating access',
-          good: "We need to get our first fix cables in before you plasterboard this section. Can we agree a time today so neither of us is waiting around?",
-          tips: ['Plan ahead to avoid clashes', 'Be flexible where possible', 'Respect their schedule too'],
+          good: 'We need to get our first fix cables in before you plasterboard this section. Can we agree a time today so neither of us is waiting around?',
+          tips: [
+            'Plan ahead to avoid clashes',
+            'Be flexible where possible',
+            'Respect their schedule too',
+          ],
         },
         {
           situation: 'Protecting your work',
           good: "Just a heads up — we've got cables running behind that stud wall. Can you check with us before you drill or nail into that section? I can mark the cable routes for you.",
-          tips: ['Be polite but clear about safety risks', 'Offer to help (marking routes, photos)', 'Report damage immediately'],
+          tips: [
+            'Be polite but clear about safety risks',
+            'Offer to help (marking routes, photos)',
+            'Report damage immediately',
+          ],
         },
         {
           situation: 'Resolving clashes',
-          good: "It looks like your pipework and our cable tray are both planned for the same route. Can we sit down with the drawings and work out who goes where? Maybe we can share the containment.",
-          tips: ['Approach it as a shared problem', 'Use the drawings as a reference', 'Involve the site manager if needed'],
+          good: 'It looks like your pipework and our cable tray are both planned for the same route. Can we sit down with the drawings and work out who goes where? Maybe we can share the containment.',
+          tips: [
+            'Approach it as a shared problem',
+            'Use the drawings as a reference',
+            'Involve the site manager if needed',
+          ],
         },
       ],
     },
@@ -153,17 +199,29 @@ const WorkplaceCommunicationTab = () => {
         {
           situation: 'Site inductions',
           good: 'Thank you for the induction. Could you clarify the emergency muster point and confirm where we can store our tools and materials overnight?',
-          tips: ['Pay attention and ask questions', 'Take notes on key information', 'Know the emergency procedures'],
+          tips: [
+            'Pay attention and ask questions',
+            'Take notes on key information',
+            'Know the emergency procedures',
+          ],
         },
         {
           situation: 'Reporting delays',
           good: 'We are running behind on the lighting because the ceiling grid was not ready when we arrived. We have moved to another area to keep productive. We should be back on schedule by Thursday.',
-          tips: ['Report early, not at the last minute', 'Explain the cause clearly', 'Show you have a plan to recover'],
+          tips: [
+            'Report early, not at the last minute',
+            'Explain the cause clearly',
+            'Show you have a plan to recover',
+          ],
         },
         {
           situation: 'Raising safety concerns',
           good: 'I have noticed that the scaffold on level 2 does not have toe boards. Before we can work up there, could you arrange for the scaffolders to make it safe?',
-          tips: ['Be specific about the hazard', 'Reference the relevant regulation if you know it', 'Do not work in unsafe conditions'],
+          tips: [
+            'Be specific about the hazard',
+            'Reference the relevant regulation if you know it',
+            'Do not work in unsafe conditions',
+          ],
         },
       ],
     },
@@ -173,7 +231,12 @@ const WorkplaceCommunicationTab = () => {
     {
       method: 'Face-to-face',
       when: 'Complex instructions, safety issues, learning new skills, client discussions',
-      pros: ['Clear understanding', 'Immediate feedback', 'Shows respect', 'Best for sensitive topics'],
+      pros: [
+        'Clear understanding',
+        'Immediate feedback',
+        'Shows respect',
+        'Best for sensitive topics',
+      ],
     },
     {
       method: 'Radio / phone',
@@ -188,17 +251,32 @@ const WorkplaceCommunicationTab = () => {
     {
       method: 'Written notes / reports',
       when: 'Handovers, detailed instructions, material lists, snagging',
-      pros: ['Permanent record', 'Can be referenced later', 'Reduces errors', 'Professional documentation'],
+      pros: [
+        'Permanent record',
+        'Can be referenced later',
+        'Reduces errors',
+        'Professional documentation',
+      ],
     },
     {
       method: 'Email',
       when: 'Formal requests, quotes, confirming verbal agreements, complaints',
-      pros: ['Formal record', 'Timestamped evidence', 'Can attach documents', 'Suitable for office-based contacts'],
+      pros: [
+        'Formal record',
+        'Timestamped evidence',
+        'Can attach documents',
+        'Suitable for office-based contacts',
+      ],
     },
     {
       method: 'Site drawings and markups',
       when: 'Cable routes, accessory positions, distribution board layouts',
-      pros: ['Visual clarity', 'Avoids misunderstandings', 'Reference for all trades', 'Part of project record'],
+      pros: [
+        'Visual clarity',
+        'Avoids misunderstandings',
+        'Reference for all trades',
+        'Part of project record',
+      ],
     },
   ];
 
@@ -277,7 +355,10 @@ const WorkplaceCommunicationTab = () => {
             'Get phone numbers for your supervisor and the site office',
             'Ask if there are any site-specific safety rules (hot works permits, asbestos register, etc.)',
           ].map((item, index) => (
-            <li key={index} className="flex items-start gap-3 text-[14px] text-white/85 leading-relaxed">
+            <li
+              key={index}
+              className="flex items-start gap-3 text-[14px] text-white/85 leading-relaxed"
+            >
               <span className="flex-shrink-0 w-6 h-6 rounded-md border border-white/10 bg-white/[0.03] flex items-center justify-center text-[12px] font-mono">
                 {index + 1}
               </span>
@@ -300,7 +381,8 @@ const WorkplaceCommunicationTab = () => {
             },
             {
               situation: 'When you have finished a task',
-              phrase: 'I have finished the sockets in room 2. What would you like me to move on to?',
+              phrase:
+                'I have finished the sockets in room 2. What would you like me to move on to?',
             },
             {
               situation: 'When you spot a hazard',
@@ -309,7 +391,8 @@ const WorkplaceCommunicationTab = () => {
             },
             {
               situation: 'When you need materials',
-              phrase: 'We are running low on 2.5mm twin and earth. We will need another drum before tomorrow.',
+              phrase:
+                'We are running low on 2.5mm twin and earth. We will need another drum before tomorrow.',
             },
             {
               situation: 'When handing over to someone else',

@@ -31,7 +31,7 @@ const SECTIONS: Section[] = [
     description:
       'Technical, judgment, communication, attitude — different mistakes need different responses. Knowing which kind you made is half the recovery.',
     meta: '8 min read',
-    tone: 'blue',
+    tone: 'yellow',
   },
   {
     number: '02',
@@ -39,9 +39,9 @@ const SECTIONS: Section[] = [
     title: 'Recovery strategies',
     slug: 'recovery',
     description:
-      'How to own it, fix it, and move on without losing trust. The script for talking to a supervisor when you\'ve got bad news.',
+      "How to own it, fix it, and move on without losing trust. The script for talking to a supervisor when you've got bad news.",
     meta: '7 min read',
-    tone: 'emerald',
+    tone: 'yellow',
   },
   {
     number: '03',
@@ -51,7 +51,7 @@ const SECTIONS: Section[] = [
     description:
       'Mistakes will keep happening — your job is to keep going. The mental habits that turn setbacks into the next bit of competence.',
     meta: '7 min read',
-    tone: 'purple',
+    tone: 'yellow',
   },
   {
     number: '04',
@@ -61,7 +61,7 @@ const SECTIONS: Section[] = [
     description:
       'Anonymised real-world cases — what happened, what they did, what came of it. The kind of war stories you only normally hear at the pub.',
     meta: '9 min read',
-    tone: 'amber',
+    tone: 'yellow',
   },
   {
     number: '05',
@@ -71,7 +71,7 @@ const SECTIONS: Section[] = [
     description:
       'The habits that catch mistakes before they happen — checks, pauses, the moment to ask the dumb question.',
     meta: '6 min read',
-    tone: 'orange',
+    tone: 'yellow',
   },
   {
     number: '06',
@@ -81,7 +81,7 @@ const SECTIONS: Section[] = [
     description:
       'Who to talk to when things go wrong — supervisor, training provider, college tutor, mental health support, peer networks.',
     meta: '5 min read',
-    tone: 'cyan',
+    tone: 'yellow',
   },
 ];
 
@@ -121,9 +121,7 @@ const LearningFromMistakes = () => {
               description={s.description}
               meta={s.meta}
               tone={s.tone}
-              onClick={() =>
-                navigate(`/apprentice/toolbox/learning-from-mistakes/${s.slug}`)
-              }
+              onClick={() => navigate(`/apprentice/toolbox/learning-from-mistakes/${s.slug}`)}
             />
           ))}
         </HubGrid>

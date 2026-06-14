@@ -28,19 +28,10 @@ import {
   PartyPopper,
   FileText,
   DollarSign,
-  Calendar,
-  Star,
 } from 'lucide-react';
 import type { LucideIcon } from 'lucide-react';
-import {
-  PageFrame,
-  PageHero,
-  itemVariants,
-} from '@/components/college/primitives';
-import {
-  Eyebrow,
-  SectionHeader,
-} from '@/components/apprentice-hub/portfolio/PortfolioPrimitives';
+import { PageFrame, PageHero, itemVariants } from '@/components/college/primitives';
+import { Eyebrow, SectionHeader } from '@/components/apprentice-hub/portfolio/PortfolioPrimitives';
 import { cn } from '@/lib/utils';
 
 interface MonthlyPeriod {
@@ -66,7 +57,7 @@ const monthlyBreakdown: MonthlyPeriod[] = [
       'Reach out to specialists in your network for shadowing',
     ],
     dayInLife:
-      'This is where you start to shape your future. The specialisation you choose now can define your career for years — but it doesn\'t lock you in forever.',
+      "This is where you start to shape your future. The specialisation you choose now can define your career for years — but it doesn't lock you in forever.",
   },
   {
     month: 'Month 39–40',
@@ -75,13 +66,13 @@ const monthlyBreakdown: MonthlyPeriod[] = [
     icon: Award,
     activities: [
       'Final EPA preparation — mock assessments and revision',
-      'Practical assessment — 17 hours over ~2.5 days at a NET booth',
-      'Professional discussion — 90 minutes presenting your portfolio',
-      'Knowledge test — 90-minute written exam',
+      'AM2S practical — a single integrated assessment (~16–18 hours, typically over ~2.5 days) at a NET booth',
+      'Safe isolation, composite install, inspection & testing, and fault diagnosis — all observed and assessed',
+      'Embedded online multiple-choice applied-knowledge test (Section E)',
       'Sleep, eat, hydrate — treat assessment week like an athlete',
     ],
     dayInLife:
-      'The big moment arrives. Everything you\'ve worked for over 4 years comes down to these assessments. You\'ve got this.',
+      "The big moment arrives. Everything you've worked for over 4 years comes down to these assessments. You've got this.",
   },
   {
     month: 'Month 41–42',
@@ -89,14 +80,14 @@ const monthlyBreakdown: MonthlyPeriod[] = [
     focus: 'Transition to qualified electrician',
     icon: Briefcase,
     activities: [
-      'Job market research — what\'s out there in your area',
+      "Job market research — what's out there in your area",
       'CV and portfolio finalisation — showing your best work',
       'Interview preparation — practising common questions',
       'Professional networking — making connections in the industry',
       'ECS card upgrade — apprentice → electrician',
     ],
     dayInLife:
-      'You\'ve passed EPA — now it\'s about your next chapter. Exciting time of possibilities. Negotiate like a qualified pro.',
+      "You've passed EPA — now it's about your next chapter. Exciting time of possibilities. Negotiate like a qualified pro.",
   },
   {
     month: 'Month 43–44',
@@ -111,7 +102,7 @@ const monthlyBreakdown: MonthlyPeriod[] = [
       'JIB grading application — Electrician → Approved Electrician (in time)',
     ],
     dayInLife:
-      'As a qualified sparky, you\'re investing in long-term career development and reputation. The best electricians keep learning.',
+      "As a qualified sparky, you're investing in long-term career development and reputation. The best electricians keep learning.",
   },
   {
     month: 'Month 45–46',
@@ -120,13 +111,13 @@ const monthlyBreakdown: MonthlyPeriod[] = [
     icon: Rocket,
     activities: [
       'Employment contract negotiation — getting the pay you deserve',
-      'Further education planning — if that\'s your path',
+      "Further education planning — if that's your path",
       'Professional goal setting — where do you want to be in 5 years?',
       'Industry networking expansion — building your reputation',
       'Self-employment groundwork (if going that route) — insurance, tools, scheme membership',
     ],
     dayInLife:
-      'Whether staying with your employer or moving on, you\'re now negotiating as a qualified professional. Know your worth.',
+      "Whether staying with your employer or moving on, you're now negotiating as a qualified professional. Know your worth.",
   },
   {
     month: 'Month 47–48',
@@ -138,10 +129,10 @@ const monthlyBreakdown: MonthlyPeriod[] = [
       'Qualification certification — official recognition',
       'Career transition completion — starting your new role',
       'Apprenticeship graduation ceremony — celebrating your achievement',
-      'Time for a proper holiday — you\'ve earned it',
+      "Time for a proper holiday — you've earned it",
     ],
     dayInLife:
-      'You did it. From that nervous first day to fully qualified electrician. Take a moment to appreciate how far you\'ve come.',
+      "You did it. From that nervous first day to fully qualified electrician. Take a moment to appreciate how far you've come.",
   },
 ];
 
@@ -258,13 +249,6 @@ const careerPathways: CareerPathway[] = [
   },
 ];
 
-const epaPassRates = [
-  { label: 'Overall EPA', value: 87 },
-  { label: 'Practical assessment', value: 89 },
-  { label: 'Professional discussion', value: 85 },
-  { label: 'Knowledge test', value: 91 },
-];
-
 const epaTips = [
   'Start preparation 6+ months before EPA',
   'Complete portfolio well in advance — not the week before',
@@ -294,7 +278,7 @@ const jobSearchTips: JobSearchSection[] = [
     icon: Users,
     tips: [
       'Research the company before the interview',
-      'Prepare examples of complex jobs you\'ve done',
+      "Prepare examples of complex jobs you've done",
       'Be ready to discuss health & safety',
       'Ask questions about their projects and culture',
     ],
@@ -304,14 +288,18 @@ const jobSearchTips: JobSearchSection[] = [
     icon: DollarSign,
     tips: [
       'Research market rates for your area',
-      'Know your worth — you\'re newly qualified',
+      "Know your worth — you're newly qualified",
       'Consider the whole package: van, tools, training',
-      'Don\'t accept the first offer if below market',
+      "Don't accept the first offer if below market",
     ],
   },
 ];
 
-const weeklyScheduleExample: { day: string; location: 'Site' | 'College' | 'EPA'; activities: string }[] = [
+const weeklyScheduleExample: {
+  day: string;
+  location: 'Site' | 'College' | 'EPA';
+  activities: string;
+}[] = [
   { day: 'Monday', location: 'Site', activities: 'Specialist installation work — chosen pathway' },
   { day: 'Tuesday', location: 'Site', activities: 'Independent work with minimal supervision' },
   { day: 'Wednesday', location: 'College', activities: 'EPA mock assessment + revision' },
@@ -387,45 +375,29 @@ export default function Year4() {
           <div className="flex items-start gap-2 pt-2 border-t border-white/[0.04]">
             <TrendingUp className="h-3.5 w-3.5 text-elec-yellow/85 flex-shrink-0 mt-0.5" />
             <p className="text-[12.5px] text-white/85 leading-relaxed">
-              From{' '}
-              <span className="font-mono text-white">£16.5k</span> to{' '}
-              <span className="font-mono text-elec-yellow">£35k+</span> in 4 years
-              — more than double your starting salary. Specialists and
-              self-employed sparks can earn{' '}
+              From <span className="font-mono text-white">£16.5k</span> to{' '}
+              <span className="font-mono text-elec-yellow">£35k+</span> in 4 years — more than
+              double your starting salary. Specialists and self-employed sparks can earn{' '}
               <span className="font-mono text-elec-yellow">£45k–£60k+</span>.
             </p>
           </div>
         </div>
       </motion.section>
 
-      {/* ── EPA pass rates ──────────────────────────────────────── */}
+      {/* ── EPA success ─────────────────────────────────────────── */}
       <motion.section variants={itemVariants} className="space-y-3">
         <SectionHeader
           eyebrow="EPA success"
-          title="National pass rates — strong odds if you've done the work"
-          meta="AM2S via NET — figures from recent EPAO reports"
+          title="Strong odds if you've done the work"
+          meta="AM2S via NET — graded Fail / Pass / Distinction"
         />
         <div className="rounded-xl border border-white/[0.06] bg-[hsl(0_0%_10%)] p-4 sm:p-5 space-y-4">
-          <ul className="space-y-2.5">
-            {epaPassRates.map((row) => (
-              <li key={row.label} className="space-y-1.5">
-                <div className="flex items-baseline justify-between gap-3">
-                  <span className="text-[13px] text-white">{row.label}</span>
-                  <span className="text-[13px] font-mono tabular-nums text-elec-yellow">
-                    {row.value}%
-                  </span>
-                </div>
-                <div className="h-1.5 rounded-full bg-white/[0.04] overflow-hidden">
-                  <motion.div
-                    initial={{ width: 0 }}
-                    animate={{ width: `${row.value}%` }}
-                    transition={{ duration: 0.7, ease: 'easeOut' }}
-                    className="h-full bg-elec-yellow rounded-full"
-                  />
-                </div>
-              </li>
-            ))}
-          </ul>
+          <p className="text-[13px] text-white/85 leading-relaxed">
+            The AM2S is one integrated practical assessment with an embedded online knowledge test,
+            graded Fail / Pass / Distinction. Most apprentices who reach the gateway well prepared —
+            portfolio complete, safe isolation and testing sequences mastered, mocks attended — pass
+            first time. Treat preparation, not luck, as the deciding factor.
+          </p>
           <div className="pt-3 border-t border-white/[0.04] space-y-2">
             <Eyebrow className="text-elec-yellow/85">Maximise your odds</Eyebrow>
             <ul className="space-y-1.5">
@@ -469,9 +441,7 @@ export default function Year4() {
                     {spec.averageSalary}
                   </span>
                 </div>
-                <p className="text-[13px] text-white/85 leading-relaxed">
-                  {spec.description}
-                </p>
+                <p className="text-[13px] text-white/85 leading-relaxed">{spec.description}</p>
                 <div className="grid grid-cols-1 sm:grid-cols-3 gap-2.5 pt-2 border-t border-white/[0.04]">
                   <KeyValue label="Career paths" items={spec.careerPaths} />
                   <KeyValue label="Outlook" items={[spec.growth]} highlight />
@@ -524,9 +494,7 @@ export default function Year4() {
                           {path.typicalSalary}
                         </span>
                       </div>
-                      <p className="text-[12.5px] text-white/70 leading-snug">
-                        {path.description}
-                      </p>
+                      <p className="text-[12.5px] text-white/70 leading-snug">{path.description}</p>
                     </div>
                     <ChevronDown
                       className={cn(
@@ -655,9 +623,7 @@ export default function Year4() {
                           {period.month}
                         </span>
                       </div>
-                      <p className="text-[12px] text-white/70 leading-snug">
-                        {period.focus}
-                      </p>
+                      <p className="text-[12px] text-white/70 leading-snug">{period.focus}</p>
                     </div>
                     <ChevronDown
                       className={cn(
@@ -702,14 +668,13 @@ export default function Year4() {
         />
         <ul className="rounded-xl border border-white/[0.06] bg-[hsl(0_0%_10%)] divide-y divide-white/[0.04] overflow-hidden">
           {weeklyScheduleExample.map(({ day, location, activities }) => (
-            <li
-              key={day}
-              className="flex items-center gap-3 sm:gap-4 p-3.5 sm:p-4"
-            >
-              <span className="w-20 text-[12.5px] font-medium text-white">{day}</span>
+            <li key={day} className="flex items-center gap-2.5 sm:gap-4 p-3.5 sm:p-4">
+              <span className="w-14 sm:w-20 shrink-0 text-[12.5px] font-medium text-white">
+                {day}
+              </span>
               <span
                 className={cn(
-                  'inline-flex items-center justify-center h-6 px-2 rounded-md border text-[10px] font-medium uppercase tracking-[0.14em] flex-shrink-0 w-16',
+                  'inline-flex items-center justify-center h-6 px-2 rounded-md border text-[10px] font-medium uppercase tracking-[0.14em] flex-shrink-0 w-14 sm:w-16',
                   location === 'College' || location === 'EPA'
                     ? 'border-elec-yellow/30 bg-elec-yellow/[0.06] text-elec-yellow'
                     : 'border-white/[0.10] bg-white/[0.03] text-white/85'
@@ -717,7 +682,7 @@ export default function Year4() {
               >
                 {location}
               </span>
-              <span className="text-[12.5px] text-white/85 flex-1 leading-snug">
+              <span className="text-[12.5px] text-white/85 flex-1 min-w-0 leading-snug">
                 {activities}
               </span>
             </li>
@@ -734,19 +699,13 @@ export default function Year4() {
           </div>
           <p className="text-[13.5px] text-white/85 leading-relaxed">
             When you finish Year 4 you'll be a{' '}
-            <span className="font-semibold text-elec-yellow">qualified electrician</span>
-            — Level 3 Diploma, NVQ Level 3, AM2S passed, 18th Edition, ECS
-            electrician card. From here it's your career to shape: employed,
-            self-employed, specialist, designer, foreman, or trainer. The trade
-            needs you.
+            <span className="font-semibold text-elec-yellow">qualified electrician</span>— Level 3
+            Diploma, NVQ Level 3, AM2S passed, 18th Edition, ECS electrician card. From here it's
+            your career to shape: employed, self-employed, specialist, designer, foreman, or
+            trainer. The trade needs you.
           </p>
         </div>
       </motion.section>
-
-      <span className="hidden">
-        <Calendar />
-        <Star />
-      </span>
     </PageFrame>
   );
 }

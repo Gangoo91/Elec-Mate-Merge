@@ -4,7 +4,7 @@ const StudyPsychologyTab = () => {
       title: 'Cognitive load theory',
       description: 'Understanding how your brain processes information',
       content: [
-        'Your working memory can only hold 7±2 pieces of information at once',
+        'Your working memory can only hold around 4 pieces of information at once (Cowan)',
         'Break complex electrical concepts into smaller, manageable chunks',
         'Use visual aids and diagrams to reduce cognitive load',
         'Practice retrieval to move information from working to long-term memory',
@@ -141,10 +141,7 @@ const StudyPsychologyTab = () => {
               </span>
               <ul className="space-y-1">
                 {topic.content.map((point, pointIndex) => (
-                  <li
-                    key={pointIndex}
-                    className="flex items-start gap-2 text-[13px] text-white/85"
-                  >
+                  <li key={pointIndex} className="flex items-start gap-2 text-[13px] text-white/85">
                     <span className="w-1 h-1 rounded-full bg-white/55 mt-2 flex-shrink-0" />
                     <span>{point}</span>
                   </li>
@@ -158,10 +155,7 @@ const StudyPsychologyTab = () => {
               </span>
               <ul className="space-y-1">
                 {topic.tips.map((tip, tipIndex) => (
-                  <li
-                    key={tipIndex}
-                    className="flex items-start gap-2 text-[13px] text-white/85"
-                  >
+                  <li key={tipIndex} className="flex items-start gap-2 text-[13px] text-white/85">
                     <span className="w-1 h-1 rounded-full bg-white/55 mt-2 flex-shrink-0" />
                     <span>{tip}</span>
                   </li>
@@ -213,6 +207,52 @@ const StudyPsychologyTab = () => {
               </p>
             </div>
           ))}
+        </div>
+      </div>
+
+      <div className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-4 sm:p-5 space-y-3">
+        <div className="space-y-1">
+          <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+            Need to talk to someone?
+          </span>
+          <p className="text-[13px] text-white/70 leading-relaxed">
+            Studying alongside work is hard. If the pressure is getting too much, these free,
+            confidential lines are there for people in the electrical and construction trades.
+          </p>
+        </div>
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
+          <a
+            href="tel:08006521618"
+            className="flex flex-col justify-center min-h-11 rounded-lg border border-white/10 bg-white/[0.03] px-3 py-2 hover:bg-white/[0.06] touch-manipulation"
+          >
+            <span className="text-[13px] font-semibold text-white">
+              Electrical Industries Charity
+            </span>
+            <span className="text-[12px] text-white/70">0800 652 1618 — tap to call</span>
+          </a>
+          <a
+            href="tel:03456051956"
+            className="flex flex-col justify-center min-h-11 rounded-lg border border-white/10 bg-white/[0.03] px-3 py-2 hover:bg-white/[0.06] touch-manipulation"
+          >
+            <span className="text-[13px] font-semibold text-white">
+              Lighthouse Construction Charity
+            </span>
+            <span className="text-[12px] text-white/70">0345 605 1956 · text HARDHAT to 85258</span>
+          </a>
+          <a
+            href="sms:85258?&body=HARDHAT"
+            className="flex flex-col justify-center min-h-11 rounded-lg border border-white/10 bg-white/[0.03] px-3 py-2 hover:bg-white/[0.06] touch-manipulation"
+          >
+            <span className="text-[13px] font-semibold text-white">Lighthouse text line</span>
+            <span className="text-[12px] text-white/70">Text HARDHAT to 85258 — tap to text</span>
+          </a>
+          <a
+            href="tel:116123"
+            className="flex flex-col justify-center min-h-11 rounded-lg border border-white/10 bg-white/[0.03] px-3 py-2 hover:bg-white/[0.06] touch-manipulation"
+          >
+            <span className="text-[13px] font-semibold text-white">Samaritans</span>
+            <span className="text-[12px] text-white/70">116 123 — free, 24/7, tap to call</span>
+          </a>
         </div>
       </div>
 

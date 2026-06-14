@@ -1,3 +1,4 @@
+import { useNavigate } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
 
 const Section = ({
@@ -14,9 +15,7 @@ const Section = ({
       <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
         {eyebrow}
       </span>
-      {description && (
-        <p className="text-[14px] text-white/70 leading-relaxed">{description}</p>
-      )}
+      {description && <p className="text-[14px] text-white/70 leading-relaxed">{description}</p>}
     </div>
     {children}
   </div>
@@ -29,12 +28,12 @@ const Pill = ({ children }: { children: React.ReactNode }) => (
 );
 
 const ExamStrategiesTab = () => {
+  const navigate = useNavigate();
   const examTypes = [
     {
-      title: 'BS 7671:2018+A4:2026',
+      title: '18th Edition — C&G 2382-26 (BS 7671:2018+A4:2026)',
       difficulty: 'High',
       duration: '2 hours',
-      passRate: '70%',
       strategies: [
         {
           strategy: 'Master Part 4 — Protection for Safety',
@@ -42,8 +41,8 @@ const ExamStrategiesTab = () => {
             'This section is heavily tested and forms the foundation of electrical safety.',
           tips: [
             'Learn Table 41.3 by heart',
-            'Understand discrimination principles',
-            'Practice shock protection scenarios',
+            'Understand selectivity (discrimination) principles',
+            'Practise shock protection scenarios',
           ],
           priority: 'Critical',
         },
@@ -51,7 +50,7 @@ const ExamStrategiesTab = () => {
           strategy: 'Cable calculations mastery',
           description: 'Cable sizing appears in multiple question formats throughout the exam.',
           tips: [
-            'Practice current-carrying capacity daily',
+            'Practise current-carrying capacity daily',
             'Understand all derating factors',
             'Memorise correction factors table',
           ],
@@ -61,7 +60,7 @@ const ExamStrategiesTab = () => {
           strategy: 'Effective reference navigation',
           description: 'Learn to navigate BS 7671 and On-Site Guide quickly and efficiently.',
           tips: [
-            'Practice finding regulations in under 30 seconds',
+            'Practise finding regulations in under 30 seconds',
             'Use index efficiently',
             'Mark key pages with colour-coded tabs',
           ],
@@ -73,16 +72,14 @@ const ExamStrategiesTab = () => {
       title: 'Level 3 diploma theory',
       difficulty: 'Medium-high',
       duration: '1.5 hours',
-      passRate: '75%',
       strategies: [
         {
           strategy: 'AC theory foundation',
-          description:
-            'Build rock-solid understanding of AC fundamentals before complex topics.',
+          description: 'Build rock-solid understanding of AC fundamentals before complex topics.',
           tips: [
             'Master RLC circuits completely',
             'Understand impedance thoroughly',
-            'Practice resonance calculations daily',
+            'Practise resonance calculations daily',
           ],
           priority: 'Critical',
         },
@@ -91,7 +88,7 @@ const ExamStrategiesTab = () => {
           description:
             'Master the relationship between line and phase values in all configurations.',
           tips: [
-            'Practice star-delta conversions',
+            'Practise star-delta conversions',
             'Understand power triangles',
             'Learn phasor diagram construction',
           ],
@@ -110,16 +107,16 @@ const ExamStrategiesTab = () => {
       ],
     },
     {
-      title: 'AM2 practical assessment',
+      title: 'AM2S end-point assessment (NET)',
       difficulty: 'High',
-      duration: '5.5 hours',
-      passRate: '85%',
+      duration: '~2.5–3 days (16.5–18.5 hours)',
       strategies: [
         {
           strategy: 'Time management excellence',
-          description: 'Develop a systematic approach to complete all tasks within time limits.',
+          description:
+            'The AM2S is sat over multiple timed sections, with an embedded online knowledge test. Develop a systematic approach to complete each task within its window.',
           tips: [
-            'Practice complete mock assessments',
+            'Practise complete mock assessments',
             'Time each individual task',
             'Build in buffer time for complex circuits',
           ],
@@ -127,18 +124,17 @@ const ExamStrategiesTab = () => {
         },
         {
           strategy: 'Methodical testing approach',
-          description: 'Follow BS 7671 testing sequence religiously for consistent results.',
+          description: 'Follow the BS 7671 testing sequence religiously for consistent results.',
           tips: [
-            'Memorise testing sequence',
-            'Practice with different MFT models',
+            'Memorise the testing sequence',
+            'Practise with different MFT models',
             'Document results clearly and legibly',
           ],
           priority: 'High',
         },
         {
           strategy: 'Installation quality focus',
-          description:
-            'Ensure all installation work meets current standards and regulations.',
+          description: 'Ensure all installation work meets current standards and regulations.',
           tips: [
             'Check cable routes and supports',
             'Verify termination quality',
@@ -152,13 +148,12 @@ const ExamStrategiesTab = () => {
       title: 'Level 2 fundamentals',
       difficulty: 'Medium',
       duration: '1.5 hours',
-      passRate: '80%',
       strategies: [
         {
           strategy: 'Basic electrical principles',
           description: "Ensure solid foundation in Ohm's Law and basic circuit analysis.",
           tips: [
-            'Practice V=IR calculations daily',
+            'Practise V=IR calculations daily',
             'Understand series vs parallel circuits',
             'Master power calculations',
           ],
@@ -177,10 +172,9 @@ const ExamStrategiesTab = () => {
       ],
     },
     {
-      title: 'Inspection and testing (2391)',
+      title: 'Inspection and testing (C&G 2391-52)',
       difficulty: 'High',
       duration: '3 hours',
-      passRate: '65%',
       strategies: [
         {
           strategy: 'Test equipment mastery',
@@ -188,7 +182,7 @@ const ExamStrategiesTab = () => {
           tips: [
             'Understand MFT capabilities',
             'Know test voltage requirements',
-            'Practice equipment setup procedures',
+            'Practise equipment setup procedures',
           ],
           priority: 'Critical',
         },
@@ -214,7 +208,7 @@ const ExamStrategiesTab = () => {
         'Arrive 15 minutes early to settle nerves',
         'Bring spare calculators and writing materials',
         'Review key formulas one final time',
-        'Practice breathing exercises to stay calm',
+        'Practise breathing exercises to stay calm',
       ],
       timeframe: 'Day of exam',
     },
@@ -266,7 +260,7 @@ const ExamStrategiesTab = () => {
     },
     {
       title: 'Stress inoculation',
-      description: 'Practice under exam-like pressure to build resilience.',
+      description: 'Practise under exam-like pressure to build resilience.',
       application: 'Take mock exams with strict time limits and distractions',
     },
     {
@@ -314,7 +308,6 @@ const ExamStrategiesTab = () => {
                 <div className="flex flex-wrap gap-1.5">
                   <Pill>{exam.difficulty}</Pill>
                   <Pill>{exam.duration}</Pill>
-                  <Pill>Pass: {exam.passRate}</Pill>
                 </div>
               </div>
               <div className="space-y-3">
@@ -396,21 +389,24 @@ const ExamStrategiesTab = () => {
         <div className="flex flex-wrap gap-2">
           <Button
             variant="outline"
-            className="h-10 border-white/10 bg-white/[0.03] text-white hover:bg-white/[0.06] touch-manipulation"
+            onClick={() => navigate('/mock-exams/18th-edition-bs-7671')}
+            className="h-11 border-white/10 bg-white/[0.03] text-white hover:bg-white/[0.06] touch-manipulation"
           >
-            BS 7671 practice
+            18th Edition mock exam
           </Button>
           <Button
             variant="outline"
-            className="h-10 border-white/10 bg-white/[0.03] text-white hover:bg-white/[0.06] touch-manipulation"
+            onClick={() => navigate('/mock-exams/level-3-electrical-science')}
+            className="h-11 border-white/10 bg-white/[0.03] text-white hover:bg-white/[0.06] touch-manipulation"
           >
-            Level 3 mock exams
+            Level 3 mock exam
           </Button>
           <Button
             variant="outline"
-            className="h-10 border-white/10 bg-white/[0.03] text-white hover:bg-white/[0.06] touch-manipulation"
+            onClick={() => navigate('/mock-exams/am2-online-knowledge-test')}
+            className="h-11 border-white/10 bg-white/[0.03] text-white hover:bg-white/[0.06] touch-manipulation"
           >
-            AM2 preparation
+            AM2S knowledge test
           </Button>
         </div>
       </Section>

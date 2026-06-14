@@ -49,7 +49,7 @@ const RecoveryStrategiesTab = () => {
     {
       title: 'Wrong MCB Rating',
       description:
-        'Installed 32A MCB instead of 20A for lighting circuit. Realised during final check, replaced immediately, and created a personal checklist to prevent future errors.',
+        'Installed a 32A MCB instead of 6A on a lighting circuit. Realised during final check that the protective device no longer coordinated with the 1.0mm² cable, replaced it immediately, and created a personal checklist to prevent future errors.',
       outcome: 'Learning applied',
       lesson: 'Systematic checking prevents repeats',
     },
@@ -153,6 +153,34 @@ const RecoveryStrategiesTab = () => {
             </div>
           ))}
         </div>
+      </div>
+
+      <div className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-4 sm:p-5 space-y-3">
+        <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+          Why honest reporting is safe
+        </span>
+        <p className="text-[14px] text-white/85 leading-relaxed">
+          A just culture separates honest mistakes from genuine recklessness. Reporting an error
+          early lets it be put right before anyone is hurt — that is exactly what a good employer
+          wants from an apprentice. Covering up a fault is what creates real danger and real
+          consequences.
+        </p>
+        <ul className="space-y-1.5">
+          {[
+            'Tell your supervisor as soon as you spot a problem — speed matters more than blame',
+            'Make the work safe and isolated before anything else',
+            'Record what happened factually, without guessing at causes you cannot prove',
+            'A dangerous-occurrence, certain injuries or an electric shock at work may be reportable under RIDDOR — your employer makes the report, but flag it so it is not missed',
+          ].map((point, idx) => (
+            <li
+              key={idx}
+              className="text-[14px] text-white/85 leading-relaxed flex items-start gap-2"
+            >
+              <span className="w-1 h-1 rounded-full bg-elec-yellow mt-2 flex-shrink-0" />
+              <span>{point}</span>
+            </li>
+          ))}
+        </ul>
       </div>
     </div>
   );

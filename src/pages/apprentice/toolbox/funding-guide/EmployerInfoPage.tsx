@@ -9,29 +9,17 @@
 
 import { useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
-import {
-  ArrowLeft,
-  CheckCircle2,
-  AlertTriangle,
-  Building2,
-  Users,
-} from 'lucide-react';
-import {
-  PageFrame,
-  PageHero,
-  itemVariants,
-} from '@/components/college/primitives';
-import {
-  Eyebrow,
-  SectionHeader,
-} from '@/components/apprentice-hub/portfolio/PortfolioPrimitives';
+import { ArrowLeft, CheckCircle2, AlertTriangle, Building2, Users } from 'lucide-react';
+import { PageFrame, PageHero, itemVariants } from '@/components/college/primitives';
+import { Eyebrow, SectionHeader } from '@/components/apprentice-hub/portfolio/PortfolioPrimitives';
 import { cn } from '@/lib/utils';
+import { NMW_RATES, NMW_EFFECTIVE_LABEL } from '@/data/nmwRates';
 
 const levyFacts = [
   'Annual payroll over £3 million',
   'Pay 0.5% of payroll as Apprenticeship Levy',
   'Funds available in DAS account',
-  'Government adds 10% top-up (ending April 2026)',
+  'Government adds 10% top-up (ending August 2026 — existing balances keep it; new contributions from 1 Aug 2026 are not topped up)',
   'Use it or lose it — funds expire after 24 months (changing to 12 months)',
   'Can transfer up to 50% to supply chain or other employers',
   'Funds appear monthly in arrears — can plan spending ahead',
@@ -65,7 +53,7 @@ const providerCriteria = [
   'Good achievement rates: check National Achievement Rate Tables',
   'Provides regular progress reviews and clear employer communication',
   'Has a dedicated employer liaison or account manager',
-  'Offers levy transfer matching if you\'re a non-levy employer',
+  "Offers levy transfer matching if you're a non-levy employer",
   'Includes EPA preparation and mock assessments',
   'Ask other local employers for recommendations',
 ];
@@ -127,16 +115,16 @@ const yearByYear: YearCost[] = [
 ];
 
 const wageRates = [
-  { label: 'Apprentice rate (Year 1 or under 19)', value: '£7.55/hr' },
-  { label: 'Age 18–20 (after Year 1)', value: '£10.00/hr' },
-  { label: 'Age 21+ (after Year 1)', value: '£12.21/hr' },
+  { label: 'Apprentice rate (Year 1 or under 19)', value: `${NMW_RATES.apprentice}/hr` },
+  { label: 'Age 18–20 (after Year 1)', value: `${NMW_RATES.age18to20}/hr` },
+  { label: 'Age 21+ (after Year 1)', value: `${NMW_RATES.age21Plus}/hr` },
 ];
 
 const concerns = [
   {
     question: '"What if they leave after qualifying?"',
     answer:
-      '92% of apprentices stay with their training employer. Loyalty built over 4 years is stronger than any contract. Even if they do leave, you\'ve had 3+ years of productive work at apprentice rates and your CITB grants back.',
+      "Most apprentices stay on with the firm that trained them — loyalty built over 4 years is stronger than any contract. Even if they do leave, you've had 3+ years of productive work at apprentice rates and your CITB grants back.",
   },
   {
     question: '"We\'re too busy to supervise an apprentice"',
@@ -192,12 +180,12 @@ const caseStudyBullets = [
 ];
 
 const stats = [
-  { value: '25,000+', label: 'Electricians needed annually in the UK' },
-  { value: '92%', label: 'Apprentices stay with their training employer' },
-  { value: '£23k', label: 'Training cost savings vs hiring qualified' },
-  { value: '4 years', label: 'To a fully trained, qualified electrician' },
-  { value: '47%', label: 'Of UK electricians are over 45 — retirement wave coming' },
-  { value: '£13.5k', label: 'CITB grants available per apprentice' },
+  { value: '£23k', label: 'Government funding band per Level 3 apprentice (Skills England, 2025)' },
+  { value: '£13.5k', label: 'CITB grants available per apprentice over 4 years' },
+  { value: '4 years', label: 'Typical time to a fully trained, qualified electrician' },
+  { value: '£1,150', label: 'Most an SME pays towards training (5% of the band)' },
+  { value: '£0', label: 'What the apprentice ever pays towards training' },
+  { value: 'Up to 50%', label: 'Of annual levy a large employer can transfer to you' },
 ];
 
 const EmployerInfoPage = () => {
@@ -228,10 +216,9 @@ const EmployerInfoPage = () => {
         <div className="rounded-xl border border-white/[0.06] bg-[hsl(0_0%_10%)] p-4 sm:p-5 space-y-2">
           <Eyebrow>Made for employers</Eyebrow>
           <p className="text-[13.5px] text-white/85 leading-relaxed">
-            This section helps employers understand apprenticeship funding and
-            make the business case. Share it with employers who are unfamiliar
-            with how funding works or need convincing that taking on an
-            apprentice is a smart investment.
+            This section helps employers understand apprenticeship funding and make the business
+            case. Share it with employers who are unfamiliar with how funding works or need
+            convincing that taking on an apprentice is a smart investment.
           </p>
         </div>
       </motion.div>
@@ -273,17 +260,15 @@ const EmployerInfoPage = () => {
                 <span className="inline-flex items-center justify-center w-6 h-6 rounded-md border border-elec-yellow/25 bg-elec-yellow/[0.06] text-[11px] font-mono font-semibold tabular-nums text-elec-yellow flex-shrink-0">
                   {i + 1}
                 </span>
-                <span className="text-[12.5px] text-white/85 leading-relaxed">
-                  {step}
-                </span>
+                <span className="text-[12.5px] text-white/85 leading-relaxed">{step}</span>
               </li>
             ))}
           </ol>
           <div className="rounded-md border border-elec-yellow/20 bg-elec-yellow/[0.04] p-3">
             <p className="text-[12.5px] text-white/85 leading-relaxed">
-              <span className="font-semibold text-elec-yellow">Note:</span> Most
-              training providers walk you through this for free. Many will set
-              up the account on your behalf with your permission.
+              <span className="font-semibold text-elec-yellow">Note:</span> Most training providers
+              walk you through this for free. Many will set up the account on your behalf with your
+              permission.
             </p>
           </div>
         </div>
@@ -358,7 +343,7 @@ const EmployerInfoPage = () => {
       {/* ── Wage rates ──────────────────────────────────────────── */}
       <motion.section variants={itemVariants} className="space-y-3">
         <SectionHeader
-          eyebrow="Apprentice wage rates · 2025/26"
+          eyebrow={`Apprentice wage rates · ${NMW_EFFECTIVE_LABEL}`}
           title="Minimum hourly rates"
           meta="JIB-graded employers typically pay above minimum"
         />
@@ -378,10 +363,9 @@ const EmployerInfoPage = () => {
           </ul>
           <div className="rounded-md border border-elec-yellow/20 bg-elec-yellow/[0.04] p-3">
             <p className="text-[12.5px] text-white/85 leading-relaxed">
-              <span className="font-semibold text-elec-yellow">Note:</span> Many
-              electrical employers pay above minimum from Year 2 onwards.
-              JIB-graded employers follow JIB recommended rates which are
-              typically higher.
+              <span className="font-semibold text-elec-yellow">Note:</span> Many electrical
+              employers pay above minimum from Year 2 onwards. JIB-graded employers follow JIB
+              recommended rates which are typically higher.
             </p>
           </div>
         </div>
@@ -460,10 +444,9 @@ const EmployerInfoPage = () => {
           </ul>
           <div className="rounded-md border border-elec-yellow/20 bg-elec-yellow/[0.04] p-3">
             <p className="text-[12.5px] text-white/85 leading-relaxed">
-              An apprentice costs significantly less in Year 1–2, becomes
-              productive from Year 2, and is fully qualified by Year 4 —
-              trained exactly to your standards, loyal to your business, at a
-              fraction of the total cost.
+              An apprentice costs significantly less in Year 1–2, becomes productive from Year 2,
+              and is fully qualified by Year 4 — trained exactly to your standards, loyal to your
+              business, at a fraction of the total cost.
             </p>
           </div>
         </div>
@@ -537,9 +520,7 @@ function FactsCard({
   return (
     <div className="rounded-xl border border-white/[0.06] bg-[hsl(0_0%_10%)] p-4 sm:p-5 space-y-3">
       <div className="space-y-0.5">
-        <h3 className="text-[15px] font-semibold text-elec-yellow tracking-tight">
-          {label}
-        </h3>
+        <h3 className="text-[15px] font-semibold text-elec-yellow tracking-tight">{label}</h3>
         <Eyebrow>{sublabel}</Eyebrow>
       </div>
       <ul className="space-y-1.5">

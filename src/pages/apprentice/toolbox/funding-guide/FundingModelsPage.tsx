@@ -18,29 +18,22 @@ import {
   ArrowRightLeft,
   CalendarDays,
 } from 'lucide-react';
-import {
-  PageFrame,
-  PageHero,
-  itemVariants,
-} from '@/components/college/primitives';
-import {
-  Eyebrow,
-  SectionHeader,
-} from '@/components/apprentice-hub/portfolio/PortfolioPrimitives';
+import { PageFrame, PageHero, itemVariants } from '@/components/college/primitives';
+import { Eyebrow, SectionHeader } from '@/components/apprentice-hub/portfolio/PortfolioPrimitives';
 
 const dasFlow = [
   'Employer creates a DAS account and adds their PAYE scheme',
   'Employer selects a training provider and agrees a price (up to the funding band max)',
   'Employer adds the apprentice with start date and standard details',
   'Training provider confirms the apprentice on their side',
-  'ESFA pays the training provider monthly in arrears (80% over programme, 20% on completion)',
-  'EPA costs are paid separately from the funding band when the apprentice enters gateway',
+  'The Department for Education pays the training provider monthly in arrears (around 80% over the programme, the balance on completion)',
+  'EPA costs come from a ring-fenced portion of the funding band, released when the apprentice enters gateway',
 ];
 
 const levyFacts = [
   '0.5% of annual payroll over £3 million',
   '£15,000 annual allowance offset against levy',
-  'Government adds 10% top-up (ending April 2026)',
+  'Government adds 10% top-up (ending 1 August 2026 — existing balances keep it; new contributions are not topped up)',
   'Funds currently expire after 24 months (changing to 12 months April 2026)',
   'Can transfer up to 50% of annual levy to other employers',
   'Funds appear in DAS account monthly, one month in arrears',
@@ -48,9 +41,9 @@ const levyFacts = [
 ];
 
 const coInvestmentFacts = [
-  'Current split: 95% government / 5% employer',
-  'Changing August 2026: 75% government / 25% employer',
+  'Current split for non-levy SMEs: 95% government / 5% employer',
   '100% funded for under-25s at non-levy employers (from August 2026)',
+  'From August 2026 the 25% co-investment applies to levy payers once their levy is exhausted — non-levy SMEs stay at 95% / 5%',
   'Max employer contribution for Level 3 Electrical: £1,150 (5% of £23,000)',
   'Employer uses the apprenticeship service to reserve funding',
   'Employer co-investment paid directly to the training provider',
@@ -77,9 +70,8 @@ const findTransfer = [
 
 const fundingCovers = [
   'All training delivery by your training provider (classroom, workshop, online)',
-  'End Point Assessment (EPA) fees paid to the EPAO',
+  'End Point Assessment fees paid to the EPAO — for ST0152 this is the integrated AM2S run by NET (practical plus embedded knowledge test)',
   'EAL or City & Guilds qualification registration and certification',
-  'AM2 practical assessment at a NET centre',
   'Functional Skills (English and Maths) delivery and exams if needed',
   'Learning materials provided by the training provider',
   'Initial assessment and diagnostic testing',
@@ -99,35 +91,71 @@ const fundingDoesntCover = [
 const paymentTimeline = [
   'Monthly payments — 80% of the agreed price paid in equal monthly instalments over the planned duration',
   'Completion payment — 20% held back, paid when the apprentice completes EPA',
-  'EPA funding — a portion ring-fenced for EPA costs (typically £2,000–£3,000)',
+  'EPA funding — a portion of the band is ring-fenced for EPA costs',
   'Payments made in arrears — provider delivers training first, then claims',
   'If an apprentice withdraws early, funding stops and is recalculated pro-rata',
   'Break in learning — funding pauses and resumes when the apprentice returns',
 ];
 
 const endOfProgramme = [
-  { step: 1, title: 'Gateway meeting', description: 'Your employer, training provider, and you agree you\'re ready for EPA.' },
-  { step: 2, title: 'EPA registration', description: 'Training provider registers you with the EPAO and EPA funding is released.' },
-  { step: 3, title: 'EPA delivery', description: 'You complete your knowledge test, practical assessment, and professional discussion.' },
-  { step: 4, title: 'Completion payment', description: 'The held-back 20% is released to the training provider.' },
-  { step: 5, title: 'Certificate', description: 'Your apprenticeship completion certificate is issued by ESFA.' },
+  {
+    step: 1,
+    title: 'Gateway meeting',
+    description: "Your employer, training provider, and you agree you're ready for EPA.",
+  },
+  {
+    step: 2,
+    title: 'EPA registration',
+    description: 'Training provider registers you with the EPAO and EPA funding is released.',
+  },
+  {
+    step: 3,
+    title: 'EPA delivery',
+    description:
+      'You complete the integrated AM2S — a practical assessment with an embedded online multiple-choice knowledge test.',
+  },
+  {
+    step: 4,
+    title: 'Completion payment',
+    description: 'The held-back completion portion is released to the training provider.',
+  },
+  {
+    step: 5,
+    title: 'Certificate',
+    description:
+      'Your apprenticeship completion certificate is issued by the Department for Education.',
+  },
 ];
 
 const growthLevyChanges = [
   'Levy funds will expire after 12 months (currently 24 months)',
-  'The 10% government top-up will end',
+  'The 10% government top-up ends from 1 August 2026 (existing balances keep it)',
+  'New fundable "apprenticeship units" — short modules of roughly 30–140 hours, up to half of a levy pot',
   'Levy will also fund non-apprenticeship training for the first time',
   'Skills England will decide which non-apprenticeship courses qualify',
-  'Co-investment changing to 75% government / 25% employer (August 2026)',
+  'From August 2026, levy payers who exhaust their levy pay 25% co-investment (non-levy SMEs stay at 95% / 5%)',
   '100% funding for under-25s at non-levy employers (from August 2026)',
+  'From April 2026, Level 7 apprenticeships are unfunded for new starters aged 22 and over',
   'Existing apprentices already on programme will not be affected mid-way',
   'New starts from April 2026 will be under the new rules',
 ];
 
 const keyDates = [
-  { date: 'Apr 2026', event: 'Growth & Skills Levy replaces Apprenticeship Levy. 12-month fund expiry begins. 10% top-up ends.' },
-  { date: 'Aug 2026', event: 'Co-investment changes to 75% / 25%. Under-25s at non-levy employers become 100% funded.' },
-  { date: '2026–27', event: 'Skills England to publish list of approved non-apprenticeship courses fundable under Growth & Skills Levy.' },
+  {
+    date: 'Apr 2026',
+    event:
+      'Growth & Skills Levy replaces Apprenticeship Levy. 12-month fund expiry begins. Level 7 apprenticeships become unfunded for new starters aged 22+.',
+  },
+  {
+    date: 'Aug 2026',
+    event:
+      '10% top-up ends for new contributions. Levy payers who exhaust their levy pay 25% co-investment; non-levy SMEs stay at 95% / 5% and under-25s become 100% funded.',
+  },
+  {
+    date: '2026–27',
+    event:
+      'Skills England to publish list of approved non-apprenticeship courses fundable under Growth & Skills Levy.',
+  },
 ];
 
 const FundingModelsPage = () => {
@@ -158,10 +186,15 @@ const FundingModelsPage = () => {
         <div className="rounded-xl border border-white/[0.06] bg-[hsl(0_0%_10%)] p-4 sm:p-5 space-y-2">
           <Eyebrow>How it works</Eyebrow>
           <p className="text-[13.5px] text-white/85 leading-relaxed">
-            Apprenticeship training in England is funded through the Education
-            and Skills Funding Agency (ESFA). Skills England — which replaced
-            IfATE in June 2025 — sets the standards and funding bands. Three
-            main models determine how training costs are paid.
+            Apprenticeship training in England is funded by the Department for Education (DfE) —
+            which absorbed the former Education and Skills Funding Agency when it closed in March
+            2025. Skills England — which replaced IfATE in June 2025 — sets the standards and
+            funding bands. Three main models determine how training costs are paid.
+          </p>
+          <p className="text-[12px] text-white/65 leading-relaxed pt-2 border-t border-white/[0.06]">
+            This is the England system. Wales, Scotland and Northern Ireland fund apprenticeships
+            differently — there's no Digital Apprenticeship Service or £23,000 band, so check your
+            nation's scheme if you're outside England.
           </p>
         </div>
       </motion.div>
@@ -185,18 +218,15 @@ const FundingModelsPage = () => {
                 <span className="inline-flex items-center justify-center w-6 h-6 rounded-md border border-elec-yellow/25 bg-elec-yellow/[0.06] text-[11px] font-mono font-semibold tabular-nums text-elec-yellow flex-shrink-0">
                   {i + 1}
                 </span>
-                <span className="text-[12.5px] text-white/85 leading-relaxed">
-                  {step}
-                </span>
+                <span className="text-[12.5px] text-white/85 leading-relaxed">{step}</span>
               </li>
             ))}
           </ol>
           <div className="rounded-md border border-elec-yellow/20 bg-elec-yellow/[0.04] p-3">
             <p className="text-[12.5px] text-white/85 leading-relaxed">
-              <span className="font-semibold text-elec-yellow">Key point:</span>{' '}
-              money never passes through the apprentice. ESFA pays the training
-              provider directly, and the employer pays any co-investment share
-              directly to the provider.
+              <span className="font-semibold text-elec-yellow">Key point:</span> money never passes
+              through the apprentice. The Department for Education pays the training provider
+              directly, and the employer pays any co-investment share directly to the provider.
             </p>
           </div>
         </div>
@@ -228,7 +258,7 @@ const FundingModelsPage = () => {
           </ul>
           <div className="rounded-md border border-elec-yellow/20 bg-elec-yellow/[0.04] p-3 space-y-1.5">
             <Eyebrow className="text-elec-yellow/85">Worked example · £5m payroll</Eyebrow>
-            <ul className="space-y-0.5 text-[12.5px] text-white/85 font-mono tabular-nums">
+            <ul className="space-y-0.5 text-[11.5px] sm:text-[12.5px] text-white/85 font-mono tabular-nums">
               <li>Annual payroll: £5,000,000</li>
               <li>Levy charge (0.5%): £25,000</li>
               <li>− £15,000 allowance = £10,000 actual levy paid</li>
@@ -238,8 +268,8 @@ const FundingModelsPage = () => {
               </li>
             </ul>
             <p className="text-[11.5px] text-white/70 leading-relaxed pt-1">
-              Enough to fund approximately one Level 3 electrical apprentice
-              every two years at the £23,000 band.
+              Enough to fund approximately one Level 3 electrical apprentice every two years at the
+              £23,000 band.
             </p>
           </div>
         </div>
@@ -270,8 +300,10 @@ const FundingModelsPage = () => {
             ))}
           </ul>
           <div className="rounded-md border border-elec-yellow/20 bg-elec-yellow/[0.04] p-3 space-y-1.5">
-            <Eyebrow className="text-elec-yellow/85">Worked example · SME taking on L3 apprentice</Eyebrow>
-            <ul className="space-y-0.5 text-[12.5px] text-white/85 font-mono tabular-nums">
+            <Eyebrow className="text-elec-yellow/85">
+              Worked example · SME taking on L3 apprentice
+            </Eyebrow>
+            <ul className="space-y-0.5 text-[11.5px] sm:text-[12.5px] text-white/85 font-mono tabular-nums">
               <li>Agreed training price: £23,000 (full funding band)</li>
               <li>Government pays (95%): £21,850</li>
               <li>Employer pays (5%): £1,150</li>
@@ -281,8 +313,9 @@ const FundingModelsPage = () => {
               </li>
             </ul>
             <p className="text-[11.5px] text-white/70 leading-relaxed pt-1">
-              After August 2026 employer share rises to 25% (£5,750), but
-              apprentices under 25 will be 100% funded at non-levy employers.
+              The 25% co-investment coming in August 2026 applies to levy payers once their levy is
+              exhausted — most small electrical contractors are non-levy and stay at 5% (£1,150),
+              with under-25s 100% funded.
             </p>
           </div>
         </div>
@@ -320,9 +353,7 @@ const FundingModelsPage = () => {
                   key={tip}
                   className="flex items-start gap-2 text-[12.5px] text-white/85 leading-relaxed"
                 >
-                  <span className="text-elec-yellow font-mono tabular-nums mt-0.5">
-                    {i + 1}.
-                  </span>
+                  <span className="text-elec-yellow font-mono tabular-nums mt-0.5">{i + 1}.</span>
                   <span>{tip}</span>
                 </li>
               ))}
@@ -350,10 +381,10 @@ const FundingModelsPage = () => {
           <div className="rounded-md border border-elec-yellow/20 bg-elec-yellow/[0.04] p-3 space-y-1">
             <Eyebrow className="text-elec-yellow/85">What's a funding band?</Eyebrow>
             <p className="text-[12.5px] text-white/85 leading-relaxed">
-              The maximum amount the government will contribute towards training.
-              Employers and providers can agree a price below the band, but never
-              above. If a provider charges more, the employer pays the difference
-              from their own funds — rare for standard L3 electrical programmes.
+              The maximum amount the government will contribute towards training. Employers and
+              providers can agree a price below the band, but never above. If a provider charges
+              more, the employer pays the difference from their own funds — rare for standard L3
+              electrical programmes.
             </p>
           </div>
           <div className="space-y-2">
@@ -430,9 +461,7 @@ const FundingModelsPage = () => {
                   <h3 className="text-[14px] font-semibold text-white tracking-tight">
                     {item.title}
                   </h3>
-                  <p className="text-[13px] text-white/85 leading-relaxed">
-                    {item.description}
-                  </p>
+                  <p className="text-[13px] text-white/85 leading-relaxed">{item.description}</p>
                 </div>
               </div>
             </li>
@@ -440,11 +469,10 @@ const FundingModelsPage = () => {
         </ol>
         <div className="rounded-md border border-elec-yellow/20 bg-elec-yellow/[0.04] p-3">
           <p className="text-[12.5px] text-white/85 leading-relaxed">
-            <span className="font-semibold text-elec-yellow">Important:</span>{' '}
-            If your apprenticeship takes longer than planned (common for L3
-            electrical), funding continues as long as you remain on programme.
-            Total paid won't exceed the funding band, but monthly payments may
-            be recalculated over the extended period.
+            <span className="font-semibold text-elec-yellow">Important:</span> If your
+            apprenticeship takes longer than planned (common for L3 electrical), funding continues
+            as long as you remain on programme. Total paid won't exceed the funding band, but
+            monthly payments may be recalculated over the extended period.
           </p>
         </div>
       </motion.section>
@@ -478,9 +506,7 @@ const FundingModelsPage = () => {
                 <span className="text-[12px] font-mono uppercase tracking-[0.14em] text-elec-yellow min-w-[80px] flex-shrink-0">
                   {item.date}
                 </span>
-                <span className="text-[12.5px] text-white/85 leading-relaxed">
-                  {item.event}
-                </span>
+                <span className="text-[12.5px] text-white/85 leading-relaxed">{item.event}</span>
               </li>
             ))}
           </ul>

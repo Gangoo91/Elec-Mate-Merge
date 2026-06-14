@@ -69,19 +69,19 @@ const InteractivePracticeTab = () => {
   const communicationExercises = [
     {
       exercise: 'Technical explanation practice',
-      description: 'Practice explaining RCD operation to someone with no electrical knowledge',
+      description: 'Practise explaining RCD operation to someone with no electrical knowledge',
       timeRequired: '10 minutes',
       materials: ['Mirror or recording device', 'Notebook for feedback'],
     },
     {
       exercise: 'Active listening drill',
-      description: 'Practice summarising and clarifying what someone has told you',
+      description: 'Practise summarising and clarifying what someone has told you',
       timeRequired: '15 minutes',
       materials: ['Study partner or family member', 'Sample scenarios'],
     },
     {
       exercise: 'Difficult conversation role-play',
-      description: 'Practice handling challenging client interactions',
+      description: 'Practise handling challenging client interactions',
       timeRequired: '20 minutes',
       materials: ['Role-play partner', 'Scenario cards'],
     },
@@ -121,7 +121,7 @@ const InteractivePracticeTab = () => {
                   <Button
                     variant="outline"
                     size="sm"
-                    className="h-9 border-white/15 text-white hover:bg-white/[0.05] touch-manipulation"
+                    className="h-11 border-white/15 text-white hover:bg-white/[0.05] touch-manipulation"
                     onClick={() => setSelectedScenario(isOpen ? null : scenario.id)}
                   >
                     <Play className="h-4 w-4 mr-1" />
@@ -172,7 +172,7 @@ const InteractivePracticeTab = () => {
                         variant="outline"
                         size="sm"
                         onClick={() => handleScenarioComplete(scenario.id)}
-                        className="h-10 border-white/15 text-white hover:bg-white/[0.05] touch-manipulation"
+                        className="h-11 border-white/15 text-white hover:bg-white/[0.05] touch-manipulation"
                       >
                         <CheckCircle className="h-4 w-4 mr-1" />
                         Mark complete
@@ -210,10 +210,7 @@ const InteractivePracticeTab = () => {
                   <span className="text-white/55">Materials needed:</span>
                   <ul className="space-y-0.5">
                     {exercise.materials.map((material, materialIndex) => (
-                      <li
-                        key={materialIndex}
-                        className="flex items-start gap-2"
-                      >
+                      <li key={materialIndex} className="flex items-start gap-2">
                         <span className="w-1 h-1 rounded-full bg-white/55 mt-1.5 flex-shrink-0" />
                         <span>{material}</span>
                       </li>
@@ -221,15 +218,6 @@ const InteractivePracticeTab = () => {
                   </ul>
                 </div>
               </div>
-
-              <Button
-                variant="outline"
-                size="sm"
-                className="w-full h-10 border-white/15 text-white hover:bg-white/[0.05] touch-manipulation"
-              >
-                <Play className="h-4 w-4 mr-1" />
-                Start exercise
-              </Button>
             </div>
           ))}
         </div>
@@ -243,7 +231,7 @@ const InteractivePracticeTab = () => {
           {[
             {
               title: 'Regular practice',
-              body: 'Set aside 15-20 minutes daily to practice communication scenarios. Consistency builds confidence and natural responses.',
+              body: 'Set aside 15-20 minutes daily to practise communication scenarios. Consistency builds confidence and natural responses.',
             },
             {
               title: 'Record yourself',
@@ -251,11 +239,11 @@ const InteractivePracticeTab = () => {
             },
             {
               title: 'Get feedback',
-              body: 'Practice with colleagues, friends or family. Ask for honest feedback on your communication style and effectiveness.',
+              body: 'Practise with colleagues, friends or family. Ask for honest feedback on your communication style and effectiveness.',
             },
             {
               title: 'Real-world application',
-              body: "Apply what you've practiced in real situations. Start with low-stakes conversations and build up to more complex interactions.",
+              body: "Apply what you've practised in real situations. Start with low-stakes conversations and build up to more complex interactions.",
             },
           ].map((item) => (
             <div

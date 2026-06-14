@@ -17,15 +17,8 @@ import {
   Award,
   ClipboardList,
 } from 'lucide-react';
-import {
-  PageFrame,
-  PageHero,
-  itemVariants,
-} from '@/components/college/primitives';
-import {
-  Eyebrow,
-  SectionHeader,
-} from '@/components/apprentice-hub/portfolio/PortfolioPrimitives';
+import { PageFrame, PageHero, itemVariants } from '@/components/college/primitives';
+import { Eyebrow, SectionHeader } from '@/components/apprentice-hub/portfolio/PortfolioPrimitives';
 
 const gatewayRequirements = [
   {
@@ -36,12 +29,12 @@ const gatewayRequirements = [
   {
     title: 'Level 2 English and Maths (minimum)',
     description:
-      'GCSE grade 4 or above, or Functional Skills Level 2. Since August 2025, adults aged 19+ must study towards Functional Skills but are no longer required to pass the exams.',
+      "GCSE grade 4 or above, or Functional Skills Level 2. Apprentices aged 16–18 must achieve Level 2. From August 2025, apprentices aged 19+ may complete without passing the Functional Skills exams, though many providers still expect them — confirm your own standard's gateway requirement.",
   },
   {
-    title: 'AM2 practical assessment passed',
+    title: 'On-programme practical competence demonstrated',
     description:
-      'You must have passed AM2 at a NET centre before Gateway. Separate from the EPA practical observation.',
+      'You must have completed the required on-programme qualifications and practical units (your EAL or C&G Level 3) and be assessed as occupationally competent. For ST0152 the practical end-point assessment itself is the AM2S, taken after Gateway, not before it.',
   },
   {
     title: 'Portfolio of evidence',
@@ -64,20 +57,34 @@ const gatewayRequirements = [
       'Minimum 12 months on programme. Typical duration for Level 3 electrical is 42–48 months.',
   },
   {
-    title: '20% off-the-job training completed',
+    title: 'Off-the-job training hours met',
     description:
-      'Evidence that you completed at least 20% of working hours as off-the-job training throughout your apprenticeship.',
+      "Evidence you completed your standard's fixed off-the-job training requirement — 1,066 hours for the Installation & Maintenance Electrician (ST0152) — across the practical period. The old 20% rule was replaced by fixed hours per standard from 1 August 2025.",
   },
 ];
 
-const am2Facts = [
-  'Duration: typically 2 days at a NET assessment centre',
-  'Tasks: multiple practical installation tasks under timed conditions',
-  'Skills tested: installation, termination, testing, fault finding, safe working practices',
-  'Graded: Pass or Fail (no Merit/Distinction)',
-  'Cost: funded within the £23,000 funding band — you shouldn\'t pay',
-  'Booking: arranged by your training provider with NET',
-  'Results: typically available within 5 working days',
+const am2sFacts = [
+  'What it is: the AM2S is the ST0152 end-point assessment — one integrated practical and knowledge assessment, taken AFTER Gateway',
+  'Run by: NET (National Electrotechnical Training) at approved AM2 assessment centres',
+  'Duration: around 16.75 hours of assessment, spread across the sessions below',
+  'Sections: Safe Isolation & Risk Assessment, Composite Installation, Inspection/Testing/Certification, Safe Isolation of circuits, Fault Diagnosis, plus an online Assessment of Applied Knowledge',
+  "Cost: funded within the £23,000 funding band — you shouldn't pay",
+  'Booking: arranged by your training provider with NET once Gateway is passed',
+];
+
+const am2Variants = [
+  {
+    name: 'AM2S',
+    who: 'The apprentice end-point assessment for ST0152 (Installation & Maintenance Electrician). This is the one you take.',
+  },
+  {
+    name: 'AM2E',
+    who: 'The Experienced Worker route (2346-03 EWA) for qualified people without an apprenticeship — not the apprentice EPA.',
+  },
+  {
+    name: 'AM2 / AM2ED',
+    who: "Legacy and diagnostic variants. Don't confuse these with your AM2S.",
+  },
 ];
 
 const gatewayMeetingSteps = [
@@ -91,7 +98,7 @@ const gatewayMeetingSteps = [
     step: 2,
     title: 'Employer assessment',
     description:
-      'Your employer confirms your workplace competence — strengths, development areas, and confirms you\'re performing at the expected level.',
+      "Your employer confirms your workplace competence — strengths, development areas, and confirms you're performing at the expected level.",
   },
   {
     step: 3,
@@ -103,25 +110,25 @@ const gatewayMeetingSteps = [
     step: 4,
     title: 'Decision',
     description:
-      'All three parties must agree you\'re ready. If anyone has concerns, Gateway can be postponed.',
+      "All three parties must agree you're ready. If anyone has concerns, Gateway can be postponed.",
   },
   {
     step: 5,
     title: 'Gateway declaration',
     description:
-      'A formal declaration form signed by all parties confirming Gateway is passed. Sent to your EPAO.',
+      'A formal declaration form signed by all parties confirming Gateway is passed. Sent to NET to register you for the AM2S.',
   },
   {
     step: 6,
-    title: 'EPA scheduling',
+    title: 'AM2S scheduling',
     description:
-      'Training provider contacts the EPAO to schedule your EPA components within the 3-month assessment window.',
+      'Training provider registers you with NET to schedule your AM2S at an approved assessment centre within the assessment window.',
   },
 ];
 
 const readinessChecklist = [
   'I have completed all required training modules and college sessions',
-  'I have passed my AM2 practical assessment',
+  'I have completed my Level 3 qualification and on-programme practical units',
   'I have Level 2 English and Maths (or Functional Skills equivalent)',
   'My portfolio covers all KSBs in the apprenticeship standard',
   'My portfolio is well-organised with clear evidence mapping',
@@ -131,7 +138,7 @@ const readinessChecklist = [
   'I can work from technical drawings and specifications',
   'I have practised under timed conditions for the practical assessment',
   'I have completed mock knowledge tests and scored consistently well',
-  'I have had at least one mock professional discussion',
+  'I have rehearsed every AM2S section, including fault diagnosis, under timed conditions',
   'My employer is happy with my workplace performance',
   'I feel ready to demonstrate my competence to an independent assessor',
 ];
@@ -140,7 +147,7 @@ const notReadyOptions = [
   {
     title: 'You can delay Gateway',
     description:
-      'If you, your employer, or your training provider feel you\'re not ready, Gateway can be postponed. There\'s no penalty — it just extends your end date.',
+      "If you, your employer, or your training provider feel you're not ready, Gateway can be postponed. There's no penalty — it just extends your end date.",
   },
   {
     title: 'Request additional support',
@@ -148,9 +155,9 @@ const notReadyOptions = [
       'If you have specific areas of weakness, ask for targeted support — extra college sessions, additional practical time, focused revision.',
   },
   {
-    title: 'Don\'t feel pressured',
+    title: "Don't feel pressured",
     description:
-      'Some employers or providers may push for early Gateway to meet targets. You have the right to say you\'re not ready. It\'s in everyone\'s interest you pass first time.',
+      "Some employers or providers may push for early Gateway to meet targets. You have the right to say you're not ready. It's in everyone's interest you pass first time.",
   },
   {
     title: 'Use self-assessment tools',
@@ -173,7 +180,7 @@ const portfolioSections = [
   {
     section: 'Section 3 — Qualifications & certificates',
     contents:
-      'AM2 certificate, English and Maths qualifications, additional certificates (PASMA, IPAF, asbestos awareness, first aid, ECS card), and your EAL / C&G qualification certificates.',
+      'Your EAL / C&G Level 3 qualification certificates, English and Maths qualifications, and additional certificates (PASMA, IPAF, asbestos awareness, first aid, ECS card). The AM2S sits after Gateway, so its certificate is added once you pass it.',
   },
   {
     section: 'Section 4 — Work evidence: photographs',
@@ -214,42 +221,52 @@ const portfolioSections = [
 
 const epaoInfo = [
   {
-    title: 'Who selects the EPAO?',
+    title: 'Who runs the ST0152 end-point assessment?',
     description:
-      'Usually your training provider, based on existing contracts. Your employer may also have a preference. Common EPAOs include Smart Assessor, City & Guilds, EAL, and Highfield.',
+      'For the Installation & Maintenance Electrician the AM2S is delivered by NET (National Electrotechnical Training) at approved AM2 assessment centres. It is not an open EPAO marketplace — NET is the assessment body for this standard. (Other apprenticeship standards do use a wider choice of EPAOs.)',
   },
   {
-    title: 'What does the EPAO do?',
+    title: 'What does NET do?',
     description:
-      'Appoints independent assessors, sets assessment tasks, manages scheduling, conducts quality assurance, and determines your grade. Completely independent from your training provider and employer.',
+      'Sets the AM2S assessment tasks and applied-knowledge test, provides trained independent assessors, manages scheduling at approved centres, conducts quality assurance, and confirms your result. Independent from your training provider and employer.',
   },
   {
     title: 'Who is the assessor?',
     description:
-      'An experienced electrical professional employed or contracted by the EPAO. Holds relevant qualifications and is trained in assessment. No connection to your training provider or employer.',
+      'An experienced electrical professional approved by NET, trained in assessment, with no connection to your training provider or employer.',
   },
   {
     title: 'Assessor impartiality',
     description:
-      'EPAO assessors must be impartial. They cannot have previously taught or employed you. Any conflict of interest = a different assessor.',
+      'AM2S assessors must be impartial. They cannot have previously taught or employed you. Any conflict of interest means a different assessor.',
   },
   {
     title: 'Assessment materials',
     description:
-      'The EPAO provides knowledge test papers, practical assessment briefs, and professional discussion question banks. Standardised across all candidates using that EPAO.',
+      'NET provides the standardised practical assessment briefs and the online Assessment of Applied Knowledge. The same standard applies to every candidate at every approved centre.',
   },
 ];
 
 const timeline = [
-  { period: 'Day 0', event: 'Gateway meeting — all parties agree you\'re ready, declaration signed' },
-  { period: 'Wk 1–2', event: 'Training provider contacts EPAO to register you for EPA' },
-  { period: 'Wk 2–4', event: 'EPAO schedules your assessment components and assigns assessors' },
-  { period: 'Wk 3–6', event: 'Knowledge test (usually first)' },
-  { period: 'Wk 4–8', event: 'Practical observation (scheduled around your work and venue)' },
-  { period: 'Wk 6–10', event: 'Professional discussion (usually last)' },
-  { period: 'Wk 8–12', event: 'All components completed within the 3-month window' },
-  { period: 'Wk 10–14', event: 'Results available (10–15 working days after final component)' },
-  { period: 'Wk 14–22', event: 'Apprenticeship certificate issued by ESFA (4–8 weeks after results)' },
+  {
+    period: 'Day 0',
+    event: "Gateway meeting — all parties agree you're ready, declaration signed",
+  },
+  { period: 'Wk 1–2', event: 'Training provider registers you with NET for the AM2S' },
+  { period: 'Wk 2–6', event: 'NET schedules your AM2S at an approved assessment centre' },
+  {
+    period: 'Wk 4–10',
+    event: 'AM2S sittings — practical sections and online applied-knowledge test',
+  },
+  { period: 'Wk 8–12', event: 'AM2S completed within the assessment window' },
+  {
+    period: 'Wk 10–14',
+    event: 'Result confirmed (typically within a few weeks of your final section)',
+  },
+  {
+    period: 'Wk 14–22',
+    event: 'Apprenticeship certificate issued by ESFA (4–8 weeks after results)',
+  },
 ];
 
 const GatewayPage = () => {
@@ -283,19 +300,17 @@ const GatewayPage = () => {
             <Eyebrow>What is the Gateway?</Eyebrow>
           </div>
           <p className="text-[13.5px] text-white/85 leading-relaxed">
-            The Gateway is the formal readiness checkpoint before you enter
-            EPA. A structured meeting between you, your employer, and your
-            training provider — all three parties must agree you're ready. You
-            cannot start EPA until Gateway is passed. It exists to protect you
-            from being entered for assessment before you're prepared.
+            The Gateway is the formal readiness checkpoint before you enter EPA. A structured
+            meeting between you, your employer, and your training provider — all three parties must
+            agree you're ready. You cannot start EPA until Gateway is passed. It exists to protect
+            you from being entered for assessment before you're prepared.
           </p>
           <div className="rounded-md border border-elec-yellow/20 bg-elec-yellow/[0.04] p-3">
             <p className="text-[12.5px] text-white/85 leading-relaxed">
               <span className="font-semibold text-elec-yellow">When does Gateway happen?</span>{' '}
-              Typically the final 3–6 months of your apprenticeship — once
-              you've completed the learning programme, passed AM2, and built a
-              comprehensive portfolio. Your training provider will schedule it
-              when they believe you're ready.
+              Typically the final 3–6 months of your apprenticeship — once you've completed the
+              learning programme, your Level 3 qualification, and built a comprehensive portfolio.
+              The AM2S end-point assessment comes after Gateway, not before it.
             </p>
           </div>
         </div>
@@ -320,9 +335,7 @@ const GatewayPage = () => {
                   <h3 className="text-[14px] font-semibold text-elec-yellow tracking-tight">
                     {req.title}
                   </h3>
-                  <p className="text-[13px] text-white/85 leading-relaxed">
-                    {req.description}
-                  </p>
+                  <p className="text-[13px] text-white/85 leading-relaxed">{req.description}</p>
                 </div>
               </div>
             </li>
@@ -330,23 +343,24 @@ const GatewayPage = () => {
         </ul>
       </motion.section>
 
-      {/* ── AM2 ──────────────────────────────────────────────────── */}
+      {/* ── AM2S = the EPA ────────────────────────────────────────── */}
       <motion.section variants={itemVariants} className="space-y-3">
         <SectionHeader
-          eyebrow="The AM2 assessment"
-          title="Practical prerequisite to Gateway"
-          meta="Different from the EPA practical observation"
+          eyebrow="The AM2S assessment"
+          title="The AM2S is your end-point assessment"
+          meta="Taken after Gateway — not a separate pre-gateway hurdle"
         />
         <div className="rounded-xl border border-white/[0.06] bg-[hsl(0_0%_10%)] p-4 sm:p-5 space-y-4">
           <p className="text-[13px] text-white/85 leading-relaxed">
-            The AM2 (Achievement Measurement 2) is a practical assessment run
-            by NET that tests your installation competence. Separate from your
-            EPA practical observation but a prerequisite for Gateway.
+            For ST0152 there is one practical end-point assessment: the AM2S (Achievement
+            Measurement 2 Standard), run by NET. It is an integrated assessment of your practical
+            and applied-knowledge competence, taken after you pass Gateway. There is no separate
+            "AM2 before Gateway" plus a different "EPA practical" — the AM2S is the EPA.
           </p>
           <div className="space-y-2">
-            <Eyebrow>AM2 key facts</Eyebrow>
+            <Eyebrow>AM2S key facts</Eyebrow>
             <ul className="space-y-1.5">
-              {am2Facts.map((fact) => (
+              {am2sFacts.map((fact) => (
                 <li
                   key={fact}
                   className="flex items-start gap-2 text-[12.5px] text-white/85 leading-relaxed"
@@ -358,30 +372,32 @@ const GatewayPage = () => {
             </ul>
           </div>
           <div className="rounded-md border border-elec-yellow/20 bg-elec-yellow/[0.04] p-3 space-y-2">
-            <Eyebrow className="text-elec-yellow/85">AM2 vs EPA practical — what's different?</Eyebrow>
+            <Eyebrow className="text-elec-yellow/85">
+              AM2 vs AM2S vs AM2E — don't get them confused
+            </Eyebrow>
+            {am2Variants.map((v) => (
+              <p key={v.name} className="text-[12.5px] text-white/85 leading-relaxed">
+                <span className="font-semibold text-elec-yellow">{v.name}:</span> {v.who}
+              </p>
+            ))}
+          </div>
+          <div className="rounded-md border border-elec-yellow/20 bg-elec-yellow/[0.04] p-3 space-y-2">
+            <Eyebrow className="text-elec-yellow/85">The correct sequence</Eyebrow>
             <p className="text-[12.5px] text-white/85 leading-relaxed">
-              <span className="font-semibold text-elec-yellow">AM2:</span> tests
-              basic installation competence — can you wire circuits, make
-              connections, and test safely? Standardised conditions at a NET
-              centre. Pass / Fail only.
-            </p>
-            <p className="text-[12.5px] text-white/85 leading-relaxed">
-              <span className="font-semibold text-elec-yellow">EPA practical:</span>{' '}
-              assesses overall competence as an electrician — planning,
-              installation, testing, quality, problem-solving, compliance. Graded
-              Pass / Merit / Distinction. More comprehensive and counts towards
-              your final grade.
+              On-programme learning + Level 3 qualification + functional skills + fixed off-the-job
+              hours <span className="text-elec-yellow">→</span> Gateway sign-off{' '}
+              <span className="text-elec-yellow">→</span> AM2S (the practical and knowledge
+              end-point assessment by NET).
             </p>
           </div>
           <div className="rounded-md border border-red-500/30 bg-red-500/[0.04] p-3">
             <div className="flex items-start gap-2">
               <AlertTriangle className="h-3.5 w-3.5 text-red-300 flex-shrink-0 mt-0.5" />
               <p className="text-[12.5px] text-white/85 leading-relaxed">
-                <span className="font-semibold text-red-300">If you fail AM2:</span>{' '}
-                you can re-sit, but it will delay Gateway and EPA. Your training
-                provider will arrange additional support. Most apprentices pass
-                first time with proper preparation — use the AM2 Simulator in
-                this app to practise.
+                <span className="font-semibold text-red-300">If you don't pass the AM2S:</span> you
+                can re-sit. Your training provider arranges additional support first. Most
+                apprentices pass first time with proper preparation — use the AM2 Simulator in this
+                app to practise.
               </p>
             </div>
           </div>
@@ -409,9 +425,7 @@ const GatewayPage = () => {
                   <h3 className="text-[14px] font-semibold text-white tracking-tight">
                     {item.title}
                   </h3>
-                  <p className="text-[13px] text-white/85 leading-relaxed">
-                    {item.description}
-                  </p>
+                  <p className="text-[13px] text-white/85 leading-relaxed">{item.description}</p>
                 </div>
               </div>
             </li>
@@ -460,9 +474,7 @@ const GatewayPage = () => {
                   <h3 className="text-[14px] font-semibold text-elec-yellow tracking-tight">
                     {item.title}
                   </h3>
-                  <p className="text-[13px] text-white/85 leading-relaxed">
-                    {item.description}
-                  </p>
+                  <p className="text-[13px] text-white/85 leading-relaxed">{item.description}</p>
                 </div>
               </div>
             </li>
@@ -489,9 +501,7 @@ const GatewayPage = () => {
                   {item.section}
                 </h3>
               </div>
-              <p className="text-[12.5px] text-white/85 leading-relaxed">
-                {item.contents}
-              </p>
+              <p className="text-[12.5px] text-white/85 leading-relaxed">{item.contents}</p>
             </li>
           ))}
         </ul>
@@ -500,9 +510,9 @@ const GatewayPage = () => {
       {/* ── EPAO info ──────────────────────────────────────────── */}
       <motion.section variants={itemVariants} className="space-y-3">
         <SectionHeader
-          eyebrow="Understanding your EPAO"
-          title="Who runs your assessment"
-          meta="Independent body — separate from your provider and employer"
+          eyebrow="Who runs your assessment"
+          title="NET delivers the AM2S"
+          meta="Independent assessment body — separate from your provider and employer"
         />
         <ul className="space-y-2">
           {epaoInfo.map((item) => (
@@ -516,9 +526,7 @@ const GatewayPage = () => {
                   <h3 className="text-[14px] font-semibold text-white tracking-tight">
                     {item.title}
                   </h3>
-                  <p className="text-[13px] text-white/85 leading-relaxed">
-                    {item.description}
-                  </p>
+                  <p className="text-[13px] text-white/85 leading-relaxed">{item.description}</p>
                 </div>
               </div>
             </li>
@@ -541,18 +549,15 @@ const GatewayPage = () => {
                 <span className="text-[11.5px] font-mono uppercase tracking-[0.14em] text-elec-yellow min-w-[70px] flex-shrink-0">
                   {item.period}
                 </span>
-                <span className="text-[12.5px] text-white/85 leading-relaxed">
-                  {item.event}
-                </span>
+                <span className="text-[12.5px] text-white/85 leading-relaxed">{item.event}</span>
               </li>
             ))}
           </ul>
           <div className="rounded-md border border-elec-yellow/20 bg-elec-yellow/[0.04] p-3">
             <p className="text-[12.5px] text-white/85 leading-relaxed">
-              <span className="font-semibold text-elec-yellow">Note:</span>{' '}
-              Timelines vary depending on EPAO availability, venue scheduling,
-              and your personal readiness. Your training provider will keep you
-              updated as dates are confirmed.
+              <span className="font-semibold text-elec-yellow">Note:</span> Timelines vary depending
+              on NET centre availability, venue scheduling, and your personal readiness. Your
+              training provider will keep you updated as dates are confirmed.
             </p>
           </div>
         </div>

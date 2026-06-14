@@ -1,37 +1,40 @@
-import { Progress } from '@/components/ui/progress';
+const utilityToneClass = (utility: string) =>
+  utility === 'High utility'
+    ? 'text-elec-yellow border-elec-yellow/30 bg-elec-yellow/[0.06]'
+    : 'text-white/70 border-white/10 bg-white/[0.03]';
 
 const RevisionTechniquesTab = () => {
   const techniques = [
     {
-      technique: 'Active recall',
+      technique: 'Practice testing',
       description: 'Test yourself without looking at notes',
-      effectiveness: 90,
+      utility: 'High utility',
       howTo: 'Cover your notes and try to write down everything you remember about a topic',
       example: 'Cover formulas and try to write them from memory, then check your accuracy',
       benefits: ['Strengthens memory pathways', 'Identifies knowledge gaps', 'Builds confidence'],
     },
     {
-      technique: 'Spaced repetition',
+      technique: 'Distributed (spaced) practice',
       description: 'Review material at increasing intervals',
-      effectiveness: 85,
+      utility: 'High utility',
       howTo: 'Review today, then in 3 days, 1 week, 2 weeks, and 1 month',
       example: 'Study cable calculations today, review them Tuesday, next Monday, then next month',
       benefits: ['Prevents forgetting', 'Efficient use of time', 'Long-term retention'],
     },
     {
-      technique: 'Teaching others',
-      description: 'Explain concepts to fellow apprentices',
-      effectiveness: 95,
+      technique: 'Self-explanation / teaching others',
+      description: 'Explain concepts to fellow apprentices in your own words',
+      utility: 'Moderate utility',
       howTo: 'Form study groups and take turns teaching different topics',
       example: 'Explain three-phase power calculations to your study group',
       benefits: ['Deepens understanding', 'Reveals gaps', 'Builds communication skills'],
     },
     {
-      technique: 'Practice testing',
-      description: 'Take mock exams under real conditions',
-      effectiveness: 80,
-      howTo: 'Set timer, use only allowed materials, no interruptions',
-      example: 'Complete a full BS 7671 practice paper in 2 hours',
+      technique: 'Interleaved practice',
+      description: 'Mix related problem types under exam conditions',
+      utility: 'Moderate utility',
+      howTo: 'Set a timer, use only allowed materials, no interruptions, mix question types',
+      example: 'Complete a full mixed practice paper in one sitting',
       benefits: ['Reduces exam anxiety', 'Improves time management', 'Identifies weak areas'],
     },
   ];
@@ -75,9 +78,16 @@ const RevisionTechniquesTab = () => {
   return (
     <div className="space-y-6">
       <div className="rounded-xl border border-white/[0.06] bg-white/[0.02] p-4 sm:p-5 space-y-4">
-        <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
-          Evidence-based revision techniques
-        </span>
+        <div className="space-y-1">
+          <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+            Evidence-based revision techniques
+          </span>
+          <p className="text-[12px] text-white/55 leading-relaxed">
+            Utility ratings follow Dunlosky et al. (2013), which ranked study techniques by how well
+            they hold up across subjects, ages, and test types — not by invented effectiveness
+            scores.
+          </p>
+        </div>
         <div className="space-y-3">
           {techniques.map((technique, index) => (
             <div
@@ -91,12 +101,13 @@ const RevisionTechniquesTab = () => {
                   </h3>
                   <p className="text-[13px] text-white/70">{technique.description}</p>
                 </div>
-                <div className="text-right space-y-1">
-                  <div className="text-[12px] text-white/85 font-mono">
-                    {technique.effectiveness}%
-                  </div>
-                  <Progress value={technique.effectiveness} className="w-20 h-1" />
-                </div>
+                <span
+                  className={`flex-shrink-0 text-[10px] font-medium uppercase tracking-[0.14em] px-2 py-0.5 rounded-md border ${utilityToneClass(
+                    technique.utility
+                  )}`}
+                >
+                  {technique.utility}
+                </span>
               </div>
 
               <div className="grid grid-cols-1 lg:grid-cols-2 gap-3">
@@ -150,10 +161,7 @@ const RevisionTechniquesTab = () => {
               </h3>
               <ol className="space-y-2">
                 {method.steps.map((step, stepIndex) => (
-                  <li
-                    key={stepIndex}
-                    className="text-[13px] text-white/85 flex items-start gap-2"
-                  >
+                  <li key={stepIndex} className="text-[13px] text-white/85 flex items-start gap-2">
                     <span className="text-white/55 font-mono text-[11px] mt-0.5">
                       {stepIndex + 1}.
                     </span>

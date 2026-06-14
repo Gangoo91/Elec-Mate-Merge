@@ -1,4 +1,7 @@
-import { Progress } from '@/components/ui/progress';
+const utilityToneClass = (utility: string) =>
+  utility === 'High utility'
+    ? 'text-elec-yellow border-elec-yellow/30 bg-elec-yellow/[0.06]'
+    : 'text-white/70 border-white/10 bg-white/[0.03]';
 
 const Section = ({
   eyebrow,
@@ -14,9 +17,7 @@ const Section = ({
       <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
         {eyebrow}
       </span>
-      {description && (
-        <p className="text-[14px] text-white/70 leading-relaxed">{description}</p>
-      )}
+      {description && <p className="text-[14px] text-white/70 leading-relaxed">{description}</p>}
     </div>
     {children}
   </div>
@@ -39,7 +40,7 @@ const StudyFundamentalsTab = () => {
         'Create mind maps',
         'Ask questions while reading',
       ],
-      effectiveness: 90,
+      utility: 'Moderate utility',
       timeInvestment: 'Same as passive reading, much stronger results',
     },
     {
@@ -51,8 +52,8 @@ const StudyFundamentalsTab = () => {
         'Increase intervals after success',
         'Focus on difficult concepts',
       ],
-      effectiveness: 85,
-      timeInvestment: 'About 20% of initial study time',
+      utility: 'High utility',
+      timeInvestment: 'Less total time than cramming for the same retention',
     },
     {
       principle: 'Interleaving',
@@ -63,7 +64,7 @@ const StudyFundamentalsTab = () => {
         'Combine calculations with regulations',
         'Vary question types',
       ],
-      effectiveness: 80,
+      utility: 'Moderate utility',
       timeInvestment: 'No extra time needed',
     },
     {
@@ -75,8 +76,8 @@ const StudyFundamentalsTab = () => {
         'Question assumptions',
         'Explore relationships',
       ],
-      effectiveness: 75,
-      timeInvestment: 'About 15% additional time',
+      utility: 'Moderate utility',
+      timeInvestment: 'A little extra time, used while you read',
     },
     {
       principle: 'Dual coding',
@@ -87,8 +88,8 @@ const StudyFundamentalsTab = () => {
         'Create concept maps',
         'Watch demonstration videos',
       ],
-      effectiveness: 85,
-      timeInvestment: 'About 25% additional time',
+      utility: 'Moderate utility',
+      timeInvestment: 'Some extra time to sketch alongside notes',
     },
     {
       principle: 'Distributed practice',
@@ -99,7 +100,7 @@ const StudyFundamentalsTab = () => {
         'Review previous sessions',
         'Build consistent habits',
       ],
-      effectiveness: 95,
+      utility: 'High utility',
       timeInvestment: 'Better time efficiency overall',
     },
   ];
@@ -274,7 +275,10 @@ const StudyFundamentalsTab = () => {
         </div>
       </div>
 
-      <Section eyebrow="Evidence-based learning principles">
+      <Section
+        eyebrow="Evidence-based learning principles"
+        description="Utility ratings follow Dunlosky et al. (2013) — how reliably each technique helps across subjects, ages, and test types. Not invented percentages."
+      >
         <div className="space-y-3">
           {learningPrinciples.map((principle, index) => (
             <div
@@ -283,12 +287,13 @@ const StudyFundamentalsTab = () => {
             >
               <div className="flex items-start justify-between gap-3">
                 <h4 className="text-[16px] font-semibold text-white">{principle.principle}</h4>
-                <div className="text-right space-y-1">
-                  <div className="text-[12px] text-white/85 font-mono">
-                    {principle.effectiveness}%
-                  </div>
-                  <Progress value={principle.effectiveness} className="w-20 h-1 bg-white/5" />
-                </div>
+                <span
+                  className={`flex-shrink-0 text-[10px] font-medium uppercase tracking-[0.14em] px-2 py-0.5 rounded-md border ${utilityToneClass(
+                    principle.utility
+                  )}`}
+                >
+                  {principle.utility}
+                </span>
               </div>
               <p className="text-[13px] text-white/70 leading-relaxed">{principle.description}</p>
               <div className="grid grid-cols-1 lg:grid-cols-2 gap-3">
@@ -414,6 +419,50 @@ const StudyFundamentalsTab = () => {
                 </p>
               </div>
             </div>
+          ))}
+        </div>
+      </Section>
+
+      <Section
+        eyebrow="If studying on top of work gets too much"
+        description="Juggling day-release, OTJ hours and a full working week is hard. If the pressure tips into stress or you are struggling, these UK trade and crisis lines are free, confidential, and there for apprentices."
+      >
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+          {[
+            {
+              name: 'Electrical Industries Charity',
+              detail: 'Free, confidential support for anyone in the electrical industry',
+              label: '0800 652 1618',
+              href: 'tel:08006521618',
+            },
+            {
+              name: 'Lighthouse Construction Industry Charity',
+              detail: '24/7 helpline for construction and trades',
+              label: '0345 605 1956',
+              href: 'tel:03456051956',
+            },
+            {
+              name: 'Lighthouse text line',
+              detail: 'Text HARDHAT to 85258 for free 24/7 crisis text support',
+              label: 'Text HARDHAT to 85258',
+              href: 'sms:85258?&body=HARDHAT',
+            },
+            {
+              name: 'Samaritans',
+              detail: 'Round-the-clock support, whatever you are going through',
+              label: '116 123',
+              href: 'tel:116123',
+            },
+          ].map((line) => (
+            <a
+              key={line.name}
+              href={line.href}
+              className="flex flex-col gap-1 rounded-md border border-white/[0.06] bg-white/[0.02] p-4 min-h-11 hover:bg-white/[0.04] active:bg-white/[0.06] transition-colors touch-manipulation"
+            >
+              <span className="text-[14px] font-semibold text-white">{line.name}</span>
+              <span className="text-[12px] text-white/70 leading-relaxed">{line.detail}</span>
+              <span className="text-[13px] font-mono text-elec-yellow">{line.label}</span>
+            </a>
           ))}
         </div>
       </Section>

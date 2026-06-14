@@ -17,10 +17,19 @@ const SupportSystemsTab = () => {
       action: 'Speak to them about any challenges',
     },
     {
-      title: 'NICEIC/NAPIT Helplines',
-      description: 'Technical guidance on electrical regulations and standards',
-      contact: '0333 015 6626 (NICEIC) / 0345 543 0330 (NAPIT)',
-      action: 'Call for technical regulation queries',
+      title: 'Electrical Safety First — Best Practice Guides',
+      description:
+        'Free, apprentice-accessible technical guidance on BS 7671:2018+A4:2026 and safe working practice',
+      contact: 'electricalsafetyfirst.org.uk',
+      contactHref: 'https://www.electricalsafetyfirst.org.uk/professional-resources/',
+      action: 'Read the Best Practice Guides for technical queries',
+    },
+    {
+      title: 'NICEIC General Enquiries',
+      description: 'General enquiries about registration, training and certification routes',
+      contact: '0333 015 6625',
+      contactHref: 'tel:03330156625',
+      action: 'Note: NICEIC/NAPIT technical helplines are members-only',
     },
     {
       title: 'Apprentice Support Networks',
@@ -34,7 +43,9 @@ const SupportSystemsTab = () => {
     {
       service: 'Samaritans',
       description: '24/7 emotional support for anyone in distress',
-      contact: '116 123 (free from any phone)',
+      contact: '116 123',
+      contactNote: 'free from any phone',
+      tel: 'tel:116123',
       website: 'samaritans.org',
     },
     {
@@ -42,19 +53,27 @@ const SupportSystemsTab = () => {
       description:
         'Free wellbeing, financial, and legal support for construction workers and families',
       contact: '0345 605 1956',
+      contactNote: '24/7 helpline',
+      tel: 'tel:03456051956',
+      text: 'Text HARDHAT to 85258',
+      sms: 'sms:85258?&body=HARDHAT',
       website: 'lighthouseclub.org',
+    },
+    {
+      service: 'Electrical Industries Charity',
+      description: 'Practical, financial and emotional support for people in the electrical sector',
+      contact: '0800 652 1618',
+      contactNote: 'free, confidential',
+      tel: 'tel:08006521618',
+      website: 'electricalcharity.org',
     },
     {
       service: 'Mind',
       description: 'Mental health information and local support services',
       contact: '0300 123 3393',
+      contactNote: 'Mon–Fri 9am–6pm',
+      tel: 'tel:03001233393',
       website: 'mind.org.uk',
-    },
-    {
-      service: 'Apprentice Support',
-      description: 'Government support for apprentice wellbeing',
-      contact: '0800 015 0400',
-      website: 'gov.uk/apprenticeships-guide',
     },
   ];
 
@@ -80,16 +99,16 @@ const SupportSystemsTab = () => {
     {
       area: 'Financial Support',
       resources: [
-        'Government apprentice minimum wage info',
-        'Student loan eligibility',
+        'Apprentice National Minimum Wage is £8.00/hr from 1 April 2026',
         'Local council support schemes',
         'Union advice services',
+        'National Apprenticeship Helpline (England): 0800 015 0400',
       ],
     },
     {
       area: 'Rights & Workplace Issues',
       resources: [
-        'ACAS employment advice',
+        'ACAS employment advice: 0300 123 1100',
         'Unite the Union apprentice support',
         'Citizens Advice employment guidance',
         'Apprentice complaints procedure',
@@ -112,10 +131,25 @@ const SupportSystemsTab = () => {
               <h3 className="text-[16px] font-semibold text-white">{contact.title}</h3>
               <p className="text-[14px] text-white/85 leading-relaxed">{contact.description}</p>
               <div className="space-y-1.5 pt-1">
-                <div className="text-[13px] text-white/85">
-                  <span className="text-white/55">Contact: </span>
-                  {contact.contact}
-                </div>
+                {contact.contactHref ? (
+                  <a
+                    href={contact.contactHref}
+                    onClick={(e) => {
+                      if (contact.contactHref?.startsWith('http')) {
+                        e.preventDefault();
+                        openExternalUrl(contact.contactHref);
+                      }
+                    }}
+                    className="inline-flex items-center min-h-11 text-[13px] text-elec-yellow underline underline-offset-2 touch-manipulation"
+                  >
+                    {contact.contact}
+                  </a>
+                ) : (
+                  <div className="text-[13px] text-white/85">
+                    <span className="text-white/55">Contact: </span>
+                    {contact.contact}
+                  </div>
+                )}
                 <span className="inline-block text-[12px] text-white/85 px-2 py-0.5 rounded-md border border-white/10 bg-white/[0.03]">
                   {contact.action}
                 </span>
@@ -125,8 +159,8 @@ const SupportSystemsTab = () => {
         </div>
       </div>
 
-      <div className="rounded-xl border border-red-500/30 bg-red-500/[0.04] p-4 sm:p-5 space-y-4">
-        <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-red-300">
+      <div className="rounded-xl border border-elec-yellow/25 bg-elec-yellow/[0.03] p-4 sm:p-5 space-y-4">
+        <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-elec-yellow">
           Mental health & wellbeing support
         </span>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -138,14 +172,29 @@ const SupportSystemsTab = () => {
               <h4 className="text-[16px] font-semibold text-white">{resource.service}</h4>
               <p className="text-[14px] text-white/85 leading-relaxed">{resource.description}</p>
               <div className="space-y-2 pt-1">
-                <div className="text-[13px] text-white/85">
-                  <span className="text-white/55">Phone: </span>
+                <a
+                  href={resource.tel}
+                  className="inline-flex items-center min-h-11 text-[14px] text-elec-yellow font-medium underline underline-offset-2 touch-manipulation"
+                >
                   {resource.contact}
-                </div>
+                  {resource.contactNote ? (
+                    <span className="text-white/55 ml-1.5 no-underline">
+                      ({resource.contactNote})
+                    </span>
+                  ) : null}
+                </a>
+                {resource.text && resource.sms ? (
+                  <a
+                    href={resource.sms}
+                    className="flex items-center min-h-11 text-[14px] text-elec-yellow underline underline-offset-2 touch-manipulation"
+                  >
+                    {resource.text}
+                  </a>
+                ) : null}
                 <Button
                   size="sm"
                   variant="outline"
-                  className="h-9 border-white/15 text-white hover:bg-white/[0.05] touch-manipulation"
+                  className="h-11 border-white/15 text-white hover:bg-white/[0.05] touch-manipulation"
                   onClick={() => openExternalUrl(`https://${resource.website}`)}
                 >
                   <ExternalLink className="h-3 w-3 mr-1" />

@@ -8,23 +8,10 @@
 
 import { useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
-import {
-  ArrowLeft,
-  CheckCircle2,
-  AlertTriangle,
-  Banknote,
-  Award,
-  PiggyBank,
-} from 'lucide-react';
-import {
-  PageFrame,
-  PageHero,
-  itemVariants,
-} from '@/components/college/primitives';
-import {
-  Eyebrow,
-  SectionHeader,
-} from '@/components/apprentice-hub/portfolio/PortfolioPrimitives';
+import { ArrowLeft, CheckCircle2, AlertTriangle, Banknote, Award, PiggyBank } from 'lucide-react';
+import type { LucideIcon } from 'lucide-react';
+import { PageFrame, PageHero, itemVariants } from '@/components/college/primitives';
+import { Eyebrow, SectionHeader } from '@/components/apprentice-hub/portfolio/PortfolioPrimitives';
 
 const citbBreakdown = [
   'Year 1 attendance grant: £2,500 (paid quarterly every 13 weeks)',
@@ -67,22 +54,22 @@ const travelFacts = [
   'Also applies to block release training requiring overnight stays',
   'Employer claims through the same CITB grants portal',
   'Receipts and evidence of travel required for claims',
-  'Doesn\'t cover daily commuting to a local college',
+  "Doesn't cover daily commuting to a local college",
 ];
 
 const ageIncentive = [
   '£1,000 for apprentices aged 16–18 at the start',
-  '£1,000 for apprentices aged 19–25 with an EHC plan or care leaver status',
-  'Payment split: £500 after 90 days + £500 after 1 year',
-  'Paid to: £500 to employer + £500 to training provider',
-  'Can be spent on anything to support the apprentice',
+  '£1,000 for apprentices aged 19–24 with an EHC plan or care leaver status',
+  'Paid in two £500 instalments (commonly at day 90 and day 365)',
+  'Paid by government to the training provider, who passes the full £1,000 to the employer',
+  'Meant to help with the costs of supporting the apprentice',
   'Automatic — no separate claim needed once registered on DAS',
 ];
 
 const careLeaverFacts = [
   '£1,000 paid directly to the apprentice',
   'Must be aged 16–24 and a care leaver',
-  'Paid by the training provider from ESFA funding',
+  'Paid by the training provider from government (DfE) funding',
   'Separate from the £1,000 age incentive paid to employers',
   'Can be used for travel, equipment, clothing, or other costs',
 ];
@@ -93,7 +80,7 @@ const learningSupportFacts = [
   'One-to-one support workers or learning assistants',
   'Available for dyslexia, ADHD, autism, physical disabilities, and other needs',
   'Claimed by the training provider on top of the funding band',
-  'Doesn\'t reduce the £23,000 available for training',
+  "Doesn't reduce the £23,000 available for training",
   'Requires an initial assessment and evidence of need',
 ];
 
@@ -107,14 +94,14 @@ const taxBenefits = [
 
 const otherGrants = [
   {
-    title: 'JIB training grant',
+    title: 'JIB member support',
     description:
-      'Up to £500 for JIB-registered electrical contractors employing apprentices. Covers first-year support costs. Check jib.org.uk for current terms.',
+      'The JIB (and its welfare and benefit schemes) supports registered electrical operatives and employers — check jib.org.uk for current member support, as terms change.',
   },
   {
     title: 'ECA training support',
     description:
-      'Varies — available to Electrical Contractors Association members. Training subsidies, mentoring support, and access to ECA training events.',
+      'Varies — available to Electrical Contractors Association members. Training subsidies, mentoring support, and access to ECA training events. Check eca.co.uk for current terms.',
   },
   {
     title: 'Local authority grants',
@@ -127,7 +114,7 @@ const otherGrants = [
       'Up to £1,000 in certain regions — availability depends on your area. Combined authorities (Greater Manchester, West Midlands) often run their own schemes.',
   },
   {
-    title: 'Kickstart / Youth Hub programmes',
+    title: 'Local Youth Hub support',
     description:
       'Some areas run youth employment hubs providing additional support — travel, work clothing, and tools. Ask your training provider or local Jobcentre Plus.',
   },
@@ -177,11 +164,43 @@ const GrantsPage = () => {
             £14,500+
           </p>
           <p className="text-[13px] text-white/85 leading-relaxed">
-            Available to eligible employers on top of the £23,000 apprenticeship
-            training fund — CITB grants, age incentives, and tax savings combined.
+            Available to eligible employers on top of the £23,000 apprenticeship training fund —
+            CITB grants, age incentives, and tax savings combined.
           </p>
         </div>
       </motion.div>
+
+      {/* ── What you can claim (apprentice) ─────────────────────── */}
+      <motion.section variants={itemVariants} className="space-y-3">
+        <SectionHeader
+          eyebrow="What you can claim"
+          title="Support aimed at you, not the employer"
+          meta="Most grants on this page go to the employer — these are yours"
+          action={
+            <span className="inline-flex items-center justify-center w-8 h-8 rounded-md border border-elec-yellow/25 bg-elec-yellow/[0.06]">
+              <PiggyBank className="h-4 w-4 text-elec-yellow" />
+            </span>
+          }
+        />
+        <div className="rounded-xl border border-white/[0.06] bg-[hsl(0_0%_10%)] p-4 sm:p-5">
+          <ul className="space-y-1.5">
+            {[
+              'Care leaver bursary — £1,000 paid directly to you if you are a care leaver aged 16–24 (see below)',
+              '16 to 19 Bursary Fund — help with travel, kit or meals for under-19s on some study programmes; ask your college',
+              'Additional learning support — adjustments and equipment if you have a disability or learning need (claimed by your provider)',
+              "Travel to college is usually the employer's or CITB's call rather than a grant you claim — ask your employer first",
+            ].map((item) => (
+              <li
+                key={item}
+                className="flex items-start gap-2 text-[12.5px] text-white/85 leading-relaxed"
+              >
+                <CheckCircle2 className="h-3.5 w-3.5 text-elec-yellow/85 flex-shrink-0 mt-0.5" />
+                <span>{item}</span>
+              </li>
+            ))}
+          </ul>
+        </div>
+      </motion.section>
 
       {/* ── CITB grants ─────────────────────────────────────────── */}
       <motion.section variants={itemVariants} className="space-y-3">
@@ -219,8 +238,8 @@ const GrantsPage = () => {
               </li>
             </ul>
             <p className="text-[11.5px] text-white/70 leading-relaxed pt-1">
-              Payments made after each 13-week period, subject to attendance
-              requirements and a valid claim.
+              Payments made after each 13-week period, subject to attendance requirements and a
+              valid claim.
             </p>
           </div>
           <div className="space-y-2 pt-2 border-t border-white/[0.04]">
@@ -245,9 +264,7 @@ const GrantsPage = () => {
                   key={step}
                   className="flex items-start gap-2 text-[12.5px] text-white/85 leading-relaxed"
                 >
-                  <span className="text-elec-yellow font-mono tabular-nums mt-0.5">
-                    {i + 1}.
-                  </span>
+                  <span className="text-elec-yellow font-mono tabular-nums mt-0.5">{i + 1}.</span>
                   <span>{step}</span>
                 </li>
               ))}
@@ -282,7 +299,7 @@ const GrantsPage = () => {
       <FundingCard
         eyebrow="Age incentive"
         title="£1,000 for under-19s + EHC / care leavers"
-        meta="Split £500 employer + £500 training provider"
+        meta="Two £500 instalments, passed to the employer"
         items={ageIncentive}
       />
 
@@ -330,9 +347,7 @@ const GrantsPage = () => {
                   <h3 className="text-[14px] font-semibold text-elec-yellow tracking-tight">
                     {grant.title}
                   </h3>
-                  <p className="text-[13px] text-white/85 leading-relaxed">
-                    {grant.description}
-                  </p>
+                  <p className="text-[13px] text-white/85 leading-relaxed">{grant.description}</p>
                 </div>
               </div>
             </li>
@@ -356,7 +371,7 @@ const GrantsPage = () => {
                   key={row.label}
                   className="flex items-start justify-between gap-3 text-[12.5px] text-white/85"
                 >
-                  <span>{row.label}</span>
+                  <span className="min-w-0">{row.label}</span>
                   <span className="font-mono tabular-nums text-elec-yellow font-semibold flex-shrink-0">
                     {row.value}
                   </span>
@@ -364,9 +379,7 @@ const GrantsPage = () => {
               ))}
               <li className="flex items-start justify-between gap-3 text-[13.5px] text-white pt-1.5 border-t border-elec-yellow/15">
                 <span className="font-semibold">Total value</span>
-                <span className="font-mono tabular-nums text-elec-yellow font-bold">
-                  £45,500+
-                </span>
+                <span className="font-mono tabular-nums text-elec-yellow font-bold">£45,500+</span>
               </li>
             </ul>
           </div>
@@ -378,7 +391,7 @@ const GrantsPage = () => {
                   key={row.label}
                   className="flex items-start justify-between gap-3 text-[12.5px] text-white/85"
                 >
-                  <span>{row.label}</span>
+                  <span className="min-w-0">{row.label}</span>
                   <span className="font-mono tabular-nums text-white font-semibold flex-shrink-0">
                     {row.value}
                   </span>
@@ -386,21 +399,17 @@ const GrantsPage = () => {
               ))}
               <li className="flex items-start justify-between gap-3 text-[13.5px] text-white pt-1.5 border-t border-white/[0.06]">
                 <span className="font-semibold">Total cost</span>
-                <span className="font-mono tabular-nums text-white font-bold">
-                  £65,150
-                </span>
+                <span className="font-mono tabular-nums text-white font-bold">£65,150</span>
               </li>
             </ul>
           </div>
           <div className="rounded-md border border-elec-yellow/25 bg-elec-yellow/[0.04] p-3">
             <p className="text-[12.5px] text-white/85 leading-relaxed">
-              <span className="font-semibold text-elec-yellow">Net result:</span>{' '}
-              After grants and tax relief, the true cost of a 4-year apprentice
-              is approximately{' '}
-              <span className="font-mono text-elec-yellow">£20,000</span> — and
-              you gain a fully qualified electrician trained to your standards.
-              Compared to hiring at £35k+ salary plus £5k+ recruitment fees,
-              apprenticeships are significantly better value.
+              <span className="font-semibold text-elec-yellow">Net result:</span> After grants and
+              tax relief, the true cost of a 4-year apprentice is approximately{' '}
+              <span className="font-mono text-elec-yellow">£20,000</span> — and you gain a fully
+              qualified electrician trained to your standards. Compared to hiring at £35k+ salary
+              plus £5k+ recruitment fees, apprenticeships are significantly better value.
             </p>
           </div>
         </div>
@@ -410,8 +419,6 @@ const GrantsPage = () => {
 };
 
 /* ─────────────────── Funding card helper ─────────────────── */
-
-import type { LucideIcon } from 'lucide-react';
 
 function FundingCard({
   eyebrow,

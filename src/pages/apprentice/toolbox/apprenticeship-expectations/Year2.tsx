@@ -15,30 +15,19 @@ import {
   FileText,
   Wrench,
   BookOpen,
-  Target,
   CheckCircle2,
   TrendingUp,
-  GraduationCap,
-  Briefcase,
   ChevronDown,
   Lightbulb,
-  Shield,
   Settings,
   Gauge,
   Brain,
   Award,
-  X,
+  Star,
 } from 'lucide-react';
 import type { LucideIcon } from 'lucide-react';
-import {
-  PageFrame,
-  PageHero,
-  itemVariants,
-} from '@/components/college/primitives';
-import {
-  Eyebrow,
-  SectionHeader,
-} from '@/components/apprentice-hub/portfolio/PortfolioPrimitives';
+import { PageFrame, PageHero, itemVariants } from '@/components/college/primitives';
+import { Eyebrow, SectionHeader } from '@/components/apprentice-hub/portfolio/PortfolioPrimitives';
 import { cn } from '@/lib/utils';
 
 interface MonthlyPeriod {
@@ -79,7 +68,7 @@ const monthlyBreakdown: MonthlyPeriod[] = [
       'Earthing arrangements — TN-S, TN-C-S (PNB / PME), TT',
     ],
     dayInLife:
-      'You\'ll start working more independently on installations. Your mentor will check your work but give you more responsibility. Be deliberate — neat work compounds.',
+      "You'll start working more independently on installations. Your mentor will check your work but give you more responsibility. Be deliberate — neat work compounds.",
   },
   {
     month: 'Month 17–18',
@@ -124,7 +113,7 @@ const monthlyBreakdown: MonthlyPeriod[] = [
       'Cross-referencing to NVQ units and AC criteria',
     ],
     dayInLife:
-      'If you\'ve been keeping up, this is just about organising. If not, it\'s time to catch up — don\'t leave it until Year 4. Two hours now saves twenty hours then.',
+      "If you've been keeping up, this is just about organising. If not, it's time to catch up — don't leave it until Year 4. Two hours now saves twenty hours then.",
   },
   {
     month: 'Month 23–24',
@@ -136,17 +125,16 @@ const monthlyBreakdown: MonthlyPeriod[] = [
       'Theory examination preparation — revision and past papers',
       'Portfolio submission — end of year review',
       'Year 3 preparation — looking ahead to commercial and fault-finding',
-      'Reflection on year 2 — what worked, what didn\'t',
+      "Reflection on year 2 — what worked, what didn't",
     ],
     dayInLife:
-      'Assessment time. Stay calm, trust your training — you\'ve been doing this work all year. The exam just proves it.',
+      "Assessment time. Stay calm, trust your training — you've been doing this work all year. The exam just proves it.",
   },
 ];
 
 interface LearningArea {
   title: string;
   icon: LucideIcon;
-  progress: number;
   topics: string[];
 }
 
@@ -154,7 +142,6 @@ const keyLearningAreas: LearningArea[] = [
   {
     title: 'BS 7671 Wiring Regulations',
     icon: BookOpen,
-    progress: 75,
     topics: [
       'Regulation structure and navigation',
       'Design requirements and calculations',
@@ -166,7 +153,6 @@ const keyLearningAreas: LearningArea[] = [
   {
     title: 'Installation techniques',
     icon: Wrench,
-    progress: 80,
     topics: [
       'Different wiring systems and applications',
       'Containment and support methods',
@@ -178,7 +164,6 @@ const keyLearningAreas: LearningArea[] = [
   {
     title: 'Testing & inspection',
     icon: Gauge,
-    progress: 65,
     topics: [
       'Test equipment usage and calibration',
       'Continuity testing procedures',
@@ -190,7 +175,6 @@ const keyLearningAreas: LearningArea[] = [
   {
     title: 'Documentation skills',
     icon: FileText,
-    progress: 70,
     topics: [
       'Electrical installation certificates',
       'Test result recording and interpretation',
@@ -231,19 +215,35 @@ const testEquipmentGuide = [
 const bs7671Parts = [
   { number: 1, title: 'Scope, object and fundamental principles', key: 'Safety first — always' },
   { number: 2, title: 'Definitions', key: 'Know the terminology' },
-  { number: 3, title: 'Assessment of general characteristics', key: 'Understanding the installation' },
+  {
+    number: 3,
+    title: 'Assessment of general characteristics',
+    key: 'Understanding the installation',
+  },
   { number: 4, title: 'Protection for safety', key: 'Most referenced section' },
-  { number: 5, title: 'Selection and erection of equipment', key: 'Practical applications' },
+  { number: 5, title: 'Selection and erection of equipment', key: 'Day-to-day design core' },
   { number: 6, title: 'Inspection and testing', key: 'Your testing bible' },
   { number: 7, title: 'Special installations or locations', key: 'Bathrooms, pools, EV, solar' },
+  {
+    number: 8,
+    title: 'Functional requirements (energy efficiency)',
+    key: 'Prosumer / multi-source supply',
+  },
 ];
 
 const bs7671Tips = [
-  'Use the index — don\'t try to memorise everything',
+  "Use the index — don't try to memorise everything",
   'Highlight key regulations you reference often',
   'Practise "regulation finding" exercises',
   'Understand the "why", not just the "what"',
   'Compare the On-Site Guide alongside the full Regs',
+];
+
+const bs7671A4Changes = [
+  'A new Part 8 — Functional requirements (Chapter 82) covering energy efficiency and prosumer / multi-source supply installations',
+  'Wider requirements for arc fault detection devices (AFDDs) on certain final circuits',
+  'TN-C-S supplies via a protective neutral bonding (PNB) arrangement clarified in the earthing terminology',
+  'Revised model certificate and schedule forms — including new and updated schedule columns',
 ];
 
 interface Challenge {
@@ -259,11 +259,11 @@ const commonChallenges: Challenge[] = [
     icon: BookOpen,
     description: 'The regulations book can seem impossibly large and complex at first.',
     solutions: [
-      'Start with Part 1 (scope) and Part 6 (testing) — most practical sections',
+      'Get to know Parts 4 (protection), 5 (selection & erection) and 6 (inspection & testing) — the working core — with Part 1 for scope and principles',
       'Use the On-Site Guide alongside the full regulations',
       'Practice finding regulations using the index',
       'Join study groups with other apprentices',
-      'Don\'t try to memorise — learn to navigate',
+      "Don't try to memorise — learn to navigate",
     ],
   },
   {
@@ -284,7 +284,7 @@ const commonChallenges: Challenge[] = [
     description: 'More responsibility and complex tasks expected compared to Year 1.',
     solutions: [
       'Communicate when you need guidance',
-      'Double-check your work before saying it\'s complete',
+      "Double-check your work before saying it's complete",
       'Ask for feedback regularly',
       'Take notes on corrections and learn from them',
       'It\'s okay to say "I haven\'t done this before"',
@@ -330,7 +330,7 @@ const developmentMilestones: Milestone[] = [
     description: 'Complete your first full electrical test sequence independently.',
     importance: 'Testing is a core skill for qualified electricians',
     tips: [
-      'Understand each test\'s purpose before performing it',
+      "Understand each test's purpose before performing it",
       'Follow the correct test sequence every time',
       'Learn to interpret results, not just record them',
     ],
@@ -357,6 +357,22 @@ const developmentMilestones: Milestone[] = [
       'Get supervisor signatures while tasks are fresh',
     ],
   },
+];
+
+const thrivingSigns = [
+  'Finds the right regulation by navigating, not memory',
+  'Sets the tester up correctly and reads results, not just records them',
+  'Always proves dead, tests, then proves again before touching',
+  'Portfolio is genuinely near halfway, cross-referenced to NVQ units',
+  'Asks for the harder jobs and takes feedback without sulking',
+];
+
+const strugglingSigns = [
+  'Still flicks blindly through the regs, gives up and guesses',
+  'Records a test number without knowing if it passes or fails',
+  'Treats safe isolation as a step to rush when behind schedule',
+  'Portfolio barely moved since year 1 — evidence not collected',
+  "Goes quiet on new tasks instead of saying it's unfamiliar",
 ];
 
 const weeklyScheduleExample: { day: string; location: 'Site' | 'College'; activities: string }[] = [
@@ -443,8 +459,8 @@ export default function Year2() {
           <div className="flex items-start gap-2 pt-2 border-t border-white/[0.04]">
             <TrendingUp className="h-3.5 w-3.5 text-elec-yellow/85 flex-shrink-0 mt-0.5" />
             <p className="text-[12.5px] text-white/85 leading-relaxed">
-              Salaries vary by employer, region, and overtime. Your growing skills
-              and productivity justify regular pay increases — ask for them.
+              Salaries vary by employer, region, and overtime. Your growing skills and productivity
+              justify regular pay increases — ask for them.
             </p>
           </div>
         </div>
@@ -454,23 +470,28 @@ export default function Year2() {
       <motion.section variants={itemVariants} className="space-y-3">
         <SectionHeader
           eyebrow="BS 7671 survival guide"
-          title="The seven parts you'll live in"
-          meta="Navigation matters more than memorisation"
+          title="The eight parts you'll live in"
+          meta="Current edition: BS 7671:2018+A4:2026 — navigation beats memorisation"
         />
         <div className="rounded-xl border border-white/[0.06] bg-[hsl(0_0%_10%)] p-4 sm:p-5 space-y-4">
           <ul className="space-y-1.5">
             {bs7671Parts.map((part) => (
               <li
                 key={part.number}
-                className="flex items-center justify-between gap-3 p-2.5 rounded-md border border-white/[0.06] bg-white/[0.02]"
+                className="flex items-start sm:items-center justify-between gap-3 p-2.5 rounded-md border border-white/[0.06] bg-white/[0.02]"
               >
-                <div className="flex items-center gap-3 min-w-0">
+                <div className="flex items-start sm:items-center gap-3 min-w-0">
                   <span className="inline-flex items-center justify-center w-7 h-7 rounded-md border border-elec-yellow/30 bg-elec-yellow/[0.06] text-[12px] font-mono font-semibold tabular-nums text-elec-yellow flex-shrink-0">
                     {part.number}
                   </span>
-                  <span className="text-[13px] text-white truncate">{part.title}</span>
+                  <div className="min-w-0">
+                    <span className="block text-[13px] text-white leading-snug">{part.title}</span>
+                    <span className="block sm:hidden text-[11px] text-white/55 italic mt-0.5">
+                      {part.key}
+                    </span>
+                  </div>
                 </div>
-                <span className="text-[11px] text-white/55 italic hidden sm:block flex-shrink-0">
+                <span className="hidden sm:block text-[11px] text-white/55 italic flex-shrink-0">
                   {part.key}
                 </span>
               </li>
@@ -486,6 +507,20 @@ export default function Year2() {
                 >
                   <CheckCircle2 className="h-3.5 w-3.5 text-elec-yellow/85 flex-shrink-0 mt-0.5" />
                   <span>{tip}</span>
+                </li>
+              ))}
+            </ul>
+          </div>
+          <div className="pt-3 border-t border-white/[0.04] space-y-2">
+            <Eyebrow className="text-elec-yellow/85">What changed in A4:2026</Eyebrow>
+            <ul className="space-y-1.5">
+              {bs7671A4Changes.map((change) => (
+                <li
+                  key={change}
+                  className="flex items-start gap-2 text-[12.5px] text-white/85 leading-relaxed"
+                >
+                  <Zap className="h-3.5 w-3.5 text-elec-yellow/85 flex-shrink-0 mt-0.5" />
+                  <span>{change}</span>
                 </li>
               ))}
             </ul>
@@ -525,9 +560,7 @@ export default function Year2() {
               </div>
               <div className="flex items-start gap-2 pt-1 border-t border-white/[0.04]">
                 <Lightbulb className="h-3.5 w-3.5 text-elec-yellow/85 flex-shrink-0 mt-0.5" />
-                <p className="text-[12.5px] text-white/85 italic leading-relaxed">
-                  {item.tip}
-                </p>
+                <p className="text-[12.5px] text-white/85 italic leading-relaxed">{item.tip}</p>
               </div>
             </li>
           ))}
@@ -575,9 +608,7 @@ export default function Year2() {
                           {period.month}
                         </span>
                       </div>
-                      <p className="text-[12px] text-white/70 leading-snug">
-                        {period.focus}
-                      </p>
+                      <p className="text-[12px] text-white/70 leading-snug">{period.focus}</p>
                     </div>
                     <ChevronDown
                       className={cn(
@@ -618,7 +649,7 @@ export default function Year2() {
         <SectionHeader
           eyebrow="Key learning areas"
           title="Where to focus your energy"
-          meta="Progress bars show typical expectations by year end"
+          meta="The four pillars you'll build across Year 2"
         />
         <ul className="grid grid-cols-1 md:grid-cols-2 gap-2.5">
           {keyLearningAreas.map((area) => {
@@ -628,24 +659,11 @@ export default function Year2() {
                 key={area.title}
                 className="rounded-xl border border-white/[0.06] bg-[hsl(0_0%_10%)] p-4 sm:p-5 space-y-3"
               >
-                <div className="flex items-start justify-between gap-2">
-                  <div className="flex items-center gap-2 min-w-0">
-                    <Icon className="h-4 w-4 text-elec-yellow flex-shrink-0" />
-                    <h3 className="text-[14px] font-semibold text-white tracking-tight">
-                      {area.title}
-                    </h3>
-                  </div>
-                  <span className="text-[12px] font-mono tabular-nums text-elec-yellow flex-shrink-0">
-                    {area.progress}%
-                  </span>
-                </div>
-                <div className="h-1.5 rounded-full bg-white/[0.04] overflow-hidden">
-                  <motion.div
-                    initial={{ width: 0 }}
-                    animate={{ width: `${area.progress}%` }}
-                    transition={{ duration: 0.7, ease: 'easeOut' }}
-                    className="h-full bg-elec-yellow rounded-full"
-                  />
+                <div className="flex items-center gap-2 min-w-0">
+                  <Icon className="h-4 w-4 text-elec-yellow flex-shrink-0" />
+                  <h3 className="text-[14px] font-semibold text-white tracking-tight">
+                    {area.title}
+                  </h3>
                 </div>
                 <ul className="space-y-1.5">
                   {area.topics.map((topic) => (
@@ -685,9 +703,7 @@ export default function Year2() {
                     <h3 className="text-[14px] font-semibold text-white tracking-tight">
                       {m.milestone}
                     </h3>
-                    <p className="text-[13px] text-white/85 leading-relaxed">
-                      {m.description}
-                    </p>
+                    <p className="text-[13px] text-white/85 leading-relaxed">{m.description}</p>
                     <p className="text-[12px] text-white/55 italic leading-relaxed">
                       {m.importance}
                     </p>
@@ -719,14 +735,13 @@ export default function Year2() {
         />
         <ul className="rounded-xl border border-white/[0.06] bg-[hsl(0_0%_10%)] divide-y divide-white/[0.04] overflow-hidden">
           {weeklyScheduleExample.map(({ day, location, activities }) => (
-            <li
-              key={day}
-              className="flex items-center gap-3 sm:gap-4 p-3.5 sm:p-4"
-            >
-              <span className="w-20 text-[12.5px] font-medium text-white">{day}</span>
+            <li key={day} className="flex items-center gap-2.5 sm:gap-4 p-3.5 sm:p-4">
+              <span className="w-14 sm:w-20 shrink-0 text-[12.5px] font-medium text-white">
+                {day}
+              </span>
               <span
                 className={cn(
-                  'inline-flex items-center justify-center h-6 px-2 rounded-md border text-[10px] font-medium uppercase tracking-[0.14em] flex-shrink-0 w-16',
+                  'inline-flex items-center justify-center h-6 px-2 rounded-md border text-[10px] font-medium uppercase tracking-[0.14em] flex-shrink-0 w-14 sm:w-16',
                   location === 'College'
                     ? 'border-elec-yellow/30 bg-elec-yellow/[0.06] text-elec-yellow'
                     : 'border-white/[0.10] bg-white/[0.03] text-white/85'
@@ -734,7 +749,7 @@ export default function Year2() {
               >
                 {location}
               </span>
-              <span className="text-[12.5px] text-white/85 flex-1 leading-snug">
+              <span className="text-[12.5px] text-white/85 flex-1 min-w-0 leading-snug">
                 {activities}
               </span>
             </li>
@@ -778,9 +793,7 @@ export default function Year2() {
                       <h3 className="text-[14px] font-semibold text-white leading-snug">
                         {item.challenge}
                       </h3>
-                      <p className="text-[12.5px] text-white/70 leading-snug">
-                        {item.description}
-                      </p>
+                      <p className="text-[12.5px] text-white/70 leading-snug">{item.description}</p>
                     </div>
                     <ChevronDown
                       className={cn(
@@ -814,6 +827,59 @@ export default function Year2() {
         </ul>
       </motion.section>
 
+      {/* ── Thriving vs struggling ───────────────────────────────── */}
+      <motion.section variants={itemVariants} className="space-y-3">
+        <SectionHeader
+          eyebrow="Where you stand"
+          title="Thriving vs struggling in Year 2"
+          meta="The gap usually opens up around the regs and the test results"
+        />
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
+          <div className="rounded-xl border border-elec-yellow/25 bg-elec-yellow/[0.04] p-4 sm:p-5 space-y-3">
+            <div className="flex items-center gap-2">
+              <Star className="h-4 w-4 text-elec-yellow" />
+              <Eyebrow className="text-elec-yellow/85">A thriving Year 2</Eyebrow>
+            </div>
+            <ul className="space-y-1.5">
+              {thrivingSigns.map((item) => (
+                <li
+                  key={item}
+                  className="flex items-start gap-2 text-[12.5px] text-white/85 leading-relaxed"
+                >
+                  <CheckCircle2 className="h-3.5 w-3.5 text-elec-yellow/85 flex-shrink-0 mt-0.5" />
+                  <span>{item}</span>
+                </li>
+              ))}
+            </ul>
+          </div>
+          <div className="rounded-xl border border-white/[0.10] bg-white/[0.02] p-4 sm:p-5 space-y-3">
+            <div className="flex items-center gap-2">
+              <Brain className="h-4 w-4 text-white/55" />
+              <Eyebrow className="text-white/55">Warning signs</Eyebrow>
+            </div>
+            <ul className="space-y-1.5">
+              {strugglingSigns.map((item) => (
+                <li
+                  key={item}
+                  className="flex items-start gap-2 text-[12.5px] text-white/85 leading-relaxed"
+                >
+                  <span className="text-white/40 font-mono mt-0.5">!</span>
+                  <span>{item}</span>
+                </li>
+              ))}
+            </ul>
+          </div>
+        </div>
+        <div className="rounded-md border border-elec-yellow/20 bg-elec-yellow/[0.04] p-3">
+          <p className="text-[12.5px] text-white/85 leading-relaxed">
+            Year 2 is where a quiet struggle becomes an exam fail or a portfolio backlog. If the
+            regs or testing aren&apos;t clicking, say so early — ask your mentor to talk you through
+            a live test, and ask your assessor for a regulation-finding session. Both are normal
+            requests.
+          </p>
+        </div>
+      </motion.section>
+
       {/* ── Closer ───────────────────────────────────────────────── */}
       <motion.section variants={itemVariants}>
         <div className="rounded-xl border border-elec-yellow/25 bg-elec-yellow/[0.04] p-4 sm:p-5 space-y-1.5">
@@ -821,21 +887,12 @@ export default function Year2() {
           <p className="text-[13.5px] text-white/85 leading-relaxed">
             By the end of Year 2 you should be{' '}
             <span className="font-semibold text-elec-yellow">comfortable navigating BS 7671</span>,
-            able to perform initial verification testing under supervision, and
-            confident installing distribution boards and protective devices. Next
-            stop — Year 3: commercial work, fault-finding, and supervision.
+            able to perform initial verification testing under supervision, and confident installing
+            distribution boards and protective devices. Next stop — Year 3: commercial work,
+            fault-finding, and supervision.
           </p>
         </div>
       </motion.section>
-
-      {/* keep imports alive */}
-      <span className="hidden">
-        <Shield />
-        <Target />
-        <GraduationCap />
-        <Briefcase />
-        <X />
-      </span>
     </PageFrame>
   );
 }

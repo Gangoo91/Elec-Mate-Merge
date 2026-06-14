@@ -8,15 +8,8 @@
 import { useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { ArrowLeft, CheckCircle2, AlertTriangle, Camera } from 'lucide-react';
-import {
-  PageFrame,
-  PageHero,
-  itemVariants,
-} from '@/components/college/primitives';
-import {
-  Eyebrow,
-  SectionHeader,
-} from '@/components/apprentice-hub/portfolio/PortfolioPrimitives';
+import { PageFrame, PageHero, itemVariants } from '@/components/college/primitives';
+import { Eyebrow, SectionHeader } from '@/components/apprentice-hub/portfolio/PortfolioPrimitives';
 
 const whatToPhotograph = [
   'Consumer unit installations — before removing old unit, during wiring, after completion',
@@ -98,8 +91,8 @@ const goodWitnessTips = [
   '"John installed a consumer unit safely and to BS 7671" beats "John is a good worker"',
   'Include the date, location, and task performed',
   'State which KSBs the testimony covers',
-  'Include the witness\'s name, role, qualifications, and signature',
-  'Add the witness\'s contact details for verification',
+  "Include the witness's name, role, qualifications, and signature",
+  "Add the witness's contact details for verification",
   'Ask for it on the same day — people forget details quickly',
 ];
 
@@ -109,7 +102,7 @@ const practicalRecords = [
   'Installation completion records signed by a supervisor',
   'Skills demonstration records (safe isolation, testing procedures)',
   'Troubleshooting and fault diagnosis documentation',
-  'AM2 mock assessment results',
+  'AM2S mock assessment results',
   'Timed practical exercises and results',
 ];
 
@@ -127,7 +120,7 @@ const safetyDocs = [
 ];
 
 const goodEvidence = [
-  'Authentic — your own work, not someone else\'s',
+  "Authentic — your own work, not someone else's",
   'Current — recent and relevant to your stage of training',
   'Sufficient — detailed enough to demonstrate competence',
   'Valid — clearly linked to specific KSBs',
@@ -140,7 +133,7 @@ const goodEvidence = [
 const evidenceMistakes = [
   'Blurry or dark photographs with no context',
   'Undated documents with no location information',
-  'Evidence that doesn\'t clearly link to any KSB',
+  "Evidence that doesn't clearly link to any KSB",
   'Unsigned witness testimonies',
   'Copies of generic information rather than your own work',
   'Too much evidence for one KSB, nothing for another',
@@ -176,9 +169,9 @@ const EvidencePage = () => {
         <div className="rounded-xl border border-white/[0.06] bg-[hsl(0_0%_10%)] p-4 sm:p-5 space-y-2">
           <Eyebrow>The principle</Eyebrow>
           <p className="text-[13.5px] text-white/85 leading-relaxed">
-            The quality of your evidence matters far more than the quantity.
-            Each piece should clearly demonstrate competence against one or
-            more KSBs. This section covers each evidence type in detail.
+            The quality of your evidence matters far more than the quantity. Each piece should
+            clearly demonstrate competence against one or more KSBs. This section covers each
+            evidence type in detail.
           </p>
         </div>
       </motion.div>
@@ -227,10 +220,9 @@ const EvidencePage = () => {
           <div className="rounded-md border border-elec-yellow/20 bg-elec-yellow/[0.04] p-3 space-y-1">
             <Eyebrow className="text-elec-yellow/85">Annotating photos</Eyebrow>
             <p className="text-[12.5px] text-white/85 leading-relaxed">
-              Always add a brief annotation to each photo explaining what it
-              shows, what KSB it maps to, the date, and the location. Without
-              annotation a photo is just a picture — with annotation, it
-              becomes evidence.
+              Always add a brief annotation to each photo explaining what it shows, what KSB it maps
+              to, the date, and the location. Without annotation a photo is just a picture — with
+              annotation, it becomes evidence.
             </p>
           </div>
         </div>
@@ -307,10 +299,9 @@ const EvidencePage = () => {
           <div className="rounded-md border border-elec-yellow/20 bg-elec-yellow/[0.04] p-3 space-y-1">
             <Eyebrow className="text-elec-yellow/85">Template for requesting</Eyebrow>
             <p className="text-[12.5px] text-white/85 leading-relaxed">
-              Make it easy: provide a simple form with date of observation,
-              task performed, what they observed, standard of your work, KSB
-              references covered, and their name / role / signature. The
-              easier you make it, the more likely they\'ll complete it.
+              Make it easy: provide a simple form with date of observation, task performed, what
+              they observed, standard of your work, KSB references covered, and their name / role /
+              signature. The easier you make it, the more likely they’ll complete it.
             </p>
           </div>
         </div>
@@ -338,10 +329,9 @@ const EvidencePage = () => {
           <div className="rounded-md border border-elec-yellow/20 bg-elec-yellow/[0.04] p-3 space-y-1">
             <Eyebrow className="text-elec-yellow/85">Document your process</Eyebrow>
             <p className="text-[12.5px] text-white/85 leading-relaxed">
-              Don\'t just record the result. Explain what you did, why you
-              chose that approach, what regulations applied, and what you
-              would do differently next time. Shows understanding, not just
-              ability.
+              Don’t just record the result. Explain what you did, why you chose that approach, what
+              regulations applied, and what you would do differently next time. Shows understanding,
+              not just ability.
             </p>
           </div>
         </div>
@@ -376,7 +366,7 @@ const EvidencePage = () => {
           title="Good vs common mistakes"
           meta="Check before adding any evidence to your portfolio"
         />
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-2.5">
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
           <div className="rounded-xl border border-elec-yellow/25 bg-elec-yellow/[0.04] p-4 sm:p-5 space-y-3">
             <Eyebrow className="text-elec-yellow/85">Good evidence is</Eyebrow>
             <ul className="space-y-1.5">
@@ -417,14 +407,12 @@ const EvidencePage = () => {
         />
         <div className="rounded-xl border border-elec-yellow/25 bg-elec-yellow/[0.04] p-4 sm:p-5 space-y-2">
           <p className="text-[13.5px] text-white/85 leading-relaxed">
-            A photo of you installing a consumer unit with proper PPE could
-            cover Skills (installation), Knowledge (BS 7671), and Behaviours
-            (safe working).
+            A photo of you installing a consumer unit with proper PPE could cover Skills
+            (installation), Knowledge (BS 7671), and Behaviours (safe working).
           </p>
           <p className="text-[13px] text-white/85 leading-relaxed">
-            When you add evidence, list ALL the KSBs it covers — not just the
-            most obvious one. Your KSB tracker should show these
-            cross-references so you can see overall coverage.
+            When you add evidence, list ALL the KSBs it covers — not just the most obvious one. Your
+            KSB tracker should show these cross-references so you can see overall coverage.
           </p>
         </div>
       </motion.section>

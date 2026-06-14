@@ -8,28 +8,15 @@
 
 import { useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
-import {
-  ArrowLeft,
-  CheckCircle2,
-  AlertTriangle,
-  Quote,
-  Compass,
-} from 'lucide-react';
-import {
-  PageFrame,
-  PageHero,
-  itemVariants,
-} from '@/components/college/primitives';
-import {
-  Eyebrow,
-  SectionHeader,
-} from '@/components/apprentice-hub/portfolio/PortfolioPrimitives';
+import { ArrowLeft, CheckCircle2, AlertTriangle, Quote, Compass } from 'lucide-react';
+import { PageFrame, PageHero, itemVariants } from '@/components/college/primitives';
+import { SectionHeader } from '@/components/apprentice-hub/portfolio/PortfolioPrimitives';
 
 const commonMistakes = [
   {
-    mistake: 'Rushing the knowledge test',
+    mistake: 'Rushing the applied-knowledge test',
     solution:
-      'Read each question carefully. You have 2 hours — use it. Read twice, eliminate wrong answers, then choose. Check if you finish early.',
+      'Read each question carefully. Use the full time — read twice, eliminate wrong answers, then choose. Review your answers if you finish early.',
   },
   {
     mistake: 'Poor safe isolation procedure',
@@ -44,7 +31,7 @@ const commonMistakes = [
   {
     mistake: 'Not explaining reasoning during practical',
     solution:
-      'The assessor needs to see your thought process, not just your actions. If they ask why, explain clearly. Verbalise key decisions even if they don\'t ask.',
+      "The assessor needs to see your thought process, not just your actions. If they ask why, explain clearly. Verbalise key decisions even if they don't ask.",
   },
   {
     mistake: 'Leaving portfolio gaps',
@@ -52,9 +39,9 @@ const commonMistakes = [
       'Cross-reference your portfolio against ALL KSBs at least 3 months before Gateway. Every KSB should have at least one piece of strong evidence.',
   },
   {
-    mistake: 'Treating the professional discussion as an exam',
+    mistake: 'Going silent when the assessor asks you to explain',
     solution:
-      'It\'s a professional conversation, not a quiz. Relax, speak naturally, share genuine experiences. The assessor wants your authentic voice, not rehearsed answers.',
+      "During the AM2S the assessor may ask you to explain a step. Talk through your reasoning calmly and clearly — it shows understanding, not just the action. Don't clam up.",
   },
   {
     mistake: 'Using uncalibrated test instruments',
@@ -64,17 +51,17 @@ const commonMistakes = [
   {
     mistake: 'Not practising under timed conditions',
     solution:
-      'Practical is 6–8 hours but goes fast. Practise complete tasks start-to-finish, timing yourself. Know how long each activity takes so you can pace yourself.',
+      'The AM2S practical runs across the day and time is tight. Practise complete tasks start-to-finish, timing yourself. Know how long each activity takes so you can pace yourself.',
   },
   {
     mistake: 'Cramming the night before',
     solution:
-      'Last-minute cramming creates anxiety and confusion. Trust your months of preparation. Light revision at most, prepare equipment, get a proper night\'s sleep.',
+      "Last-minute cramming creates anxiety and confusion. Trust your months of preparation. Light revision at most, prepare equipment, get a proper night's sleep.",
   },
   {
     mistake: 'Not knowing the testing sequence',
     solution:
-      'BS 7671 Regulation 612: continuity of CPCs → continuity of ring finals → IR → polarity → Zs → RCD → PFC. Getting this wrong shows a fundamental gap.',
+      'BS 7671 Regulation 643.1 (Section 643) sets the initial-verification order: continuity of CPCs → continuity of ring finals → IR → polarity → Zs → RCD → PFC. Getting this wrong shows a fundamental gap.',
   },
   {
     mistake: 'Forgetting PPE',
@@ -97,31 +84,31 @@ const tips = [
   },
   {
     quote:
-      'In the professional discussion, don\'t just describe what you did — explain why you made those decisions and what you\'d do differently next time. That\'s what separates a Pass from a Distinction.',
-    grade: 'Distinction',
+      "When the assessor asks you to explain a step, don't just describe what you did — explain why you made that decision. Talking through your reasoning shows the depth they're looking for.",
+    grade: 'Pass',
     name: 'Level 3 Installation Electrician',
   },
   {
     quote:
-      'The practical isn\'t about speed. Take your time, work safely, check everything twice. Quality beats rushing every time. I finished with 20 minutes spare and used it to double-check.',
+      "The practical isn't about speed. Take your time, work safely, check everything twice. Quality beats rushing every time. I finished with 20 minutes spare and used it to double-check.",
     grade: 'Distinction',
     name: 'Level 3 Maintenance Electrician',
   },
   {
     quote:
-      'I practised safe isolation so much it became automatic. In the assessment, I didn\'t even have to think about it — my hands just did the procedure. That freed my mind to focus on the actual installation.',
+      "I practised safe isolation so much it became automatic. In the assessment, I didn't even have to think about it — my hands just did the procedure. That freed my mind to focus on the actual installation.",
     grade: 'Merit',
     name: 'Level 3 Installation Electrician',
   },
   {
     quote:
-      'Get someone to run mock professional discussions with you. My supervisor did three with me in the weeks before EPA and it made a massive difference. I knew exactly what to expect.',
-    grade: 'Merit',
+      "Rehearse fault diagnosis until it's a habit. My supervisor introduced faults for me to find in the weeks before, and on the day I worked through them methodically instead of panicking.",
+    grade: 'Pass',
     name: 'Level 3 Installation Electrician',
   },
   {
     quote:
-      'Don\'t panic if you get a question wrong in the knowledge test. Move on, come back later. I flagged three I was unsure about, answered everything else, then came back with a clearer head.',
+      "Don't panic if you get a question wrong in the knowledge test. Move on, come back later. I flagged three I was unsure about, answered everything else, then came back with a clearer head.",
     grade: 'Pass',
     name: 'Level 3 Maintenance Electrician',
   },
@@ -129,34 +116,34 @@ const tips = [
 
 const faqs = [
   {
-    question: 'How long does EPA take in total?',
+    question: 'How long does the AM2S take?',
     answer:
-      'Typically 3 months from when you pass Gateway. Within that window, your three components will be scheduled. Knowledge test 2 hours, practical 6–8 hours, professional discussion 60 minutes. Results within 10–15 working days of your final component.',
+      'The AM2S is around 16.75 hours of assessment in total — composite installation is the longest part (~10 hours), plus inspection and testing, fault diagnosis, safe isolation, and a ~1 hour online applied-knowledge test. It is scheduled after Gateway. Your result follows within a few weeks.',
   },
   {
-    question: 'Can I choose my EPAO?',
+    question: 'Who runs the electrician end-point assessment?',
     answer:
-      'Usually your training provider selects the EPAO based on existing relationships. You can discuss preferences with them. Common EPAOs include Smart Assessor, City & Guilds, and EAL.',
+      'For the Installation & Maintenance Electrician (ST0152) the AM2S is delivered by NET at approved AM2 assessment centres — it is not an open EPAO marketplace for this standard. Your training provider registers you with NET after Gateway.',
   },
   {
-    question: 'What if I\'m not ready for Gateway?',
+    question: "What if I'm not ready for Gateway?",
     answer:
       'You can delay Gateway. No penalty for postponing — it just extends your end date. Far better to delay and pass first time than to rush and risk failing.',
   },
   {
-    question: 'Do I need to pass AM2 before EPA?',
+    question: 'Is the AM2 the same as the EPA?',
     answer:
-      'Yes. AM2 is a mandatory Gateway requirement for the Level 3 Installation / Maintenance Electrician standard. You must have your AM2 pass certificate before Gateway.',
+      'For ST0152 the AM2S is the end-point assessment — taken after Gateway, not before it. There is no separate "AM2 before Gateway" plus a different EPA practical. The AM2S is the practical and knowledge assessment, run by NET.',
   },
   {
-    question: 'Can I bring reference books to the knowledge test?',
+    question: 'Can I bring reference material to the applied-knowledge test?',
     answer:
-      'Depends on your EPAO. Most allow a clean (unannotated) copy of BS 7671 and the On-Site Guide. Some also allow Guidance Note 3. Check with your training provider well in advance.',
+      'NET confirms what is permitted on the day. Check with your training provider well in advance, and revise so you can find key BS 7671 regulations quickly rather than relying on reference material.',
   },
   {
-    question: 'What happens if I fail one component?',
+    question: "What happens if I don't pass a section?",
     answer:
-      'You only re-sit the failed component. One free re-sit within the original funding band, typically within 3 months. Training provider arranges additional support. Maximum grade on re-sit is usually Pass.',
+      'You can re-sit, with additional support arranged by your training provider first. Re-sit arrangements and any funding are confirmed by NET and your provider. Most apprentices pass on re-sit with focused preparation on the area they fell short in.',
   },
   {
     question: 'How do I prepare my portfolio?',
@@ -166,50 +153,50 @@ const faqs = [
   {
     question: 'Will the assessor help me during the practical?',
     answer:
-      'No. The assessor observes silently and takes notes. They may ask you to explain what you\'re doing (to assess understanding), but won\'t guide, correct, or hint. You must work independently.',
+      "No. The assessor observes silently and takes notes. They may ask you to explain what you're doing (to assess understanding), but won't guide, correct, or hint. You must work independently.",
   },
   {
-    question: 'What\'s the pass rate for EPA?',
+    question: 'How hard is the AM2S to pass?',
     answer:
-      'Varies by EPAO but generally high — typically 80–90% for well-prepared apprentices. First-attempt pass rates are higher for those who have completed proper preparation.',
+      'Well-prepared apprentices who have rehearsed safe isolation, the full testing sequence, and fault diagnosis under timed conditions pass at a good rate. The most common cause of failure is a safe-isolation error, so drill that until it is automatic.',
   },
   {
-    question: 'Can my employer attend the EPA?',
+    question: 'Can my employer attend the AM2S?',
     answer:
-      'No. The whole point of EPA is that it\'s an independent assessment by a third party. Your employer is involved at Gateway but not during the assessments themselves.',
+      'No. The AM2S is an independent assessment by NET. Your employer is involved at Gateway but not during the assessment itself.',
   },
   {
     question: 'What certificate do I receive?',
     answer:
-      'An apprenticeship completion certificate from ESFA showing your name, the apprenticeship standard, overall grade, and completion date. Separate from your AM2 certificate.',
+      'An apprenticeship completion certificate from ESFA showing your name, the apprenticeship standard, and completion date, plus your AM2S pass from NET. These confirm you have completed the standard.',
   },
   {
-    question: 'How soon after EPA can I get my JIB Gold Card?',
+    question: 'How soon after the AM2S can I get my ECS Gold Card?',
     answer:
-      'Once you have your completion certificate. Takes a few weeks. You\'ll need EPA certificate, AM2 certificate, qualification evidence. Your employer or JIB can guide you through the application.',
+      'Once you have your AM2S pass and apprenticeship completion. The JIB Approved Electrician (ECS Gold) card is applied for through ECS — they check your Level 3 qualification, AM2S pass, and apprenticeship completion. Apply via ecscard.org.uk; it usually takes a few weeks.',
   },
 ];
 
 const dayBeforeChecklist = [
   'Confirm the time, location, and any access arrangements (parking, building entry)',
   'Check you have photo ID (driving licence or passport)',
-  'Lay out everything you need the night before — don\'t leave packing to the morning',
-  'For practical: check all instruments are calibrated, test leads intact, lock-off devices work',
-  'For knowledge test: pack calculator, pens, BS 7671 (if permitted)',
-  'For professional discussion: review your portfolio, re-read key evidence and reflective accounts',
-  'Set two alarms — don\'t rely on one',
+  "Lay out everything you need the night before — don't leave packing to the morning",
+  'For the practical sections: check all instruments are calibrated, test leads intact, lock-off devices work',
+  'For the applied-knowledge test: pack calculator, pens, and any reference material NET permits',
+  'Refresh the testing sequence and your fault-diagnosis approach in your head',
+  "Set two alarms — don't rely on one",
   'Eat a proper dinner and avoid alcohol',
-  'Light revision only — don\'t cram new material',
+  "Light revision only — don't cram new material",
   'Get at least 7–8 hours of sleep',
-  'Prepare lunch and water if you\'ll be there all day',
+  "Prepare lunch and water if you'll be there all day",
   'Plan your route and add extra time for unexpected delays',
 ];
 
 const thingsGoWrong = [
   {
-    situation: 'You\'re running late',
+    situation: "You're running late",
     action:
-      'Call your training provider and the assessment venue immediately. Most EPAOs accommodate short delays. Don\'t just fail to show up — communicate.',
+      "Call your training provider and the assessment venue immediately. Most EPAOs accommodate short delays. Don't just fail to show up — communicate.",
   },
   {
     situation: 'You feel unwell on the day',
@@ -222,19 +209,19 @@ const thingsGoWrong = [
       'Tell the assessor immediately. Training providers / assessment centres may have a replacement. This is why checking instruments the day before is critical.',
   },
   {
-    situation: 'You don\'t understand a question',
+    situation: "You don't understand a question",
     action:
-      'In the knowledge test, re-read carefully and use process of elimination. In the professional discussion, ask the assessor to rephrase. No penalty for asking.',
+      "In the applied-knowledge test, re-read carefully and use process of elimination. If an assessor asks you to explain a step during the practical and you're unsure what they mean, ask them to rephrase. No penalty for asking.",
   },
   {
     situation: 'You make a significant mistake in the practical',
     action:
-      'Stop, acknowledge it, explain what went wrong and how you\'ll correct it. Don\'t try to hide it. Self-awareness and correction are valued. A single mistake doesn\'t necessarily mean a fail.',
+      "Stop, acknowledge it, explain what went wrong and how you'll correct it. Don't try to hide it. Self-awareness and correction are valued. A single mistake doesn't necessarily mean a fail.",
   },
   {
     situation: 'Panic attack or severe anxiety',
     action:
-      'Tell the assessor you need a moment. Step away briefly if needed. Assessors are trained to handle this. If you can\'t continue, the assessment can be rescheduled under mitigating circumstances.',
+      "Tell the assessor you need a moment. Step away briefly if needed. Assessors are trained to handle this. If you can't continue, the assessment can be rescheduled under mitigating circumstances.",
   },
   {
     situation: 'Assessment environment has a problem',
@@ -246,21 +233,21 @@ const thingsGoWrong = [
 const postEpaSteps = [
   {
     step: 1,
-    title: 'Apply for JIB Gold Card',
+    title: 'Apply for your ECS Gold Card',
     description:
-      'Apply as soon as you have your completion certificate. You\'ll need EPA certificate, AM2 certificate, qualification evidence. The Gold Card is the industry-recognised proof of competence.',
+      'The JIB Approved Electrician (ECS Gold) card is the industry-recognised proof of competence. Apply through ECS (ecscard.org.uk) once you have your Level 3 qualification, AM2S pass, and apprenticeship completion. Your employer or the JIB can guide you.',
   },
   {
     step: 2,
     title: 'Negotiate your pay',
     description:
-      'You\'re now a fully qualified electrician — should be paid accordingly. Average qualified electrician salary is £35,000–£42,000. Speak to your employer about a pay review.',
+      "You're now a fully qualified electrician — you should be paid accordingly. The JIB-graded electrician rate is around £35,841 (rising to roughly £43,778 at higher grades) on 2026 rates. Speak to your employer about a pay review against the JIB ladder.",
   },
   {
     step: 3,
     title: 'Consider further qualifications',
     description:
-      'Level 4 Design & Verification (2396) is the natural next step if you want to design and certify installations. The 18th Edition course (2382) keeps you current.',
+      'Level 4 Design & Verification (2396) is the natural next step if you want to design and certify installations. The C&G 2382 Wiring Regulations update course (currently BS 7671:2018+A4:2026) keeps you current.',
   },
   {
     step: 4,
@@ -283,19 +270,73 @@ const postEpaSteps = [
 ];
 
 const glossary = [
-  { term: 'EPA', definition: 'End Point Assessment — the independent final assessment of your apprenticeship.' },
-  { term: 'EPAO', definition: 'End Point Assessment Organisation — the independent body that conducts your EPA.' },
-  { term: 'Gateway', definition: 'The formal readiness checkpoint before EPA where you, employer, and training provider agree you\'re ready.' },
-  { term: 'KSB', definition: 'Knowledge, Skills, and Behaviours — the three areas defined in your apprenticeship standard.' },
-  { term: 'AM2', definition: 'Achievement Measurement 2 — the practical assessment by NET that tests installation competence.' },
-  { term: 'NET', definition: 'National Electrotechnical Training — the organisation that runs AM2 assessments.' },
-  { term: 'ST0152', definition: 'Apprenticeship standard reference for Level 3 Installation / Maintenance Electrician (v1.2 current).' },
-  { term: 'STAR method', definition: 'Situation, Task, Action, Result — structured approach to answering professional discussion questions.' },
-  { term: 'Portfolio', definition: 'Your collection of evidence demonstrating competence against all KSBs.' },
-  { term: 'Regulation 612', definition: 'BS 7671 regulation defining the correct testing sequence for initial verification.' },
-  { term: 'GS38', definition: 'HSE guidance on test probes and leads — your voltage indicator must comply.' },
-  { term: 'Safe isolation', definition: 'The 5-step procedure for safely isolating circuits: identify, switch off, secure, test, work.' },
-  { term: 'JIB Gold Card', definition: 'Joint Industry Board Approved Electrician card — industry-recognised proof of qualification.' },
+  {
+    term: 'EPA',
+    definition: 'End Point Assessment — the independent final assessment of your apprenticeship.',
+  },
+  {
+    term: 'EPAO',
+    definition: 'End Point Assessment Organisation — the independent body that conducts your EPA.',
+  },
+  {
+    term: 'Gateway',
+    definition:
+      "The formal readiness checkpoint before EPA where you, employer, and training provider agree you're ready.",
+  },
+  {
+    term: 'KSB',
+    definition:
+      'Knowledge, Skills, and Behaviours — the three areas defined in your apprenticeship standard.',
+  },
+  {
+    term: 'AM2S',
+    definition:
+      'Achievement Measurement 2 Standard — the integrated practical and knowledge end-point assessment for ST0152, run by NET after Gateway.',
+  },
+  {
+    term: 'AM2E',
+    definition:
+      'The Experienced Worker route (2346-03 EWA) for qualified people without an apprenticeship — not the apprentice EPA.',
+  },
+  {
+    term: 'NET',
+    definition:
+      'National Electrotechnical Training — the body that delivers the AM2S at approved assessment centres.',
+  },
+  {
+    term: 'ST0152',
+    definition:
+      'Apprenticeship standard reference for the Level 3 Installation & Maintenance Electrician.',
+  },
+  {
+    term: 'STAR method',
+    definition:
+      'Situation, Task, Action, Result — a structured way to talk through examples from your work.',
+  },
+  {
+    term: 'Portfolio',
+    definition:
+      'Your collection of evidence demonstrating competence against all KSBs, used at Gateway.',
+  },
+  {
+    term: 'Regulation 643.1',
+    definition:
+      'BS 7671 (A4:2026) regulation setting the order of initial-verification tests (643.2 to 643.6) before energising.',
+  },
+  {
+    term: 'GS38',
+    definition: 'HSE guidance on test probes and leads — your voltage indicator must comply.',
+  },
+  {
+    term: 'Safe isolation',
+    definition:
+      'The 5-step procedure for safely isolating circuits: identify, switch off, secure, test, work.',
+  },
+  {
+    term: 'JIB Gold Card',
+    definition:
+      'Joint Industry Board Approved Electrician card — industry-recognised proof of qualification.',
+  },
 ];
 
 const MistakesAndTipsPage = () => {
@@ -369,9 +410,7 @@ const MistakesAndTipsPage = () => {
             >
               <div className="flex items-start gap-2">
                 <Quote className="h-3.5 w-3.5 text-elec-yellow/85 flex-shrink-0 mt-0.5" />
-                <p className="text-[13px] text-white/85 italic leading-relaxed">
-                  {tip.quote}
-                </p>
+                <p className="text-[13px] text-white/85 italic leading-relaxed">{tip.quote}</p>
               </div>
               <div className="flex items-center gap-2 pl-5">
                 <span className="inline-flex items-center h-6 px-2 rounded-md border border-elec-yellow/30 bg-elec-yellow/[0.06] text-[10.5px] font-medium uppercase tracking-[0.14em] text-elec-yellow">
@@ -422,9 +461,7 @@ const MistakesAndTipsPage = () => {
               <h3 className="text-[14px] font-semibold text-elec-yellow tracking-tight">
                 {item.situation}
               </h3>
-              <p className="text-[13px] text-white/85 leading-relaxed mt-1">
-                {item.action}
-              </p>
+              <p className="text-[13px] text-white/85 leading-relaxed mt-1">{item.action}</p>
             </li>
           ))}
         </ul>
@@ -473,9 +510,7 @@ const MistakesAndTipsPage = () => {
                   <h3 className="text-[14px] font-semibold text-white tracking-tight">
                     {item.title}
                   </h3>
-                  <p className="text-[13px] text-white/85 leading-relaxed">
-                    {item.description}
-                  </p>
+                  <p className="text-[13px] text-white/85 leading-relaxed">{item.description}</p>
                 </div>
               </div>
             </li>
@@ -493,18 +528,13 @@ const MistakesAndTipsPage = () => {
         <div className="rounded-xl border border-white/[0.06] bg-[hsl(0_0%_10%)] p-4 sm:p-5">
           <ul className="space-y-2.5">
             {glossary.map((item) => (
-              <li
-                key={item.term}
-                className="flex items-start gap-3"
-              >
+              <li key={item.term} className="flex items-start gap-3">
                 <Compass className="h-3.5 w-3.5 text-elec-yellow/85 flex-shrink-0 mt-0.5" />
                 <div className="space-y-0.5">
                   <span className="text-[12.5px] font-mono font-semibold text-elec-yellow">
                     {item.term}
                   </span>
-                  <p className="text-[12.5px] text-white/85 leading-relaxed">
-                    {item.definition}
-                  </p>
+                  <p className="text-[12.5px] text-white/85 leading-relaxed">{item.definition}</p>
                 </div>
               </li>
             ))}

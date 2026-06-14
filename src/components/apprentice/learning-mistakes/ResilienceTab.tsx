@@ -1,7 +1,9 @@
 import { Button } from '@/components/ui/button';
 import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 const ResilienceTab = () => {
+  const navigate = useNavigate();
   const [resilienceScore, setResilienceScore] = useState(0);
   const [currentQuestion, setCurrentQuestion] = useState(0);
   const [answers, setAnswers] = useState<number[]>([]);
@@ -221,6 +223,23 @@ const ResilienceTab = () => {
             </div>
           ))}
         </div>
+      </div>
+
+      <div className="rounded-xl border border-elec-yellow/25 bg-elec-yellow/[0.03] p-4 sm:p-5 space-y-3">
+        <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-elec-yellow">
+          Turn reflection into evidence
+        </span>
+        <p className="text-[14px] text-white/85 leading-relaxed">
+          A written reflection on a mistake — what happened, what you changed, what you learned — is
+          recognised off-the-job training. Log it in your OJT hub so it counts towards your
+          portfolio and end-point assessment.
+        </p>
+        <Button
+          onClick={() => navigate('/apprentice/ojt-hub')}
+          className="w-full sm:w-auto h-11 bg-elec-yellow hover:bg-elec-yellow/90 text-black font-semibold touch-manipulation active:scale-[0.98]"
+        >
+          Log a reflection in your OJT hub
+        </Button>
       </div>
     </div>
   );

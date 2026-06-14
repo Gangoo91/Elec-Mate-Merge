@@ -16,26 +16,19 @@ import {
   Scale,
   Phone,
 } from 'lucide-react';
-import {
-  PageFrame,
-  PageHero,
-  itemVariants,
-} from '@/components/college/primitives';
-import {
-  Eyebrow,
-  SectionHeader,
-} from '@/components/apprentice-hub/portfolio/PortfolioPrimitives';
+import { PageFrame, PageHero, itemVariants } from '@/components/college/primitives';
+import { Eyebrow, SectionHeader } from '@/components/apprentice-hub/portfolio/PortfolioPrimitives';
 
 const rights = [
   {
     title: 'Free training guaranteed by law',
     description:
-      'Your apprenticeship training must be fully funded. You should never be asked to pay any training fees. Non-negotiable ESFA funding rule.',
+      'Your apprenticeship training must be fully funded. You should never be asked to pay any training fees. This is a non-negotiable apprenticeship funding rule (now administered by the Department for Education).',
   },
   {
     title: 'No deductions from wages',
     description:
-      'Your employer cannot deduct training costs from your wages. This includes any contribution towards co-investment — employer\'s responsibility, not yours.',
+      "Your employer cannot deduct training costs from your wages. This includes any contribution towards co-investment — employer's responsibility, not yours.",
   },
   {
     title: 'Funded End Point Assessment',
@@ -45,7 +38,7 @@ const rights = [
   {
     title: 'Funded learning materials',
     description:
-      'Your training provider must provide all learning materials. You shouldn\'t be asked to buy textbooks, workbooks, online access, or study materials separately.',
+      "Your training provider must provide all learning materials. You shouldn't be asked to buy textbooks, workbooks, online access, or study materials separately.",
   },
   {
     title: 'Employer covers co-investment',
@@ -58,14 +51,14 @@ const rights = [
       'Your training provider cannot charge additional fees for registration, assessment, materials, or certification. Everything is covered by the funding band.',
   },
   {
-    title: 'AM2 assessment is funded',
+    title: 'Your End Point Assessment is funded',
     description:
-      'Your AM2 practical at a NET centre is part of your apprenticeship and covered by the funding band. You should not be asked to pay separately.',
+      'For ST0152 your EPA is the integrated AM2S run by NET — the practical with an embedded knowledge test. It is part of your apprenticeship and covered by the funding band. You should not be asked to pay separately.',
   },
   {
     title: 'Functional Skills are funded',
     description:
-      'If you need Functional Skills in English or Maths, these are fully funded. You shouldn\'t be charged for Functional Skills exams or tuition.',
+      "If you need Functional Skills in English or Maths, these are fully funded. You shouldn't be charged for Functional Skills exams or tuition.",
   },
 ];
 
@@ -79,7 +72,7 @@ const warningSignals = [
   'Being asked to sign a loan agreement for training costs',
   'Being told you must repay training costs if you leave early',
   'Employer deducting travel costs to college without agreement',
-  'Any payment request that isn\'t clearly for personal items (own tools, clothing)',
+  "Any payment request that isn't clearly for personal items (own tools, clothing)",
 ];
 
 const escalation = [
@@ -97,7 +90,7 @@ const escalation = [
   },
   {
     step: 3,
-    title: 'Report to ESFA',
+    title: 'Report to the Department for Education',
     description:
       'Email complaints.esfa@education.gov.uk with your evidence. Include apprenticeship details, employer name, training provider name, and a clear description.',
   },
@@ -141,9 +134,14 @@ const links = [
     url: 'https://www.gov.uk/topic/further-education-skills/apprenticeships',
   },
   {
-    title: 'ESFA funding rules',
-    description: 'Full apprenticeship funding rules and guidance',
+    title: 'Apprenticeship funding rules',
+    description: 'Full apprenticeship funding rules and guidance (DfE)',
     url: 'https://www.gov.uk/guidance/apprenticeship-funding-rules',
+  },
+  {
+    title: 'National Careers Service',
+    description: 'Free careers and redundancy support — 0800 100 900',
+    url: 'https://nationalcareers.service.gov.uk/',
   },
   {
     title: 'CITB grants portal',
@@ -190,7 +188,7 @@ const YourRightsPage = () => {
         <PageHero
           eyebrow="Apprentice · Rights"
           title="Your funding rights"
-          description="What you should never have to pay for, the warning signs, and the escalation route if your training provider or employer breaks the ESFA rules."
+          description="What you should never have to pay for, the warning signs, and the escalation route if your training provider or employer breaks the apprenticeship funding rules."
           tone="yellow"
         />
       </motion.div>
@@ -206,9 +204,9 @@ const YourRightsPage = () => {
             You should NEVER be asked to pay for your training.
           </p>
           <p className="text-[13px] text-white/85 leading-relaxed">
-            Apprenticeship training is funded by the government and/or your
-            employer. If anyone asks you to pay, this is a breach of ESFA funding
-            rules — and should be reported.
+            Apprenticeship training is funded by the government and/or your employer. If anyone asks
+            you to pay, this is a breach of the apprenticeship funding rules — and should be
+            reported.
           </p>
         </div>
       </motion.div>
@@ -249,9 +247,7 @@ const YourRightsPage = () => {
                   <h3 className="text-[14px] font-semibold text-elec-yellow tracking-tight">
                     {right.title}
                   </h3>
-                  <p className="text-[13px] text-white/85 leading-relaxed">
-                    {right.description}
-                  </p>
+                  <p className="text-[13px] text-white/85 leading-relaxed">{right.description}</p>
                 </div>
               </div>
             </li>
@@ -285,7 +281,7 @@ const YourRightsPage = () => {
       <motion.section variants={itemVariants} className="space-y-3">
         <SectionHeader
           eyebrow="What to include in a complaint"
-          title="10 items for ESFA"
+          title="10 items for your complaint"
           meta="Build the file before you escalate"
         />
         <div className="rounded-xl border border-white/[0.06] bg-[hsl(0_0%_10%)] p-4 sm:p-5 space-y-3">
@@ -334,9 +330,7 @@ const YourRightsPage = () => {
                   <h3 className="text-[14px] font-semibold text-white tracking-tight">
                     {item.title}
                   </h3>
-                  <p className="text-[13px] text-white/85 leading-relaxed">
-                    {item.description}
-                  </p>
+                  <p className="text-[13px] text-white/85 leading-relaxed">{item.description}</p>
                 </div>
               </div>
             </li>

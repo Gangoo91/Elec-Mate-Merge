@@ -8,15 +8,8 @@
 import { useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { ArrowLeft, CheckCircle2, Quote } from 'lucide-react';
-import {
-  PageFrame,
-  PageHero,
-  itemVariants,
-} from '@/components/college/primitives';
-import {
-  Eyebrow,
-  SectionHeader,
-} from '@/components/apprentice-hub/portfolio/PortfolioPrimitives';
+import { PageFrame, PageHero, itemVariants } from '@/components/college/primitives';
+import { Eyebrow, SectionHeader } from '@/components/apprentice-hub/portfolio/PortfolioPrimitives';
 
 const starSteps = [
   {
@@ -31,12 +24,13 @@ const starSteps = [
     title: 'Task',
     description: 'What was your specific role and responsibility? What were you asked to do?',
     example:
-      'I was tasked with installing the new consumer unit and first-fix wiring for the upstairs circuits, working under my supervisor\'s guidance.',
+      "I was tasked with installing the new consumer unit and first-fix wiring for the upstairs circuits, working under my supervisor's guidance.",
   },
   {
     letter: 'A',
     title: 'Action',
-    description: 'What did you actually do? Be specific about your actions, decisions, and the regulations or standards you followed.',
+    description:
+      'What did you actually do? Be specific about your actions, decisions, and the regulations or standards you followed.',
     example:
       'I performed safe isolation of the existing supply using the GS38 procedure. I then installed a 10-way split-load consumer unit with dual RCDs, ran 2.5mm² T&E for ring finals and 1.5mm² for lighting circuits through the first-floor void, following BS 7671 Table 4D5.',
   },
@@ -45,7 +39,7 @@ const starSteps = [
     title: 'Result',
     description: 'What was the outcome? What did you learn? What would you do differently?',
     example:
-      'All circuits tested satisfactorily — R1+R2 within expected ranges, IR >200MΩ, Zs values within limits. I learned that planning cable routes before starting saves significant time. Next time I\'d draw a full routing plan before cutting any cables.',
+      "All circuits tested satisfactorily — R1+R2 within expected ranges, IR >200MΩ, Zs values within limits. I learned that planning cable routes before starting saves significant time. Next time I'd draw a full routing plan before cutting any cables.",
   },
 ];
 
@@ -59,14 +53,17 @@ const writingTips = [
   'Write soon after the event — you will forget important details if you wait weeks',
   'Show progression — early reflections simpler, later ones more detailed and analytical',
   'Include what went wrong — a reflection about a mistake you corrected is extremely valuable',
-  'Don\'t copy from textbooks — use your own words and your own experience',
+  "Don't copy from textbooks — use your own words and your own experience",
 ];
 
 const gibbsStages = [
   { stage: '1. Description', description: 'What happened? Describe the event factually.' },
   { stage: '2. Feelings', description: 'What were you thinking and feeling at the time?' },
   { stage: '3. Evaluation', description: 'What was good and bad about the experience?' },
-  { stage: '4. Analysis', description: 'What sense can you make of the situation? Why did things go that way?' },
+  {
+    stage: '4. Analysis',
+    description: 'What sense can you make of the situation? Why did things go that way?',
+  },
   { stage: '5. Conclusion', description: 'What else could you have done? What did you learn?' },
   { stage: '6. Action plan', description: 'What will you do differently next time?' },
 ];
@@ -100,7 +97,7 @@ const reflectionTopics = [
       'A skill you struggled with but eventually mastered',
       'What you learned from a more experienced electrician',
       'How college theory helped you on site',
-      'Your preparation for the AM2 assessment',
+      'Your preparation for the AM2S assessment',
     ],
   },
   {
@@ -126,12 +123,12 @@ const reflectionTopics = [
 ];
 
 const assessorUse = [
-  'They read your reflective accounts before the Professional Discussion',
-  'They use them as starting points for deeper questions',
-  'They look for evidence of genuine understanding, not rehearsed answers',
-  'They want to see progression in your reflective ability over time',
-  'They assess whether you can apply theory to practice',
+  'Your provider reviews your reflective accounts as part of your on-programme portfolio',
+  'They use them to confirm you genuinely understand your work, not just rehearsed answers',
+  'They look for progression in your reflective ability over time',
+  'They check you can apply theory to practice',
   'They check that you understand why regulations exist, not just what they are',
+  'The same applied-knowledge thinking is tested in your AM2S End-Point Assessment',
 ];
 
 const fullExample = [
@@ -149,7 +146,7 @@ const fullExample = [
   },
   {
     label: 'Result',
-    text: 'The circuit passed all tests and was signed off by my supervisor. I learned the importance of checking voltage drop calculations before starting — if the route had been 5 metres longer, I would have needed 10mm² cable. In future, I\'ll always calculate voltage drop as part of my planning before pulling cable.',
+    text: "The circuit passed all tests and was signed off by my supervisor. I learned the importance of checking voltage drop calculations before starting — if the route had been 5 metres longer, I would have needed 10mm² cable. In future, I'll always calculate voltage drop as part of my planning before pulling cable.",
   },
 ];
 
@@ -190,15 +187,16 @@ const ReflectivePracticePage = () => {
         <div className="rounded-xl border border-white/[0.06] bg-[hsl(0_0%_10%)] p-4 sm:p-5 space-y-2">
           <Eyebrow>Why reflection matters</Eyebrow>
           <p className="text-[13.5px] text-white/85 leading-relaxed">
-            Reflective practice is the process of thinking about what you did,
-            why you did it, what went well, what could be better, and what
-            you\'ll do differently next time. It\'s a critical part of your
-            portfolio because it shows assessors that you understand your work.
+            Reflective practice is the process of thinking about what you did, why you did it, what
+            went well, what could be better, and what you’ll do differently next time. It’s a
+            critical part of your portfolio because it shows assessors that you understand your
+            work.
           </p>
           <p className="text-[13px] text-white/85 leading-relaxed">
-            In the Professional Discussion at EPA, the assessor will ask you to
-            reflect on your experiences. Practising reflection throughout your
-            apprenticeship means you\'ll be prepared and confident.
+            Strong reflective accounts make your on-programme portfolio evidence and gateway
+            sign-off far more convincing, and the same thinking underpins the applied-knowledge
+            questions in your AM2S End-Point Assessment. Practising reflection throughout your
+            apprenticeship means you’ll be ready and confident.
           </p>
         </div>
       </motion.div>
@@ -224,10 +222,10 @@ const ReflectivePracticePage = () => {
                   {step.title}
                 </h3>
               </div>
-              <p className="text-[13px] text-white/85 leading-relaxed pl-12">
+              <p className="text-[13px] text-white/85 leading-relaxed pl-3 sm:pl-12">
                 {step.description}
               </p>
-              <div className="rounded-md border border-white/[0.06] bg-white/[0.02] p-3 ml-12">
+              <div className="rounded-md border border-white/[0.06] bg-white/[0.02] p-3 ml-3 sm:ml-12">
                 <Eyebrow>Example</Eyebrow>
                 <p className="text-[12.5px] text-white/85 italic leading-relaxed mt-1">
                   {step.example}
@@ -243,7 +241,7 @@ const ReflectivePracticePage = () => {
         <SectionHeader
           eyebrow="Writing tips"
           title="Ten rules for stronger reflections"
-          meta="The difference between a Pass and a Distinction"
+          meta="What turns a thin account into convincing evidence"
         />
         <div className="rounded-xl border border-white/[0.06] bg-[hsl(0_0%_10%)] p-4 sm:p-5">
           <ul className="space-y-1.5">
@@ -276,9 +274,7 @@ const ReflectivePracticePage = () => {
               <h3 className="text-[13.5px] font-semibold text-elec-yellow tracking-tight">
                 {item.stage}
               </h3>
-              <p className="text-[12.5px] text-white/85 leading-relaxed mt-1">
-                {item.description}
-              </p>
+              <p className="text-[12.5px] text-white/85 leading-relaxed mt-1">{item.description}</p>
             </li>
           ))}
         </ul>
@@ -319,15 +315,18 @@ const ReflectivePracticePage = () => {
       {/* ── Linking to EPA ──────────────────────────────────────── */}
       <motion.section variants={itemVariants} className="space-y-3">
         <SectionHeader
-          eyebrow="Linking reflection to EPA"
-          title="How assessors use your reflections"
-          meta="Reflection prep = professional discussion prep"
+          eyebrow="Reflection, gateway & EPA"
+          title="How reflection feeds your assessment"
+          meta="Strong on-programme reflection = a smoother gateway and AM2S"
         />
         <div className="rounded-xl border border-white/[0.06] bg-[hsl(0_0%_10%)] p-4 sm:p-5 space-y-3">
           <p className="text-[13px] text-white/85 leading-relaxed">
-            Your reflective accounts directly prepare you for the Professional
-            Discussion. If you\'ve been writing quality reflections throughout,
-            you\'ll find this conversation natural and confident.
+            Your reflective accounts strengthen your on-programme portfolio and help your provider
+            sign you off at gateway. There is no portfolio interview in the AM2S End-Point
+            Assessment, but the same habit of explaining your decisions and the regulations behind
+            them is exactly what the AM2S applied-knowledge test checks. If you’ve been writing
+            quality reflections throughout, you’ll approach assessment with genuine understanding
+            rather than rehearsed answers.
           </p>
           <ul className="space-y-1.5">
             {assessorUse.map((item) => (
@@ -359,14 +358,13 @@ const ReflectivePracticePage = () => {
           {fullExample.map((part) => (
             <div key={part.label} className="space-y-0.5">
               <Eyebrow className="text-elec-yellow/85">{part.label}</Eyebrow>
-              <p className="text-[12.5px] text-white/85 leading-relaxed">
-                {part.text}
-              </p>
+              <p className="text-[12.5px] text-white/85 leading-relaxed">{part.text}</p>
             </div>
           ))}
           <p className="text-[12px] text-white/70 leading-relaxed pt-2 border-t border-elec-yellow/15 italic">
-            This single account covers installation skills, BS 7671 knowledge,
-            and safe working behaviours — three KSBs with one piece of evidence.
+            This single account covers installation skills, BS 7671 knowledge, and safe working
+            behaviours — three KSBs with one piece of evidence. Test values shown (R1+R2, Zs, IR)
+            are illustrative — record your own measured results.
           </p>
         </div>
       </motion.section>

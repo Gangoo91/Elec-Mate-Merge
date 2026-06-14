@@ -16,7 +16,6 @@ import {
   Target,
   CheckCircle2,
   TrendingUp,
-  Briefcase,
   ChevronDown,
   Shield,
   Search,
@@ -24,20 +23,11 @@ import {
   Brain,
   Award,
   ClipboardCheck,
-  MessageSquare,
   Star,
-  Lightbulb,
 } from 'lucide-react';
 import type { LucideIcon } from 'lucide-react';
-import {
-  PageFrame,
-  PageHero,
-  itemVariants,
-} from '@/components/college/primitives';
-import {
-  Eyebrow,
-  SectionHeader,
-} from '@/components/apprentice-hub/portfolio/PortfolioPrimitives';
+import { PageFrame, PageHero, itemVariants } from '@/components/college/primitives';
+import { Eyebrow, SectionHeader } from '@/components/apprentice-hub/portfolio/PortfolioPrimitives';
 import { cn } from '@/lib/utils';
 
 interface MonthlyPeriod {
@@ -63,7 +53,7 @@ const monthlyBreakdown: MonthlyPeriod[] = [
       'Heavier containment — tray, ladder, cable management at scale',
     ],
     dayInLife:
-      'You\'re trusted with more complex work now. Jobs that seemed impossible in Year 1 are now your bread and butter. Take pride in the upgrade.',
+      "You're trusted with more complex work now. Jobs that seemed impossible in Year 1 are now your bread and butter. Take pride in the upgrade.",
   },
   {
     month: 'Month 27–28',
@@ -74,11 +64,11 @@ const monthlyBreakdown: MonthlyPeriod[] = [
       'Systematic fault finding — a logical approach to any problem',
       'Advanced test equipment — oscilloscopes, thermal imaging, clamp meters',
       'Circuit analysis techniques — reading and interpreting schematics',
-      'Repair and maintenance procedures — fixing what others can\'t',
+      "Repair and maintenance procedures — fixing what others can't",
       'Intermittent faults — the patience and method to chase them down',
     ],
     dayInLife:
-      'When something\'s broken, you\'re increasingly the one they call. The satisfaction of finding a tricky fault is unmatched — chase the cause, not the symptom.',
+      "When something's broken, you're increasingly the one they call. The satisfaction of finding a tricky fault is unmatched — chase the cause, not the symptom.",
   },
   {
     month: 'Month 29–30',
@@ -93,7 +83,7 @@ const monthlyBreakdown: MonthlyPeriod[] = [
       'Power factor correction and harmonic distortion basics',
     ],
     dayInLife:
-      'Commercial work opens new opportunities. Understanding how whole buildings work electrically gives you perspective that\'ll pay back for decades.',
+      "Commercial work opens new opportunities. Understanding how whole buildings work electrically gives you perspective that'll pay back for decades.",
   },
   {
     month: 'Month 31–32',
@@ -101,14 +91,14 @@ const monthlyBreakdown: MonthlyPeriod[] = [
     focus: 'Leadership and mentoring skills',
     icon: Users,
     activities: [
-      'Mentoring junior apprentices — passing on what you\'ve learned',
+      "Mentoring junior apprentices — passing on what you've learned",
       'Work planning and coordination — organising jobs efficiently',
-      'Quality control and inspection — checking others\' work',
+      "Quality control and inspection — checking others' work",
       'Health and safety leadership — setting the example',
       'Toolbox talks — explaining a risk in plain language',
     ],
     dayInLife:
-      'Remember your first day? Now you\'re helping others through theirs. Teaching reinforces your own knowledge and is great EPA prep.',
+      "Remember your first day? Now you're helping others through theirs. Teaching reinforces your own knowledge and is great EPA prep.",
   },
   {
     month: 'Month 33–34',
@@ -118,12 +108,12 @@ const monthlyBreakdown: MonthlyPeriod[] = [
     activities: [
       'Portfolio completion and review — gathering final evidence',
       'Mock practical assessments — practising under exam conditions',
-      'Professional discussion preparation — talking about your work',
-      'Knowledge test revision — filling any gaps',
+      'Safe isolation and inspection-testing drills — getting the sequences cold',
+      'Applied-knowledge revision — filling any gaps before the online MCQ',
       'AM2S booth practice if your provider offers it',
     ],
     dayInLife:
-      'EPA prep time. Everything you\'ve done for 3+ years comes together now. Trust your training — you\'re closer than you think.',
+      "EPA prep time. Everything you've done for 3+ years comes together now. Trust your training — you're closer than you think.",
   },
   {
     month: 'Month 35–36',
@@ -138,14 +128,13 @@ const monthlyBreakdown: MonthlyPeriod[] = [
       'Specialisation conversations — EV, solar, I&T, design',
     ],
     dayInLife:
-      'You can see the finish line. This year is about proving you\'re ready to be called a qualified electrician — and choosing your direction beyond.',
+      "You can see the finish line. This year is about proving you're ready to be called a qualified electrician — and choosing your direction beyond.",
   },
 ];
 
 interface LearningArea {
   title: string;
   icon: LucideIcon;
-  progress: number;
   topics: string[];
 }
 
@@ -153,10 +142,9 @@ const keyLearningAreas: LearningArea[] = [
   {
     title: 'Advanced installation methods',
     icon: Wrench,
-    progress: 85,
     topics: [
       'Industrial installation techniques',
-      'High-voltage systems (up to 1 kV)',
+      'Three-phase low-voltage distribution (up to 1,000 V AC)',
       'Specialist containment systems',
       'Advanced jointing techniques',
       'Complex distribution arrangements',
@@ -165,7 +153,6 @@ const keyLearningAreas: LearningArea[] = [
   {
     title: 'Fault finding & diagnostics',
     icon: Search,
-    progress: 80,
     topics: [
       'Systematic troubleshooting approaches',
       'Advanced test equipment operation',
@@ -177,7 +164,6 @@ const keyLearningAreas: LearningArea[] = [
   {
     title: 'Commercial & industrial systems',
     icon: Zap,
-    progress: 75,
     topics: [
       'Three-phase power distribution',
       'Motor control systems (DOL, star-delta, VSD)',
@@ -189,7 +175,6 @@ const keyLearningAreas: LearningArea[] = [
   {
     title: 'Leadership & mentoring',
     icon: Users,
-    progress: 70,
     topics: [
       'Supervising junior apprentices',
       'Work planning and organisation',
@@ -200,65 +185,58 @@ const keyLearningAreas: LearningArea[] = [
   },
 ];
 
-interface EPAComponent {
-  component: string;
+interface EPASection {
+  section: string;
   icon: LucideIcon;
-  duration: string;
-  weighting: string;
   description: string;
-  preparationTips: string[];
-  whatToExpect: string;
 }
 
-const epaComponents: EPAComponent[] = [
+// AM2S section map (single integrated practical assessment). The knowledge
+// element is the embedded online MCQ (Section E) — not a separate component.
+const epaSections: EPASection[] = [
   {
-    component: 'Practical assessment',
+    section: 'A1 · Safe isolation & risk assessment',
+    icon: Shield,
+    description:
+      'Carry out safe isolation correctly and assess the risks before any work begins — this gates everything that follows.',
+  },
+  {
+    section: 'A2–A6 · Composite installation',
     icon: Wrench,
-    duration: '17 hours over ~2.5 days',
-    weighting: '50%',
     description:
-      'Demonstrate installation, testing, and fault-finding skills under exam conditions in equipped NET assessment booths.',
-    preparationTips: [
-      'Practice installations under time pressure',
-      'Master all testing procedures thoroughly — every test, every time',
-      'Develop a systematic fault-finding approach',
-      'Ensure all portfolio evidence is complete and signed off',
-    ],
-    whatToExpect:
-      'You complete a real installation task, test your work, and diagnose a fault — all while observed and assessed against the AM2S specification.',
+      'Install a composite circuit arrangement to specification — containment, wiring systems, terminations and accessories.',
   },
   {
-    component: 'Professional discussion',
-    icon: MessageSquare,
-    duration: '90 minutes',
-    weighting: '25%',
+    section: 'B · Inspection, testing & certification',
+    icon: ClipboardCheck,
     description:
-      'Discuss your portfolio evidence and demonstrate knowledge through structured conversation with an EPAO assessor.',
-    preparationTips: [
-      'Know your portfolio evidence thoroughly — every photo, every sign-off',
-      'Practice explaining complex technical concepts in plain language',
-      'Prepare for regulation-based questions — BS 7671, HSWA, EAW',
-      'Develop confidence in professional communication',
-    ],
-    whatToExpect:
-      'An assessor will ask about your work experience, how you\'ve applied knowledge, and test your understanding through discussion — not interrogation.',
+      'Inspect and test your installation in the correct sequence and complete the certification accurately.',
   },
   {
-    component: 'Knowledge test',
+    section: 'C · Safe isolation',
+    icon: Shield,
+    description:
+      'Demonstrate safe isolation again at the relevant stage — proving it is a habit, not a one-off.',
+  },
+  {
+    section: 'D · Fault diagnosis & rectification',
+    icon: Search,
+    description: 'Diagnose and rectify faults on a live installation using a systematic approach.',
+  },
+  {
+    section: 'E · Applied knowledge (online MCQ)',
     icon: Brain,
-    duration: '90 minutes',
-    weighting: '25%',
     description:
-      'Multiple-choice test covering all apprenticeship content areas. Use of BS 7671 permitted.',
-    preparationTips: [
-      'Revise theoretical knowledge systematically across all units',
-      'Practice past papers and mock tests under time pressure',
-      'Focus on weak areas identified during practice',
-      'Understand regulations and their practical applications',
-    ],
-    whatToExpect:
-      'Online or paper-based test with questions covering the entire apprenticeship standard. Use of the Regs book allowed — navigation skill matters.',
+      'An embedded online multiple-choice test of your applied knowledge across the standard — the knowledge element sits within the AM2S, not as a separate exam.',
   },
+];
+
+const epaPrepTips = [
+  'Master safe isolation cold — it appears more than once and gates the rest',
+  'Practise the full inspection & testing sequence until it is second nature',
+  'Develop a systematic fault-diagnosis method and stick to it under pressure',
+  'Have your portfolio complete and signed off before the gateway',
+  'Sit mock AM2S sessions in a booth if your provider offers them',
 ];
 
 interface LeadershipOpp {
@@ -274,11 +252,7 @@ const leadershipOpportunities: LeadershipOpp[] = [
     opportunity: 'Mentor new apprentices',
     icon: Users,
     description: 'Guide and support first-year apprentices through their learning journey.',
-    benefits: [
-      'Develops leadership skills',
-      'Reinforces your own knowledge',
-      'Builds confidence',
-    ],
+    benefits: ['Develops leadership skills', 'Reinforces your own knowledge', 'Builds confidence'],
     responsibilities: [
       'Provide technical guidance',
       'Share experiences and tips',
@@ -304,11 +278,7 @@ const leadershipOpportunities: LeadershipOpp[] = [
     opportunity: 'Quality assurance role',
     icon: Shield,
     description: 'Check and verify work completed by junior team members.',
-    benefits: [
-      'Attention to detail',
-      'Technical knowledge application',
-      'Quality awareness',
-    ],
+    benefits: ['Attention to detail', 'Technical knowledge application', 'Quality awareness'],
     responsibilities: [
       'Inspect completed work',
       'Identify issues early',
@@ -330,10 +300,10 @@ const commonChallenges: Challenge[] = [
     icon: Award,
     description: 'The End Point Assessment can feel overwhelming after years of preparation.',
     solutions: [
-      'Start preparation early — don\'t cram at the end',
+      "Start preparation early — don't cram at the end",
       'Attend mock assessments if offered by college',
-      'Talk to apprentices who\'ve passed recently',
-      'Remember — you\'ve been preparing for 3+ years',
+      "Talk to apprentices who've passed recently",
+      "Remember — you've been preparing for 3+ years",
       'Trust your training and experience',
     ],
   },
@@ -342,8 +312,8 @@ const commonChallenges: Challenge[] = [
     icon: TrendingUp,
     description: 'More complex work and expectations to guide others can feel pressuring.',
     solutions: [
-      'Delegate appropriately — you can\'t do everything',
-      'Ask for help when needed — it\'s not weakness',
+      "Delegate appropriately — you can't do everything",
+      "Ask for help when needed — it's not weakness",
       'Set realistic expectations for yourself',
       'Learn from mistakes without dwelling on them',
       'Even qualified sparkies ask questions',
@@ -352,11 +322,11 @@ const commonChallenges: Challenge[] = [
   {
     challenge: 'Complex technical problems',
     icon: Search,
-    description: 'Advanced fault finding can be frustrating when solutions aren\'t obvious.',
+    description: "Advanced fault finding can be frustrating when solutions aren't obvious.",
     solutions: [
       'Develop a systematic approach to every fault',
-      'Document what you\'ve tried and the results',
-      'Don\'t be afraid to ask for a second opinion',
+      "Document what you've tried and the results",
+      "Don't be afraid to ask for a second opinion",
       'Use manufacturer resources and tech support',
       'Every tricky fault teaches you something new',
     ],
@@ -367,7 +337,7 @@ const commonChallenges: Challenge[] = [
     description: 'Guiding junior apprentices while still learning yourself can be challenging.',
     solutions: [
       'Be patient — remember your first days',
-      'You don\'t need to know everything to help',
+      "You don't need to know everything to help",
       'It\'s okay to say "let\'s find out together"',
       'Teaching reinforces your own learning',
       'Set boundaries — your work matters too',
@@ -441,7 +411,7 @@ export default function Year3() {
           meta="The biggest jump is often Year 3 → Year 4"
         />
         <div className="rounded-xl border border-white/[0.06] bg-[hsl(0_0%_10%)] p-4 sm:p-5">
-          <div className="grid grid-cols-4 gap-2 sm:gap-3">
+          <div className="grid grid-cols-2 sm:grid-cols-4 gap-2 sm:gap-3">
             <StatCell label="Year 1" value="£16.5k" mono />
             <StatCell label="Year 2" value="£20k" mono />
             <div className="rounded-xl border border-elec-yellow/30 bg-elec-yellow/[0.06] p-3 sm:p-4 space-y-0.5">
@@ -464,62 +434,60 @@ export default function Year3() {
       <motion.section variants={itemVariants} className="space-y-3">
         <SectionHeader
           eyebrow="End Point Assessment"
-          title="Three components, one final challenge"
-          meta="AM2S via NET — start preparation now, not in Year 4"
+          title="The AM2S — one integrated assessment"
+          meta="A single practical assessment via NET — start preparing now, not in Year 4"
         />
-        <ul className="space-y-2.5">
-          {epaComponents.map((c) => {
-            const Icon = c.icon;
+        <div className="rounded-xl border border-white/[0.06] bg-[hsl(0_0%_10%)] p-4 sm:p-5 space-y-3">
+          <div className="flex items-start gap-2 flex-wrap">
+            <span className="inline-flex items-center h-6 px-2 rounded-md border border-elec-yellow/30 bg-elec-yellow/[0.06] text-[10.5px] uppercase tracking-[0.14em] text-elec-yellow">
+              ~16–18 hours
+            </span>
+            <span className="inline-flex items-center h-6 px-2 rounded-md border border-white/[0.10] bg-white/[0.03] text-[10.5px] uppercase tracking-[0.14em] text-white/85">
+              ~2.5 days
+            </span>
+            <span className="inline-flex items-center h-6 px-2 rounded-md border border-white/[0.10] bg-white/[0.03] text-[10.5px] uppercase tracking-[0.14em] text-white/85">
+              Fail / Pass / Distinction
+            </span>
+          </div>
+          <p className="text-[13px] text-white/85 leading-relaxed">
+            The AM2S is a single integrated practical assessment run by NET, worked through in
+            equipped assessment booths. There is no separate professional discussion — the
+            applied-knowledge element is sat as an embedded online multiple-choice test (Section E).
+          </p>
+        </div>
+        <ul className="space-y-2">
+          {epaSections.map((s) => {
+            const Icon = s.icon;
             return (
               <li
-                key={c.component}
-                className="rounded-xl border border-white/[0.06] bg-[hsl(0_0%_10%)] p-4 sm:p-5 space-y-3"
+                key={s.section}
+                className="rounded-xl border border-white/[0.06] bg-[hsl(0_0%_10%)] p-4 sm:p-5 space-y-2"
               >
-                <div className="flex items-start justify-between gap-3 flex-wrap">
-                  <div className="flex items-center gap-2 min-w-0">
-                    <Icon className="h-4 w-4 text-elec-yellow flex-shrink-0" />
-                    <h3 className="text-[15px] font-semibold text-white tracking-tight">
-                      {c.component}
-                    </h3>
-                  </div>
-                  <div className="flex items-center gap-2 flex-shrink-0">
-                    <span className="text-[11px] font-mono tabular-nums text-white/55">
-                      {c.duration}
-                    </span>
-                    <span className="inline-flex items-center h-6 px-2 rounded-md border border-elec-yellow/30 bg-elec-yellow/[0.06] text-[10.5px] font-mono tabular-nums text-elec-yellow">
-                      {c.weighting}
-                    </span>
-                  </div>
+                <div className="flex items-center gap-2 min-w-0">
+                  <Icon className="h-4 w-4 text-elec-yellow flex-shrink-0" />
+                  <h3 className="text-[14px] font-semibold text-white tracking-tight">
+                    {s.section}
+                  </h3>
                 </div>
-                <p className="text-[13px] text-white/85 leading-relaxed">
-                  {c.description}
-                </p>
-                <div className="space-y-2 pt-2 border-t border-white/[0.04]">
-                  <Eyebrow className="text-elec-yellow/85">Preparation tips</Eyebrow>
-                  <ul className="space-y-1.5">
-                    {c.preparationTips.map((tip) => (
-                      <li
-                        key={tip}
-                        className="flex items-start gap-2 text-[12.5px] text-white/85 leading-relaxed"
-                      >
-                        <CheckCircle2 className="h-3.5 w-3.5 text-elec-yellow/85 flex-shrink-0 mt-0.5" />
-                        <span>{tip}</span>
-                      </li>
-                    ))}
-                  </ul>
-                </div>
-                <div className="rounded-md border border-white/[0.06] bg-white/[0.02] p-3">
-                  <div className="flex items-start gap-2">
-                    <Lightbulb className="h-3.5 w-3.5 text-elec-yellow/85 flex-shrink-0 mt-0.5" />
-                    <p className="text-[12.5px] text-white/85 leading-relaxed italic">
-                      {c.whatToExpect}
-                    </p>
-                  </div>
-                </div>
+                <p className="text-[12.5px] text-white/85 leading-relaxed">{s.description}</p>
               </li>
             );
           })}
         </ul>
+        <div className="rounded-xl border border-white/[0.06] bg-[hsl(0_0%_10%)] p-4 sm:p-5 space-y-2">
+          <Eyebrow className="text-elec-yellow/85">How to prepare</Eyebrow>
+          <ul className="space-y-1.5">
+            {epaPrepTips.map((tip) => (
+              <li
+                key={tip}
+                className="flex items-start gap-2 text-[12.5px] text-white/85 leading-relaxed"
+              >
+                <CheckCircle2 className="h-3.5 w-3.5 text-elec-yellow/85 flex-shrink-0 mt-0.5" />
+                <span>{tip}</span>
+              </li>
+            ))}
+          </ul>
+        </div>
       </motion.section>
 
       {/* ── Monthly timeline ─────────────────────────────────────── */}
@@ -563,9 +531,7 @@ export default function Year3() {
                           {period.month}
                         </span>
                       </div>
-                      <p className="text-[12px] text-white/70 leading-snug">
-                        {period.focus}
-                      </p>
+                      <p className="text-[12px] text-white/70 leading-snug">{period.focus}</p>
                     </div>
                     <ChevronDown
                       className={cn(
@@ -606,7 +572,7 @@ export default function Year3() {
         <SectionHeader
           eyebrow="Key learning areas"
           title="Where to focus your energy"
-          meta="Progress bars show typical expectations by year end"
+          meta="The four pillars you'll build across Year 3"
         />
         <ul className="grid grid-cols-1 md:grid-cols-2 gap-2.5">
           {keyLearningAreas.map((area) => {
@@ -616,24 +582,11 @@ export default function Year3() {
                 key={area.title}
                 className="rounded-xl border border-white/[0.06] bg-[hsl(0_0%_10%)] p-4 sm:p-5 space-y-3"
               >
-                <div className="flex items-start justify-between gap-2">
-                  <div className="flex items-center gap-2 min-w-0">
-                    <Icon className="h-4 w-4 text-elec-yellow flex-shrink-0" />
-                    <h3 className="text-[14px] font-semibold text-white tracking-tight">
-                      {area.title}
-                    </h3>
-                  </div>
-                  <span className="text-[12px] font-mono tabular-nums text-elec-yellow flex-shrink-0">
-                    {area.progress}%
-                  </span>
-                </div>
-                <div className="h-1.5 rounded-full bg-white/[0.04] overflow-hidden">
-                  <motion.div
-                    initial={{ width: 0 }}
-                    animate={{ width: `${area.progress}%` }}
-                    transition={{ duration: 0.7, ease: 'easeOut' }}
-                    className="h-full bg-elec-yellow rounded-full"
-                  />
+                <div className="flex items-center gap-2 min-w-0">
+                  <Icon className="h-4 w-4 text-elec-yellow flex-shrink-0" />
+                  <h3 className="text-[14px] font-semibold text-white tracking-tight">
+                    {area.title}
+                  </h3>
                 </div>
                 <ul className="space-y-1.5">
                   {area.topics.map((topic) => (
@@ -657,7 +610,7 @@ export default function Year3() {
         <SectionHeader
           eyebrow="Leadership opportunities"
           title="Three ways to step up"
-          meta="Each one builds skills your EPA professional discussion will probe"
+          meta="Each one builds the supervisory skills your AM2S and portfolio draw on"
         />
         <ul className="space-y-2">
           {leadershipOpportunities.map((opp) => {
@@ -673,9 +626,7 @@ export default function Year3() {
                     {opp.opportunity}
                   </h3>
                 </div>
-                <p className="text-[13px] text-white/85 leading-relaxed">
-                  {opp.description}
-                </p>
+                <p className="text-[13px] text-white/85 leading-relaxed">{opp.description}</p>
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 sm:gap-3 pt-2 border-t border-white/[0.04]">
                   <div className="space-y-1.5">
                     <Eyebrow>What you get</Eyebrow>
@@ -717,14 +668,13 @@ export default function Year3() {
         />
         <ul className="rounded-xl border border-white/[0.06] bg-[hsl(0_0%_10%)] divide-y divide-white/[0.04] overflow-hidden">
           {weeklyScheduleExample.map(({ day, location, activities }) => (
-            <li
-              key={day}
-              className="flex items-center gap-3 sm:gap-4 p-3.5 sm:p-4"
-            >
-              <span className="w-20 text-[12.5px] font-medium text-white">{day}</span>
+            <li key={day} className="flex items-center gap-2.5 sm:gap-4 p-3.5 sm:p-4">
+              <span className="w-14 sm:w-20 shrink-0 text-[12.5px] font-medium text-white">
+                {day}
+              </span>
               <span
                 className={cn(
-                  'inline-flex items-center justify-center h-6 px-2 rounded-md border text-[10px] font-medium uppercase tracking-[0.14em] flex-shrink-0 w-16',
+                  'inline-flex items-center justify-center h-6 px-2 rounded-md border text-[10px] font-medium uppercase tracking-[0.14em] flex-shrink-0 w-14 sm:w-16',
                   location === 'College'
                     ? 'border-elec-yellow/30 bg-elec-yellow/[0.06] text-elec-yellow'
                     : 'border-white/[0.10] bg-white/[0.03] text-white/85'
@@ -732,7 +682,7 @@ export default function Year3() {
               >
                 {location}
               </span>
-              <span className="text-[12.5px] text-white/85 flex-1 leading-snug">
+              <span className="text-[12.5px] text-white/85 flex-1 min-w-0 leading-snug">
                 {activities}
               </span>
             </li>
@@ -776,9 +726,7 @@ export default function Year3() {
                       <h3 className="text-[14px] font-semibold text-white leading-snug">
                         {item.challenge}
                       </h3>
-                      <p className="text-[12.5px] text-white/70 leading-snug">
-                        {item.description}
-                      </p>
+                      <p className="text-[12.5px] text-white/70 leading-snug">{item.description}</p>
                     </div>
                     <ChevronDown
                       className={cn(
@@ -818,17 +766,13 @@ export default function Year3() {
           <Eyebrow className="text-elec-yellow/85">End of Year 3</Eyebrow>
           <p className="text-[13.5px] text-white/85 leading-relaxed">
             By the end of Year 3 you should be{' '}
-            <span className="font-semibold text-elec-yellow">commercially competent</span>
-            , mentoring junior apprentices with confidence, your portfolio
-            substantially complete, and your EPA preparation well underway. Year
-            4 is the final stretch — AM2S, 18th Edition, and JIB grading.
+            <span className="font-semibold text-elec-yellow">commercially competent</span>,
+            mentoring junior apprentices with confidence, your portfolio substantially complete, and
+            your EPA preparation well underway. Year 4 is the final stretch — AM2S, 18th Edition,
+            and JIB grading.
           </p>
         </div>
       </motion.section>
-
-      <span className="hidden">
-        <Briefcase />
-      </span>
     </PageFrame>
   );
 }

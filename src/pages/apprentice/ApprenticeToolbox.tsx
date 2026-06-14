@@ -46,7 +46,8 @@ const TOOLBOX_ITEMS: ToolboxItem[] = [
     number: '02',
     eyebrow: 'OTJ',
     title: 'Off-the-job training',
-    description: 'Your 20% off-the-job training requirements and what counts toward them.',
+    description:
+      'Your fixed off-the-job training hours (1,066h for Installation & Maintenance Electricians) and what counts toward them.',
     link: '/apprentice/toolbox/off-job-training-guide',
     category: 'essential',
     tone: 'blue',
@@ -78,7 +79,8 @@ const TOOLBOX_ITEMS: ToolboxItem[] = [
     number: '05',
     eyebrow: 'Rights',
     title: 'Apprentice rights & pay',
-    description: 'National wage tiers, your rights on site, and support when things go wrong.',
+    description:
+      'National wage tiers (£8.00/hr apprentice minimum from April 2026), your rights on site, and support when things go wrong.',
     link: '/apprentice/rights-and-pay',
     category: 'essential',
     badge: 'April 2026',
@@ -89,7 +91,7 @@ const TOOLBOX_ITEMS: ToolboxItem[] = [
     number: '06',
     eyebrow: 'Language',
     title: 'Site jargon & terminology',
-    description: 'Common electrical and construction terms — don\'t get caught out on day one.',
+    description: "Common electrical and construction terms — don't get caught out on day one.",
     link: '/apprentice/toolbox/site-jargon',
     category: 'skills',
     tone: 'cyan',
@@ -147,7 +149,11 @@ const TOOLBOX_ITEMS: ToolboxItem[] = [
   },
 ];
 
-const CATEGORIES: Array<{ id: 'essential' | 'skills' | 'wellbeing'; eyebrow: string; title: string }> = [
+const CATEGORIES: Array<{
+  id: 'essential' | 'skills' | 'wellbeing';
+  eyebrow: string;
+  title: string;
+}> = [
   { id: 'essential', eyebrow: 'Essential', title: 'Foundation knowledge' },
   { id: 'skills', eyebrow: 'Skills', title: 'Skills development' },
   { id: 'wellbeing', eyebrow: 'Wellbeing', title: 'Wellbeing & growth' },
@@ -156,7 +162,7 @@ const CATEGORIES: Array<{ id: 'essential' | 'skills' | 'wellbeing'; eyebrow: str
 const QUICK_STATS = [
   { number: '01', label: 'Topics', value: '11' },
   { number: '02', label: 'Duration', value: '3–4 yrs' },
-  { number: '03', label: 'Off-job', value: '20%' },
+  { number: '03', label: 'Off-job (L3)', value: '1,066h' },
   { number: '04', label: 'Final', value: 'Level 3' },
 ];
 
@@ -211,9 +217,7 @@ export default function ApprenticeToolbox() {
           {QUICK_STATS.map((s) => (
             <div
               key={s.number}
-              className={cn(
-                'bg-[hsl(0_0%_10%)] px-5 py-6 sm:px-7 sm:py-8 flex flex-col text-left'
-              )}
+              className={cn('bg-[hsl(0_0%_10%)] px-5 py-6 sm:px-7 sm:py-8 flex flex-col text-left')}
             >
               <div className="flex items-baseline gap-2 whitespace-nowrap">
                 <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-elec-yellow/80 tabular-nums">
@@ -236,11 +240,7 @@ export default function ApprenticeToolbox() {
         const items = TOOLBOX_ITEMS.filter((i) => i.category === cat.id);
         if (items.length === 0) return null;
         return (
-          <motion.section
-            key={cat.id}
-            variants={itemVariants}
-            className="space-y-5 sm:space-y-6"
-          >
+          <motion.section key={cat.id} variants={itemVariants} className="space-y-5 sm:space-y-6">
             <SectionHeader eyebrow={cat.eyebrow} title={cat.title} />
             <HubGrid columns={cat.id === 'wellbeing' ? 2 : 3}>
               {items.map((item) => (
@@ -285,6 +285,35 @@ export default function ApprenticeToolbox() {
             onClick={() => navigate('/apprentice/professional-development')}
           />
         </HubGrid>
+      </motion.section>
+
+      {/* CRISIS / WELLBEING — one-tap helplines */}
+      <motion.section variants={itemVariants} className="space-y-3 sm:space-y-4">
+        <SectionHeader eyebrow="Support" title="Need to talk now?" />
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-px bg-white/[0.06] sm:border sm:border-white/[0.08] rounded-2xl overflow-hidden">
+          <a
+            href="tel:116123"
+            className="flex flex-col gap-1 bg-[hsl(0_0%_10%)] px-5 py-4 min-h-11 touch-manipulation active:bg-white/[0.04]"
+          >
+            <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-elec-yellow/80">
+              Samaritans · free, 24/7
+            </span>
+            <span className="text-lg font-semibold tabular-nums tracking-tight text-white">
+              116 123
+            </span>
+          </a>
+          <a
+            href="tel:03456051956"
+            className="flex flex-col gap-1 bg-[hsl(0_0%_10%)] px-5 py-4 min-h-11 touch-manipulation active:bg-white/[0.04]"
+          >
+            <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-elec-yellow/80">
+              Lighthouse · construction industry
+            </span>
+            <span className="text-lg font-semibold tabular-nums tracking-tight text-white">
+              0345 605 1956
+            </span>
+          </a>
+        </div>
       </motion.section>
     </PageFrame>
   );

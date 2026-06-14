@@ -31,7 +31,7 @@ const SECTIONS: Section[] = [
     description:
       'How learning actually works — active recall, spaced repetition, why re-reading notes is the worst study habit going.',
     meta: '8 min read',
-    tone: 'blue',
+    tone: 'yellow',
   },
   {
     number: '02',
@@ -39,9 +39,9 @@ const SECTIONS: Section[] = [
     title: 'Exam strategies',
     slug: 'exam-strategies',
     description:
-      'Time allocation, multiple-choice tactics, written-answer structure, and how to recover from a question you can\'t answer.',
+      "Time allocation, multiple-choice tactics, written-answer structure, and how to recover from a question you can't answer.",
     meta: '7 min read',
-    tone: 'emerald',
+    tone: 'yellow',
   },
   {
     number: '03',
@@ -51,7 +51,7 @@ const SECTIONS: Section[] = [
     description:
       'Past papers, flashcards, group study, mock exams — what to use when, and the techniques that move marks the most.',
     meta: '8 min read',
-    tone: 'amber',
+    tone: 'yellow',
   },
   {
     number: '04',
@@ -59,9 +59,9 @@ const SECTIONS: Section[] = [
     title: 'Study time management',
     slug: 'study-time',
     description:
-      'Fitting study around 40-hour work weeks. Realistic schedules, micro-sessions, the tools that work and the ones that don\'t.',
+      "Fitting study around 40-hour work weeks. Realistic schedules, micro-sessions, the tools that work and the ones that don't.",
     meta: '6 min read',
-    tone: 'purple',
+    tone: 'yellow',
   },
   {
     number: '05',
@@ -71,7 +71,7 @@ const SECTIONS: Section[] = [
     description:
       'Best textbooks, free online resources, podcasts, YouTube channels, and the apps that genuinely help (and the ones that just gamify procrastination).',
     meta: '6 min read',
-    tone: 'orange',
+    tone: 'yellow',
   },
   {
     number: '06',
@@ -79,9 +79,9 @@ const SECTIONS: Section[] = [
     title: 'Study psychology',
     slug: 'psychology',
     description:
-      'Motivation when you\'re tired, dealing with imposter syndrome, building habits that survive a long apprenticeship.',
+      "Motivation when you're tired, dealing with imposter syndrome, building habits that survive a long apprenticeship.",
     meta: '7 min read',
-    tone: 'cyan',
+    tone: 'yellow',
   },
 ];
 

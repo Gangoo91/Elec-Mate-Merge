@@ -12,9 +12,7 @@ const Section = ({
       <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
         {eyebrow}
       </span>
-      {description && (
-        <p className="text-[14px] text-white/70 leading-relaxed">{description}</p>
-      )}
+      {description && <p className="text-[14px] text-white/70 leading-relaxed">{description}</p>}
     </div>
     {children}
   </div>
@@ -78,8 +76,7 @@ const InteractiveToolsTab = () => {
     },
     {
       title: 'Reporting a safety concern',
-      situation:
-        'You notice unsafe working conditions but need to speak up to senior staff.',
+      situation: 'You notice unsafe working conditions but need to speak up to senior staff.',
       tips: [
         "Use 'I' statements to avoid blame",
         'Focus on the safety risk, not personalities',
@@ -91,8 +88,7 @@ const InteractiveToolsTab = () => {
     },
     {
       title: 'Team meeting participation',
-      situation:
-        'Weekly site meeting where you need to contribute and ask questions.',
+      situation: 'Weekly site meeting where you need to contribute and ask questions.',
       tips: [
         'Prepare your points beforehand',
         'Ask questions for clarification, not to show off',
@@ -166,13 +162,13 @@ const InteractiveToolsTab = () => {
       title: 'When you need to chase someone',
       approach: 'Be polite but direct, reference what was agreed, offer alternatives.',
       example:
-        "Hi, just following up on the cable order we discussed on Monday. I need those drums by Wednesday to stay on programme. Is there anything I can do to help speed things up?",
+        'Hi, just following up on the cable order we discussed on Monday. I need those drums by Wednesday to stay on programme. Is there anything I can do to help speed things up?',
     },
     {
       title: 'When a client questions your work',
       approach: 'Stay calm, explain your reasoning, offer to involve your supervisor.',
       example:
-        "I understand your concern. This cable route follows the safe zones required by the wiring regulations. I can ask my supervisor to explain the technical reasons if you would like.",
+        'I understand your concern. This cable route follows the safe zones required by the wiring regulations. I can ask my supervisor to explain the technical reasons if you would like.',
     },
   ];
 
@@ -371,16 +367,16 @@ const InteractiveToolsTab = () => {
       <Section eyebrow="Practice makes perfect">
         <p className="text-[14px] text-white/85 leading-relaxed">
           Effective communication is a skill that improves with practice. Start by focusing on one
-          framework or tip at a time. Use these scenarios to practice with colleagues, friends, or
-          even in front of a mirror. The more you practice professional communication, the more
+          framework or tip at a time. Use these scenarios to practise with colleagues, friends, or
+          even in front of a mirror. The more you practise professional communication, the more
           natural it becomes in real situations.
         </p>
         <div className="rounded-md border border-white/[0.06] bg-white/[0.02] p-3">
           <p className="text-[13px] text-white/85 leading-relaxed">
             <span className="text-white">Weekly challenge: </span>
             Pick one communication skill from this guide each week and consciously practise it on
-            site. After a month, you will notice a real difference in how people respond to you
-            and how confident you feel.
+            site. After a month, you will notice a real difference in how people respond to you and
+            how confident you feel.
           </p>
         </div>
       </Section>

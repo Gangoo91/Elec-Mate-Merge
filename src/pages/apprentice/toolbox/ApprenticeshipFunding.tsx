@@ -1,6 +1,5 @@
 import { useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
-import { Card, CardContent } from '@/components/ui/card';
 import { ArrowLeft } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import {
@@ -32,7 +31,7 @@ const SECTIONS: Section[] = [
     description:
       'The Apprenticeship Levy, co-investment, employer-led funding — what each one is and which one applies to you.',
     meta: '8 min read',
-    tone: 'blue',
+    tone: 'yellow',
   },
   {
     number: '02',
@@ -42,7 +41,7 @@ const SECTIONS: Section[] = [
     description:
       'CITB grants, employer incentives, and the schemes that help cover the cost of training, tools and travel.',
     meta: '7 min read',
-    tone: 'emerald',
+    tone: 'yellow',
   },
   {
     number: '03',
@@ -52,7 +51,7 @@ const SECTIONS: Section[] = [
     description:
       "How your employer pays for your apprenticeship — useful for spotting whether they're funding you correctly.",
     meta: '6 min read',
-    tone: 'amber',
+    tone: 'yellow',
   },
   {
     number: '04',
@@ -72,7 +71,7 @@ const SECTIONS: Section[] = [
     description:
       "The terms you'll hear thrown around — Levy, EPA, EPAO, ILR, Standards — explained without the jargon.",
     meta: '5 min read',
-    tone: 'purple',
+    tone: 'yellow',
   },
 ];
 
@@ -101,20 +100,23 @@ const ApprenticeshipFunding = () => {
       </motion.div>
 
       <motion.div variants={itemVariants}>
-        <Card className="border-elec-yellow/20 bg-elec-yellow/[0.04]">
-          <CardContent className="p-5 space-y-3">
-            <div className="flex items-baseline gap-2">
-              <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-elec-yellow/85">
-                Bottom line
-              </span>
-            </div>
-            <p className="text-[13px] text-white/85 leading-relaxed">
-              You should never pay for your training, college fees, exam fees or End Point
-              Assessment. If you're being asked to, something's wrong — flag it with your training
-              provider, ACAS, or the National Apprenticeship Helpline.
-            </p>
-          </CardContent>
-        </Card>
+        <div className="rounded-xl border border-elec-yellow/20 bg-elec-yellow/[0.04] p-4 sm:p-5 space-y-3">
+          <div className="flex items-baseline gap-2">
+            <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-elec-yellow/85">
+              Bottom line
+            </span>
+          </div>
+          <p className="text-[13px] text-white/85 leading-relaxed">
+            You should never pay for your training, college fees, exam fees or End Point Assessment.
+            If you're being asked to, something's wrong — flag it with your training provider, ACAS,
+            or the National Apprenticeship Helpline.
+          </p>
+          <p className="text-[12px] text-white/65 leading-relaxed pt-1 border-t border-white/[0.06]">
+            This guide covers the England system (the Levy, the £23,000 band and Skills England).
+            Wales, Scotland and Northern Ireland fund apprenticeships differently — check your
+            nation's scheme if you're outside England.
+          </p>
+        </div>
       </motion.div>
 
       <motion.section variants={itemVariants} className="space-y-5 sm:space-y-6">
@@ -129,9 +131,7 @@ const ApprenticeshipFunding = () => {
               description={s.description}
               meta={s.meta}
               tone={s.tone}
-              onClick={() =>
-                navigate(`/apprentice/toolbox/apprenticeship-funding/${s.slug}`)
-              }
+              onClick={() => navigate(`/apprentice/toolbox/apprenticeship-funding/${s.slug}`)}
             />
           ))}
         </HubGrid>

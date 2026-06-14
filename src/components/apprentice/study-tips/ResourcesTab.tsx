@@ -1,4 +1,5 @@
-import { Download, ExternalLink } from 'lucide-react';
+import { ArrowRight, ExternalLink } from 'lucide-react';
+import { Link } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
 
 const ResourcesTab = () => {
@@ -14,14 +15,15 @@ const ResourcesTab = () => {
           link: 'https://electrical.theiet.org/wiring-regulations/',
         },
         {
-          name: 'Guidance Note 3: Inspection & Testing',
-          description: 'Comprehensive guide to electrical testing procedures',
+          name: 'Guidance Note 3: Inspection & Testing (BS 7671:2018+A4:2026)',
+          description:
+            'Comprehensive guide to electrical testing procedures, current A4:2026 edition',
           type: 'IET publication',
           link: 'https://electrical.theiet.org/guidance-notes/',
         },
         {
-          name: 'On-Site Guide (BS 7671:2018)',
-          description: 'Simplified guidance for electrical installations',
+          name: 'On-Site Guide (BS 7671:2018+A4:2026)',
+          description: 'Simplified guidance for electrical installations, current A4:2026 edition',
           type: 'IET publication',
           link: 'https://electrical.theiet.org/on-site-guide/',
         },
@@ -48,6 +50,13 @@ const ResourcesTab = () => {
           description: 'Comprehensive apprenticeship learning resources',
           type: 'Training provider',
           link: 'https://www.jtltraining.com/',
+        },
+        {
+          name: 'Anki (spaced repetition)',
+          description:
+            'Free flashcard app that schedules reviews using spaced repetition — ideal for regulation numbers, tables and definitions',
+          type: 'Study app',
+          link: 'https://apps.ankiweb.net/',
         },
       ],
     },
@@ -77,26 +86,30 @@ const ResourcesTab = () => {
       ],
     },
     {
-      title: 'Reference materials',
-      description: 'Quick reference guides and charts',
+      title: 'In-app reference tools',
+      description: 'Quick reference calculators and guides built into Elec-Mate',
       resources: [
         {
-          name: 'Cable capacity charts',
-          description: 'Current carrying capacity tables for various cable types',
-          type: 'Reference chart',
-          downloadable: true,
+          name: 'Cable sizing calculator',
+          description:
+            'Work out current-carrying capacity and correction factors for common cable types',
+          type: 'In-app tool',
+          link: '/tools/cable-sizing-calculator',
+          internal: true,
         },
         {
-          name: 'Electrical symbols guide',
-          description: 'Comprehensive guide to electrical schematic symbols',
-          type: 'Reference guide',
-          downloadable: true,
+          name: 'Voltage drop calculator',
+          description: 'Check volt drop against BS 7671 limits for your circuit length and load',
+          type: 'In-app tool',
+          link: '/tools/voltage-drop-calculator',
+          internal: true,
         },
         {
-          name: 'Fault finding flowcharts',
-          description: 'Step-by-step troubleshooting procedures',
-          type: 'Flowchart',
-          downloadable: true,
+          name: 'On-the-job calculators',
+          description: 'The full set of apprentice calculators for site and revision use',
+          type: 'In-app tool',
+          link: '/apprentice/calculators',
+          internal: true,
         },
       ],
     },
@@ -109,9 +122,8 @@ const ResourcesTab = () => {
           Study resources library
         </span>
         <p className="text-[14px] text-white/85 leading-relaxed">
-          A curated collection of essential resources for electrical apprentices and students.
-          These materials cover everything from basic principles to advanced installation
-          techniques.
+          A curated collection of essential resources for electrical apprentices and students. These
+          materials cover everything from basic principles to advanced installation techniques.
         </p>
       </div>
 
@@ -146,20 +158,23 @@ const ResourcesTab = () => {
                       </span>
                     </div>
                     <div className="flex-shrink-0">
-                      {resource.downloadable ? (
+                      {resource.internal ? (
                         <Button
                           size="sm"
                           variant="outline"
-                          className="h-9 border-white/15 text-white hover:bg-white/[0.05] touch-manipulation"
+                          className="h-11 border-white/15 text-white hover:bg-white/[0.05] touch-manipulation"
+                          asChild
                         >
-                          <Download className="h-3 w-3 mr-1" />
-                          Download
+                          <Link to={resource.link}>
+                            <ArrowRight className="h-3 w-3 mr-1" />
+                            Open
+                          </Link>
                         </Button>
                       ) : (
                         <Button
                           size="sm"
                           variant="outline"
-                          className="h-9 border-white/15 text-white hover:bg-white/[0.05] touch-manipulation"
+                          className="h-11 border-white/15 text-white hover:bg-white/[0.05] touch-manipulation"
                           asChild
                         >
                           <a href={resource.link} target="_blank" rel="noopener noreferrer">

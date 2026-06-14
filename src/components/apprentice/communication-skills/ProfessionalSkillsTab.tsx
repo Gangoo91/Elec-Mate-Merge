@@ -1,5 +1,3 @@
-import { Progress } from '@/components/ui/progress';
-
 const Section = ({
   eyebrow,
   description,
@@ -14,9 +12,7 @@ const Section = ({
       <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
         {eyebrow}
       </span>
-      {description && (
-        <p className="text-[14px] text-white/70 leading-relaxed">{description}</p>
-      )}
+      {description && <p className="text-[14px] text-white/70 leading-relaxed">{description}</p>}
     </div>
     {children}
   </div>
@@ -27,7 +23,6 @@ const ProfessionalSkillsTab = () => {
     {
       skill: 'Active listening',
       description: 'Understanding instructions and feedback completely.',
-      level: 85,
       techniques: [
         'Maintain eye contact when receiving instructions',
         "Don't interrupt — wait for the full explanation",
@@ -41,7 +36,6 @@ const ProfessionalSkillsTab = () => {
     {
       skill: 'Clear speaking',
       description: 'Expressing yourself clearly and professionally.',
-      level: 70,
       techniques: [
         'Speak at a steady pace — not too fast when nervous',
         'Use specific technical terms correctly',
@@ -50,12 +44,11 @@ const ProfessionalSkillsTab = () => {
         'Speak loudly enough to be heard over site noise',
       ],
       practice:
-        "Practice the 'SBI' model: Situation → Behaviour → Impact. 'In the kitchen (S), the cable run hits a beam (B), so we can't complete the circuit safely (I).'",
+        "Practise the 'SBI' model: Situation → Behaviour → Impact. 'In the kitchen (S), the cable run hits a beam (B), so we can't complete the circuit safely (I).'",
     },
     {
       skill: 'Body language',
       description: 'Professional non-verbal communication.',
-      level: 75,
       techniques: [
         'Stand or sit up straight — shows confidence and respect',
         'Make appropriate eye contact during conversations',
@@ -69,7 +62,6 @@ const ProfessionalSkillsTab = () => {
     {
       skill: 'Written communication',
       description: 'Professional documentation and messages.',
-      level: 60,
       techniques: [
         'Use proper spelling and grammar in all written communication',
         'Be concise but include all necessary details',
@@ -86,49 +78,101 @@ const ProfessionalSkillsTab = () => {
     {
       category: 'Asking for help',
       examples: [
-        { poor: "I don't know how to do this", better: 'Could you show me the correct procedure for this?' },
-        { poor: 'This is impossible', better: "I'm having difficulty with this — could you suggest an approach?" },
-        { poor: "You didn't tell me that", better: 'I may have misunderstood — could you clarify this part?' },
+        {
+          poor: "I don't know how to do this",
+          better: 'Could you show me the correct procedure for this?',
+        },
+        {
+          poor: 'This is impossible',
+          better: "I'm having difficulty with this — could you suggest an approach?",
+        },
+        {
+          poor: "You didn't tell me that",
+          better: 'I may have misunderstood — could you clarify this part?',
+        },
       ],
     },
     {
       category: 'Reporting problems',
       examples: [
         { poor: 'This is all wrong', better: "I've identified an issue that needs attention" },
-        { poor: "It's not working", better: "The circuit isn't functioning as expected — here's what I've observed" },
-        { poor: 'Someone messed up', better: 'There appears to be a discrepancy with the original plan' },
+        {
+          poor: "It's not working",
+          better: "The circuit isn't functioning as expected — here's what I've observed",
+        },
+        {
+          poor: 'Someone messed up',
+          better: 'There appears to be a discrepancy with the original plan',
+        },
       ],
     },
     {
       category: 'Making suggestions',
       examples: [
-        { poor: 'You should do it this way', better: 'Would it work better if we tried this approach?' },
+        {
+          poor: 'You should do it this way',
+          better: 'Would it work better if we tried this approach?',
+        },
         { poor: "That's wrong", better: 'I wonder if there might be an alternative method?' },
-        { poor: 'I know a better way', better: "I've seen this done differently — would that be appropriate here?" },
+        {
+          poor: 'I know a better way',
+          better: "I've seen this done differently — would that be appropriate here?",
+        },
       ],
     },
     {
       category: 'Accepting feedback',
       examples: [
-        { poor: "That's not fair, I did my best", better: 'Thanks for the feedback. What specifically should I do differently next time?' },
-        { poor: "It wasn't my fault", better: 'I understand. Can you show me the correct way so I get it right next time?' },
-        { poor: 'Nobody told me that', better: "I appreciate you pointing that out — I'll make a note so I remember for next time" },
+        {
+          poor: "That's not fair, I did my best",
+          better: 'Thanks for the feedback. What specifically should I do differently next time?',
+        },
+        {
+          poor: "It wasn't my fault",
+          better: 'I understand. Can you show me the correct way so I get it right next time?',
+        },
+        {
+          poor: 'Nobody told me that',
+          better:
+            "I appreciate you pointing that out — I'll make a note so I remember for next time",
+        },
       ],
     },
     {
       category: 'Giving progress updates',
       examples: [
-        { poor: "I'm getting on with it", better: "I've completed the first fix in rooms 1 and 2, and I'm about to start room 3" },
-        { poor: "It's taking ages", better: 'The cable route is more complex than expected. I estimate another 2 hours to complete this section.' },
-        { poor: "I'm nearly done", better: "I've got 3 more sockets to terminate and then I need about 30 minutes for testing" },
+        {
+          poor: "I'm getting on with it",
+          better: "I've completed the first fix in rooms 1 and 2, and I'm about to start room 3",
+        },
+        {
+          poor: "It's taking ages",
+          better:
+            'The cable route is more complex than expected. I estimate another 2 hours to complete this section.',
+        },
+        {
+          poor: "I'm nearly done",
+          better:
+            "I've got 3 more sockets to terminate and then I need about 30 minutes for testing",
+        },
       ],
     },
     {
       category: 'When you do not know something',
       examples: [
-        { poor: "I don't have a clue", better: "I haven't come across this before. Could you point me in the right direction?" },
-        { poor: 'I just guessed', better: "I wasn't sure about this connection, so I've left it for you to check rather than risk getting it wrong" },
-        { poor: 'Whatever, it will be fine', better: "I'd rather check the On-Site Guide than assume — give me 2 minutes" },
+        {
+          poor: "I don't have a clue",
+          better: "I haven't come across this before. Could you point me in the right direction?",
+        },
+        {
+          poor: 'I just guessed',
+          better:
+            "I wasn't sure about this connection, so I've left it for you to check rather than risk getting it wrong",
+        },
+        {
+          poor: 'Whatever, it will be fine',
+          better: "I'd rather check the On-Site Guide than assume — give me 2 minutes",
+        },
       ],
     },
   ];
@@ -142,15 +186,9 @@ const ProfessionalSkillsTab = () => {
               key={index}
               className="rounded-md border border-white/[0.06] bg-white/[0.02] p-4 space-y-3"
             >
-              <div className="flex items-start gap-3">
-                <div className="flex-1 space-y-1">
-                  <h3 className="text-[16px] font-semibold text-white">{skill.skill}</h3>
-                  <p className="text-[13px] text-white/70 leading-relaxed">{skill.description}</p>
-                </div>
-                <div className="text-right space-y-1">
-                  <div className="text-[12px] text-white/85 font-mono">{skill.level}%</div>
-                  <Progress value={skill.level} className="w-20 h-1 bg-white/5" />
-                </div>
+              <div className="space-y-1">
+                <h3 className="text-[16px] font-semibold text-white">{skill.skill}</h3>
+                <p className="text-[13px] text-white/70 leading-relaxed">{skill.description}</p>
               </div>
 
               <div className="grid grid-cols-1 lg:grid-cols-2 gap-3">
@@ -190,10 +228,7 @@ const ProfessionalSkillsTab = () => {
               <h3 className="text-[14px] text-white">{category.category}</h3>
               <div className="space-y-2">
                 {category.examples.map((example, exampleIndex) => (
-                  <div
-                    key={exampleIndex}
-                    className="grid grid-cols-1 md:grid-cols-2 gap-2"
-                  >
+                  <div key={exampleIndex} className="grid grid-cols-1 md:grid-cols-2 gap-2">
                     <div className="rounded-md border border-white/[0.06] bg-white/[0.02] p-3 space-y-1">
                       <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
                         Avoid saying
@@ -224,12 +259,36 @@ const ProfessionalSkillsTab = () => {
       >
         <div className="space-y-2">
           {[
-            { title: 'Start small', detail: 'Begin with simple updates and questions. The more you speak up in low-stakes situations, the easier it becomes in high-pressure ones.' },
-            { title: 'Prepare your points', detail: 'Before meetings or conversations with your supervisor, think about what you want to say. Even a few seconds of mental preparation helps.' },
-            { title: 'Use technical language correctly', detail: 'Learning and using the correct terminology shows you are taking your training seriously. It earns respect from colleagues.' },
-            { title: 'Ask questions freely', detail: 'There is no such thing as a stupid question in a safety-critical trade. Experienced electricians respect apprentices who ask rather than guess.' },
-            { title: 'Accept that mistakes happen', detail: 'Everyone makes mistakes — what matters is how you handle them. Own it, fix it, learn from it. Your credibility grows each time you handle a mistake well.' },
-            { title: 'Practise at college', detail: 'Use college sessions to practise explaining technical concepts. Presenting to classmates in a safe environment builds confidence for site.' },
+            {
+              title: 'Start small',
+              detail:
+                'Begin with simple updates and questions. The more you speak up in low-stakes situations, the easier it becomes in high-pressure ones.',
+            },
+            {
+              title: 'Prepare your points',
+              detail:
+                'Before meetings or conversations with your supervisor, think about what you want to say. Even a few seconds of mental preparation helps.',
+            },
+            {
+              title: 'Use technical language correctly',
+              detail:
+                'Learning and using the correct terminology shows you are taking your training seriously. It earns respect from colleagues.',
+            },
+            {
+              title: 'Ask questions freely',
+              detail:
+                'There is no such thing as a stupid question in a safety-critical trade. Experienced electricians respect apprentices who ask rather than guess.',
+            },
+            {
+              title: 'Accept that mistakes happen',
+              detail:
+                'Everyone makes mistakes — what matters is how you handle them. Own it, fix it, learn from it. Your credibility grows each time you handle a mistake well.',
+            },
+            {
+              title: 'Practise at college',
+              detail:
+                'Use college sessions to practise explaining technical concepts. Presenting to classmates in a safe environment builds confidence for site.',
+            },
           ].map((item, index) => (
             <div
               key={index}
@@ -243,8 +302,8 @@ const ProfessionalSkillsTab = () => {
       </Section>
 
       <Section
-        eyebrow="Preparing for EPA professional discussion"
-        description="Your End Point Assessment includes a Professional Discussion. Good communication is graded — not just nice to have."
+        eyebrow="Communication at your AM2S assessment"
+        description="The end-point assessment for the Installation and Maintenance Electrician standard is the integrated AM2S: a practical assessment of around 16.5 to 18.5 hours with an embedded online multiple-choice knowledge test. There is no separate professional discussion — but how you communicate with the assessor while you work still counts towards your grade."
       >
         <div className="space-y-3">
           <div className="rounded-md border border-white/[0.06] bg-white/[0.02] p-4 space-y-2">
@@ -253,11 +312,11 @@ const ProfessionalSkillsTab = () => {
             </span>
             <ul className="space-y-1.5">
               {[
-                'Clear, structured answers using technical terminology',
-                'Ability to explain your work process and reasoning',
-                'Evidence of professional behaviour and communication on site',
-                'Reflection on what you have learned and how you have developed',
-                'Awareness of health and safety communication requirements',
+                'Clear, accurate use of technical terminology as you explain what you are doing',
+                'Ability to talk the assessor through your safe isolation and your method',
+                'Professional behaviour and calm, courteous communication under assessment pressure',
+                'Asking sensible questions to clarify the task rather than guessing',
+                'Awareness of health and safety communication — signs, warnings, and reporting',
               ].map((item, idx) => (
                 <li
                   key={idx}
@@ -275,11 +334,11 @@ const ProfessionalSkillsTab = () => {
             </span>
             <ul className="space-y-1.5">
               {[
-                'Keep a portfolio of your work with photos and descriptions',
-                'Practise explaining technical processes in your own words',
-                'Think of examples for each knowledge, skill, and behaviour in the standard',
-                'Practise with your supervisor or training provider — mock professional discussions are invaluable',
-                'Record yourself answering practice questions and listen back',
+                'Rehearse explaining your safe isolation procedure out loud, step by step',
+                'Practise narrating your method as you work, the way you would for the assessor',
+                'Revise the knowledge areas of the standard for the embedded online multiple-choice test',
+                'Run a mock AM2S task with your training provider and ask for feedback on your communication',
+                'Record yourself talking through a wiring task and listen back for clarity',
               ].map((item, idx) => (
                 <li
                   key={idx}

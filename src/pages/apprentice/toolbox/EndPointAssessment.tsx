@@ -29,9 +29,9 @@ const SECTIONS: Section[] = [
     title: 'EPA components',
     slug: 'components',
     description:
-      'AM2E practical, knowledge test and professional discussion — what each one tests and how they fit together.',
+      'The AM2S — the integrated practical and knowledge assessment run by NET. What each section tests and how they fit together.',
     meta: '10 min read',
-    tone: 'blue',
+    tone: 'yellow',
   },
   {
     number: '02',
@@ -39,9 +39,9 @@ const SECTIONS: Section[] = [
     title: 'Grading & results',
     slug: 'grading',
     description:
-      'Pass, merit, distinction — what each grade actually means, how the components weight, and what you need to hit each band.',
+      'How the AM2S is marked, results, re-sits if needed, and what passing means for your career.',
     meta: '8 min read',
-    tone: 'emerald',
+    tone: 'yellow',
   },
   {
     number: '03',
@@ -49,9 +49,9 @@ const SECTIONS: Section[] = [
     title: 'Preparation guide',
     slug: 'preparation',
     description:
-      'How to revise the knowledge test, practise the AM2E, rehearse the professional discussion — without burning out in the last fortnight.',
+      'How to revise the applied-knowledge test and rehearse every AM2S section — without burning out in the last fortnight.',
     meta: '10 min read',
-    tone: 'amber',
+    tone: 'yellow',
   },
   {
     number: '04',
@@ -59,9 +59,9 @@ const SECTIONS: Section[] = [
     title: 'Gateway & readiness',
     slug: 'gateway',
     description:
-      'What gateway sign-off requires, how to know you\'re ready, and what to do if your tutor or employer disagrees with your verdict.',
+      "What gateway sign-off requires, how to know you're ready, and what to do if your tutor or employer disagrees with your verdict.",
     meta: '8 min read',
-    tone: 'purple',
+    tone: 'yellow',
   },
   {
     number: '05',
@@ -71,7 +71,7 @@ const SECTIONS: Section[] = [
     description:
       'The things people fail on most, the small habits that pay off on the day, and answers to the questions every apprentice asks.',
     meta: '7 min read',
-    tone: 'orange',
+    tone: 'yellow',
   },
 ];
 
@@ -94,7 +94,7 @@ const EndPointAssessment = () => {
         <PageHero
           eyebrow="Apprentice · EPA"
           title="The final test"
-          description="End Point Assessment is the gate that turns 'apprentice' into 'electrician'. Three components, one grade, one shot at distinction. Everything you need to know, in the order you need to know it."
+          description="End-point assessment is the gate that turns 'apprentice' into 'electrician'. For the Installation & Maintenance Electrician (ST0152) it is the integrated AM2S, run by NET — one practical and knowledge assessment taken after Gateway. Everything you need to know, in the order you need to know it."
           tone="yellow"
         />
       </motion.div>
@@ -111,9 +111,7 @@ const EndPointAssessment = () => {
               description={s.description}
               meta={s.meta}
               tone={s.tone}
-              onClick={() =>
-                navigate(`/apprentice/toolbox/end-point-assessment/${s.slug}`)
-              }
+              onClick={() => navigate(`/apprentice/toolbox/end-point-assessment/${s.slug}`)}
             />
           ))}
         </HubGrid>

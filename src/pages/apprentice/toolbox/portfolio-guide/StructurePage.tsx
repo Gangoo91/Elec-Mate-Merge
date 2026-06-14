@@ -9,15 +9,9 @@
 import { useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { ArrowLeft, CheckCircle2, AlertTriangle, FolderTree } from 'lucide-react';
-import {
-  PageFrame,
-  PageHero,
-  itemVariants,
-} from '@/components/college/primitives';
-import {
-  Eyebrow,
-  SectionHeader,
-} from '@/components/apprentice-hub/portfolio/PortfolioPrimitives';
+import { PageFrame, PageHero, itemVariants } from '@/components/college/primitives';
+import { Eyebrow, SectionHeader } from '@/components/apprentice-hub/portfolio/PortfolioPrimitives';
+import { DEFAULT_OTJ_STANDARD, OTJ_HOURS_FLOOR } from '@/data/otjStandards';
 
 const portfolioSections = [
   {
@@ -94,11 +88,11 @@ const portfolioSections = [
   {
     section: 'Section 8 — Off-the-job training log',
     contents: [
-      'OJT hours tracker',
+      'OTJ hours tracker',
       'College attendance records',
       'Self-study evidence',
       'Mentoring and coaching records',
-      'Activities mapped to 20% minimum requirement',
+      'Activities mapped to your OTJ hours requirement (ST0152 = 1,066 hours; absolute floor 187h)',
     ],
   },
 ];
@@ -181,11 +175,11 @@ const namingExamples = [
 
 const pitfalls = [
   'Over-complicating your structure — keep it simple and consistent',
-  'Not following your training provider\'s required format',
-  'Creating too many sub-folders — you\'ll lose track of where things are',
+  "Not following your training provider's required format",
+  "Creating too many sub-folders — you'll lose track of where things are",
   'Not including a contents page or index in physical portfolios',
   'Forgetting to update your KSB tracker when adding new evidence',
-  'Planning to collect everything in Year 4 — it\'s too late by then',
+  "Planning to collect everything in Year 4 — it's too late by then",
   'Not making a backup plan — what happens if your laptop breaks?',
 ];
 
@@ -198,7 +192,7 @@ const monthlyChecklist = [
   'Is my KSB tracker up to date?',
   'Have I backed up my digital portfolio this month?',
   'Do I need to request any witness statements?',
-  'Is my OJT log current and accurate?',
+  'Is my OTJ log current and accurate?',
   'Have I discussed my progress with my assessor?',
 ];
 
@@ -230,9 +224,9 @@ const StructurePage = () => {
         <div className="rounded-xl border border-white/[0.06] bg-[hsl(0_0%_10%)] p-4 sm:p-5 space-y-2">
           <Eyebrow>Why structure matters</Eyebrow>
           <p className="text-[13.5px] text-white/85 leading-relaxed">
-            A well-structured portfolio makes it easy for assessors to find
-            evidence, demonstrates your organisational skills, and ensures you
-            cover all required KSBs. Plan your structure early and stick to it.
+            A well-structured portfolio makes it easy for assessors to find evidence, demonstrates
+            your organisational skills, and ensures you cover all required KSBs. Plan your structure
+            early and stick to it.
           </p>
         </div>
       </motion.div>
@@ -272,6 +266,52 @@ const StructurePage = () => {
             </li>
           ))}
         </ul>
+      </motion.section>
+
+      {/* ── Gateway & OTJ hours ─────────────────────────────────── */}
+      <motion.section variants={itemVariants} className="space-y-3">
+        <SectionHeader
+          eyebrow="Section 8 — what gateway checks"
+          title="Off-the-job training hours"
+          meta="Your portfolio sits behind your gateway sign-off — not a percentage"
+        />
+        <div className="rounded-xl border border-elec-yellow/25 bg-elec-yellow/[0.04] p-4 sm:p-5 space-y-3">
+          <p className="text-[13.5px] text-white/85 leading-relaxed">
+            Off-the-job (OTJ) training is now a fixed number of hours per standard, not a percentage
+            of your working week. For {DEFAULT_OTJ_STANDARD.name} ({DEFAULT_OTJ_STANDARD.code}) the
+            requirement is{' '}
+            <span className="font-mono text-elec-yellow tabular-nums">
+              {DEFAULT_OTJ_STANDARD.otjHours.toLocaleString()} hours
+            </span>{' '}
+            (absolute floor {OTJ_HOURS_FLOOR}h), delivered over a provider-agreed timeframe. Your
+            Section 8 log evidences these hours — keep it current.
+          </p>
+          <div className="space-y-1.5 pt-2 border-t border-elec-yellow/15">
+            <Eyebrow className="text-elec-yellow/85">
+              What your provider confirms at gateway
+            </Eyebrow>
+            <ul className="space-y-1.5">
+              {[
+                'The technical qualification — e.g. City & Guilds 2365 + NVQ 2357, or an EAL route (your provider confirms the exact units)',
+                'Maths and English at Level 2',
+                'Your OTJ hours evidenced and signed off',
+                'Full KSB coverage across your portfolio',
+              ].map((item) => (
+                <li
+                  key={item}
+                  className="flex items-start gap-2 text-[12.5px] text-white/85 leading-relaxed"
+                >
+                  <CheckCircle2 className="h-3.5 w-3.5 text-elec-yellow/85 flex-shrink-0 mt-0.5" />
+                  <span>{item}</span>
+                </li>
+              ))}
+            </ul>
+          </div>
+          <p className="text-[12px] text-white/70 leading-relaxed pt-2 border-t border-elec-yellow/15">
+            Gateway is your provider confirming you are ready for End-Point Assessment. The EPA
+            itself is the AM2S practical assessment, not a portfolio review.
+          </p>
+        </div>
       </motion.section>
 
       {/* ── 5-step planning ─────────────────────────────────────── */}
@@ -320,8 +360,7 @@ const StructurePage = () => {
         />
         <div className="rounded-xl border border-white/[0.06] bg-[hsl(0_0%_10%)] p-4 sm:p-5 space-y-3">
           <p className="text-[13px] text-white/85 leading-relaxed">
-            Create a simple spreadsheet with these columns to track your
-            evidence against each KSB:
+            Create a simple spreadsheet with these columns to track your evidence against each KSB:
           </p>
           <ul className="space-y-1.5">
             {ksbColumns.map((item) => (
@@ -335,8 +374,8 @@ const StructurePage = () => {
             ))}
           </ul>
           <p className="text-[12.5px] text-white/70 leading-relaxed pt-2 border-t border-white/[0.04]">
-            Review this tracker monthly. Aim for 2–3 pieces of evidence per
-            KSB by gateway. Quality over quantity.
+            Review this tracker monthly. Aim for 2–3 pieces of evidence per KSB by gateway. Quality
+            over quantity.
           </p>
         </div>
       </motion.section>
@@ -361,7 +400,7 @@ const StructurePage = () => {
               {namingExamples.map((example) => (
                 <li
                   key={example}
-                  className="text-[12px] font-mono text-white/85 leading-relaxed"
+                  className="text-[12px] font-mono text-white/85 leading-relaxed break-all"
                 >
                   {example}
                 </li>
