@@ -318,8 +318,12 @@ const EICCertificateActions: React.FC<EICCertificateActionsProps> = ({
       queryClient.invalidateQueries({ queryKey: ['recent-certificates'] });
       queryClient.invalidateQueries({ queryKey: ['my-reports'] });
 
-      // Also call the original handler for any additional processing
-      onGenerateCertificate();
+      // NOTE: deliberately do NOT call onGenerateCertificate() here. It points at
+      // the legacy inline "thin" generator (EICCertificate.handleGenerateCertificate)
+      // which builds a ~85%-blank payload and produced a second, near-empty PDF on
+      // top of this correct one. The rich formatEicJson path above is the only
+      // generation path now. (Its former trigger, the EIC nav "Generate" button,
+      // was already removed.)
     } catch (error) {
       setExportStatus('error');
       toast({
