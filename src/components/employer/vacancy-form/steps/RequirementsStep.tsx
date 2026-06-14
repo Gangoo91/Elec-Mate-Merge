@@ -54,7 +54,7 @@ export function RequirementsStep() {
   return (
     <div className="space-y-4">
       {/* Experience Level */}
-      <FormCard eyebrow="Experience Level">
+      <FormCard index={1} eyebrow="Experience level">
         <Controller
           name="experienceLevel"
           control={control}
@@ -69,8 +69,8 @@ export function RequirementsStep() {
                     'p-3 rounded-xl border text-[13px] font-medium transition-all duration-200',
                     'touch-manipulation min-h-[48px]',
                     selectedLevel === level
-                      ? 'border-elec-yellow bg-elec-yellow/10 text-elec-yellow'
-                      : 'border-white/[0.08] bg-[hsl(0_0%_9%)] text-white hover:bg-white/[0.08]'
+                      ? 'border-elec-yellow/40 bg-elec-yellow/[0.10] text-elec-yellow'
+                      : 'border-white/[0.08] bg-white/[0.04] text-white/80 hover:bg-white/[0.06]'
                   )}
                 >
                   {level}

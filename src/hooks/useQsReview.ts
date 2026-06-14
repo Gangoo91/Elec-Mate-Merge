@@ -12,6 +12,8 @@ export interface QsTeamContext {
   employer_id?: string;
   company_name?: string | null;
   am_i_qs?: boolean;
+  /** True when the caller may sign off their OWN certificates (declared owner-QS or designated principal QS). */
+  am_i_principal_qs?: boolean;
   qs_approval_required?: boolean;
 }
 

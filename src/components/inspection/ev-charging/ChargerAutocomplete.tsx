@@ -180,13 +180,23 @@ export const ChargerAutocomplete: React.FC<ChargerAutocompleteProps> = ({
         )}
       </div>
       {selectedCharger && (
-        <button
-          type="button"
+        // Not a <button> — this sits inside the trigger button and nested
+        // buttons are invalid DOM (React warns, screen readers mis-announce).
+        <span
+          role="button"
+          tabIndex={0}
+          aria-label="Clear selected charger"
           onClick={handleClear}
+          onKeyDown={(e) => {
+            if (e.key === 'Enter' || e.key === ' ') {
+              e.preventDefault();
+              handleClear(e as unknown as React.MouseEvent);
+            }
+          }}
           className="w-7 h-7 flex items-center justify-center rounded-lg hover:bg-white/10 touch-manipulation flex-shrink-0"
         >
           <X className="h-3.5 w-3.5 text-white" />
-        </button>
+        </span>
       )}
     </button>
   );

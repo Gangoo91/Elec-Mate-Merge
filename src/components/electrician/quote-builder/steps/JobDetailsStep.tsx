@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { JobDetails } from '@/types/quote';
 import { cn } from '@/lib/utils';
 import { format, parse, isValid } from 'date-fns';
-import { CalendarIcon } from 'lucide-react';
+import { CalendarIcon, Check } from 'lucide-react';
 import { Calendar } from '@/components/ui/calendar';
 import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover';
 import {
@@ -41,6 +41,17 @@ export const JobDetailsStep = ({ jobDetails, onUpdate }: JobDetailsStepProps) =>
 
   const handleChange = (field: keyof JobDetails, value: string) => {
     onUpdate({ ...(jobDetails || {}), [field]: value } as JobDetails);
+  };
+
+  const startTbd = !!jobDetails?.workStartTbd;
+  const toggleStartTbd = () => {
+    const next = !startTbd;
+    // Turning on TBD clears any chosen date; turning off just drops the flag.
+    onUpdate({
+      ...(jobDetails || {}),
+      workStartTbd: next,
+      ...(next ? { workStartDate: '' } : {}),
+    } as JobDetails);
   };
 
   // workStartDate is stored as 'yyyy-MM-dd' (native date input format)
@@ -108,35 +119,61 @@ export const JobDetailsStep = ({ jobDetails, onUpdate }: JobDetailsStepProps) =>
 
         <div>
           <label className={labelClass}>Proposed start date</label>
-          <Popover open={dateOpen} onOpenChange={setDateOpen}>
-            <PopoverTrigger asChild>
-              <button
-                type="button"
-                className={cn(
-                  inputClass,
-                  'flex items-center justify-between text-left',
-                  !startDateValid && 'text-white/40'
-                )}
-              >
-                {startDateValid ? format(startDateValid, 'EEE d MMM yyyy') : 'Pick a date'}
-                <CalendarIcon className="h-4 w-4 text-white/50 flex-shrink-0 ml-2" />
-              </button>
-            </PopoverTrigger>
-            <PopoverContent
-              align="start"
-              className="w-auto p-0 z-[100] bg-elec-gray border-white/10"
+          {startTbd ? (
+            <div
+              className={cn(inputClass, 'flex items-center justify-between text-left text-white/70')}
             >
-              <Calendar
-                mode="single"
-                selected={startDateValid}
-                onSelect={(date) => {
-                  handleChange('workStartDate', date ? format(date, 'yyyy-MM-dd') : '');
-                  setDateOpen(false);
-                }}
-                initialFocus
-              />
-            </PopoverContent>
-          </Popover>
+              To be decided
+              <CalendarIcon className="ml-2 h-4 w-4 flex-shrink-0 text-white/30" />
+            </div>
+          ) : (
+            <Popover open={dateOpen} onOpenChange={setDateOpen}>
+              <PopoverTrigger asChild>
+                <button
+                  type="button"
+                  className={cn(
+                    inputClass,
+                    'flex items-center justify-between text-left',
+                    !startDateValid && 'text-white/40'
+                  )}
+                >
+                  {startDateValid ? format(startDateValid, 'EEE d MMM yyyy') : 'Pick a date'}
+                  <CalendarIcon className="h-4 w-4 text-white/50 flex-shrink-0 ml-2" />
+                </button>
+              </PopoverTrigger>
+              <PopoverContent
+                align="start"
+                className="w-auto p-0 z-[100] bg-elec-gray border-white/10"
+              >
+                <Calendar
+                  mode="single"
+                  selected={startDateValid}
+                  onSelect={(date) => {
+                    handleChange('workStartDate', date ? format(date, 'yyyy-MM-dd') : '');
+                    setDateOpen(false);
+                  }}
+                  initialFocus
+                />
+              </PopoverContent>
+            </Popover>
+          )}
+          <button
+            type="button"
+            onClick={toggleStartTbd}
+            className="mt-2 inline-flex items-center gap-1.5 text-[12px] text-white/65 touch-manipulation active:scale-[0.98]"
+          >
+            <span
+              className={cn(
+                'flex h-4 w-4 items-center justify-center rounded border transition-colors',
+                startTbd
+                  ? 'border-elec-yellow bg-elec-yellow text-black'
+                  : 'border-white/30 bg-white/[0.04]'
+              )}
+            >
+              {startTbd && <Check className="h-3 w-3" />}
+            </span>
+            Start date to be decided
+          </button>
         </div>
       </div>
 

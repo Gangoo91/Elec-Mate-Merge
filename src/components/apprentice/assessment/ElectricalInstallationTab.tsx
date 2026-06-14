@@ -77,11 +77,11 @@ const ElectricalInstallationTab = () => {
 
   const complianceRequirements = [
     {
-      standard: 'BS 7671:2018+A3:2024',
+      standard: 'BS 7671:2018+A4:2026',
       description: 'Requirements for Electrical Installations (IET Wiring Regulations)',
       keyPoints: [
-        'Chapter 61: Initial verification',
-        'Chapter 62: Periodic inspection',
+        'Chapter 64: Initial verification',
+        'Chapter 65: Periodic inspection',
         'Appendix 6: Model forms',
       ],
     },

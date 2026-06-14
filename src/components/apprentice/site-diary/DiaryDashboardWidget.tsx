@@ -7,6 +7,7 @@
  */
 
 import { useState } from 'react';
+import { todayLocalISO } from '@/lib/localDate';
 import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { Plus, ChevronRight, Flame, FileText } from 'lucide-react';
@@ -29,7 +30,7 @@ export function DiaryDashboardWidget() {
     useDiaryStreak(entries);
   const [sheetOpen, setSheetOpen] = useState(false);
 
-  const todayStr = new Date().toISOString().split('T')[0];
+  const todayStr = todayLocalISO();
   const hasLoggedToday = entries.some((e) => e.date === todayStr);
   const todayFormatted = new Date().toLocaleDateString('en-GB', {
     weekday: 'long',

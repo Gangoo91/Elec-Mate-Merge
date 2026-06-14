@@ -742,6 +742,22 @@ const PublicQuoteView = () => {
                     </p>
                   </div>
                 )}
+                {(quote.jobDetails.workStartTbd || quote.jobDetails.workStartDate) && (
+                  <div>
+                    <p className="text-[11px] font-medium text-slate-500 flex items-center gap-1">
+                      <Calendar className="h-3 w-3" />
+                      Start date
+                    </p>
+                    <p className="mt-1 text-[14px] text-slate-700">
+                      {quote.jobDetails.workStartTbd
+                        ? 'To be confirmed'
+                        : new Date(quote.jobDetails.workStartDate as string).toLocaleDateString(
+                            'en-GB',
+                            { day: 'numeric', month: 'short', year: 'numeric' }
+                          )}
+                    </p>
+                  </div>
+                )}
               </div>
               {quote.jobDetails.description && (
                 <div>
@@ -860,7 +876,7 @@ const PublicQuoteView = () => {
                     {items.map((item) => (
                       <div key={item.id} className="flex items-start justify-between gap-3 py-1.5">
                         <div className="flex-1 min-w-0 pr-2">
-                          <p className="text-[14px] text-slate-900 font-medium leading-snug">
+                          <p className="text-[14px] text-slate-900 font-medium leading-snug whitespace-pre-line">
                             {item.description}
                           </p>
                           <p className="text-[12px] text-slate-500 mt-0.5">

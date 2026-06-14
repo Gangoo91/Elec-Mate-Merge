@@ -445,7 +445,7 @@ const SafeIsolationPage = () => {
       <div className="rounded-xl border border-white/[0.06] bg-[hsl(0_0%_10%)]">
         <div className="p-4 sm:p-5">
           <p className="text-white text-xs leading-relaxed">
-            Based on the Electricity at Work Regulations 1989, BS 7671:2018+A2:2022
+            Based on the Electricity at Work Regulations 1989, BS 7671:2018+A4:2026
             (Regulation 132.15), HSE Guidance Note GS38 (4th edition), and IET Code
             of Practice for In-Service Inspection and Testing of Electrical
             Equipment. Always follow your employer's specific safe isolation

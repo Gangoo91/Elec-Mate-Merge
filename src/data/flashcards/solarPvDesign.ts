@@ -171,7 +171,7 @@ export const solarPvDesign: FlashcardData[] = [
   {
     id: 'spv19',
     question:
-      'Which section of BS 7671:2018+A2:2022 covers solar photovoltaic power supply systems, and what are its key requirements?',
+      'Which section of BS 7671:2018+A4:2026 covers solar photovoltaic power supply systems, and what are its key requirements?',
     answer:
       'Section 712 covers solar photovoltaic (PV) power supply systems. Key requirements include: selection and installation of equipment rated for the maximum voltage and current of the PV array; DC cable protection and isolation; equipotential bonding of all exposed-conductive-parts (module frames and mounting structures); labelling at the consumer unit, meter, and inverter warning of dual supply; and appropriate overcurrent and fault protection. Section 712 also addresses the specific risks of PV installations, including the fact that DC circuits remain live whenever the modules are exposed to light.',
     category: 'Regulations',

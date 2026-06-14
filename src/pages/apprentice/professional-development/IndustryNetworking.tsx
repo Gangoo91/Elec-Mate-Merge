@@ -9,15 +9,8 @@
 import { useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { ArrowLeft, CheckCircle2 } from 'lucide-react';
-import {
-  PageFrame,
-  PageHero,
-  itemVariants,
-} from '@/components/college/primitives';
-import {
-  Eyebrow,
-  SectionHeader,
-} from '@/components/apprentice-hub/portfolio/PortfolioPrimitives';
+import { PageFrame, PageHero, itemVariants } from '@/components/college/primitives';
+import { Eyebrow, SectionHeader } from '@/components/apprentice-hub/portfolio/PortfolioPrimitives';
 
 const professionalBodies = [
   {
@@ -91,7 +84,7 @@ const professionalBodies = [
     recommended: false,
   },
   {
-    name: 'REA (Renewable Energy Association)',
+    name: 'REA (Association for Renewable Energy & Clean Technology)',
     cost: '£500–£2,000/yr',
     members: 'Green energy sector',
     description:
@@ -124,12 +117,20 @@ const industryEvents = [
       'Regular local technical talks, seminars, and networking events run by IET volunteers across the UK. Great for meeting local professionals.',
   },
   {
-    name: 'ElecTech Live',
-    frequency: 'Annual',
-    location: 'Various',
-    cost: '£200–£800',
+    name: 'Elex (The Electrical Trade Show)',
+    frequency: 'Several shows a year',
+    location: 'London, Exeter, Coventry, Manchester & more',
+    cost: 'Free entry',
     description:
-      'Major electrical trade exhibition showcasing new products, technologies, and training. Hands-on demos and CPD sessions.',
+      'The UK electrical trade show — new products, wholesaler deals, and free CPD seminars on the wiring regs, EV and renewables. Free to attend, runs at venues around the country through the year.',
+  },
+  {
+    name: 'SkillELECTRIC / WorldSkills UK',
+    frequency: 'Annual competition',
+    location: 'Regional heats → national final',
+    cost: 'Free to enter',
+    description:
+      'The national skills competition for electrical installation apprentices, run by NET. A genuine CV standout, brilliant for confidence, and a pathway towards WorldSkills — entries open early in the year.',
   },
   {
     name: 'Renewable Energy Events',
@@ -172,6 +173,13 @@ const onlineCommunities = [
       'Online discussion forums run by the IET covering technical topics, career development, and industry news. Moderated by qualified professionals.',
   },
   {
+    name: 'IET Young Professionals',
+    members: 'Under-35 community',
+    cost: 'IET membership',
+    description:
+      "The IET's community for early-career engineers — events, mentoring and competitions aimed squarely at apprentices and recently-qualified electricians. A low-pressure way into the wider network.",
+  },
+  {
     name: 'Facebook Trade Groups',
     members: 'Variable',
     cost: 'Free',
@@ -189,17 +197,17 @@ const linkedInTips = [
   {
     tip: 'Fill the basics',
     detail:
-      'Photo, current employer, qualifications, ECS card status. Recruiters skim — if the basics are blank they move on. Doesn\'t need polish, needs to be there.',
+      "Photo, current employer, qualifications, ECS card status. Recruiters skim — if the basics are blank they move on. Doesn't need polish, needs to be there.",
   },
   {
     tip: 'Show real work',
     detail:
-      'Post photos of jobs you\'re proud of (with employer + client permission). One good board, one tidy second-fix run, one finished cert — that\'s a portfolio.',
+      "Post photos of jobs you're proud of (with employer + client permission). One good board, one tidy second-fix run, one finished cert — that's a portfolio.",
   },
   {
     tip: 'Comment more than you post',
     detail:
-      'Replying to other people\'s posts with a useful technical thought is faster than writing your own and gets you in front of more people. Show you know your stuff.',
+      "Replying to other people's posts with a useful technical thought is faster than writing your own and gets you in front of more people. Show you know your stuff.",
   },
 ];
 
@@ -212,7 +220,7 @@ const networkingTips = [
   {
     tip: 'Ask questions',
     detail:
-      'At events and talks, always ask a question. It shows you\'re engaged, helps you learn, and gives speakers a reason to remember you. Follow up afterwards.',
+      "At events and talks, always ask a question. It shows you're engaged, helps you learn, and gives speakers a reason to remember you. Follow up afterwards.",
   },
   {
     tip: 'Volunteer at events',
@@ -285,7 +293,7 @@ const actionPlan = [
     step: 4,
     title: 'Get your ECS card',
     detail:
-      'If you don\'t already have one, apply for your ECS card through the JIB. It\'s the industry-standard proof of your qualifications and is required on most commercial sites.',
+      "If you don't already have one, apply for your ECS card through the JIB. It's the industry-standard proof of your qualifications and is required on most commercial sites.",
   },
 ];
 
@@ -316,10 +324,9 @@ const IndustryNetworking = () => {
       <motion.div variants={itemVariants}>
         <div className="rounded-xl border border-elec-yellow/20 bg-elec-yellow/[0.04] p-4 sm:p-5">
           <p className="text-[13.5px] text-white/85 leading-relaxed">
-            Your network is your net worth in this industry. The connections you
-            make as an apprentice can become lifelong professional relationships
-            — opening doors to jobs, partnerships, and opportunities you'd never
-            find on your own.
+            Your network is your net worth in this industry. The connections you make as an
+            apprentice can become lifelong professional relationships — opening doors to jobs,
+            partnerships, and opportunities you'd never find on your own.
           </p>
         </div>
       </motion.div>
@@ -338,18 +345,14 @@ const IndustryNetworking = () => {
               className="rounded-xl border border-white/[0.06] bg-[hsl(0_0%_10%)] p-4 sm:p-5 space-y-3"
             >
               <div className="flex items-baseline justify-between gap-3 flex-wrap">
-                <h3 className="text-[15px] font-semibold text-white tracking-tight">
-                  {body.name}
-                </h3>
+                <h3 className="text-[15px] font-semibold text-white tracking-tight">{body.name}</h3>
                 {body.recommended && (
                   <span className="inline-flex items-center h-6 px-2 rounded-md border border-elec-yellow/30 bg-elec-yellow/[0.06] text-[10px] font-medium uppercase tracking-[0.14em] text-elec-yellow">
                     Recommended
                   </span>
                 )}
               </div>
-              <p className="text-[13px] text-white/85 leading-relaxed">
-                {body.description}
-              </p>
+              <p className="text-[13px] text-white/85 leading-relaxed">{body.description}</p>
               <div className="flex items-center gap-2 text-[11.5px] font-mono tabular-nums text-white/55">
                 <span>{body.cost}</span>
                 <span>·</span>
@@ -384,12 +387,8 @@ const IndustryNetworking = () => {
               key={event.name}
               className="rounded-xl border border-white/[0.06] bg-[hsl(0_0%_10%)] p-4 sm:p-5 space-y-2"
             >
-              <h3 className="text-[14px] font-semibold text-white tracking-tight">
-                {event.name}
-              </h3>
-              <p className="text-[13px] text-white/85 leading-relaxed">
-                {event.description}
-              </p>
+              <h3 className="text-[14px] font-semibold text-white tracking-tight">{event.name}</h3>
+              <p className="text-[13px] text-white/85 leading-relaxed">{event.description}</p>
               <div className="flex items-center gap-2 text-[11.5px] font-mono tabular-nums text-white/55 flex-wrap">
                 <span>{event.frequency}</span>
                 <span>·</span>
@@ -423,12 +422,8 @@ const IndustryNetworking = () => {
                   {community.cost}
                 </span>
               </div>
-              <p className="text-[13px] text-white/85 leading-relaxed">
-                {community.description}
-              </p>
-              <p className="text-[11.5px] text-white/55 font-mono">
-                {community.members}
-              </p>
+              <p className="text-[13px] text-white/85 leading-relaxed">{community.description}</p>
+              <p className="text-[11.5px] text-white/55 font-mono">{community.members}</p>
             </li>
           ))}
         </ul>
@@ -447,9 +442,7 @@ const IndustryNetworking = () => {
               key={item.tip}
               className="rounded-xl border border-white/[0.06] bg-[hsl(0_0%_10%)] p-4 sm:p-5 space-y-1"
             >
-              <h3 className="text-[14px] font-semibold text-white tracking-tight">
-                {item.tip}
-              </h3>
+              <h3 className="text-[14px] font-semibold text-white tracking-tight">{item.tip}</h3>
               <p className="text-[13px] text-white/85 leading-relaxed">{item.detail}</p>
             </li>
           ))}
@@ -469,9 +462,7 @@ const IndustryNetworking = () => {
               key={item.tip}
               className="rounded-xl border border-white/[0.06] bg-[hsl(0_0%_10%)] p-4 sm:p-5 space-y-1"
             >
-              <h3 className="text-[14px] font-semibold text-white tracking-tight">
-                {item.tip}
-              </h3>
+              <h3 className="text-[14px] font-semibold text-white tracking-tight">{item.tip}</h3>
               <p className="text-[13px] text-white/85 leading-relaxed">{item.detail}</p>
             </li>
           ))}
@@ -494,9 +485,7 @@ const IndustryNetworking = () => {
               <h3 className="text-[14px] font-semibold text-white tracking-tight">
                 {programme.name}
               </h3>
-              <p className="text-[13px] text-white/85 leading-relaxed">
-                {programme.description}
-              </p>
+              <p className="text-[13px] text-white/85 leading-relaxed">{programme.description}</p>
               <div className="flex items-center gap-2 text-[11.5px] font-mono tabular-nums text-white/55">
                 <span>{programme.duration}</span>
                 <span>·</span>
@@ -530,9 +519,7 @@ const IndustryNetworking = () => {
                   <h3 className="text-[14px] font-semibold text-white tracking-tight">
                     {item.title}
                   </h3>
-                  <p className="text-[13px] text-white/85 leading-relaxed">
-                    {item.detail}
-                  </p>
+                  <p className="text-[13px] text-white/85 leading-relaxed">{item.detail}</p>
                 </div>
               </div>
             </li>
@@ -546,10 +533,10 @@ const IndustryNetworking = () => {
           <Eyebrow className="text-elec-yellow/85">The ROI of networking</Eyebrow>
           <p className="text-[13.5px] text-white/85 leading-relaxed">
             Industry surveys consistently show that{' '}
-            <span className="font-mono text-elec-yellow">60–70%</span> of job
-            opportunities are never advertised publicly. They're filled through
-            referrals and personal connections. Even 30 minutes a week on
-            LinkedIn can transform your career opportunities within a year.
+            <span className="font-mono text-elec-yellow">60–70%</span> of job opportunities are
+            never advertised publicly. They're filled through referrals and personal connections.
+            Even 30 minutes a week on LinkedIn can transform your career opportunities within a
+            year.
           </p>
         </div>
       </motion.section>
@@ -557,9 +544,8 @@ const IndustryNetworking = () => {
       {/* ── Footnote ─────────────────────────────────────────────── */}
       <motion.section variants={itemVariants}>
         <p className="text-[11px] text-white/40 leading-relaxed">
-          Professional body information based on current UK membership rates and
-          benefits. Costs and offerings may change — check directly with each
-          organisation for the latest details.
+          Professional body information based on current UK membership rates and benefits. Costs and
+          offerings may change — check directly with each organisation for the latest details.
         </p>
       </motion.section>
     </PageFrame>

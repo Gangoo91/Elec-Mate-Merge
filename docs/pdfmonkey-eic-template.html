@@ -13,6 +13,8 @@
 
         @page {
             size: A4 portrait;
+            /* Tight margins by design (minimal border). Right-edge clipping is fixed
+               by word-wrapping + width constraints below, NOT by widening margins. */
             margin: 3mm 3mm 4mm 3mm;
         }
 
@@ -48,6 +50,24 @@
             background: #fff;
             -webkit-print-color-adjust: exact;
             print-color-adjust: exact;
+            /* ELE-1112: wrap long content (emails, URLs, reg numbers, addresses,
+               descriptions) so it never overflows the tight printable width and
+               clips at the right edge. Inherited by all text below. */
+            overflow-wrap: break-word;
+            word-break: break-word;
+        }
+
+        /* ELE-1112: belt-and-braces — no element may exceed the printable width,
+           and tables wrap their cell contents rather than forcing a wider page. */
+        .section, .form-grid, .data-table, .inspection-table,
+        .inline-form, .signature-grid, .guidance-columns, .footer {
+            max-width: 100%;
+        }
+        .form-value, .inline-value, .data-field-value, .sig-field-value,
+        .declaration-text, .compliance-text, .observation-section-content,
+        .item-desc, .checkbox-label {
+            overflow-wrap: break-word;
+            word-break: break-word;
         }
 
         /* =============================================
@@ -795,6 +815,8 @@
 
         .guidance-col {
             flex: 1;
+            min-width: 0;
+            overflow-wrap: break-word;
             font-size: 6.5px;
             line-height: 1.5;
             color: #475569;
@@ -816,12 +838,15 @@
             border-top: 2px solid var(--accent-color);
             display: flex;
             justify-content: space-between;
+            gap: 12px;
             font-size: 7px;
             color: #64748b;
         }
 
-        .footer-left { line-height: 1.5; }
-        .footer-right { text-align: right; }
+        /* ELE-1112: min-width:0 lets the left block shrink/wrap instead of forcing
+           the footer wider than the page and clipping the right-hand reg/BS text. */
+        .footer-left { line-height: 1.5; min-width: 0; overflow-wrap: break-word; }
+        .footer-right { text-align: right; flex-shrink: 0; }
 
         /* =============================================
            PAGE BREAKS & UTILITIES
@@ -837,7 +862,9 @@
            CLIENT-FACING COVER SHEET (A4:2026) — full-bleed navy + gold
            All values from the existing payload — statutory certificate unchanged below
            ============================================= */
-        .cover-page { page: cover; width: 210mm; min-height: 297mm; display: flex; flex-direction: column; color: #0a1628; }
+        /* ELE-1112: full-width (100% of the zero-margin cover page) instead of a
+           fixed 210mm, so it can't impose a 210mm width on the statutory pages. */
+        .cover-page { page: cover; width: 100%; min-height: 297mm; display: flex; flex-direction: column; color: #0a1628; }
         .cover-hero { position: relative; background: linear-gradient(160deg, #0a1628 0%, #152238 60%, #1c2e4a 100%); color: #fff; padding: 22mm 18mm 16mm; }
         .cover-hero::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 6px; background: linear-gradient(90deg, var(--accent-color), #fbbf24, var(--accent-color)); }
         .cover-logos { display: flex; justify-content: space-between; align-items: center; margin-bottom: 18mm; min-height: 60px; }
@@ -1505,7 +1532,7 @@
 <!-- Footer Page 2 -->
 <div class="footer">
     <div class="footer-left">
-        <strong>{{ company_details.company_name }}</strong> | {{ company_details.company_phone }}
+        <strong>{{ company_details.company_name }}</strong>{% if company_details.company_phone %} | Tel: {{ company_details.company_phone }}{% endif %}{% if company_details.company_email %} | {{ company_details.company_email }}{% endif %}
     </div>
     <div class="footer-right">
         <span style="color: #94a3b8;">BS 7671:2018+A4:2026</span>
@@ -1959,7 +1986,7 @@
 <!-- Footer Page 3 -->
 <div class="footer">
     <div class="footer-left">
-        <strong>{{ company_details.company_name }}</strong> | {{ company_details.company_phone }}
+        <strong>{{ company_details.company_name }}</strong>{% if company_details.company_phone %} | Tel: {{ company_details.company_phone }}{% endif %}{% if company_details.company_email %} | {{ company_details.company_email }}{% endif %}
     </div>
     <div class="footer-right">
         <span style="color: #94a3b8;">BS 7671:2018+A4:2026</span>
@@ -2117,10 +2144,14 @@
         </tbody>
     </table>
 
-    <div style="margin-top: 6px; font-size: 7px; color: #64748b">
-        <strong>Tested by:</strong> {{ inspector.name }} &nbsp;&nbsp;|&nbsp;&nbsp;
-        <strong>Signature:</strong> __________________ &nbsp;&nbsp;|&nbsp;&nbsp;
-        <strong>Date:</strong> {{ inspector.date }}
+    <!-- ELE-1114: auto-populate the tester's saved signature (from their profile)
+         instead of a blank line; falls back to a ruled line if none is on file. -->
+    <div style="margin-top: 6px; font-size: 7px; color: #64748b; display: flex; align-items: center; gap: 8px;">
+        <span><strong>Tested by:</strong> {{ inspector.name }}</span>
+        <span>|</span>
+        <span style="display: inline-flex; align-items: center; gap: 4px;"><strong>Signature:</strong> {% if inspector.signature contains "data:" %}<img src="{{ inspector.signature }}" style="max-height: 24px; vertical-align: middle;" />{% else %}__________________{% endif %}</span>
+        <span>|</span>
+        <span><strong>Date:</strong> {{ inspector.date }}</span>
     </div>
 </div>
 {% endfor %}
@@ -2428,7 +2459,7 @@
 <!-- Footer Observations Page -->
 <div class="footer">
     <div class="footer-left">
-        <strong>{{ company_details.company_name }}</strong> | {{ company_details.company_phone }}
+        <strong>{{ company_details.company_name }}</strong>{% if company_details.company_phone %} | Tel: {{ company_details.company_phone }}{% endif %}{% if company_details.company_email %} | {{ company_details.company_email }}{% endif %}
     </div>
     <div class="footer-right">
         <span style="color: #94a3b8;">BS 7671:2018+A4:2026</span>

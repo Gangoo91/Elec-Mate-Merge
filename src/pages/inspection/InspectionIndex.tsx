@@ -27,6 +27,7 @@ const LearningHub = lazy(() => import('@/components/LearningHub'));
 const CertificatesSection = lazy(() => import('@/components/dashboard/CertificatesSection'));
 const SpecialistSection = lazy(() => import('@/components/dashboard/SpecialistSection'));
 const LabelsWarningsSection = lazy(() => import('@/components/dashboard/LabelsWarningsSection'));
+const QsReviewBenchSection = lazy(() => import('@/components/inspection/QsReviewBenchSection'));
 
 // Skeleton loader for lazy components
 const SectionLoader = SectionSkeleton;
@@ -242,6 +243,8 @@ const InspectionIndex = () => {
         );
       case 'learning-hub':
         return <LearningHub onBack={() => handleNavigate('dashboard')} />;
+      case 'qs-reviews':
+        return <QsReviewBenchSection onBack={() => handleNavigate('dashboard')} />;
       case 'notifications':
         return (
           <div className="-mt-3 sm:-mt-4 md:-mt-6 bg-background pb-24">

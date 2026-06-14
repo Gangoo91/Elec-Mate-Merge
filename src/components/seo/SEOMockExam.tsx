@@ -19,7 +19,7 @@
  * feel fresh; fixed salt for the SSR sample questions so crawl HTML is
  * consistent across crawls.
  */
-import { useState, useMemo, useCallback, useEffect } from 'react';
+import { useState, useMemo, useCallback, useEffect, useRef } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import {
   Clock,
@@ -35,6 +35,7 @@ import {
 } from 'lucide-react';
 import { shuffleAllQuestionOptions, createShuffleSalt } from '@/utils/shuffleOptions';
 import { supabase } from '@/integrations/supabase/client';
+import { recordMiss } from '@/lib/missedQuestions';
 
 export interface SEOMockExamQuestion {
   id: number | string;
@@ -90,6 +91,11 @@ export function SEOMockExam({
   const [attempt, setAttempt] = useState(0);
   const [startedAt, setStartedAt] = useState<number | null>(null);
   const [finishedAt, setFinishedAt] = useState<number | null>(null);
+  // Synchronous re-entry guard — `submitted` state can't stop a double-tap
+  // (or a timer-expiry + click race) calling submit twice before React
+  // re-renders, which would record every missed question twice and insert
+  // a duplicate attempt row.
+  const submitGuardRef = useRef(false);
 
   // 3 sample questions rendered server-side for SEO. Picked deterministically
   // and shuffled with a fixed salt so crawl HTML is identical between crawls.
@@ -105,6 +111,7 @@ export function SEOMockExam({
     );
     setQuestions(picked);
     setAnswers(new Array(picked.length).fill(null));
+    submitGuardRef.current = false;
     setCurrent(0);
     setSecondsLeft(timeLimitMinutes * 60);
     setSubmitted(false);
@@ -120,6 +127,8 @@ export function SEOMockExam({
   }, [questionBank, questionsPerExam, timeLimitMinutes]);
 
   const submit = useCallback(() => {
+    if (submitGuardRef.current) return;
+    submitGuardRef.current = true;
     setSubmitted(true);
     setStarted(false);
     const finished = Date.now();
@@ -131,6 +140,33 @@ export function SEOMockExam({
     // bounds; here we additionally gate sub-30-second attempts so
     // misclicks + obvious bots don't pollute the dataset.
     if (typeof window === 'undefined' || !startedAt) return;
+
+    // Wrong-answer capture — signed-in learners only (this page is also
+    // public/anonymous). Each answered-but-wrong question lands in the
+    // personal missed pile that powers /apprentice/revision. Fire-and-
+    // forget; zero UI change to the exam flow.
+    const missed = questions.filter(
+      (q, i) => answers[i] !== null && answers[i] !== q.correctAnswer
+    );
+    if (missed.length > 0) {
+      void supabase.auth.getSession().then(({ data }) => {
+        const uid = data.session?.user?.id;
+        if (!uid) return;
+        missed.forEach((q) =>
+          recordMiss(
+            uid,
+            {
+              question: q.question,
+              options: q.options,
+              correctAnswer: q.correctAnswer,
+              explanation: q.explanation,
+            },
+            examName
+          )
+        );
+      });
+    }
+
     const timeSec = Math.round((finished - startedAt) / 1000);
     if (timeSec < 30 || questions.length === 0) return;
     const finalCorrect = questions.reduce(
@@ -163,7 +199,7 @@ export function SEOMockExam({
           console.warn('[seo_mock_attempts insert failed]', error.message);
         }
       });
-  }, [startedAt, questions, answers, passThreshold, location.pathname]);
+  }, [startedAt, questions, answers, passThreshold, location.pathname, examName]);
 
   useEffect(() => {
     if (!started || submitted) return;

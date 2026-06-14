@@ -9,15 +9,8 @@
 import { useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { ArrowLeft, CheckCircle2 } from 'lucide-react';
-import {
-  PageFrame,
-  PageHero,
-  itemVariants,
-} from '@/components/college/primitives';
-import {
-  Eyebrow,
-  SectionHeader,
-} from '@/components/apprentice-hub/portfolio/PortfolioPrimitives';
+import { PageFrame, PageHero, itemVariants } from '@/components/college/primitives';
+import { Eyebrow, SectionHeader } from '@/components/apprentice-hub/portfolio/PortfolioPrimitives';
 
 const courseCategories = [
   {
@@ -226,7 +219,7 @@ const successStories = [
     location: 'Bristol',
     role: 'Solar PV specialist',
     change: '£28k → £39k (+40%)',
-    path: 'Completed City & Guilds 2399 PV Design and MCS certification part-time over 6 months while working as a domestic electrician.',
+    path: 'Completed City & Guilds 2922 Solar PV and MCS certification part-time over 6 months while working as a domestic electrician.',
     detail:
       'Now leads a four-person solar installation team for a renewable energy company. Handles system design, installation, and DNO applications.',
     tip: 'Start with one renewable cert — it opens the door to the whole green energy sector.',
@@ -236,7 +229,7 @@ const successStories = [
     location: 'Manchester',
     role: 'EV charging business owner',
     change: '£32k → £52k + own business',
-    path: 'Invested £1,200 in City & Guilds 2919 EV Charging and Smart Charging certifications. Built a client base through local EV owner groups.',
+    path: 'Invested £1,200 in City & Guilds 2921 EV Charging and Smart Charging certifications. Built a client base through local EV owner groups.',
     detail:
       'Started his own EV charging installation company within 2 years. Now employs two electricians and covers the entire North West.',
     tip: 'The EV market is still young enough that you can build a strong local reputation quickly.',
@@ -315,7 +308,7 @@ const whyContinue = [
   {
     title: 'Higher earnings',
     detail:
-      'Specialist training adds £8,000–£15,000 annually. That\'s a 30–50% salary increase for qualified specialists vs general electricians.',
+      "Specialist training adds £8,000–£15,000 annually. That's a 30–50% salary increase for qualified specialists vs general electricians.",
   },
   {
     title: 'Future-proof your career',
@@ -325,12 +318,40 @@ const whyContinue = [
 ];
 
 const fundingPoints = [
-  'Apprenticeship Levy — up to £23,000 for Level 3 Electrical Installation (funding band). Employers with a pay bill over £3m pay into the levy; smaller employers get 95% government co-investment.',
+  'Apprenticeship Levy — up to £18,000 for Level 3 Electrical Installation, ST0152 (funding band). Employers with a pay bill over £3m pay into the levy; smaller employers get 95% government co-investment.',
   'Advanced Learner Loans — cover full course fees for Level 3–6 qualifications including degree top-ups. Repay only when earning over £25,000/yr.',
   'Employer sponsorship — many larger contractors fund training as part of staff development. Always ask before paying yourself.',
   'IET Education Grants — £500–£2,000 for IET members pursuing further education.',
   'Skills Bootcamps — free government-funded intensive courses in specific technical areas.',
   'CITB Training Grants — construction industry training board grants for eligible employers and individuals.',
+];
+
+const a4Changes = [
+  {
+    change: 'Arc Fault Detection Devices (AFDDs)',
+    detail:
+      'Now required on single-phase socket-outlet final circuits up to 32A in higher-risk residential buildings, HMOs, purpose-built student accommodation and care homes (Reg 421.1.7) — they catch series and parallel arc faults that MCBs and RCDs miss.',
+  },
+  {
+    change: 'Prosumer installations',
+    detail:
+      'New requirements for installations with their own generation or storage — solar PV, batteries, EV vehicle-to-grid — where energy flows both ways. Switching and protective devices in the energy path must be suitable for bidirectional current.',
+  },
+  {
+    change: 'Solar PV — Section 712',
+    detail:
+      'Updated provisions for PV generators, DC isolation and protection. Directly relevant to the fast-growing renewables market.',
+  },
+  {
+    change: 'Open-PEN / TN-C-S protection',
+    detail:
+      'Strengthened protection against a broken combined neutral-earth (open-PEN) conductor, especially for EV charging on PME supplies (Section 722).',
+  },
+  {
+    change: 'Certificates & the exam',
+    detail:
+      'Updated model forms and schedule columns. From 16 October 2026 the A4 version of the 18th Edition exam (2382-26) is the only one sat — Gold-card holders need A4 knowledge.',
+  },
 ];
 
 const ContinuingEducation = () => {
@@ -376,6 +397,26 @@ const ContinuingEducation = () => {
         </ul>
       </motion.section>
 
+      {/* ── What changed in A4:2026 ──────────────────────────────── */}
+      <motion.section variants={itemVariants} className="space-y-3">
+        <SectionHeader
+          eyebrow="BS 7671:2018+A4:2026"
+          title="What changed — and why it pays to know"
+          meta="The current amendment. Knowing it first is billable."
+        />
+        <ul className="space-y-2">
+          {a4Changes.map((c) => (
+            <li
+              key={c.change}
+              className="rounded-xl border border-white/[0.06] bg-[hsl(0_0%_10%)] p-4 sm:p-5 space-y-1.5"
+            >
+              <Eyebrow>{c.change}</Eyebrow>
+              <p className="text-[13px] text-white/85 leading-relaxed">{c.detail}</p>
+            </li>
+          ))}
+        </ul>
+      </motion.section>
+
       {/* ── Course categories ────────────────────────────────────── */}
       <motion.section variants={itemVariants} className="space-y-3">
         <SectionHeader
@@ -390,16 +431,12 @@ const ContinuingEducation = () => {
               className="rounded-xl border border-white/[0.06] bg-[hsl(0_0%_10%)] p-4 sm:p-5 space-y-3"
             >
               <div className="flex items-baseline justify-between gap-3 flex-wrap">
-                <h3 className="text-[15px] font-semibold text-white tracking-tight">
-                  {cat.title}
-                </h3>
+                <h3 className="text-[15px] font-semibold text-white tracking-tight">{cat.title}</h3>
                 <span className="inline-flex items-center h-6 px-2 rounded-md border border-elec-yellow/30 bg-elec-yellow/[0.06] text-[10px] font-medium uppercase tracking-[0.14em] text-elec-yellow">
                   {cat.level}
                 </span>
               </div>
-              <p className="text-[13px] text-white/85 leading-relaxed">
-                {cat.description}
-              </p>
+              <p className="text-[13px] text-white/85 leading-relaxed">{cat.description}</p>
               <div className="flex items-center gap-2 text-[11.5px] font-mono tabular-nums text-white/55">
                 <span>{cat.duration}</span>
                 <span>·</span>
@@ -443,9 +480,7 @@ const ContinuingEducation = () => {
                   <h3 className="text-[14px] font-semibold text-white tracking-tight">
                     {item.title}
                   </h3>
-                  <p className="text-[13px] text-white/85 leading-relaxed">
-                    {item.description}
-                  </p>
+                  <p className="text-[13px] text-white/85 leading-relaxed">{item.description}</p>
                 </div>
               </div>
             </li>
@@ -488,9 +523,7 @@ const ContinuingEducation = () => {
               key={item.trend}
               className="rounded-xl border border-white/[0.06] bg-[hsl(0_0%_10%)] p-4 sm:p-5 space-y-1.5"
             >
-              <h3 className="text-[14px] font-semibold text-white tracking-tight">
-                {item.trend}
-              </h3>
+              <h3 className="text-[14px] font-semibold text-white tracking-tight">{item.trend}</h3>
               <p className="text-[13px] text-white/85 leading-relaxed">{item.detail}</p>
             </li>
           ))}
@@ -558,14 +591,10 @@ const ContinuingEducation = () => {
                   {story.change}
                 </span>
               </div>
-              <p className="text-[13px] text-white/85 leading-relaxed">
-                {story.detail}
-              </p>
+              <p className="text-[13px] text-white/85 leading-relaxed">{story.detail}</p>
               <div className="rounded-md border border-white/[0.06] bg-white/[0.02] p-3 space-y-1">
                 <Eyebrow>Education path</Eyebrow>
-                <p className="text-[12.5px] text-white/85 leading-relaxed">
-                  {story.path}
-                </p>
+                <p className="text-[12.5px] text-white/85 leading-relaxed">{story.path}</p>
               </div>
               <div className="flex items-start gap-2 pt-1">
                 <Eyebrow>Top tip</Eyebrow>
@@ -581,10 +610,9 @@ const ContinuingEducation = () => {
       {/* ── Footnote ─────────────────────────────────────────────── */}
       <motion.section variants={itemVariants}>
         <p className="text-[11px] text-white/40 leading-relaxed">
-          Course information and funding details based on ESFA guidance, IET
-          professional standards, and current UK electrical industry data. Costs
-          and availability vary by provider and region. Check with individual
-          providers for current pricing.
+          Course information and funding details based on ESFA guidance, IET professional standards,
+          and current UK electrical industry data. Costs and availability vary by provider and
+          region. Check with individual providers for current pricing.
         </p>
       </motion.section>
     </PageFrame>

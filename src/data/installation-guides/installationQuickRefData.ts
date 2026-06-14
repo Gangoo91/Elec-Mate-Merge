@@ -265,7 +265,7 @@ export const circuitData: CircuitData[] = [
     name: 'Cooker Circuit',
     cable: '6mm\u00B2 T&E (up to 15kW with diversity)',
     protection: '32A MCB',
-    tip: 'Apply diversity factor from BS 7671 Table 1B. First 10A at 100%, remaining at 30%, plus 5A if socket on cooker control unit.',
+    tip: 'Apply diversity factor from the IET On-Site Guide (Table 1B). First 10A at 100%, remaining at 30%, plus 5A if socket on cooker control unit.',
   },
   {
     name: 'Shower Circuit',

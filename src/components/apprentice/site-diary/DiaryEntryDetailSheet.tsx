@@ -7,6 +7,7 @@
 
 import { useState, useEffect, useMemo } from 'react';
 import { motion } from 'framer-motion';
+import { EvidenceImage } from '@/components/shared/EvidenceImage';
 import { Sheet, SheetContent, SheetHeader, SheetTitle } from '@/components/ui/ui/sheet';
 import {
   MapPin,
@@ -510,7 +511,7 @@ export function DiaryEntryDetailSheet({
                       onClick={() => setLightboxPhoto(url)}
                       className="aspect-square rounded-lg overflow-hidden border border-white/10 bg-white/[0.03] touch-manipulation active:opacity-80 transition-opacity"
                     >
-                      <img
+                      <EvidenceImage
                         src={url}
                         alt={`Photo ${i + 1}`}
                         className="w-full h-full object-cover"
@@ -846,7 +847,7 @@ export function DiaryEntryDetailSheet({
           >
             <X className="h-5 w-5" />
           </button>
-          <img
+          <EvidenceImage
             src={lightboxPhoto}
             alt="Full size photo"
             className="max-w-full max-h-[85vh] rounded-lg object-contain"

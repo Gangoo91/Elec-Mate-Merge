@@ -5,7 +5,7 @@ export const designVerification: FlashcardData[] = [
   {
     id: 'dv1',
     question:
-      'According to BS 7671:2018+A2:2022, what does Regulation 132.16 require regarding who designs an electrical installation?',
+      'According to BS 7671:2018+A4:2026, what does Regulation 132.16 require regarding who designs an electrical installation?',
     answer:
       'Regulation 132.16 states that every electrical installation shall be designed by a person or persons competent to do so. The design must take account of the intended use of the installation, external influences, compatibility of equipment, and maintainability. This ensures safety is built in from the outset, not just verified afterwards.',
     category: 'Design Process',
@@ -14,7 +14,7 @@ export const designVerification: FlashcardData[] = [
   {
     id: 'dv2',
     question:
-      'What is the first step of the design process as outlined in Chapter 31 of BS 7671:2018+A2:2022?',
+      'What is the first step of the design process as outlined in Chapter 31 of BS 7671:2018+A4:2026?',
     answer:
       'The first step is the assessment of general characteristics as required by Chapter 31 (Regulation 311 onwards). This includes determining the purpose and supplies available, the nature of demand, the supply characteristics (voltage, frequency, prospective fault current), the type of earthing arrangement (TN-S, TN-C-S, TT), and any external influences that may affect the installation.',
     category: 'Design Process',
@@ -43,14 +43,14 @@ export const designVerification: FlashcardData[] = [
     question:
       'Explain the relationship between Ib, In, and Iz when selecting a protective device and cable for a circuit.',
     answer:
-      'The design current Ib must not exceed the rated current of the protective device In, and In must not exceed the current-carrying capacity of the cable Iz. This is expressed as Ib <= In <= Iz. Additionally, the cable must be able to withstand the let-through energy of the protective device under fault conditions. These three values form the fundamental basis of circuit design to BS 7671:2018+A2:2022.',
+      'The design current Ib must not exceed the rated current of the protective device In, and In must not exceed the current-carrying capacity of the cable Iz. This is expressed as Ib <= In <= Iz. Additionally, the cable must be able to withstand the let-through energy of the protective device under fault conditions. These three values form the fundamental basis of circuit design to BS 7671:2018+A4:2026.',
     category: 'Design Process',
     difficulty: 'medium',
   },
   {
     id: 'dv6',
     question:
-      'What are the five general characteristics that Chapter 31 of BS 7671:2018+A2:2022 requires the designer to assess?',
+      'What are the five general characteristics that Chapter 31 of BS 7671:2018+A4:2026 requires the designer to assess?',
     answer:
       'Chapter 31 requires assessment of: (1) the purpose, supplies, and structure of the installation (Reg 311); (2) external influences such as ambient temperature, water, dust, and impact (Reg 312); (3) compatibility of equipment to avoid harmful effects like harmonics and voltage surges (Reg 313); (4) maintainability, ensuring safe inspection and testing can be carried out (Reg 314); and (5) safety services such as emergency lighting or fire alarm supplies (Reg 315).',
     category: 'Design Process',
@@ -61,16 +61,16 @@ export const designVerification: FlashcardData[] = [
   {
     id: 'dv7',
     question:
-      'What maximum disconnection times does BS 7671:2018+A2:2022 specify for final circuits not exceeding 32A in a TN system?',
+      'What maximum disconnection times does BS 7671:2018+A4:2026 specify for final circuits not exceeding 32A in a TN system?',
     answer:
-      'For final circuits not exceeding 32A in a TN system, the maximum disconnection time is 0.4 seconds, as stated in Table 41.1 of BS 7671:2018+A2:2022. This fast disconnection time is required because these circuits supply equipment likely to be held or touched by users, presenting a greater electric shock risk.',
+      'For final circuits not exceeding 32A in a TN system, the maximum disconnection time is 0.4 seconds, as stated in Table 41.1 of BS 7671:2018+A4:2026. This fast disconnection time is required because these circuits supply equipment likely to be held or touched by users, presenting a greater electric shock risk.',
     category: 'Protective Devices',
     difficulty: 'easy',
   },
   {
     id: 'dv8',
     question:
-      'What is the maximum permitted disconnection time for distribution circuits in a TN system under BS 7671:2018+A2:2022?',
+      'What is the maximum permitted disconnection time for distribution circuits in a TN system under BS 7671:2018+A4:2026?',
     answer:
       'Distribution circuits in a TN system are permitted a maximum disconnection time of 5 seconds, as stated in Regulation 411.3.2.3. This longer time is acceptable because distribution circuits do not directly supply equipment that users are likely to touch. The circuit protective conductor provides the return path for fault current, and the 5-second limit still ensures safety.',
     category: 'Protective Devices',
@@ -81,13 +81,13 @@ export const designVerification: FlashcardData[] = [
     question:
       'What is automatic disconnection of supply (ADS) and why is it the most commonly used protective measure?',
     answer:
-      'Automatic disconnection of supply (ADS) is a protective measure described in Section 411 of BS 7671:2018+A2:2022. It uses a protective device (MCB, fuse, or RCD) to disconnect the circuit automatically when an earth fault causes a touch voltage that could be dangerous. ADS is the most commonly used measure because it is reliable, well understood, and suitable for virtually all installation types. It requires proper earthing and bonding to function correctly.',
+      'Automatic disconnection of supply (ADS) is a protective measure described in Section 411 of BS 7671:2018+A4:2026. It uses a protective device (MCB, fuse, or RCD) to disconnect the circuit automatically when an earth fault causes a touch voltage that could be dangerous. ADS is the most commonly used measure because it is reliable, well understood, and suitable for virtually all installation types. It requires proper earthing and bonding to function correctly.',
     category: 'Protective Devices',
     difficulty: 'medium',
   },
   {
     id: 'dv10',
-    question: 'When is a 30mA RCD required for additional protection under BS 7671:2018+A2:2022?',
+    question: 'When is a 30mA RCD required for additional protection under BS 7671:2018+A4:2026?',
     answer:
       'Regulation 411.3.3 requires additional protection by a 30mA RCD for socket outlets rated at 32A or below, mobile equipment rated up to 32A for outdoor use, and circuits within Sections 701 (bathrooms), 702 (swimming pools), and certain other special locations. The 30mA RCD provides additional protection against electric shock in the event of failure of the basic protective provisions or carelessness by users.',
     category: 'Protective Devices',
@@ -98,7 +98,7 @@ export const designVerification: FlashcardData[] = [
     question:
       'What is discrimination (selectivity) between protective devices and why is it important in installation design?',
     answer:
-      'Discrimination means that when a fault occurs, only the protective device nearest to the fault operates, leaving healthy circuits unaffected. This is achieved by coordinating the time/current characteristics of upstream and downstream devices. BS 7671:2018+A2:2022 Regulation 536.4 covers coordination. Proper discrimination improves the availability of the installation and makes fault finding easier, as the tripped device identifies the faulted circuit.',
+      'Discrimination means that when a fault occurs, only the protective device nearest to the fault operates, leaving healthy circuits unaffected. This is achieved by coordinating the time/current characteristics of upstream and downstream devices. BS 7671:2018+A4:2026 Regulation 536.4 covers coordination. Proper discrimination improves the availability of the installation and makes fault finding easier, as the tripped device identifies the faulted circuit.',
     category: 'Protective Devices',
     difficulty: 'hard',
   },
@@ -160,7 +160,7 @@ export const designVerification: FlashcardData[] = [
   {
     id: 'dv18',
     question:
-      'How is the maximum Zs value for a particular circuit protective device determined from BS 7671:2018+A2:2022?',
+      'How is the maximum Zs value for a particular circuit protective device determined from BS 7671:2018+A4:2026?',
     answer:
       'The maximum Zs values are found in the tables within Chapter 41, specifically Tables 41.2 to 41.4 for different protective device types (BS 88 fuses, BS 3036 fuses, and MCBs). The table gives the maximum Zs for each device rating that will ensure disconnection within 0.4 seconds for final circuits or 5 seconds for distribution circuits. The designer selects the correct table for the device type and reads across from the device rating to find the maximum permitted Zs.',
     category: 'Calculations',
@@ -172,7 +172,7 @@ export const designVerification: FlashcardData[] = [
     id: 'dv19',
     question: 'What is initial verification and what two main activities does it comprise?',
     answer:
-      'Initial verification, as defined in Chapter 61 of BS 7671:2018+A2:2022, comprises inspection and testing of a new installation or addition before it is put into service. Inspection is a visual check that all equipment complies with the relevant standards and is correctly selected, erected, and not visibly damaged. Testing involves a series of electrical measurements to confirm the installation meets design requirements and is safe to energise.',
+      'Initial verification, as defined in Chapter 64 of BS 7671:2018+A4:2026, comprises inspection and testing of a new installation or addition before it is put into service. Inspection is a visual check that all equipment complies with the relevant standards and is correctly selected, erected, and not visibly damaged. Testing involves a series of electrical measurements to confirm the installation meets design requirements and is safe to energise.',
     category: 'Verification',
     difficulty: 'easy',
   },
@@ -198,7 +198,7 @@ export const designVerification: FlashcardData[] = [
     question:
       'What minimum insulation resistance values are acceptable during initial verification of a low-voltage installation?',
     answer:
-      'For circuits at nominal voltages up to and including 500V AC, the minimum insulation resistance is 1 megohm when tested at 500V DC, as stated in Table 64 of BS 7671:2018+A2:2022. For SELV and PELV circuits up to 50V, the minimum is 0.5 megohms tested at 250V DC. For circuits between 500V and 1000V, the minimum is 1 megohm tested at 1000V DC. Values below these indicate a potential insulation breakdown.',
+      'For circuits at nominal voltages up to and including 500V AC, the minimum insulation resistance is 1 megohm when tested at 500V DC, as stated in Table 64 of BS 7671:2018+A4:2026. For SELV and PELV circuits up to 50V, the minimum is 0.5 megohms tested at 250V DC. For circuits between 500V and 1000V, the minimum is 1 megohm tested at 1000V DC. Values below these indicate a potential insulation breakdown.',
     category: 'Verification',
     difficulty: 'medium',
   },
@@ -235,7 +235,7 @@ export const designVerification: FlashcardData[] = [
     question:
       'What documentation must be provided to the person ordering the electrical work upon completion of initial verification?',
     answer:
-      'Upon completion, the contractor must provide an Electrical Installation Certificate (EIC) together with a schedule of inspections and a schedule of test results, as required by Regulation 641.7. These documents certify that the installation has been designed, constructed, inspected, and tested in accordance with BS 7671:2018+A2:2022. A copy must be given to the person ordering the work, and the contractor should retain a copy for their own records.',
+      'Upon completion, the contractor must provide an Electrical Installation Certificate (EIC) together with a schedule of inspections and a schedule of test results, as required by Regulation 641.7. These documents certify that the installation has been designed, constructed, inspected, and tested in accordance with BS 7671:2018+A4:2026. A copy must be given to the person ordering the work, and the contractor should retain a copy for their own records.',
     category: 'Documentation',
     difficulty: 'easy',
   },
@@ -252,7 +252,7 @@ export const designVerification: FlashcardData[] = [
     question:
       'What is the purpose of the Electrical Installation Certificate (EIC) and who is responsible for signing it?',
     answer:
-      'The EIC certifies that the electrical installation work to which it relates has been designed, constructed, inspected, and tested in accordance with BS 7671:2018+A2:2022. It must be signed by a competent person or persons responsible for the design, construction, and inspection and testing respectively. Where one person fulfils all three roles, they sign all three sections. The certificate confirms legal compliance and is required for Building Regulations notification.',
+      'The EIC certifies that the electrical installation work to which it relates has been designed, constructed, inspected, and tested in accordance with BS 7671:2018+A4:2026. It must be signed by a competent person or persons responsible for the design, construction, and inspection and testing respectively. Where one person fulfils all three roles, they sign all three sections. The certificate confirms legal compliance and is required for Building Regulations notification.',
     category: 'Documentation',
     difficulty: 'medium',
   },

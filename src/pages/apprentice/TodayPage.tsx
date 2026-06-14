@@ -18,7 +18,7 @@
  * exactly one UnifiedCaptureSheet in the tree.
  */
 
-import { useMemo } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import {
@@ -27,11 +27,15 @@ import {
   Camera,
   Clock,
   ClipboardList,
+  FileCheck,
   Flame,
   GraduationCap,
   HeartHandshake,
+  MessageSquare,
+  RotateCcw,
   Trophy,
 } from 'lucide-react';
+import type { LucideIcon } from 'lucide-react';
 import { useAuth } from '@/contexts/AuthContext';
 import { useApprenticeData } from '@/hooks/useApprenticeData';
 import { useAchievementChecker } from '@/hooks/useAchievementChecker';
@@ -39,7 +43,11 @@ import { useMyAssignedQuizzes } from '@/hooks/useMyAssignedQuizzes';
 import { useMyIlp } from '@/hooks/useMyIlp';
 import { useOtjProgramme } from '@/hooks/useOtjProgramme';
 import { useApprenticeOtj } from '@/hooks/useApprenticeOtj';
+import { useAm2Readiness } from '@/hooks/useAm2Readiness';
 import { useLastStudyLocation } from '@/hooks/useLastStudyLocation';
+import { useWeeklyRecap } from '@/hooks/useWeeklyRecap';
+import { WeeklyRecapSheet } from '@/components/apprentice-hub/WeeklyRecapSheet';
+import { getCount as getMissedCount } from '@/lib/missedQuestions';
 import { cn } from '@/lib/utils';
 
 const partOfDay = (): string => {
@@ -56,7 +64,12 @@ const dateEyebrow = (): string =>
     month: 'long',
   });
 
+type NextUpKind = 'overdue' | 'newquiz' | 'hours' | 'streak' | 'fallback';
 interface NextUp {
+  /** Matches a plate-item id so the plate can drop the exact item the hero
+      already owns (route-based dedup over-filters — overdue/newquiz/feedback
+      all point at college-plan). */
+  kind: NextUpKind;
   title: string;
   verdict: string;
   ctaLabel: string;
@@ -71,8 +84,28 @@ export default function TodayPage() {
   const { hasCollegeLink, rollUp, loading: ilpLoading } = useMyIlp();
   const programme = useOtjProgramme();
   const { breakdown } = useApprenticeOtj(user?.id ?? null);
+  const am2 = useAm2Readiness();
   const { lastLocation } = useLastStudyLocation();
   const { nextUp: nextBadge } = useAchievementChecker();
+  // Cheap localStorage read — recomputed on focus/visibility so graduating
+  // the pile (this tab or another) doesn't leave a stale "Quick revision"
+  // tile pointing at an empty pile.
+  const [missedCount, setMissedCount] = useState(0);
+  useEffect(() => {
+    const uid = user?.id;
+    if (!uid) {
+      setMissedCount(0);
+      return;
+    }
+    const update = () => setMissedCount(getMissedCount(uid));
+    update();
+    window.addEventListener('focus', update);
+    document.addEventListener('visibilitychange', update);
+    return () => {
+      window.removeEventListener('focus', update);
+      document.removeEventListener('visibilitychange', update);
+    };
+  }, [user?.id]);
 
   const eyebrow = useMemo(() => dateEyebrow(), []);
   const salutation = useMemo(() => partOfDay(), []);
@@ -86,6 +119,12 @@ export default function TodayPage() {
   const streak = stats.learning.currentStreak;
   const continuePath = lastLocation?.path ?? '/study-centre';
 
+  // Once-a-week "your week" moment — only fires for a week with real activity.
+  const { recap, show: showRecap, dismiss: dismissRecap } = useWeeklyRecap(
+    user?.id ?? null,
+    streak
+  );
+
   const heroLoading = isLoading || quizzesLoading || ilpLoading || programme.loading;
 
   // ── WHAT'S NEXT — priority chain ─────────────────────────────────────
@@ -93,6 +132,7 @@ export default function TodayPage() {
     // a. Overdue tutor work trumps everything.
     if (overdueQuizzes.length > 0) {
       return {
+        kind: 'overdue',
         title: `${overdueQuizzes.length} overdue from your tutor`,
         verdict: 'Catch up now to keep your college plan on track.',
         ctaLabel: 'Open college plan',
@@ -103,6 +143,7 @@ export default function TodayPage() {
     if (notStartedQuizzes.length > 0) {
       const quiz = notStartedQuizzes[0];
       return {
+        kind: 'newquiz',
         title: `New quiz from your tutor: ${quiz.title}`,
         verdict: 'Set this week — best done while the topic is fresh.',
         ctaLabel: 'Start quiz',
@@ -118,6 +159,7 @@ export default function TodayPage() {
       thisWeekHours < programme.weeklyTargetHours * 0.5
     ) {
       return {
+        kind: 'hours',
         title: "You're behind on hours this week",
         verdict: 'Logging an entry takes 30 seconds — keep your pace defensible.',
         ctaLabel: 'Log hours now',
@@ -127,6 +169,7 @@ export default function TodayPage() {
     // d. Streak alive — protect it.
     if (streak >= 2) {
       return {
+        kind: 'streak',
         title: `Day ${streak} of your streak`,
         verdict: 'One section keeps it alive.',
         ctaLabel: 'Continue learning',
@@ -135,6 +178,7 @@ export default function TodayPage() {
     }
     // e. Fallback.
     return {
+      kind: 'fallback',
       title: "Start today's learning",
       verdict: 'Five minutes counts towards your off-the-job hours.',
       ctaLabel: 'Open Study Centre',
@@ -165,6 +209,107 @@ export default function TodayPage() {
     { label: 'Sign-off', value: <>{stats.portfolio.pendingReview}</> },
   ];
 
+  // ── On your plate — every open item worth doing, prioritised ─────────
+  // The hero ("What's next") already calls out the single top thing; this is
+  // everything ELSE that's actually waiting, deduped against it so nothing
+  // repeats. Empty plate → the section doesn't render (Today stays calm).
+  interface PlateItem {
+    id: string;
+    label: string;
+    icon: LucideIcon;
+    to: string;
+    count?: number;
+    urgent?: boolean;
+  }
+  const plateItems = useMemo<PlateItem[]>(() => {
+    const items: PlateItem[] = [];
+    if (overdueQuizzes.length > 0) {
+      items.push({
+        id: 'overdue',
+        label: 'Catch up on overdue work',
+        icon: ClipboardList,
+        to: '/apprentice/college-plan',
+        count: overdueQuizzes.length,
+        urgent: true,
+      });
+    }
+    if (notStartedQuizzes.length > 0) {
+      items.push({
+        id: 'newquiz',
+        label: notStartedQuizzes.length === 1 ? 'New quiz from your tutor' : 'New quizzes from your tutor',
+        icon: ClipboardList,
+        to: hasCollegeLink ? '/apprentice/college-plan' : '/study-centre',
+        count: notStartedQuizzes.length,
+      });
+    }
+    if (rollUp.unread_tutor_comments > 0) {
+      items.push({
+        id: 'feedback',
+        label: 'Read your tutor’s feedback',
+        icon: MessageSquare,
+        to: '/apprentice/college-plan',
+        count: rollUp.unread_tutor_comments,
+      });
+    }
+    if (stats.portfolio.pendingReview > 0) {
+      items.push({
+        id: 'signoff',
+        label: 'Evidence waiting for sign-off',
+        icon: FileCheck,
+        to: '/apprentice/hub?tab=work',
+        count: stats.portfolio.pendingReview,
+      });
+    }
+    {
+      const day = new Date().getDay();
+      const behind =
+        (day === 0 || day >= 4) &&
+        programme.weeklyTargetHours > 0 &&
+        thisWeekHours < programme.weeklyTargetHours * 0.75;
+      if (behind) {
+        items.push({
+          id: 'hours',
+          label: 'Log this week’s hours',
+          icon: Clock,
+          to: '/apprentice/ojt-hub',
+        });
+      }
+    }
+    if (missedCount > 0) {
+      items.push({
+        id: 'revision',
+        label: 'Revise the questions you missed',
+        icon: RotateCcw,
+        to: '/apprentice/revision',
+        count: missedCount,
+      });
+    }
+    // Drop the exact item the hero already owns (by kind, not route — several
+    // items share /apprentice/college-plan), then cap.
+    return items.filter((i) => i.id !== nextUp.kind).slice(0, 5);
+  }, [
+    overdueQuizzes.length,
+    notStartedQuizzes.length,
+    rollUp.unread_tutor_comments,
+    stats.portfolio.pendingReview,
+    programme.weeklyTargetHours,
+    thisWeekHours,
+    missedCount,
+    hasCollegeLink,
+    nextUp.kind,
+  ]);
+
+  // ── AM2 milestone chip ───────────────────────────────────────────────
+  // The practical exam is the apprentice's biggest milestone. Surface it on
+  // Today ONLY when it's real: a booked exam date still ahead, or at least one
+  // completed timed run. Otherwise it stays off the page (anti-clutter).
+  const am2Counting = am2.daysToGo !== null && am2.daysToGo >= 0;
+  const am2Visible = !am2.loading && (am2Counting || am2.sessionsCount > 0);
+  const am2Urgent =
+    am2Counting && (am2.daysToGo as number) <= 14 && (am2.score === null || am2.score < 60);
+  const am2DayLabel =
+    am2.daysToGo === 0 ? 'Today' : am2.daysToGo === 1 ? 'Tomorrow' : `${am2.daysToGo} days`;
+
   // ── Quick actions ────────────────────────────────────────────────────
   const quickActions = [
     {
@@ -182,15 +327,42 @@ export default function TodayPage() {
       icon: BookOpen,
       onClick: () => navigate(continuePath),
     },
-    {
-      label: 'Quick quiz',
-      icon: ClipboardList,
-      onClick: () => navigate(hasCollegeLink ? '/apprentice/college-plan' : '/study-centre'),
-    },
+    // When the learner has missed questions banked, this becomes their
+    // personal weak-spot session instead of a generic quiz pointer.
+    missedCount > 0
+      ? {
+          label: 'Quick revision',
+          icon: ClipboardList,
+          onClick: () => navigate('/apprentice/revision'),
+        }
+      : {
+          label: 'Quick quiz',
+          icon: ClipboardList,
+          onClick: () => navigate(hasCollegeLink ? '/apprentice/college-plan' : '/study-centre'),
+        },
   ];
 
   return (
     <div className="min-h-screen bg-[hsl(0_0%_8%)] text-white">
+      {/* House masthead — Today is the tab-bar home, but the rest of the
+          apprentice world lives off /apprentice; without this there was no
+          route back to the dashboard. */}
+      <div className="sticky top-0 z-50 bg-elec-dark/95 backdrop-blur-sm border-b border-white/[0.06]">
+        <div className="mx-auto max-w-2xl px-4">
+          <div className="flex items-center h-12 gap-4">
+            <button
+              type="button"
+              onClick={() => navigate('/apprentice')}
+              className="text-[12.5px] font-medium text-white hover:text-white transition-colors touch-manipulation whitespace-nowrap"
+            >
+              ← Back
+            </button>
+            <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+              Apprentice · Today
+            </span>
+          </div>
+        </div>
+      </div>
       <motion.div
         initial={{ opacity: 0, y: 4 }}
         animate={{ opacity: 1, y: 0 }}
@@ -240,6 +412,98 @@ export default function TodayPage() {
           </div>
         </section>
 
+        {/* 2b · AM2 milestone — countdown + readiness (only when relevant) */}
+        {am2Visible && (
+          <section aria-label="AM2 readiness">
+            <button
+              type="button"
+              onClick={() => navigate('/apprentice/am2-simulator')}
+              className={cn(
+                'group relative w-full text-left bg-[hsl(0_0%_10%)] border rounded-2xl overflow-hidden p-4 touch-manipulation transition-colors',
+                am2Urgent
+                  ? 'border-red-400/25 hover:bg-red-500/[0.04]'
+                  : 'border-white/[0.08] hover:bg-elec-yellow/[0.03]'
+              )}
+            >
+              <div className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-white/15 to-transparent pointer-events-none" />
+              <div className="flex items-center gap-4">
+                <div className="flex-1 min-w-0">
+                  <span
+                    className={cn(
+                      'text-[10px] font-medium uppercase tracking-[0.18em]',
+                      am2Urgent ? 'text-red-300/80' : 'text-elec-yellow/80'
+                    )}
+                  >
+                    {am2Counting ? 'Your AM2' : 'AM2 practical'}
+                  </span>
+                  {am2Counting ? (
+                    <div className="mt-1 flex items-baseline gap-1.5">
+                      <span className="text-[22px] font-semibold tracking-tight tabular-nums text-white">
+                        {am2DayLabel}
+                      </span>
+                      <span className="text-[12.5px] text-white/55">to go</span>
+                    </div>
+                  ) : (
+                    <div className="mt-1 text-[15px] font-semibold text-white">
+                      Keep your match fitness up
+                    </div>
+                  )}
+                  {am2.score !== null ? (
+                    <p className="mt-1 text-[12px] text-white/55">
+                      Readiness{' '}
+                      <span className="text-white/80 font-medium tabular-nums">{am2.score}%</span> ·{' '}
+                      {am2.sessionsCount} timed run{am2.sessionsCount === 1 ? '' : 's'}
+                    </p>
+                  ) : (
+                    <p className="mt-1 text-[12px] text-white/55">
+                      Take your first timed run to see your readiness
+                    </p>
+                  )}
+                </div>
+                {am2.score !== null && (
+                  <div
+                    className={cn(
+                      'shrink-0 flex flex-col items-center justify-center h-12 w-12 rounded-xl border',
+                      am2Urgent
+                        ? 'border-red-400/30 bg-red-500/10'
+                        : 'border-elec-yellow/25 bg-elec-yellow/[0.07]'
+                    )}
+                  >
+                    <span
+                      className={cn(
+                        'text-[15px] font-semibold leading-none tabular-nums',
+                        am2Urgent ? 'text-red-200' : 'text-elec-yellow'
+                      )}
+                    >
+                      {am2.score}
+                    </span>
+                    <span className="text-[8px] uppercase tracking-wider text-white/45 mt-0.5">
+                      ready
+                    </span>
+                  </div>
+                )}
+                <ArrowRight
+                  className={cn(
+                    'h-4 w-4 shrink-0 transition-all group-hover:translate-x-0.5',
+                    am2Urgent ? 'text-red-300/70' : 'text-white/35 group-hover:text-elec-yellow'
+                  )}
+                />
+              </div>
+              {am2.score !== null && (
+                <div className="mt-3 h-1 rounded-full bg-white/[0.06] overflow-hidden">
+                  <div
+                    className={cn(
+                      'h-full rounded-full',
+                      am2Urgent ? 'bg-red-400/70' : 'bg-elec-yellow/70'
+                    )}
+                    style={{ width: `${am2.score}%` }}
+                  />
+                </div>
+              )}
+            </button>
+          </section>
+        )}
+
         {/* 3 · Stat strip */}
         <section
           className="grid grid-cols-4 gap-[2px] bg-black border border-white/[0.08] rounded-2xl overflow-hidden"
@@ -263,6 +527,55 @@ export default function TodayPage() {
             </div>
           ))}
         </section>
+
+        {/* 3b · ON YOUR PLATE — the rest of today's open items */}
+        {!heroLoading && plateItems.length > 0 && (
+          <section className="space-y-3" aria-label="On your plate">
+            <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+              On your plate
+            </span>
+            <div className="bg-[hsl(0_0%_10%)] border border-white/[0.08] rounded-2xl overflow-hidden divide-y divide-white/[0.05]">
+              {plateItems.map(({ id, label, icon: Icon, to, count, urgent }) => (
+                <button
+                  key={id}
+                  type="button"
+                  onClick={() => navigate(to)}
+                  className="group w-full flex items-center gap-3 px-4 py-3 text-left touch-manipulation hover:bg-elec-yellow/[0.04] transition-colors"
+                >
+                  <span
+                    className={cn(
+                      'flex h-8 w-8 shrink-0 items-center justify-center rounded-lg border',
+                      urgent
+                        ? 'border-red-400/25 bg-red-500/[0.08]'
+                        : 'border-elec-yellow/20 bg-elec-yellow/[0.06]'
+                    )}
+                  >
+                    <Icon
+                      className={cn('h-4 w-4', urgent ? 'text-red-300' : 'text-elec-yellow')}
+                      strokeWidth={2}
+                    />
+                  </span>
+                  <span className="flex-1 min-w-0 text-[13.5px] font-medium text-white truncate">
+                    {label}
+                  </span>
+                  {count != null && count > 0 && (
+                    <span
+                      className={cn(
+                        'shrink-0 text-[10px] font-semibold tabular-nums px-1.5 py-0.5 rounded border',
+                        urgent
+                          ? 'text-red-300 border-red-400/30 bg-red-500/10'
+                          : 'text-elec-yellow border-elec-yellow/30 bg-elec-yellow/10'
+                      )}
+                    >
+                      {count}
+                    </span>
+                  )}
+                  <ArrowRight className="h-4 w-4 shrink-0 text-white/35 group-hover:text-elec-yellow group-hover:translate-x-0.5 transition-all" />
+                </button>
+              ))}
+            </div>
+          </section>
+        )}
 
         {/* 4 · Quick actions */}
         <section className="space-y-3" aria-label="Quick actions">
@@ -361,6 +674,8 @@ export default function TodayPage() {
           Struggling or need to talk?
         </button>
       </motion.div>
+
+      <WeeklyRecapSheet open={showRecap} onClose={dismissRecap} recap={recap} />
     </div>
   );
 }

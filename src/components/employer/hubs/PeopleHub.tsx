@@ -232,7 +232,8 @@ export function PeopleHub({ onNavigate }: PeopleHubProps) {
   const pendingTimesheetCount = useMemo(
     // Status is stored Capitalised ('Pending') — compare case-insensitively
     // so the approval badge actually lights up
-    () => timesheets.filter((t) => ['pending', 'submitted'].includes(t.status?.toLowerCase())).length,
+    () =>
+      timesheets.filter((t) => ['pending', 'submitted'].includes(t.status?.toLowerCase())).length,
     [timesheets]
   );
 
@@ -588,13 +589,79 @@ export function PeopleHub({ onNavigate }: PeopleHubProps) {
         </ListCard>
       </div>
 
+      {/* Your team ───────────────────────────────────────── */}
+      <div className="space-y-4 sm:space-y-5">
+        <SectionHeader eyebrow="Day-to-day" title="Your team" />
+        <HubGrid columns={2}>
+          <HubCard
+            tone="blue"
+            number="01"
+            eyebrow="Workforce"
+            title="Team"
+            description="Operatives, supervisors and PMs on your books."
+            meta={
+              activeEmployees > 0
+                ? `${activeEmployees} member${activeEmployees === 1 ? '' : 's'} · ${onSiteCount} on shift now`
+                : 'No employees yet'
+            }
+            cta="Open"
+            onClick={onOpenEmployees}
+          />
+          <HubCard
+            tone="emerald"
+            number="02"
+            eyebrow="Compliance"
+            title="Credentials & Elec-IDs"
+            description="Cards, qualifications and renewal dates in one place."
+            meta={
+              credentialCount > 0
+                ? `${credentialCount} profile${credentialCount === 1 ? '' : 's'} · ${expiringSoonCount} expiring soon`
+                : 'No profiles yet'
+            }
+            badge={expiredCount > 0 ? <Pill tone="red">{expiredCount} expired</Pill> : undefined}
+            cta="Open"
+            onClick={onOpenElecID}
+          />
+          <HubCard
+            tone="amber"
+            number="03"
+            eyebrow="Hours"
+            title="Timesheets"
+            description="Approve hours, attendance and weekly submissions."
+            meta={`${Math.round(totalHoursThisWeek)}h this week · ${pendingTimesheetCount} pending approval`}
+            badge={
+              pendingTimesheetCount > 0 ? (
+                <Pill tone="orange">{pendingTimesheetCount}</Pill>
+              ) : undefined
+            }
+            cta="Open"
+            onClick={onOpenTimesheets}
+          />
+          <HubCard
+            tone="purple"
+            number="04"
+            eyebrow="Messaging"
+            title="Communications"
+            description="Internal messages, broadcasts and team alerts."
+            meta={
+              unreadComms > 0
+                ? `${unreadComms} unread · ${commStats?.totalAnnouncements ?? 0} announcement${(commStats?.totalAnnouncements ?? 0) === 1 ? '' : 's'}`
+                : 'All caught up'
+            }
+            badge={unreadComms > 0 ? <Pill tone="yellow">{unreadComms}</Pill> : undefined}
+            cta="Open"
+            onClick={onOpenComms}
+          />
+        </HubGrid>
+      </div>
+
       {/* Recruitment ─────────────────────────────────────── */}
       <div className="space-y-4 sm:space-y-5">
         <SectionHeader eyebrow="Hiring" title="Recruitment" />
         <HubGrid columns={2}>
           <HubCard
             tone="blue"
-            number="01"
+            number="05"
             eyebrow="Talent"
             title="Talent Pool"
             description="Browse vetted sparkies available for work right now."
@@ -608,7 +675,7 @@ export function PeopleHub({ onNavigate }: PeopleHubProps) {
           />
           <HubCard
             tone="cyan"
-            number="02"
+            number="06"
             eyebrow="Vacancies"
             title="Job Vacancies"
             description="Post jobs and manage applications across your firm."
@@ -624,72 +691,6 @@ export function PeopleHub({ onNavigate }: PeopleHubProps) {
             }
             cta="Open"
             onClick={onOpenVacancies}
-          />
-        </HubGrid>
-      </div>
-
-      {/* Your team ───────────────────────────────────────── */}
-      <div className="space-y-4 sm:space-y-5">
-        <SectionHeader eyebrow="Day-to-day" title="Your team" />
-        <HubGrid columns={2}>
-          <HubCard
-            tone="blue"
-            number="03"
-            eyebrow="Workforce"
-            title="Team"
-            description="Operatives, supervisors and PMs on your books."
-            meta={
-              activeEmployees > 0
-                ? `${activeEmployees} member${activeEmployees === 1 ? '' : 's'} · ${onSiteCount} on shift now`
-                : 'No employees yet'
-            }
-            cta="Open"
-            onClick={onOpenEmployees}
-          />
-          <HubCard
-            tone="emerald"
-            number="04"
-            eyebrow="Compliance"
-            title="Credentials & Elec-IDs"
-            description="Cards, qualifications and renewal dates in one place."
-            meta={
-              credentialCount > 0
-                ? `${credentialCount} profile${credentialCount === 1 ? '' : 's'} · ${expiringSoonCount} expiring soon`
-                : 'No profiles yet'
-            }
-            badge={expiredCount > 0 ? <Pill tone="red">{expiredCount} expired</Pill> : undefined}
-            cta="Open"
-            onClick={onOpenElecID}
-          />
-          <HubCard
-            tone="amber"
-            number="05"
-            eyebrow="Hours"
-            title="Timesheets"
-            description="Approve hours, attendance and weekly submissions."
-            meta={`${Math.round(totalHoursThisWeek)}h this week · ${pendingTimesheetCount} pending approval`}
-            badge={
-              pendingTimesheetCount > 0 ? (
-                <Pill tone="orange">{pendingTimesheetCount}</Pill>
-              ) : undefined
-            }
-            cta="Open"
-            onClick={onOpenTimesheets}
-          />
-          <HubCard
-            tone="purple"
-            number="06"
-            eyebrow="Messaging"
-            title="Communications"
-            description="Internal messages, broadcasts and team alerts."
-            meta={
-              unreadComms > 0
-                ? `${unreadComms} unread · ${commStats?.totalAnnouncements ?? 0} announcement${(commStats?.totalAnnouncements ?? 0) === 1 ? '' : 's'}`
-                : 'All caught up'
-            }
-            badge={unreadComms > 0 ? <Pill tone="yellow">{unreadComms}</Pill> : undefined}
-            cta="Open"
-            onClick={onOpenComms}
           />
         </HubGrid>
       </div>

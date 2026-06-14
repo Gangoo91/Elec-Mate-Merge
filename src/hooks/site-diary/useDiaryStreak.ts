@@ -6,6 +6,7 @@
  */
 
 import { useMemo } from 'react';
+import { toLocalISODate, parseLocalISODate } from '@/lib/localDate';
 import type { SiteDiaryEntry } from './useSiteDiaryEntries';
 
 const MILESTONES = [3, 7, 14, 30, 60, 100] as const;
@@ -64,11 +65,11 @@ export function useDiaryStreak(entries: SiteDiaryEntry[]) {
 
     const today = new Date();
     today.setHours(0, 0, 0, 0);
-    const todayStr = today.toISOString().split('T')[0];
+    const todayStr = toLocalISODate(today);
 
     const yesterday = new Date(today);
     yesterday.setDate(yesterday.getDate() - 1);
-    const yesterdayStr = yesterday.toISOString().split('T')[0];
+    const yesterdayStr = toLocalISODate(yesterday);
 
     // Current streak: count consecutive days from today or yesterday backwards
     let currentStreak = 0;
@@ -76,11 +77,11 @@ export function useDiaryStreak(entries: SiteDiaryEntry[]) {
 
     if (latestDate === todayStr || latestDate === yesterdayStr) {
       currentStreak = 1;
-      const checkDate = new Date(latestDate);
+      const checkDate = parseLocalISODate(latestDate);
 
       for (let i = 1; i < uniqueDates.length; i++) {
         checkDate.setDate(checkDate.getDate() - 1);
-        const checkStr = checkDate.toISOString().split('T')[0];
+        const checkStr = toLocalISODate(checkDate);
         if (uniqueDates[i] === checkStr) {
           currentStreak++;
         } else {
@@ -93,9 +94,9 @@ export function useDiaryStreak(entries: SiteDiaryEntry[]) {
     let longestStreak = 1;
     let streak = 1;
     for (let i = 1; i < uniqueDates.length; i++) {
-      const prev = new Date(uniqueDates[i - 1]);
+      const prev = parseLocalISODate(uniqueDates[i - 1]);
       prev.setDate(prev.getDate() - 1);
-      if (prev.toISOString().split('T')[0] === uniqueDates[i]) {
+      if (toLocalISODate(prev) === uniqueDates[i]) {
         streak++;
         longestStreak = Math.max(longestStreak, streak);
       } else {

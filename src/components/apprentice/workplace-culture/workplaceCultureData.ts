@@ -185,8 +185,8 @@ export const questions: Question[] = [
     section: 'raising-concerns',
     question: 'How do I identify the specific safety risk before raising it?',
     answer:
-      "Use the STAR approach: Situation (what's happening), Task (what regulation it relates to), Action (what needs to change), and Result (what the safe outcome looks like). Reference relevant regulations like BS 7671, the Work at Height Regulations, or CDM Regulations. Being specific about which regulation is being breached gives your concern more weight.",
-    tags: ['safety', 'STAR', 'regulations'],
+      "Pin it down in four steps: what's happening, which rule it breaches, what needs to change, and what 'safe' looks like. Reference the relevant regulations — BS 7671, the Work at Height Regulations, or the CDM Regulations. Being specific about which regulation is being breached gives your concern more weight.",
+    tags: ['safety', 'regulations'],
     priority: 'important',
   },
 
@@ -433,7 +433,7 @@ export const scenarios: Scenario[] = [
     section: 'raising-concerns',
     situation: 'You see a colleague working at height without proper fall protection',
     rightApproach:
-      '"Hey mate, I\'ve got a spare harness in the van. The regs require fall protection above 2 metres — we could both get in trouble if someone sees this."',
+      '"Hey mate, I\'ve got a spare harness in the van. The Work at Height Regs say protect against any fall that could cause injury — there\'s no ‘2 metre’ cut-off any more. Let\'s get clipped on."',
     wrongApproach: '"You\'re breaking the rules and being stupid. You\'ll fall and hurt yourself."',
   },
   {

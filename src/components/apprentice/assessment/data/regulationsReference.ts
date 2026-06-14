@@ -53,7 +53,7 @@ export const referenceCards: ReferenceCard[] = [
   },
   {
     id: 'bs7671',
-    title: 'BS 7671:2018+A2:2022 Key Points',
+    title: 'BS 7671:2018+A4:2026 Key Points',
     color: 'yellow',
     icon: 'FileText',
     content: {
@@ -66,8 +66,8 @@ export const referenceCards: ReferenceCard[] = [
         'Section 521 — Cable installation methods and routing',
         'Section 537 — Isolation and switching requirements',
         'Section 542 — Earthing arrangements and conductor sizing',
-        'Chapter 61 — Initial verification (testing sequence)',
-        'Chapter 62 — Periodic inspection and testing',
+        'Chapter 64 — Initial verification (testing sequence)',
+        'Chapter 65 — Periodic inspection and testing',
         'Appendix 6 — Model forms for certification',
       ],
     },

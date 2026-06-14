@@ -6,6 +6,7 @@ import { ApprenticeTabBar } from '@/components/apprentice-hub/ApprenticeTabBar';
 // Lazy-loaded pages
 const ApprenticeHub = lazy(() => import('@/pages/ApprenticeHub'));
 const TodayPage = lazy(() => import('@/pages/apprentice/TodayPage'));
+const RevisionSessionPage = lazy(() => import('@/pages/apprentice/RevisionSessionPage'));
 const ApprenticeMentalHealth = lazy(() => import('@/pages/MentalHealthHub'));
 const RightsAndPay = lazy(() => import('@/pages/apprentice/RightsAndPay'));
 const MyCollegePlanPage = lazy(() => import('@/pages/apprentice/MyCollegePlanPage'));
@@ -212,6 +213,14 @@ const ApprenticeRoutes = () => (
         element={
           <LazyRoute>
             <TodayPage />
+          </LazyRoute>
+        }
+      />
+      <Route
+        path="revision"
+        element={
+          <LazyRoute>
+            <RevisionSessionPage />
           </LazyRoute>
         }
       />

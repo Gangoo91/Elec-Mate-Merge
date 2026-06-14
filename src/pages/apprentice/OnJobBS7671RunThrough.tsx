@@ -1,8 +1,7 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
-import { Card, CardContent } from '@/components/ui/card';
-import { ArrowLeft, Zap, FileText, BookOpen, Shield, CheckCircle } from 'lucide-react';
+import { ArrowLeft, Zap, FileText, BookOpen, CheckCircle } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import {
   PageFrame,
@@ -89,25 +88,27 @@ const OnJobBS7671RunThrough = () => {
       </motion.div>
 
         {/* Progress Strip */}
-        <div className="flex items-center gap-4 p-3 rounded-xl bg-white/5 border border-white/10">
+        <div className="flex items-center gap-4 p-3.5 rounded-2xl bg-[hsl(0_0%_10%)] border border-white/[0.08]">
           <div className="flex items-center gap-2">
             {progress.completedTestCount === TOTAL_TESTS && TOTAL_TESTS > 0 ? (
-              <CheckCircle className="h-4 w-4 text-green-400 flex-shrink-0" />
+              <CheckCircle className="h-4 w-4 text-elec-yellow flex-shrink-0" />
             ) : (
-              <Zap className="h-4 w-4 text-cyan-400 flex-shrink-0" />
+              <Zap className="h-4 w-4 text-elec-yellow flex-shrink-0" />
             )}
-            <span className="text-sm text-white font-medium">
+            <span className="text-sm text-white font-medium tabular-nums">
               {progress.completedTestCount}/{TOTAL_TESTS} tests completed
             </span>
           </div>
-          <div className="h-4 w-px bg-white/20" />
+          <div className="h-4 w-px bg-white/15" />
           <div className="flex items-center gap-2">
-            <span className="text-sm text-white">{progress.totalStepsCompleted} steps done</span>
+            <span className="text-sm text-white/70 tabular-nums">
+              {progress.totalStepsCompleted} steps done
+            </span>
           </div>
           <div className="flex-1" />
-          <div className="h-1.5 w-16 bg-white/10 rounded-full overflow-hidden hidden sm:block">
+          <div className="h-1.5 w-16 bg-white/[0.08] rounded-full overflow-hidden hidden sm:block">
             <div
-              className="h-full rounded-full bg-cyan-500 transition-all duration-500"
+              className="h-full rounded-full bg-elec-yellow/70 transition-all duration-500"
               style={{
                 width: `${TOTAL_TESTS > 0 ? (progress.completedTestCount / TOTAL_TESTS) * 100 : 0}%`,
               }}
@@ -118,28 +119,26 @@ const OnJobBS7671RunThrough = () => {
         {/* Tool Cards */}
         <div className="grid grid-cols-3 gap-3">
           {toolCards.map((tool) => {
-            const Icon = tool.icon;
             const isActive = activeTool === tool.id;
             return (
               <button
                 key={tool.id}
                 onClick={() => toggleTool(tool.id)}
                 className={`
-                  p-4 rounded-xl border transition-all touch-manipulation active:scale-[0.98]
+                  p-4 rounded-2xl border text-left transition-colors touch-manipulation active:scale-[0.98]
                   ${
                     isActive
-                      ? `${tool.bgColor} ${tool.borderColor} ring-2 ring-white/10`
-                      : 'bg-white/5 border-white/10 hover:border-white/20'
+                      ? 'bg-elec-yellow/[0.08] border-elec-yellow/30'
+                      : 'bg-[hsl(0_0%_10%)] border-white/[0.08] hover:border-white/[0.18]'
                   }
                 `}
               >
-                <div className={`p-2 rounded-lg ${tool.bgColor} inline-block mb-2`}>
-                  <Icon className={`h-5 w-5 ${tool.color}`} />
-                </div>
-                <div className={`text-sm font-semibold ${isActive ? tool.color : 'text-white'}`}>
+                <div
+                  className={`text-sm font-semibold ${isActive ? 'text-elec-yellow' : 'text-white'}`}
+                >
                   {tool.label}
                 </div>
-                <div className="text-xs text-white mt-1">{tool.description}</div>
+                <div className="text-xs text-white/55 mt-1">{tool.description}</div>
               </button>
             );
           })}
@@ -152,23 +151,17 @@ const OnJobBS7671RunThrough = () => {
 
         {activeTool === 'reference' && <BS7671QuickReferencePanel />}
 
-        {/* Compliance Banner */}
-        <Card className="border-cyan-500/30 bg-gradient-to-r from-cyan-500/10 via-cyan-500/5 to-transparent">
-          <CardContent className="p-4">
-            <div className="flex items-start gap-3">
-              <div className="p-2 rounded-lg bg-cyan-500/20 flex-shrink-0">
-                <Shield className="h-4 w-4 text-cyan-400" />
-              </div>
-              <p className="text-sm text-white">
-                All electrical installation work must comply with BS 7671:2018+A3:2024 (18th Edition
-                including Amendment 3). Follow the correct testing sequence, document all results
-                accurately, and ensure{' '}
-                <span className="font-medium text-cyan-300">safe isolation procedures</span> are
-                followed at all times.
-              </p>
-            </div>
-          </CardContent>
-        </Card>
+        {/* Compliance note — editorial, matches the hub's flat note style */}
+        <div className="rounded-2xl border border-elec-yellow/20 bg-elec-yellow/[0.04] p-4">
+          <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-elec-yellow/80">
+            Compliance
+          </span>
+          <p className="mt-2 text-[13px] text-white/80 leading-relaxed">
+            All electrical installation work must comply with BS 7671:2018+A4:2026 (18th Edition,
+            Amendment 4). Follow the correct testing sequence, document every result accurately, and
+            keep to safe isolation procedures at all times.
+          </p>
+        </div>
     </PageFrame>
   );
 };

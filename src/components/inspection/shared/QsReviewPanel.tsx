@@ -1,9 +1,12 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Button } from '@/components/ui/button';
+import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
-import { ShieldCheck, Clock, Loader2, RotateCcw } from 'lucide-react';
+import { ShieldCheck, Clock, Loader2, RotateCcw, PenLine } from 'lucide-react';
 import { useToast } from '@/hooks/use-toast';
 import { useHaptic } from '@/hooks/useHaptic';
+import SignatureInput from '@/components/signature/SignatureInput';
+import { supabase } from '@/integrations/supabase/client';
 import {
   useQsTeamContext,
   useQsReviewStatus,
@@ -11,6 +14,7 @@ import {
   useCancelQsReview,
   type QsReviewableType,
 } from '@/hooks/useQsReview';
+import { useApproveQsReview } from '@/hooks/useQsReviewQueue';
 
 interface QsReviewPanelProps {
   reportId: string | undefined;
@@ -31,8 +35,33 @@ const QsReviewPanel: React.FC<QsReviewPanelProps> = ({ reportId, reportType, onB
   const { data: review } = useQsReviewStatus(reportId, isTeamMember);
   const submitMutation = useSubmitForQsReview();
   const cancelMutation = useCancelQsReview();
+  const approveMutation = useApproveQsReview();
   const [note, setNote] = useState('');
   const [showNote, setShowNote] = useState(false);
+
+  // Self sign-off (one-tap) — for a QS who may countersign their OWN certs
+  // (declared owner-QS or designated principal QS). am_i_principal_qs comes from
+  // get_my_qs_team_context.
+  const canSelfSignoff = ctx?.am_i_principal_qs === true;
+  const [showSignoff, setShowSignoff] = useState(false);
+  const [signoffSig, setSignoffSig] = useState<string | null>(null);
+  const [signoffName, setSignoffName] = useState('');
+
+  useEffect(() => {
+    if (!canSelfSignoff) return;
+    (async () => {
+      const {
+        data: { user },
+      } = await supabase.auth.getUser();
+      if (!user) return;
+      const { data } = await supabase
+        .from('profiles')
+        .select('full_name')
+        .eq('id', user.id)
+        .maybeSingle();
+      if (data?.full_name) setSignoffName((prev) => prev || data.full_name);
+    })();
+  }, [canSelfSignoff]);
 
   if (!isTeamMember || !reportId) return null;
 
@@ -73,6 +102,44 @@ const QsReviewPanel: React.FC<QsReviewPanelProps> = ({ reportId, reportType, onB
     }
   };
 
+  // One-tap: open the review and immediately countersign it as the QS.
+  const handleSelfSignoff = async () => {
+    if (!reportId) return;
+    if (!signoffSig || !signoffName.trim()) {
+      toast({
+        title: 'Signature required',
+        description: 'Add your signature and name to sign off this certificate.',
+        variant: 'destructive',
+      });
+      return;
+    }
+    haptic.light();
+    try {
+      await onBeforeSubmit?.();
+      const res = (await submitMutation.mutateAsync({ reportId })) as { review_id?: string };
+      const reviewId = res?.review_id;
+      if (!reviewId) throw new Error('Could not open the review.');
+      await approveMutation.mutateAsync({
+        reviewId,
+        signature: signoffSig,
+        reviewerName: signoffName.trim(),
+      });
+      setShowSignoff(false);
+      toast({
+        title: 'Signed off as QS',
+        description:
+          'You have countersigned this certificate. Your QS signature will appear on the PDF.',
+      });
+    } catch (error) {
+      toast({
+        title: 'Could not sign off',
+        description: error instanceof Error ? error.message : 'Please try again.',
+        variant: 'destructive',
+      });
+    }
+  };
+
+  const signoffBusy = submitMutation.isPending || approveMutation.isPending;
   const status = review?.status;
 
   return (
@@ -159,41 +226,109 @@ const QsReviewPanel: React.FC<QsReviewPanelProps> = ({ reportId, reportType, onB
 
       {(!status || status === 'cancelled') && (
         <div className="space-y-3">
-          <p className="text-sm text-white/70">
-            Send this certificate to {ctx?.company_name || 'your company'} for Qualifying Supervisor
-            sign-off.
-          </p>
-          {showNote && (
-            <Textarea
-              value={note}
-              onChange={(e) => setNote(e.target.value)}
-              placeholder="Note for the QS (optional)"
-              className="touch-manipulation text-base min-h-[80px] focus:ring-2 focus:ring-elec-yellow/20 border-white/30 focus:border-yellow-500"
-            />
-          )}
-          <div className="flex flex-col sm:flex-row gap-3">
-            <Button
-              onClick={handleSubmit}
-              disabled={submitMutation.isPending}
-              className="h-11 w-full sm:w-auto flex-1 touch-manipulation bg-elec-yellow hover:bg-elec-yellow/90 text-black font-medium"
-            >
-              {submitMutation.isPending ? (
-                <Loader2 className="h-4 w-4 mr-2 animate-spin" />
+          {canSelfSignoff ? (
+            <>
+              <p className="text-sm text-white/70">
+                As {ctx?.company_name || 'your company'}&rsquo;s Qualifying Supervisor, review and
+                countersign this certificate.
+              </p>
+              {!showSignoff ? (
+                <div className="flex flex-col sm:flex-row gap-3">
+                  <Button
+                    onClick={() => {
+                      haptic.light();
+                      setShowSignoff(true);
+                    }}
+                    className="h-11 w-full sm:w-auto flex-1 touch-manipulation bg-elec-yellow hover:bg-elec-yellow/90 text-black font-medium"
+                  >
+                    <PenLine className="h-4 w-4 mr-2" />
+                    Review &amp; sign off as QS
+                  </Button>
+                  <Button
+                    variant="outline"
+                    onClick={handleSubmit}
+                    disabled={submitMutation.isPending}
+                    className="h-11 w-full sm:w-auto touch-manipulation"
+                  >
+                    Send to another QS
+                  </Button>
+                </div>
               ) : (
-                <ShieldCheck className="h-4 w-4 mr-2" />
+                <div className="space-y-3 rounded-lg border border-white/[0.08] p-3">
+                  <p className="text-xs text-white/60">
+                    Sign below to countersign this certificate as Qualifying Supervisor.
+                  </p>
+                  <Input
+                    value={signoffName}
+                    onChange={(e) => setSignoffName(e.target.value)}
+                    placeholder="QS name (CAPITALS)"
+                    className="h-11 text-base touch-manipulation border-white/30 focus:border-yellow-500 focus:ring-yellow-500"
+                  />
+                  <SignatureInput value={signoffSig || ''} onChange={setSignoffSig} />
+                  <div className="flex flex-col sm:flex-row gap-3">
+                    <Button
+                      onClick={handleSelfSignoff}
+                      disabled={signoffBusy}
+                      className="h-11 w-full sm:w-auto flex-1 touch-manipulation bg-elec-yellow hover:bg-elec-yellow/90 text-black font-medium"
+                    >
+                      {signoffBusy ? (
+                        <Loader2 className="h-4 w-4 mr-2 animate-spin" />
+                      ) : (
+                        <ShieldCheck className="h-4 w-4 mr-2" />
+                      )}
+                      Sign off certificate
+                    </Button>
+                    <Button
+                      variant="outline"
+                      onClick={() => setShowSignoff(false)}
+                      disabled={signoffBusy}
+                      className="h-11 w-full sm:w-auto touch-manipulation"
+                    >
+                      Cancel
+                    </Button>
+                  </div>
+                </div>
               )}
-              Submit for QS review
-            </Button>
-            {!showNote && (
-              <Button
-                variant="outline"
-                onClick={() => setShowNote(true)}
-                className="h-11 w-full sm:w-auto touch-manipulation"
-              >
-                Add a note
-              </Button>
-            )}
-          </div>
+            </>
+          ) : (
+            <>
+              <p className="text-sm text-white/70">
+                Send this certificate to {ctx?.company_name || 'your company'} for Qualifying
+                Supervisor sign-off.
+              </p>
+              {showNote && (
+                <Textarea
+                  value={note}
+                  onChange={(e) => setNote(e.target.value)}
+                  placeholder="Note for the QS (optional)"
+                  className="touch-manipulation text-base min-h-[80px] focus:ring-2 focus:ring-elec-yellow/20 border-white/30 focus:border-yellow-500"
+                />
+              )}
+              <div className="flex flex-col sm:flex-row gap-3">
+                <Button
+                  onClick={handleSubmit}
+                  disabled={submitMutation.isPending}
+                  className="h-11 w-full sm:w-auto flex-1 touch-manipulation bg-elec-yellow hover:bg-elec-yellow/90 text-black font-medium"
+                >
+                  {submitMutation.isPending ? (
+                    <Loader2 className="h-4 w-4 mr-2 animate-spin" />
+                  ) : (
+                    <ShieldCheck className="h-4 w-4 mr-2" />
+                  )}
+                  Submit for QS review
+                </Button>
+                {!showNote && (
+                  <Button
+                    variant="outline"
+                    onClick={() => setShowNote(true)}
+                    className="h-11 w-full sm:w-auto touch-manipulation"
+                  >
+                    Add a note
+                  </Button>
+                )}
+              </div>
+            </>
+          )}
         </div>
       )}
     </div>

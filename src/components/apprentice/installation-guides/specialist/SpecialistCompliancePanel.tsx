@@ -1,5 +1,5 @@
 const keyStandards = [
-  'BS 7671:2018+A3:2024 Part 7 — Special Installations',
+  'BS 7671:2018+A4:2026 Part 7 — Special Installations',
   'IET Guidance Note 7 — Special Locations (6th Edition)',
   'MCS standards for renewable energy systems',
   'IET Code of Practice for EV charging installations',

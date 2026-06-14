@@ -131,7 +131,7 @@ export const documentationForms: FlashcardData[] = [
     id: 'df15',
     question: 'What guidance does GN3 (Guidance Note 3, 9th Edition) provide for electricians?',
     answer:
-      'GN3, published by the IET, provides detailed guidance on inspection and testing procedures for electrical installations. It covers the sequence of tests, acceptable test values, how to complete certificates and reports, and the use of test instruments. The 9th Edition aligns with BS 7671:2018+A2:2022 (the 18th Edition Wiring Regulations) and includes worked examples of test result recording.',
+      'GN3, published by the IET, provides detailed guidance on inspection and testing procedures for electrical installations. It covers the sequence of tests, acceptable test values, how to complete certificates and reports, and the use of test instruments. The 9th Edition aligns with BS 7671:2018+A4:2026 (the 18th Edition Wiring Regulations) and includes worked examples of test result recording.',
     category: 'Inspection Forms',
     difficulty: 'hard',
   },

@@ -33,8 +33,6 @@ export const mainNavItems: NavItem[] = [
     name: 'Elec-AI',
     path: '/electrician-tools/ai-tooling/assistant',
     roles: ['visitor', 'apprentice', 'electrician', 'employer', 'admin', 'beta_tester'],
-    badge: 'New',
-    badgeVariant: 'new',
   },
   {
     name: 'Employer Hub',

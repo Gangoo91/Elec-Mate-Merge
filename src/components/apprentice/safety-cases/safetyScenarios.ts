@@ -1586,7 +1586,7 @@ export const safetyScenarios: SafetyScenario[] = [
             feedback:
               'The new consumer unit affects the entire installation. All circuits supplied from it must be verified.',
             outcome: 'Existing circuit faults remain undetected, incomplete certification',
-            regulation: 'BS 7671:2018 Chapter 61',
+            regulation: 'BS 7671:2018 Chapter 64',
           },
         ],
       },
@@ -1767,7 +1767,7 @@ export const safetyScenarios: SafetyScenario[] = [
             feedback:
               'Interconnections can mask faults and lead to overloaded cables. They indicate non-compliant installation.',
             outcome: 'Fault undetected, potential for cable overload and fire risk',
-            regulation: 'BS 7671:2018 Regulation 543.1.1',
+            regulation: 'BS 7671:2018+A4:2026 Regulation 543.2.9',
           },
           {
             id: 'B',

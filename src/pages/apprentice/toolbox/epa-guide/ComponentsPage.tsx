@@ -29,7 +29,7 @@ import {
 
 const knowledgeTopics = [
   'Electrical science and principles — Ohm\'s law, power, AC theory, three-phase, impedance, reactance',
-  'BS 7671:2018+A2:2022 — Parts 1–7, especially Part 4 (Protection for Safety) and Part 6 (Inspection & Testing)',
+  'BS 7671:2018+A4:2026 — Parts 1–7, especially Part 4 (Protection for Safety) and Part 6 (Inspection & Testing)',
   'Health and safety legislation — Electricity at Work 1989, CDM 2015, HSWA 1974, PUWER, LOLER',
   'Installation methods and materials — cable types, containment, earthing (TN-S, TN-C-S, TT), CPDs',
   'Testing and inspection — initial verification, periodic inspection, safe isolation, instruments',

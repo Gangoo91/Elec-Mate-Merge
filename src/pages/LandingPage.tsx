@@ -618,13 +618,15 @@ const LandingPage = () => {
           </button>
         </div>
 
-        {/* Always mounted; grid-rows animates the menu open/closed like a native sheet */}
+        {/* Always mounted; max-height animates the menu open/closed. (grid-rows
+            [0fr/1fr] animation is unreliable in Android WebView and rendered the
+            menu blank — ELE-1075.) */}
         <div
-          className={`grid transition-[grid-template-rows] duration-300 ease-out sm:hidden ${
-            isNavOpen ? 'grid-rows-[1fr]' : 'grid-rows-[0fr]'
+          className={`overflow-hidden transition-[max-height,opacity] duration-300 ease-out sm:hidden ${
+            isNavOpen ? 'max-h-screen opacity-100' : 'max-h-0 opacity-0'
           }`}
         >
-          <div className="overflow-hidden">
+          <div>
             <div className="border-t border-white/[0.08] bg-[#0a0a0a] px-5 py-5">
               <div className="space-y-4">
                 <a
@@ -913,6 +915,7 @@ const LandingPage = () => {
                   alt={photo.alt}
                   loading="lazy"
                   decoding="async"
+                  decoding="async"
                   className="aspect-[3/4] w-full bg-white/[0.04] object-cover transition-transform duration-500 group-hover:scale-[1.03]"
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/25 to-transparent" />
@@ -986,6 +989,7 @@ const LandingPage = () => {
                   width={560}
                   height={1212}
                   loading="lazy"
+                  decoding="async"
                   decoding="async"
                   className="w-[220px] flex-none snap-start rounded-[1.4rem] border border-white/[0.08] bg-white/[0.04] sm:w-[250px]"
                 />
@@ -1235,6 +1239,7 @@ const LandingPage = () => {
                   alt="Elec-Mate"
                   className="h-10 w-10 rounded-2xl"
                   loading="lazy"
+                  decoding="async"
                   decoding="async"
                 />
                 <div>

@@ -9,6 +9,7 @@
 import { useMemo, useState } from 'react';
 import { ChevronDown, ChevronUp, TrendingUp, TrendingDown, Minus, Flame } from 'lucide-react';
 import type { SiteDiaryEntry } from '@/hooks/site-diary/useSiteDiaryEntries';
+import { toLocalISODate } from '@/lib/localDate';
 import { useDiaryStreak } from '@/hooks/site-diary/useDiaryStreak';
 import { storageGetSync, storageSetSync } from '@/utils/storage';
 
@@ -53,8 +54,8 @@ export function DiaryWeeklySummary({
     const startOfLastWeek = new Date(startOfThisWeek);
     startOfLastWeek.setDate(startOfLastWeek.getDate() - 7);
 
-    const thisWeekStr = startOfThisWeek.toISOString().split('T')[0];
-    const lastWeekStr = startOfLastWeek.toISOString().split('T')[0];
+    const thisWeekStr = toLocalISODate(startOfThisWeek);
+    const lastWeekStr = toLocalISODate(startOfLastWeek);
 
     const thisWeekEntries = entries.filter((e) => e.date >= thisWeekStr);
     const lastWeekEntries = entries.filter((e) => e.date >= lastWeekStr && e.date < thisWeekStr);
@@ -68,7 +69,7 @@ export function DiaryWeeklySummary({
     for (let i = 0; i < 5; i++) {
       const checkDate = new Date(startOfThisWeek);
       checkDate.setDate(checkDate.getDate() + i);
-      const checkStr = checkDate.toISOString().split('T')[0];
+      const checkStr = toLocalISODate(checkDate);
       const dayEntry = thisWeekEntries.find((e) => e.date === checkStr);
       moodTrend.push(dayEntry?.mood_rating || null);
     }

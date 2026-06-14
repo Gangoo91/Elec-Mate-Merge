@@ -194,7 +194,7 @@ export const questions: Question[] = [
     id: 'emergency-002',
     question: 'What should I do if I cause a fire with electrical equipment?',
     answer:
-      'Turn off the power if safe to do so. Raise the alarm immediately. Use a CO2 fire extinguisher for electrical fires \u2014 never use water. Evacuate the area if the fire is spreading. Call 999 and report to the site manager immediately.',
+      'Turn off the power if safe to do so. Raise the alarm immediately. Use a CO2 extinguisher (or another rated for electrical risk, e.g. dry powder) \u2014 never water while the supply could still be live. Evacuate the area if the fire is spreading. Call 999 and report to the site manager immediately.',
     tags: ['fire', 'electrical fire', 'evacuation'],
     priority: 'critical',
     section: 'emergency',
@@ -542,7 +542,7 @@ export const questions: Question[] = [
     id: 'career-008',
     question: 'What if local building control has different requirements?',
     answer:
-      'Building regulations take precedence over BS 7671 where they conflict. Always check local requirements and discuss any conflicts with your supervisor. When in doubt, follow the more stringent requirement or contact building control directly.',
+      'Building Regulations are the law; BS 7671 is the recognised way to show you meet them (Approved Document P cites it for dwellings). They rarely actually conflict. Where local building control sets a specific requirement, follow it, check with your supervisor, and when in doubt follow the more stringent requirement or contact building control directly.',
     tags: ['building control', 'local requirements', 'conflicts'],
     priority: 'important',
     section: 'building-career',
@@ -1289,7 +1289,7 @@ export const quizQuestions: QuizQuestion[] = [
     ],
     correctIndex: 2,
     explanation:
-      'CO2 extinguishers are safe for use on electrical fires as they do not conduct electricity and leave no residue. Never use water on an electrical fire.',
+      'CO2 extinguishers are safe on electrical fires — they do not conduct electricity and leave no residue (dry powder units rated for electrical risk are also used on many sites). Never use water on an electrical fire while the supply could still be live.',
     section: 'emergency',
   },
   {

@@ -10,11 +10,12 @@
  *     session in `am2_mock_sessions`. The motivational hook.
  *   • Last practice — when, what mode, score.
  *
- * Storage is intentionally light: target date in localStorage (no schema
- * change), session data read from the already-deployed `am2_mock_sessions`
- * table. Per-user keyspace so multiple users on the same device don't
- * collide. This panel is the "your AM2 journey" frame above the grid; it
- * doesn't replace the gauge or risk banner, it adds to them.
+ * Storage is intentionally light: target date via useAm2ExamDate (shared
+ * localStorage key with the readiness ring — no schema change), session
+ * data read from the already-deployed `am2_mock_sessions` table. Per-user
+ * keyspace so multiple users on the same device don't collide. First-time
+ * date entry lives in the readiness ring hero above; this panel keeps the
+ * edit/clear affordance plus streak, last-practice and projection tiles.
  */
 
 import { useCallback, useEffect, useMemo, useState } from 'react';
@@ -23,13 +24,11 @@ import { Calendar, Flame, Clock, TrendingUp, Pencil, X } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { useAuth } from '@/contexts/AuthContext';
 import { useAM2Readiness } from '@/hooks/am2/useAM2Readiness';
+import { useAm2ExamDate } from '@/hooks/useAm2Readiness';
 import { createClient } from '@supabase/supabase-js';
 import { SUPABASE_URL, SUPABASE_PUBLISHABLE_KEY } from '@/integrations/supabase/client';
-import { storageGetSync, storageSetSync, storageRemoveSync } from '@/utils/storage';
 
 const db = createClient(SUPABASE_URL, SUPABASE_PUBLISHABLE_KEY);
-
-const TARGET_DATE_KEY = (userId: string) => `am2-target-date-${userId}`;
 
 interface SessionStamp {
   id: string;
@@ -58,22 +57,33 @@ function daysBetween(a: Date, b: Date): number {
   return Math.round(ms / 86_400_000);
 }
 
+/**
+ * LOCAL yyyy-mm-dd key. Never toISOString here — that keys on UTC, so
+ * during BST a run logged this morning lands on "today" while a
+ * local-midnight cursor keys as "yesterday" and the streak silently
+ * misses every same-day session.
+ */
+function localDayKey(d: Date): string {
+  return d.toLocaleDateString('en-CA');
+}
+
 function computeStreak(sessions: SessionStamp[]): number {
   if (sessions.length === 0) return 0;
-  // Days (yyyy-mm-dd) that have at least one session, deduped.
-  const dayKeys = new Set(sessions.map((s) => new Date(s.completed_at).toISOString().slice(0, 10)));
+  // Days (local yyyy-mm-dd) that have at least one session, deduped.
+  const dayKeys = new Set(sessions.map((s) => localDayKey(new Date(s.completed_at))));
   // Walk backwards from today until we miss a day.
   let streak = 0;
   let cursor = startOfDay(new Date());
+  const todayKey = localDayKey(cursor);
   while (true) {
-    const key = cursor.toISOString().slice(0, 10);
+    const key = localDayKey(cursor);
     if (dayKeys.has(key)) {
       streak += 1;
       cursor = new Date(cursor.getTime() - 86_400_000);
     } else {
       // Allow today to be missing if it's still early — streak counts from
       // yesterday backwards in that case.
-      if (streak === 0 && key === startOfDay(new Date()).toISOString().slice(0, 10)) {
+      if (streak === 0 && key === todayKey) {
         cursor = new Date(cursor.getTime() - 86_400_000);
         continue;
       }
@@ -87,7 +97,9 @@ export function AM2JourneyPanel() {
   const { user } = useAuth();
   const { data: readiness } = useAM2Readiness();
 
-  const [targetDate, setTargetDate] = useState<string | null>(null);
+  // Shared with the readiness ring — same localStorage key, kept in sync
+  // across instances via the hook's change event.
+  const { examDate: targetDate, setExamDate } = useAm2ExamDate();
   const [editingTarget, setEditingTarget] = useState(false);
   const [draftTarget, setDraftTarget] = useState<string>('');
   const [stats, setStats] = useState<JourneyStats>({
@@ -96,36 +108,22 @@ export function AM2JourneyPanel() {
     recentCount: 0,
   });
 
-  // Load target date from local storage on mount
-  useEffect(() => {
-    if (!user) return;
-    const stored = storageGetSync(TARGET_DATE_KEY(user.id));
-    if (stored && /^\d{4}-\d{2}-\d{2}$/.test(stored)) {
-      setTargetDate(stored);
-    }
-  }, [user]);
-
   const saveTarget = useCallback(() => {
-    if (!user) return;
     if (!draftTarget) {
-      storageRemoveSync(TARGET_DATE_KEY(user.id));
-      setTargetDate(null);
+      setExamDate(null);
       setEditingTarget(false);
       return;
     }
     if (!/^\d{4}-\d{2}-\d{2}$/.test(draftTarget)) return;
-    storageSetSync(TARGET_DATE_KEY(user.id), draftTarget);
-    setTargetDate(draftTarget);
+    setExamDate(draftTarget);
     setEditingTarget(false);
-  }, [user, draftTarget]);
+  }, [draftTarget, setExamDate]);
 
   const clearTarget = useCallback(() => {
-    if (!user) return;
-    storageRemoveSync(TARGET_DATE_KEY(user.id));
-    setTargetDate(null);
+    setExamDate(null);
     setEditingTarget(false);
     setDraftTarget('');
-  }, [user]);
+  }, [setExamDate]);
 
   // Fetch last 30 days of sessions for streak + last + recent count
   useEffect(() => {
@@ -155,11 +153,13 @@ export function AM2JourneyPanel() {
     };
   }, [user, readiness]);
 
-  // Derived target metrics
+  // Derived target metrics. Parse as LOCAL midnight (bare yyyy-mm-dd is
+  // UTC) so the countdown matches the hook's daysToGo to the day.
   const targetMetrics = useMemo(() => {
     if (!targetDate) return null;
     const today = startOfDay(new Date());
-    const target = startOfDay(new Date(targetDate));
+    const target = new Date(`${targetDate}T00:00:00`);
+    if (!isFinite(target.getTime())) return null;
     const daysRemaining = daysBetween(today, target);
     const isPast = daysRemaining < 0;
     const isToday = daysRemaining === 0;
@@ -239,10 +239,10 @@ export function AM2JourneyPanel() {
           )}
         </div>
 
-        {/* Date picker — first-time apprentice with no target set, or
-            inline editing. Storage is per-user so multiple accounts on
-            the same device don't share. */}
-        {(!targetDate || editingTarget) && (
+        {/* Date picker — inline editing only. First-time entry happens in
+            the readiness ring hero above, so the panel doesn't double up
+            on "set your date" prompts. */}
+        {editingTarget && (
           <div className="rounded-xl border border-elec-yellow/20 bg-white/[0.02] p-3 sm:p-4 space-y-2.5">
             <div className="flex items-center gap-2 text-[12.5px] text-white/85">
               <Calendar className="h-3.5 w-3.5 text-elec-yellow shrink-0" />

@@ -65,7 +65,8 @@ const skillFilterOptions = [
 
 export default function SiteDiary() {
   const navigate = useNavigate();
-  const { entries, createEntry, updateEntry, deleteEntry, recentSites } = useSiteDiaryEntries();
+  const { entries, isLoading, loadError, createEntry, updateEntry, deleteEntry, recentSites, refresh } =
+    useSiteDiaryEntries();
   const {
     currentStreak,
     longestStreak,
@@ -207,12 +208,13 @@ export default function SiteDiary() {
   }, []);
 
   const handleSave = useCallback(
+    // Return the saved row (or null on failure) so the sheet only closes on
+    // success — a failed save must keep the form open with the work intact.
     async (entry: Parameters<typeof createEntry>[0]) => {
       if (editEntry) {
-        await updateEntry(editEntry.id, entry);
-      } else {
-        await createEntry(entry);
+        return updateEntry(editEntry.id, entry);
       }
+      return createEntry(entry);
     },
     [editEntry, updateEntry, createEntry]
   );
@@ -671,8 +673,26 @@ export default function SiteDiary() {
             </p>
           )}
 
-          {/* Feed or Calendar */}
-          {viewMode === 'feed' ? (
+          {/* Feed or Calendar — gate on load so an in-flight fetch never flashes
+              the "no entries" empty state to a user who actually has entries. */}
+          {isLoading && entries.length === 0 ? (
+            <div className="flex items-center justify-center py-16" aria-label="Loading diary">
+              <div className="animate-spin h-5 w-5 border-2 border-elec-yellow border-t-transparent rounded-full" />
+            </div>
+          ) : loadError && entries.length === 0 ? (
+            <div className="text-center py-12 space-y-3">
+              <p className="text-[13px] text-white/70 leading-snug">
+                Couldn't load your diary. Check your connection and try again.
+              </p>
+              <button
+                type="button"
+                onClick={() => void refresh()}
+                className="h-10 px-4 rounded-xl border border-white/[0.12] bg-white/[0.04] text-white/85 text-[13px] font-medium touch-manipulation"
+              >
+                Try again
+              </button>
+            </div>
+          ) : viewMode === 'feed' ? (
             <DiaryFeed
               entries={filteredEntries}
               onEntryTap={handleEntryTap}

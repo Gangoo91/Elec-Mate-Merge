@@ -1,4 +1,4 @@
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { Card, CardContent, CardHeader, CardTitle } from '../ui/guideCard';
 import { Badge } from '@/components/ui/badge';
 import { Alert, AlertDescription } from '@/components/ui/alert';
 import {
@@ -515,7 +515,7 @@ const SpecialistReferenceGuide = () => {
       category: 'Official Standards',
       resources: [
         {
-          name: 'BS 7671:2018+A2:2022',
+          name: 'BS 7671:2018+A4:2026',
           description: 'Requirements for Electrical Installations (18th Edition)',
           source: 'BSI',
         },

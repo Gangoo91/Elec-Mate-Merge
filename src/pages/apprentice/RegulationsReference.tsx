@@ -19,42 +19,42 @@ const RegulationsReference = () => {
         'Protection against electric shock',
         'Protection against thermal effects',
       ],
-      reference: 'BS7671:2018+A3:2024',
+      reference: 'BS 7671:2018+A4:2026',
     },
     {
       section: 'Part 2',
       title: 'Definitions',
       description: 'Technical definitions used throughout the regulations',
       keyPoints: ['Circuit definitions', 'Equipment classifications', 'Installation types'],
-      reference: 'BS7671:2018+A3:2024',
+      reference: 'BS 7671:2018+A4:2026',
     },
     {
       section: 'Part 4',
       title: 'Protection for Safety',
       description: 'Requirements for protection against electric shock and thermal effects',
       keyPoints: ['Basic protection', 'Fault protection', 'Additional protection'],
-      reference: 'BS7671:2018+A3:2024',
+      reference: 'BS 7671:2018+A4:2026',
     },
     {
       section: 'Part 5',
       title: 'Selection and Erection of Equipment',
       description: 'Requirements for selecting and installing electrical equipment',
       keyPoints: ['Cable selection', 'Switchgear requirements', 'Earthing arrangements'],
-      reference: 'BS7671:2018+A3:2024',
+      reference: 'BS 7671:2018+A4:2026',
     },
     {
       section: 'Part 6',
       title: 'Inspection and Testing',
       description: 'Requirements for initial verification and periodic inspection',
       keyPoints: ['Visual inspection', 'Testing procedures', 'Certification requirements'],
-      reference: 'BS7671:2018+A3:2024',
+      reference: 'BS 7671:2018+A4:2026',
     },
     {
       section: 'Part 7',
       title: 'Special Installations or Locations',
       description: 'Additional requirements for specific locations',
       keyPoints: ['Bathrooms', 'Swimming pools', 'Agricultural locations', 'Caravan parks'],
-      reference: 'BS7671:2018+A3:2024',
+      reference: 'BS 7671:2018+A4:2026',
     },
   ];
 
@@ -95,7 +95,7 @@ const RegulationsReference = () => {
           BS 7671 Regulations Quick Reference
         </h1>
         <p className="text-white text-center max-w-2xl mb-4">
-          Quick access to key sections of BS7671:2018+A3:2024 (18th Edition) wiring regulations
+          Quick access to key sections of BS 7671:2018+A4:2026 (18th Edition) wiring regulations
         </p>
         <SmartBackButton />
       </div>
@@ -165,7 +165,7 @@ const RegulationsReference = () => {
         </CardHeader>
         <CardContent>
           <p className="text-white text-sm">
-            This is a quick reference guide only. Always consult the full BS7671:2018+A3:2024
+            This is a quick reference guide only. Always consult the full BS 7671:2018+A4:2026
             regulations and relevant guidance notes for complete requirements. Ensure you have the
             latest version of the regulations as they are updated periodically.
           </p>

@@ -29,6 +29,8 @@ import { supabase } from '@/integrations/supabase/client';
 import { useQuery } from '@tanstack/react-query';
 import { reportCloud } from '@/utils/reportCloud';
 import { useDesignedCircuits } from '@/hooks/useDesignedCircuits';
+import { useQsTeamContext } from '@/hooks/useQsReview';
+import { useQsPendingCount } from '@/hooks/useQsReviewQueue';
 
 // ─────────────────────────────────────────────────────────────────────────
 // Editorial helpers
@@ -564,6 +566,11 @@ const Dashboard = ({
   const { reminders = [] } = useExpiryReminders();
   const { data: designedCircuits } = useDesignedCircuits();
 
+  // QS Review bench entry point — only shown to a Qualifying Supervisor (am_i_qs).
+  const { data: qsTeam } = useQsTeamContext();
+  const qsPendingCount = useQsPendingCount();
+  const isQs = qsTeam?.am_i_qs === true;
+
   const { data: reportsData } = useQuery({
     queryKey: ['recent-certificates', user?.id],
     queryFn: async () => {
@@ -723,6 +730,19 @@ const Dashboard = ({
   ];
 
   const complianceTools: ToolCard[] = [
+    ...(isQs
+      ? [
+          {
+            id: 'qs-review',
+            eyebrow: 'Compliance',
+            title: 'QS Review',
+            description: 'Review and countersign certificates awaiting your sign-off.',
+            onClick: () => onNavigate('qs-reviews'),
+            meta: qsPendingCount > 0 ? `${qsPendingCount} awaiting sign-off` : 'Nothing waiting',
+            alert: qsPendingCount > 0,
+          } as ToolCard,
+        ]
+      : []),
     {
       id: 'expiring',
       eyebrow: 'Expiry',

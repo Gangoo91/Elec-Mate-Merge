@@ -1,4 +1,4 @@
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { Card, CardContent, CardHeader, CardTitle } from '../ui/guideCard';
 import { Badge } from '@/components/ui/badge';
 import { Progress } from '@/components/ui/progress';
 import { Alert, AlertDescription } from '@/components/ui/alert';
@@ -147,7 +147,7 @@ const DomesticOverviewCards = () => {
   };
 
   const consumerUnitRequirements = {
-    title: 'Consumer Unit Requirements (18th Edition AMD3)',
+    title: 'Consumer Unit Requirements (BS 7671:2018+A4:2026)',
     icon: Box,
     keyChanges: [
       {
@@ -171,8 +171,8 @@ const DomesticOverviewCards = () => {
       {
         requirement: 'Arc Fault Detection Devices (AFDD)',
         details:
-          'Recommended for locations with sleeping accommodation, fire risk, combustible construction, or irreplaceable goods',
-        regulation: 'Reg 421.1.7 (Recommendation)',
+          'Required under A4:2026 for single-phase AC socket-outlet final circuits ≤32A in higher-risk residential buildings, HMOs, purpose-built student accommodation and care homes; recommended elsewhere with sleeping accommodation or fire risk',
+        regulation: 'Reg 421.1.7 (requirement under A4:2026)',
       },
     ],
     specifications: [

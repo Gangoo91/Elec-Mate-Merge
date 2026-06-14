@@ -77,7 +77,7 @@ export const firstAndSecondFix: FlashcardData[] = [
     question:
       'Since January 2016, what requirement applies to consumer units in domestic premises, and which amendment introduced it?',
     answer:
-      'Amendment 3 (AMD3) to BS 7671:2008 requires that all consumer units and similar switchgear assemblies in domestic premises must be constructed of non-combustible material, which in practice means a metal enclosure. This was introduced to reduce the risk of fire spreading from a faulty consumer unit. The requirement is now carried forward in BS 7671:2018+A2:2022.',
+      'Amendment 3 (AMD3) to BS 7671:2008 requires that all consumer units and similar switchgear assemblies in domestic premises must be constructed of non-combustible material, which in practice means a metal enclosure. This was introduced to reduce the risk of fire spreading from a faulty consumer unit. The requirement is now carried forward in BS 7671:2018+A4:2026.',
     category: 'Consumer Units',
     difficulty: 'medium',
   },

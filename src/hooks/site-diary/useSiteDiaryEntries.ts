@@ -5,12 +5,51 @@
  * localStorage fallback for offline resilience.
  */
 
-import { useState, useEffect, useCallback } from 'react';
+import { useState, useEffect, useCallback, useRef } from 'react';
 import { supabase } from '@/integrations/supabase/client';
 import { useAuth } from '@/contexts/AuthContext';
 import { toast } from 'sonner';
 import { useLearningXP } from '@/hooks/useLearningXP';
 import { storageGetJSONSync, storageSetJSONSync } from '@/utils/storage';
+
+// Buckets diary photos can live in — new uploads go to portfolio-evidence;
+// legacy ones may still be in visual-uploads. Used to turn a stored photo URL
+// back into a {bucket, path} so the file can be deleted (no more orphans).
+const PHOTO_BUCKETS = ['portfolio-evidence', 'visual-uploads'] as const;
+
+function parsePhotoRef(url: string): { bucket: string; path: string } | null {
+  const marker = '/storage/v1/object/';
+  const idx = url.indexOf(marker);
+  if (idx === -1) return null;
+  const rest = url.slice(idx + marker.length).replace(/^(public|sign|authenticated)\//, '');
+  for (const bucket of PHOTO_BUCKETS) {
+    const prefix = `${bucket}/`;
+    if (rest.startsWith(prefix)) {
+      const path = decodeURIComponent(rest.slice(prefix.length).split('?')[0]);
+      return path ? { bucket, path } : null;
+    }
+  }
+  return null;
+}
+
+/** Best-effort delete of photo storage objects by their stored URLs. */
+async function removePhotoFiles(urls: string[]): Promise<void> {
+  const byBucket = new Map<string, string[]>();
+  for (const u of urls) {
+    const ref = parsePhotoRef(u);
+    if (!ref) continue;
+    const list = byBucket.get(ref.bucket) ?? [];
+    list.push(ref.path);
+    byBucket.set(ref.bucket, list);
+  }
+  for (const [bucket, paths] of byBucket) {
+    try {
+      await supabase.storage.from(bucket).remove(paths);
+    } catch {
+      /* best-effort — never block the entry op on storage cleanup */
+    }
+  }
+}
 
 export interface SiteDiaryEntry {
   id: string;
@@ -43,10 +82,20 @@ export function useSiteDiaryEntries() {
   const { logActivity } = useLearningXP();
   const [entries, setEntries] = useState<SiteDiaryEntry[]>([]);
   const [isLoading, setIsLoading] = useState(true);
+  // True when the fetch failed AND there was no local cache to fall back on —
+  // lets the UI distinguish "couldn't load" from a genuine empty first-run.
+  const [loadError, setLoadError] = useState(false);
+  // Mirror of entries, readable from delete/update without stale closures, so
+  // we can find the OLD photo set and clean up its storage on remove/replace.
+  const entriesRef = useRef<SiteDiaryEntry[]>([]);
+  useEffect(() => {
+    entriesRef.current = entries;
+  }, [entries]);
 
   // Load entries
   const loadEntries = useCallback(async () => {
     setIsLoading(true);
+    setLoadError(false);
     try {
       if (user) {
         const { data, error } = await supabase
@@ -70,9 +119,11 @@ export function useSiteDiaryEntries() {
         if (local.length > 0) setEntries(local);
       }
     } catch {
-      // Fallback to storage
+      // Fallback to storage; only flag an error if there's nothing cached to
+      // show either — otherwise the cached list is a fine offline experience.
       const local = storageGetJSONSync<SiteDiaryEntry[]>(STORAGE_KEY, []);
       if (local.length > 0) setEntries(local);
+      else setLoadError(true);
     } finally {
       setIsLoading(false);
     }
@@ -134,8 +185,11 @@ export function useSiteDiaryEntries() {
         if (error) throw error;
 
         const newEntry = data as SiteDiaryEntry;
-        setEntries((prev) => [newEntry, ...prev]);
-        storageSetJSONSync(STORAGE_KEY, [newEntry, ...entries]);
+        setEntries((prev) => {
+          const next = [newEntry, ...prev];
+          storageSetJSONSync(STORAGE_KEY, next);
+          return next;
+        });
 
         const hoursMsg =
           hours_spent && hours_spent > 0 ? ` + ${hours_spent}h OJT logged` : '';
@@ -161,7 +215,7 @@ export function useSiteDiaryEntries() {
         return null;
       }
     },
-    [user, entries]
+    [user, logActivity]
   );
 
   // Update entry
@@ -181,7 +235,18 @@ export function useSiteDiaryEntries() {
         if (error) throw error;
 
         const updated = data as SiteDiaryEntry;
-        setEntries((prev) => prev.map((e) => (e.id === id ? updated : e)));
+        // Delete the storage objects for any photos dropped in this edit — no
+        // orphaned, still-downloadable files left behind.
+        if (updates.photos) {
+          const prevPhotos = entriesRef.current.find((e) => e.id === id)?.photos ?? [];
+          const removed = prevPhotos.filter((u) => !updates.photos!.includes(u));
+          if (removed.length) void removePhotoFiles(removed);
+        }
+        setEntries((prev) => {
+          const next = prev.map((e) => (e.id === id ? updated : e));
+          storageSetJSONSync(STORAGE_KEY, next);
+          return next;
+        });
         toast.success('Entry updated');
         return updated;
       } catch {
@@ -206,7 +271,16 @@ export function useSiteDiaryEntries() {
 
         if (error) throw error;
 
-        setEntries((prev) => prev.filter((e) => e.id !== id));
+        // Clean up this entry's photo files so a delete doesn't leave them
+        // orphaned (and, on the public bucket, still downloadable) forever.
+        const removedPhotos = entriesRef.current.find((e) => e.id === id)?.photos ?? [];
+        if (removedPhotos.length) void removePhotoFiles(removedPhotos);
+
+        setEntries((prev) => {
+          const next = prev.filter((e) => e.id !== id);
+          storageSetJSONSync(STORAGE_KEY, next);
+          return next;
+        });
         toast.success('Entry deleted');
         return true;
       } catch {
@@ -226,6 +300,7 @@ export function useSiteDiaryEntries() {
   return {
     entries,
     isLoading,
+    loadError,
     createEntry,
     updateEntry,
     deleteEntry,

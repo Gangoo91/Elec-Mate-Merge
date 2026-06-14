@@ -953,7 +953,10 @@ export const formatEICRJson = async (formData: any, reportId: string): Promise<E
       address: get('installationAddress'),
       same_as_client_address: getBool('sameAsClientAddress'),
       occupier: get('occupier'),
-      installation_type: get('installationType'),
+      // EICR is always existing; UI field removed (ELE-1105) so fall back.
+      installation_type: get('installationType') || 'existing-installation',
+      property_type: get('propertyType'),
+      number_of_bedrooms: get('numberOfBedrooms'),
       description: get('description'),
       premises_type:
         get('description') === 'other' ? get('otherPremisesDescription') : get('description'),

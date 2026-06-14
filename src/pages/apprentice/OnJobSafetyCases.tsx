@@ -118,7 +118,7 @@ const OnJobSafetyCases = () => {
                     onClick={() => setDifficultyFilter(d)}
                     className={`
                       flex-shrink-0 px-3 py-1.5 rounded-full text-sm font-medium
-                      touch-manipulation active:scale-95 transition-all min-h-[36px]
+                      touch-manipulation active:scale-95 transition-all min-h-[44px]
                       ${
                         difficultyFilter === d
                           ? 'bg-elec-yellow text-black'
@@ -139,7 +139,7 @@ const OnJobSafetyCases = () => {
                     onClick={() => setCategoryFilter(c)}
                     className={`
                       flex-shrink-0 px-3 py-1.5 rounded-full text-xs font-medium
-                      touch-manipulation active:scale-95 transition-all min-h-[32px]
+                      touch-manipulation active:scale-95 transition-all min-h-[44px]
                       ${
                         categoryFilter === c
                           ? 'bg-white/20 text-white border border-white/30'

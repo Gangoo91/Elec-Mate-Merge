@@ -2,17 +2,13 @@ import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { ArrowLeft, CheckCircle2, ChevronDown, ChevronUp } from 'lucide-react';
-import {
-  PageFrame,
-  PageHero,
-  itemVariants,
-} from '@/components/college/primitives';
+import { PageFrame, PageHero, itemVariants } from '@/components/college/primitives';
 
 const skillCategories = [
   {
     title: 'Communication Skills',
     importance: 'Critical',
-    marketValue: '+15% earning potential',
+    marketValue: 'Lifts your earning potential',
     skills: [
       'Client consultation — explain technical work in plain language',
       'Written communication — clear reports, quotes, and certificates',
@@ -25,7 +21,7 @@ const skillCategories = [
   {
     title: 'Time Management',
     importance: 'High',
-    marketValue: '+10% productivity',
+    marketValue: 'Work faster and tidier',
     skills: [
       'Project planning — break jobs into manageable tasks with realistic timelines',
       'Prioritising tasks — deal with urgent safety issues before cosmetic work',
@@ -38,7 +34,7 @@ const skillCategories = [
   {
     title: 'Problem Solving',
     importance: 'Critical',
-    marketValue: '+20% client satisfaction',
+    marketValue: 'Clients trust you more',
     skills: [
       'Systematic fault diagnosis — follow a logical process to find faults',
       'Creative solutions — work within constraints of existing installations',
@@ -90,7 +86,7 @@ const skillCategories = [
   {
     title: 'Digital Skills',
     importance: 'High',
-    marketValue: '+25% efficiency',
+    marketValue: 'Get more done in a day',
     skills: [
       'Job management software — track work, schedules, and customer records',
       'Certification and reporting — digital EICR and EIC completion',
@@ -103,7 +99,7 @@ const skillCategories = [
   {
     title: 'Sustainability Knowledge',
     importance: 'Critical',
-    marketValue: '+40% market access',
+    marketValue: 'Opens far more of the market',
     skills: [
       'Energy efficiency — advise clients on reducing consumption',
       'Renewable systems — understand solar PV, battery storage, and heat pumps',
@@ -124,6 +120,19 @@ const skillCategories = [
       'Voice-controlled systems — install and configure smart assistants',
       'PLC basics — understand programmable logic controllers',
       'Predictive maintenance — use data to anticipate equipment failure',
+    ],
+  },
+  {
+    title: 'Talking through your work (EPA & AM2)',
+    importance: 'Critical',
+    marketValue: 'The very skills your end-point assessment grades',
+    skills: [
+      'Explaining WHY you did something, not just what you did',
+      'Talking through a fault — how you found it and how you proved it',
+      'Justifying your choices against BS 7671 in plain language',
+      'Staying calm and methodical under assessment pressure',
+      'Walking an assessor through your portfolio evidence with confidence',
+      'Reflecting honestly on what you would do differently next time',
     ],
   },
 ];
@@ -194,7 +203,10 @@ const ProfessionalSkills = () => {
   return (
     <PageFrame className="px-4 sm:px-6 lg:px-8">
       <motion.div variants={itemVariants}>
-        <button onClick={() => navigate('/apprentice/professional-development')} className="inline-flex items-center gap-2 h-11 -ml-2 px-2 rounded-md text-[12px] uppercase tracking-[0.18em] text-white/55 hover:text-white/85 transition-colors touch-manipulation">
+        <button
+          onClick={() => navigate('/apprentice/professional-development')}
+          className="inline-flex items-center gap-2 h-11 -ml-2 px-2 rounded-md text-[12px] uppercase tracking-[0.18em] text-white/55 hover:text-white/85 transition-colors touch-manipulation"
+        >
           <ArrowLeft className="h-4 w-4" />
           Back
         </button>
@@ -210,17 +222,26 @@ const ProfessionalSkills = () => {
       </motion.div>
 
       {/* Skill Categories */}
-      <div className="flex items-baseline justify-between gap-3 pb-1"><div className="space-y-1 min-w-0"><span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">Skill Categories</span></div></div>
+      <div className="flex items-baseline justify-between gap-3 pb-1">
+        <div className="space-y-1 min-w-0">
+          <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+            Skill Categories
+          </span>
+        </div>
+      </div>
 
       <div className="space-y-2">
         {skillCategories.map((category, index) => (
-          <div key={category.title} className="rounded-xl border border-white/[0.06] bg-[hsl(0_0%_10%)]">
+          <div
+            key={category.title}
+            className="rounded-xl border border-white/[0.06] bg-[hsl(0_0%_10%)]"
+          >
             <button
               onClick={() => toggleExpanded(index)}
               className="w-full p-4 flex items-center justify-between touch-manipulation active:scale-[0.98] transition-transform min-h-[44px] text-left"
             >
               <div className="flex-1 min-w-0">
-                <h3 className="font-semibold text-green-400 text-sm">{category.title}</h3>
+                <h3 className="font-semibold text-white text-sm">{category.title}</h3>
                 <div className="flex items-center gap-2 mt-0.5">
                   <span className="text-xs text-white">{category.importance} importance</span>
                   <span className="text-xs text-white">·</span>
@@ -252,20 +273,36 @@ const ProfessionalSkills = () => {
       </div>
 
       {/* Development Activities */}
-      <div className="flex items-baseline justify-between gap-3 pb-1"><div className="space-y-1 min-w-0"><span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">Development Activities</span></div></div>
+      <div className="flex items-baseline justify-between gap-3 pb-1">
+        <div className="space-y-1 min-w-0">
+          <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+            Development Activities
+          </span>
+        </div>
+      </div>
 
       <div className="space-y-3">
         {developmentActivities.map((activity) => (
-          <div key={activity.title} className="rounded-xl border border-white/[0.06] bg-[hsl(0_0%_10%)]">
+          <div
+            key={activity.title}
+            className="rounded-xl border border-white/[0.06] bg-[hsl(0_0%_10%)]"
+          >
             <div className="p-4 space-y-1">
-              <h3 className="font-semibold text-blue-400 text-sm">{activity.title}</h3>
+              <h3 className="font-semibold text-white text-sm">{activity.title}</h3>
               <p className="text-white text-sm leading-relaxed">{activity.description}</p>
-            </div></div>
+            </div>
+          </div>
         ))}
       </div>
 
       {/* Why Professional Skills Matter */}
-      <div className="flex items-baseline justify-between gap-3 pb-1"><div className="space-y-1 min-w-0"><span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">Why Professional Skills Matter</span></div></div>
+      <div className="flex items-baseline justify-between gap-3 pb-1">
+        <div className="space-y-1 min-w-0">
+          <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+            Why Professional Skills Matter
+          </span>
+        </div>
+      </div>
 
       <div className="space-y-3">
         {[
@@ -285,35 +322,49 @@ const ProfessionalSkills = () => {
               'If you want to be self-employed or run your own business, professional skills are not optional. Pricing, marketing, customer service, and financial management are essential.',
           },
         ].map((benefit) => (
-          <div key={benefit.title} className="rounded-xl border border-white/[0.06] bg-[hsl(0_0%_10%)]">
+          <div
+            key={benefit.title}
+            className="rounded-xl border border-white/[0.06] bg-[hsl(0_0%_10%)]"
+          >
             <div className="p-4 space-y-1">
-              <h3 className="font-semibold text-purple-400 text-sm">{benefit.title}</h3>
+              <h3 className="font-semibold text-white text-sm">{benefit.title}</h3>
               <p className="text-white text-sm leading-relaxed">{benefit.detail}</p>
-            </div></div>
+            </div>
+          </div>
         ))}
       </div>
 
       {/* Recommended Resources */}
-      <div className="flex items-baseline justify-between gap-3 pb-1"><div className="space-y-1 min-w-0"><span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">Recommended Resources</span></div></div>
+      <div className="flex items-baseline justify-between gap-3 pb-1">
+        <div className="space-y-1 min-w-0">
+          <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+            Recommended Resources
+          </span>
+        </div>
+      </div>
 
       <div className="space-y-3">
         {recommendedResources.map((resource) => (
-          <div key={resource.title} className="rounded-xl border border-white/[0.06] bg-[hsl(0_0%_10%)]">
+          <div
+            key={resource.title}
+            className="rounded-xl border border-white/[0.06] bg-[hsl(0_0%_10%)]"
+          >
             <div className="p-4 space-y-1">
               <div className="flex items-center justify-between">
-                <h3 className="font-semibold text-orange-400 text-sm">{resource.title}</h3>
-                <span className="text-xs font-medium text-white bg-orange-500/20 border border-orange-500/30 rounded-full px-2 py-0.5 flex-shrink-0">
+                <h3 className="font-semibold text-white text-sm">{resource.title}</h3>
+                <span className="text-xs font-medium text-white bg-white/[0.04] border border-white/[0.08] rounded-full px-2 py-0.5 flex-shrink-0">
                   {resource.type}
                 </span>
               </div>
               <p className="text-white text-sm leading-relaxed">{resource.description}</p>
-            </div></div>
+            </div>
+          </div>
         ))}
       </div>
 
       {/* Getting Started This Week */}
       <div className="flex items-center gap-2">
-        <div className="w-2 h-2 rounded-full bg-yellow-400" />
+        <div className="w-2 h-2 rounded-full bg-elec-yellow" />
         <h2 className="text-base font-semibold text-white">Getting Started This Week</h2>
       </div>
 
@@ -332,24 +383,26 @@ const ProfessionalSkills = () => {
               'Introduce yourself to someone from another trade on site — start building your network',
             ].map((action) => (
               <li key={action} className="flex items-start gap-2 text-sm text-white">
-                <CheckCircle className="h-4 w-4 text-yellow-400 flex-shrink-0 mt-0.5" />
+                <CheckCircle2 className="h-4 w-4 text-elec-yellow flex-shrink-0 mt-0.5" />
                 {action}
               </li>
             ))}
           </ul>
-        </div></div>
+        </div>
+      </div>
 
       {/* Development Strategy */}
       <div className="rounded-xl border border-white/[0.06] bg-[hsl(0_0%_10%)]">
         <div className="p-4 space-y-2">
-          <h3 className="font-semibold text-green-400 text-sm">Development Strategy</h3>
+          <h3 className="font-semibold text-white text-sm">Development Strategy</h3>
           <p className="text-white text-sm leading-relaxed">
             Pick one or two professional skills to focus on each quarter. Set specific, measurable
             goals — for example, "complete one written quote per week without help" or "lead one
             toolbox talk per month." Track your progress and ask for feedback from colleagues and
             clients. Small, consistent improvements add up to significant career growth.
           </p>
-        </div></div>
+        </div>
+      </div>
 
       {/* Footer */}
       <div className="rounded-xl border border-white/[0.06] bg-[hsl(0_0%_10%)]">
@@ -358,7 +411,8 @@ const ProfessionalSkills = () => {
             Professional skills guidance based on IET professional standards, ECA industry
             requirements, and current UK employer expectations for electrical professionals.
           </p>
-        </div></div>
+        </div>
+      </div>
     </PageFrame>
   );
 };

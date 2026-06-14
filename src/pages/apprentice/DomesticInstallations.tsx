@@ -96,7 +96,7 @@ const DomesticInstallations = () => (
         {
           title: 'RCD Protection Requirements',
           content:
-            'All domestic socket outlets must have 30mA RCD protection as per BS 7671:2018+A3:2024. Bathroom circuits require additional protection measures.',
+            'All domestic socket outlets must have 30mA RCD protection as per BS 7671:2018+A4:2026. Bathroom circuits require additional protection measures.',
         },
         {
           title: 'Testing and Certification Mandatory',

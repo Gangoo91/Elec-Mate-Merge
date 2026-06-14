@@ -341,7 +341,7 @@ const ApprenticeshipExpectations = () => {
                 <span className="font-medium">EPA:</span> AM2S End Point Assessment
               </Bullet>
               <Bullet icon={BookOpen}>
-                <span className="font-medium">Industry:</span> 18th Edition BS 7671:2018+A3:2024 (Amd 4 expected 2026)
+                <span className="font-medium">Industry:</span> 18th Edition BS 7671:2018+A4:2026 (Amd 4 expected 2026)
               </Bullet>
               <Bullet icon={CreditCard}>
                 <span className="font-medium">Card:</span> ECS Apprentice → ECS Electrician on qualification

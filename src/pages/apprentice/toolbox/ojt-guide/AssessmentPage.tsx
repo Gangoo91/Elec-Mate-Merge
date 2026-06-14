@@ -11,7 +11,7 @@ const knowledgeCards = [
     title: 'Regulations & Standards',
     colour: 'text-blue-400',
     border: 'border-blue-500/20',
-    desc: 'Structured study of BS 7671:2018+A3:2024, building regulations, and safety standards through guided reading and interpretation exercises.',
+    desc: 'Structured study of BS 7671:2018+A4:2026, building regulations, and safety standards through guided reading and interpretation exercises.',
   },
   {
     title: 'Design & Planning',

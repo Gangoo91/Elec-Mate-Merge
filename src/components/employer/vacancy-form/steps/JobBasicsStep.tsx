@@ -7,6 +7,7 @@ import {
   FormCard,
   FormGrid,
   Field,
+  OptionTile,
 } from '@/components/employer/editorial';
 import {
   employmentTypes,
@@ -40,7 +41,7 @@ export function JobBasicsStep() {
   return (
     <div className="space-y-4">
       {/* Job Title */}
-      <FormCard eyebrow="Role">
+      <FormCard index={1} eyebrow="Role">
         <Field label="Job Title" required hint={errors.title?.message}>
           <Input
             className={inputClass}
@@ -51,27 +52,19 @@ export function JobBasicsStep() {
       </FormCard>
 
       {/* Employment Type */}
-      <FormCard eyebrow="Employment Type">
+      <FormCard index={2} eyebrow="Employment type">
         <Controller
           name="type"
           control={control}
           render={({ field }) => (
             <div className="grid grid-cols-2 sm:grid-cols-3 gap-2">
               {employmentTypes.map((type) => (
-                <button
+                <OptionTile
                   key={type}
-                  type="button"
+                  selected={selectedType === type}
                   onClick={() => field.onChange(type)}
-                  className={cn(
-                    'p-3 rounded-xl border text-[13px] font-medium transition-all duration-200',
-                    'touch-manipulation min-h-[48px]',
-                    selectedType === type
-                      ? 'border-elec-yellow bg-elec-yellow/10 text-elec-yellow'
-                      : 'border-white/[0.08] bg-[hsl(0_0%_9%)] text-white hover:bg-white/[0.08]'
-                  )}
-                >
-                  {type}
-                </button>
+                  label={type}
+                />
               ))}
             </div>
           )}
@@ -82,7 +75,7 @@ export function JobBasicsStep() {
       </FormCard>
 
       {/* Location */}
-      <FormCard eyebrow="Location">
+      <FormCard index={3} eyebrow="Location">
         <FormGrid cols={2}>
           <Field label="Work Location" required hint={errors.location?.message ?? 'Enter city, town or postcode'}>
             <Input
@@ -103,29 +96,21 @@ export function JobBasicsStep() {
       </FormCard>
 
       {/* Work Arrangement */}
-      <FormCard eyebrow="Work Arrangement">
+      <FormCard index={4} eyebrow="Work arrangement">
         <Controller
           name="workArrangement"
           control={control}
           render={({ field }) => (
             <div className="grid grid-cols-3 gap-2">
               {workArrangements.map((arrangement) => (
-                <button
+                <OptionTile
                   key={arrangement}
-                  type="button"
+                  selected={selectedArrangement === arrangement}
                   onClick={() => field.onChange(arrangement)}
-                  className={cn(
-                    'flex flex-col items-center gap-2 p-4 rounded-xl border',
-                    'text-[13px] font-medium transition-all duration-200',
-                    'touch-manipulation min-h-[80px]',
-                    selectedArrangement === arrangement
-                      ? 'border-elec-yellow bg-elec-yellow/10 text-elec-yellow'
-                      : 'border-white/[0.08] bg-[hsl(0_0%_9%)] text-white hover:bg-white/[0.08]'
-                  )}
-                >
-                  {getWorkArrangementIcon(arrangement)}
-                  <span>{arrangement}</span>
-                </button>
+                  icon={getWorkArrangementIcon(arrangement)}
+                  label={arrangement}
+                  vertical
+                />
               ))}
             </div>
           )}
@@ -136,10 +121,10 @@ export function JobBasicsStep() {
       </FormCard>
 
       {/* Helper text */}
-      <div className="p-4 rounded-xl bg-elec-yellow/10 border border-elec-yellow/25">
-        <p className="text-[13px] text-white">
-          <strong className="text-elec-yellow">Tip:</strong> Be specific with your location to
-          attract nearby candidates. Jobs with postcodes get 40% more relevant applications.
+      <div className="flex items-start gap-2.5 px-3.5 py-3 rounded-xl bg-elec-yellow/[0.06] border border-elec-yellow/[0.15]">
+        <span className="text-elec-yellow text-[13px] font-semibold flex-shrink-0">Tip</span>
+        <p className="text-[12px] text-white/70 leading-snug">
+          Be specific with your location — jobs with a postcode get 40% more relevant, nearby applications.
         </p>
       </div>
     </div>
