@@ -1,6 +1,6 @@
 {
   "buildCommand": "npm run build:seo",
-  "installCommand": "npm install --legacy-peer-deps && npx playwright install --with-deps chromium",
+  "installCommand": "npm install --legacy-peer-deps && (npx playwright install --with-deps chromium || npx playwright install chromium || echo playwright-install-failed-prerender-will-fallback)",
   "outputDirectory": "dist",
   "framework": "vite",
   "cleanUrls": true,
