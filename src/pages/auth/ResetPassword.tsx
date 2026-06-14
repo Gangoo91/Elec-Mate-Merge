@@ -26,6 +26,30 @@ const PASSWORD_REQUIREMENTS = [
   { id: 'number', label: '0-9', test: (p: string) => /[0-9]/.test(p) },
 ];
 
+// Turn Supabase's raw auth errors into plain, reassuring guidance. The breached
+// -password check (HaveIBeenPwned) fires server-side even when every chip above
+// is green, so the message must explain *why* rather than read as a failure.
+const friendlyResetError = (message: string): string => {
+  const m = (message || '').toLowerCase();
+  if (m.includes('weak') || m.includes('pwned') || m.includes('breach') || m.includes('compromis')) {
+    return "This password has appeared in a known online data breach, so it isn't safe to use. Please choose one you haven't used anywhere else.";
+  }
+  if (m.includes('should be different') || m.includes('same as') || m.includes('new password should')) {
+    return 'Your new password needs to be different from your old one.';
+  }
+  if (
+    m.includes('expired') ||
+    m.includes('invalid') ||
+    m.includes('session') ||
+    m.includes('jwt') ||
+    m.includes('not authenticated') ||
+    m.includes('auth session missing')
+  ) {
+    return 'Your reset link has expired. Please request a new one and try again.';
+  }
+  return message || 'Something went wrong. Please request a new reset link and try again.';
+};
+
 const ResetPassword = () => {
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
@@ -98,13 +122,13 @@ const ResetPassword = () => {
     try {
       const { error } = await updatePassword(password);
       if (error) {
-        setError(error.message);
+        setError(friendlyResetError(error.message));
       } else {
         setIsSuccess(true);
         setTimeout(() => navigate('/auth/signin'), 2500);
       }
     } catch (err: unknown) {
-      setError(err instanceof Error ? err.message : 'An error occurred');
+      setError(friendlyResetError(err instanceof Error ? err.message : ''));
     } finally {
       setIsSubmitting(false);
     }
@@ -262,9 +286,19 @@ const ResetPassword = () => {
                       exit={{ opacity: 0, y: -10 }}
                       className="mb-5 p-4 rounded-2xl bg-red-500/10 border border-red-500/20"
                     >
-                      <div className="flex gap-3 items-center">
-                        <AlertTriangle className="h-5 w-5 text-red-400 flex-shrink-0" />
-                        <p className="text-[14px] text-red-400 font-medium">{error}</p>
+                      <div className="flex gap-3 items-start">
+                        <AlertTriangle className="h-5 w-5 text-red-400 flex-shrink-0 mt-0.5" />
+                        <div>
+                          <p className="text-[14px] text-red-400 font-medium">{error}</p>
+                          {error.toLowerCase().includes('expired') && (
+                            <Link
+                              to="/auth/forgot-password"
+                              className="inline-block mt-2 text-[13px] font-semibold text-elec-yellow"
+                            >
+                              Request a new link
+                            </Link>
+                          )}
+                        </div>
                       </div>
                     </motion.div>
                   )}
@@ -337,6 +371,12 @@ const ResetPassword = () => {
                           </div>
                         ))}
                       </motion.div>
+                    )}
+                    {password && allRequirementsMet && (
+                      <p className="text-[12px] text-white/50 ml-1 mt-2">
+                        For your security we also check new passwords against known data breaches —
+                        avoid common or reused passwords.
+                      </p>
                     )}
                   </div>
 

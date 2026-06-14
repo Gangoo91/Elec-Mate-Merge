@@ -129,7 +129,7 @@ const handler = async (req: Request): Promise<Response> => {
         headers: { ...corsHeaders, 'Content-Type': 'application/json' },
       }
     );
-  } catch (error: any) {
+  } catch (error) {
     console.error('Error in send-password-reset function:', error);
     return new Response(
       JSON.stringify({
@@ -144,166 +144,114 @@ const handler = async (req: Request): Promise<Response> => {
   }
 };
 
+// ─── Email template (light, editorial — matches the welcome email) ───
 function generatePasswordResetEmailHTML(resetLink: string, firstName: string): string {
-  const logoUrl = 'https://elec-mate.com/logo.jpg';
+  // Same hosted logo as the welcome email (public lead-magnets bucket).
+  const supabaseUrl = Deno.env.get('SUPABASE_URL') || 'https://jtwygbeceundfgnkirof.supabase.co';
+  const logoUrl = `${supabaseUrl}/storage/v1/object/public/lead-magnets/onboarding/elec-mate-logo.png`;
   const greeting = firstName ? `Hi ${firstName},` : 'Hi there,';
   const year = new Date().getFullYear();
+  const font =
+    "-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif";
 
-  return `
-<!DOCTYPE html>
+  return `<!DOCTYPE html>
 <html lang="en" xmlns:v="urn:schemas-microsoft-com:vml">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="x-apple-disable-message-reformatting">
-  <meta name="color-scheme" content="dark">
-  <meta name="supported-color-schemes" content="dark">
-  <title>Reset Your Password</title>
+  <meta name="color-scheme" content="light">
+  <meta name="supported-color-schemes" content="light">
+  <title>Reset your password</title>
   <!--[if mso]>
-  <noscript>
-    <xml>
-      <o:OfficeDocumentSettings>
-        <o:PixelsPerInch>96</o:PixelsPerInch>
-      </o:OfficeDocumentSettings>
-    </xml>
-  </noscript>
-  <style>
-    table {border-collapse: collapse;}
-    td, th, div, p, a, h1, h2, h3, h4, h5, h6 {font-family: Arial, sans-serif;}
-  </style>
+  <noscript><xml><o:OfficeDocumentSettings><o:PixelsPerInch>96</o:PixelsPerInch></o:OfficeDocumentSettings></xml></noscript>
+  <style>table {border-collapse: collapse;} td,th,div,p,a,h1,h2,h3 {font-family: Arial, sans-serif;}</style>
   <![endif]-->
   <style>
-    :root { color-scheme: dark; supported-color-schemes: dark; }
-    body { margin: 0; padding: 0; width: 100%; background-color: #000000; }
-    table { border-collapse: collapse; mso-table-lspace: 0pt; mso-table-rspace: 0pt; }
-    img { border: 0; height: auto; line-height: 100%; outline: none; text-decoration: none; -ms-interpolation-mode: bicubic; }
-    a { color: #fbbf24; text-decoration: none; }
-    .button-td, .button-a { transition: all 100ms ease-in; }
-    @media screen and (max-width: 600px) {
-      .mobile-padding { padding-left: 20px !important; padding-right: 20px !important; }
-      .mobile-stack { display: block !important; width: 100% !important; }
+    body { margin: 0; padding: 0; width: 100%; background-color: #F4F6F9; }
+    a { text-decoration: none; }
+    @media screen and (max-width: 480px) {
+      .pad { padding-left: 24px !important; padding-right: 24px !important; }
     }
   </style>
 </head>
-<body style="margin: 0; padding: 0; background-color: #000000; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;">
-  <!-- Preheader text (hidden but shows in email preview) -->
+<body style="margin: 0; padding: 0; background-color: #F4F6F9; font-family: ${font}; -webkit-font-smoothing: antialiased;">
+  <!-- Preheader (hidden, shows in inbox preview) -->
   <div style="display: none; max-height: 0; overflow: hidden; mso-hide: all;">
-    Reset your Elec-Mate password - this link expires in 1 hour.
-    &nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;
+    Reset your Elec-Mate password — this link expires in 1 hour.
+    &nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;
   </div>
 
-  <!-- Email wrapper -->
-  <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%" style="background-color: #000000;">
+  <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%" style="background-color: #F4F6F9;">
     <tr>
       <td align="center" style="padding: 40px 16px;">
 
-        <!-- Email container - 480px max for mobile-first -->
-        <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%" style="max-width: 480px; background-color: #111111; border-radius: 20px; overflow: hidden; border: 1px solid #262626;">
+        <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%" style="max-width: 520px; background-color: #FFFFFF; border-radius: 18px; overflow: hidden; border: 1px solid #E6E9EE;">
 
-          <!-- Logo & Header -->
+          <!-- Header -->
           <tr>
-            <td align="center" style="padding: 40px 32px 32px;" class="mobile-padding">
-              <img src="${logoUrl}" alt="Elec-Mate" width="72" height="72" style="display: block; border-radius: 14px; margin-bottom: 24px;">
-              <h1 style="margin: 0; font-size: 24px; font-weight: 700; color: #ffffff; line-height: 1.3;">
-                Reset Your Password
-              </h1>
+            <td align="left" style="padding: 36px 36px 8px;" class="pad">
+              <img src="${logoUrl}" alt="Elec-Mate" width="56" height="56" style="display: block; border-radius: 13px; border: 1px solid #E6E9EE;">
             </td>
           </tr>
 
-          <!-- Main content card -->
+          <!-- Title + intro -->
           <tr>
-            <td style="padding: 0 32px 32px;" class="mobile-padding">
-              <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%" style="background-color: #1a1a1a; border-radius: 16px; border: 1px solid #262626;">
-                <tr>
-                  <td style="padding: 28px;">
-                    <p style="margin: 0 0 16px; font-size: 16px; color: #ffffff; line-height: 1.5;">
-                      ${greeting}
-                    </p>
-                    <p style="margin: 0 0 28px; font-size: 15px; color: #d4d4d4; line-height: 1.6;">
-                      We received a request to reset your password. Click the button below to choose a new one. This link expires in <strong style="color: #fbbf24;">1 hour</strong>.
-                    </p>
+            <td align="left" style="padding: 18px 36px 0;" class="pad">
+              <p style="margin: 0 0 6px; font-size: 11px; font-weight: 700; letter-spacing: 1.6px; text-transform: uppercase; color: #B5840A;">Security</p>
+              <h1 style="margin: 0 0 18px; font-size: 27px; font-weight: 800; color: #0C1B2A; line-height: 1.12; letter-spacing: -0.5px;">Reset your password</h1>
+              <p style="margin: 0 0 14px; font-size: 15px; color: #0C1B2A; line-height: 1.5;">${greeting}</p>
+              <p style="margin: 0 0 24px; font-size: 15px; color: #51606F; line-height: 1.62;">We received a request to reset the password on your Elec-Mate account. Choose a new one using the button below. This link expires in <strong style="color: #0C1B2A;">1 hour</strong>.</p>
+            </td>
+          </tr>
 
-                    <!-- CTA Button - Large touch target -->
-                    <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%">
-                      <tr>
-                        <td align="center">
-                          <!--[if mso]>
-                          <v:roundrect xmlns:v="urn:schemas-microsoft-com:vml" xmlns:w="urn:schemas-microsoft-com:office:word" href="${resetLink}" style="height:56px;v-text-anchor:middle;width:100%;" arcsize="21%" fillcolor="#fbbf24">
-                            <w:anchorlock/>
-                            <center style="color:#000000;font-family:Arial,sans-serif;font-size:16px;font-weight:bold;">Reset Password</center>
-                          </v:roundrect>
-                          <![endif]-->
-                          <!--[if !mso]><!-->
-                          <a href="${resetLink}" style="display: block; padding: 18px 32px; background: linear-gradient(135deg, #fbbf24 0%, #f59e0b 100%); color: #000000; font-size: 16px; font-weight: 700; text-decoration: none; border-radius: 12px; text-align: center;">
-                            Reset Password
-                          </a>
-                          <!--<![endif]-->
-                        </td>
-                      </tr>
-                    </table>
+          <!-- Primary CTA -->
+          <tr>
+            <td align="left" style="padding: 0 36px 26px;" class="pad">
+              <!--[if mso]>
+              <v:roundrect xmlns:v="urn:schemas-microsoft-com:vml" xmlns:w="urn:schemas-microsoft-com:office:word" href="${resetLink}" style="height:52px;v-text-anchor:middle;width:220px;" arcsize="22%" fillcolor="#F3B70A">
+                <w:anchorlock/><center style="color:#0C1B2A;font-family:Arial,sans-serif;font-size:15px;font-weight:bold;">Reset password</center>
+              </v:roundrect>
+              <![endif]-->
+              <!--[if !mso]><!-->
+              <a href="${resetLink}" style="display: inline-block; padding: 15px 32px; background-color: #F3B70A; color: #0C1B2A; font-size: 15px; font-weight: 700; border-radius: 11px;">Reset password</a>
+              <!--<![endif]-->
+            </td>
+          </tr>
+
+          <!-- Security notice card -->
+          <tr>
+            <td style="padding: 0 36px 26px;" class="pad">
+              <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%" style="background-color: #FFFAEC; border: 1px solid #EFD489; border-radius: 14px;">
+                <tr>
+                  <td style="padding: 18px 20px;">
+                    <p style="margin: 0 0 4px; font-size: 11px; font-weight: 700; letter-spacing: 1.4px; text-transform: uppercase; color: #B5840A;">Didn't request this?</p>
+                    <p style="margin: 0; font-size: 13px; color: #51606F; line-height: 1.55;">You can safely ignore this email — your password won't change unless you use the button above.</p>
                   </td>
                 </tr>
               </table>
             </td>
           </tr>
 
-          <!-- Security notice -->
+          <!-- Fallback link -->
           <tr>
-            <td style="padding: 0 32px 32px;" class="mobile-padding">
-              <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%" style="background-color: #1a1a1a; border-radius: 12px; border: 1px solid #262626;">
-                <tr>
-                  <td style="padding: 20px;">
-                    <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%">
-                      <tr>
-                        <td width="48" valign="top">
-                          <div style="width: 40px; height: 40px; background-color: #262626; border-radius: 10px; text-align: center; line-height: 40px;">
-                            <span style="font-size: 20px;">🔒</span>
-                          </div>
-                        </td>
-                        <td style="padding-left: 16px;" valign="middle">
-                          <p style="margin: 0; font-size: 14px; color: #d4d4d4; line-height: 1.5;">
-                            Didn't request this? You can safely ignore this email. Your password will remain unchanged.
-                          </p>
-                        </td>
-                      </tr>
-                    </table>
-                  </td>
-                </tr>
-              </table>
-            </td>
-          </tr>
-
-          <!-- Alternative link -->
-          <tr>
-            <td style="padding: 0 32px 32px;" class="mobile-padding">
-              <p style="margin: 0 0 8px; font-size: 13px; color: #737373;">
-                Button not working? Copy this link:
-              </p>
-              <p style="margin: 0; font-size: 12px; color: #fbbf24; word-break: break-all; line-height: 1.5;">
-                ${resetLink}
-              </p>
+            <td style="padding: 0 36px 30px;" class="pad">
+              <p style="margin: 0 0 6px; font-size: 13px; color: #8B95A3;">Button not working? Copy and paste this link:</p>
+              <p style="margin: 0; font-size: 12px; color: #51606F; word-break: break-all; line-height: 1.5;">${resetLink}</p>
             </td>
           </tr>
 
           <!-- Footer -->
           <tr>
-            <td style="padding: 24px 32px; background-color: #0a0a0a; border-top: 1px solid #1a1a1a;" class="mobile-padding">
-              <p style="margin: 0 0 8px; font-size: 13px; color: #737373;">
-                Questions? Contact us at
-              </p>
-              <a href="mailto:founder@elec-mate.com" style="font-size: 14px; color: #fbbf24; font-weight: 500;">
-                founder@elec-mate.com
-              </a>
+            <td style="padding: 22px 36px; background-color: #F8FAFC; border-top: 1px solid #E6E9EE;" class="pad">
+              <p style="margin: 0; font-size: 13px; color: #51606F; line-height: 1.55;">Questions? Just reply to this email — it comes straight to Andrew, the founder, and he reads every one.</p>
             </td>
           </tr>
-
-          <!-- Copyright -->
           <tr>
-            <td align="center" style="padding: 20px 32px; background-color: #000000;">
-              <p style="margin: 0; font-size: 12px; color: #525252;">
-                © ${year} Elec-Mate · Made in the UK
-              </p>
+            <td align="center" style="padding: 18px 36px 26px; background-color: #F8FAFC;">
+              <p style="margin: 0 0 3px; font-size: 12px; font-weight: 600; color: #0C1B2A;">Your trade. Your app.</p>
+              <p style="margin: 0; font-size: 11px; color: #8B95A3;">&copy; ${year} Elec-Mate &middot; Made in the UK</p>
             </td>
           </tr>
 
@@ -312,10 +260,8 @@ function generatePasswordResetEmailHTML(resetLink: string, firstName: string): s
       </td>
     </tr>
   </table>
-
 </body>
-</html>
-  `;
+</html>`;
 }
 
 serve(handler);
