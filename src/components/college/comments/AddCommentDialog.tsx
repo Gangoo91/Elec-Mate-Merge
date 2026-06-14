@@ -1,11 +1,11 @@
 import { useState } from 'react';
 import {
-  Dialog,
-  DialogContent,
-  DialogHeader,
-  DialogTitle,
-  DialogFooter,
-} from '@/components/ui/dialog';
+  ResponsiveDialog,
+  ResponsiveDialogContent,
+  ResponsiveDialogHeader,
+  ResponsiveDialogTitle,
+  ResponsiveDialogFooter,
+} from '@/components/ui/responsive-dialog';
 import { Textarea } from '@/components/ui/textarea';
 import { Avatar, AvatarFallback } from '@/components/ui/avatar';
 import { Switch } from '@/components/ui/switch';
@@ -212,17 +212,17 @@ export function AddCommentDialog({
   };
 
   return (
-    <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogContent className="sm:max-w-md bg-[hsl(0_0%_8%)] border border-white/[0.08] text-white">
-        <DialogHeader>
-          <DialogTitle className="flex items-center gap-2 text-white">Add Comment</DialogTitle>
+    <ResponsiveDialog open={open} onOpenChange={onOpenChange}>
+      <ResponsiveDialogContent className="sm:max-w-md bg-[hsl(0_0%_8%)] border border-white/[0.08] text-white">
+        <ResponsiveDialogHeader>
+          <ResponsiveDialogTitle className="flex items-center gap-2 text-white">Add Comment</ResponsiveDialogTitle>
           {contextTitle && (
             <p className="text-sm text-white">
               On {getContextLabel()}:{' '}
               <span className="font-medium text-white">{contextTitle}</span>
             </p>
           )}
-        </DialogHeader>
+        </ResponsiveDialogHeader>
 
         <div className="space-y-4">
           {/* Comment author */}
@@ -350,13 +350,13 @@ export function AddCommentDialog({
           </div>
         </div>
 
-        <DialogFooter className="gap-2 sm:gap-0">
+        <ResponsiveDialogFooter className="gap-2 sm:gap-0">
           <SecondaryButton onClick={() => onOpenChange(false)}>Cancel</SecondaryButton>
           <PrimaryButton onClick={handleSubmit} disabled={!content.trim()}>
             Post Comment
           </PrimaryButton>
-        </DialogFooter>
-      </DialogContent>
-    </Dialog>
+        </ResponsiveDialogFooter>
+      </ResponsiveDialogContent>
+    </ResponsiveDialog>
   );
 }

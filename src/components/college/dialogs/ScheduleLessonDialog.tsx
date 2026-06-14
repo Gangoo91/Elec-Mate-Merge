@@ -1,11 +1,11 @@
 import { useEffect, useMemo, useState } from 'react';
 import {
-  Dialog,
-  DialogContent,
-  DialogDescription,
-  DialogHeader,
-  DialogTitle,
-} from '@/components/ui/dialog';
+  ResponsiveDialog,
+  ResponsiveDialogContent,
+  ResponsiveDialogDescription,
+  ResponsiveDialogHeader,
+  ResponsiveDialogTitle,
+} from '@/components/ui/responsive-dialog';
 import { cn } from '@/lib/utils';
 import { supabase } from '@/integrations/supabase/client';
 import { useToast } from '@/hooks/use-toast';
@@ -166,8 +166,8 @@ export function ScheduleLessonDialog({
   }, []);
 
   return (
-    <Dialog open={open} onOpenChange={(v) => !v && onOpenChange(false)}>
-      <DialogContent
+    <ResponsiveDialog open={open} onOpenChange={(v) => !v && onOpenChange(false)}>
+      <ResponsiveDialogContent
         className={cn(
           'w-[min(100vw-1rem,640px)] max-h-[92vh]',
           'bg-[hsl(0_0%_10%)] border-white/[0.08]',
@@ -175,17 +175,17 @@ export function ScheduleLessonDialog({
           'sm:w-[min(100vw-2rem,640px)]'
         )}
       >
-        <DialogHeader className="shrink-0 border-b border-white/[0.06] px-6 py-5 sm:px-7 sm:py-6 space-y-2 text-left">
+        <ResponsiveDialogHeader className="shrink-0 border-b border-white/[0.06] px-6 py-5 sm:px-7 sm:py-6 space-y-2 text-left">
           <div className="text-[10px] font-medium uppercase tracking-[0.22em] text-elec-yellow/85">
             Schedule to timetable
           </div>
-          <DialogTitle className="text-xl sm:text-[22px] font-semibold text-white tracking-tight leading-tight">
+          <ResponsiveDialogTitle className="text-xl sm:text-[22px] font-semibold text-white tracking-tight leading-tight">
             {planTitle}
-          </DialogTitle>
-          <DialogDescription className="text-[12.5px] text-white leading-relaxed">
+          </ResponsiveDialogTitle>
+          <ResponsiveDialogDescription className="text-[12.5px] text-white leading-relaxed">
             Pick when and where this lesson will run. You can always move it later.
-          </DialogDescription>
-        </DialogHeader>
+          </ResponsiveDialogDescription>
+        </ResponsiveDialogHeader>
 
         <div className="flex-1 overflow-y-auto px-6 sm:px-7 py-6 space-y-6">
           {/* Cohort */}
@@ -339,8 +339,8 @@ export function ScheduleLessonDialog({
             {saving ? 'Scheduling…' : 'Schedule lesson'}
           </PrimaryButton>
         </div>
-      </DialogContent>
-    </Dialog>
+      </ResponsiveDialogContent>
+    </ResponsiveDialog>
   );
 }
 

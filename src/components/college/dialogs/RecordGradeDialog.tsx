@@ -2,13 +2,13 @@ import { useState, useEffect } from 'react';
 import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
 import {
-  Dialog,
-  DialogContent,
-  DialogDescription,
-  DialogFooter,
-  DialogHeader,
-  DialogTitle,
-} from '@/components/ui/dialog';
+  ResponsiveDialog,
+  ResponsiveDialogContent,
+  ResponsiveDialogDescription,
+  ResponsiveDialogFooter,
+  ResponsiveDialogHeader,
+  ResponsiveDialogTitle,
+} from '@/components/ui/responsive-dialog';
 import {
   Select,
   SelectContent,
@@ -120,14 +120,14 @@ export function RecordGradeDialog({ open, onOpenChange, assessmentId }: RecordGr
   };
 
   return (
-    <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogContent className="sm:max-w-[500px] max-h-[90vh] overflow-y-auto bg-[hsl(0_0%_8%)] border-white/[0.08]">
-        <DialogHeader>
-          <DialogTitle className="text-white">Record grade</DialogTitle>
-          <DialogDescription className="text-white">
+    <ResponsiveDialog open={open} onOpenChange={onOpenChange}>
+      <ResponsiveDialogContent className="sm:max-w-[500px] max-h-[90vh] overflow-y-auto bg-[hsl(0_0%_8%)] border-white/[0.08]">
+        <ResponsiveDialogHeader>
+          <ResponsiveDialogTitle className="text-white">Record grade</ResponsiveDialogTitle>
+          <ResponsiveDialogDescription className="text-white">
             Grade an assessment submission. All fields marked with * are required.
-          </DialogDescription>
-        </DialogHeader>
+          </ResponsiveDialogDescription>
+        </ResponsiveDialogHeader>
 
         <form onSubmit={handleSubmit} className="space-y-4">
           <FormCard eyebrow="Assessment">
@@ -249,7 +249,7 @@ export function RecordGradeDialog({ open, onOpenChange, assessmentId }: RecordGr
             </Field>
           </FormCard>
 
-          <DialogFooter>
+          <ResponsiveDialogFooter>
             <SecondaryButton
               onClick={() => onOpenChange(false)}
               disabled={isSubmitting}
@@ -265,9 +265,9 @@ export function RecordGradeDialog({ open, onOpenChange, assessmentId }: RecordGr
             >
               {isSubmitting ? 'Saving…' : 'Record grade'}
             </PrimaryButton>
-          </DialogFooter>
+          </ResponsiveDialogFooter>
         </form>
-      </DialogContent>
-    </Dialog>
+      </ResponsiveDialogContent>
+    </ResponsiveDialog>
   );
 }

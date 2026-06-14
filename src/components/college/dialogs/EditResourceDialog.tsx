@@ -1,11 +1,11 @@
 import { useEffect, useState } from 'react';
 import {
-  Dialog,
-  DialogContent,
-  DialogDescription,
-  DialogHeader,
-  DialogTitle,
-} from '@/components/ui/dialog';
+  ResponsiveDialog,
+  ResponsiveDialogContent,
+  ResponsiveDialogDescription,
+  ResponsiveDialogHeader,
+  ResponsiveDialogTitle,
+} from '@/components/ui/responsive-dialog';
 import { cn } from '@/lib/utils';
 import { supabase } from '@/integrations/supabase/client';
 import { useToast } from '@/hooks/use-toast';
@@ -94,25 +94,25 @@ export function EditResourceDialog({ open, onOpenChange, resource, onSaved }: Pr
   };
 
   return (
-    <Dialog open={open} onOpenChange={(v) => !v && !saving && onOpenChange(false)}>
-      <DialogContent
+    <ResponsiveDialog open={open} onOpenChange={(v) => !v && !saving && onOpenChange(false)}>
+      <ResponsiveDialogContent
         className={cn(
           'w-[min(100vw-1rem,600px)] max-h-[92vh] bg-[hsl(0_0%_10%)] border-white/[0.08] p-0 gap-0 flex flex-col overflow-hidden',
           'sm:w-[min(100vw-2rem,600px)]'
         )}
       >
-        <DialogHeader className="border-b border-white/[0.06] px-6 py-5 space-y-2 text-left shrink-0">
+        <ResponsiveDialogHeader className="border-b border-white/[0.06] px-6 py-5 space-y-2 text-left shrink-0">
           <div className="text-[10px] font-medium uppercase tracking-[0.22em] text-elec-yellow/85">
             Edit resource
           </div>
-          <DialogTitle className="text-xl font-semibold text-white tracking-tight leading-tight">
+          <ResponsiveDialogTitle className="text-xl font-semibold text-white tracking-tight leading-tight">
             {resource.title}
-          </DialogTitle>
-          <DialogDescription className="text-[12.5px] text-white leading-relaxed">
+          </ResponsiveDialogTitle>
+          <ResponsiveDialogDescription className="text-[12.5px] text-white leading-relaxed">
             Update metadata. The file itself can be replaced via re-upload (coming
             next).
-          </DialogDescription>
-        </DialogHeader>
+          </ResponsiveDialogDescription>
+        </ResponsiveDialogHeader>
 
         <div className="flex-1 overflow-y-auto px-6 py-5 space-y-4">
           <Field label="Title">
@@ -218,8 +218,8 @@ export function EditResourceDialog({ open, onOpenChange, resource, onSaved }: Pr
             {saving ? 'Saving…' : 'Save changes'}
           </button>
         </div>
-      </DialogContent>
-    </Dialog>
+      </ResponsiveDialogContent>
+    </ResponsiveDialog>
   );
 }
 

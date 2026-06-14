@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Dialog, DialogContent, DialogTitle, DialogDescription } from '@/components/ui/dialog';
+import { ResponsiveDialog, ResponsiveDialogContent, ResponsiveDialogTitle, ResponsiveDialogDescription } from '@/components/ui/responsive-dialog';
 import { cn } from '@/lib/utils';
 import type { DeckPreflight, DeckTone, DeckDepth } from '@/hooks/useSlideDeck';
 
@@ -37,15 +37,15 @@ export function SlideDeckPreflightDialog({ open, onOpenChange, onConfirm, defaul
   const [depth, setDepth] = useState<DeckDepth>(defaults?.depth ?? 'standard');
 
   return (
-    <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogContent className="sm:max-w-[520px] bg-[hsl(0_0%_10%)] border-white/[0.08] text-white p-0 overflow-hidden">
+    <ResponsiveDialog open={open} onOpenChange={onOpenChange}>
+      <ResponsiveDialogContent className="sm:max-w-[520px] bg-[hsl(0_0%_10%)] border-white/[0.08] text-white p-0 overflow-hidden">
         <div className="px-5 pt-5 pb-4 border-b border-white/[0.06]">
-          <DialogTitle className="text-[15px] font-semibold tracking-tight text-white">
+          <ResponsiveDialogTitle className="text-[15px] font-semibold tracking-tight text-white">
             Generate slide deck
-          </DialogTitle>
-          <DialogDescription className="mt-1 text-[12px] text-white">
+          </ResponsiveDialogTitle>
+          <ResponsiveDialogDescription className="mt-1 text-[12px] text-white">
             Pick the shape of the deck before the AI runs. Defaults work for most lessons.
-          </DialogDescription>
+          </ResponsiveDialogDescription>
         </div>
 
         <div className="px-5 py-5 space-y-5">
@@ -144,7 +144,7 @@ export function SlideDeckPreflightDialog({ open, onOpenChange, onConfirm, defaul
             Generate {slideCount} slides →
           </button>
         </div>
-      </DialogContent>
-    </Dialog>
+      </ResponsiveDialogContent>
+    </ResponsiveDialog>
   );
 }

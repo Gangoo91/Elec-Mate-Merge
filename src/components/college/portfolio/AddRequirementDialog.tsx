@@ -1,17 +1,17 @@
 /**
  * AddRequirementDialog
- * Dialog for tutors to create or edit custom evidence requirements.
+ * ResponsiveDialog for tutors to create or edit custom evidence requirements.
  */
 
 import React, { useState, useEffect } from 'react';
 import {
-  Dialog,
-  DialogContent,
-  DialogDescription,
-  DialogFooter,
-  DialogHeader,
-  DialogTitle,
-} from '@/components/ui/dialog';
+  ResponsiveDialog,
+  ResponsiveDialogContent,
+  ResponsiveDialogDescription,
+  ResponsiveDialogFooter,
+  ResponsiveDialogHeader,
+  ResponsiveDialogTitle,
+} from '@/components/ui/responsive-dialog';
 import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
 import { Switch } from '@/components/ui/switch';
@@ -144,19 +144,19 @@ export function AddRequirementDialog({
   };
 
   return (
-    <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogContent className="bg-[hsl(0_0%_12%)] border-white/[0.08] max-w-lg max-h-[90vh] overflow-y-auto rounded-2xl">
-        <DialogHeader>
+    <ResponsiveDialog open={open} onOpenChange={onOpenChange}>
+      <ResponsiveDialogContent className="bg-[hsl(0_0%_12%)] border-white/[0.08] max-w-lg max-h-[90vh] overflow-y-auto rounded-2xl">
+        <ResponsiveDialogHeader>
           <Eyebrow>Portfolio</Eyebrow>
-          <DialogTitle className="mt-1 text-white">
+          <ResponsiveDialogTitle className="mt-1 text-white">
             {isEditing ? 'Edit requirement' : 'Add custom requirement'}
-          </DialogTitle>
-          <DialogDescription className="text-[12.5px] text-white">
+          </ResponsiveDialogTitle>
+          <ResponsiveDialogDescription className="text-[12.5px] text-white">
             {isEditing
               ? 'Update the evidence requirement for this student.'
               : 'Create a specific evidence requirement for this student.'}
-          </DialogDescription>
-        </DialogHeader>
+          </ResponsiveDialogDescription>
+        </ResponsiveDialogHeader>
 
         <form onSubmit={handleSubmit} className="space-y-5 pt-2">
           <Field label="Title" required>
@@ -291,7 +291,7 @@ export function AddRequirementDialog({
             />
           </Field>
 
-          <DialogFooter className="flex items-center justify-end gap-4 pt-3">
+          <ResponsiveDialogFooter className="flex items-center justify-end gap-4 pt-3">
             <SecondaryButton onClick={() => onOpenChange(false)}>Cancel</SecondaryButton>
             <PrimaryButton type="submit" disabled={isSubmitting}>
               {isSubmitting
@@ -300,10 +300,10 @@ export function AddRequirementDialog({
                   ? 'Update requirement →'
                   : 'Add requirement →'}
             </PrimaryButton>
-          </DialogFooter>
+          </ResponsiveDialogFooter>
         </form>
-      </DialogContent>
-    </Dialog>
+      </ResponsiveDialogContent>
+    </ResponsiveDialog>
   );
 }
 

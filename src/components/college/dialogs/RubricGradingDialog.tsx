@@ -4,13 +4,13 @@ import { Progress } from '@/components/ui/progress';
 import { Pill } from '@/components/college/primitives';
 import { Checkbox } from '@/components/ui/checkbox';
 import {
-  Dialog,
-  DialogContent,
-  DialogDescription,
-  DialogFooter,
-  DialogHeader,
-  DialogTitle,
-} from '@/components/ui/dialog';
+  ResponsiveDialog,
+  ResponsiveDialogContent,
+  ResponsiveDialogDescription,
+  ResponsiveDialogFooter,
+  ResponsiveDialogHeader,
+  ResponsiveDialogTitle,
+} from '@/components/ui/responsive-dialog';
 import {
   Select,
   SelectContent,
@@ -246,14 +246,14 @@ export function RubricGradingDialog({
   if (!grade) return null;
 
   return (
-    <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogContent className="max-w-4xl max-h-[90vh] overflow-hidden flex flex-col bg-[hsl(0_0%_8%)] border-white/[0.08]">
-        <DialogHeader>
-          <DialogTitle className="text-white">Rubric grading</DialogTitle>
-          <DialogDescription className="text-white">
+    <ResponsiveDialog open={open} onOpenChange={onOpenChange}>
+      <ResponsiveDialogContent className="max-w-4xl max-h-[90vh] overflow-hidden flex flex-col bg-[hsl(0_0%_8%)] border-white/[0.08]">
+        <ResponsiveDialogHeader>
+          <ResponsiveDialogTitle className="text-white">Rubric grading</ResponsiveDialogTitle>
+          <ResponsiveDialogDescription className="text-white">
             {grade?.unit_name} - {student?.name}
-          </DialogDescription>
-        </DialogHeader>
+          </ResponsiveDialogDescription>
+        </ResponsiveDialogHeader>
 
         {/* Grade Summary Bar */}
         <div className="flex items-center gap-4 p-3 rounded-xl bg-[hsl(0_0%_12%)] border border-white/[0.06]">
@@ -486,7 +486,7 @@ export function RubricGradingDialog({
           </TabsContent>
         </Tabs>
 
-        <DialogFooter className="border-t border-white/[0.06] pt-4">
+        <ResponsiveDialogFooter className="border-t border-white/[0.06] pt-4">
           <SecondaryButton onClick={() => onOpenChange(false)} disabled={isSubmitting}>
             Cancel
           </SecondaryButton>
@@ -496,8 +496,8 @@ export function RubricGradingDialog({
           >
             {isSubmitting ? 'Saving…' : 'Submit grade'}
           </PrimaryButton>
-        </DialogFooter>
-      </DialogContent>
-    </Dialog>
+        </ResponsiveDialogFooter>
+      </ResponsiveDialogContent>
+    </ResponsiveDialog>
   );
 }

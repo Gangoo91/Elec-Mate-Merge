@@ -1,12 +1,12 @@
 import { useEffect, useState } from 'react';
 import { useCollegeSafeguardingReadiness } from '@/hooks/useCollegeSafeguardingReadiness';
 import {
-  Dialog,
-  DialogContent,
-  DialogDescription,
-  DialogHeader,
-  DialogTitle,
-} from '@/components/ui/dialog';
+  ResponsiveDialog,
+  ResponsiveDialogContent,
+  ResponsiveDialogDescription,
+  ResponsiveDialogHeader,
+  ResponsiveDialogTitle,
+} from '@/components/ui/responsive-dialog';
 import { cn } from '@/lib/utils';
 import { supabase } from '@/integrations/supabase/client';
 import { useToast } from '@/hooks/use-toast';
@@ -283,8 +283,8 @@ export function AddPastoralNoteDialog({
   };
 
   return (
-    <Dialog open={open} onOpenChange={(v) => !v && !saving && onOpenChange(false)}>
-      <DialogContent
+    <ResponsiveDialog open={open} onOpenChange={(v) => !v && !saving && onOpenChange(false)}>
+      <ResponsiveDialogContent
         className={cn(
           'w-[min(100vw-1rem,620px)] max-h-[92vh]',
           'bg-[hsl(0_0%_10%)] border-white/[0.08]',
@@ -292,18 +292,18 @@ export function AddPastoralNoteDialog({
           'sm:w-[min(100vw-2rem,620px)]'
         )}
       >
-        <DialogHeader className="shrink-0 border-b border-white/[0.06] px-6 py-5 sm:px-7 sm:py-6 space-y-2 text-left">
+        <ResponsiveDialogHeader className="shrink-0 border-b border-white/[0.06] px-6 py-5 sm:px-7 sm:py-6 space-y-2 text-left">
           <div className="text-[10px] font-medium uppercase tracking-[0.22em] text-elec-yellow/85">
             Pastoral note
           </div>
-          <DialogTitle className="text-xl sm:text-[22px] font-semibold text-white tracking-tight leading-tight">
+          <ResponsiveDialogTitle className="text-xl sm:text-[22px] font-semibold text-white tracking-tight leading-tight">
             Record about {studentName}
-          </DialogTitle>
-          <DialogDescription className="text-[12.5px] text-white leading-relaxed">
+          </ResponsiveDialogTitle>
+          <ResponsiveDialogDescription className="text-[12.5px] text-white leading-relaxed">
             Notes help you and colleagues build the picture. Safeguarding
             entries are restricted to designated leads.
-          </DialogDescription>
-        </DialogHeader>
+          </ResponsiveDialogDescription>
+        </ResponsiveDialogHeader>
 
         <div className="flex-1 overflow-y-auto px-6 sm:px-7 py-5 space-y-5">
           {/* Kind */}
@@ -491,7 +491,7 @@ export function AddPastoralNoteDialog({
             {saving ? 'Saving…' : `Save ${meta.label.toLowerCase()}`}
           </PrimaryButton>
         </div>
-      </DialogContent>
-    </Dialog>
+      </ResponsiveDialogContent>
+    </ResponsiveDialog>
   );
 }

@@ -1,11 +1,11 @@
 import { useEffect, useState } from 'react';
 import {
-  Dialog,
-  DialogContent,
-  DialogDescription,
-  DialogHeader,
-  DialogTitle,
-} from '@/components/ui/dialog';
+  ResponsiveDialog,
+  ResponsiveDialogContent,
+  ResponsiveDialogDescription,
+  ResponsiveDialogHeader,
+  ResponsiveDialogTitle,
+} from '@/components/ui/responsive-dialog';
 import { cn } from '@/lib/utils';
 import { useToast } from '@/hooks/use-toast';
 
@@ -67,25 +67,25 @@ export function AddResourceLinkDialog({ open, onOpenChange, onSave }: Props) {
   };
 
   return (
-    <Dialog open={open} onOpenChange={(v) => !v && !saving && onOpenChange(false)}>
-      <DialogContent
+    <ResponsiveDialog open={open} onOpenChange={(v) => !v && !saving && onOpenChange(false)}>
+      <ResponsiveDialogContent
         className={cn(
           'w-[min(100vw-1rem,560px)] bg-[hsl(0_0%_10%)] border-white/[0.08] p-0 gap-0 flex flex-col overflow-hidden',
           'sm:w-[min(100vw-2rem,560px)]'
         )}
       >
-        <DialogHeader className="border-b border-white/[0.06] px-6 py-5 space-y-2 text-left">
+        <ResponsiveDialogHeader className="border-b border-white/[0.06] px-6 py-5 space-y-2 text-left">
           <div className="text-[10px] font-medium uppercase tracking-[0.22em] text-elec-yellow/85">
             Add external resource
           </div>
-          <DialogTitle className="text-xl font-semibold text-white tracking-tight">
+          <ResponsiveDialogTitle className="text-xl font-semibold text-white tracking-tight">
             Link a YouTube video, website or doc
-          </DialogTitle>
-          <DialogDescription className="text-[12.5px] text-white leading-relaxed">
+          </ResponsiveDialogTitle>
+          <ResponsiveDialogDescription className="text-[12.5px] text-white leading-relaxed">
             Anything with a URL. It'll sit alongside your uploaded files and be
             searchable.
-          </DialogDescription>
-        </DialogHeader>
+          </ResponsiveDialogDescription>
+        </ResponsiveDialogHeader>
 
         <div className="px-6 py-5 space-y-4">
           <Field label="Title">
@@ -142,8 +142,8 @@ export function AddResourceLinkDialog({ open, onOpenChange, onSave }: Props) {
             {saving ? 'Adding…' : 'Add link'}
           </button>
         </div>
-      </DialogContent>
-    </Dialog>
+      </ResponsiveDialogContent>
+    </ResponsiveDialog>
   );
 }
 

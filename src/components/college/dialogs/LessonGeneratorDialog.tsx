@@ -1,12 +1,12 @@
 import { useEffect, useMemo, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import {
-  Dialog,
-  DialogContent,
-  DialogDescription,
-  DialogHeader,
-  DialogTitle,
-} from '@/components/ui/dialog';
+  ResponsiveDialog,
+  ResponsiveDialogContent,
+  ResponsiveDialogDescription,
+  ResponsiveDialogHeader,
+  ResponsiveDialogTitle,
+} from '@/components/ui/responsive-dialog';
 import { Slider } from '@/components/ui/slider';
 import { Checkbox } from '@/components/ui/checkbox';
 import { cn } from '@/lib/utils';
@@ -315,8 +315,8 @@ export function LessonGeneratorDialog({
   const modeLabel = MODE_OPTIONS.find((m) => m.value === mode)?.label ?? 'Classroom';
 
   return (
-    <Dialog open={open} onOpenChange={(v) => !v && onOpenChange(false)}>
-      <DialogContent
+    <ResponsiveDialog open={open} onOpenChange={(v) => !v && onOpenChange(false)}>
+      <ResponsiveDialogContent
         className={cn(
           // Wider, taller dialog for editorial feel
           'w-[min(100vw-1rem,880px)] max-h-[92vh]',
@@ -326,14 +326,14 @@ export function LessonGeneratorDialog({
         )}
       >
         {/* ─── Header ────────────────────────────────────────────── */}
-        <DialogHeader className="shrink-0 border-b border-white/[0.06] px-6 py-5 sm:px-8 sm:py-6 space-y-2 text-left">
+        <ResponsiveDialogHeader className="shrink-0 border-b border-white/[0.06] px-6 py-5 sm:px-8 sm:py-6 space-y-2 text-left">
           <div className="text-[10px] font-medium uppercase tracking-[0.22em] text-elec-yellow/85">
             AI lesson generator
           </div>
-          <DialogTitle className="text-xl sm:text-2xl font-semibold text-white tracking-tight leading-tight">
+          <ResponsiveDialogTitle className="text-xl sm:text-2xl font-semibold text-white tracking-tight leading-tight">
             Build a lesson plan
-          </DialogTitle>
-          <DialogDescription className="text-[12.5px] sm:text-[13px] text-white leading-relaxed">
+          </ResponsiveDialogTitle>
+          <ResponsiveDialogDescription className="text-[12.5px] sm:text-[13px] text-white leading-relaxed">
             <span className="font-mono tabular-nums text-white">{qualificationCode}</span>
             <span className="mx-2 text-white/30">·</span>
             <span>
@@ -345,8 +345,8 @@ export function LessonGeneratorDialog({
                 <span>{unitTitle}</span>
               </>
             )}
-          </DialogDescription>
-        </DialogHeader>
+          </ResponsiveDialogDescription>
+        </ResponsiveDialogHeader>
 
         {/* ─── Body ──────────────────────────────────────────────── */}
         <div className="flex-1 overflow-y-auto">
@@ -648,8 +648,8 @@ export function LessonGeneratorDialog({
             </div>
           </div>
         </div>
-      </DialogContent>
-    </Dialog>
+      </ResponsiveDialogContent>
+    </ResponsiveDialog>
   );
 }
 
