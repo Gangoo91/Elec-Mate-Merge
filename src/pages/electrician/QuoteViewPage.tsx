@@ -746,8 +746,8 @@ const QuoteViewPage = () => {
               : ''
           )}
         >
-          <div className={cn(!(quote.jobDetails?.description || quote.jobDetails?.location) && 'hidden')}>
-            {(quote.jobDetails?.description || quote.jobDetails?.location) && (
+          <div className={cn(!(quote.jobDetails?.description || quote.jobDetails?.location || quote.jobDetails?.workStartDate || quote.jobDetails?.workStartTbd) && 'hidden')}>
+            {(quote.jobDetails?.description || quote.jobDetails?.location || quote.jobDetails?.workStartDate || quote.jobDetails?.workStartTbd) && (
               <div className={cn(PANEL, 'p-4 sm:p-5 h-full')}>
                 <h2 className="text-[14px] font-semibold text-white mb-2">
                   {quote.jobDetails?.title || 'Job'}
@@ -759,6 +759,17 @@ const QuoteViewPage = () => {
                 )}
                 {quote.jobDetails?.location && (
                   <p className="text-[12px] text-white/55 mt-2">{quote.jobDetails.location}</p>
+                )}
+                {(quote.jobDetails?.workStartTbd || quote.jobDetails?.workStartDate) && (
+                  <p className="text-[12px] text-white/55 mt-2">
+                    Start:{' '}
+                    {quote.jobDetails?.workStartTbd
+                      ? 'To be confirmed'
+                      : new Date(quote.jobDetails!.workStartDate as string).toLocaleDateString(
+                          'en-GB',
+                          { day: 'numeric', month: 'short', year: 'numeric' }
+                        )}
+                  </p>
                 )}
               </div>
             )}

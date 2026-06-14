@@ -742,6 +742,22 @@ const PublicQuoteView = () => {
                     </p>
                   </div>
                 )}
+                {(quote.jobDetails.workStartTbd || quote.jobDetails.workStartDate) && (
+                  <div>
+                    <p className="text-[11px] font-medium text-slate-500 flex items-center gap-1">
+                      <Calendar className="h-3 w-3" />
+                      Start date
+                    </p>
+                    <p className="mt-1 text-[14px] text-slate-700">
+                      {quote.jobDetails.workStartTbd
+                        ? 'To be confirmed'
+                        : new Date(quote.jobDetails.workStartDate as string).toLocaleDateString(
+                            'en-GB',
+                            { day: 'numeric', month: 'short', year: 'numeric' }
+                          )}
+                    </p>
+                  </div>
+                )}
               </div>
               {quote.jobDetails.description && (
                 <div>

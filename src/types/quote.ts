@@ -68,6 +68,8 @@ export interface JobDetails {
   estimatedDuration?: string;
   customDuration?: string;
   workStartDate?: string;
+  /** "To be decided" — quoting/estimating before a start date is committed. */
+  workStartTbd?: boolean;
   specialRequirements?: string;
 }
 
