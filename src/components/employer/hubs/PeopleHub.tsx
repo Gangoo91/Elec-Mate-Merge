@@ -232,7 +232,8 @@ export function PeopleHub({ onNavigate }: PeopleHubProps) {
   const pendingTimesheetCount = useMemo(
     // Status is stored Capitalised ('Pending') — compare case-insensitively
     // so the approval badge actually lights up
-    () => timesheets.filter((t) => ['pending', 'submitted'].includes(t.status?.toLowerCase())).length,
+    () =>
+      timesheets.filter((t) => ['pending', 'submitted'].includes(t.status?.toLowerCase())).length,
     [timesheets]
   );
 
