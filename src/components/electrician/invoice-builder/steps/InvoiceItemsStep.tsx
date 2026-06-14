@@ -1133,6 +1133,41 @@ export const InvoiceItemsStep = ({
       {/* Manual Entry */}
       {activeAddMethod === 'manual' && (
         <div className="space-y-3">
+          {/* ELE-1130 — explicit category in Manual mode. Previously the manual
+              item silently inherited whatever category the last Quick-mode tab
+              had, so a manual labour charge could be saved as 'materials' and
+              break CIS labour detection ("CIS is on but no Labour lines found").
+              Set only the category here so the user's typed values are preserved. */}
+          <div>
+            <label className="text-[11px] font-medium text-white/65 uppercase tracking-wider block mb-1.5">
+              Category
+            </label>
+            <div className="flex gap-1.5">
+              {[
+                { id: 'labour' as Category, label: 'Labour', dot: 'bg-blue-400' },
+                { id: 'materials' as Category, label: 'Materials', dot: 'bg-emerald-400' },
+                { id: 'equipment' as Category, label: 'Equipment', dot: 'bg-purple-400' },
+              ].map((cat) => {
+                const isActive = newItem.category === cat.id;
+                return (
+                  <button
+                    key={cat.id}
+                    type="button"
+                    onClick={() => setNewItem((prev) => ({ ...prev, category: cat.id }))}
+                    className={cn(
+                      'flex-1 h-11 rounded-xl text-[13px] font-semibold transition-all touch-manipulation flex items-center justify-center gap-1.5 border',
+                      isActive
+                        ? 'bg-elec-yellow/[0.08] border-elec-yellow/[0.25] text-elec-yellow'
+                        : 'bg-white/[0.04] border-white/[0.08] text-white/80'
+                    )}
+                  >
+                    <span className={cn('h-1.5 w-1.5 rounded-full', cat.dot)} />
+                    {cat.label}
+                  </button>
+                );
+              })}
+            </div>
+          </div>
           <div>
             <div className="pb-3">
               <label className="text-[11px] font-medium text-white/65 uppercase tracking-wider block mb-1.5">

@@ -38,7 +38,11 @@ export const mainNavItems: NavItem[] = [
     name: 'Employer Hub',
     path: '/employer',
     roles: ['visitor', 'apprentice', 'electrician', 'employer', 'admin', 'beta_tester'],
-    allowedEmails: ['founder@elec-mate.com', 'andrewgangoo91@gmail.com'],
+    allowedEmails: [
+      'founder@elec-mate.com',
+      'andrewgangoo91@gmail.com',
+      'info@precisionei.co.uk',
+    ],
   },
   {
     name: 'College Hub',

@@ -368,6 +368,15 @@ const ElectricalHubInner = () => {
   ];
   const canSeeRenewables = RENEWABLES_ALLOWLIST.includes(profile?.id ?? '');
 
+  // Worker Tools — controlled rollout of the employer↔worker beta. Only the test
+  // accounts see it for now (mirrors the Employer Hub allowlist).
+  const WORKER_TOOLS_ALLOWLIST = [
+    'b0113c59-8611-4c5e-8503-1797a75bb64f', // Andrew Gangoo
+    'aa69361d-dad9-4841-84e4-25ee41568594', // founder
+    'e2945660-a8e0-4099-8e50-a70d71d3dca4', // Craig Soper
+  ];
+  const canSeeWorkerTools = WORKER_TOOLS_ALLOWLIST.includes(profile?.id ?? '');
+
   const coreTools: ToolCard[] = [
     {
       id: 'certificates',
@@ -458,7 +467,7 @@ const ElectricalHubInner = () => {
       to: '/electrician-tools/ai-tooling/assistant',
       meta: 'Open chat',
     },
-  ];
+  ].filter((c) => c.id !== 'worker-tools' || canSeeWorkerTools);
 
   const moreTools: ToolCard[] = [
     {

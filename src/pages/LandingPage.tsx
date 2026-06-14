@@ -622,7 +622,7 @@ const LandingPage = () => {
             [0fr/1fr] animation is unreliable in Android WebView and rendered the
             menu blank — ELE-1075.) */}
         <div
-          className={`overflow-hidden transition-[max-height,opacity] duration-300 ease-out sm:hidden ${
+          className={`relative z-10 overflow-hidden transition-[max-height,opacity] duration-300 ease-out sm:hidden ${
             isNavOpen ? 'max-h-screen opacity-100' : 'max-h-0 opacity-0'
           }`}
         >
