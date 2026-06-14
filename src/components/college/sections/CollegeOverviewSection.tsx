@@ -45,8 +45,8 @@ import { useTutorToday } from '@/hooks/useTutorToday';
    Compliance + tools live below-the-fold and are collapsible — they hold
    real signal but most tutors don't open them daily. State persists per
    browser so a returning user lands where they left off. */
-type DashSectionId = 'compliance' | 'tools';
-const COLLAPSE_KEY = 'college.overview.collapsed.v2';
+type DashSectionId = 'compliance' | 'tools' | 'momentum';
+const COLLAPSE_KEY = 'college.overview.collapsed.v3';
 
 function useDashCollapse() {
   const [collapsed, setCollapsed] = useState<Set<DashSectionId>>(() => {
@@ -56,7 +56,7 @@ function useDashCollapse() {
       if (raw) return new Set(JSON.parse(raw) as DashSectionId[]);
       // First visit: closed by default — Today + hubs are the daily
       // workflow, compliance/tools are reach-for-when-you-need-them.
-      return new Set<DashSectionId>(['compliance', 'tools']);
+      return new Set<DashSectionId>(['compliance', 'tools', 'momentum']);
     } catch {
       return new Set();
     }
@@ -458,7 +458,7 @@ export function CollegeOverviewSection({ onNavigate }: CollegeOverviewSectionPro
     if (inboxTotal > 0) {
       return `${inboxTotal} item${inboxTotal === 1 ? '' : 's'} in your inbox — OTJ verifications, action comments, IQA verdicts.`;
     }
-    return `Quiet morning — no assessments pending, no risk flags. A good window to plan ahead.`;
+    return `Quiet ${partOfDay().toLowerCase()} — no assessments pending, no risk flags. A good window to plan ahead.`;
   }, [pendingAssessments, atRiskCount, today]);
 
   if (isLoading) {
@@ -562,14 +562,24 @@ export function CollegeOverviewSection({ onNavigate }: CollegeOverviewSectionPro
         <TutorTodayBody mode="embed-bare" />
       </motion.section>
 
-      {/* MOMENTUM */}
+      {/* MOMENTUM — collapsible below-the-fold detail */}
       <motion.section variants={itemVariants} className="space-y-4">
-        <NumberedHeader number="" label="MOMENTUM" />
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-3 sm:gap-4">
-          <AtRiskPredictor onNavigate={onNavigate} compact />
-          <EPACountdown onNavigate={onNavigate} compact />
-        </div>
-        <ActivityFeed maxItems={6} iconless />
+        <NumberedHeader
+          number=""
+          label="MOMENTUM"
+          collapsible
+          isCollapsed={collapsed.has('momentum')}
+          onToggle={() => toggle('momentum')}
+        />
+        {!collapsed.has('momentum') && (
+          <>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-3 sm:gap-4">
+              <AtRiskPredictor onNavigate={onNavigate} compact />
+              <EPACountdown onNavigate={onNavigate} compact />
+            </div>
+            <ActivityFeed maxItems={6} iconless />
+          </>
+        )}
       </motion.section>
 
       {/* COMPLIANCE — collapsible below-the-fold detail */}

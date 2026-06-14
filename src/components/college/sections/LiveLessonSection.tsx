@@ -59,13 +59,20 @@ function formatTime(seconds: number): string {
   return `${m}:${String(s).padStart(2, '0')}`;
 }
 
-const STATUS_CYCLE: AttendanceStatus[] = ['Present', 'Absent', 'Late', 'Authorised'];
 const STATUS_TONE: Record<AttendanceStatus, Tone> = {
   Present: 'green',
   Absent: 'red',
   Late: 'amber',
   Authorised: 'blue',
 };
+
+// Segmented register control — one tap sets the status directly (no cycle).
+const REGISTER_OPTIONS: { status: AttendanceStatus; short: string; active: string }[] = [
+  { status: 'Present', short: 'P', active: 'bg-emerald-500/20 text-emerald-300 border-emerald-500/50' },
+  { status: 'Late', short: 'L', active: 'bg-amber-500/20 text-amber-300 border-amber-500/50' },
+  { status: 'Absent', short: 'A', active: 'bg-red-500/20 text-red-300 border-red-500/50' },
+  { status: 'Authorised', short: 'Au', active: 'bg-blue-500/20 text-blue-300 border-blue-500/50' },
+];
 
 function isoToday(): string {
   return new Date().toISOString().split('T')[0];
@@ -186,14 +193,11 @@ export function LiveLessonSection({ lessonId, onBack }: LiveLessonSectionProps) 
     };
   }, [timerRunning]);
 
-  const toggleStatus = (studentId: string) => {
+  // One tap = one decision. Explicit P/L/A/Au segments beat a blind cycle when
+  // a tutor is marking a register standing in front of the class.
+  const setStatus = (studentId: string, status: AttendanceStatus) => {
     setAttendance((prev) =>
-      prev.map((a) => {
-        if (a.studentId !== studentId) return a;
-        const currentIdx = STATUS_CYCLE.indexOf(a.status);
-        const nextIdx = (currentIdx + 1) % STATUS_CYCLE.length;
-        return { ...a, status: STATUS_CYCLE[nextIdx] };
-      })
+      prev.map((a) => (a.studentId === studentId ? { ...a, status } : a))
     );
   };
 
@@ -311,22 +315,35 @@ export function LiveLessonSection({ lessonId, onBack }: LiveLessonSectionProps) 
         ) : (
           <ListCard>
             {attendance.map((a) => (
-              <button
+              <div
                 key={a.studentId}
-                onClick={() => toggleStatus(a.studentId)}
-                className="w-full flex items-center gap-3 px-5 sm:px-6 py-4 hover:bg-[hsl(0_0%_15%)] transition-colors text-left touch-manipulation"
+                className="flex items-center gap-3 px-4 sm:px-6 py-3"
               >
-                <span className="text-[13.5px] font-medium text-white flex-1 truncate">
+                <span className="text-[13.5px] font-medium text-white flex-1 truncate min-w-0">
                   {a.name}
                 </span>
-                <Pill tone={STATUS_TONE[a.status]}>{a.status}</Pill>
-                <span
-                  className="text-white/60 text-[15px] leading-none w-7 text-center"
-                  aria-hidden
-                >
-                  ↻
-                </span>
-              </button>
+                <div className="flex shrink-0 gap-1" role="group" aria-label={`Status for ${a.name}`}>
+                  {REGISTER_OPTIONS.map((opt) => {
+                    const active = a.status === opt.status;
+                    return (
+                      <button
+                        key={opt.status}
+                        type="button"
+                        onClick={() => setStatus(a.studentId, opt.status)}
+                        aria-pressed={active}
+                        aria-label={`${a.name}: ${opt.status}`}
+                        className={`h-9 min-w-[2.25rem] px-1.5 rounded-lg border text-[12px] font-semibold transition-colors touch-manipulation ${
+                          active
+                            ? opt.active
+                            : 'border-white/10 text-white/40 active:bg-white/[0.06]'
+                        }`}
+                      >
+                        {opt.short}
+                      </button>
+                    );
+                  })}
+                </div>
+              </div>
             ))}
           </ListCard>
         )}

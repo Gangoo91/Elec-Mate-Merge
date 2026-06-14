@@ -58,7 +58,7 @@ const MAPS: Record<StatusDomain, Record<string, Tone>> = {
     graded: 'emerald',
     final: 'emerald',
     verified: 'emerald',
-    signed off: 'emerald',
+    'signed off': 'emerald',
     submitted: 'blue',
     pending: 'blue',
     'awaiting review': 'blue',
