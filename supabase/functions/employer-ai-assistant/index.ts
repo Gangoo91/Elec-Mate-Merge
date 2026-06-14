@@ -42,6 +42,8 @@ BE PROACTIVE — never just execute silently. After any action, add a short, bus
 
 ESTIMATING & PLANNING — when asked to plan, quote, price or "set up" a job, orchestrate the WHOLE thing from a one-line brief: (1) break the work into the real trade tasks (a rewire = first fix, plaster liaison, second fix, test, certify); (2) cost LABOUR using THE FIRM'S RATES below × your honest hour/day estimate per task; (3) price MATERIALS by calling get_material_prices for the key items — these are LIVE supplier prices refreshed daily, so USE them, never guess a material price; (4) add the firm's materials markup + overhead + profit; (5) give a realistic timeline (labour hours → working days). Present a clear breakdown — tasks, materials (with the live prices + supplier), labour, and the total — and ground the method via search_employer_knowledge (NRM1, daywork, markup) where it sharpens it. Then offer to build it for real: create_job, add_task for each task, assign people from list_team, and create_quote. If the firm's rates aren't set, ask once or state your assumption.
 
+CONFIRM & UNDO — for anything financial or hard to reverse (raising an invoice, posting a public vacancy) or any large batch, briefly propose it and wait for a "yes" before doing it — UNLESS the user already clearly told you to. Quick low-risk setup (adding a supplier, a price-book line) just do. Every action is logged. If the user says "undo", "remove it" or corrects you, call delete_record with the id you got when you created it — and confirm what you removed.
+
 SAFEGUARDS: you advise, but flag when something high-stakes warrants an accountant or solicitor rather than relying on you. Stay strictly within this employer's own data.`;
 
 const TOOLS = [
@@ -259,6 +261,21 @@ const TOOLS = [
       },
     },
   },
+  {
+    type: 'function',
+    function: {
+      name: 'delete_record',
+      description: 'Undo — delete a record you just created (use the id from when you created it). Use when the user says "undo that", "remove it", or corrects you.',
+      parameters: {
+        type: 'object',
+        properties: {
+          entity: { type: 'string', enum: ['team', 'supplier', 'price_book_item', 'job', 'quote', 'invoice', 'job_pack', 'vacancy', 'task'] },
+          id: { type: 'string', description: 'The id of the record to delete.' },
+        },
+        required: ['entity', 'id'],
+      },
+    },
+  },
 ];
 
 async function embed(text: string, key: string): Promise<string> {
@@ -335,6 +352,29 @@ async function getSnapshot(admin: any, uid: string): Promise<string> {
   return 'LIVE BUSINESS SNAPSHOT (this firm, right now — your full oversight of the hub):\n' + lines.join('\n');
 }
 
+// Audit trail — record every write Mate makes (non-fatal if it fails).
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+async function logAudit(admin: any, uid: string, action: string, entity: string, entityId: string | null, detail: Record<string, unknown>): Promise<void> {
+  try {
+    await admin.from('employer_audit_log').insert({ employer_id: uid, actor_id: uid, action, entity, entity_id: entityId, detail });
+  } catch { /* non-fatal */ }
+}
+
+// Entities Mate can create — and therefore delete (undo). Maps to table + owner column.
+const ENTITY_MAP: Record<string, { table: string; owner: string }> = {
+  team: { table: 'employer_employees', owner: 'employer_id' },
+  team_member: { table: 'employer_employees', owner: 'employer_id' },
+  supplier: { table: 'employer_suppliers', owner: 'employer_id' },
+  price_book_item: { table: 'employer_price_book', owner: 'employer_id' },
+  price: { table: 'employer_price_book', owner: 'employer_id' },
+  job: { table: 'employer_jobs', owner: 'user_id' },
+  quote: { table: 'employer_quotes', owner: 'employer_id' },
+  invoice: { table: 'employer_invoices', owner: 'employer_id' },
+  job_pack: { table: 'employer_job_packs', owner: 'employer_id' },
+  vacancy: { table: 'employer_vacancies', owner: 'employer_id' },
+  task: { table: 'employer_job_tasks', owner: 'employer_id' },
+};
+
 // Execute one tool call and return a short result string for the model.
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 async function runTool(admin: any, uid: string, openAiKey: string, name: string, argsJson: string): Promise<string> {
@@ -345,6 +385,12 @@ async function runTool(admin: any, uid: string, openAiKey: string, name: string,
   } catch {
     return 'Could not parse the tool arguments.';
   }
+  // Insert a row, audit-log it, and return its new id.
+  const ins = async (table: string, row: Record<string, unknown>, entity: string) => {
+    const { data, error } = await admin.from(table).insert(row).select('id').single();
+    if (!error && data?.id) await logAudit(admin, uid, 'create', entity, data.id, { name: row.name ?? row.title ?? row.client ?? null });
+    return { id: data?.id as string | undefined, error };
+  };
   try {
     if (name === 'search_employer_knowledge') {
       const qEmb = await embed(args.query, openAiKey);
@@ -353,65 +399,79 @@ async function runTool(admin: any, uid: string, openAiKey: string, name: string,
         .map((h: { source: string; topic: string; content: string }) => `[${h.source} — ${h.topic}]\n${h.content}`)
         .join('\n\n---\n\n') || 'No matching knowledge found.';
     } else if (name === 'add_team_member') {
-      const { error } = await admin.from('employer_employees').insert({
+      const { id, error } = await ins('employer_employees', {
         employer_id: uid, status: 'active', name: args.name, role: args.role ?? 'Electrician', team_role: args.team_role ?? 'Operative',
         pay_type: args.pay_type ?? null, hourly_rate: args.hourly_rate ?? null, annual_salary: args.annual_salary ?? null,
         email: args.email ?? null, phone: args.phone ?? null, avatar_initials: initials(args.name),
-      });
-      return error ? `Failed to add ${args.name}: ${error.message}` : `Added ${args.name} to the team.`;
+      }, 'team');
+      return error ? `Failed to add ${args.name}: ${error.message}` : `Added ${args.name} to the team (id: ${id}).`;
     } else if (name === 'add_supplier') {
-      const { error } = await admin.from('employer_suppliers').insert({
+      const { id, error } = await ins('employer_suppliers', {
         employer_id: uid, name: args.name, category: args.category ?? null, contact_name: args.contact_name ?? null,
         phone: args.phone ?? null, email: args.email ?? null, account_number: args.account_number ?? null,
         address: args.address ?? null, delivery_days: args.delivery_days ?? null,
-      });
-      return error ? `Failed to add supplier ${args.name}: ${error.message}` : `Added supplier ${args.name}.`;
+      }, 'supplier');
+      return error ? `Failed to add supplier ${args.name}: ${error.message}` : `Added supplier ${args.name} (id: ${id}).`;
     } else if (name === 'add_price_book_item') {
       const buy = args.buy_price ?? null;
       const sell = args.sell_price ?? null;
       const markup = buy && sell ? Math.round(((sell - buy) / buy) * 100) : null;
-      const { error } = await admin.from('employer_price_book').insert({
+      const { id, error } = await ins('employer_price_book', {
         employer_id: uid, name: args.name, category: args.category ?? 'General', buy_price: buy, sell_price: sell, markup,
         unit: args.unit ?? 'each', sku: args.sku ?? null,
-      });
-      return error ? `Failed to add ${args.name}: ${error.message}` : `Added price-book item: ${args.name}.`;
+      }, 'price_book_item');
+      return error ? `Failed to add ${args.name}: ${error.message}` : `Added price-book item: ${args.name} (id: ${id}).`;
     } else if (name === 'create_job') {
-      const { data: jobRow, error } = await admin.from('employer_jobs').insert({
+      const { id, error } = await ins('employer_jobs', {
         user_id: uid, status: 'active', title: args.title, client: args.client ?? '', location: args.location ?? '',
         value: args.value ?? null, start_date: args.start_date ?? null, description: args.description ?? null,
         client_phone: args.client_phone ?? null, client_email: args.client_email ?? null,
-      }).select('id').single();
-      return error ? `Failed to create job: ${error.message}` : `Created job: ${args.title} (job_id: ${jobRow?.id}).`;
+      }, 'job');
+      return error ? `Failed to create job: ${error.message}` : `Created job: ${args.title} (job_id: ${id}).`;
     } else if (name === 'create_quote') {
       const { count } = await admin.from('employer_quotes').select('id', { count: 'exact', head: true }).eq('employer_id', uid);
       const num = `QTE-${String((count ?? 0) + 1).padStart(4, '0')}`;
-      const { error } = await admin.from('employer_quotes').insert({
+      const { id, error } = await ins('employer_quotes', {
         employer_id: uid, quote_number: num, client: args.client, status: 'Draft', description: args.description ?? null,
         value: args.value ?? null, job_title: args.job_title ?? null, valid_until: args.valid_until ?? null,
         client_email: args.client_email ?? null, client_phone: args.client_phone ?? null,
-      });
-      return error ? `Failed to create quote: ${error.message}` : `Created quote ${num} for ${args.client}.`;
+      }, 'quote');
+      return error ? `Failed to create quote: ${error.message}` : `Created quote ${num} for ${args.client} (id: ${id}).`;
     } else if (name === 'create_invoice') {
       const { count } = await admin.from('employer_invoices').select('id', { count: 'exact', head: true }).eq('employer_id', uid);
       const num = `INV-${String((count ?? 0) + 1).padStart(4, '0')}`;
-      const { error } = await admin.from('employer_invoices').insert({
+      const { id, error } = await ins('employer_invoices', {
         employer_id: uid, invoice_number: num, client: args.client, status: 'Draft', amount: args.amount ?? null,
         project: args.project ?? null, due_date: args.due_date ?? null, notes: args.notes ?? null, client_email: args.client_email ?? null,
-      });
-      return error ? `Failed to create invoice: ${error.message}` : `Created draft invoice ${num} for ${args.client}.`;
+      }, 'invoice');
+      return error ? `Failed to create invoice: ${error.message}` : `Created draft invoice ${num} for ${args.client} (id: ${id}).`;
     } else if (name === 'create_job_pack') {
-      const { error } = await admin.from('employer_job_packs').insert({
+      const { id, error } = await ins('employer_job_packs', {
         employer_id: uid, title: args.title, client: args.client, location: args.location, scope: args.scope ?? null,
         status: 'draft', start_date: args.start_date ?? null, estimated_value: args.estimated_value ?? null,
-      });
-      return error ? `Failed to create job pack: ${error.message}` : `Created job pack: ${args.title}.`;
+      }, 'job_pack');
+      return error ? `Failed to create job pack: ${error.message}` : `Created job pack: ${args.title} (id: ${id}).`;
     } else if (name === 'create_vacancy') {
-      const { error } = await admin.from('employer_vacancies').insert({
+      const { id, error } = await ins('employer_vacancies', {
         employer_id: uid, title: args.title, location: args.location, type: args.type ?? 'Full-time', status: 'open',
         salary_min: args.salary_min ?? null, salary_max: args.salary_max ?? null, salary_period: args.salary_period ?? 'year',
         description: args.description ?? null,
-      });
-      return error ? `Failed to post vacancy: ${error.message}` : `Posted vacancy: ${args.title}.`;
+      }, 'vacancy');
+      return error ? `Failed to post vacancy: ${error.message}` : `Posted vacancy: ${args.title} (id: ${id}).`;
+    } else if (name === 'delete_record') {
+      const m = ENTITY_MAP[String(args.entity ?? '').toLowerCase()];
+      if (!m) return `I can't delete a "${args.entity}".`;
+      if (!args.id) return 'I need the record id to delete it.';
+      const { error } = await admin.from(m.table).delete().eq('id', args.id).eq(m.owner, uid);
+      if (error) return `Failed to delete: ${error.message}`;
+      await logAudit(admin, uid, 'delete', String(args.entity).toLowerCase(), args.id, { via: 'mate' });
+      return `Deleted that ${args.entity}.`;
+    } else if (name === 'add_task') {
+      const { id, error } = await ins('employer_job_tasks', {
+        employer_id: uid, job_id: args.job_id, title: args.title, description: args.description ?? null,
+        priority: args.priority ?? null, due_date: args.due_date ?? null, assignee_employee_id: args.assignee_employee_id ?? null,
+      }, 'task');
+      return error ? `Failed to add task: ${error.message}` : `Added task: ${args.title} (id: ${id}).`;
     } else if (name === 'get_material_prices') {
       const { data: prods } = await admin.from('marketplace_products')
         .select('name, brand, current_price, currency, stock_status')
@@ -423,12 +483,6 @@ async function runTool(admin: any, uid: string, openAiKey: string, name: string,
     } else if (name === 'list_team') {
       const { data: tm } = await admin.from('employer_employees').select('id, name, role').eq('employer_id', uid);
       return (tm ?? []).map((e: { id: string; name: string; role: string }) => `${e.name} (${e.role}) — id ${e.id}`).join('\n') || 'No team members yet.';
-    } else if (name === 'add_task') {
-      const { error } = await admin.from('employer_job_tasks').insert({
-        employer_id: uid, job_id: args.job_id, title: args.title, description: args.description ?? null,
-        priority: args.priority ?? null, due_date: args.due_date ?? null, assignee_employee_id: args.assignee_employee_id ?? null,
-      });
-      return error ? `Failed to add task: ${error.message}` : `Added task: ${args.title}.`;
     }
     return 'Unknown tool.';
   } catch (e) {
