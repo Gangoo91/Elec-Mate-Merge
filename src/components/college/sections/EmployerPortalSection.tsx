@@ -4,9 +4,11 @@
  */
 
 import { useState, useMemo } from 'react';
+import { useQuery } from '@tanstack/react-query';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Link as LinkIcon } from 'lucide-react';
 import { cn } from '@/lib/utils';
+import { supabase } from '@/integrations/supabase/client';
 import { useCollegeSupabase } from '@/contexts/CollegeSupabaseContext';
 import { useToast } from '@/hooks/use-toast';
 import { useCollegeEmployers } from '@/hooks/useCollegeEmployers';
@@ -107,6 +109,30 @@ export function EmployerPortalSection() {
 
   const now = useMemo(() => new Date(), []);
 
+  // Verified off-the-job minutes per learner — keyed by auth uid
+  // (college_otj_entries.student_id = profiles.id = college_students.user_id).
+  const userIds = useMemo(
+    () => students.filter((s) => s.user_id).map((s) => s.user_id as string),
+    [students]
+  );
+  const { data: verifiedMinutesByUser = {} } = useQuery({
+    queryKey: ['employer-otj-verified-minutes', userIds],
+    enabled: userIds.length > 0,
+    queryFn: async () => {
+      const { data, error } = await supabase
+        .from('college_otj_entries')
+        .select('student_id, duration_minutes')
+        .in('student_id', userIds)
+        .eq('verification_status', 'verified');
+      if (error) throw error;
+      const m: Record<string, number> = {};
+      (data ?? []).forEach((r) => {
+        m[r.student_id] = (m[r.student_id] ?? 0) + (r.duration_minutes ?? 0);
+      });
+      return m;
+    },
+  });
+
   /* ---------- build employer groups from student data ---------- */
 
   const employers = useMemo((): EmployerGroup[] => {
@@ -132,11 +158,12 @@ export function EmployerPortalSection() {
 
       // OTJ: fixed required total per apprenticeship standard (DfE Annex C),
       // inherited onto the course as otj_required_hours — NOT a % of duration.
-      // completed is proxied from headline progress until per-learner OTJ
-      // minutes are wired in (OTJTrainingSection holds the real source).
+      // Completed = real verified off-the-job minutes the learner has logged.
       const course = courses.find((c) => c.id === s.course_id);
       const otjTarget = course?.otj_required_hours ?? DEFAULT_OTJ_STANDARD.otjHours;
-      const otjCompleted = Math.round((progress / 100) * otjTarget);
+      const otjCompleted = s.user_id
+        ? Math.round((verifiedMinutesByUser[s.user_id] ?? 0) / 60)
+        : 0;
       const expectedOtjAtThisPoint =
         s.start_date && s.expected_end_date
           ? (() => {
@@ -211,7 +238,7 @@ export function EmployerPortalSection() {
     });
 
     return groups.sort((a, b) => b.apprentices.length - a.apprentices.length);
-  }, [students, courses, attendance, epaRecords, ilps, now, registeredMap]);
+  }, [students, courses, attendance, epaRecords, ilps, now, registeredMap, verifiedMinutesByUser]);
 
   /* ---------- KPI calculations ---------- */
 
