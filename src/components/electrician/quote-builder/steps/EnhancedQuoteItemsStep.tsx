@@ -3,6 +3,7 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { DecimalInput } from '@/components/ui/decimal-input';
 import { Textarea } from '@/components/ui/textarea';
+import { AutoGrowTextarea } from '@/components/ui/auto-grow-textarea';
 import {
   Select,
   SelectContent,
@@ -1621,11 +1622,14 @@ export const EnhancedQuoteItemsStep = ({
                       )}
                     />
                     {editingItemId === item.id ? (
-                      <input
-                        type="text"
+                      <AutoGrowTextarea
                         autoFocus
                         value={editingDescription}
                         onChange={(e) => setEditingDescription(e.target.value)}
+                        onFocus={(e) => {
+                          const len = e.target.value.length;
+                          e.target.setSelectionRange(len, len);
+                        }}
                         onBlur={() => {
                           if (editingDescription.trim()) {
                             onUpdate(item.id, { description: editingDescription.trim() });
@@ -1633,20 +1637,23 @@ export const EnhancedQuoteItemsStep = ({
                           setEditingItemId(null);
                         }}
                         onKeyDown={(e) => {
-                          if (e.key === 'Enter') {
-                            if (editingDescription.trim()) {
-                              onUpdate(item.id, { description: editingDescription.trim() });
-                            }
-                            setEditingItemId(null);
-                          }
                           if (e.key === 'Escape') setEditingItemId(null);
                         }}
-                        className="flex-1 min-w-0 bg-[#1a1a1e] border border-elec-yellow/40 rounded-lg px-2 py-1 text-[14px] text-white focus:outline-none focus:border-elec-yellow"
+                        className="flex-1 min-w-0 rounded-lg border border-elec-yellow/40 bg-[#1a1a1e] px-2.5 py-2 text-[15px] leading-snug text-white focus:border-elec-yellow focus:outline-none focus:ring-2 focus:ring-elec-yellow/15"
                       />
                     ) : (
-                      <p className="flex-1 min-w-0 font-medium text-[14px] text-white leading-tight line-clamp-2">
-                        {item.description}
-                      </p>
+                      <button
+                        type="button"
+                        onClick={() => {
+                          setEditingDescription(item.description);
+                          setEditingItemId(item.id);
+                        }}
+                        className="min-w-0 flex-1 whitespace-pre-wrap break-words text-left font-medium text-[14px] leading-snug text-white"
+                      >
+                        {item.description || (
+                          <span className="font-normal text-white/40">Tap to add a description</span>
+                        )}
+                      </button>
                     )}
                     <p className="text-[15px] font-bold text-elec-yellow shrink-0 ml-2">
                       £{((item.totalPrice ?? item.quantity * item.unitPrice) || 0).toFixed(2)}
