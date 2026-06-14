@@ -522,7 +522,11 @@ function RequirementRow({ item, onEdit }: { item: VaultRow; onEdit: (row: VaultR
                 >
                   ✓
                 </span>
-                Verified
+                Verified{' '}
+                {new Date(item.record.verified_at).toLocaleDateString('en-GB', {
+                  day: 'numeric',
+                  month: 'short',
+                })}
               </span>
             </>
           )}
@@ -532,7 +536,11 @@ function RequirementRow({ item, onEdit }: { item: VaultRow; onEdit: (row: VaultR
         className="shrink-0 text-[12.5px] font-medium text-white group-hover:text-white transition-colors self-center"
         aria-hidden
       >
-        {item.record ? 'Edit →' : 'Add →'}
+        {item.computed_status === 'pending_verification'
+          ? 'Verify →'
+          : item.record
+            ? 'Edit →'
+            : 'Add →'}
       </span>
     </button>
   );

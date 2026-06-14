@@ -207,7 +207,10 @@ export function AddPolicyDialog({ open, onOpenChange }: Props) {
                   placeholder="—"
                 />
               </Field>
-              <Field label="Category">
+              <Field
+                label="Category"
+                hint="Groups it in the policy register — pick the closest area."
+              >
                 <Select value={form.category} onValueChange={(v) => update({ category: v })}>
                   <SelectTrigger className={selectTriggerClass}>
                     <SelectValue />

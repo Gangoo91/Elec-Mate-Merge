@@ -136,7 +136,7 @@ export function ComplianceDocsSection() {
       <motion.div variants={itemVariants}>
         <FilterBar
           tabs={[
-            { value: 'staff', label: 'Staff Compliance' },
+            { value: 'staff', label: 'Staff Records (DBS · CPD · Quals)' },
             { value: 'policies', label: 'Policies & Procedures' },
           ]}
           activeTab={activeTab}
