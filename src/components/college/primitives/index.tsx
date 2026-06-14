@@ -32,7 +32,8 @@ export type Tone =
   | 'orange'
   | 'red'
   | 'cyan'
-  | 'indigo';
+  | 'indigo'
+  | 'grey';
 
 export const toneAccent: Record<Tone, string> = {
   blue: 'from-blue-500/70 via-blue-400/70 to-cyan-400/70',
@@ -45,6 +46,7 @@ export const toneAccent: Record<Tone, string> = {
   red: 'from-red-500/70 via-rose-400/70 to-red-500/70',
   cyan: 'from-cyan-500/70 via-sky-400/70 to-blue-400/70',
   indigo: 'from-indigo-500/70 via-violet-400/70 to-purple-400/70',
+  grey: 'from-white/25 via-white/15 to-white/25',
 };
 
 export const toneText: Record<Tone, string> = {
@@ -58,6 +60,7 @@ export const toneText: Record<Tone, string> = {
   red: 'text-red-400',
   cyan: 'text-cyan-400',
   indigo: 'text-indigo-400',
+  grey: 'text-white/55',
 };
 
 export const toneDot: Record<Tone, string> = {
@@ -71,7 +74,12 @@ export const toneDot: Record<Tone, string> = {
   red: 'bg-red-400',
   cyan: 'bg-cyan-400',
   indigo: 'bg-indigo-400',
+  grey: 'bg-white/40',
 };
+
+/* Re-exports of sibling primitive modules so consumers import from one place. */
+export { BackButton } from './BackButton';
+export { statusTone, type StatusDomain } from './statusTone';
 
 /* ────────────────────────────────────────────────────────
    Motion
@@ -132,7 +140,9 @@ export function Pill({
                     ? 'bg-purple-500/10 text-purple-400 border-purple-500/20'
                     : tone === 'indigo'
                       ? 'bg-indigo-500/10 text-indigo-400 border-indigo-500/20'
-                      : 'bg-elec-yellow/10 text-elec-yellow border-elec-yellow/20';
+                      : tone === 'grey'
+                        ? 'bg-white/[0.06] text-white/55 border-white/10'
+                        : 'bg-elec-yellow/10 text-elec-yellow border-elec-yellow/20';
   return (
     <span
       className={cn(

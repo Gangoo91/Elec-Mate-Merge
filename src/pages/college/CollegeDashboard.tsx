@@ -5,6 +5,8 @@ import { CollegeSupabaseProvider } from '@/contexts/CollegeSupabaseContext';
 import { useAuth } from '@/contexts/AuthContext';
 import { CommandPalette } from '@/components/college/CommandPalette';
 import { NotificationCenter } from '@/components/college/NotificationCenter';
+import { CollegeBottomNav } from '@/components/college/CollegeBottomNav';
+import { BackButton } from '@/components/college/primitives';
 import { useKeyboardShortcuts } from '@/hooks/useKeyboardShortcuts';
 import { SectionSkeleton } from '@/components/ui/page-skeleton';
 
@@ -678,13 +680,10 @@ const CollegeDashboard = () => {
         <div className="sticky top-0 z-50 bg-elec-dark/95 backdrop-blur-sm border-b border-white/[0.06]">
           <div className="mx-auto max-w-7xl px-4">
             <div className="flex items-center h-12 gap-4 sm:gap-6">
-              <button
-                onClick={activeSection === 'overview' ? handleGoHome : handleBack}
-                aria-label="Go back"
-                className="text-[12.5px] font-medium text-white hover:text-white transition-colors touch-manipulation whitespace-nowrap"
-              >
-                ← Back
-              </button>
+              <BackButton
+                label={activeSection === 'overview' ? 'Exit College' : 'Back'}
+                onBack={activeSection === 'overview' ? handleGoHome : handleBack}
+              />
               <div className="flex-1 min-w-0 flex items-baseline gap-2.5">
                 <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white hidden sm:inline">
                   College
@@ -729,6 +728,9 @@ const CollegeDashboard = () => {
           onOpenChange={setCommandPaletteOpen}
           onNavigate={handleNavigate}
         />
+
+        {/* Persistent native bottom nav (mobile) */}
+        <CollegeBottomNav activeSection={activeSection} onSelect={setActiveSection} />
       </div>
     </CollegeSupabaseProvider>
   );
