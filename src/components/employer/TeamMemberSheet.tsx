@@ -27,7 +27,11 @@ export interface TeamMemberView {
 }
 import { useEmployeeAssignments, useDeleteJobAssignment } from '@/hooks/useJobAssignments';
 import { useCertificationsByEmployee } from '@/hooks/useCertifications';
-import { differenceInDays, parseISO } from 'date-fns';
+import { useEmployeeTimesheets } from '@/hooks/useTimesheets';
+import { useMyExpenses } from '@/hooks/useExpenses';
+import { useLeaveRequests } from '@/hooks/useEmployeeLeave';
+import { useWorkerLocations } from '@/hooks/useWorkerLocations';
+import { differenceInDays, parseISO, format } from 'date-fns';
 import { CreateElecIDForEmployeeDialog } from '@/components/employer/dialogs/CreateElecIDForEmployeeDialog';
 import { useIsMobile } from '@/hooks/use-mobile';
 import { useElecIdProfileByEmployee } from '@/hooks/useElecId';
@@ -39,6 +43,7 @@ import {
   Briefcase,
   Award,
   MapPin,
+  Clock,
   ChevronRight,
   UserCog,
   Star,
@@ -98,6 +103,10 @@ export function TeamMemberSheet({
   const { data: rawAssignments = [] } = useEmployeeAssignments(employee?.id || '');
   const deleteAssignment = useDeleteJobAssignment();
   const { data: rawCerts = [] } = useCertificationsByEmployee(employee?.id);
+  const { data: rawTimesheets = [] } = useEmployeeTimesheets(employee?.id || '');
+  const { expenses: rawExpenses = [] } = useMyExpenses(employee?.id);
+  const { data: allLeave = [] } = useLeaveRequests();
+  const { data: workerLocations = [] } = useWorkerLocations();
   const [activeTab, setActiveTab] = useState('details');
   const [createElecIdOpen, setCreateElecIdOpen] = useState(false);
 
@@ -129,6 +138,62 @@ export function TeamMemberSheet({
   const expiringSoonCerts = employeeCerts.filter(
     (c) => c.status === 'Warning' || c.status === 'Expired'
   );
+
+  // Timesheets — already ordered by date desc from the hook
+  const recentTimesheets = rawTimesheets.slice(0, 12);
+  const pendingTimesheets = rawTimesheets.filter(
+    (t) => (t.status || '').toLowerCase() === 'pending'
+  ).length;
+  const timesheetStatusTone = (status: string) => {
+    const s = (status || '').toLowerCase();
+    if (s === 'approved') return 'border-l-emerald-500';
+    if (s === 'rejected') return 'border-l-red-500';
+    return 'border-l-amber-500'; // pending / submitted
+  };
+
+  // Expenses — already ordered by submitted_date desc from the hook
+  const recentExpenses = rawExpenses.slice(0, 12);
+  const pendingExpenses = rawExpenses.filter(
+    (e) => (e.status || '').toLowerCase() === 'pending'
+  );
+  const pendingExpenseTotal = pendingExpenses.reduce((sum, e) => sum + (Number(e.amount) || 0), 0);
+  const expenseStatusTone = (status: string) => {
+    const s = (status || '').toLowerCase();
+    if (s === 'approved' || s === 'paid') return 'border-l-emerald-500';
+    if (s === 'rejected') return 'border-l-red-500';
+    return 'border-l-amber-500'; // pending
+  };
+
+  // Leave — useLeaveRequests is employer-scoped; filter to this worker
+  const employeeLeave = allLeave.filter((l) => l.employeeId === employee?.id);
+  const recentLeave = employeeLeave.slice(0, 12);
+  const pendingLeave = employeeLeave.filter(
+    (l) => (l.status || '').toLowerCase() === 'pending'
+  ).length;
+  const leaveStatusTone = (status: string) => {
+    const s = (status || '').toLowerCase();
+    if (s === 'approved') return 'border-l-emerald-500';
+    if (s === 'rejected' || s === 'cancelled') return 'border-l-red-500';
+    return 'border-l-amber-500'; // pending
+  };
+
+  // Live on-site presence — latest location row for this worker (clock-in derived)
+  const presence = workerLocations.find((l) => l.employee_id === employee?.id);
+  const presenceDot = (status?: string) => {
+    switch (status) {
+      case 'On Site':
+        return 'bg-emerald-500';
+      case 'En Route':
+        return 'bg-blue-500';
+      case 'Office':
+        return 'bg-amber-500';
+      case 'On Leave':
+        return 'bg-red-500';
+      default:
+        return 'bg-white/30'; // Off Duty / unknown
+    }
+  };
+  const presenceSince = presence?.checked_in_at || presence?.last_updated;
 
   const handleCall = () => (window.location.href = `tel:${employee.phone}`);
   const handleEmergencyCall = () => {
@@ -208,22 +273,40 @@ export function TeamMemberSheet({
         className="flex-1 flex flex-col min-h-0 overflow-hidden"
       >
         <div className="px-4 md:px-6 border-b border-white/[0.06] flex-shrink-0">
-          <TabsList className="w-full justify-start gap-0 bg-transparent h-auto p-0">
+          <TabsList className="w-full justify-start gap-1 bg-transparent h-auto p-0 overflow-x-auto flex-nowrap">
             <TabsTrigger
               value="details"
-              className="flex-1 data-[state=active]:bg-transparent data-[state=active]:border-b-2 data-[state=active]:border-elec-yellow rounded-none px-2 py-3 text-sm text-white"
+              className="flex-shrink-0 whitespace-nowrap data-[state=active]:bg-transparent data-[state=active]:border-b-2 data-[state=active]:border-elec-yellow rounded-none px-3.5 py-3 text-sm text-white"
             >
               Details
             </TabsTrigger>
             <TabsTrigger
               value="jobs"
-              className="flex-1 data-[state=active]:bg-transparent data-[state=active]:border-b-2 data-[state=active]:border-elec-yellow rounded-none px-2 py-3 text-sm text-white"
+              className="flex-shrink-0 whitespace-nowrap data-[state=active]:bg-transparent data-[state=active]:border-b-2 data-[state=active]:border-elec-yellow rounded-none px-3.5 py-3 text-sm text-white"
             >
               Jobs
             </TabsTrigger>
             <TabsTrigger
+              value="hours"
+              className="flex-shrink-0 whitespace-nowrap data-[state=active]:bg-transparent data-[state=active]:border-b-2 data-[state=active]:border-elec-yellow rounded-none px-3.5 py-3 text-sm text-white"
+            >
+              Hours
+            </TabsTrigger>
+            <TabsTrigger
+              value="spend"
+              className="flex-shrink-0 whitespace-nowrap data-[state=active]:bg-transparent data-[state=active]:border-b-2 data-[state=active]:border-elec-yellow rounded-none px-3.5 py-3 text-sm text-white"
+            >
+              Spend
+            </TabsTrigger>
+            <TabsTrigger
+              value="leave"
+              className="flex-shrink-0 whitespace-nowrap data-[state=active]:bg-transparent data-[state=active]:border-b-2 data-[state=active]:border-elec-yellow rounded-none px-3.5 py-3 text-sm text-white"
+            >
+              Leave
+            </TabsTrigger>
+            <TabsTrigger
               value="creds"
-              className="flex-1 data-[state=active]:bg-transparent data-[state=active]:border-b-2 data-[state=active]:border-elec-yellow rounded-none px-2 py-3 text-sm text-white"
+              className="flex-shrink-0 whitespace-nowrap data-[state=active]:bg-transparent data-[state=active]:border-b-2 data-[state=active]:border-elec-yellow rounded-none px-3.5 py-3 text-sm text-white"
             >
               Credentials
             </TabsTrigger>
@@ -235,6 +318,27 @@ export function TeamMemberSheet({
           <div className="p-4 md:p-6">
             {/* Details Tab */}
             <TabsContent value="details" className="mt-0 space-y-4">
+              {/* Live on-site presence (clock-in derived) */}
+              {presence && (
+                <div className="flex items-center gap-3 p-3 rounded-xl bg-[hsl(0_0%_12%)] border border-white/[0.06]">
+                  <span className={`w-2.5 h-2.5 rounded-full flex-shrink-0 ${presenceDot(presence.status)}`} />
+                  <div className="flex-1 min-w-0">
+                    <p className="font-medium text-white truncate">
+                      {presence.status}
+                      {presence.jobs?.title && (
+                        <span className="text-xs text-white font-normal"> · {presence.jobs.title}</span>
+                      )}
+                    </p>
+                    <p className="text-xs text-white">
+                      {presenceSince
+                        ? `since ${format(parseISO(presenceSince), 'EEE d MMM, HH:mm')}`
+                        : 'no recent check-in'}
+                    </p>
+                  </div>
+                  <MapPin className="h-4 w-4 text-white flex-shrink-0" />
+                </div>
+              )}
+
               {/* Contact */}
               <div className="space-y-2">
                 <button
@@ -346,6 +450,149 @@ export function TeamMemberSheet({
                 <div className="text-center py-8">
                   <Briefcase className="h-10 w-10 text-white mx-auto mb-2" />
                   <p className="text-sm text-white">No active assignments</p>
+                </div>
+              )}
+            </TabsContent>
+
+            {/* Hours Tab */}
+            <TabsContent value="hours" className="mt-0 space-y-3">
+              <div className="flex items-center justify-between">
+                <h4 className="font-medium text-white">Recent Timesheets</h4>
+                {pendingTimesheets > 0 && (
+                  <Badge variant="outline" className="border-amber-500 text-amber-400 text-xs">
+                    {pendingTimesheets} pending
+                  </Badge>
+                )}
+              </div>
+              {recentTimesheets.length > 0 ? (
+                <div className="space-y-2">
+                  {recentTimesheets.map((t) => (
+                    <div
+                      key={t.id}
+                      className={`p-3 rounded-xl bg-[hsl(0_0%_12%)] border border-white/[0.06] border-l-4 ${timesheetStatusTone(t.status)}`}
+                    >
+                      <div className="flex items-center justify-between gap-2">
+                        <div className="flex items-center gap-3 min-w-0">
+                          <div className="w-10 h-10 rounded-full bg-elec-yellow/10 flex items-center justify-center flex-shrink-0">
+                            <Clock className="h-5 w-5 text-elec-yellow" />
+                          </div>
+                          <div className="min-w-0">
+                            <p className="font-medium text-white truncate">
+                              {t.total_hours != null ? `${t.total_hours}h` : '—'}
+                            </p>
+                            <p className="text-xs text-white">
+                              {t.date ? format(parseISO(t.date), 'EEE d MMM') : ''}
+                            </p>
+                          </div>
+                        </div>
+                        <Badge variant="outline" className="text-xs border-white/20 text-white capitalize">
+                          {t.status || 'Pending'}
+                        </Badge>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              ) : (
+                <div className="text-center py-8">
+                  <Clock className="h-10 w-10 text-white mx-auto mb-2" />
+                  <p className="text-sm text-white">No timesheets yet</p>
+                </div>
+              )}
+            </TabsContent>
+
+            {/* Spend (Expenses) Tab */}
+            <TabsContent value="spend" className="mt-0 space-y-3">
+              <div className="flex items-center justify-between">
+                <h4 className="font-medium text-white">Recent Expenses</h4>
+                {pendingExpenses.length > 0 && (
+                  <Badge variant="outline" className="border-amber-500 text-amber-400 text-xs">
+                    £{pendingExpenseTotal.toFixed(2)} pending
+                  </Badge>
+                )}
+              </div>
+              {recentExpenses.length > 0 ? (
+                <div className="space-y-2">
+                  {recentExpenses.map((e) => (
+                    <div
+                      key={e.id}
+                      className={`p-3 rounded-xl bg-[hsl(0_0%_12%)] border border-white/[0.06] border-l-4 ${expenseStatusTone(e.status)}`}
+                    >
+                      <div className="flex items-center justify-between gap-2">
+                        <div className="flex items-center gap-3 min-w-0">
+                          <div className="w-10 h-10 rounded-full bg-elec-yellow/10 flex items-center justify-center flex-shrink-0">
+                            <PoundSterling className="h-5 w-5 text-elec-yellow" />
+                          </div>
+                          <div className="min-w-0">
+                            <p className="font-medium text-white truncate">
+                              £{(Number(e.amount) || 0).toFixed(2)}
+                              <span className="text-xs text-white font-normal"> · {e.category}</span>
+                            </p>
+                            <p className="text-xs text-white truncate">
+                              {e.description || (e.submitted_date ? format(parseISO(e.submitted_date), 'd MMM') : '')}
+                            </p>
+                          </div>
+                        </div>
+                        <Badge variant="outline" className="text-xs border-white/20 text-white capitalize">
+                          {e.status || 'Pending'}
+                        </Badge>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              ) : (
+                <div className="text-center py-8">
+                  <PoundSterling className="h-10 w-10 text-white mx-auto mb-2" />
+                  <p className="text-sm text-white">No expenses claimed</p>
+                </div>
+              )}
+            </TabsContent>
+
+            {/* Leave Tab */}
+            <TabsContent value="leave" className="mt-0 space-y-3">
+              <div className="flex items-center justify-between">
+                <h4 className="font-medium text-white">Leave Requests</h4>
+                {pendingLeave > 0 && (
+                  <Badge variant="outline" className="border-amber-500 text-amber-400 text-xs">
+                    {pendingLeave} pending
+                  </Badge>
+                )}
+              </div>
+              {recentLeave.length > 0 ? (
+                <div className="space-y-2">
+                  {recentLeave.map((l) => (
+                    <div
+                      key={l.id}
+                      className={`p-3 rounded-xl bg-[hsl(0_0%_12%)] border border-white/[0.06] border-l-4 ${leaveStatusTone(l.status)}`}
+                    >
+                      <div className="flex items-center justify-between gap-2">
+                        <div className="flex items-center gap-3 min-w-0">
+                          <div className="w-10 h-10 rounded-full bg-elec-yellow/10 flex items-center justify-center flex-shrink-0">
+                            <Clock className="h-5 w-5 text-elec-yellow" />
+                          </div>
+                          <div className="min-w-0">
+                            <p className="font-medium text-white truncate capitalize">
+                              {l.type}
+                              <span className="text-xs text-white font-normal"> · {l.totalDays}d</span>
+                            </p>
+                            <p className="text-xs text-white truncate">
+                              {l.startDate ? format(parseISO(l.startDate), 'd MMM') : ''}
+                              {l.endDate && l.endDate !== l.startDate
+                                ? ` – ${format(parseISO(l.endDate), 'd MMM')}`
+                                : ''}
+                            </p>
+                          </div>
+                        </div>
+                        <Badge variant="outline" className="text-xs border-white/20 text-white capitalize">
+                          {l.status || 'Pending'}
+                        </Badge>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              ) : (
+                <div className="text-center py-8">
+                  <Clock className="h-10 w-10 text-white mx-auto mb-2" />
+                  <p className="text-sm text-white">No leave requests</p>
                 </div>
               )}
             </TabsContent>

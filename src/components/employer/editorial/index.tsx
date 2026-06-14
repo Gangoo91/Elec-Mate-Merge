@@ -112,7 +112,7 @@ export const rowVariants = {
 export function Eyebrow({ children, className }: { children: ReactNode; className?: string }) {
   return (
     <div
-      className={cn('text-[10px] font-medium uppercase tracking-[0.18em] text-white', className)}
+      className={cn('text-[10px] font-medium uppercase tracking-[0.18em] text-white/55', className)}
     >
       {children}
     </div>
@@ -1329,18 +1329,18 @@ export function HubLanding({
    ──────────────────────────────────────────────────────── */
 
 export const inputClass =
-  'h-11 w-full px-4 bg-[hsl(0_0%_9%)] border border-white/[0.08] rounded-xl text-white text-[13px] placeholder:text-white focus:outline-none focus:border-elec-yellow/60 touch-manipulation';
+  'h-12 w-full px-3.5 bg-white/[0.05] border border-white/[0.10] rounded-xl text-white text-base placeholder:text-white/40 focus:outline-none focus:border-elec-yellow focus:ring-2 focus:ring-elec-yellow/15 transition-colors touch-manipulation';
 
 export const selectTriggerClass =
-  'h-11 px-4 bg-[hsl(0_0%_9%)] border border-white/[0.08] rounded-xl text-white text-[13px] focus:outline-none focus:border-elec-yellow/60 touch-manipulation data-[state=open]:border-elec-yellow/60';
+  'h-12 px-3.5 bg-white/[0.05] border border-white/[0.10] rounded-xl text-white text-base focus:outline-none focus:border-elec-yellow focus:ring-2 focus:ring-elec-yellow/15 transition-colors touch-manipulation data-[state=open]:border-elec-yellow';
 
 export const selectContentClass =
   'z-[100] max-w-[calc(100vw-2rem)] bg-[hsl(0_0%_12%)] border border-white/[0.08] text-white';
 
 export const textareaClass =
-  'w-full px-4 py-3 bg-[hsl(0_0%_9%)] border border-white/[0.08] rounded-xl text-white text-[13px] placeholder:text-white focus:outline-none focus:border-elec-yellow/60 touch-manipulation resize-none';
+  'w-full px-3.5 py-3 bg-white/[0.05] border border-white/[0.10] rounded-xl text-white text-base placeholder:text-white/40 focus:outline-none focus:border-elec-yellow focus:ring-2 focus:ring-elec-yellow/15 transition-colors touch-manipulation resize-none';
 
-export const fieldLabelClass = 'text-[11.5px] text-white mb-1.5 block';
+export const fieldLabelClass = 'text-[11px] font-medium uppercase tracking-wider text-white/65 mb-1.5 block';
 
 export const checkboxClass =
   'h-5 w-5 rounded border border-white/[0.15] bg-[hsl(0_0%_9%)] data-[state=checked]:bg-elec-yellow data-[state=checked]:border-elec-yellow data-[state=checked]:text-black touch-manipulation';
@@ -1371,7 +1371,7 @@ export function Field({
         </label>
       )}
       {children}
-      {hint && <p className="text-[11px] text-white">{hint}</p>}
+      {hint && <p className="text-[11px] text-white/50 leading-snug">{hint}</p>}
     </div>
   );
 }
@@ -1382,23 +1382,86 @@ export function Field({
 
 export function FormCard({
   eyebrow,
+  index,
   children,
   className,
 }: {
   eyebrow?: string;
+  index?: number;
   children: ReactNode;
   className?: string;
 }) {
   return (
     <div
       className={cn(
-        'bg-[hsl(0_0%_12%)] border border-white/[0.06] rounded-2xl p-5 space-y-3',
+        'rounded-2xl border border-white/[0.10] bg-gradient-to-b from-white/[0.06] to-white/[0.03] shadow-[0_8px_24px_rgba(0,0,0,0.35)] p-4 sm:p-5 space-y-3.5',
         className
       )}
     >
-      {eyebrow && <Eyebrow>{eyebrow}</Eyebrow>}
+      {eyebrow && (
+        <div className="flex items-baseline gap-2">
+          {typeof index === 'number' && (
+            <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-elec-yellow/80 tabular-nums">
+              {String(index).padStart(2, '0')}
+            </span>
+          )}
+          <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/70">
+            {typeof index === 'number' ? '· ' : ''}{eyebrow}
+          </span>
+        </div>
+      )}
       {children}
     </div>
+  );
+}
+
+/* ────────────────────────────────────────────────────────
+   OptionTile — selectable choice button (icon optional)
+   ──────────────────────────────────────────────────────── */
+
+export function OptionTile({
+  selected,
+  onClick,
+  icon,
+  label,
+  sublabel,
+  vertical,
+  className,
+}: {
+  selected: boolean;
+  onClick: () => void;
+  icon?: ReactNode;
+  label: string;
+  sublabel?: string;
+  vertical?: boolean;
+  className?: string;
+}) {
+  return (
+    <button
+      type="button"
+      onClick={onClick}
+      aria-pressed={selected}
+      className={cn(
+        'rounded-xl border text-[13px] font-medium transition-all duration-150 touch-manipulation active:scale-[0.98] select-none',
+        vertical
+          ? 'flex flex-col items-center justify-center gap-1.5 p-4 min-h-[80px] text-center'
+          : 'flex items-center justify-center gap-2 px-3 min-h-[52px]',
+        selected
+          ? 'border-elec-yellow/40 bg-elec-yellow/[0.10] text-elec-yellow shadow-[0_0_0_1px_rgba(250,204,21,0.15)]'
+          : 'border-white/[0.08] bg-white/[0.04] text-white/80 hover:bg-white/[0.06] hover:border-white/[0.14]',
+        className
+      )}
+    >
+      {icon}
+      <span className="leading-tight">
+        {label}
+        {sublabel && (
+          <span className={cn('block text-[11px] mt-0.5', selected ? 'text-elec-yellow/70' : 'text-white/45')}>
+            {sublabel}
+          </span>
+        )}
+      </span>
+    </button>
   );
 }
 
@@ -1428,12 +1491,9 @@ export function FormGrid({
    Buttons — canonical variants
    ──────────────────────────────────────────────────────── */
 
-interface ButtonProps {
+interface ButtonProps extends Omit<React.ButtonHTMLAttributes<HTMLButtonElement>, 'type'> {
   children: ReactNode;
-  onClick?: (e: React.MouseEvent<HTMLButtonElement>) => void;
-  disabled?: boolean;
   type?: 'button' | 'submit' | 'reset';
-  className?: string;
   size?: 'sm' | 'md' | 'lg';
   fullWidth?: boolean;
 }
@@ -1444,83 +1504,74 @@ const sizeToClasses: Record<'sm' | 'md' | 'lg', string> = {
   lg: 'h-12 px-6 text-[14px]',
 };
 
-export function PrimaryButton({
-  children,
-  onClick,
-  disabled,
-  type = 'button',
-  className,
-  size = 'md',
-  fullWidth,
-}: ButtonProps) {
-  return (
-    <button
-      type={type}
-      onClick={onClick}
-      disabled={disabled}
-      className={cn(
-        'inline-flex items-center justify-center font-semibold rounded-full bg-elec-yellow text-black hover:bg-elec-yellow/90 active:scale-[0.98] disabled:opacity-40 disabled:active:scale-100 transition-all touch-manipulation',
-        sizeToClasses[size],
-        fullWidth && 'w-full',
-        className
-      )}
-    >
-      {children}
-    </button>
-  );
-}
+export const PrimaryButton = React.forwardRef<HTMLButtonElement, ButtonProps>(
+  function PrimaryButton(
+    { children, type = 'button', className, size = 'md', fullWidth, ...rest },
+    ref
+  ) {
+    return (
+      <button
+        ref={ref}
+        type={type}
+        className={cn(
+          'inline-flex items-center justify-center font-semibold rounded-full bg-elec-yellow text-black hover:bg-elec-yellow/90 active:scale-[0.98] disabled:opacity-40 disabled:active:scale-100 transition-all touch-manipulation',
+          sizeToClasses[size],
+          fullWidth && 'w-full',
+          className
+        )}
+        {...rest}
+      >
+        {children}
+      </button>
+    );
+  }
+);
 
-export function SecondaryButton({
-  children,
-  onClick,
-  disabled,
-  type = 'button',
-  className,
-  size = 'md',
-  fullWidth,
-}: ButtonProps) {
-  return (
-    <button
-      type={type}
-      onClick={onClick}
-      disabled={disabled}
-      className={cn(
-        'inline-flex items-center justify-center font-medium rounded-full bg-white/[0.06] text-white border border-white/[0.1] hover:bg-white/[0.1] active:scale-[0.98] disabled:opacity-40 disabled:active:scale-100 transition-all touch-manipulation',
-        sizeToClasses[size],
-        fullWidth && 'w-full',
-        className
-      )}
-    >
-      {children}
-    </button>
-  );
-}
+export const SecondaryButton = React.forwardRef<HTMLButtonElement, ButtonProps>(
+  function SecondaryButton(
+    { children, type = 'button', className, size = 'md', fullWidth, ...rest },
+    ref
+  ) {
+    return (
+      <button
+        ref={ref}
+        type={type}
+        className={cn(
+          'inline-flex items-center justify-center font-medium rounded-full bg-white/[0.06] text-white border border-white/[0.1] hover:bg-white/[0.1] active:scale-[0.98] disabled:opacity-40 disabled:active:scale-100 transition-all touch-manipulation',
+          sizeToClasses[size],
+          fullWidth && 'w-full',
+          className
+        )}
+        {...rest}
+      >
+        {children}
+      </button>
+    );
+  }
+);
 
-export function DestructiveButton({
-  children,
-  onClick,
-  disabled,
-  type = 'button',
-  className,
-  size = 'md',
-  fullWidth,
-}: ButtonProps) {
-  return (
-    <button
-      type={type}
-      onClick={onClick}
-      disabled={disabled}
-      className={cn(
-        'inline-flex items-center justify-center font-semibold rounded-full bg-red-500/15 text-red-400 border border-red-500/25 hover:bg-red-500/20 active:scale-[0.98] disabled:opacity-40 disabled:active:scale-100 transition-all touch-manipulation',
-        sizeToClasses[size],
-        fullWidth && 'w-full',
-        className
-      )}
-    >
-      {children}
-    </button>
-  );
-}
+export const DestructiveButton = React.forwardRef<HTMLButtonElement, ButtonProps>(
+  function DestructiveButton(
+    { children, type = 'button', className, size = 'md', fullWidth, ...rest },
+    ref
+  ) {
+    return (
+      <button
+        ref={ref}
+        type={type}
+        className={cn(
+          'inline-flex items-center justify-center font-semibold rounded-full bg-red-500/15 text-red-400 border border-red-500/25 hover:bg-red-500/20 active:scale-[0.98] disabled:opacity-40 disabled:active:scale-100 transition-all touch-manipulation',
+          sizeToClasses[size],
+          fullWidth && 'w-full',
+          className
+        )}
+        {...rest}
+      >
+        {children}
+      </button>
+    );
+  }
+);
 
 /* ────────────────────────────────────────────────────────
    Sheet shell — drag handle + eyebrow header + scrollable body + footer

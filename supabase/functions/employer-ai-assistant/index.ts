@@ -30,17 +30,21 @@ const OPENAI_CHAT = 'https://api.openai.com/v1/chat/completions';
 
 const SOUL = `You are Mate — the electrician's AI, now sitting inside the Employer Hub as the firm owner's business partner. You advise the person who RUNS a UK electrical contracting business: hiring, bidding, costing, cashflow, compliance, contracts, and running jobs and people.
 
+SECTOR — think across DOMESTIC, COMMERCIAL and INDUSTRIAL, not just domestic. A firm's work spans houses and landlords; offices, retail, schools and healthcare; and industrial sites, plant and factories. So reason in the right register for the job: three-phase and single-phase, sub-mains and distribution boards, containment (tray, basket, trunking, conduit), SWA and fire-rated cable, motor/HVAC/process supplies, emergency lighting and fire alarm interfaces, plus the commercial/industrial contracting reality — main contractors, JCT/NEC and term contracts, retentions, applications for payment and CVR, prelims, programme and phasing. Ask which sector if a brief is ambiguous and it changes the answer.
+
 VOICE: a sharp, experienced operations & commercial director. Direct, trade-aware, UK English (colour, organise, labour, metre). No emoji, no waffle — but give real depth when advising. Lead with the recommendation, then the why, the grounded facts WITH their source, the practical steps, and the trade-offs. Match length to the weight of the question: a quick fact gets a tight answer; a hiring, bidding or cashflow decision gets a proper, structured one (headed points are fine).
 
-GROUNDING — non-negotiable: for ANY factual or advisory question (costing, estimating, tendering, contracts, retentions, payment terms, CIS, VAT, employment law, apprenticeships, project management), you MUST call search_employer_knowledge first and base your answer on what it returns, citing the source inline (e.g. "per the JIB National Working Rules", "under the Construction Act 1996", "RICS NRM1", "ACAS"). Never invent rates, figures, legal positions or rules from memory. If the knowledge base doesn't cover it, say so plainly rather than guess.
+GROUNDING — non-negotiable, two knowledge bases, never invent: (1) for any BUSINESS/COMMERCIAL question (costing, estimating, tendering, contracts, retentions, payment terms, CIS, VAT, employment law, apprenticeships, project management) you MUST call search_employer_knowledge first and cite the source inline (e.g. "per the JIB National Working Rules", "under the Construction Act 1996", "RICS NRM1", "ACAS"); (2) for any TECHNICAL/REGULATORY point — what BS 7671 actually requires (RCD/RCBO, AFDDs, disconnection times, cable sizing, special locations, certification, notifiable work) — you MUST call search_bs7671 and cite the regulation number it returns. Both ground job-planning and estimating too: the Regs often drive the spec (and therefore the materials and cost). Never invent rates, figures, legal positions or regulation requirements from memory. If a knowledge base doesn't cover it, say so plainly rather than guess.
 
 THE FIRM — you have OVERSIGHT of the whole business. Each turn you receive a live snapshot across the entire hub: team, jobs and job packs, money (invoices, overdue, quotes, material orders, expenses to approve), hiring (vacancies, applicants), safety & ops (open incidents, open/overdue tasks), and resources (suppliers, price book). Use it: answer about any corner of the firm, make advice specific to their real numbers, and join the dots across areas (e.g. an overdue invoice that threatens cashflow on a job starting next week; a compliance gap on a worker assigned to a live job).
 
-ACTIONS — you can SET UP and RUN the firm directly. Tools: add team members, suppliers, price-book items and jobs; create quotes, invoices, job packs and vacancies. When asked to do something, DO it, then report exactly what you created (e.g. "Raised invoice INV-0003 to Dave for £450"). For a large batch, confirm the count first. You only ever INSERT — never overwrite or delete; the user edits in the hub. Setting up from scratch, work in order: team → suppliers → price book → jobs → quotes/invoices. For anything you don't yet have a tool for (producing PDFs, hiring an applicant), give the precise manual steps.
+ACTIONS — you can SET UP and RUN the firm directly. Tools: add team members, suppliers, price-book items and jobs; create quotes, invoices, job packs and vacancies. When asked to do something, DO it, then report exactly what you created (e.g. "Raised invoice INV-0003 to Dave for £450").
+
+ONBOARDING PEOPLE — when you add a team member, get their EMAIL and their PAY: salaried roles (QS, Project Manager, Supervisor) take an annual_salary, hands-on roles (Operative, Apprentice) an hourly_rate — ask if it's missing rather than assume. If you have an email, adding them automatically emails them their sign-in details: they sign in with that email and link to the firm on their own, no password handover from you. Each linked team member is a £9.99/month seat on the firm's subscription, charged only once they actually link. Tell the owner what you did in those terms, and if there's no email, tell them to share the team invite code instead. For a large batch, confirm the count first. You only ever INSERT — never overwrite or delete; the user edits in the hub. Setting up from scratch, work in order: team → suppliers → price book → jobs → quotes/invoices. For anything you don't yet have a tool for (producing PDFs, hiring an applicant), give the precise manual steps.
 
 BE PROACTIVE — never just execute silently. After any action, add a short, business-aware observation: what it means for the firm and the obvious next step, drawn from your live oversight (e.g. "Added CEF — but you've still no price book, so you can't cost a job properly yet; want me to add your common rates?"; "Raised that invoice — your overdue total is now £X across N invoices; I'd chase the oldest two first"). Surface risks and opportunities unprompted: cashflow exposure, a compliance gap, an unfilled vacancy on a job starting soon. You are a partner who thinks, not a form-filler.
 
-ESTIMATING & PLANNING — when asked to plan, quote, price or "set up" a job, orchestrate the WHOLE thing from a one-line brief: (1) break the work into the real trade tasks (a rewire = first fix, plaster liaison, second fix, test, certify); (2) cost LABOUR using THE FIRM'S RATES below × your honest hour/day estimate per task; (3) price MATERIALS by calling get_material_prices for the key items — these are LIVE supplier prices refreshed daily, so USE them, never guess a material price; (4) add the firm's materials markup + overhead + profit; (5) give a realistic timeline (labour hours → working days). Present a clear breakdown — tasks, materials (with the live prices + supplier), labour, and the total — and ground the method via search_employer_knowledge (NRM1, daywork, markup) where it sharpens it. Then offer to build it for real: create_job, add_task for each task, assign people from list_team, and create_quote. If the firm's rates aren't set, ask once or state your assumption.
+ESTIMATING & PLANNING — when asked to plan, quote, price or "set up" a job, orchestrate the WHOLE thing from a one-line brief, in the right register for the sector: (1) break the work into the real trade tasks (a domestic rewire = first fix, plaster liaison, second fix, test, certify; a commercial/industrial job = containment install, cable pulling/glanding, board/sub-main termination, motor/plant connections, testing, commissioning, certification) — use get_task_guidance to make the breakdown concrete (steps, tools); (2) check search_bs7671 for any reg that drives the spec (e.g. AFDDs/RCBOs now required, RCD protection, special-location requirements) — it changes what you must fit and therefore the cost; (3) cost LABOUR using THE FIRM'S RATES below × your honest hour/day estimate per task; (4) price MATERIALS by calling get_material_prices for the key items — these are LIVE supplier prices refreshed daily, so USE them, never guess a material price; (5) add the firm's materials markup + overhead + profit; (6) give a realistic timeline (labour hours → working days). Present a clear breakdown — tasks, materials (with the live prices + supplier), labour, and the total — and ground the method via search_employer_knowledge (NRM1, daywork, markup) where it sharpens it. Then offer to build it for real: create_job, add_task for each task, assign people from list_team, and create_quote. If the firm's rates aren't set, ask once or state your assumption.
 
 CONFIRM & UNDO — for anything financial or hard to reverse (raising an invoice, posting a public vacancy) or any large batch, briefly propose it and wait for a "yes" before doing it — UNLESS the user already clearly told you to. Quick low-risk setup (adding a supplier, a price-book line) just do. Every action is logged. If the user says "undo", "remove it" or corrects you, call delete_record with the id you got when you created it — and confirm what you removed.
 
@@ -245,6 +249,32 @@ const TOOLS = [
   {
     type: 'function',
     function: {
+      name: 'search_bs7671',
+      description:
+        'Search BS 7671:2018+A4:2026 (the Wiring Regulations) for the authoritative regulation text on a technical or compliance point — RCD/RCBO requirements, disconnection times, cable sizing, special locations, AFDDs, certification, notifiable work. Call this whenever an estimate, job plan or answer turns on what the Regs actually require, and cite the regulation number it returns. Never state a BS 7671 requirement from memory.',
+      parameters: {
+        type: 'object',
+        properties: { query: { type: 'string', description: 'The technical/regulatory point to look up, e.g. "RCD protection for socket outlets in a domestic install".' } },
+        required: ['query'],
+      },
+    },
+  },
+  {
+    type: 'function',
+    function: {
+      name: 'get_task_guidance',
+      description:
+        'Look up the real trade task breakdown for a piece of electrical work — the steps, tools and equipment involved — to make an estimate or job plan concrete and credible. Use when planning/quoting a job to ground the task list (NOT for labour hours, which remain your estimate × the firm rate).',
+      parameters: {
+        type: 'object',
+        properties: { query: { type: 'string', description: 'The work to break down, e.g. "consumer unit replacement" or "EV charger installation".' } },
+        required: ['query'],
+      },
+    },
+  },
+  {
+    type: 'function',
+    function: {
       name: 'add_task',
       description: 'Add a task to a job. job_id is the id returned by create_job. Optionally assign a team member (assignee_employee_id from list_team).',
       parameters: {
@@ -276,6 +306,20 @@ const TOOLS = [
       },
     },
   },
+  {
+    type: 'function',
+    function: {
+      name: 'get_team_member',
+      description: "Get a single worker's full picture (their \"Worker 360\") — profile plus their recent timesheets, expenses and leave, each with a pending-approval count. Use when the user asks about one worker by name, e.g. \"how many hours has Dave done?\", \"has Sam got expenses to approve?\", \"is Jordan off next week?\", or \"tell me about Jordan\". Pass the employee_id from list_team (call list_team first if you don't have it).",
+      parameters: {
+        type: 'object',
+        properties: {
+          employee_id: { type: 'string', description: 'The worker id from list_team.' },
+        },
+        required: ['employee_id'],
+      },
+    },
+  },
 ];
 
 async function embed(text: string, key: string): Promise<string> {
@@ -291,6 +335,47 @@ async function embed(text: string, key: string): Promise<string> {
 function initials(name: string): string {
   const p = String(name || '').trim().split(/\s+/);
   return ((p[0]?.[0] ?? '') + (p[1]?.[0] ?? '')).toUpperCase() || 'NW';
+}
+
+// Geocode a job address → map coordinates via the shared geocode-location fn
+// (Google, UK-biased), so a job Mate creates pins on the live map exactly like
+// one made in the UI. Best-effort: a miss just leaves the job un-pinned.
+async function geocodeJob(location: string): Promise<{ lat: number; lng: number } | null> {
+  if (!location || !location.trim()) return null;
+  try {
+    const anon = Deno.env.get('SUPABASE_ANON_KEY') ?? '';
+    const r = await fetch(`${Deno.env.get('SUPABASE_URL')}/functions/v1/geocode-location`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${anon}`, apikey: anon },
+      body: JSON.stringify({ location }),
+    });
+    if (!r.ok) return null;
+    const d = await r.json();
+    const loc = d?.location;
+    if (loc && typeof loc.lat === 'number' && typeof loc.lng === 'number') {
+      return { lat: loc.lat, lng: loc.lng };
+    }
+    return null;
+  } catch {
+    return null;
+  }
+}
+
+// Invoke another edge function as the EMPLOYER (their JWT) — used so Mate can
+// trigger the onboarding email + seat-sync exactly as the manual add does.
+// Non-fatal: a failed side-effect never blocks the roster insert.
+async function invokeFn(name: string, body: unknown, authHeader: string): Promise<void> {
+  try {
+    await fetch(`${Deno.env.get('SUPABASE_URL')}/functions/v1/${name}`, {
+      method: 'POST',
+      headers: {
+        Authorization: authHeader,
+        apikey: Deno.env.get('SUPABASE_ANON_KEY') ?? '',
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(body ?? {}),
+    });
+  } catch { /* non-fatal */ }
 }
 
 // Full-hub oversight. Defensive: a missing table/column returns [] (no crash).
@@ -377,7 +462,7 @@ const ENTITY_MAP: Record<string, { table: string; owner: string }> = {
 
 // Execute one tool call and return a short result string for the model.
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
-async function runTool(admin: any, uid: string, openAiKey: string, name: string, argsJson: string): Promise<string> {
+async function runTool(admin: any, uid: string, openAiKey: string, authHeader: string, name: string, argsJson: string): Promise<string> {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   let args: Record<string, any>;
   try {
@@ -404,7 +489,17 @@ async function runTool(admin: any, uid: string, openAiKey: string, name: string,
         pay_type: args.pay_type ?? null, hourly_rate: args.hourly_rate ?? null, annual_salary: args.annual_salary ?? null,
         email: args.email ?? null, phone: args.phone ?? null, avatar_initials: initials(args.name),
       }, 'team');
-      return error ? `Failed to add ${args.name}: ${error.message}` : `Added ${args.name} to the team (id: ${id}).`;
+      if (error) return `Failed to add ${args.name}: ${error.message}`;
+      // Fire the same onboarding side-effects as the manual add: the welcome /
+      // login email (so they sign in and link) + seat-sync. Both run as the
+      // employer, both non-fatal.
+      if (id && args.email) {
+        await invokeFn('send-team-welcome', { employeeId: id }, authHeader);
+        await invokeFn('manage-employer-seats', {}, authHeader);
+      }
+      return args.email
+        ? `Added ${args.name} to the team (id: ${id}) and emailed ${args.email} their sign-in details — they link to your firm automatically the first time they sign in with that address. Their seat (£9.99/mo) starts when they link.`
+        : `Added ${args.name} to the team (id: ${id}). No email given, so send them your team invite code to link — they won't get an automatic sign-in email without one.`;
     } else if (name === 'add_supplier') {
       const { id, error } = await ins('employer_suppliers', {
         employer_id: uid, name: args.name, category: args.category ?? null, contact_name: args.contact_name ?? null,
@@ -422,10 +517,12 @@ async function runTool(admin: any, uid: string, openAiKey: string, name: string,
       }, 'price_book_item');
       return error ? `Failed to add ${args.name}: ${error.message}` : `Added price-book item: ${args.name} (id: ${id}).`;
     } else if (name === 'create_job') {
+      const coords = args.location ? await geocodeJob(args.location) : null;
       const { id, error } = await ins('employer_jobs', {
         user_id: uid, status: 'active', title: args.title, client: args.client ?? '', location: args.location ?? '',
         value: args.value ?? null, start_date: args.start_date ?? null, description: args.description ?? null,
         client_phone: args.client_phone ?? null, client_email: args.client_email ?? null,
+        ...(coords ?? {}),
       }, 'job');
       return error ? `Failed to create job: ${error.message}` : `Created job: ${args.title} (job_id: ${id}).`;
     } else if (name === 'create_quote') {
@@ -483,6 +580,74 @@ async function runTool(admin: any, uid: string, openAiKey: string, name: string,
     } else if (name === 'list_team') {
       const { data: tm } = await admin.from('employer_employees').select('id, name, role').eq('employer_id', uid);
       return (tm ?? []).map((e: { id: string; name: string; role: string }) => `${e.name} (${e.role}) — id ${e.id}`).join('\n') || 'No team members yet.';
+    } else if (name === 'get_team_member') {
+      // Worker 360 for Mate — scope to THIS employer so one firm can't read another's people.
+      const { data: emp } = await admin.from('employer_employees')
+        .select('id, name, role, team_role, status').eq('id', args.employee_id).eq('employer_id', uid).maybeSingle();
+      if (!emp) return 'No team member with that id belongs to your firm — call list_team to get a valid id.';
+      const { data: ts } = await admin.from('employer_timesheets')
+        .select('date, total_hours, status').eq('employee_id', emp.id).order('date', { ascending: false }).limit(10);
+      const rows = ts ?? [];
+      const pending = rows.filter((t: { status: string }) => (t.status || '').toLowerCase() === 'pending').length;
+      const recent = rows
+        .map((t: { date: string; total_hours: number | null; status: string }) =>
+          `  ${t.date}: ${t.total_hours != null ? t.total_hours + 'h' : '—'} [${t.status || 'pending'}]`)
+        .join('\n') || '  (no timesheets logged)';
+      const { data: ex } = await admin.from('employer_expense_claims')
+        .select('submitted_date, amount, category, status').eq('employee_id', emp.id).order('submitted_date', { ascending: false }).limit(10);
+      const exRows = ex ?? [];
+      const exPending = exRows.filter((e: { status: string }) => (e.status || '').toLowerCase() === 'pending');
+      const exPendingTotal = exPending.reduce((s: number, e: { amount: number | null }) => s + (Number(e.amount) || 0), 0);
+      const exRecent = exRows
+        .map((e: { submitted_date: string; amount: number | null; category: string; status: string }) =>
+          `  ${e.submitted_date}: £${(Number(e.amount) || 0).toFixed(2)} ${e.category || ''} [${e.status || 'pending'}]`)
+        .join('\n') || '  (no expenses claimed)';
+      const { data: lv } = await admin.from('employee_leave_requests')
+        .select('start_date, end_date, leave_type, total_days, status').eq('employee_id', emp.id).order('start_date', { ascending: false }).limit(10);
+      const lvRows = lv ?? [];
+      const lvPending = lvRows.filter((l: { status: string }) => (l.status || '').toLowerCase() === 'pending').length;
+      const lvRecent = lvRows
+        .map((l: { start_date: string; end_date: string; leave_type: string; total_days: number | null; status: string }) =>
+          `  ${l.start_date}${l.end_date && l.end_date !== l.start_date ? '–' + l.end_date : ''}: ${l.leave_type || 'leave'} ${l.total_days != null ? '(' + l.total_days + 'd)' : ''} [${l.status || 'pending'}]`)
+        .join('\n') || '  (no leave requests)';
+      // Live on-site presence — clock-in derived (latest location row).
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      const { data: loc } = await admin.from('employer_worker_locations')
+        .select('status, checked_in_at, last_updated, employer_jobs(title)')
+        .eq('employee_id', emp.id).order('last_updated', { ascending: false }).limit(1).maybeSingle();
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      const locAny = loc as any;
+      const presenceLine = locAny
+        ? `${locAny.status || 'unknown'}${locAny.employer_jobs?.title ? ' at ' + locAny.employer_jobs.title : ''}`
+          + `${locAny.checked_in_at ? ' (since ' + locAny.checked_in_at + ')' : ''}`
+        : 'no check-in recorded';
+      return `${emp.name} — ${emp.team_role || emp.role || 'Operative'} (status: ${emp.status || 'active'})\n`
+        + `On-site now: ${presenceLine}\n`
+        + `Timesheets pending approval: ${pending}\n`
+        + `Recent timesheets:\n${recent}\n`
+        + `Expenses pending approval: ${exPending.length} (£${exPendingTotal.toFixed(2)})\n`
+        + `Recent expenses:\n${exRecent}\n`
+        + `Leave pending approval: ${lvPending}\n`
+        + `Recent leave:\n${lvRecent}`;
+    } else if (name === 'search_bs7671') {
+      const { data: regs } = await admin.rpc('match_bs7671_for_text', { q_text: args.query, doc_type: null, max_results: 5 });
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      return (regs ?? [])
+        .map((r: any) =>
+          `Reg ${r.reg_number}${r.reg_title ? ' — ' + r.reg_title : ''}${r.is_a4_change ? ' [A4:2026 change]' : ''}\n${r.content}`)
+        .join('\n\n---\n\n') || 'No BS 7671 regulation found for that — say so rather than guess.';
+    } else if (name === 'get_task_guidance') {
+      const { data: rows } = await admin.rpc('search_practical_work_fast', { query_text: args.query, match_count: 4 });
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      return (rows ?? [])
+        .map((r: any) => {
+          const tools = Array.isArray(r.tools_required) ? r.tools_required.slice(0, 5).join(', ') : '';
+          const steps = Array.isArray(r.test_procedures)
+            ? r.test_procedures.map((t: { task?: string }) => t.task).filter(Boolean).slice(0, 4).join('; ')
+            : '';
+          return `• ${r.primary_topic}${tools ? `\n  tools: ${tools}` : ''}${steps ? `\n  steps: ${steps}` : ''}`;
+        })
+        .join('\n') || 'No task guidance found.';
     }
     return 'Unknown tool.';
   } catch (e) {
@@ -582,7 +747,7 @@ Deno.serve(async (req) => {
               tool_calls: toolCalls.map((t) => ({ id: t.id, type: 'function', function: { name: t.name, arguments: t.arguments } })),
             });
             for (const t of toolCalls) {
-              const result = await runTool(admin, user.id, openAiKey, t.name, t.arguments);
+              const result = await runTool(admin, user.id, openAiKey, authHeader, t.name, t.arguments);
               convo.push({ role: 'tool', tool_call_id: t.id, content: result });
             }
           }

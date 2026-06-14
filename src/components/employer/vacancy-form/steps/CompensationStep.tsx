@@ -51,7 +51,7 @@ export function CompensationStep() {
   return (
     <div className="space-y-4">
       {/* Salary */}
-      <FormCard eyebrow="Salary Range">
+      <FormCard index={1} eyebrow="Salary range">
         {/* Salary Period Selector */}
         <Controller
           name="salaryPeriod"
@@ -103,7 +103,7 @@ export function CompensationStep() {
           </Field>
         </FormGrid>
 
-        <p className="text-[11px] text-white">
+        <p className="text-[11px] text-white/50">
           Leave blank to show "Competitive salary" on the listing
         </p>
       </FormCard>
@@ -111,8 +111,11 @@ export function CompensationStep() {
       {/* Benefits */}
       <FormCard>
         <div className="flex items-center justify-between">
-          <Eyebrow>Benefits & Perks</Eyebrow>
-          <span className="text-[11px] text-white">{selectedBenefits.length} selected</span>
+          <div className="flex items-baseline gap-2">
+            <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-elec-yellow/80 tabular-nums">02</span>
+            <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/70">· Benefits &amp; perks</span>
+          </div>
+          <span className="text-[11px] text-white/50 tabular-nums">{selectedBenefits.length} selected</span>
         </div>
 
         {/* Benefits Grid */}
@@ -140,13 +143,13 @@ export function CompensationStep() {
           })}
         </div>
 
-        <p className="text-[11px] text-white">
+        <p className="text-[11px] text-white/50">
           Select the benefits you offer. You can add custom benefits in the description.
         </p>
       </FormCard>
 
       {/* Schedule + Start Date */}
-      <FormCard eyebrow="Schedule">
+      <FormCard index={3} eyebrow="Schedule">
         <Field label="Working Hours" hint="Optional - describe typical working hours">
           <Input
             className={inputClass}
