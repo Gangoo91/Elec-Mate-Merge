@@ -729,7 +729,7 @@ const InvoiceViewPage = () => {
                         item.category === 'equipment' ? 'bg-purple-400' : 'bg-white/70'
                       )} />
                       <div className="flex-1 min-w-0">
-                        <p className="text-[14px] text-white font-medium">{item.description || item.name}</p>
+                        <p className="text-[14px] text-white font-medium whitespace-pre-line">{item.description || item.name}</p>
                         <p className="text-[12px] text-white/60 mt-0.5 tabular-nums">
                           {item.quantity} {item.unit || 'units'} × {formatCurrency(item.unitPrice || item.price || 0)}
                         </p>

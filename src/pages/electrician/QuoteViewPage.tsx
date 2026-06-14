@@ -882,7 +882,7 @@ const QuoteViewPage = () => {
                           item.category === 'equipment' ? 'bg-purple-400' : 'bg-white/70'
                         )} />
                         <div className="flex-1 min-w-0">
-                          <p className="text-[14px] text-white font-medium leading-snug">{item.description}</p>
+                          <p className="text-[14px] text-white font-medium leading-snug whitespace-pre-line">{item.description}</p>
                           <p className="text-[12px] text-white/60 mt-1 tabular-nums">
                             {item.quantity} {item.unit || 'units'} × {formatCurrency(item.unitPrice)}
                           </p>
