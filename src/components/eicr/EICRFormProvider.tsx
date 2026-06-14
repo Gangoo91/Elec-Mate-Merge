@@ -150,7 +150,11 @@ export const EICRFormProvider: React.FC<EICRFormProviderProps> = ({
       sameAsClientAddress: 'false',
       installationAddress: '',
       description: '',
-      installationType: '',
+      // EICR is always an existing installation; the field is hidden in the UI
+      // (ELE-1105) but defaulted so the PDF payload still carries a value.
+      installationType: 'existing-installation',
+      propertyType: '',
+      numberOfBedrooms: '',
       estimatedAge: '',
       ageUnit: 'years',
       evidenceOfAlterations: 'no',
@@ -974,7 +978,11 @@ export const EICRFormProvider: React.FC<EICRFormProviderProps> = ({
       sameAsClientAddress: 'false',
       installationAddress: '',
       description: '',
-      installationType: '',
+      // EICR is always an existing installation; the field is hidden in the UI
+      // (ELE-1105) but defaulted so the PDF payload still carries a value.
+      installationType: 'existing-installation',
+      propertyType: '',
+      numberOfBedrooms: '',
       estimatedAge: '',
       ageUnit: 'years',
       evidenceOfAlterations: 'no',

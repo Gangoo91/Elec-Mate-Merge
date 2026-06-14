@@ -103,13 +103,15 @@ export function useAssessorDrift(opts: UseAssessorDriftOpts = {}) {
         .in('sampling_plan_id', Array.from(planToAssessor.keys()))
         .gte('sampled_at', priorFrom);
 
-      // Resolve assessor names from college_staff (assessor_id is auth.uid)
+      // Resolve assessor names from college_staff. plan.assessor_id is the
+      // college_staff PK (FK: college_iqa_sampling.assessor_id → college_staff.id),
+      // NOT auth.uid — match on id or every row reads "Unknown assessor".
       const { data: staffRows } = await supabase
         .from('college_staff')
-        .select('user_id, name')
-        .in('user_id', Array.from(assessorIds));
+        .select('id, name')
+        .in('id', Array.from(assessorIds));
       const nameMap = new Map(
-        ((staffRows ?? []) as Array<{ user_id: string; name: string }>).map((r) => [r.user_id, r.name])
+        ((staffRows ?? []) as Array<{ id: string; name: string }>).map((r) => [r.id, r.name])
       );
 
       type Acc = {
