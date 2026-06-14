@@ -20,6 +20,7 @@ export interface TalentPoolSkill {
 export interface TalentPoolWorker {
   profileId: string;
   name: string;
+  photoUrl: string | null;
   jobTitle: string | null;
   bio: string | null;
   specialisms: string[];
@@ -116,6 +117,7 @@ export function useTalentPool(options: UseTalentPoolOptions = {}): UseTalentPool
         return {
           profileId: row.profile_id,
           name: row.name || 'Unnamed profile',
+          photoUrl: row.photo_url ?? null,
           jobTitle: row.job_title ?? null,
           bio: row.bio ?? null,
           specialisms: Array.isArray(row.specialisations) ? row.specialisations : [],

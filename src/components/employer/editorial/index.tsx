@@ -717,25 +717,36 @@ export function ListRow({
 
 export function Avatar({
   initials,
+  photo,
   size = 'md',
   online,
   className,
 }: {
   initials: string;
-  size?: 'sm' | 'md';
+  photo?: string | null;
+  size?: 'sm' | 'md' | 'lg';
   online?: boolean;
   className?: string;
 }) {
-  const dim = size === 'sm' ? 'h-8 w-8 text-[10px]' : 'h-9 w-9 text-[11px]';
+  const dim =
+    size === 'sm'
+      ? 'h-8 w-8 text-[10px]'
+      : size === 'lg'
+        ? 'h-12 w-12 text-[14px]'
+        : 'h-9 w-9 text-[11px]';
   return (
     <div className={cn('relative shrink-0', className)}>
       <div
         className={cn(
-          'rounded-lg bg-white/[0.06] text-white border border-white/[0.08] flex items-center justify-center font-semibold',
+          'rounded-lg bg-white/[0.06] text-white border border-white/[0.08] flex items-center justify-center font-semibold overflow-hidden',
           dim
         )}
       >
-        {initials}
+        {photo ? (
+          <img src={photo} alt={initials} className="h-full w-full object-cover" loading="lazy" />
+        ) : (
+          initials
+        )}
       </div>
       {online !== undefined && (
         <span

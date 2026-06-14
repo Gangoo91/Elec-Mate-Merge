@@ -11,8 +11,6 @@ import {
   FilterBar,
   ListCard,
   ListCardHeader,
-  ListBody,
-  ListRow,
   Avatar,
   Pill,
   IconButton,
@@ -25,7 +23,17 @@ import {
   fieldLabelClass,
   type Tone,
 } from '@/components/employer/editorial';
-import { SlidersHorizontal, Shield, Check, Award, RefreshCw } from 'lucide-react';
+import {
+  SlidersHorizontal,
+  Shield,
+  Check,
+  Award,
+  RefreshCw,
+  MessageSquare,
+  UserPlus,
+  Bookmark,
+  BookmarkCheck,
+} from 'lucide-react';
 import { toast } from '@/hooks/use-toast';
 import {
   useTalentPool,
@@ -414,7 +422,7 @@ export function TalentPoolSection() {
                       <span>£150</span>
                       <span>£500+</span>
                     </div>
-                    <p className="text-[11.5px] text-white/50">
+                    <p className="text-[11.5px] text-white">
                       Filtering by rate only shows candidates who declared one.
                     </p>
                   </div>
@@ -476,45 +484,121 @@ export function TalentPoolSection() {
               />
             </div>
           ) : (
-            <ListBody>
+            <div className="divide-y divide-white/[0.06]">
               {workers.map((worker) => {
                 const isSaved = savedCandidates.includes(worker.profileId);
                 const tierTone = tierToneFor(worker.verificationTier);
-                const subtitleParts = [
-                  worker.jobTitle || 'Electrician',
-                  worker.dayRate != null ? `£${worker.dayRate}/day` : 'Rate on request',
-                ];
-                if (worker.yearsExperience != null) {
-                  subtitleParts.push(`${worker.yearsExperience} yrs`);
-                }
-
                 return (
-                  <ListRow
-                    key={worker.profileId}
-                    lead={<Avatar initials={getInitials(worker.name)} />}
-                    title={
-                      <span className="inline-flex items-center gap-2">
-                        <span className="text-white">{worker.name}</span>
-                        {isSaved && <Pill tone="amber">Saved</Pill>}
-                      </span>
-                    }
-                    subtitle={subtitleParts.join(' · ')}
-                    trailing={
-                      <>
-                        <Pill tone={tierTone}>{worker.verificationTier}</Pill>
-                        {worker.verifiedDocuments.length > 0 && (
-                          <Pill tone="emerald">
-                            {worker.verifiedDocuments.length} doc
-                            {worker.verifiedDocuments.length !== 1 ? 's' : ''} ✓
-                          </Pill>
+                  <div key={worker.profileId} className="px-4 sm:px-5 py-4">
+                    <div className="flex items-start gap-3">
+                      <button
+                        onClick={() => handleOpenProfile(worker)}
+                        className="shrink-0 touch-manipulation rounded-lg"
+                        aria-label={`View ${worker.name}`}
+                      >
+                        <Avatar
+                          size="lg"
+                          photo={worker.photoUrl}
+                          initials={getInitials(worker.name)}
+                        />
+                      </button>
+
+                      <div className="flex-1 min-w-0">
+                        {/* Name + tier */}
+                        <div className="flex items-start justify-between gap-2">
+                          <button
+                            onClick={() => handleOpenProfile(worker)}
+                            className="text-left min-w-0 touch-manipulation"
+                          >
+                            <p className="font-semibold text-white truncate flex items-center gap-1.5">
+                              {worker.name}
+                              {worker.isVerified && (
+                                <Check className="h-3.5 w-3.5 text-emerald-400 shrink-0" />
+                              )}
+                              {isSaved && <Pill tone="amber">Saved</Pill>}
+                            </p>
+                            <p className="text-[12.5px] text-white truncate">
+                              {worker.jobTitle || 'Electrician'}
+                            </p>
+                          </button>
+                          <Pill tone={tierTone}>{worker.verificationTier}</Pill>
+                        </div>
+
+                        {/* Meta row — every value real/declared */}
+                        <div className="mt-1.5 flex flex-wrap items-center gap-x-3 gap-y-1 text-[12px]">
+                          {worker.dayRate != null ? (
+                            <span className="font-semibold text-elec-yellow tabular-nums">
+                              £{worker.dayRate}/day
+                            </span>
+                          ) : (
+                            <span className="text-white">Rate on request</span>
+                          )}
+                          {worker.yearsExperience != null && (
+                            <span className="text-white">{worker.yearsExperience} yrs exp</span>
+                          )}
+                          {worker.ecsCardType && (
+                            <span className="text-white">{worker.ecsCardType} ECS</span>
+                          )}
+                          {worker.verifiedDocuments.length > 0 && (
+                            <span className="text-emerald-400">
+                              {worker.verifiedDocuments.length} verified ✓
+                            </span>
+                          )}
+                        </div>
+
+                        {/* Specialism chips */}
+                        {worker.specialisms.length > 0 && (
+                          <div className="mt-2 flex flex-wrap gap-1.5">
+                            {worker.specialisms.slice(0, 4).map((s) => (
+                              <span
+                                key={s}
+                                className="h-6 px-2.5 inline-flex items-center rounded-full bg-white/[0.05] border border-white/[0.08] text-[11px] text-white"
+                              >
+                                {s}
+                              </span>
+                            ))}
+                            {worker.specialisms.length > 4 && (
+                              <span className="h-6 px-2 inline-flex items-center rounded-full text-[11px] text-white">
+                                +{worker.specialisms.length - 4}
+                              </span>
+                            )}
+                          </div>
                         )}
-                      </>
-                    }
-                    onClick={() => handleOpenProfile(worker)}
-                  />
+
+                        {/* Quick actions */}
+                        <div className="mt-3 flex items-center gap-2">
+                          <button
+                            onClick={() => handleMessage(worker)}
+                            className="h-9 px-3.5 inline-flex items-center gap-1.5 rounded-full bg-white/[0.06] border border-white/[0.1] text-[12.5px] font-medium text-white hover:bg-white/[0.1] transition-colors touch-manipulation"
+                          >
+                            <MessageSquare className="h-3.5 w-3.5" />
+                            Message
+                          </button>
+                          <button
+                            onClick={() => handleInvite(worker)}
+                            className="h-9 px-3.5 inline-flex items-center gap-1.5 rounded-full bg-elec-yellow text-black text-[12.5px] font-semibold hover:bg-elec-yellow/90 transition-colors touch-manipulation"
+                          >
+                            <UserPlus className="h-3.5 w-3.5" />
+                            Invite
+                          </button>
+                          <button
+                            onClick={() => handleSave(worker)}
+                            className={`ml-auto h-9 w-9 inline-flex items-center justify-center rounded-full border touch-manipulation transition-colors ${isSaved ? 'bg-amber-500/15 border-amber-500/30 text-amber-400' : 'bg-white/[0.04] border-white/[0.08] text-white hover:text-white'}`}
+                            aria-label={isSaved ? 'Remove from saved' : 'Save candidate'}
+                          >
+                            {isSaved ? (
+                              <BookmarkCheck className="h-4 w-4" />
+                            ) : (
+                              <Bookmark className="h-4 w-4" />
+                            )}
+                          </button>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
                 );
               })}
-            </ListBody>
+            </div>
           )}
         </ListCard>
       )}

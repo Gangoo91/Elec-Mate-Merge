@@ -83,9 +83,25 @@ export function useEmployerDashboardStats(): UseEmployerDashboardStatsReturn {
       const thirtyDaysFromNow = addDays(now, 30);
       const sixtyDaysFromNow = addDays(now, 60);
 
-      // Run all queries in parallel for performance
+      // Everything is scoped to THIS employer. Relying on RLS alone over-returns
+      // for admin/owner accounts (you'd see every firm's data — e.g. 121 staff).
+      const uid = user?.id;
+      if (!uid) {
+        setStats(DEFAULT_STATS);
+        setIsLoading(false);
+        clearTimeout(timeoutId);
+        return;
+      }
+
+      // Employees first — cert/expense queries key off employee_id, not employer_id.
+      const { data: myEmployees } = await supabase
+        .from('employer_employees')
+        .select('id, status')
+        .eq('employer_id', uid);
+      const employeeIds = (myEmployees ?? []).map((e) => e.id);
+
+      // Run the rest in parallel for performance
       const [
-        employeesResult,
         jobsResult,
         certificationsResult,
         talentPoolResult,
@@ -93,22 +109,21 @@ export function useEmployerDashboardStats(): UseEmployerDashboardStatsReturn {
         vacanciesResult,
         invoicesResult,
       ] = await Promise.all([
-        // Active employees count
-        supabase.from('employer_employees').select('id, status').ilike('status', 'active'),
-
-        // Active jobs count
+        // Active jobs count (jobs key off user_id)
         supabase
           .from('employer_jobs')
           .select('id, status, value, title, client, end_date')
+          .eq('user_id', uid)
           .ilike('status', 'active'),
 
-        // Certifications with expiry status
+        // Certifications with expiry status — this firm's staff only
         supabase
           .from('employer_certifications')
           .select('id, name, expiry_date, status, employee_id')
+          .in('employee_id', employeeIds)
           .not('expiry_date', 'is', null),
 
-        // Available talent in talent pool (join to get employer_id for exclusion)
+        // Available talent in talent pool — intentionally cross-employer
         supabase
           .from('employer_elec_id_profiles')
           .select('id, employer_employees!inner ( employer_id )')
@@ -116,22 +131,33 @@ export function useEmployerDashboardStats(): UseEmployerDashboardStatsReturn {
           .eq('available_for_hire', true)
           .in('profile_visibility', ['public', 'employers_only']),
 
-        // Pending expense claims
-        supabase.from('employer_expense_claims').select('id, status').eq('status', 'Pending'),
+        // Pending expense claims — this firm's staff only
+        supabase
+          .from('employer_expense_claims')
+          .select('id, status')
+          .eq('status', 'Pending')
+          .in('employee_id', employeeIds),
 
         // Open vacancies
-        supabase.from('employer_vacancies').select('id, status').eq('status', 'Open'),
+        supabase
+          .from('employer_vacancies')
+          .select('id, status')
+          .eq('status', 'Open')
+          .eq('employer_id', uid),
 
         // Invoices for revenue calculation (paid this year)
         supabase
           .from('employer_invoices')
           .select('id, amount, status, paid_date')
           .eq('status', 'Paid')
+          .eq('employer_id', uid)
           .gte('paid_date', `${now.getFullYear()}-01-01`),
       ]);
 
-      // Process employee stats
-      const activeEmployees = employeesResult.data?.length || 0;
+      // Process employee stats (active = status 'active', case-insensitive)
+      const activeEmployees = (myEmployees ?? []).filter(
+        (e) => (e.status || '').toLowerCase() === 'active'
+      ).length;
 
       // Process jobs stats
       const activeJobs = jobsResult.data?.length || 0;

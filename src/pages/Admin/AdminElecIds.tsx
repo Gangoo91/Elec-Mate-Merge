@@ -78,7 +78,7 @@ export default function AdminElecIds() {
   const queryClient = useQueryClient();
   const haptic = useHaptic();
   const [search, setSearch] = useState('');
-  const [statusFilter, setStatusFilter] = useState<string>('pending');
+  const [statusFilter, setStatusFilter] = useState<string>('all');
   const [selectedProfile, setSelectedProfile] = useState<ElecIdProfile | null>(null);
   const [rejectReason, setRejectReason] = useState('');
   const [showRejectDialog, setShowRejectDialog] = useState(false);

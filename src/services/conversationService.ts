@@ -425,12 +425,14 @@ const sendJobMessagePushNotification = async (
       if (!userId) return;
       recipientId = userId;
 
-      // Get employer name
+      // Get employer name — company_profiles is keyed by user_id (the employer's
+      // auth id). The old 'employer_profiles' table doesn't exist, so the name
+      // silently fell back to 'Employer'.
       const { data: employer } = await supabase
-        .from('employer_profiles')
+        .from('company_profiles')
         .select('company_name')
-        .eq('id', conversation.employer_id)
-        .single();
+        .eq('user_id', conversation.employer_id)
+        .maybeSingle();
       senderName = employer?.company_name || 'Employer';
     } else {
       // Sender is electrician, recipient is employer

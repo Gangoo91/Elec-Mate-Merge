@@ -39,8 +39,10 @@ export function useTrainingRequests() {
 
     setIsLoading(true);
     try {
-      // Determine if user is employer or worker based on role
-      const isEmployer = profile?.role === 'employer';
+      // Employers are identified by tier (role is unreliable — an employer-tier
+      // account can have role 'electrician'/'apprentice').
+      const isEmployer =
+        profile?.role === 'employer' || profile?.subscription_tier === 'employer';
 
       let query = supabase
         .from('elec_id_training_requests')
@@ -51,13 +53,22 @@ export function useTrainingRequests() {
         // Employer sees requests they've sent
         query = query.eq('employer_id', user.id);
       } else {
-        // Worker sees requests they've received
-        // Need to get their elec_id_profile first
-        const { data: elecProfile } = await supabase
-          .from('employer_elec_id_profiles')
+        // Worker sees requests they've received. Resolve their elec-id profile
+        // via their employer_employees record — employee_id FKs to
+        // employer_employees.id, NOT the user/profile id (that mismatch + .single()
+        // was returning a 406).
+        const { data: emp } = await supabase
+          .from('employer_employees')
           .select('id')
-          .eq('employee_id', user.id)
-          .single();
+          .eq('user_id', user.id)
+          .maybeSingle();
+        const { data: elecProfile } = emp
+          ? await supabase
+              .from('employer_elec_id_profiles')
+              .select('id')
+              .eq('employee_id', emp.id)
+              .maybeSingle()
+          : { data: null };
 
         if (elecProfile) {
           query = query.eq('worker_profile_id', elecProfile.id);
