@@ -1,5 +1,5 @@
-import { useState, useCallback, useMemo, useRef } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useState, useCallback, useMemo, useRef, useEffect } from 'react';
+import { useNavigate, useSearchParams } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import {
@@ -32,6 +32,10 @@ import {
   Pill,
   EmptyState,
   FilterBar,
+  PrimaryButton,
+  SecondaryButton,
+  IconButton,
+  statusTone,
   itemVariants,
 } from '@/components/college/primitives';
 
@@ -42,6 +46,7 @@ export function StudentsSection() {
   const highAttendance = settings.high_attendance_threshold_percent;
   const { toast } = useToast();
   const navigate = useNavigate();
+  const [searchParams, setSearchParams] = useSearchParams();
   const [searchQuery, setSearchQuery] = useState('');
   const [filterStatus, setFilterStatus] = useState<string>('all');
   const [filterCohort, setFilterCohort] = useState<string>('all');
@@ -55,6 +60,19 @@ export function StudentsSection() {
   const [withdrawOpen, setWithdrawOpen] = useState(false);
   const [batchMode, setBatchMode] = useState(false);
   const [selectedIds, setSelectedIds] = useState<Set<string>>(new Set());
+
+  // Seed the cohort filter from a ?cohort=<id> deep-link (e.g. tapping a cohort
+  // card), then strip it so refreshes don't re-pin the filter.
+  useEffect(() => {
+    const cohortParam = searchParams.get('cohort');
+    if (cohortParam) {
+      setFilterCohort(cohortParam);
+      const next = new URLSearchParams(searchParams);
+      next.delete('cohort');
+      setSearchParams(next, { replace: true });
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   const handleSelectStudent = (student: CollegeStudent) => {
     if (batchMode) {
@@ -175,27 +193,10 @@ export function StudentsSection() {
           description={`${activeCount} active student${activeCount === 1 ? '' : 's'} enrolled.`}
           tone="yellow"
           actions={
-            <div className="flex items-center gap-3 flex-wrap justify-end">
-              <button
-                onClick={() => setInviteOpen(true)}
-                className="text-[12px] font-medium text-white hover:text-white transition-colors touch-manipulation whitespace-nowrap"
-                title="Generate a code for a learner or staff member to join"
-              >
-                Invite
-              </button>
-              <button
-                onClick={() => setBulkAddOpen(true)}
-                className="text-[12px] font-medium text-white hover:text-white transition-colors touch-manipulation whitespace-nowrap"
-                title="Paste a list or drop a CSV to enrol many learners at once"
-              >
-                Bulk enrol
-              </button>
-              <button
-                onClick={() => setAddStudentOpen(true)}
-                className="text-[12.5px] font-medium text-elec-yellow/90 hover:text-elec-yellow transition-colors touch-manipulation whitespace-nowrap"
-              >
-                Enrol student →
-              </button>
+            <div className="flex items-center gap-2 flex-wrap justify-end">
+              <SecondaryButton onClick={() => setInviteOpen(true)}>Invite</SecondaryButton>
+              <SecondaryButton onClick={() => setBulkAddOpen(true)}>Bulk enrol</SecondaryButton>
+              <PrimaryButton onClick={() => setAddStudentOpen(true)}>Enrol student</PrimaryButton>
             </div>
           }
         />
@@ -314,9 +315,6 @@ export function StudentsSection() {
                       {/* Avatar / checkbox (col 1) */}
                       <button
                         type="button"
-                        onMouseDown={() => {
-                          // Long-press for desktop mouse too (nice-to-have)
-                        }}
                         onClick={(e) => {
                           e.stopPropagation();
                           if (longPressFiredRef.current) {
@@ -417,15 +415,7 @@ export function StudentsSection() {
 
                       {/* Trailing (col 3) — status + actions */}
                       <div className="flex items-center gap-1.5 shrink-0">
-                        <Pill
-                          tone={
-                            student.status === 'Active'
-                              ? 'green'
-                              : student.status === 'Withdrawn'
-                                ? 'red'
-                                : 'yellow'
-                          }
-                        >
+                        <Pill tone={statusTone('student', student.status)}>
                           <span className="hidden sm:inline">{student.status}</span>
                           <span className="sm:hidden">
                             {student.status === 'Active'
@@ -437,14 +427,12 @@ export function StudentsSection() {
                         </Pill>
                         <DropdownMenu>
                           <DropdownMenuTrigger asChild>
-                            <button
-                              type="button"
+                            <IconButton
                               aria-label="More actions"
                               onClick={(e) => e.stopPropagation()}
-                              className="h-9 w-9 rounded-full flex items-center justify-center text-white hover:text-white hover:bg-white/[0.06] transition-colors touch-manipulation"
                             >
                               <span className="text-[15px] font-semibold tracking-[0.12em]">⋯</span>
-                            </button>
+                            </IconButton>
                           </DropdownMenuTrigger>
                           <DropdownMenuContent
                             align="end"
@@ -527,14 +515,9 @@ export function StudentsSection() {
             <p className="text-sm text-white font-medium tabular-nums">
               {selectedIds.size} selected
             </p>
-            <div className="flex items-center gap-4">
-              <button
-                onClick={exitBatchMode}
-                className="text-[12.5px] font-medium text-white hover:text-white transition-colors touch-manipulation"
-              >
-                Cancel
-              </button>
-              <button
+            <div className="flex items-center gap-2">
+              <SecondaryButton onClick={exitBatchMode}>Cancel</SecondaryButton>
+              <PrimaryButton
                 onClick={async () => {
                   const ids = Array.from(selectedIds);
                   for (const id of ids) {
@@ -546,10 +529,9 @@ export function StudentsSection() {
                   });
                   exitBatchMode();
                 }}
-                className="text-[12.5px] font-medium text-amber-400 hover:text-amber-300 transition-colors touch-manipulation"
               >
-                Flag as at risk →
-              </button>
+                Flag as at risk
+              </PrimaryButton>
             </div>
           </div>
         </motion.div>

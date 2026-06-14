@@ -27,6 +27,7 @@ import {
   Pill,
   EmptyState,
   PrimaryButton,
+  statusTone,
   inputClass,
   itemVariants,
   type Tone,
@@ -126,8 +127,11 @@ export function WorkQueueSection({ onNavigate }: WorkQueueSectionProps) {
 
   const priorityTone = (priority: WorkItemPriority): Tone =>
     priority === 'Urgent' ? 'red' : priority === 'High' ? 'amber' : 'blue';
-  const statusTone = (status: WorkItemStatus): Tone =>
-    status === 'Pending' ? 'amber' : status === 'In Progress' ? 'blue' : 'green';
+  // Canonical work-queue status tones: Pending → blue, In Progress → blue,
+  // Completed → emerald (via the shared statusTone map). 'Pending' surfaces as
+  // amber attention in the map's absence, so map it to the attention token.
+  const workItemStatusTone = (status: WorkItemStatus): Tone =>
+    status === 'Pending' ? 'amber' : statusTone('workQueue', status);
   const typeLabel = (type: WorkQueueItem['type']) =>
     type === 'grade' ? 'Grade' : type === 'ilp' ? 'ILP' : type === 'gateway' ? 'Gateway' : 'Portfolio';
 
@@ -251,9 +255,9 @@ export function WorkQueueSection({ onNavigate }: WorkQueueSectionProps) {
                         </>
                       }
                       titleChips={<Pill tone={priorityTone(item.priority)}>{item.priority}</Pill>}
-                      status={{ label: currentStatus, tone: statusTone(currentStatus) }}
+                      status={{ label: currentStatus, tone: workItemStatusTone(currentStatus) }}
                       meta={
-                        <div className="flex flex-wrap items-center gap-x-4 gap-y-1 text-[11px] text-white">
+                        <div className="flex flex-wrap items-center gap-x-4 gap-y-2 text-[11px] text-white">
                           <span className="tabular-nums">
                             Created{' '}
                             {new Date(item.createdAt).toLocaleDateString('en-GB', {
@@ -280,7 +284,7 @@ export function WorkQueueSection({ onNavigate }: WorkQueueSectionProps) {
                                 handleStartWork(item);
                               }}
                               disabled={savingItemId === item.id}
-                              className="text-elec-yellow/90 hover:text-elec-yellow font-medium touch-manipulation disabled:opacity-50"
+                              className="ml-auto inline-flex items-center h-9 px-3.5 rounded-full bg-elec-yellow text-black text-[12px] font-semibold hover:bg-elec-yellow/90 active:scale-[0.98] transition-all touch-manipulation disabled:opacity-50"
                             >
                               {savingItemId === item.id ? 'Saving…' : 'Start work →'}
                             </button>
@@ -292,7 +296,7 @@ export function WorkQueueSection({ onNavigate }: WorkQueueSectionProps) {
                                 handleCompleteWork(item);
                               }}
                               disabled={savingItemId === item.id}
-                              className="text-emerald-400 hover:text-emerald-300 font-medium touch-manipulation disabled:opacity-50"
+                              className="ml-auto inline-flex items-center h-9 px-3.5 rounded-full bg-emerald-500/15 text-emerald-300 border border-emerald-500/30 text-[12px] font-semibold hover:bg-emerald-500/25 active:scale-[0.98] transition-all touch-manipulation disabled:opacity-50"
                             >
                               {savingItemId === item.id ? 'Saving…' : 'Mark complete →'}
                             </button>

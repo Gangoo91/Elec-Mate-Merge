@@ -1,4 +1,4 @@
-import { useMemo, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import { motion } from 'framer-motion';
 import {
   DropdownMenu,
@@ -15,10 +15,13 @@ import {
   ListCard,
   FilterBar,
   EmptyState,
+  IconButton,
+  SecondaryButton,
   itemVariants,
   toneDot,
   type Tone,
 } from '@/components/college/primitives';
+import { ResourcePreviewSheet } from '@/components/college/sheets/ResourcePreviewSheet';
 import { ConfirmationDialog } from '@/components/ui/confirmation-dialog';
 import { useToast } from '@/hooks/use-toast';
 import { cn } from '@/lib/utils';
@@ -118,7 +121,8 @@ export function DocumentLibrarySection({ onNavigate }: DocumentLibrarySectionPro
   const [filterKind, setFilterKind] = useState<string>('all');
   const [viewMode, setViewMode] = useState<'grid' | 'list'>('grid');
   const [deleting, setDeleting] = useState<CollegeResource | null>(null);
-  const [opening, setOpening] = useState<string | null>(null);
+  const [preview, setPreview] = useState<CollegeResource | null>(null);
+  const [visibleCount, setVisibleCount] = useState(24);
 
   const folders = useMemo(() => buildFolders(resources), [resources]);
 
@@ -140,32 +144,27 @@ export function DocumentLibrarySection({ onNavigate }: DocumentLibrarySectionPro
   );
   const storagePercent = Math.min(Math.round((usedStorage / STORAGE_QUOTA_BYTES) * 100), 100);
 
-  const openResource = async (resource: CollegeResource) => {
-    setOpening(resource.id);
-    try {
-      if (resource.external_url) {
-        window.open(resource.external_url, '_blank', 'noopener,noreferrer');
-        return;
-      }
-      if (resource.file_path) {
-        const url = await signedUrl(resource.file_path);
-        window.open(url, '_blank', 'noopener,noreferrer');
-        return;
-      }
+  // Reset the page size whenever the filtered set changes so a new filter
+  // doesn't inherit a huge previous "load more" count.
+  useEffect(() => {
+    setVisibleCount(24);
+  }, [searchQuery, filterFolder, filterKind, viewMode]);
+
+  const shown = filtered.slice(0, visibleCount);
+  const hasMore = filtered.length > visibleCount;
+
+  // Open the in-app preview sheet (image / PDF / video / audio / link) rather
+  // than bouncing to a new browser tab.
+  const openResource = (resource: CollegeResource) => {
+    if (!resource.external_url && !resource.file_path) {
       toast({
         title: 'Nothing to open',
         description: 'This resource has no file or URL attached.',
         variant: 'destructive',
       });
-    } catch (e) {
-      toast({
-        title: 'Could not open',
-        description: (e as Error).message,
-        variant: 'destructive',
-      });
-    } finally {
-      setOpening(null);
+      return;
     }
+    setPreview(resource);
   };
 
   const confirmDelete = async () => {
@@ -211,7 +210,7 @@ export function DocumentLibrarySection({ onNavigate }: DocumentLibrarySectionPro
       <motion.div variants={itemVariants}>
         <div className="bg-[hsl(0_0%_12%)] border border-white/[0.06] rounded-2xl p-5 sm:p-6">
           <div className="flex items-baseline justify-between">
-            <div className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/60">
+            <div className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/70">
               Storage
             </div>
             <div className="text-[12px] tabular-nums text-white">
@@ -252,14 +251,14 @@ export function DocumentLibrarySection({ onNavigate }: DocumentLibrarySectionPro
                 aria-hidden
                 className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-elec-yellow/80 via-amber-400/70 to-orange-400/70 opacity-70 group-hover:opacity-100 transition-opacity"
               />
-              <div className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/60">
+              <div className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/70">
                 All
               </div>
               <h3 className="mt-3 text-base font-semibold text-white tracking-tight">
                 Everything
               </h3>
               <div className="flex-grow" />
-              <div className="mt-4 pt-3 border-t border-white/[0.06] text-[11.5px] text-white/60 tabular-nums">
+              <div className="mt-4 pt-3 border-t border-white/[0.06] text-[11.5px] text-white/70 tabular-nums">
                 {resources.length} item{resources.length === 1 ? '' : 's'}
               </div>
             </button>
@@ -280,14 +279,14 @@ export function DocumentLibrarySection({ onNavigate }: DocumentLibrarySectionPro
                     toneDot[folder.tone]
                   )}
                 />
-                <div className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/60">
+                <div className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/70">
                   {String(i + 1).padStart(2, '0')} · Folder
                 </div>
                 <h3 className="mt-3 text-base font-semibold text-white tracking-tight">
                   {folder.label}
                 </h3>
                 <div className="flex-grow" />
-                <div className="mt-4 pt-3 border-t border-white/[0.06] text-[11.5px] text-white/60 tabular-nums">
+                <div className="mt-4 pt-3 border-t border-white/[0.06] text-[11.5px] text-white/70 tabular-nums">
                   {folder.count} item{folder.count === 1 ? '' : 's'}
                 </div>
               </button>
@@ -344,7 +343,13 @@ export function DocumentLibrarySection({ onNavigate }: DocumentLibrarySectionPro
       <motion.section variants={itemVariants} className="space-y-5">
         <SectionHeader
           eyebrow={loading ? 'Loading…' : 'Documents'}
-          title={loading ? '—' : `${filtered.length} item${filtered.length === 1 ? '' : 's'}`}
+          title={
+            loading
+              ? '—'
+              : hasMore
+                ? `Showing ${shown.length} of ${filtered.length}`
+                : `${filtered.length} item${filtered.length === 1 ? '' : 's'}`
+          }
         />
 
         {error ? (
@@ -380,13 +385,12 @@ export function DocumentLibrarySection({ onNavigate }: DocumentLibrarySectionPro
           />
         ) : viewMode === 'grid' ? (
           <HubGrid columns={4}>
-            {filtered.slice(0, 24).map((resource, i) => (
+            {shown.map((resource, i) => (
               <button
                 key={resource.id}
                 type="button"
                 onClick={() => openResource(resource)}
-                disabled={opening === resource.id}
-                className="group relative bg-[hsl(0_0%_12%)] hover:bg-[hsl(0_0%_15%)] transition-colors p-4 flex flex-col min-h-[140px] rounded-2xl border border-white/[0.06] text-left touch-manipulation focus:outline-none focus:ring-2 focus:ring-elec-yellow/40 disabled:opacity-60"
+                className="group relative bg-[hsl(0_0%_12%)] hover:bg-[hsl(0_0%_15%)] transition-colors p-4 flex flex-col min-h-[140px] rounded-2xl border border-white/[0.06] text-left touch-manipulation focus:outline-none focus:ring-2 focus:ring-elec-yellow/40"
               >
                 <div
                   className={cn(
@@ -395,7 +399,7 @@ export function DocumentLibrarySection({ onNavigate }: DocumentLibrarySectionPro
                   )}
                 />
                 <div className="flex items-start justify-between">
-                  <div className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/60">
+                  <div className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/70">
                     {String(i + 1).padStart(2, '0')} · {KIND_LABEL[resource.kind]}
                   </div>
                   <DropdownMenu>
@@ -403,14 +407,13 @@ export function DocumentLibrarySection({ onNavigate }: DocumentLibrarySectionPro
                       asChild
                       onClick={(e) => e.stopPropagation()}
                     >
-                      <button
-                        type="button"
-                        onClick={(e) => e.stopPropagation()}
-                        className="text-white hover:text-white text-[16px] leading-none px-1 touch-manipulation"
+                      <IconButton
                         aria-label="Options"
+                        onClick={(e) => e.stopPropagation()}
+                        className="-mt-1 -mr-1 shrink-0"
                       >
-                        ⋯
-                      </button>
+                        <span className="text-[18px] leading-none">⋯</span>
+                      </IconButton>
                     </DropdownMenuTrigger>
                     <DropdownMenuContent
                       align="end"
@@ -436,7 +439,7 @@ export function DocumentLibrarySection({ onNavigate }: DocumentLibrarySectionPro
                   {resource.title}
                 </h4>
                 <div className="flex-grow" />
-                <div className="mt-4 pt-3 border-t border-white/[0.06] text-[11px] text-white/60 tabular-nums">
+                <div className="mt-4 pt-3 border-t border-white/[0.06] text-[11px] text-white/70 tabular-nums">
                   {formatFileSize(resource.size_bytes)}
                 </div>
               </button>
@@ -444,13 +447,12 @@ export function DocumentLibrarySection({ onNavigate }: DocumentLibrarySectionPro
           </HubGrid>
         ) : (
           <ListCard>
-            {filtered.slice(0, 60).map((resource) => (
+            {shown.map((resource) => (
               <button
                 key={resource.id}
                 type="button"
                 onClick={() => openResource(resource)}
-                disabled={opening === resource.id}
-                className="w-full flex items-center gap-4 px-5 sm:px-6 py-4 hover:bg-[hsl(0_0%_15%)] transition-colors text-left touch-manipulation disabled:opacity-60"
+                className="w-full flex items-center gap-4 px-5 sm:px-6 py-4 hover:bg-[hsl(0_0%_15%)] transition-colors text-left touch-manipulation"
               >
                 <span
                   aria-hidden
@@ -463,7 +465,7 @@ export function DocumentLibrarySection({ onNavigate }: DocumentLibrarySectionPro
                   <div className="text-[14px] font-medium text-white truncate">
                     {resource.title}
                   </div>
-                  <div className="mt-0.5 flex items-center gap-3 text-[11.5px] text-white/60">
+                  <div className="mt-0.5 flex items-center gap-3 text-[11.5px] text-white/70">
                     <span className="tabular-nums">
                       {formatFileSize(resource.size_bytes)}
                     </span>
@@ -481,14 +483,13 @@ export function DocumentLibrarySection({ onNavigate }: DocumentLibrarySectionPro
                     asChild
                     onClick={(e) => e.stopPropagation()}
                   >
-                    <button
-                      type="button"
-                      onClick={(e) => e.stopPropagation()}
-                      className="text-white hover:text-white text-[16px] leading-none px-1 touch-manipulation shrink-0"
+                    <IconButton
                       aria-label="Options"
+                      onClick={(e) => e.stopPropagation()}
+                      className="shrink-0"
                     >
-                      ⋯
-                    </button>
+                      <span className="text-[18px] leading-none">⋯</span>
+                    </IconButton>
                   </DropdownMenuTrigger>
                   <DropdownMenuContent align="end" onClick={(e) => e.stopPropagation()}>
                     <DropdownMenuItem
@@ -510,7 +511,28 @@ export function DocumentLibrarySection({ onNavigate }: DocumentLibrarySectionPro
             ))}
           </ListCard>
         )}
+
+        {!loading && !error && hasMore && (
+          <div className="flex justify-center">
+            <SecondaryButton onClick={() => setVisibleCount((c) => c + 24)}>
+              Load more · {filtered.length - visibleCount} left
+            </SecondaryButton>
+          </div>
+        )}
       </motion.section>
+
+      <ResourcePreviewSheet
+        open={preview != null}
+        onOpenChange={(v) => {
+          if (!v) setPreview(null);
+        }}
+        resource={preview}
+        signedUrl={signedUrl}
+        onDelete={(r) => {
+          setPreview(null);
+          setDeleting(r);
+        }}
+      />
 
       <ConfirmationDialog
         open={!!deleting}

@@ -5,6 +5,7 @@
 
 import { useState, useMemo } from 'react';
 import { motion } from 'framer-motion';
+import { useNavigate } from 'react-router-dom';
 import { useCollegeSupabase } from '@/contexts/CollegeSupabaseContext';
 import type { CollegeSection } from '@/pages/college/CollegeDashboard';
 import type {
@@ -96,6 +97,7 @@ const statusTone = (status: OTJStatus): Tone =>
   status === 'On Track' ? 'emerald' : status === 'Behind' ? 'amber' : 'red';
 
 export function OTJTrainingSection({ onNavigate }: OTJTrainingSectionProps) {
+  const navigate = useNavigate();
   const { students, courses, isLoading } = useCollegeSupabase();
   const [activeFilter, setActiveFilter] = useState<FilterOption>('all');
 
@@ -234,9 +236,11 @@ export function OTJTrainingSection({ onNavigate }: OTJTrainingSectionProps) {
         <motion.div variants={itemVariants}>
           <ListCard>
             {filteredData.map((data) => (
-              <div
+              <button
+                type="button"
                 key={data.student.id}
-                className="flex items-start gap-4 px-5 sm:px-6 py-5 hover:bg-[hsl(0_0%_15%)] transition-colors"
+                onClick={() => navigate(`/college/students/${data.student.id}#otj`)}
+                className="w-full text-left flex items-start gap-4 px-5 sm:px-6 py-5 min-h-[44px] hover:bg-[hsl(0_0%_15%)] active:bg-[hsl(0_0%_16%)] transition-colors touch-manipulation"
               >
                 <div className="flex-1 min-w-0">
                   <div className="flex items-baseline justify-between gap-2">
@@ -244,7 +248,7 @@ export function OTJTrainingSection({ onNavigate }: OTJTrainingSectionProps) {
                       <div className="text-[15px] font-medium text-white truncate">
                         {data.student.name}
                       </div>
-                      <div className="mt-0.5 text-[11.5px] text-white truncate tabular-nums">
+                      <div className="mt-0.5 text-[11.5px] text-white/70 truncate tabular-nums">
                         {data.course?.name ?? 'Unknown programme'}
                         {data.course?.duration_months
                           ? ` · ${data.course.duration_months} months`
@@ -282,7 +286,7 @@ export function OTJTrainingSection({ onNavigate }: OTJTrainingSectionProps) {
                         {Math.round(data.progressPercent)}%
                       </span>
                     </div>
-                    <div className="mt-1.5 relative h-1 bg-white/[0.06] rounded-full overflow-hidden">
+                    <div className="mt-1.5 relative h-2 bg-white/[0.06] rounded-full overflow-hidden">
                       <div
                         className={cn(
                           'h-full rounded-full',
@@ -294,19 +298,22 @@ export function OTJTrainingSection({ onNavigate }: OTJTrainingSectionProps) {
                         )}
                         style={{ width: `${Math.min(100, data.progressPercent)}%` }}
                       />
+                      {data.expectedPercent > 0 && (
+                        <span
+                          aria-hidden
+                          className="absolute top-[-2px] bottom-[-2px] w-0.5 bg-white/70 rounded-full"
+                          style={{ left: `${Math.min(100, data.expectedPercent)}%` }}
+                        />
+                      )}
                     </div>
                     {data.expectedPercent > 0 && (
-                      <div className="relative h-0 mt-[-6px]">
-                        <div
-                          className="absolute top-0 w-0.5 h-2 bg-white/60 rounded-full"
-                          style={{ left: `${Math.min(100, data.expectedPercent)}%` }}
-                          title={`Expected: ${Math.round(data.expectedPercent)}%`}
-                        />
+                      <div className="mt-1 text-[10.5px] text-white/70 tabular-nums">
+                        Expected {Math.round(data.expectedPercent)}% by now
                       </div>
                     )}
                   </div>
                 </div>
-              </div>
+              </button>
             ))}
           </ListCard>
         </motion.div>

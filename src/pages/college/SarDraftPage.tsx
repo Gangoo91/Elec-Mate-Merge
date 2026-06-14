@@ -39,11 +39,13 @@ const JUDGEMENTS: Array<{
   { key: 'judgement_apprenticeships', label: 'Apprenticeships' },
 ];
 
+// "Not tracked" → neutral grey tone. Was 'blue', which read as
+// "informational / in progress" and misrepresented an untracked judgement.
 const RAG_TONE: Record<Rag, Tone> = {
   red: 'red',
   amber: 'amber',
   green: 'emerald',
-  grey: 'blue',
+  grey: 'grey',
 };
 
 const RAG_LABEL: Record<Rag, string> = {
@@ -189,15 +191,15 @@ export default function SarDraftPage() {
                   <div className="text-sm text-white truncate">
                     {d.title ?? `SAR ${d.academic_year}`}
                   </div>
-                  <div className="text-[11px] text-white/50">
+                  <div className="text-[11px] text-white/70">
                     {d.academic_year} · sent for review{' '}
                     {new Date(d.updated_at).toLocaleDateString('en-GB')}
                   </div>
                 </div>
                 <div className="flex items-center gap-2 shrink-0">
                   <Pill tone="amber">In review</Pill>
-                  <button
-                    type="button"
+                  <PrimaryButton
+                    size="sm"
                     onClick={async () => {
                       try {
                         await updateStatus(d.id, 'approved');
@@ -211,10 +213,9 @@ export default function SarDraftPage() {
                         });
                       }
                     }}
-                    className="rounded-lg border border-emerald-400/30 bg-emerald-500/10 px-3 py-1.5 text-[11px] font-semibold text-emerald-200 hover:bg-emerald-500/20 touch-manipulation"
                   >
                     Approve
-                  </button>
+                  </PrimaryButton>
                 </div>
               </li>
             ))}
@@ -295,7 +296,7 @@ export default function SarDraftPage() {
                     </div>
                     <p className="mt-2 text-sm text-white/80">{j.summary}</p>
                   </div>
-                  <span className="text-xs text-white/40">{isOpen ? 'Collapse' : 'Open'}</span>
+                  <span className="text-xs text-white/70 shrink-0">{isOpen ? 'Collapse' : 'Open'}</span>
                 </button>
 
                 {isOpen && (

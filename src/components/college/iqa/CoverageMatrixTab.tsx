@@ -79,7 +79,7 @@ export function CoverageMatrixTab({ targetPct = 20, sinceDays = null }: Props) {
             <GitBranch className="h-4 w-4 text-elec-yellow" />
             Standards-Verifier coverage
           </h2>
-          <p className="mt-1 text-[12px] text-white/65 max-w-2xl leading-snug">
+          <p className="mt-1 text-[12px] text-white/70 max-w-2xl leading-snug">
             One row per IQA, one column per cohort they've sampled. Cells show how many
             distinct learners they've reached, vs the cohort's active size. Anything below
             <span className="text-elec-yellow font-semibold"> {targetPct}%</span> is flagged —
@@ -103,7 +103,7 @@ export function CoverageMatrixTab({ targetPct = 20, sinceDays = null }: Props) {
                 'h-8 px-3 rounded-full border text-[11.5px] font-semibold transition-colors touch-manipulation',
                 window === w.value
                   ? 'bg-elec-yellow/[0.12] border-elec-yellow/40 text-elec-yellow'
-                  : 'bg-white/[0.04] border-white/[0.10] text-white/65 hover:bg-white/[0.08]'
+                  : 'bg-white/[0.04] border-white/[0.10] text-white/70 hover:bg-white/[0.08]'
               )}
             >
               {w.label}
@@ -113,28 +113,74 @@ export function CoverageMatrixTab({ targetPct = 20, sinceDays = null }: Props) {
       </div>
 
       {loading && (
-        <div className="text-[12.5px] text-white/55">Crunching coverage…</div>
+        <div className="text-[12.5px] text-white/70">Crunching coverage…</div>
       )}
 
       {!loading && cells.length === 0 && (
-        <div className="rounded-xl border border-dashed border-white/[0.10] px-4 py-10 text-center text-[12.5px] text-white/45">
+        <div className="rounded-xl border border-dashed border-white/[0.10] px-4 py-10 text-center text-[12.5px] text-white/70">
           No IQA samples logged in this window. Once samples are recorded against learners,
           the coverage grid populates automatically.
         </div>
       )}
 
+      {/* Mobile: one card per IQA, listing each cohort cell (no horizontal-scroll table) */}
       {!loading && cells.length > 0 && (
-        <div className="rounded-2xl border border-white/[0.06] bg-[hsl(0_0%_10%)] overflow-x-auto">
+        <div className="space-y-3 sm:hidden">
+          {samplers.map(([samplerId, samplerName]) => {
+            const samplerCells = cohorts
+              .map(([cohortId, cohortName]) => ({
+                cohortId,
+                cohortName,
+                cell: cellMap.get(`${samplerId}::${cohortId}`),
+              }))
+              .filter((c) => c.cell);
+            if (samplerCells.length === 0) return null;
+            return (
+              <div
+                key={samplerId}
+                className="rounded-2xl border border-white/[0.06] bg-[hsl(0_0%_10%)] overflow-hidden"
+              >
+                <div className="px-4 py-2.5 border-b border-white/[0.06] text-[13px] font-semibold text-white">
+                  {samplerName}
+                </div>
+                <div className="divide-y divide-white/[0.04]">
+                  {samplerCells.map(({ cohortId, cohortName, cell }) => (
+                    <div
+                      key={cohortId}
+                      className="flex items-center justify-between gap-3 px-4 py-3"
+                    >
+                      <span className="text-[12.5px] text-white/90 min-w-0 truncate">
+                        {cohortName}
+                      </span>
+                      <CoverageCellView
+                        cell={cell!}
+                        target={targetPct}
+                        onPick={() =>
+                          handlePick(samplerId, samplerName, cohortId, cohortName)
+                        }
+                      />
+                    </div>
+                  ))}
+                </div>
+              </div>
+            );
+          })}
+        </div>
+      )}
+
+      {/* sm+: full matrix table */}
+      {!loading && cells.length > 0 && (
+        <div className="hidden sm:block rounded-2xl border border-white/[0.06] bg-[hsl(0_0%_10%)] overflow-x-auto">
           <table className="min-w-full border-collapse text-[12px]">
             <thead>
               <tr className="border-b border-white/[0.08]">
-                <th className="sticky left-0 z-10 bg-[hsl(0_0%_10%)] px-3 py-2.5 text-left text-[10px] uppercase tracking-[0.16em] text-white/55 whitespace-nowrap">
+                <th className="sticky left-0 z-10 bg-[hsl(0_0%_10%)] px-3 py-2.5 text-left text-[10px] uppercase tracking-[0.16em] text-white/70 whitespace-nowrap">
                   IQA / Verifier
                 </th>
                 {cohorts.map(([id, name]) => (
                   <th
                     key={id}
-                    className="px-3 py-2.5 text-center text-[10px] uppercase tracking-[0.16em] text-white/55 whitespace-nowrap"
+                    className="px-3 py-2.5 text-center text-[10px] uppercase tracking-[0.16em] text-white/70 whitespace-nowrap"
                   >
                     {name}
                   </th>

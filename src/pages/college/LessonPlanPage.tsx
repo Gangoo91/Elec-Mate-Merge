@@ -7,8 +7,12 @@ import {
   PageFrame,
   LoadingState,
   PrimaryButton,
+  SecondaryButton,
+  DestructiveButton,
+  SheetShell,
   itemVariants,
 } from '@/components/college/primitives';
+import { Sheet, SheetContent } from '@/components/ui/sheet';
 import {
   useGenerateLesson,
   useLessonPlan,
@@ -1304,6 +1308,7 @@ function PlanActionBar({
   const [confirmDelete, setConfirmDelete] = useState(false);
   const [scheduleOpen, setScheduleOpen] = useState(false);
   const [registerOpen, setRegisterOpen] = useState(false);
+  const [moreOpen, setMoreOpen] = useState(false);
   const [scheduleMeta, setScheduleMeta] = useState<{
     scheduled_date: string | null;
     scheduled_start_time: string | null;
@@ -1508,6 +1513,7 @@ function PlanActionBar({
             )}
           </div>
           <div className="flex items-center gap-1.5 flex-wrap">
+            {/* Primary pair — always inline */}
             <ActionBtn
               label="Deliver"
               onClick={() => navigate(`/college/lessons/${lessonId}/deliver`)}
@@ -1518,25 +1524,104 @@ function PlanActionBar({
               onClick={() => navigate(`/college/lessons/${lessonId}/slides`)}
               accent
             />
-            {scheduleMeta?.cohort_id && (
-              <ActionBtn label="Register" onClick={() => setRegisterOpen(true)} accent />
-            )}
-            <ActionBtn
-              label={isScheduled ? 'Reschedule' : 'Schedule'}
-              onClick={() => setScheduleOpen(true)}
-              accent
-            />
-            <ActionBtn
-              label={isReady ? 'Mark draft' : 'Mark ready'}
-              onClick={handleMarkReady}
-              loading={busy === 'ready'}
-            />
-            <ActionBtn label="Duplicate" onClick={handleDuplicate} loading={busy === 'duplicate'} />
-            <ActionBtn label="Print" onClick={handlePrint} />
-            <ActionBtn label="Delete" onClick={() => setConfirmDelete(true)} destructive />
+
+            {/* Secondary actions — inline on desktop, collapsed into More on mobile */}
+            <div className="hidden sm:flex items-center gap-1.5 flex-wrap">
+              {scheduleMeta?.cohort_id && (
+                <ActionBtn label="Register" onClick={() => setRegisterOpen(true)} accent />
+              )}
+              <ActionBtn
+                label={isScheduled ? 'Reschedule' : 'Schedule'}
+                onClick={() => setScheduleOpen(true)}
+                accent
+              />
+              <ActionBtn
+                label={isReady ? 'Mark draft' : 'Mark ready'}
+                onClick={handleMarkReady}
+                loading={busy === 'ready'}
+              />
+              <ActionBtn label="Duplicate" onClick={handleDuplicate} loading={busy === 'duplicate'} />
+              <ActionBtn label="Print" onClick={handlePrint} />
+              <ActionBtn label="Delete" onClick={() => setConfirmDelete(true)} destructive />
+            </div>
+
+            {/* Mobile overflow trigger */}
+            <ActionBtn label="⋯ More" onClick={() => setMoreOpen(true)} className="sm:hidden" />
           </div>
         </div>
       </div>
+
+      {/* Mobile overflow sheet */}
+      <Sheet open={moreOpen} onOpenChange={setMoreOpen}>
+        <SheetContent side="bottom" className="h-auto max-h-[85vh] p-0 rounded-t-2xl overflow-hidden border-white/[0.08]">
+          <SheetShell eyebrow="Lesson plan" title="More actions">
+            <div className="grid grid-cols-2 gap-2">
+              {scheduleMeta?.cohort_id && (
+                <SecondaryButton
+                  fullWidth
+                  onClick={() => {
+                    setMoreOpen(false);
+                    setRegisterOpen(true);
+                  }}
+                >
+                  Register
+                </SecondaryButton>
+              )}
+              <SecondaryButton
+                fullWidth
+                onClick={() => {
+                  setMoreOpen(false);
+                  setScheduleOpen(true);
+                }}
+              >
+                {isScheduled ? 'Reschedule' : 'Schedule'}
+              </SecondaryButton>
+              <SecondaryButton
+                fullWidth
+                disabled={busy === 'ready'}
+                onClick={() => {
+                  setMoreOpen(false);
+                  handleMarkReady();
+                }}
+              >
+                {isReady ? 'Mark draft' : 'Mark ready'}
+              </SecondaryButton>
+              <SecondaryButton
+                fullWidth
+                disabled={busy === 'duplicate'}
+                onClick={() => {
+                  setMoreOpen(false);
+                  handleDuplicate();
+                }}
+              >
+                Duplicate
+              </SecondaryButton>
+              <SecondaryButton
+                fullWidth
+                onClick={() => {
+                  setMoreOpen(false);
+                  handlePrint();
+                }}
+              >
+                Print
+              </SecondaryButton>
+            </div>
+
+            {/* Destructive — separated */}
+            <div className="mt-4 pt-4 border-t border-white/[0.06]">
+              <DestructiveButton
+                fullWidth
+                onClick={() => {
+                  setMoreOpen(false);
+                  setConfirmDelete(true);
+                }}
+              >
+                Delete plan
+              </DestructiveButton>
+            </div>
+          </SheetShell>
+        </SheetContent>
+      </Sheet>
 
       <ScheduleLessonDialog
         open={scheduleOpen}
@@ -1579,6 +1664,7 @@ function ActionBtn({
   primary,
   accent,
   destructive,
+  className,
 }: {
   label: string;
   onClick: () => void;
@@ -1586,20 +1672,22 @@ function ActionBtn({
   primary?: boolean;
   accent?: boolean;
   destructive?: boolean;
+  className?: string;
 }) {
   return (
     <button
       onClick={onClick}
       disabled={loading}
       className={cn(
-        'h-9 px-3.5 rounded-full text-[12.5px] font-medium transition-colors touch-manipulation disabled:opacity-50',
+        'h-11 px-3.5 rounded-full text-[12.5px] font-medium transition-colors touch-manipulation disabled:opacity-50',
         primary
           ? 'bg-elec-yellow text-black hover:bg-elec-yellow/90'
           : accent
             ? 'text-elec-yellow hover:text-black hover:bg-elec-yellow border border-elec-yellow/40 hover:border-elec-yellow'
             : destructive
               ? 'text-red-300 hover:text-red-200 hover:bg-red-500/10 border border-red-500/20'
-              : 'text-white hover:text-white hover:bg-white/[0.06] border border-white/[0.1]'
+              : 'text-white hover:text-white hover:bg-white/[0.06] border border-white/[0.1]',
+        className
       )}
     >
       {loading ? '…' : label}

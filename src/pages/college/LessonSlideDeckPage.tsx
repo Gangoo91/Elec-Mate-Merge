@@ -17,7 +17,8 @@ import {
   verticalListSortingStrategy,
 } from '@dnd-kit/sortable';
 import { CSS } from '@dnd-kit/utilities';
-import { PageFrame } from '@/components/college/primitives';
+import { PageFrame, SheetShell, SecondaryButton } from '@/components/college/primitives';
+import { Sheet, SheetContent } from '@/components/ui/sheet';
 import {
   useSlideDeck,
   type Slide,
@@ -135,6 +136,7 @@ export default function LessonSlideDeckPage() {
   const [mode, setMode] = useState<Mode>('viewer');
   const [focusedIndex, setFocusedIndex] = useState(0);
   const [quality, setQuality] = useState<'low' | 'medium' | 'high'>('medium');
+  const [toolsOpen, setToolsOpen] = useState(false);
   const [preflightOpen, setPreflightOpen] = useState(false);
   const [editorIndex, setEditorIndex] = useState<number | null>(null);
   const [exportingPptx, setExportingPptx] = useState(false);
@@ -315,13 +317,133 @@ export default function LessonSlideDeckPage() {
           <div className="flex items-center gap-1.5 sm:gap-2 flex-wrap">
             {slides.length > 0 && (
               <>
-                {/* Theme toggle — visible from sm+, hidden on tiny phones to save row space */}
-                <div className="hidden sm:inline-flex h-10 rounded-lg border border-white/[0.10] overflow-hidden">
+                {/* Secondary controls — inline on desktop, collapsed into More on mobile */}
+                <div className="hidden md:flex items-center gap-2 flex-wrap">
+                  {/* Theme toggle */}
+                  <div className="inline-flex h-11 rounded-lg border border-white/[0.10] overflow-hidden">
+                    <button
+                      type="button"
+                      onClick={() => void setTheme('dark')}
+                      className={cn(
+                        'px-3 text-[11.5px] font-medium touch-manipulation transition-colors',
+                        theme === 'dark'
+                          ? 'bg-white/[0.10] text-white'
+                          : 'bg-transparent text-white/55 hover:text-white'
+                      )}
+                    >
+                      Dark
+                    </button>
+                    <button
+                      type="button"
+                      onClick={() => void setTheme('light')}
+                      className={cn(
+                        'px-3 text-[11.5px] font-medium touch-manipulation transition-colors',
+                        theme === 'light'
+                          ? 'bg-white text-black'
+                          : 'bg-transparent text-white/55 hover:text-white'
+                      )}
+                    >
+                      Light
+                    </button>
+                  </div>
+                  {/* Quality select */}
+                  <select
+                    value={quality}
+                    onChange={(e) => setQuality(e.target.value as 'low' | 'medium' | 'high')}
+                    className="h-11 px-3 rounded-lg bg-[hsl(0_0%_10%)] border border-white/[0.10] text-white text-[12px] font-medium touch-manipulation"
+                    title="Image quality"
+                  >
+                    <option value="low">£0.40 photos</option>
+                    <option value="medium">£2 photos</option>
+                    <option value="high">£8 photos</option>
+                  </select>
+                  {pendingImages > 0 && (
+                    <button
+                      type="button"
+                      onClick={() => void generateMissingImages(quality)}
+                      className="inline-flex h-11 px-4 rounded-lg bg-transparent border border-white/[0.10] hover:border-white/25 text-white text-[12px] font-medium transition-colors touch-manipulation"
+                    >
+                      Generate {pendingImages} photo{pendingImages === 1 ? '' : 's'}
+                    </button>
+                  )}
+                  <button
+                    type="button"
+                    onClick={handleExportPptx}
+                    disabled={exportingPptx}
+                    className="h-11 px-4 rounded-lg bg-transparent border border-white/[0.10] hover:border-white/25 text-white text-[12px] font-medium transition-colors touch-manipulation"
+                    title="Download PowerPoint"
+                  >
+                    {exportingPptx ? 'Building…' : '↓ PPTX'}
+                  </button>
+                  {/* Focus mode */}
+                  <button
+                    type="button"
+                    onClick={() => {
+                      setFocusedIndex(0);
+                      setMode('single');
+                    }}
+                    className="inline-flex h-11 px-4 rounded-lg bg-transparent border border-white/[0.10] hover:border-white/25 text-white text-[12px] font-medium transition-colors touch-manipulation"
+                  >
+                    Focus
+                  </button>
+                </div>
+
+                {/* Mobile overflow trigger */}
+                <button
+                  type="button"
+                  onClick={() => setToolsOpen(true)}
+                  className="md:hidden h-11 px-3 rounded-lg bg-transparent border border-white/[0.10] text-white text-[12px] font-medium transition-colors touch-manipulation"
+                >
+                  ⋯ More
+                </button>
+
+                <button
+                  type="button"
+                  onClick={() => {
+                    setFocusedIndex(0);
+                    setMode('presenter');
+                  }}
+                  className="h-11 px-3 sm:px-4 rounded-lg bg-elec-yellow text-black text-[12px] font-semibold hover:bg-elec-yellow/90 transition-colors touch-manipulation"
+                >
+                  Present →
+                </button>
+              </>
+            )}
+            <button
+              type="button"
+              onClick={() => setPreflightOpen(true)}
+              disabled={generating}
+              className={cn(
+                'h-11 px-3 sm:px-4 rounded-lg text-[12px] font-semibold transition-colors touch-manipulation',
+                slides.length === 0
+                  ? 'bg-elec-yellow text-black hover:bg-elec-yellow/90'
+                  : 'bg-transparent border border-white/[0.10] hover:border-white/25 text-white',
+                generating && 'opacity-60 cursor-wait'
+              )}
+            >
+              {generating ? 'Generating…' : slides.length === 0 ? 'Generate slides' : 'Regenerate'}
+            </button>
+          </div>
+        </div>
+
+        {/* Mobile tools overflow sheet */}
+        <Sheet open={toolsOpen} onOpenChange={setToolsOpen}>
+          <SheetContent
+            side="bottom"
+            className="h-auto max-h-[85vh] p-0 rounded-t-2xl overflow-hidden border-white/[0.08]"
+          >
+            <SheetShell eyebrow="Slide deck" title="Deck tools">
+              {/* Theme */}
+              <div>
+                <div className="text-[11px] font-medium uppercase tracking-[0.14em] text-white/70 mb-2">
+                  Theme
+                </div>
+                <div className="inline-flex h-11 w-full rounded-lg border border-white/[0.10] overflow-hidden">
                   <button
                     type="button"
                     onClick={() => void setTheme('dark')}
                     className={cn(
-                      'px-3 text-[11.5px] font-medium touch-manipulation transition-colors',
+                      'flex-1 text-[12.5px] font-medium touch-manipulation transition-colors',
                       theme === 'dark'
                         ? 'bg-white/[0.10] text-white'
                         : 'bg-transparent text-white/55 hover:text-white'
@@ -333,7 +455,7 @@ export default function LessonSlideDeckPage() {
                     type="button"
                     onClick={() => void setTheme('light')}
                     className={cn(
-                      'px-3 text-[11.5px] font-medium touch-manipulation transition-colors',
+                      'flex-1 text-[12.5px] font-medium touch-manipulation transition-colors',
                       theme === 'light'
                         ? 'bg-white text-black'
                         : 'bg-transparent text-white/55 hover:text-white'
@@ -342,74 +464,61 @@ export default function LessonSlideDeckPage() {
                     Light
                   </button>
                 </div>
-                {/* Quality select — short label on phone, full label sm+ */}
+              </div>
+
+              {/* Photo quality */}
+              <div>
+                <div className="text-[11px] font-medium uppercase tracking-[0.14em] text-white/70 mb-2">
+                  Photo quality
+                </div>
                 <select
                   value={quality}
                   onChange={(e) => setQuality(e.target.value as 'low' | 'medium' | 'high')}
-                  className="h-10 px-2.5 sm:px-3 rounded-lg bg-[hsl(0_0%_10%)] border border-white/[0.10] text-white text-[11.5px] sm:text-[12px] font-medium touch-manipulation max-w-[160px] sm:max-w-none"
-                  title="Image quality"
+                  className="h-11 w-full px-3 rounded-lg bg-[hsl(0_0%_10%)] border border-white/[0.10] text-white text-[12.5px] font-medium touch-manipulation"
                 >
                   <option value="low">£0.40 photos</option>
                   <option value="medium">£2 photos</option>
                   <option value="high">£8 photos</option>
                 </select>
+              </div>
+
+              {/* Actions */}
+              <div className="grid grid-cols-2 gap-2">
                 {pendingImages > 0 && (
-                  <button
-                    type="button"
-                    onClick={() => void generateMissingImages(quality)}
-                    className="hidden sm:inline-flex h-10 px-4 rounded-lg bg-transparent border border-white/[0.10] hover:border-white/25 text-white text-[12px] font-medium transition-colors touch-manipulation"
+                  <SecondaryButton
+                    fullWidth
+                    onClick={() => {
+                      setToolsOpen(false);
+                      void generateMissingImages(quality);
+                    }}
                   >
                     Generate {pendingImages} photo{pendingImages === 1 ? '' : 's'}
-                  </button>
+                  </SecondaryButton>
                 )}
-                <button
-                  type="button"
-                  onClick={handleExportPptx}
+                <SecondaryButton
+                  fullWidth
                   disabled={exportingPptx}
-                  className="h-10 px-3 sm:px-4 rounded-lg bg-transparent border border-white/[0.10] hover:border-white/25 text-white text-[12px] font-medium transition-colors touch-manipulation"
-                  title="Download PowerPoint"
+                  onClick={() => {
+                    setToolsOpen(false);
+                    void handleExportPptx();
+                  }}
                 >
                   {exportingPptx ? 'Building…' : '↓ PPTX'}
-                </button>
-                {/* Focus mode — desktop only; phone can focus by tapping a slide */}
-                <button
-                  type="button"
+                </SecondaryButton>
+                <SecondaryButton
+                  fullWidth
                   onClick={() => {
+                    setToolsOpen(false);
                     setFocusedIndex(0);
                     setMode('single');
                   }}
-                  className="hidden md:inline-flex h-10 px-4 rounded-lg bg-transparent border border-white/[0.10] hover:border-white/25 text-white text-[12px] font-medium transition-colors touch-manipulation"
                 >
                   Focus
-                </button>
-                <button
-                  type="button"
-                  onClick={() => {
-                    setFocusedIndex(0);
-                    setMode('presenter');
-                  }}
-                  className="h-10 px-3 sm:px-4 rounded-lg bg-elec-yellow text-black text-[12px] font-semibold hover:bg-elec-yellow/90 transition-colors touch-manipulation"
-                >
-                  Present →
-                </button>
-              </>
-            )}
-            <button
-              type="button"
-              onClick={() => setPreflightOpen(true)}
-              disabled={generating}
-              className={cn(
-                'h-10 px-3 sm:px-4 rounded-lg text-[12px] font-semibold transition-colors touch-manipulation',
-                slides.length === 0
-                  ? 'bg-elec-yellow text-black hover:bg-elec-yellow/90'
-                  : 'bg-transparent border border-white/[0.10] hover:border-white/25 text-white',
-                generating && 'opacity-60 cursor-wait'
-              )}
-            >
-              {generating ? 'Generating…' : slides.length === 0 ? 'Generate slides' : 'Regenerate'}
-            </button>
-          </div>
-        </div>
+                </SecondaryButton>
+              </div>
+            </SheetShell>
+          </SheetContent>
+        </Sheet>
 
         {error && (
           <div className="mt-4 rounded-xl border border-rose-300/30 bg-rose-500/[0.06] px-4 py-3 text-[13px] text-rose-200">
@@ -458,6 +567,10 @@ export default function LessonSlideDeckPage() {
                       setMode('single');
                     }}
                     onEditOpen={() => setEditorIndex(i)}
+                    onMoveUp={i > 0 ? () => void reorderSlides(i, i - 1) : undefined}
+                    onMoveDown={
+                      i < slides.length - 1 ? () => void reorderSlides(i, i + 1) : undefined
+                    }
                   />
                 ))}
               </ol>
@@ -569,6 +682,8 @@ function SortableSlideRow({
   regenerating: boolean;
   onFocus: () => void;
   onEditOpen: () => void;
+  onMoveUp?: () => void;
+  onMoveDown?: () => void;
 }) {
   const { attributes, listeners, setNodeRef, transform, transition, isDragging } = useSortable({
     id: sortableId,
@@ -597,6 +712,8 @@ function SlideCard({
   focused = false,
   onFocus,
   onEditOpen,
+  onMoveUp,
+  onMoveDown,
   dragHandleProps,
 }: {
   slide: Slide;
@@ -608,6 +725,8 @@ function SlideCard({
   focused?: boolean;
   onFocus?: () => void;
   onEditOpen: () => void;
+  onMoveUp?: () => void;
+  onMoveDown?: () => void;
   dragHandleProps?: Record<string, unknown>;
 }) {
   const isImageKind =
@@ -698,12 +817,47 @@ function SlideCard({
           </div>
 
           <div className="shrink-0 flex items-center gap-1.5">
+            {/* Move up/down — touch-friendly alternative to drag (drag is touch-hostile) */}
+            {(onMoveUp || onMoveDown) && (
+              <div className="flex items-center gap-1.5">
+                <button
+                  type="button"
+                  onClick={onMoveUp}
+                  disabled={!onMoveUp}
+                  aria-label="Move slide up"
+                  title="Move up"
+                  className={cn(
+                    'h-11 w-9 rounded-lg border flex items-center justify-center transition-colors touch-manipulation disabled:opacity-30',
+                    theme === 'light'
+                      ? 'border-black/[0.12] text-black/55 hover:border-black/30'
+                      : 'border-white/[0.10] text-white/55 hover:border-white/25'
+                  )}
+                >
+                  <span className="text-[14px] leading-none">↑</span>
+                </button>
+                <button
+                  type="button"
+                  onClick={onMoveDown}
+                  disabled={!onMoveDown}
+                  aria-label="Move slide down"
+                  title="Move down"
+                  className={cn(
+                    'h-11 w-9 rounded-lg border flex items-center justify-center transition-colors touch-manipulation disabled:opacity-30',
+                    theme === 'light'
+                      ? 'border-black/[0.12] text-black/55 hover:border-black/30'
+                      : 'border-white/[0.10] text-white/55 hover:border-white/25'
+                  )}
+                >
+                  <span className="text-[14px] leading-none">↓</span>
+                </button>
+              </div>
+            )}
             {dragHandleProps && (
               <button
                 type="button"
                 {...dragHandleProps}
                 className={cn(
-                  'h-9 w-9 rounded-lg border flex items-center justify-center cursor-grab active:cursor-grabbing transition-colors touch-manipulation',
+                  'hidden sm:flex h-11 w-9 rounded-lg border items-center justify-center cursor-grab active:cursor-grabbing transition-colors touch-manipulation',
                   theme === 'light'
                     ? 'border-black/[0.12] text-black/55 hover:border-black/30'
                     : 'border-white/[0.10] text-white/55 hover:border-white/25'
@@ -718,7 +872,7 @@ function SlideCard({
               type="button"
               onClick={onEditOpen}
               className={cn(
-                'h-9 px-3 rounded-lg border text-[11.5px] font-medium transition-colors touch-manipulation',
+                'h-11 px-3 rounded-lg border text-[11.5px] font-medium transition-colors touch-manipulation',
                 theme === 'light'
                   ? 'border-black/[0.12] text-black hover:border-black/30'
                   : 'border-white/[0.10] text-white hover:border-white/25'
@@ -731,7 +885,7 @@ function SlideCard({
                 type="button"
                 onClick={onFocus}
                 className={cn(
-                  'h-9 px-3 rounded-lg border text-[11.5px] font-medium transition-colors touch-manipulation',
+                  'h-11 px-3 rounded-lg border text-[11.5px] font-medium transition-colors touch-manipulation',
                   theme === 'light'
                     ? 'border-black/[0.12] text-black hover:border-black/30'
                     : 'border-white/[0.10] text-white hover:border-white/25'

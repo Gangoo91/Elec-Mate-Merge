@@ -1,6 +1,5 @@
-import { useState, useCallback, useMemo } from 'react';
+import { useState, useMemo } from 'react';
 import { motion } from 'framer-motion';
-import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { StaffDetailSheet } from '@/components/college/sheets/StaffDetailSheet';
 import { EditStaffSheet } from '@/components/college/sheets/EditStaffSheet';
 import { AddTutorDialog } from '@/components/college/dialogs/AddTutorDialog';
@@ -8,8 +7,7 @@ import { PullToRefresh } from '@/components/college/ui/PullToRefresh';
 import { StaffCardSkeletonList } from '@/components/college/ui/StaffCardSkeleton';
 import { useCollegeSupabase } from '@/contexts/CollegeSupabaseContext';
 import type { CollegeStaff } from '@/contexts/CollegeSupabaseContext';
-import { getInitials, getRoleLabel } from '@/utils/collegeHelpers';
-import { cn } from '@/lib/utils';
+import { getRoleLabel } from '@/utils/collegeHelpers';
 import {
   PageFrame,
   PeopleListRow,
@@ -18,6 +16,7 @@ import {
   Pill,
   EmptyState,
   FilterBar,
+  PrimaryButton,
   itemVariants,
 } from '@/components/college/primitives';
 
@@ -29,14 +28,8 @@ export function SupportStaffSection() {
   const [detailOpen, setDetailOpen] = useState(false);
   const [editOpen, setEditOpen] = useState(false);
   const [addStaffOpen, setAddStaffOpen] = useState(false);
-  const [batchMode, setBatchMode] = useState(false);
-  const [selectedIds, setSelectedIds] = useState<Set<string>>(new Set());
 
   const handleSelectStaff = (member: CollegeStaff) => {
-    if (batchMode) {
-      toggleSelection(member.id);
-      return;
-    }
     setSelectedStaff(member);
     setDetailOpen(true);
   };
@@ -44,27 +37,6 @@ export function SupportStaffSection() {
     setSelectedStaff(member);
     setDetailOpen(false);
     setEditOpen(true);
-  };
-  const toggleSelection = (id: string) => {
-    setSelectedIds((prev) => {
-      const next = new Set(prev);
-      if (next.has(id)) next.delete(id);
-      else next.add(id);
-      return next;
-    });
-  };
-  const handleLongPress = useCallback(
-    (id: string) => {
-      if (!batchMode) {
-        setBatchMode(true);
-        setSelectedIds(new Set([id]));
-      }
-    },
-    [batchMode]
-  );
-  const exitBatchMode = () => {
-    setBatchMode(false);
-    setSelectedIds(new Set());
   };
 
   const supportStaff = useMemo(
@@ -102,14 +74,7 @@ export function SupportStaffSection() {
           title="Assessors, admin & IQA"
           description={`${supportStaff.length} support staff member${supportStaff.length === 1 ? '' : 's'}.`}
           tone="cyan"
-          actions={
-            <button
-              onClick={() => setAddStaffOpen(true)}
-              className="text-[12.5px] font-medium text-elec-yellow/90 hover:text-elec-yellow transition-colors touch-manipulation whitespace-nowrap"
-            >
-              Add staff →
-            </button>
-          }
+          actions={<PrimaryButton onClick={() => setAddStaffOpen(true)}>Add staff</PrimaryButton>}
         />
       </motion.div>
 
@@ -163,7 +128,6 @@ export function SupportStaffSection() {
             <motion.div variants={itemVariants}>
               <ListCard>
                 {filteredStaff.map((member) => {
-                  const isSelected = selectedIds.has(member.id);
                   const statusTone =
                     member.status === 'Active'
                       ? 'green'
@@ -174,16 +138,12 @@ export function SupportStaffSection() {
                     <PeopleListRow
                       key={member.id}
                       id={member.id}
-                      lead={
-                        batchMode
-                          ? { kind: 'checkbox', checked: isSelected }
-                          : {
-                              kind: 'avatar',
-                              name: member.name,
-                              photoUrl: member.photo_url,
-                              ringTone: 'blue',
-                            }
-                      }
+                      lead={{
+                        kind: 'avatar',
+                        name: member.name,
+                        photoUrl: member.photo_url,
+                        ringTone: 'blue',
+                      }}
                       title={member.name}
                       titleChips={<Pill tone="cyan">{getRoleLabel(member.role)}</Pill>}
                       subtitle={member.department ?? getRoleLabel(member.role)}
@@ -198,9 +158,7 @@ export function SupportStaffSection() {
                         </div>
                       }
                       status={{ label: member.status, tone: statusTone }}
-                      selected={isSelected}
                       onOpen={() => handleSelectStaff(member)}
-                      onLongPress={() => handleLongPress(member.id)}
                       actions={[
                         { label: 'Open profile', onClick: () => handleSelectStaff(member) },
                         {
@@ -225,27 +183,6 @@ export function SupportStaffSection() {
             </motion.div>
           )}
         </PullToRefresh>
-      )}
-
-      {batchMode && selectedIds.size > 0 && (
-        <motion.div
-          initial={{ y: 80, opacity: 0 }}
-          animate={{ y: 0, opacity: 1 }}
-          exit={{ y: 80, opacity: 0 }}
-          className="fixed bottom-0 inset-x-0 z-50 p-4 bg-[hsl(0_0%_8%)]/95 backdrop-blur-sm border-t border-white/[0.06]"
-        >
-          <div className="flex items-center justify-between gap-3 max-w-2xl mx-auto">
-            <p className="text-sm text-white font-medium tabular-nums">
-              {selectedIds.size} selected
-            </p>
-            <button
-              onClick={exitBatchMode}
-              className="text-[12.5px] font-medium text-white hover:text-white transition-colors touch-manipulation"
-            >
-              Cancel
-            </button>
-          </div>
-        </motion.div>
       )}
 
       <AddTutorDialog open={addStaffOpen} onOpenChange={setAddStaffOpen} />

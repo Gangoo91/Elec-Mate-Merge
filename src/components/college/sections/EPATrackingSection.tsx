@@ -27,6 +27,7 @@ import {
   Pill,
   EmptyState,
   SectionHeader,
+  statusTone,
   itemVariants,
   type Tone,
 } from '@/components/college/primitives';
@@ -70,29 +71,10 @@ export function EPATrackingSection({ onNavigate }: EPATrackingSectionProps) {
     complete: epaRecords.filter((r) => r.status === 'Complete').length,
   };
 
-  const statusTone = (status: string | null): Tone =>
-    status === 'Not Started'
-      ? 'yellow'
-      : status === 'In Progress'
-        ? 'amber'
-        : status === 'Pre-Gateway'
-          ? 'blue'
-          : status === 'Gateway Ready'
-            ? 'yellow'
-            : status === 'Complete'
-              ? 'green'
-              : 'yellow';
-
-  const gradeTone = (grade?: string): Tone =>
-    grade === 'Distinction'
-      ? 'green'
-      : grade === 'Merit'
-        ? 'blue'
-        : grade === 'Pass'
-          ? 'yellow'
-          : grade === 'Fail'
-            ? 'red'
-            : 'yellow';
+  // Canonical EPA tones from the shared map — never the action accent.
+  const epaStatusTone = (status: string | null): Tone =>
+    status === 'Complete' ? 'emerald' : statusTone('epa', status);
+  const gradeTone = (grade?: string): Tone => statusTone('gradeValue', grade);
 
   const getStudentInfo = (studentId: string | null) => {
     if (!studentId) return { name: 'Unknown', initials: '?', photoUrl: undefined, cohortId: undefined };
@@ -262,7 +244,7 @@ export function EPATrackingSection({ onNavigate }: EPATrackingSectionProps) {
                     subtitle={getCohortName(studentInfo.cohortId)}
                     status={{
                       label: epa.status ?? 'Unknown',
-                      tone: statusTone(epa.status),
+                      tone: epaStatusTone(epa.status),
                     }}
                     meta={
                       <div className="space-y-2.5">

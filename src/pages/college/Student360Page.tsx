@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState } from 'react';
+import { useEffect, useMemo, useState, type ReactNode } from 'react';
 import { useLocation, useNavigate, useParams } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { ChevronLeft, ChevronRight } from 'lucide-react';
@@ -337,6 +337,41 @@ export default function Student360Page() {
           <motion.div variants={itemVariants}>
             <IdentityHero core={core} risk={risk} />
           </motion.div>
+
+          {/* Mobile compact risk banner — risk visible above the fold (<lg only).
+              Desktop keeps the full Risk section in document order below. */}
+          <motion.div variants={itemVariants} className="lg:hidden no-print">
+            <MobileRiskBanner
+              risk={risk}
+              riskLevel={core.risk_level}
+              loading={loading.risk}
+              computing={recomputingRisk}
+              onCompute={async () => {
+                if (!core) return;
+                await recompute({ student_ids: [core.id] });
+                await refresh();
+              }}
+            />
+          </motion.div>
+
+          {/* Mobile sticky chip-rail — anchor-scrolls to each section (<lg only). */}
+          <div className="lg:hidden no-print sticky top-0 z-20 -mx-4 sm:-mx-6 bg-[hsl(0_0%_8%)]/95 backdrop-blur-md border-b border-white/[0.06]">
+            <div className="flex items-center gap-2 overflow-x-auto scrollbar-none px-4 sm:px-6 py-2.5">
+              <SectionChip href="#next-best">Next best</SectionChip>
+              <SectionChip href="#risk">Risk</SectionChip>
+              <SectionChip href="#ilp">ILP</SectionChip>
+              <SectionChip href="#progress">Progress</SectionChip>
+              <SectionChip href="#coverage">AC coverage</SectionChip>
+              <SectionChip href="#otj">OTJ</SectionChip>
+              <SectionChip href="#portfolio">Portfolio</SectionChip>
+              <SectionChip href="#observations">Observations</SectionChip>
+              <SectionChip href="#quizzes">Quizzes</SectionChip>
+              <SectionChip href="#epa">EPA</SectionChip>
+              <SectionChip href="#attendance">Attendance</SectionChip>
+              <SectionChip href="#grades">Grades</SectionChip>
+              <SectionChip href="#notes">Notes</SectionChip>
+            </div>
+          </div>
 
           {/* Stat strip */}
           <motion.div variants={itemVariants}>
@@ -939,6 +974,82 @@ function IdentityHero({ core, risk }: { core: StudentCore; risk: RiskSnapshot | 
         </div>
       </div>
     </div>
+  );
+}
+
+/* ==========================================================================
+   Mobile section chip — sticky horizontal-scroll anchor link (<lg only)
+   ========================================================================== */
+
+function SectionChip({ href, children }: { href: string; children: ReactNode }) {
+  return (
+    <a
+      href={href}
+      className="inline-flex shrink-0 items-center h-11 px-3 rounded-full text-[12.5px] font-medium text-white/70 border border-white/[0.12] bg-white/[0.03] active:bg-white/[0.10] transition-colors touch-manipulation whitespace-nowrap"
+    >
+      {children}
+    </a>
+  );
+}
+
+/* ==========================================================================
+   Mobile risk banner — compact, above-the-fold risk on small screens
+   ========================================================================== */
+
+function MobileRiskBanner({
+  risk,
+  riskLevel,
+  loading,
+  onCompute,
+  computing,
+}: {
+  risk: RiskSnapshot | null;
+  riskLevel: string | null | undefined;
+  loading: boolean;
+  onCompute: () => Promise<void> | void;
+  computing?: boolean;
+}) {
+  const level = (risk?.level ?? riskLevel ?? 'low') as string;
+  const tone = riskToneClasses(level);
+  const topFactor = risk?.factors && risk.factors.length > 0 ? risk.factors[0] : null;
+
+  const recompute = (
+    <button
+      type="button"
+      onClick={() => onCompute()}
+      disabled={computing}
+      className="shrink-0 inline-flex items-center justify-center h-11 px-3 rounded-full text-[12px] font-medium text-elec-yellow/85 active:text-elec-yellow border border-white/[0.12] bg-white/[0.03] disabled:opacity-40 transition-colors touch-manipulation"
+    >
+      {computing ? 'Computing…' : 'Recompute'}
+    </button>
+  );
+
+  return (
+    <a
+      href="#risk"
+      className="mt-4 flex items-center gap-3 bg-[hsl(0_0%_12%)] border border-white/[0.06] rounded-2xl px-4 py-3 active:bg-[hsl(0_0%_15%)] transition-colors touch-manipulation"
+    >
+      <div className="min-w-0 flex-1">
+        <div className="flex items-baseline gap-2">
+          <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+            Risk
+          </span>
+          <span className={cn('text-[15px] font-semibold tabular-nums leading-none', tone.valueClass)}>
+            {level.toUpperCase()}
+          </span>
+        </div>
+        <div className="mt-1 text-[12px] text-white/70 truncate">
+          {loading && !risk
+            ? 'Computing risk…'
+            : topFactor
+              ? topFactor.label
+              : risk
+                ? 'No active risk factors'
+                : 'No risk score yet'}
+        </div>
+      </div>
+      {recompute}
+    </a>
   );
 }
 

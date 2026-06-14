@@ -1,6 +1,6 @@
 import { useEffect, useMemo, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { PageFrame } from '@/components/college/primitives';
+import { PageFrame, Pill, statusTone } from '@/components/college/primitives';
 import {
   useMarkingQueue,
   type MarkingQueueItem,
@@ -9,6 +9,7 @@ import {
 import { QuizAttemptReviewSheet } from '@/components/college/sheets/QuizAttemptReviewSheet';
 import { cn } from '@/lib/utils';
 import { supabase } from '@/integrations/supabase/client';
+import { useToast } from '@/hooks/use-toast';
 
 /* ==========================================================================
    MarkingQueuePage — /college/marking
@@ -31,8 +32,80 @@ const FILTER_DEFS: Array<{ key: Filter; label: string; tone: string }> = [
 
 export default function MarkingQueuePage() {
   const navigate = useNavigate();
+  const { toast } = useToast();
   const { items, stats, loading, refresh } = useMarkingQueue();
   const [bulkGrading, setBulkGrading] = useState<{ done: number; total: number } | null>(null);
+
+  // ─── Human sign-off multi-select (separate from AI "Grade all pending") ───
+  // A tutor can select rows that are waiting on their eyes and approve them in
+  // one go: accept the AI score on every awaiting-review answer, then re-tally.
+  const [selected, setSelected] = useState<Set<string>>(new Set());
+  const [approving, setApproving] = useState<{ done: number; total: number } | null>(null);
+
+  const toggleSelect = (id: string) =>
+    setSelected((prev) => {
+      const next = new Set(prev);
+      if (next.has(id)) next.delete(id);
+      else next.add(id);
+      return next;
+    });
+  const clearSelection = () => setSelected(new Set());
+
+  // Sign off one attempt: write the AI score as the tutor override for every
+  // answer that's still awaiting review, then re-tally via the same edge fn.
+  const signOffAttempt = async (attemptId: string) => {
+    const { data: userData } = await supabase.auth.getUser();
+    const uid = userData?.user?.id ?? null;
+    const { data: rows } = await supabase
+      .from('tutor_quiz_answer_grades')
+      .select('id, ai_score, tutor_override_score')
+      .eq('attempt_id', attemptId);
+    const pending = (rows ?? []).filter(
+      (r) => r.ai_score != null && r.tutor_override_score == null
+    );
+    for (const r of pending) {
+      await supabase
+        .from('tutor_quiz_answer_grades')
+        .update({
+          tutor_override_score: r.ai_score,
+          tutor_override_by: uid,
+          tutor_override_at: new Date().toISOString(),
+        })
+        .eq('id', r.id);
+    }
+    // Re-tally the attempt total (idempotent — no ungraded rows, so no model call).
+    await supabase.functions
+      .invoke('ai-grade-free-response', { body: { attempt_id: attemptId } })
+      .catch(() => undefined);
+  };
+
+  const handleApproveSelected = async () => {
+    const ids = items
+      .filter((it) => selected.has(it.attempt_id) && it.status === 'awaiting_review')
+      .map((it) => it.attempt_id);
+    if (ids.length === 0) return;
+    setApproving({ done: 0, total: ids.length });
+    let failed = 0;
+    try {
+      for (let i = 0; i < ids.length; i++) {
+        try {
+          await signOffAttempt(ids[i]);
+        } catch {
+          failed += 1;
+        }
+        setApproving({ done: i + 1, total: ids.length });
+      }
+      await refresh();
+      clearSelection();
+      toast({
+        title: failed === 0 ? `Approved ${ids.length}` : `Approved ${ids.length - failed} of ${ids.length}`,
+        description: failed === 0 ? 'Sign-off recorded.' : `${failed} could not be signed off.`,
+        variant: failed === 0 ? undefined : 'destructive',
+      });
+    } finally {
+      setApproving(null);
+    }
+  };
 
   // ELE-925 (H1) — bulk-grade every free-response answer that's still waiting.
   // Iterates the currently visible queue rows and fires the per-attempt grader
@@ -92,9 +165,20 @@ export default function MarkingQueuePage() {
     setOpenStudentName(item.student_name);
   };
 
+  const selectedCount = useMemo(
+    () =>
+      items.filter((it) => selected.has(it.attempt_id) && it.status === 'awaiting_review').length,
+    [items, selected]
+  );
+
   return (
     <PageFrame>
-      <div className="max-w-[1100px] mx-auto px-4 sm:px-6 py-5 sm:py-7">
+      <div
+        className={cn(
+          'max-w-[1100px] mx-auto px-4 sm:px-6 py-5 sm:py-7',
+          selectedCount > 0 && 'pb-28'
+        )}
+      >
         {/* Header */}
         <button
           type="button"
@@ -133,65 +217,69 @@ export default function MarkingQueuePage() {
           )}
         </div>
 
-        {/* Stats strip */}
-        <div className="mt-5 grid grid-cols-2 sm:grid-cols-4 gap-2.5">
-          <Stat label="Pending review" value={stats.awaiting_review} tone="amber" />
-          <Stat label="AI grading" value={stats.awaiting_ai} tone="blue" />
-          <Stat label="Approved (24h)" value={stats.approved_today} tone="emerald" />
-          <Stat
-            label="Avg score"
-            value={stats.avg_pct == null ? '—' : `${stats.avg_pct}%`}
-            tone="white"
-          />
-        </div>
+        {/* Sticky controls — stats + filters + search stay pinned while the
+            queue scrolls, so the tutor never loses the filter context. */}
+        <div className="sticky top-0 z-20 -mx-4 sm:-mx-6 px-4 sm:px-6 pt-5 pb-3 bg-[hsl(0_0%_7%)]/95 backdrop-blur supports-[backdrop-filter]:bg-[hsl(0_0%_7%)]/80 border-b border-white/[0.06]">
+          {/* Stats strip */}
+          <div className="grid grid-cols-2 sm:grid-cols-4 gap-2.5">
+            <Stat label="Pending review" value={stats.awaiting_review} tone="amber" />
+            <Stat label="AI grading" value={stats.awaiting_ai} tone="blue" />
+            <Stat label="Approved (24h)" value={stats.approved_today} tone="emerald" />
+            <Stat
+              label="Avg score"
+              value={stats.avg_pct == null ? '—' : `${stats.avg_pct}%`}
+              tone="white"
+            />
+          </div>
 
-        {/* Filter chips */}
-        <div className="mt-5 flex sm:flex-wrap overflow-x-auto snap-x snap-mandatory -mx-4 px-4 sm:mx-0 sm:px-0 gap-2 pb-1">
-          {FILTER_DEFS.map((f) => {
-            const count =
-              f.key === 'all' ? items.length : items.filter((i) => i.status === f.key).length;
-            const active = filter === f.key;
-            return (
-              <button
-                key={f.key}
-                type="button"
-                onClick={() => setFilter(f.key)}
-                className={cn(
-                  'shrink-0 snap-start h-9 px-3.5 rounded-full text-[12px] font-semibold border transition-colors touch-manipulation inline-flex items-center gap-2',
-                  active
-                    ? f.tone === 'amber'
-                      ? 'bg-amber-400 text-black border-amber-400'
-                      : f.tone === 'blue'
-                        ? 'bg-blue-400 text-black border-blue-400'
-                        : f.tone === 'emerald'
-                          ? 'bg-emerald-400 text-black border-emerald-400'
-                          : 'bg-white text-black border-white'
-                    : 'bg-transparent text-white border-white/[0.12] hover:border-white/30'
-                )}
-              >
-                {f.label}
-                <span
+          {/* Filter chips */}
+          <div className="mt-4 flex sm:flex-wrap overflow-x-auto snap-x snap-mandatory -mx-4 px-4 sm:mx-0 sm:px-0 gap-2 pb-0.5">
+            {FILTER_DEFS.map((f) => {
+              const count =
+                f.key === 'all' ? items.length : items.filter((i) => i.status === f.key).length;
+              const active = filter === f.key;
+              return (
+                <button
+                  key={f.key}
+                  type="button"
+                  onClick={() => setFilter(f.key)}
                   className={cn(
-                    'tabular-nums text-[11px] px-1.5 rounded',
-                    active ? 'bg-black/20' : 'bg-white/[0.08]'
+                    'shrink-0 snap-start h-11 px-3.5 rounded-full text-[12px] font-semibold border transition-colors touch-manipulation inline-flex items-center gap-2',
+                    active
+                      ? f.tone === 'amber'
+                        ? 'bg-amber-400 text-black border-amber-400'
+                        : f.tone === 'blue'
+                          ? 'bg-blue-400 text-black border-blue-400'
+                          : f.tone === 'emerald'
+                            ? 'bg-emerald-400 text-black border-emerald-400'
+                            : 'bg-white text-black border-white'
+                      : 'bg-transparent text-white border-white/[0.12] hover:border-white/30'
                   )}
                 >
-                  {count}
-                </span>
-              </button>
-            );
-          })}
-        </div>
+                  {f.label}
+                  <span
+                    className={cn(
+                      'tabular-nums text-[11px] px-1.5 rounded',
+                      active ? 'bg-black/20' : 'bg-white/[0.08]'
+                    )}
+                  >
+                    {count}
+                  </span>
+                </button>
+              );
+            })}
+          </div>
 
-        {/* Search */}
-        <div className="mt-3">
-          <input
-            type="search"
-            value={search}
-            onChange={(e) => setSearch(e.target.value)}
-            placeholder="Filter by student, quiz, or cohort"
-            className="w-full h-11 px-3.5 rounded-lg bg-[hsl(0_0%_10%)] border border-white/[0.08] text-[13px] text-white placeholder:text-white/40 focus:outline-none focus:border-white/30 touch-manipulation"
-          />
+          {/* Search */}
+          <div className="mt-3">
+            <input
+              type="search"
+              value={search}
+              onChange={(e) => setSearch(e.target.value)}
+              placeholder="Filter by student, quiz, or cohort"
+              className="w-full h-11 px-3.5 rounded-lg bg-[hsl(0_0%_10%)] border border-white/[0.08] text-[13px] text-white placeholder:text-white/70 focus:outline-none focus:border-white/30 touch-manipulation"
+            />
+          </div>
         </div>
 
         {/* List */}
@@ -212,7 +300,13 @@ export default function MarkingQueuePage() {
               <ul className="space-y-2">
                 {visible.map((item) => (
                   <li key={item.attempt_id}>
-                    <QueueRow item={item} onOpen={() => openItem(item)} />
+                    <QueueRow
+                      item={item}
+                      onOpen={() => openItem(item)}
+                      selectable={item.status === 'awaiting_review'}
+                      selected={selected.has(item.attempt_id)}
+                      onToggleSelect={() => toggleSelect(item.attempt_id)}
+                    />
                   </li>
                 ))}
               </ul>
@@ -234,6 +328,41 @@ export default function MarkingQueuePage() {
           )}
         </div>
       </div>
+
+      {/* Sticky human sign-off action bar — only when rows are selected. */}
+      {selectedCount > 0 && (
+        <div
+          className="fixed inset-x-0 bottom-0 z-30 border-t border-white/[0.08] bg-[hsl(0_0%_8%)]/95 backdrop-blur supports-[backdrop-filter]:bg-[hsl(0_0%_8%)]/85"
+          style={{ paddingBottom: 'max(0.75rem, env(safe-area-inset-bottom))' }}
+        >
+          <div className="max-w-[1100px] mx-auto px-4 sm:px-6 pt-3 flex items-center gap-3">
+            <div className="min-w-0 flex-1">
+              <div className="text-[13px] font-semibold text-white tabular-nums">
+                {selectedCount} selected
+              </div>
+              <div className="text-[11px] text-white/70">Accept AI scores and sign off</div>
+            </div>
+            <button
+              type="button"
+              onClick={clearSelection}
+              disabled={!!approving}
+              className="h-11 px-4 rounded-full text-[12.5px] font-medium text-white/70 hover:text-white disabled:opacity-50 touch-manipulation"
+            >
+              Clear
+            </button>
+            <button
+              type="button"
+              onClick={handleApproveSelected}
+              disabled={!!approving}
+              className="inline-flex items-center h-11 px-5 rounded-full bg-elec-yellow text-black text-[13px] font-semibold disabled:opacity-50 touch-manipulation"
+            >
+              {approving
+                ? `Approving… ${approving.done} / ${approving.total}`
+                : `Approve ${selectedCount}`}
+            </button>
+          </div>
+        </div>
+      )}
 
       <QuizAttemptReviewSheet
         open={openAttemptId != null}
@@ -287,53 +416,93 @@ function Stat({
 
 /* ───────────────── row ───────────────── */
 
-const STATUS_META: Record<MarkingStatus, { label: string; tone: string }> = {
-  awaiting_review: { label: 'Review', tone: 'amber' },
-  awaiting_ai: { label: 'AI grading', tone: 'blue' },
-  signed_off: { label: 'Approved', tone: 'emerald' },
-  no_free_response: { label: 'Auto', tone: 'white' },
+// Each marking status maps to a canonical gradeStatus token so the chip tone
+// comes from statusTone() — never an ad-hoc colour.
+const STATUS_META: Record<MarkingStatus, { label: string; statusValue: string }> = {
+  awaiting_review: { label: 'Review', statusValue: 'resubmit' /* amber — needs eyes */ },
+  awaiting_ai: { label: 'AI grading', statusValue: 'awaiting review' /* blue */ },
+  signed_off: { label: 'Approved', statusValue: 'signed off' /* emerald */ },
+  no_free_response: { label: 'Auto', statusValue: 'auto' /* grey */ },
 };
 
-function QueueRow({ item, onOpen }: { item: MarkingQueueItem; onOpen: () => void }) {
-  const { tone, label } = STATUS_META[item.status];
-  const dotClass =
-    tone === 'amber'
-      ? 'bg-amber-400'
-      : tone === 'blue'
-        ? 'bg-blue-400'
-        : tone === 'emerald'
-          ? 'bg-emerald-400'
-          : 'bg-white';
-  const pillClass =
-    tone === 'amber'
-      ? 'bg-amber-500/[0.10] text-amber-200 border-amber-500/30'
-      : tone === 'blue'
-        ? 'bg-blue-500/[0.10] text-blue-200 border-blue-500/30'
-        : tone === 'emerald'
-          ? 'bg-emerald-500/[0.10] text-emerald-200 border-emerald-500/30'
-          : 'bg-white/[0.06] text-white border-white/[0.12]';
+function QueueRow({
+  item,
+  onOpen,
+  selectable,
+  selected,
+  onToggleSelect,
+}: {
+  item: MarkingQueueItem;
+  onOpen: () => void;
+  selectable: boolean;
+  selected: boolean;
+  onToggleSelect: () => void;
+}) {
+  const { label, statusValue } = STATUS_META[item.status];
+  const tone = statusTone('gradeStatus', statusValue);
   const submittedRel = item.submitted_at ? formatRel(item.submitted_at) : '—';
 
+  // Long-press on touch enters selection (in addition to the always-visible
+  // checkbox), matching the PeopleListRow batch-mode pattern.
+  let pressTimer: ReturnType<typeof setTimeout> | null = null;
+  const startPress = () => {
+    if (!selectable) return;
+    pressTimer = setTimeout(() => {
+      onToggleSelect();
+      pressTimer = null;
+    }, 450);
+  };
+  const cancelPress = () => {
+    if (pressTimer) {
+      clearTimeout(pressTimer);
+      pressTimer = null;
+    }
+  };
+
   return (
+    <div
+      className={cn(
+        'group relative flex items-stretch gap-2 rounded-xl border transition-colors',
+        selected
+          ? 'bg-elec-yellow/[0.06] border-elec-yellow/30'
+          : 'bg-[hsl(0_0%_10%)] hover:bg-[hsl(0_0%_12%)] border-white/[0.06] hover:border-white/[0.12]'
+      )}
+      onTouchStart={startPress}
+      onTouchEnd={cancelPress}
+      onTouchMove={cancelPress}
+      onTouchCancel={cancelPress}
+    >
+      {selectable && (
+        <button
+          type="button"
+          aria-label={selected ? 'Deselect attempt' : 'Select attempt'}
+          aria-pressed={selected}
+          onClick={onToggleSelect}
+          className="shrink-0 self-stretch flex items-center pl-3 pr-1 touch-manipulation"
+        >
+          <span
+            className={cn(
+              'h-6 w-6 rounded-md border-2 flex items-center justify-center transition-colors',
+              selected ? 'bg-elec-yellow border-elec-yellow text-black' : 'border-white/25'
+            )}
+          >
+            {selected && <span className="text-[13px] font-semibold leading-none">✓</span>}
+          </span>
+        </button>
+      )}
     <button
       type="button"
       onClick={onOpen}
-      className="group w-full text-left bg-[hsl(0_0%_10%)] hover:bg-[hsl(0_0%_12%)] active:bg-[hsl(0_0%_14%)] border border-white/[0.06] hover:border-white/[0.12] rounded-xl px-4 py-3.5 transition-colors touch-manipulation"
+      className="flex-1 min-w-0 text-left px-4 py-3.5 touch-manipulation"
     >
       <div className="flex items-start gap-3">
-        <span className={cn('mt-1.5 h-2 w-2 rounded-full shrink-0', dotClass)} aria-hidden />
+        <Pill tone={tone} className="mt-0.5 shrink-0">
+          {label}
+        </Pill>
         <div className="min-w-0 flex-1">
           <div className="flex items-center gap-2 flex-wrap">
             <span className="text-[14px] font-semibold text-white truncate">
               {item.student_name}
-            </span>
-            <span
-              className={cn(
-                'inline-flex items-center h-5 px-2 rounded-md border text-[10px] font-semibold uppercase tracking-[0.06em]',
-                pillClass
-              )}
-            >
-              {label}
             </span>
           </div>
           <div className="mt-1 text-[12.5px] text-white truncate">{item.quiz_title}</div>
@@ -385,6 +554,7 @@ function QueueRow({ item, onOpen }: { item: MarkingQueueItem; onOpen: () => void
         </div>
       </div>
     </button>
+    </div>
   );
 }
 

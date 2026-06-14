@@ -28,6 +28,7 @@ import {
   ListCard,
   Pill,
   EmptyState,
+  statusTone,
   itemVariants,
   type Tone,
 } from '@/components/college/primitives';
@@ -72,27 +73,11 @@ export function GradingSection() {
     return matchesSearch && matchesStatus && matchesCohort;
   });
 
-  const statusTone = (status: string | null): Tone =>
-    status === 'Pending'
-      ? 'amber'
-      : status === 'Graded'
-        ? 'green'
-        : status === 'Resubmission'
-          ? 'blue'
-          : status === 'Not Yet Competent'
-            ? 'red'
-            : 'yellow';
-
+  // Canonical tones from the shared map — never the action accent ('yellow').
+  const gradeStatusTone = (status: string | null): Tone =>
+    statusTone('gradeStatus', status);
   const gradeTone = (grade?: string | null): Tone =>
-    grade === 'Distinction'
-      ? 'green'
-      : grade === 'Merit'
-        ? 'blue'
-        : grade === 'Pass' || grade === 'Competent'
-          ? 'yellow'
-          : grade === 'Refer'
-            ? 'red'
-            : 'yellow';
+    statusTone('gradeValue', grade);
 
   const getStudentName = (studentId: string | null) =>
     !studentId ? 'Unknown' : students.find((s) => s.id === studentId)?.name || 'Unknown';
@@ -211,7 +196,7 @@ export function GradingSection() {
               {filteredGrades.map((grade) => {
                 const initials = getStudentInitials(grade.student_id);
                 const photoUrl = getStudentPhotoUrl(grade.student_id);
-                const tone = statusTone(grade.status);
+                const tone = gradeStatusTone(grade.status);
 
                 return (
                   <PeopleListRow
@@ -230,7 +215,7 @@ export function GradingSection() {
                       <div className="space-y-2">
                         <div className="flex flex-wrap gap-1.5">
                           {grade.assessment_type && (
-                            <Pill tone="yellow">{grade.assessment_type}</Pill>
+                            <Pill tone="grey">{grade.assessment_type}</Pill>
                           )}
                           {grade.grade && (
                             <Pill tone={gradeTone(grade.grade)}>{grade.grade}</Pill>

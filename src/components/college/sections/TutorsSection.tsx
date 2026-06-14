@@ -1,6 +1,5 @@
-import { useState, useCallback, useMemo } from 'react';
+import { useState, useMemo } from 'react';
 import { motion } from 'framer-motion';
-import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { AddTutorDialog } from '@/components/college/dialogs/AddTutorDialog';
 import { StaffOnboardingWizard } from '@/components/college/sheets/StaffOnboardingWizard';
 import { StaffComplianceDrawer } from '@/components/college/sheets/StaffComplianceDrawer';
@@ -10,17 +9,16 @@ import { PullToRefresh } from '@/components/college/ui/PullToRefresh';
 import { StaffCardSkeletonList } from '@/components/college/ui/StaffCardSkeleton';
 import { useCollegeSupabase } from '@/contexts/CollegeSupabaseContext';
 import type { CollegeStaff } from '@/contexts/CollegeSupabaseContext';
-import { getInitials } from '@/utils/collegeHelpers';
-import { cn } from '@/lib/utils';
 import {
   PageFrame,
   PeopleListRow,
   PageHero,
-  SectionHeader,
   ListCard,
   Pill,
   EmptyState,
   FilterBar,
+  PrimaryButton,
+  SecondaryButton,
   itemVariants,
 } from '@/components/college/primitives';
 
@@ -35,14 +33,7 @@ export function TutorsSection() {
   const [detailOpen, setDetailOpen] = useState(false);
   const [editOpen, setEditOpen] = useState(false);
 
-  const [batchMode, setBatchMode] = useState(false);
-  const [selectedIds, setSelectedIds] = useState<Set<string>>(new Set());
-
   const handleSelectStaff = (member: CollegeStaff) => {
-    if (batchMode) {
-      toggleSelection(member.id);
-      return;
-    }
     setSelectedStaff(member);
     setDetailOpen(true);
   };
@@ -50,27 +41,6 @@ export function TutorsSection() {
     setSelectedStaff(member);
     setDetailOpen(false);
     setEditOpen(true);
-  };
-  const toggleSelection = (id: string) => {
-    setSelectedIds((prev) => {
-      const next = new Set(prev);
-      if (next.has(id)) next.delete(id);
-      else next.add(id);
-      return next;
-    });
-  };
-  const handleLongPress = useCallback(
-    (id: string) => {
-      if (!batchMode) {
-        setBatchMode(true);
-        setSelectedIds(new Set([id]));
-      }
-    },
-    [batchMode]
-  );
-  const exitBatchMode = () => {
-    setBatchMode(false);
-    setSelectedIds(new Set());
   };
 
   const tutors = useMemo(
@@ -113,19 +83,9 @@ export function TutorsSection() {
           description={`${tutors.length} tutor${tutors.length === 1 ? '' : 's'} in the department.`}
           tone="blue"
           actions={
-            <div className="flex items-center gap-3 flex-wrap justify-end">
-              <button
-                onClick={() => setAddTutorOpen(true)}
-                className="text-[12px] font-medium text-white/65 hover:text-white transition-colors touch-manipulation whitespace-nowrap"
-              >
-                Quick add
-              </button>
-              <button
-                onClick={() => setOnboardOpen(true)}
-                className="text-[12.5px] font-medium text-elec-yellow/90 hover:text-elec-yellow transition-colors touch-manipulation whitespace-nowrap"
-              >
-                Onboard starter →
-              </button>
+            <div className="flex items-center gap-2 flex-wrap justify-end">
+              <SecondaryButton onClick={() => setAddTutorOpen(true)}>Quick add</SecondaryButton>
+              <PrimaryButton onClick={() => setOnboardOpen(true)}>Onboard starter</PrimaryButton>
             </div>
           }
         />
@@ -176,7 +136,6 @@ export function TutorsSection() {
               <ListCard>
                 {filteredTutors.map((tutor) => {
                   const cohortCount = getCohortCount(tutor.id);
-                  const isSelected = selectedIds.has(tutor.id);
 
                   const statusTone =
                     tutor.status === 'Active'
@@ -189,16 +148,12 @@ export function TutorsSection() {
                     <PeopleListRow
                       key={tutor.id}
                       id={tutor.id}
-                      lead={
-                        batchMode
-                          ? { kind: 'checkbox', checked: isSelected }
-                          : {
-                              kind: 'avatar',
-                              name: tutor.name,
-                              photoUrl: tutor.photo_url,
-                              ringTone: 'blue',
-                            }
-                      }
+                      lead={{
+                        kind: 'avatar',
+                        name: tutor.name,
+                        photoUrl: tutor.photo_url,
+                        ringTone: 'blue',
+                      }}
                       title={tutor.name}
                       titleChips={
                         cohortCount > 0 ? (
@@ -221,7 +176,7 @@ export function TutorsSection() {
                               ))
                             : null}
                           {tutor.specialisations && tutor.specialisations.length > 3 && (
-                            <span className="text-[11px] text-white/50">
+                            <span className="text-[11px] text-white/70">
                               +{tutor.specialisations.length - 3}
                             </span>
                           )}
@@ -234,9 +189,7 @@ export function TutorsSection() {
                         </div>
                       }
                       status={{ label: tutor.status, tone: statusTone }}
-                      selected={isSelected}
                       onOpen={() => handleSelectStaff(tutor)}
-                      onLongPress={() => handleLongPress(tutor.id)}
                       actions={[
                         {
                           label: 'Open profile',
@@ -264,28 +217,6 @@ export function TutorsSection() {
             </motion.div>
           )}
         </PullToRefresh>
-      )}
-
-      {/* BATCH BAR */}
-      {batchMode && selectedIds.size > 0 && (
-        <motion.div
-          initial={{ y: 80, opacity: 0 }}
-          animate={{ y: 0, opacity: 1 }}
-          exit={{ y: 80, opacity: 0 }}
-          className="fixed bottom-0 inset-x-0 z-50 p-4 bg-[hsl(0_0%_8%)]/95 backdrop-blur-sm border-t border-white/[0.06]"
-        >
-          <div className="flex items-center justify-between gap-3 max-w-2xl mx-auto">
-            <p className="text-sm text-white font-medium tabular-nums">
-              {selectedIds.size} selected
-            </p>
-            <button
-              onClick={exitBatchMode}
-              className="text-[12.5px] font-medium text-white hover:text-white transition-colors touch-manipulation"
-            >
-              Cancel
-            </button>
-          </div>
-        </motion.div>
       )}
 
       <AddTutorDialog open={addTutorOpen} onOpenChange={setAddTutorOpen} />

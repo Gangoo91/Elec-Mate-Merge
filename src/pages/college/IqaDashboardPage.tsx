@@ -11,9 +11,15 @@ import {
   EmptyState,
   ListCard,
   Pill,
+  SheetShell,
+  PrimaryButton,
+  SecondaryButton,
+  textareaClass,
+  statusTone,
   itemVariants,
   type Tone,
 } from '@/components/college/primitives';
+import { Sheet, SheetContent } from '@/components/ui/sheet';
 import {
   useIqaSamplingPlans,
   type IqaSamplingPlan,
@@ -40,17 +46,13 @@ import { Download } from 'lucide-react';
    Tabs: Sampling · Findings · Standardisation
    ========================================================================== */
 
-const FINDING_TYPE_TONE = {
-  commendation: 'green',
-  observation: 'blue',
-  action: 'amber',
-  concern: 'red',
-} as const;
-
+// Finding-status tone is local: 'open / in_progress / closed / escalated' is
+// not one of the canonical statusTone domains. Finding *type* is routed
+// through statusTone('iqaFinding', …) so it matches every other surface.
 const FINDING_STATUS_TONE: Record<FindingStatus, Tone> = {
   open: 'amber',
   in_progress: 'blue',
-  closed: 'green',
+  closed: 'emerald',
   escalated: 'red',
 };
 
@@ -82,6 +84,11 @@ export default function IqaDashboardPage() {
   const [addPlanOpen, setAddPlanOpen] = useState(false);
   const [addFindingOpen, setAddFindingOpen] = useState(false);
   const [addMeetingOpen, setAddMeetingOpen] = useState(false);
+  // In-app close-note flow (replaces window.prompt). Holds the finding being
+  // closed plus the resolution-note draft and an in-flight flag.
+  const [closingFinding, setClosingFinding] = useState<IqaFinding | null>(null);
+  const [closeNote, setCloseNote] = useState('');
+  const [closeSaving, setCloseSaving] = useState(false);
   const { exportPack, exporting: exportingPack } = useEqaVisitPackExport();
 
   const handleEqaPack = async () => {
@@ -97,6 +104,25 @@ export default function IqaDashboardPage() {
         description: (e as Error).message,
         variant: 'destructive',
       });
+    }
+  };
+
+  const confirmCloseFinding = async () => {
+    if (!closingFinding) return;
+    setCloseSaving(true);
+    try {
+      await closeFinding(closingFinding.id, closeNote.trim());
+      toast({ title: 'Finding closed' });
+      setClosingFinding(null);
+      setCloseNote('');
+    } catch (e) {
+      toast({
+        title: 'Close failed',
+        description: (e as Error).message,
+        variant: 'destructive',
+      });
+    } finally {
+      setCloseSaving(false);
     }
   };
 
@@ -241,21 +267,9 @@ export default function IqaDashboardPage() {
             loading={findingsLoading}
             search={search}
             onAdd={() => setAddFindingOpen(true)}
-            onClose={async (f) => {
-              const notes = window.prompt(
-                `Close "${f.description.slice(0, 60)}…" with resolution notes (optional):`
-              );
-              if (notes === null) return;
-              try {
-                await closeFinding(f.id, notes);
-                toast({ title: 'Finding closed' });
-              } catch (e) {
-                toast({
-                  title: 'Close failed',
-                  description: (e as Error).message,
-                  variant: 'destructive',
-                });
-              }
+            onClose={(f) => {
+              setCloseNote('');
+              setClosingFinding(f);
             }}
             onDelete={async (f) => {
               const ok = window.confirm(`Delete this finding? Logged in audit trail.`);
@@ -304,6 +318,64 @@ export default function IqaDashboardPage() {
         open={addMeetingOpen}
         onOpenChange={setAddMeetingOpen}
       />
+
+      {/* Close-finding sheet — in-app resolution note (replaces window.prompt). */}
+      <Sheet
+        open={!!closingFinding}
+        onOpenChange={(open) => {
+          if (!open && !closeSaving) {
+            setClosingFinding(null);
+            setCloseNote('');
+          }
+        }}
+      >
+        <SheetContent side="bottom" className="h-auto max-h-[85vh] p-0 rounded-t-2xl overflow-hidden">
+          <SheetShell
+            eyebrow="IQA · Findings"
+            title="Close finding"
+            description={
+              closingFinding
+                ? `Recorded against the audit trail. ${closingFinding.assessor_name}.`
+                : undefined
+            }
+            footer={
+              <>
+                <SecondaryButton
+                  fullWidth
+                  onClick={() => {
+                    setClosingFinding(null);
+                    setCloseNote('');
+                  }}
+                  disabled={closeSaving}
+                >
+                  Cancel
+                </SecondaryButton>
+                <PrimaryButton fullWidth onClick={confirmCloseFinding} disabled={closeSaving}>
+                  {closeSaving ? 'Closing…' : 'Close finding →'}
+                </PrimaryButton>
+              </>
+            }
+          >
+            {closingFinding && (
+              <p className="text-[12.5px] text-white/70 leading-snug line-clamp-3">
+                {closingFinding.description}
+              </p>
+            )}
+            <label htmlFor="close-note" className="text-[11.5px] text-white/70 block">
+              Resolution notes (optional)
+            </label>
+            <textarea
+              id="close-note"
+              value={closeNote}
+              onChange={(e) => setCloseNote(e.target.value)}
+              rows={5}
+              autoFocus
+              placeholder="How was this finding resolved? Recorded on the audit trail."
+              className={cn(textareaClass, 'min-h-[120px] text-base')}
+            />
+          </SheetShell>
+        </SheetContent>
+      </Sheet>
     </PageFrame>
   );
 }
@@ -515,8 +587,8 @@ function FindingRow({
   onClose: () => void;
   onDelete: () => void;
 }) {
-  const tone = FINDING_TYPE_TONE[finding.finding_type];
-  const statusTone = FINDING_STATUS_TONE[finding.status];
+  const tone = statusTone('iqaFinding', finding.finding_type);
+  const statusToneValue = FINDING_STATUS_TONE[finding.status];
   const today = new Date();
   today.setHours(0, 0, 0, 0);
   const overdue =
@@ -530,7 +602,7 @@ function FindingRow({
         <div className="min-w-0 flex-1">
           <div className="flex items-center gap-2 flex-wrap">
             <Pill tone={tone}>{finding.finding_type}</Pill>
-            <Pill tone={statusTone}>{finding.status.replace(/_/g, ' ')}</Pill>
+            <Pill tone={statusToneValue}>{finding.status.replace(/_/g, ' ')}</Pill>
             {finding.severity && (
               <span
                 className={cn(

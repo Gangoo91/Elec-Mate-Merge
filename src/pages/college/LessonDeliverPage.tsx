@@ -1,6 +1,7 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import { cn } from '@/lib/utils';
+import { LoadingState } from '@/components/college/primitives';
 import { useLessonPlan, type GeneratedActivity } from '@/hooks/useCurriculum';
 
 /* ==========================================================================
@@ -110,7 +111,7 @@ export default function LessonDeliverPage() {
   if (loading) {
     return (
       <div className="min-h-screen bg-black text-white flex items-center justify-center">
-        <div className="h-8 w-8 rounded-full border-2 border-white/15 border-t-elec-yellow animate-spin" />
+        <LoadingState />
       </div>
     );
   }

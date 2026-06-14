@@ -117,6 +117,17 @@ function rowToPlatform(
   };
 }
 
+// KPI tone enum → static Tailwind class. Dynamic `text-${tone}` strings get
+// purged at build time, so map a small fixed set instead.
+type KpiTone = 'neutral' | 'muted' | 'good' | 'warn' | 'bad';
+const KPI_TONE_CLASS: Record<KpiTone, string> = {
+  neutral: 'text-white',
+  muted: 'text-white/70',
+  good: 'text-emerald-400',
+  warn: 'text-amber-400',
+  bad: 'text-red-400',
+};
+
 // Real LTI 1.3 backend (Supabase Edge Functions)
 const LTI_BASE = 'https://jtwygbeceundfgnkirof.supabase.co/functions/v1';
 
@@ -168,6 +179,10 @@ export function LTISettingsSection() {
   const [verifyResult, setVerifyResult] = useState<
     Record<string, { ok: boolean; checks: Array<{ name: string; ok: boolean; message: string }> }>
   >({});
+  // Tapped sparkline day — touch alternative to the hover title=.
+  const [sparkTapped, setSparkTapped] = useState<
+    { date: string; total: number; failed: number } | null
+  >(null);
 
   // New platform form state — captures everything needed to create an
   // `lti_platforms` row. college_id is taken from profile (required — H14).
@@ -1037,66 +1052,84 @@ export function LTISettingsSection() {
           </div>
         </div>
 
-        {/* KPI tiles */}
+        {/* KPI tiles. Tones are a fixed enum mapped to a static class lookup —
+            never interpolate `text-${k.tone}`, Tailwind purges those. */}
         <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
-          {[
+          {([
             {
               label: 'Launches (50)',
               value: globalStats.total,
-              tone: 'white/80',
+              tone: 'neutral' as KpiTone,
             },
             {
               label: 'Success rate',
               value: globalStats.successRate === null ? '—' : `${globalStats.successRate}%`,
-              tone:
-                globalStats.successRate === null
-                  ? 'white/60'
-                  : globalStats.successRate >= 99
-                    ? 'emerald-400'
-                    : globalStats.successRate >= 95
-                      ? 'amber-400'
-                      : 'red-400',
+              tone: (globalStats.successRate === null
+                ? 'muted'
+                : globalStats.successRate >= 99
+                  ? 'good'
+                  : globalStats.successRate >= 95
+                    ? 'warn'
+                    : 'bad') as KpiTone,
             },
             {
               label: 'Failed',
               value: globalStats.failed,
-              tone: globalStats.failed > 0 ? 'red-400' : 'white/60',
+              tone: (globalStats.failed > 0 ? 'bad' : 'muted') as KpiTone,
             },
             {
               label: 'Platforms',
               value: rows.length,
-              tone: 'white/80',
+              tone: 'neutral' as KpiTone,
             },
-          ].map((k) => (
+          ]).map((k) => (
             <div
               key={k.label}
               className="bg-[hsl(0_0%_12%)] border border-white/[0.06] rounded-xl p-4"
             >
-              <div className="text-[10px] uppercase tracking-wider text-white">{k.label}</div>
-              <div className={cn('mt-1 text-xl font-semibold tabular-nums', `text-${k.tone}`)}>
+              <div className="text-[10px] uppercase tracking-wider text-white/70">{k.label}</div>
+              <div className={cn('mt-1 text-xl font-semibold tabular-nums', KPI_TONE_CLASS[k.tone])}>
                 {k.value}
               </div>
             </div>
           ))}
         </div>
 
-        {/* 7-day sparkline */}
+        {/* 7-day sparkline. Tap a bar to reveal its figures (hover title= is
+            useless on touch). */}
         <div className="mt-3 bg-[hsl(0_0%_12%)] border border-white/[0.06] rounded-xl p-4">
-          <div className="text-[10px] uppercase tracking-wider text-white mb-3">
-            Last 7 days · launches per day
+          <div className="flex items-baseline justify-between gap-3 mb-3">
+            <div className="text-[10px] uppercase tracking-wider text-white">
+              Last 7 days · launches per day
+            </div>
+            {sparkTapped && (
+              <div className="text-[11px] tabular-nums text-white/70">
+                {sparkTapped.date}: {sparkTapped.total} launches
+                {sparkTapped.failed > 0 ? ` · ${sparkTapped.failed} failed` : ''}
+              </div>
+            )}
           </div>
           <div className="flex items-end gap-2 h-20">
             {globalStats.days.map((d) => {
               const max = Math.max(1, ...globalStats.days.map((x) => x.total));
               const h = Math.round((d.total / max) * 100);
               const fh = d.total ? Math.round((d.failed / d.total) * h) : 0;
+              const isTapped = sparkTapped?.date === d.date;
               return (
-                <div key={d.date} className="flex-1 flex flex-col items-center gap-1">
+                <button
+                  key={d.date}
+                  type="button"
+                  onClick={() => setSparkTapped((s) => (s?.date === d.date ? null : d))}
+                  aria-label={`${d.total} launches, ${d.failed} failed on ${d.date}`}
+                  className="flex-1 flex flex-col items-center gap-1 touch-manipulation min-h-[44px] justify-end"
+                >
                   <div className="w-full flex-1 flex items-end">
                     <div
-                      className="w-full rounded-t bg-emerald-400/70 relative"
+                      className={cn(
+                        'w-full rounded-t bg-emerald-400/70 relative transition-opacity',
+                        sparkTapped && !isTapped && 'opacity-50'
+                      )}
                       style={{ height: `${Math.max(2, h)}%` }}
-                      title={`${d.total} launches (${d.failed} failed) on ${d.date}`}
                     >
                       {fh > 0 && (
                         <div
@@ -1106,10 +1139,15 @@ export function LTISettingsSection() {
                       )}
                     </div>
                   </div>
-                  <span className="text-[9px] tabular-nums text-white/65">
+                  <span
+                    className={cn(
+                      'text-[9px] tabular-nums',
+                      isTapped ? 'text-white' : 'text-white/70'
+                    )}
+                  >
                     {d.date.slice(-2)}
                   </span>
-                </div>
+                </button>
               );
             })}
           </div>

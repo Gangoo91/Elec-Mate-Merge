@@ -153,6 +153,29 @@ export default function CohortEpaPage() {
         </div>
       </div>
 
+      {/* Persistent marker legend — the gauge dots & verdict badges encode
+          who said what; spell it out so it's not hover-only. */}
+      <div className="mt-4 flex flex-wrap items-center gap-x-4 gap-y-1.5 text-[11px] text-white/70">
+        <span className="inline-flex items-center gap-1.5">
+          <span className="h-3.5 w-3.5 rounded-full bg-blue-500 ring-2 ring-blue-400/60 inline-flex items-center justify-center">
+            <User2 className="h-2 w-2 text-black" strokeWidth={2.5} />
+          </span>
+          L · Learner self-assessment
+        </span>
+        <span className="inline-flex items-center gap-1.5">
+          <span className="h-3.5 w-3.5 rounded-full bg-elec-yellow ring-2 ring-elec-yellow/60 inline-flex items-center justify-center">
+            <ShieldCheck className="h-2 w-2 text-black" strokeWidth={2.5} />
+          </span>
+          T · Tutor verdict
+        </span>
+        <span className="inline-flex items-center gap-1.5">
+          <span className="h-3.5 w-3.5 rounded-full bg-purple-400 ring-2 ring-purple-400/60 inline-flex items-center justify-center">
+            <Bot className="h-2 w-2 text-black" strokeWidth={2.5} />
+          </span>
+          AI · Predicted readiness
+        </span>
+      </div>
+
       {/* List */}
       {loading ? (
         <LoadingState />

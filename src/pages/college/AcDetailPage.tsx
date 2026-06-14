@@ -7,6 +7,11 @@ import {
   PageHero,
   Pill,
   SecondaryButton,
+  ListCard,
+  ListRow,
+  FormCard,
+  EmptyState,
+  LoadingState,
   itemVariants,
   toneDot,
   type Tone,
@@ -69,31 +74,25 @@ export default function AcDetailPage() {
         }
       />
 
-      {loading && <div className="px-4 pb-12 text-sm text-white/60">Loading…</div>}
+      {loading && <LoadingState />}
 
       {error && (
-        <div className="mx-4 mb-6 rounded-xl border border-red-500/30 bg-red-500/10 px-4 py-3 text-sm text-red-300">
+        <div className="mx-4 rounded-2xl border border-red-500/30 bg-red-500/[0.06] px-5 py-4 text-[13px] text-red-300">
           {error}
         </div>
       )}
 
       {!loading && meta && (
-        <div className="px-4 pb-16 space-y-5">
+        <div className="px-4 pb-16 space-y-6">
           {/* LO context */}
           {meta.lo_text && (
-            <motion.section
-              variants={itemVariants}
-              initial="hidden"
-              animate="visible"
-              className="rounded-2xl border border-white/10 bg-white/5 p-5"
-            >
-              <div className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/50">
-                Learning Outcome {meta.lo_number ?? ''}
-              </div>
-              <p className="mt-2 text-sm text-white/85 leading-relaxed">{meta.lo_text}</p>
-              {meta.unit_title && (
-                <div className="mt-3 text-xs text-white/50">{meta.unit_title}</div>
-              )}
+            <motion.section variants={itemVariants} initial="hidden" animate="visible">
+              <FormCard eyebrow={`Learning Outcome ${meta.lo_number ?? ''}`}>
+                <p className="text-[14px] text-white leading-relaxed">{meta.lo_text}</p>
+                {meta.unit_title && (
+                  <div className="text-[12px] text-white/70">{meta.unit_title}</div>
+                )}
+              </FormCard>
             </motion.section>
           )}
 
@@ -102,42 +101,33 @@ export default function AcDetailPage() {
             variants={itemVariants}
             initial="hidden"
             animate="visible"
-            className="rounded-2xl border border-white/10 bg-white/5 p-5"
+            className="space-y-3"
           >
-            <h2 className="text-sm font-semibold uppercase tracking-wider text-white/70">
+            <h2 className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/70">
               Learner progress
             </h2>
-            <div className="mt-3 grid grid-cols-3 gap-3 text-center">
+            <div className="grid grid-cols-3 gap-3 text-center">
               <ProgressTile label="Signed off / assessed" value={learnerStats.done} tone="emerald" />
               <ProgressTile label="In progress" value={learnerStats.partial} tone="amber" />
               <ProgressTile label="Not started" value={learnerStats.notStarted} tone="red" />
             </div>
 
             {learners.length > 0 && (
-              <ul className="mt-4 divide-y divide-white/5">
+              <ListCard>
                 {learners.slice(0, 20).map((l) => (
-                  <li
+                  <ListRow
                     key={l.student_id}
-                    className="flex items-center justify-between gap-3 py-2"
-                  >
-                    <button
-                      type="button"
-                      onClick={() => navigate(`/college/students/${l.student_id}`)}
-                      className="text-sm text-white hover:text-elec-yellow text-left touch-manipulation"
-                    >
-                      {l.student_name}
-                    </button>
-                    <div className="flex items-center gap-2">
-                      <span className="text-[11px] text-white/50">
-                        {l.evidence_count} evidence
-                      </span>
+                    onClick={() => navigate(`/college/students/${l.student_id}`)}
+                    title={l.student_name}
+                    subtitle={`${l.evidence_count} evidence`}
+                    trailing={
                       <Pill tone={STATUS_TONE[l.status] || 'blue'}>
                         {l.status.replace(/_/g, ' ')}
                       </Pill>
-                    </div>
-                  </li>
+                    }
+                  />
                 ))}
-              </ul>
+              </ListCard>
             )}
           </motion.section>
 
@@ -146,35 +136,29 @@ export default function AcDetailPage() {
             variants={itemVariants}
             initial="hidden"
             animate="visible"
-            className="rounded-2xl border border-white/10 bg-white/5 p-5"
+            className="space-y-3"
           >
-            <h2 className="text-sm font-semibold uppercase tracking-wider text-white/70">
+            <h2 className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/70">
               Tagged resources
             </h2>
             {resources.length === 0 ? (
-              <div className="mt-3 rounded-lg border border-dashed border-white/10 px-3 py-4 text-center text-xs text-white/40">
-                No resources tagged to this AC yet. Tag from the Teaching Resources library.
-              </div>
+              <EmptyState
+                title="No resources tagged yet"
+                description="Tag resources to this AC from the Teaching Resources library."
+              />
             ) : (
-              <ul className="mt-3 space-y-2">
+              <div className="space-y-2">
                 {resources.map((r) => (
-                  <li
-                    key={r.id}
-                    className="rounded-xl border border-white/10 bg-black/20 p-3"
-                  >
+                  <FormCard key={r.id}>
                     <div className="flex items-start justify-between gap-3">
                       <div className="min-w-0 flex-1">
-                        <div className="text-sm font-medium text-white">{r.title}</div>
+                        <div className="text-[14px] font-medium text-white">{r.title}</div>
                         {r.description && (
-                          <p className="mt-1 text-xs text-white/70">{r.description}</p>
+                          <p className="text-[12px] text-white/70 leading-relaxed">{r.description}</p>
                         )}
-                        <div className="mt-2 flex flex-wrap gap-1.5">
-                          {r.resource_type && (
-                            <Pill tone="blue">{r.resource_type}</Pill>
-                          )}
-                          {!r.is_student_visible && (
-                            <Pill tone="amber">Staff-only</Pill>
-                          )}
+                        <div className="flex flex-wrap gap-1.5 pt-1">
+                          {r.resource_type && <Pill tone="blue">{r.resource_type}</Pill>}
+                          {!r.is_student_visible && <Pill tone="amber">Staff-only</Pill>}
                         </div>
                       </div>
                       {r.external_url && (
@@ -189,15 +173,15 @@ export default function AcDetailPage() {
                               context: 'ac_page',
                             })
                           }
-                          className="rounded-lg border border-elec-yellow/40 bg-elec-yellow/10 px-3 py-1.5 text-xs font-semibold text-elec-yellow touch-manipulation"
+                          className="shrink-0 inline-flex h-11 items-center rounded-full border border-elec-yellow/40 bg-elec-yellow/10 px-4 text-[12.5px] font-semibold text-elec-yellow touch-manipulation"
                         >
                           Open →
                         </a>
                       )}
                     </div>
-                  </li>
+                  </FormCard>
                 ))}
-              </ul>
+              </div>
             )}
           </motion.section>
 
@@ -206,38 +190,35 @@ export default function AcDetailPage() {
             variants={itemVariants}
             initial="hidden"
             animate="visible"
-            className="rounded-2xl border border-white/10 bg-white/5 p-5"
+            className="space-y-3"
           >
-            <h2 className="text-sm font-semibold uppercase tracking-wider text-white/70">
+            <h2 className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/70">
               Lessons covering this AC
             </h2>
             {lessons.length === 0 ? (
-              <div className="mt-3 rounded-lg border border-dashed border-white/10 px-3 py-4 text-center text-xs text-white/40">
-                No lessons mapped to this AC yet.
-              </div>
+              <EmptyState title="No lessons mapped yet" description="No lessons are mapped to this AC yet." />
             ) : (
-              <ul className="mt-3 divide-y divide-white/5">
+              <ListCard>
                 {lessons.map((l) => (
-                  <li
+                  <ListRow
                     key={l.lesson_plan_id}
-                    className="flex items-center justify-between gap-3 py-2"
-                  >
-                    <button
-                      type="button"
-                      onClick={() => navigate(`/college/lessons/${l.lesson_plan_id}`)}
-                      className="min-w-0 text-left touch-manipulation"
-                    >
-                      <div className="text-sm text-white truncate">{l.title}</div>
-                      {l.scheduled_date && (
-                        <div className="text-[11px] text-white/50">
-                          {new Date(l.scheduled_date).toLocaleDateString('en-GB')}
-                        </div>
-                      )}
-                    </button>
-                    {l.status && <Pill tone="blue">{l.status}</Pill>}
-                  </li>
+                    onClick={() => navigate(`/college/lessons/${l.lesson_plan_id}`)}
+                    title={l.title}
+                    subtitle={
+                      l.scheduled_date
+                        ? new Date(l.scheduled_date).toLocaleDateString('en-GB')
+                        : undefined
+                    }
+                    trailing={
+                      l.status ? (
+                        <Pill tone={STATUS_TONE[l.status] || 'blue'}>
+                          {l.status.replace(/_/g, ' ')}
+                        </Pill>
+                      ) : undefined
+                    }
+                  />
                 ))}
-              </ul>
+              </ListCard>
             )}
           </motion.section>
         </div>
@@ -256,9 +237,9 @@ function ProgressTile({
   tone: Tone;
 }) {
   return (
-    <div className="rounded-xl border border-white/10 bg-black/20 px-3 py-3">
-      <div className="text-2xl font-semibold text-white">{value}</div>
-      <div className="mt-1 flex items-center justify-center gap-1.5 text-[10px] uppercase tracking-wider text-white/50">
+    <div className="rounded-2xl border border-white/[0.06] bg-[hsl(0_0%_12%)] px-3 py-4">
+      <div className="text-2xl font-semibold text-white tabular-nums">{value}</div>
+      <div className="mt-1.5 flex items-center justify-center gap-1.5 text-[10px] uppercase tracking-[0.14em] text-white/70">
         <span className={cn('inline-block h-1.5 w-1.5 rounded-full', toneDot[tone])} />
         {label}
       </div>

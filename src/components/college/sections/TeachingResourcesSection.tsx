@@ -5,6 +5,7 @@ import {
   PageHero,
   FilterBar,
   EmptyState,
+  PrimaryButton,
   itemVariants,
 } from '@/components/college/primitives';
 import { cn } from '@/lib/utils';
@@ -138,6 +139,14 @@ export function TeachingResourcesSection() {
         }}
       />
 
+      {/* Mobile: the drag-drop hint is hidden < sm, so give a thumb-friendly
+          full-width Add files button to reach the native picker. */}
+      <motion.div variants={itemVariants} className="sm:hidden">
+        <PrimaryButton fullWidth onClick={pickFiles}>
+          Add files
+        </PrimaryButton>
+      </motion.div>
+
       {/* Upload in-flight panel */}
       {uploads.length > 0 && (
         <motion.div variants={itemVariants}>
@@ -152,44 +161,70 @@ export function TeachingResourcesSection() {
               {inProgressUploads.length === 0 && uploads.length > 0 && (
                 <button
                   onClick={clearFinishedUploads}
-                  className="text-[11.5px] text-white/65 hover:text-white transition-colors"
+                  className="text-[11.5px] text-white/70 hover:text-white transition-colors"
                 >
                   Dismiss
                 </button>
               )}
             </div>
             <ul className="divide-y divide-white/[0.06]">
-              {uploads.map((u) => (
-                <li
-                  key={u.token}
-                  className="px-4 sm:px-5 py-3 flex items-center gap-3 text-[12.5px] min-w-0"
-                >
-                  <span className="flex-1 min-w-0 truncate text-white">
-                    {u.file.name}
-                  </span>
-                  <span className="hidden sm:inline text-white tabular-nums shrink-0">
-                    {(u.file.size / 1024 / 1024).toFixed(2)} MB
-                  </span>
-                  <span
-                    className={cn(
-                      'text-[11px] shrink-0 truncate max-w-[40%] sm:max-w-none',
-                      u.status === 'done' && 'text-emerald-300',
-                      u.status === 'error' && 'text-red-300',
-                      u.status === 'uploading' && 'text-elec-yellow/85',
-                      u.status === 'queued' && 'text-white'
-                    )}
-                    title={u.status === 'error' ? u.error : undefined}
+              {uploads.map((u) => {
+                const isActive = u.status === 'uploading' || u.status === 'saving';
+                return (
+                  <li
+                    key={u.token}
+                    className="px-4 sm:px-5 py-3 space-y-2 text-[12.5px] min-w-0"
                   >
-                    {u.status === 'done'
-                      ? 'Uploaded'
-                      : u.status === 'error'
-                        ? 'Failed'
-                        : u.status === 'uploading'
-                          ? 'Uploading…'
-                          : 'Queued'}
-                  </span>
-                </li>
-              ))}
+                    <div className="flex items-center gap-3 min-w-0">
+                      <span className="flex-1 min-w-0 truncate text-white">
+                        {u.file.name}
+                      </span>
+                      <span className="hidden sm:inline text-white tabular-nums shrink-0">
+                        {(u.file.size / 1024 / 1024).toFixed(2)} MB
+                      </span>
+                      <span
+                        className={cn(
+                          'text-[11px] shrink-0 truncate max-w-[40%] sm:max-w-none',
+                          u.status === 'done' && 'text-emerald-300',
+                          u.status === 'error' && 'text-red-300',
+                          isActive && 'text-elec-yellow/85',
+                          u.status === 'queued' && 'text-white'
+                        )}
+                        title={u.status === 'error' ? u.error : undefined}
+                      >
+                        {u.status === 'done'
+                          ? 'Uploaded'
+                          : u.status === 'error'
+                            ? 'Failed'
+                            : u.status === 'uploading'
+                              ? `Uploading… ${Math.round(u.progress * 100)}%`
+                              : u.status === 'saving'
+                                ? 'Saving…'
+                                : 'Queued'}
+                      </span>
+                    </div>
+                    {/* Per-file progress bar */}
+                    {u.status !== 'error' && (
+                      <div className="h-1 w-full rounded-full bg-white/[0.08] overflow-hidden">
+                        <div
+                          className={cn(
+                            'h-full rounded-full transition-all',
+                            u.status === 'done' ? 'bg-emerald-400' : 'bg-elec-yellow'
+                          )}
+                          style={{
+                            width:
+                              u.status === 'done'
+                                ? '100%'
+                                : u.status === 'saving'
+                                  ? '100%'
+                                  : `${Math.max(u.progress * 100, isActive ? 6 : 0)}%`,
+                          }}
+                        />
+                      </div>
+                    )}
+                  </li>
+                );
+              })}
             </ul>
           </div>
         </motion.div>

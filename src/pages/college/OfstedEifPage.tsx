@@ -3,8 +3,11 @@ import { motion } from 'framer-motion';
 import {
   PageFrame,
   PageHero,
+  Pill,
+  toneDot,
   itemVariants,
   containerVariants,
+  type Tone,
 } from '@/components/college/primitives';
 import { useOfstedSignals, type JudgementSignal, type RagStatus } from '@/hooks/useOfstedSignals';
 import { cn } from '@/lib/utils';
@@ -19,11 +22,14 @@ import { cn } from '@/lib/utils';
    inspector-ready handout.
    ========================================================================== */
 
-const RAG_DOT: Record<RagStatus, string> = {
-  red: 'bg-rose-400',
-  amber: 'bg-amber-400',
-  green: 'bg-emerald-400',
-  grey: 'bg-white/30',
+// Canonical RAG → Tone. "Not tracked" maps to the neutral grey tone — never
+// blue (blue reads as "in progress / informational", which is misleading for
+// an untracked judgement).
+const RAG_TONE: Record<RagStatus, Tone> = {
+  red: 'red',
+  amber: 'amber',
+  green: 'emerald',
+  grey: 'grey',
 };
 
 const RAG_LABEL: Record<RagStatus, string> = {
@@ -31,13 +37,6 @@ const RAG_LABEL: Record<RagStatus, string> = {
   amber: 'Amber',
   green: 'Green',
   grey: 'Not tracked',
-};
-
-const RAG_BADGE: Record<RagStatus, string> = {
-  red: 'border-rose-300/30 text-rose-200 bg-rose-500/[0.10]',
-  amber: 'border-amber-300/30 text-amber-200 bg-amber-500/[0.10]',
-  green: 'border-emerald-300/30 text-emerald-200 bg-emerald-500/[0.10]',
-  grey: 'border-white/[0.10] text-white bg-white/[0.04]',
 };
 
 export default function OfstedEifPage() {
@@ -128,21 +127,16 @@ function JudgementCard({ judgement }: { judgement: JudgementSignal }) {
         <div className="flex items-start justify-between gap-3">
           <div className="flex items-center gap-2.5 min-w-0">
             <span
-              className={cn('w-2.5 h-2.5 rounded-full shrink-0', RAG_DOT[judgement.rag])}
+              className={cn('w-2.5 h-2.5 rounded-full shrink-0', toneDot[RAG_TONE[judgement.rag]])}
               aria-hidden="true"
             />
             <h2 className="text-[15px] sm:text-[16px] font-semibold text-white tracking-tight truncate">
               {judgement.title}
             </h2>
           </div>
-          <span
-            className={cn(
-              'inline-flex items-center h-6 px-2 rounded-md border text-[11px] font-semibold whitespace-nowrap',
-              RAG_BADGE[judgement.rag]
-            )}
-          >
+          <Pill tone={RAG_TONE[judgement.rag]} className="whitespace-nowrap">
             {RAG_LABEL[judgement.rag]}
-          </span>
+          </Pill>
         </div>
         <p className="mt-2 text-[12.5px] text-white leading-snug">{judgement.summary}</p>
       </div>
@@ -164,7 +158,7 @@ function JudgementCard({ judgement }: { judgement: JudgementSignal }) {
                 <span
                   className={cn(
                     'w-1.5 h-1.5 rounded-full shrink-0 mt-1',
-                    row.status ? RAG_DOT[row.status] : 'bg-white/30'
+                    toneDot[row.status ? RAG_TONE[row.status] : 'grey']
                   )}
                   aria-hidden="true"
                 />

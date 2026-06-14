@@ -289,7 +289,7 @@ function ReportCard({ report, onOpen }: { report: ReportDef<any>; onOpen: () => 
       whileTap={{ scale: 0.98 }}
       className="text-left rounded-2xl border border-white/10 bg-white/5 hover:bg-white/[0.08] p-5 transition-colors touch-manipulation"
     >
-      <div className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/50">
+      <div className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/70">
         {report.eyebrow}
       </div>
       <h3 className="mt-2 text-lg font-semibold text-white">{report.title}</h3>
@@ -372,7 +372,7 @@ function ReportRunner({ report, onClose }: { report: ReportDef<any>; onClose: ()
       >
         <div className="flex items-start justify-between gap-4">
           <div>
-            <div className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/50">
+            <div className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/70">
               {report.eyebrow}
             </div>
             <h2 className="mt-1 text-xl font-semibold text-white">{report.title}</h2>
@@ -387,7 +387,7 @@ function ReportRunner({ report, onClose }: { report: ReportDef<any>; onClose: ()
         <div className="mt-5 grid gap-3 sm:grid-cols-3">
           {showCohortFilter && (
             <div>
-              <label className="text-[10px] uppercase tracking-wider text-white/50">Cohort</label>
+              <label className="text-[10px] uppercase tracking-wider text-white/70">Cohort</label>
               <Select
                 value={filters.cohortId ?? 'all'}
                 onValueChange={(v) =>
@@ -412,7 +412,7 @@ function ReportRunner({ report, onClose }: { report: ReportDef<any>; onClose: ()
           {showDateFilter && (
             <>
               <div>
-                <label className="text-[10px] uppercase tracking-wider text-white/50">From</label>
+                <label className="text-[10px] uppercase tracking-wider text-white/70">From</label>
                 <Input
                   type="date"
                   value={filters.startDate ?? ''}
@@ -423,7 +423,7 @@ function ReportRunner({ report, onClose }: { report: ReportDef<any>; onClose: ()
                 />
               </div>
               <div>
-                <label className="text-[10px] uppercase tracking-wider text-white/50">To</label>
+                <label className="text-[10px] uppercase tracking-wider text-white/70">To</label>
                 <Input
                   type="date"
                   value={filters.endDate ?? ''}
@@ -438,7 +438,7 @@ function ReportRunner({ report, onClose }: { report: ReportDef<any>; onClose: ()
 
           {showQualFilter && (
             <div>
-              <label className="text-[10px] uppercase tracking-wider text-white/50">
+              <label className="text-[10px] uppercase tracking-wider text-white/70">
                 Qualification code
               </label>
               <Input
@@ -476,42 +476,69 @@ function ReportRunner({ report, onClose }: { report: ReportDef<any>; onClose: ()
         >
           <SectionHeader eyebrow="Preview" title={`First 25 of ${rows.length} rows`} />
           {rows.length === 0 ? (
-            <div className="mt-3 rounded-lg border border-dashed border-white/10 px-3 py-8 text-center text-sm text-white/40">
+            <div className="mt-3 rounded-lg border border-dashed border-white/10 px-3 py-8 text-center text-sm text-white/70">
               No rows match the current filters.
             </div>
           ) : (
-            <div className="mt-3 overflow-x-auto">
-              <table className="min-w-full text-[12px]">
-                <thead>
-                  <tr className="border-b border-white/10">
+            <>
+              {/* Mobile: stacked key/value cards (no horizontal-scroll table) */}
+              <div className="mt-3 space-y-3 sm:hidden">
+                {rows.slice(0, 25).map((r, i) => (
+                  <div
+                    key={i}
+                    className="rounded-xl border border-white/10 bg-white/[0.03] divide-y divide-white/[0.06]"
+                  >
                     {report.columns.map((c) => (
-                      <th
+                      <div
                         key={c.key}
-                        className={cn(
-                          'px-2 py-2 text-left font-medium uppercase tracking-wider text-white/50 whitespace-nowrap'
-                        )}
+                        className="flex items-start justify-between gap-3 px-3 py-2"
                       >
-                        {c.header}
-                      </th>
-                    ))}
-                  </tr>
-                </thead>
-                <tbody>
-                  {rows.slice(0, 25).map((r, i) => (
-                    <tr key={i} className="border-b border-white/5">
-                      {report.columns.map((c) => (
-                        <td
-                          key={c.key}
-                          className="px-2 py-2 text-white/90 whitespace-nowrap"
-                        >
+                        <span className="text-[11px] font-medium uppercase tracking-wider text-white/70 shrink-0">
+                          {c.header}
+                        </span>
+                        <span className="text-[12.5px] text-white/90 text-right break-words">
                           {formatCell(r[c.key])}
-                        </td>
+                        </span>
+                      </div>
+                    ))}
+                  </div>
+                ))}
+              </div>
+
+              {/* sm+: full table */}
+              <div className="mt-3 hidden sm:block overflow-x-auto">
+                <table className="min-w-full text-[12px]">
+                  <thead>
+                    <tr className="border-b border-white/10">
+                      {report.columns.map((c) => (
+                        <th
+                          key={c.key}
+                          className={cn(
+                            'px-2 py-2 text-left font-medium uppercase tracking-wider text-white/70 whitespace-nowrap'
+                          )}
+                        >
+                          {c.header}
+                        </th>
                       ))}
                     </tr>
-                  ))}
-                </tbody>
-              </table>
-            </div>
+                  </thead>
+                  <tbody>
+                    {rows.slice(0, 25).map((r, i) => (
+                      <tr key={i} className="border-b border-white/5">
+                        {report.columns.map((c) => (
+                          <td
+                            key={c.key}
+                            className="px-2 py-2 text-white/90 whitespace-nowrap"
+                          >
+                            {formatCell(r[c.key])}
+                          </td>
+                        ))}
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
+            </>
           )}
         </motion.div>
       )}

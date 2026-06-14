@@ -18,6 +18,7 @@ import {
   ListCard,
   itemVariants,
   toneDot,
+  statusTone as lessonStatusTone,
 } from '@/components/college/primitives';
 import { cn } from '@/lib/utils';
 
@@ -106,19 +107,9 @@ export function LessonPlansSection() {
     return new Date(a.scheduled_date).getTime() - new Date(b.scheduled_date).getTime();
   });
 
-  const statusTone = (status: string | null) => {
-    switch (status) {
-      case 'Published':
-      case 'Approved':
-        return 'green' as const;
-      case 'Draft':
-        return 'amber' as const;
-      case 'Delivered':
-        return 'blue' as const;
-      default:
-        return 'yellow' as const;
-    }
-  };
+  // Route status → canonical lesson tone (Approved is the DB alias for Published).
+  const statusTone = (status: string | null) =>
+    lessonStatusTone('lesson', status === 'Approved' ? 'Published' : status);
   const statusLabel = (status: string | null) => (status === 'Approved' ? 'Published' : status ?? 'Unknown');
 
   const getCohortName = (cohortId: string | null) => {
@@ -306,10 +297,7 @@ export function LessonPlansSection() {
 
                   <div className="flex items-center gap-1.5 shrink-0">
                     <Pill tone={tone}>
-                      <span className="hidden sm:inline">{statusLabel(lesson.status)}</span>
-                      <span className="sm:hidden">
-                        {(statusLabel(lesson.status) ?? '?').charAt(0)}
-                      </span>
+                      {statusLabel(lesson.status)}
                     </Pill>
                     <DropdownMenu>
                       <DropdownMenuTrigger asChild>

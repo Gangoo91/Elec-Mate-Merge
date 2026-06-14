@@ -9,6 +9,7 @@ import {
   FilterBar,
   EmptyState,
   LoadingState,
+  SheetShell,
   itemVariants,
   PrimaryButton,
 } from '@/components/college/primitives';
@@ -111,6 +112,9 @@ function QualificationsGrid({ onSelect }: { onSelect: (q: QualificationRow) => v
   const [search, setSearch] = useState('');
   const [levelFilter, setLevelFilter] = useState('all');
   const [awardingBodyFilter, setAwardingBodyFilter] = useState('all');
+  const [filtersOpen, setFiltersOpen] = useState(false);
+  const activeFilterCount =
+    (levelFilter !== 'all' ? 1 : 0) + (awardingBodyFilter !== 'all' ? 1 : 0);
 
   const filtered = useMemo(() => {
     return data.filter((q) => {
@@ -149,29 +153,93 @@ function QualificationsGrid({ onSelect }: { onSelect: (q: QualificationRow) => v
           onSearchChange={setSearch}
           searchPlaceholder="Search by code, title, description…"
           actions={
-            <div className="flex items-center gap-2 flex-wrap">
-              <FilterPillGroup
-                label="Level"
-                value={levelFilter}
-                onChange={setLevelFilter}
-                options={[
-                  { label: 'All', value: 'all' },
-                  ...levels.map((l) => ({ label: l, value: l })),
-                ]}
-              />
-              <FilterPillGroup
-                label="Body"
-                value={awardingBodyFilter}
-                onChange={setAwardingBodyFilter}
-                options={[
-                  { label: 'All', value: 'all' },
-                  ...bodies.map((b) => ({ label: shortAwardingBody(b), value: b })),
-                ]}
-              />
-            </div>
+            <>
+              {/* Desktop — inline pill groups */}
+              <div className="hidden lg:flex items-center gap-2 flex-wrap">
+                <FilterPillGroup
+                  label="Level"
+                  value={levelFilter}
+                  onChange={setLevelFilter}
+                  options={[
+                    { label: 'All', value: 'all' },
+                    ...levels.map((l) => ({ label: l, value: l })),
+                  ]}
+                />
+                <FilterPillGroup
+                  label="Body"
+                  value={awardingBodyFilter}
+                  onChange={setAwardingBodyFilter}
+                  options={[
+                    { label: 'All', value: 'all' },
+                    ...bodies.map((b) => ({ label: shortAwardingBody(b), value: b })),
+                  ]}
+                />
+              </div>
+              {/* Mobile — single Filters trigger; pills move into a bottom sheet */}
+              <button
+                type="button"
+                onClick={() => setFiltersOpen(true)}
+                className="lg:hidden inline-flex items-center gap-2 h-11 px-4 rounded-full bg-[hsl(0_0%_12%)] border border-white/[0.08] text-[12.5px] font-medium text-white touch-manipulation"
+              >
+                Filters
+                {activeFilterCount > 0 && (
+                  <span className="inline-flex items-center justify-center min-w-[18px] h-[18px] px-1 rounded-full bg-elec-yellow text-black text-[10px] font-semibold tabular-nums">
+                    {activeFilterCount}
+                  </span>
+                )}
+              </button>
+            </>
           }
         />
       </motion.div>
+
+      {/* Mobile filters sheet */}
+      <Sheet open={filtersOpen} onOpenChange={setFiltersOpen}>
+        <SheetContent
+          side="bottom"
+          className="h-auto max-h-[85vh] p-0 rounded-t-2xl overflow-hidden border-white/[0.08]"
+        >
+          <SheetShell eyebrow="Qualifications" title="Filters">
+            <div className="space-y-5">
+              <div>
+                <div className="text-[11px] font-medium uppercase tracking-[0.14em] text-white/70 mb-2">
+                  Level
+                </div>
+                <div className="flex flex-wrap gap-2">
+                  {[{ label: 'All', value: 'all' }, ...levels.map((l) => ({ label: l, value: l }))].map(
+                    (o) => (
+                      <FilterChip
+                        key={o.value}
+                        label={o.label}
+                        active={levelFilter === o.value}
+                        onClick={() => setLevelFilter(o.value)}
+                      />
+                    )
+                  )}
+                </div>
+              </div>
+              <div>
+                <div className="text-[11px] font-medium uppercase tracking-[0.14em] text-white/70 mb-2">
+                  Awarding body
+                </div>
+                <div className="flex flex-wrap gap-2">
+                  {[
+                    { label: 'All', value: 'all' },
+                    ...bodies.map((b) => ({ label: shortAwardingBody(b), value: b })),
+                  ].map((o) => (
+                    <FilterChip
+                      key={o.value}
+                      label={o.label}
+                      active={awardingBodyFilter === o.value}
+                      onClick={() => setAwardingBodyFilter(o.value)}
+                    />
+                  ))}
+                </div>
+              </div>
+            </div>
+          </SheetShell>
+        </SheetContent>
+      </Sheet>
 
       {loading ? (
         <LoadingState />
@@ -671,6 +739,32 @@ function shortAwardingBody(b: string): string {
   if (b === 'City & Guilds') return 'C&G';
   if (b.includes('ECS')) return 'ECS';
   return b;
+}
+
+/** Single touch-friendly filter chip — used inside the mobile Filters sheet. */
+function FilterChip({
+  label,
+  active,
+  onClick,
+}: {
+  label: string;
+  active: boolean;
+  onClick: () => void;
+}) {
+  return (
+    <button
+      type="button"
+      onClick={onClick}
+      className={cn(
+        'h-11 px-4 rounded-full text-[12.5px] font-medium transition-colors touch-manipulation',
+        active
+          ? 'bg-elec-yellow text-black'
+          : 'bg-[hsl(0_0%_12%)] border border-white/[0.08] text-white hover:bg-white/[0.06]'
+      )}
+    >
+      {label}
+    </button>
+  );
 }
 
 /** Pill-group dropdown — compact filter selector that matches the editorial style. */
