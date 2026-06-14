@@ -734,18 +734,16 @@ export const InvoiceItemsStep = ({
                     )}
                   {adjustingItemId === item.id && (
                     <div className="mt-2 mb-1 p-2 rounded-lg bg-white/[0.04] border border-white/[0.08] flex items-center gap-2">
-                      <input
-                        type="number"
-                        step="0.1"
-                        autoFocus
+                      <InlineDecimalInput
+                        allowNegative
+                        nonNegative={false}
                         placeholder="± %"
-                        value={item.itemAdjustmentPercent ?? ''}
-                        onChange={(e) => {
-                          const v = e.target.value;
+                        value={item.itemAdjustmentPercent ?? 0}
+                        onChange={(val) =>
                           onUpdateItem(item.id, {
-                            itemAdjustmentPercent: v === '' ? undefined : parseFloat(v),
-                          });
-                        }}
+                            itemAdjustmentPercent: val === 0 ? undefined : val,
+                          })
+                        }
                         className="w-20 h-8 px-2 text-center text-[13px] bg-[#1a1a1e] border border-white/[0.1] rounded-lg text-white touch-manipulation"
                       />
                       <input
@@ -1542,18 +1540,16 @@ export const InvoiceItemsStep = ({
                   )}
                 {adjustingItemId === item.id && (
                   <div className="mb-2 p-2 rounded-lg bg-white/[0.04] border border-white/[0.08] flex items-center gap-2">
-                    <input
-                      type="number"
-                      step="0.1"
-                      autoFocus
+                    <InlineDecimalInput
+                      allowNegative
+                      nonNegative={false}
                       placeholder="± %"
-                      value={item.itemAdjustmentPercent ?? ''}
-                      onChange={(e) => {
-                        const v = e.target.value;
+                      value={item.itemAdjustmentPercent ?? 0}
+                      onChange={(val) =>
                         onUpdateItem(item.id, {
-                          itemAdjustmentPercent: v === '' ? undefined : parseFloat(v),
-                        });
-                      }}
+                          itemAdjustmentPercent: val === 0 ? undefined : val,
+                        })
+                      }
                       className="w-20 h-8 px-2 text-center text-[13px] bg-[#1a1a1e] border border-white/[0.1] rounded-lg text-white touch-manipulation"
                     />
                     <input

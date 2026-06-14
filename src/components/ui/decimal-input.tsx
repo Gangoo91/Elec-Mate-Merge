@@ -15,6 +15,8 @@ interface DecimalInputProps {
   placeholder?: string;
   /** Optional: clamp committed values to >= 0 (default true) */
   nonNegative?: boolean;
+  /** Optional: allow a leading minus for signed values like ±% adjustments */
+  allowNegative?: boolean;
 }
 
 export function DecimalInput({
@@ -24,6 +26,7 @@ export function DecimalInput({
   style,
   placeholder,
   nonNegative = true,
+  allowNegative = false,
 }: DecimalInputProps) {
   const [draft, setDraft] = React.useState(value === 0 ? '' : String(value));
 
@@ -48,13 +51,14 @@ export function DecimalInput({
       placeholder={placeholder}
       onChange={(e) => {
         const val = e.target.value.replace(',', '.');
-        if (val === '' || /^\d*\.?\d*$/.test(val)) {
+        const pattern = allowNegative ? /^-?\d*\.?\d*$/ : /^\d*\.?\d*$/;
+        if (val === '' || val === '-' || pattern.test(val)) {
           setDraft(val);
-          if (val === '') {
+          if (val === '' || val === '-') {
             onChange(0);
           } else {
             const parsed = parseFloat(val);
-            if (!isNaN(parsed) && (!nonNegative || parsed >= 0)) onChange(parsed);
+            if (!isNaN(parsed) && (allowNegative || !nonNegative || parsed >= 0)) onChange(parsed);
           }
         }
       }}
