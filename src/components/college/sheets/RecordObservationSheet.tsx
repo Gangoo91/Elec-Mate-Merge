@@ -251,7 +251,7 @@ export function RecordObservationSheet({
 
   return (
     <Sheet open={open} onOpenChange={onOpenChange}>
-      <SheetContent
+      <SheetContent hideCloseButton
         side="bottom"
         className="h-[92vh] sm:h-[90vh] p-0 overflow-hidden bg-[hsl(0_0%_8%)]"
       >

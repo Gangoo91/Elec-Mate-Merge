@@ -708,7 +708,7 @@ const SubmissionReviewPanel: React.FC<SubmissionReviewPanelProps> = ({
 
       {/* Sign-off Sheet */}
       <Sheet open={showSignOffSheet} onOpenChange={setShowSignOffSheet}>
-        <SheetContent
+        <SheetContent hideCloseButton
           side="bottom"
           className="h-[85vh] p-0 overflow-hidden bg-[hsl(0_0%_8%)]"
         >
@@ -734,7 +734,7 @@ const SubmissionReviewPanel: React.FC<SubmissionReviewPanelProps> = ({
 
       {/* Request Evidence Sheet */}
       <Sheet open={showRejectSheet} onOpenChange={setShowRejectSheet}>
-        <SheetContent
+        <SheetContent hideCloseButton
           side="bottom"
           className="h-[85vh] p-0 overflow-hidden bg-[hsl(0_0%_8%)]"
         >

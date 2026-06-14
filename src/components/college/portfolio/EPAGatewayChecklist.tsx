@@ -316,7 +316,7 @@ const EPAGatewayChecklist: React.FC<EPAGatewayChecklistProps> = ({
 
       {/* Update OJT Hours Sheet */}
       <Sheet open={showOJTSheet} onOpenChange={setShowOJTSheet}>
-        <SheetContent
+        <SheetContent hideCloseButton
           side="bottom"
           className="h-[85vh] p-0 overflow-hidden bg-[hsl(0_0%_8%)]"
         >
@@ -353,7 +353,7 @@ const EPAGatewayChecklist: React.FC<EPAGatewayChecklistProps> = ({
 
       {/* Book EPA Sheet */}
       <Sheet open={showBookEPA} onOpenChange={setShowBookEPA}>
-        <SheetContent
+        <SheetContent hideCloseButton
           side="bottom"
           className="h-[85vh] p-0 overflow-hidden bg-[hsl(0_0%_8%)]"
         >

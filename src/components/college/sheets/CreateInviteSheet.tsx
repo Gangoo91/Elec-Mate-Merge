@@ -211,7 +211,7 @@ export function CreateInviteSheet({ open, onOpenChange, onCreated }: Props) {
 
   return (
     <Sheet open={open} onOpenChange={onOpenChange}>
-      <SheetContent
+      <SheetContent hideCloseButton
         side="bottom"
         className="h-[80vh] sm:max-w-lg sm:mx-auto p-0 rounded-t-2xl overflow-hidden border-white/10"
       >

@@ -335,7 +335,7 @@ export function LessonRegisterSheet({
 
   return (
     <Sheet open={open} onOpenChange={onOpenChange}>
-      <SheetContent
+      <SheetContent hideCloseButton
         side="bottom"
         className="h-[92vh] p-0 rounded-t-2xl overflow-hidden bg-[hsl(0_0%_8%)] border-white/[0.06]"
       >

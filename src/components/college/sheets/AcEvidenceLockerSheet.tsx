@@ -474,7 +474,7 @@ export function AcEvidenceLockerSheet({
 
   return (
     <Sheet open={open} onOpenChange={onOpenChange}>
-      <SheetContent
+      <SheetContent hideCloseButton
         side="right"
         className="w-full sm:max-w-[560px] p-0 bg-[hsl(0_0%_8%)] border-white/[0.06]"
       >

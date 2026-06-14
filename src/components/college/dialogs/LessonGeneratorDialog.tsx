@@ -316,7 +316,7 @@ export function LessonGeneratorDialog({
 
   return (
     <ResponsiveDialog open={open} onOpenChange={(v) => !v && onOpenChange(false)}>
-      <ResponsiveDialogContent
+      <ResponsiveDialogContent hideCloseButton
         className={cn(
           // Wider, taller dialog for editorial feel
           'w-[min(100vw-1rem,880px)] max-h-[92vh]',

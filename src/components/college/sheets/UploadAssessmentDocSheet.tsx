@@ -281,7 +281,7 @@ export function UploadAssessmentDocSheet({
 
   return (
     <Sheet open={open} onOpenChange={onOpenChange}>
-      <SheetContent side="bottom" className="h-[92vh] p-0 rounded-t-2xl overflow-hidden border-white/[0.06] bg-[hsl(0_0%_8%)]">
+      <SheetContent hideCloseButton side="bottom" className="h-[92vh] p-0 rounded-t-2xl overflow-hidden border-white/[0.06] bg-[hsl(0_0%_8%)]">
         <SheetShell
           eyebrow="From your document"
           title={

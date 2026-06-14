@@ -58,7 +58,7 @@ export function WithdrawStudentDialog({
 
   return (
     <ResponsiveDialog open={open} onOpenChange={onOpenChange}>
-      <ResponsiveDialogContent className="sm:max-w-[440px]">
+      <ResponsiveDialogContent hideCloseButton className="sm:max-w-[440px]">
         <ResponsiveDialogHeader>
           <ResponsiveDialogTitle>Withdraw student</ResponsiveDialogTitle>
           <ResponsiveDialogDescription>

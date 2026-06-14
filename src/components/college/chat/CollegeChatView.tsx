@@ -159,7 +159,7 @@ export function CollegeChatView({
 
   return (
     <Sheet open={open} onOpenChange={onOpenChange}>
-      <SheetContent side="bottom" className="h-[95vh] rounded-t-2xl p-0 flex flex-col bg-[hsl(0_0%_8%)]">
+      <SheetContent hideCloseButton side="bottom" className="h-[95vh] rounded-t-2xl p-0 flex flex-col bg-[hsl(0_0%_8%)]">
         {/* Header */}
         <div className="flex items-center gap-3 p-4 border-b border-white/[0.08]">
           <IconButton onClick={() => onOpenChange(false)} aria-label="Back">

@@ -284,7 +284,7 @@ export function AddPastoralNoteDialog({
 
   return (
     <ResponsiveDialog open={open} onOpenChange={(v) => !v && !saving && onOpenChange(false)}>
-      <ResponsiveDialogContent
+      <ResponsiveDialogContent hideCloseButton
         className={cn(
           'w-[min(100vw-1rem,620px)] max-h-[92vh]',
           'bg-[hsl(0_0%_10%)] border-white/[0.08]',

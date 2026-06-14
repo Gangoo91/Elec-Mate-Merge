@@ -111,7 +111,7 @@ export function CriteriaLinkerSheet({
 
   return (
     <Sheet open={open} onOpenChange={onOpenChange}>
-      <SheetContent
+      <SheetContent hideCloseButton
         side="bottom"
         className="h-[85vh] p-0 overflow-hidden bg-[hsl(0_0%_8%)]"
       >

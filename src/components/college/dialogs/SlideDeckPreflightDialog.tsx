@@ -38,7 +38,7 @@ export function SlideDeckPreflightDialog({ open, onOpenChange, onConfirm, defaul
 
   return (
     <ResponsiveDialog open={open} onOpenChange={onOpenChange}>
-      <ResponsiveDialogContent className="sm:max-w-[520px] bg-[hsl(0_0%_10%)] border-white/[0.08] text-white p-0 overflow-hidden">
+      <ResponsiveDialogContent hideCloseButton className="sm:max-w-[520px] bg-[hsl(0_0%_10%)] border-white/[0.08] text-white p-0 overflow-hidden">
         <div className="px-5 pt-5 pb-4 border-b border-white/[0.06]">
           <ResponsiveDialogTitle className="text-[15px] font-semibold tracking-tight text-white">
             Generate slide deck

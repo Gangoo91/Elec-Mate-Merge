@@ -133,7 +133,7 @@ export function AddTutorDialog({ open, onOpenChange }: AddTutorDialogProps) {
 
   return (
     <ResponsiveDialog open={open} onOpenChange={onOpenChange}>
-      <ResponsiveDialogContent className="sm:max-w-[500px]">
+      <ResponsiveDialogContent hideCloseButton className="sm:max-w-[500px]">
         <ResponsiveDialogHeader>
           <ResponsiveDialogTitle>Add new tutor</ResponsiveDialogTitle>
           <ResponsiveDialogDescription>

@@ -68,7 +68,7 @@ export function AddResourceLinkDialog({ open, onOpenChange, onSave }: Props) {
 
   return (
     <ResponsiveDialog open={open} onOpenChange={(v) => !v && !saving && onOpenChange(false)}>
-      <ResponsiveDialogContent
+      <ResponsiveDialogContent hideCloseButton
         className={cn(
           'w-[min(100vw-1rem,560px)] bg-[hsl(0_0%_10%)] border-white/[0.08] p-0 gap-0 flex flex-col overflow-hidden',
           'sm:w-[min(100vw-2rem,560px)]'

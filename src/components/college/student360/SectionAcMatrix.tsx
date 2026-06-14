@@ -91,7 +91,11 @@ interface Props {
 export function SectionAcMatrix({ studentId, studentUserId, studentName }: Props) {
   const { toast } = useToast();
   const { data, loading, error, evidenceTypes, refresh } = useAcMatrix(studentId, studentUserId);
-  const [mode, setMode] = useState<ViewMode>('matrix');
+  // Default to the list view on phones — the matrix heatmap needs horizontal
+  // scroll that doesn't belong on a small screen; desktop still opens the grid.
+  const [mode, setMode] = useState<ViewMode>(() =>
+    typeof window !== 'undefined' && window.innerWidth < 640 ? 'list' : 'matrix'
+  );
   const [filterGapsOnly, setFilterGapsOnly] = useState(false);
   const [search, setSearch] = useState('');
   const [openLocker, setOpenLocker] = useState<AcCellRow | null>(null);

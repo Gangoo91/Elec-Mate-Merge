@@ -145,7 +145,7 @@ export function AddRequirementDialog({
 
   return (
     <ResponsiveDialog open={open} onOpenChange={onOpenChange}>
-      <ResponsiveDialogContent className="bg-[hsl(0_0%_12%)] border-white/[0.08] max-w-lg max-h-[90vh] overflow-y-auto rounded-2xl">
+      <ResponsiveDialogContent hideCloseButton className="bg-[hsl(0_0%_12%)] border-white/[0.08] max-w-lg max-h-[90vh] overflow-y-auto rounded-2xl">
         <ResponsiveDialogHeader>
           <Eyebrow>Portfolio</Eyebrow>
           <ResponsiveDialogTitle className="mt-1 text-white">

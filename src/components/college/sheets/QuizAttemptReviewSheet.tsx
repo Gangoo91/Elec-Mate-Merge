@@ -192,7 +192,7 @@ export function QuizAttemptReviewSheet({ open, onOpenChange, attemptId, studentN
 
   return (
     <Sheet open={open} onOpenChange={onOpenChange}>
-      <SheetContent
+      <SheetContent hideCloseButton
         side="bottom"
         className="h-[92vh] p-0 rounded-t-2xl overflow-hidden border-white/[0.06] bg-[hsl(0_0%_8%)]"
       >

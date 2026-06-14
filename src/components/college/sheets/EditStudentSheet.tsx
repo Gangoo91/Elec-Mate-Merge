@@ -145,7 +145,7 @@ export function EditStudentSheet({ student, open, onOpenChange }: EditStudentShe
 
   return (
     <Sheet open={open} onOpenChange={onOpenChange}>
-      <SheetContent side="bottom" className="h-[85vh] p-0 overflow-hidden bg-[hsl(0_0%_8%)]">
+      <SheetContent hideCloseButton side="bottom" className="h-[85vh] p-0 overflow-hidden bg-[hsl(0_0%_8%)]">
         <SheetShell
           eyebrow="Edit Student"
           title={student.name}

@@ -247,7 +247,7 @@ export function RubricGradingDialog({
 
   return (
     <ResponsiveDialog open={open} onOpenChange={onOpenChange}>
-      <ResponsiveDialogContent className="max-w-4xl max-h-[90vh] overflow-hidden flex flex-col bg-[hsl(0_0%_8%)] border-white/[0.08]">
+      <ResponsiveDialogContent hideCloseButton className="max-w-4xl max-h-[90vh] overflow-hidden flex flex-col bg-[hsl(0_0%_8%)] border-white/[0.08]">
         <ResponsiveDialogHeader>
           <ResponsiveDialogTitle className="text-white">Rubric grading</ResponsiveDialogTitle>
           <ResponsiveDialogDescription className="text-white">

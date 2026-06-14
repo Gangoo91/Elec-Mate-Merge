@@ -167,7 +167,7 @@ export function ScheduleLessonDialog({
 
   return (
     <ResponsiveDialog open={open} onOpenChange={(v) => !v && onOpenChange(false)}>
-      <ResponsiveDialogContent
+      <ResponsiveDialogContent hideCloseButton
         className={cn(
           'w-[min(100vw-1rem,640px)] max-h-[92vh]',
           'bg-[hsl(0_0%_10%)] border-white/[0.08]',

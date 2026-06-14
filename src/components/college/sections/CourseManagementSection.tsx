@@ -331,7 +331,7 @@ function CourseFormSheet({
 
   return (
     <Sheet open onOpenChange={(v) => !v && onClose()}>
-      <SheetContent
+      <SheetContent hideCloseButton
         side="bottom"
         className="h-[90vh] p-0 rounded-t-2xl overflow-hidden border-white/[0.08] bg-[hsl(0_0%_8%)]"
       >

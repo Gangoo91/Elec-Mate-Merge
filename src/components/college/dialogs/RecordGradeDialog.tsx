@@ -121,7 +121,7 @@ export function RecordGradeDialog({ open, onOpenChange, assessmentId }: RecordGr
 
   return (
     <ResponsiveDialog open={open} onOpenChange={onOpenChange}>
-      <ResponsiveDialogContent className="sm:max-w-[500px] max-h-[90vh] overflow-y-auto bg-[hsl(0_0%_8%)] border-white/[0.08]">
+      <ResponsiveDialogContent hideCloseButton className="sm:max-w-[500px] max-h-[90vh] overflow-y-auto bg-[hsl(0_0%_8%)] border-white/[0.08]">
         <ResponsiveDialogHeader>
           <ResponsiveDialogTitle className="text-white">Record grade</ResponsiveDialogTitle>
           <ResponsiveDialogDescription className="text-white">

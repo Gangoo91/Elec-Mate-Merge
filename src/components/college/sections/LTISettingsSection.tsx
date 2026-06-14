@@ -41,13 +41,12 @@ import {
   DropdownMenuSeparator,
 } from '@/components/ui/dropdown-menu';
 import {
-  Dialog,
-  DialogContent,
-  DialogDescription,
-  DialogFooter,
-  DialogHeader,
-  DialogTitle,
-} from '@/components/ui/dialog';
+  ResponsiveDialog,
+  ResponsiveDialogContent,
+  ResponsiveDialogDescription,
+  ResponsiveDialogFooter,
+  ResponsiveDialogTitle,
+} from '@/components/ui/responsive-dialog';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import {
   Accordion,
@@ -1276,7 +1275,7 @@ export function LTISettingsSection() {
       </motion.div>
 
       {/* Add Platform Dialog */}
-      <Dialog
+      <ResponsiveDialog
         open={isAddDialogOpen}
         onOpenChange={(open) => {
           setIsAddDialogOpen(open);
@@ -1295,23 +1294,23 @@ export function LTISettingsSection() {
           }
         }}
       >
-        <DialogContent className="w-[min(100vw-2rem,640px)] max-h-[90vh] overflow-y-auto bg-[hsl(0_0%_10%)] border-white/[0.08] p-0">
-          {/* Sticky header */}
-          <div className="sticky top-0 z-10 bg-[hsl(0_0%_10%)] border-b border-white/[0.06] px-6 py-5">
+        <ResponsiveDialogContent hideCloseButton className="w-[min(100vw-2rem,640px)] bg-[hsl(0_0%_10%)] border-white/[0.08] p-0">
+          {/* Header */}
+          <div className="shrink-0 bg-[hsl(0_0%_10%)] border-b border-white/[0.06] px-6 py-5">
             <div className="text-[10px] font-medium uppercase tracking-[0.18em] text-white">
               LMS integration
             </div>
-            <DialogTitle className="mt-1 text-xl font-semibold text-white tracking-tight">
+            <ResponsiveDialogTitle className="mt-1 text-xl font-semibold text-white tracking-tight">
               {editingPlatformId ? 'Edit LTI platform' : 'Add LTI platform'}
-            </DialogTitle>
-            <DialogDescription className="mt-1 text-[13px] text-white leading-relaxed">
+            </ResponsiveDialogTitle>
+            <ResponsiveDialogDescription className="mt-1 text-[13px] text-white leading-relaxed">
               {editingPlatformId
                 ? 'Update the LMS configuration. Changes take effect on the next launch.'
                 : 'Manually register an LMS using LTI 1.3. If your LMS supports Dynamic Registration, switch to that tab — it only needs one URL.'}
-            </DialogDescription>
+            </ResponsiveDialogDescription>
           </div>
 
-          <div className="px-6 py-5 space-y-6">
+          <div className="flex-1 overflow-y-auto px-6 py-5 space-y-6">
             {/* —— Section 1: Platform identity —— */}
             <div className="space-y-4">
               <div className="flex items-center gap-2">
@@ -1472,8 +1471,8 @@ export function LTISettingsSection() {
             )}
           </div>
 
-          {/* Sticky footer */}
-          <DialogFooter className="sticky bottom-0 bg-[hsl(0_0%_10%)] border-t border-white/[0.06] px-6 py-4 gap-2">
+          {/* Footer */}
+          <ResponsiveDialogFooter className="bg-[hsl(0_0%_10%)] border-t border-white/[0.06] px-6 py-4 gap-2">
             <SecondaryButton
               onClick={() => setIsAddDialogOpen(false)}
               disabled={isSubmittingAdd}
@@ -1492,25 +1491,25 @@ export function LTISettingsSection() {
                   ? 'Save changes →'
                   : 'Add platform →'}
             </PrimaryButton>
-          </DialogFooter>
-        </DialogContent>
-      </Dialog>
+          </ResponsiveDialogFooter>
+        </ResponsiveDialogContent>
+      </ResponsiveDialog>
 
       {/* Setup Guide Dialog */}
-      <Dialog open={isSetupGuideOpen} onOpenChange={setIsSetupGuideOpen}>
-        <DialogContent className="max-w-2xl max-h-[80vh] overflow-y-auto bg-[hsl(0_0%_10%)] border-white/[0.08]">
-          <DialogHeader>
-            <DialogTitle>
+      <ResponsiveDialog open={isSetupGuideOpen} onOpenChange={setIsSetupGuideOpen}>
+        <ResponsiveDialogContent hideCloseButton className="max-w-2xl bg-[hsl(0_0%_10%)] border-white/[0.08] p-0">
+          <div className="shrink-0 border-b border-white/[0.06] px-6 py-5">
+            <ResponsiveDialogTitle className="text-lg font-semibold text-white tracking-tight">
               {selectedGuide === 'canvas' && 'Canvas LMS setup guide'}
               {selectedGuide === 'moodle' && 'Moodle setup guide'}
               {selectedGuide === 'blackboard' && 'Blackboard Learn setup guide'}
-            </DialogTitle>
-            <DialogDescription>
+            </ResponsiveDialogTitle>
+            <ResponsiveDialogDescription className="mt-1 text-[13px] text-white leading-relaxed">
               Follow these steps to connect your LMS to Elec-Mate
-            </DialogDescription>
-          </DialogHeader>
+            </ResponsiveDialogDescription>
+          </div>
 
-          <div className="py-4">
+          <div className="flex-1 overflow-y-auto px-6 py-4">
             {selectedGuide === 'canvas' && (
               <Accordion type="single" collapsible className="w-full">
                 <AccordionItem value="step1">
@@ -1821,7 +1820,7 @@ export function LTISettingsSection() {
             )}
           </div>
 
-          <DialogFooter>
+          <ResponsiveDialogFooter className="border-t border-white/[0.06] px-6 py-4 gap-2">
             <SecondaryButton onClick={() => setIsSetupGuideOpen(false)}>
               Close
             </SecondaryButton>
@@ -1833,19 +1832,23 @@ export function LTISettingsSection() {
             >
               Add Platform →
             </PrimaryButton>
-          </DialogFooter>
-        </DialogContent>
-      </Dialog>
+          </ResponsiveDialogFooter>
+        </ResponsiveDialogContent>
+      </ResponsiveDialog>
 
       {/* Configure Platform Dialog */}
-      <Dialog open={isConfigureDialogOpen} onOpenChange={setIsConfigureDialogOpen}>
-        <DialogContent className="max-w-lg bg-[hsl(0_0%_10%)] border-white/[0.08]">
-          <DialogHeader>
-            <DialogTitle>Configure {selectedPlatform?.name}</DialogTitle>
-            <DialogDescription>Update platform settings and features</DialogDescription>
-          </DialogHeader>
+      <ResponsiveDialog open={isConfigureDialogOpen} onOpenChange={setIsConfigureDialogOpen}>
+        <ResponsiveDialogContent hideCloseButton className="max-w-lg bg-[hsl(0_0%_10%)] border-white/[0.08] p-0">
+          <div className="shrink-0 border-b border-white/[0.06] px-6 py-5">
+            <ResponsiveDialogTitle className="text-lg font-semibold text-white tracking-tight">
+              Configure {selectedPlatform?.name}
+            </ResponsiveDialogTitle>
+            <ResponsiveDialogDescription className="mt-1 text-[13px] text-white leading-relaxed">
+              Update platform settings and features
+            </ResponsiveDialogDescription>
+          </div>
           {selectedPlatform && (
-            <div className="space-y-4 py-4">
+            <div className="flex-1 overflow-y-auto px-6 py-4 space-y-4">
               <Field label="Platform Name">
                 <Input defaultValue={selectedPlatform.name} className={inputClass} />
               </Field>
@@ -1874,7 +1877,7 @@ export function LTISettingsSection() {
               </div>
             </div>
           )}
-          <DialogFooter>
+          <ResponsiveDialogFooter className="border-t border-white/[0.06] px-6 py-4 gap-2">
             <SecondaryButton onClick={() => setIsConfigureDialogOpen(false)}>
               Cancel
             </SecondaryButton>
@@ -1889,9 +1892,9 @@ export function LTISettingsSection() {
             >
               Save Changes
             </PrimaryButton>
-          </DialogFooter>
-        </DialogContent>
-      </Dialog>
+          </ResponsiveDialogFooter>
+        </ResponsiveDialogContent>
+      </ResponsiveDialog>
     </PageFrame>
   );
 }

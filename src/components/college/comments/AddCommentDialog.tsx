@@ -213,7 +213,7 @@ export function AddCommentDialog({
 
   return (
     <ResponsiveDialog open={open} onOpenChange={onOpenChange}>
-      <ResponsiveDialogContent className="sm:max-w-md bg-[hsl(0_0%_8%)] border border-white/[0.08] text-white">
+      <ResponsiveDialogContent hideCloseButton className="sm:max-w-md bg-[hsl(0_0%_8%)] border border-white/[0.08] text-white">
         <ResponsiveDialogHeader>
           <ResponsiveDialogTitle className="flex items-center gap-2 text-white">Add Comment</ResponsiveDialogTitle>
           {contextTitle && (

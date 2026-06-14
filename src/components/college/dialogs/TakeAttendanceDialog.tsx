@@ -156,7 +156,7 @@ export function TakeAttendanceDialog({ open, onOpenChange, cohortId }: TakeAtten
 
   return (
     <ResponsiveDialog open={open} onOpenChange={onOpenChange}>
-      <ResponsiveDialogContent className="sm:max-w-[600px]">
+      <ResponsiveDialogContent hideCloseButton className="sm:max-w-[600px]">
         <ResponsiveDialogHeader>
           <ResponsiveDialogTitle>Take register</ResponsiveDialogTitle>
           <ResponsiveDialogDescription>

@@ -175,7 +175,7 @@ export function NewSchemeDialog({ open, onOpenChange, editing }: NewSchemeDialog
 
   return (
     <ResponsiveDialog open={open} onOpenChange={onOpenChange}>
-      <ResponsiveDialogContent className="sm:max-w-[600px]">
+      <ResponsiveDialogContent hideCloseButton className="sm:max-w-[600px]">
         <ResponsiveDialogHeader>
           <ResponsiveDialogTitle>
             {editing ? 'Edit scheme of work' : 'Create scheme of work'}

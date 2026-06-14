@@ -138,7 +138,7 @@ export function AddStudentDialog({ open, onOpenChange }: AddStudentDialogProps) 
 
   return (
     <ResponsiveDialog open={open} onOpenChange={onOpenChange}>
-      <ResponsiveDialogContent className="sm:max-w-[500px]">
+      <ResponsiveDialogContent hideCloseButton className="sm:max-w-[500px]">
         <ResponsiveDialogHeader>
           <ResponsiveDialogTitle>Enrol new student</ResponsiveDialogTitle>
           <ResponsiveDialogDescription>

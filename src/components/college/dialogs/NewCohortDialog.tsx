@@ -144,7 +144,7 @@ export function NewCohortDialog({ open, onOpenChange }: NewCohortDialogProps) {
 
   return (
     <ResponsiveDialog open={open} onOpenChange={onOpenChange}>
-      <ResponsiveDialogContent className="sm:max-w-[550px]">
+      <ResponsiveDialogContent hideCloseButton className="sm:max-w-[550px]">
         <ResponsiveDialogHeader>
           <ResponsiveDialogTitle>Create new cohort</ResponsiveDialogTitle>
           <ResponsiveDialogDescription>

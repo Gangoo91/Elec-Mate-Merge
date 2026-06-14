@@ -195,7 +195,7 @@ function QualificationsGrid({ onSelect }: { onSelect: (q: QualificationRow) => v
 
       {/* Mobile filters sheet */}
       <Sheet open={filtersOpen} onOpenChange={setFiltersOpen}>
-        <SheetContent
+        <SheetContent hideCloseButton
           side="bottom"
           className="h-auto max-h-[85vh] p-0 rounded-t-2xl overflow-hidden border-white/[0.08]"
         >
@@ -529,7 +529,7 @@ function AcSheet({
 
   return (
     <Sheet open={open} onOpenChange={(v) => !v && onClose()}>
-      <SheetContent
+      <SheetContent hideCloseButton
         side={isMobile ? 'bottom' : 'right'}
         className={cn(
           'p-0 bg-[hsl(0_0%_8%)] border-white/[0.08] overflow-hidden',

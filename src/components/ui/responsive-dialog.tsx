@@ -33,6 +33,8 @@ interface ResponsiveDialogContentProps {
   mobileHeight?: string;
   /** Side for mobile sheet. Defaults to bottom */
   side?: 'bottom' | 'right' | 'left' | 'top';
+  /** Suppress the built-in top-right close X — use when a footer Cancel/Close is the single close affordance. */
+  hideCloseButton?: boolean;
 }
 
 interface ResponsiveDialogHeaderProps {
@@ -109,6 +111,7 @@ export function ResponsiveDialogContent({
   className,
   mobileHeight = '85vh',
   side = 'bottom',
+  hideCloseButton = false,
 }: ResponsiveDialogContentProps) {
   const { isMobile } = React.useContext(ResponsiveDialogContext);
 
@@ -116,6 +119,7 @@ export function ResponsiveDialogContent({
     return (
       <SheetContent
         side={side}
+        hideCloseButton={hideCloseButton}
         className={cn('flex flex-col p-0', side === 'bottom' && 'rounded-t-2xl', className)}
         style={side === 'bottom' ? { height: mobileHeight } : undefined}
       >
@@ -125,7 +129,10 @@ export function ResponsiveDialogContent({
   }
 
   return (
-    <DialogContent className={cn('max-h-[90vh] flex flex-col overflow-hidden', className)}>
+    <DialogContent
+      hideCloseButton={hideCloseButton}
+      className={cn('max-h-[90vh] flex flex-col overflow-hidden', className)}
+    >
       {children}
     </DialogContent>
   );

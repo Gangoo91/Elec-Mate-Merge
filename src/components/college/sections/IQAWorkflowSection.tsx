@@ -656,7 +656,7 @@ export function IQAWorkflowSection({ onNavigate: _onNavigate }: IQAWorkflowSecti
 
       {/* ── Add finding bottom sheet ─────────────────────── */}
       <Sheet open={showAddFinding} onOpenChange={setShowAddFinding}>
-        <SheetContent side="bottom" className="h-[85vh] p-0 rounded-t-2xl overflow-hidden">
+        <SheetContent hideCloseButton side="bottom" className="h-[85vh] p-0 rounded-t-2xl overflow-hidden">
           <SheetShell
             eyebrow="IQA Workflow"
             title="New finding"
@@ -736,7 +736,7 @@ export function IQAWorkflowSection({ onNavigate: _onNavigate }: IQAWorkflowSecti
 
       {/* ── Add meeting bottom sheet ─────────────────────── */}
       <Sheet open={showAddMeeting} onOpenChange={setShowAddMeeting}>
-        <SheetContent side="bottom" className="h-[85vh] p-0 rounded-t-2xl overflow-hidden">
+        <SheetContent hideCloseButton side="bottom" className="h-[85vh] p-0 rounded-t-2xl overflow-hidden">
           <SheetShell
             eyebrow="IQA Workflow"
             title="Record standardisation meeting"

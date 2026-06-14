@@ -102,7 +102,7 @@ export function StudentInclusionSheet({ open, onOpenChange, studentId, studentNa
 
   return (
     <Sheet open={open} onOpenChange={onOpenChange}>
-      <SheetContent side="bottom" className="h-[85vh] p-0 rounded-t-2xl overflow-hidden">
+      <SheetContent hideCloseButton side="bottom" className="h-[85vh] p-0 rounded-t-2xl overflow-hidden">
         <SheetShell
           title="Inclusion & adjustments"
           subtitle={
