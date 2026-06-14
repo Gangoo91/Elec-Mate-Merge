@@ -14,29 +14,34 @@ import {
   LoadingBlocks,
 } from '@/components/employer/editorial';
 import { useEmployerDashboardStats } from '@/hooks/useEmployerDashboardStats';
+import { useEmployerOverview, type RadarItem } from '@/hooks/useEmployerOverview';
 import { useVacancyStats } from '@/hooks/useVacancies';
 import type { Section } from '@/pages/employer/EmployerDashboard';
+import type { Tone } from '@/components/employer/editorial';
 
 interface OverviewSectionProps {
   onNavigate: (section: Section) => void;
+  onOpenMate?: () => void;
 }
 
 import { FirstRunChecklist } from '@/components/employer/FirstRunChecklist';
+import { MateEntryCard } from '@/components/employer/EmployerMate';
 
-export function OverviewSection({ onNavigate }: OverviewSectionProps) {
+const gbp = (n: number) =>
+  `£${Math.round(n).toLocaleString('en-GB')}`;
+
+export function OverviewSection({ onNavigate, onOpenMate }: OverviewSectionProps) {
   const { stats, isLoading, refetch } = useEmployerDashboardStats();
+  const { data: radar, refetch: refetchRadar } = useEmployerOverview();
   const { data: vacancyStats } = useVacancyStats();
 
-  const {
-    activeEmployees,
-    activeJobs,
-    expiringCertifications: expiringCerts,
-    pendingExpenses,
-    safetyScore,
-    upcomingDeadlines,
-  } = stats;
+  const { activeEmployees, activeJobs, expiringCertifications: expiringCerts, pendingExpenses, safetyScore } =
+    stats;
 
   const newApplications = vacancyStats?.newApplications || 0;
+  const cash = radar?.cash;
+  const radarItems: RadarItem[] = radar?.items ?? [];
+  const pendingTimesheets = radar?.counts.pending_timesheets ?? 0;
 
   const onOpenPeople = () => onNavigate('peoplehub');
   const onOpenJobs = () => onNavigate('jobshub');
@@ -45,53 +50,65 @@ export function OverviewSection({ onNavigate }: OverviewSectionProps) {
   const onOpenSmartDocs = () => onNavigate('smartdocs');
   const onOpenAlerts = () => onNavigate('elecid');
 
-  const attentionItems = [
-    ...(expiringCerts > 0
+  const refreshAll = () => {
+    void refetch();
+    void refetchRadar();
+  };
+
+  // Named, one-tap attention rows from the radar, plus the cross-table
+  // aggregates the radar reports as counts (timesheets) and the surfaces it
+  // doesn't yet cover (expenses, applications).
+  const attentionItems: {
+    key: string;
+    title: string;
+    sub: string;
+    section: Section;
+    tone: Tone;
+    count?: number;
+  }[] = [
+    ...radarItems.map((it, i) => ({
+      key: `${it.kind}-${it.id}-${i}`,
+      title: it.title,
+      sub: it.subtitle,
+      section: it.section as Section,
+      tone: it.severity as Tone,
+    })),
+    ...(pendingTimesheets > 0
       ? [
           {
-            type: 'cert' as const,
-            count: expiringCerts,
-            label: 'Expiring certifications',
-            sub: 'Renewals due in the next 30 days',
-            section: 'elecid' as Section,
-            tone: 'orange' as const,
+            key: 'timesheets',
+            title: `${pendingTimesheets} timesheet${pendingTimesheets === 1 ? '' : 's'} awaiting approval`,
+            sub: 'Approve to release the hours',
+            section: 'timesheets' as Section,
+            tone: 'amber' as Tone,
+            count: pendingTimesheets,
           },
         ]
       : []),
     ...(pendingExpenses > 0
       ? [
           {
-            type: 'expense' as const,
-            count: pendingExpenses,
-            label: 'Pending expense claims',
-            sub: 'Awaiting your review',
+            key: 'expenses',
+            title: `${pendingExpenses} expense claim${pendingExpenses === 1 ? '' : 's'} to review`,
+            sub: 'Awaiting your approval',
             section: 'expenses' as Section,
-            tone: 'amber' as const,
+            tone: 'amber' as Tone,
+            count: pendingExpenses,
           },
         ]
       : []),
     ...(newApplications > 0
       ? [
           {
-            type: 'app' as const,
-            count: newApplications,
-            label: 'New job applications',
+            key: 'applications',
+            title: `${newApplications} new job application${newApplications === 1 ? '' : 's'}`,
             sub: 'Candidates waiting on a reply',
             section: 'vacancies' as Section,
-            tone: 'blue' as const,
+            tone: 'blue' as Tone,
+            count: newApplications,
           },
         ]
       : []),
-    ...upcomingDeadlines
-      .filter((d) => d.urgent)
-      .map((d) => ({
-        type: 'deadline' as const,
-        count: 1,
-        label: d.title,
-        sub: 'Deadline approaching',
-        section: 'elecid' as Section,
-        tone: 'red' as const,
-      })),
   ];
 
   if (isLoading) {
@@ -116,13 +133,13 @@ export function OverviewSection({ onNavigate }: OverviewSectionProps) {
         description="Your firm at a glance — team, jobs, alerts, safety."
         tone="yellow"
         actions={
-          <IconButton onClick={() => void refetch()} aria-label="Refresh">
+          <IconButton onClick={refreshAll} aria-label="Refresh">
             <RefreshCw className="h-4 w-4" />
           </IconButton>
         }
       />
 
-      <FirstRunChecklist onNavigate={(sec) => onNavigate(sec as never)} />
+      {onOpenMate && <MateEntryCard onOpen={onOpenMate} />}
 
       <StatStrip
         columns={4}
@@ -140,8 +157,8 @@ export function OverviewSection({ onNavigate }: OverviewSectionProps) {
           },
           {
             label: 'Alerts',
-            value: expiringCerts,
-            tone: expiringCerts > 0 ? 'red' : 'emerald',
+            value: attentionItems.length,
+            tone: attentionItems.length > 0 ? 'red' : 'emerald',
             onClick: onOpenAlerts,
           },
           {
@@ -152,6 +169,35 @@ export function OverviewSection({ onNavigate }: OverviewSectionProps) {
           },
         ]}
       />
+
+      {cash && (
+        <div className="space-y-4">
+          <SectionHeader eyebrow="This month" title="Cash" />
+          <StatStrip
+            columns={3}
+            stats={[
+              {
+                label: 'Invoiced',
+                value: gbp(cash.invoiced_this_month),
+                tone: 'blue',
+                onClick: onOpenFinance,
+              },
+              {
+                label: 'Paid',
+                value: gbp(cash.paid_this_month),
+                tone: 'emerald',
+                onClick: onOpenFinance,
+              },
+              {
+                label: cash.overdue_count > 0 ? `Overdue · ${cash.overdue_count}` : 'Overdue',
+                value: gbp(cash.overdue_total),
+                tone: cash.overdue_total > 0 ? 'red' : 'emerald',
+                onClick: onOpenFinance,
+              },
+            ]}
+          />
+        </div>
+      )}
 
       <div className="space-y-4">
         <SectionHeader eyebrow="Quick Actions" title="Do next" />
@@ -195,16 +241,21 @@ export function OverviewSection({ onNavigate }: OverviewSectionProps) {
             <Pill tone="orange">{attentionItems.length}</Pill>
           </div>
           <div className="space-y-3">
-            {attentionItems.slice(0, 4).map((item, index) => (
+            {attentionItems.slice(0, 6).map((item) => (
               <AlertRow
-                key={`${item.type}-${index}`}
+                key={item.key}
                 tone={item.tone}
-                title={item.count > 1 ? `${item.count} ${item.label}` : item.label}
+                title={item.title}
                 subtitle={item.sub}
-                trailing={<Pill tone={item.tone}>{item.count}</Pill>}
+                trailing={item.count ? <Pill tone={item.tone}>{item.count}</Pill> : undefined}
                 onClick={() => onNavigate(item.section)}
               />
             ))}
+            {attentionItems.length > 6 && (
+              <p className="text-[12px] text-white/50 text-center pt-1">
+                +{attentionItems.length - 6} more
+              </p>
+            )}
           </div>
         </div>
       )}
@@ -265,6 +316,8 @@ export function OverviewSection({ onNavigate }: OverviewSectionProps) {
           />
         </HubGrid>
       </div>
+
+      <FirstRunChecklist onNavigate={(sec) => onNavigate(sec as never)} />
     </PageFrame>
   );
 }

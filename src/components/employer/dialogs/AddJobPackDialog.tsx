@@ -23,6 +23,7 @@ import { useCreateJobPack } from '@/hooks/useJobPacks';
 import { useEmployees } from '@/hooks/useEmployees';
 import { useJobs } from '@/hooks/useJobs';
 import { toast } from '@/hooks/use-toast';
+import { supabase } from '@/integrations/supabase/client';
 import {
   getSuggestedCertifications,
   COMMON_CERTIFICATIONS,
@@ -38,11 +39,9 @@ import {
   PoundSterling,
   Award,
   FileText,
-  ChevronRight,
-  ChevronLeft,
   CheckCircle2,
   Briefcase,
-  Zap,
+  Loader2,
 } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { useIsMobile } from '@/hooks/use-mobile';
@@ -52,6 +51,8 @@ import {
   FormGrid,
   PrimaryButton,
   SecondaryButton,
+  Eyebrow,
+  Pill,
   inputClass,
   textareaClass,
   checkboxClass,
@@ -69,12 +70,62 @@ const COMMON_HAZARDS = [
 ];
 
 const STEPS = [
-  { id: 1, title: 'Source', icon: Briefcase },
-  { id: 2, title: 'Details', icon: Package },
-  { id: 3, title: 'Hazards', icon: AlertTriangle },
-  { id: 4, title: 'Team', icon: Users },
-  { id: 5, title: 'Review', icon: CheckCircle2 },
+  { id: 1, title: 'Source' },
+  { id: 2, title: 'Details' },
+  { id: 3, title: 'Hazards' },
+  { id: 4, title: 'Team' },
+  { id: 5, title: 'Review' },
 ];
+
+// A clean, icon-free source choice — radio-style selection, editorial type.
+function SourceCard({
+  label,
+  desc,
+  selected,
+  onClick,
+  tag,
+}: {
+  label: string;
+  desc: string;
+  selected: boolean;
+  onClick: () => void;
+  tag?: string;
+}) {
+  return (
+    <button
+      type="button"
+      onClick={onClick}
+      className={cn(
+        'w-full text-left px-4 py-3.5 rounded-xl border transition-all duration-200 touch-manipulation active:scale-[0.99]',
+        selected
+          ? 'border-elec-yellow/70 bg-elec-yellow/[0.07]'
+          : 'border-white/[0.08] bg-white/[0.02] hover:bg-white/[0.04]'
+      )}
+    >
+      <div className="flex items-center justify-between gap-3">
+        <div className="min-w-0">
+          <div className="flex items-center gap-2">
+            <p className="text-[14px] font-semibold text-white">{label}</p>
+            {tag && (
+              <Pill tone="yellow" className="text-[9px] px-1.5 py-0">
+                {tag}
+              </Pill>
+            )}
+          </div>
+          <p className="mt-0.5 text-[12px] text-white/55">{desc}</p>
+        </div>
+        <span
+          className={cn(
+            'h-4 w-4 rounded-full border shrink-0 flex items-center justify-center transition-colors',
+            selected ? 'border-elec-yellow bg-elec-yellow' : 'border-white/20'
+          )}
+        >
+          {selected && <span className="h-1.5 w-1.5 rounded-full bg-black" />}
+        </span>
+      </div>
+    </button>
+  );
+}
 
 interface AddJobPackDialogProps {
   trigger?: React.ReactNode;
@@ -97,8 +148,10 @@ export function AddJobPackDialog({
   const { data: jobs = [] } = useJobs();
 
   const [currentStep, setCurrentStep] = useState(1);
-  const [sourceType, setSourceType] = useState<'new' | 'existing'>('new');
+  const [sourceType, setSourceType] = useState<'new' | 'existing' | 'document'>('new');
   const [selectedJobId, setSelectedJobId] = useState<string | null>(null);
+  const [isExtracting, setIsExtracting] = useState(false);
+  const [extractError, setExtractError] = useState<string | null>(null);
 
   const [formData, setFormData] = useState({
     title: '',
@@ -230,10 +283,68 @@ export function AddJobPackDialog({
     });
   };
 
+  // Read a job sheet (photo or PDF) and pre-fill the pack for review.
+  const handleDocumentUpload = async (file: File) => {
+    setExtractError(null);
+    setIsExtracting(true);
+    try {
+      const base64 = await new Promise<string>((resolve, reject) => {
+        const reader = new FileReader();
+        reader.onload = () => resolve(String(reader.result).split(',')[1] ?? '');
+        reader.onerror = () => reject(new Error('Could not read that file'));
+        reader.readAsDataURL(file);
+      });
+
+      const { data, error } = await supabase.functions.invoke('parse-job-sheet', {
+        body: { file_base64: base64, file_type: file.type },
+      });
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      const res = data as any;
+      if (error || !res?.success) {
+        throw error || new Error(res?.error || 'Could not read that document');
+      }
+
+      const e = res.extracted;
+      setFormData((prev) => ({
+        ...prev,
+        title: e.title || prev.title,
+        client: e.client || prev.client,
+        location: e.location || prev.location,
+        scope: e.scope || prev.scope,
+        hazards: e.hazards?.length ? e.hazards : prev.hazards,
+        requiredCertifications: e.requiredCertifications?.length
+          ? e.requiredCertifications
+          : prev.requiredCertifications,
+        estimatedValue: e.estimatedValue ? String(e.estimatedValue) : prev.estimatedValue,
+        startDate: e.startDate || prev.startDate,
+      }));
+      setSourceType('document');
+      toast({
+        title: 'Job sheet read',
+        description: 'Review the extracted details and adjust anything before saving.',
+      });
+      setCurrentStep(2);
+    } catch (err) {
+      const message = err instanceof Error ? err.message : 'Could not read that document';
+      setExtractError(message);
+      toast({
+        title: "Couldn't read the sheet",
+        description: 'Try a clearer photo or a PDF.',
+        variant: 'destructive',
+      });
+    } finally {
+      setIsExtracting(false);
+    }
+  };
+
   const canProceed = () => {
     switch (currentStep) {
       case 1:
-        return sourceType === 'new' || selectedJobId !== null;
+        return (
+          sourceType === 'new' ||
+          (sourceType === 'existing' && selectedJobId !== null) ||
+          (sourceType === 'document' && !!formData.title)
+        );
       case 2:
         return formData.title && formData.client && formData.location;
       case 3:
@@ -255,59 +366,38 @@ export function AddJobPackDialog({
     .filter((e) => formData.assignedWorkers.includes(e.id))
     .map((e) => e.name);
 
-  // Step Progress Indicator
+  // Step progress — segmented bar + "Step 02 / 05 · Title", no icons.
   const ProgressIndicator = () => (
-    <div className="flex items-center justify-between px-1 sm:px-2 py-3 mb-3">
-      {STEPS.map((step, index) => {
-        const StepIcon = step.icon;
-        const isActive = currentStep === step.id;
-        const isComplete = currentStep > step.id;
-
-        return (
-          <div key={step.id} className="flex items-center">
-            <div
-              className={cn(
-                'flex flex-col items-center cursor-pointer transition-all duration-200',
-                isActive && 'scale-105'
-              )}
+    <div className="px-1 sm:px-2 pt-1 pb-4">
+      <div className="flex items-center justify-between mb-2.5">
+        <Eyebrow>
+          Step {String(currentStep).padStart(2, '0')} / {String(STEPS.length).padStart(2, '0')}
+        </Eyebrow>
+        <span className="text-[11px] font-medium text-white/55">
+          {STEPS[currentStep - 1].title}
+        </span>
+      </div>
+      <div className="flex items-center gap-1.5">
+        {STEPS.map((step) => {
+          const isDone = currentStep > step.id;
+          const isActive = currentStep === step.id;
+          return (
+            <button
+              key={step.id}
+              type="button"
               onClick={() => step.id < currentStep && setCurrentStep(step.id)}
-            >
-              <div
-                className={cn(
-                  'w-10 h-10 sm:w-11 sm:h-11 rounded-full flex items-center justify-center transition-all duration-200',
-                  isComplete && 'bg-emerald-500 text-black',
-                  isActive && 'bg-elec-yellow text-black ring-2 ring-elec-yellow/25',
-                  !isComplete && !isActive && 'bg-white/[0.06] text-white'
-                )}
-              >
-                {isComplete ? (
-                  <CheckCircle2 className="h-5 w-5" />
-                ) : (
-                  <StepIcon className="h-4 w-4 sm:h-5 sm:w-5" />
-                )}
-              </div>
-              <span
-                className={cn(
-                  'text-[10px] sm:text-xs mt-1 font-medium transition-colors',
-                  isActive && 'text-elec-yellow',
-                  isComplete && 'text-emerald-400',
-                  !isComplete && !isActive && 'text-white'
-                )}
-              >
-                {step.title}
-              </span>
-            </div>
-            {index < STEPS.length - 1 && (
-              <div
-                className={cn(
-                  'w-3 sm:w-5 h-0.5 mx-0.5 sm:mx-1 rounded-full transition-colors',
-                  isComplete ? 'bg-emerald-500' : 'bg-white/[0.06]'
-                )}
-              />
-            )}
-          </div>
-        );
-      })}
+              disabled={step.id >= currentStep}
+              aria-label={step.title}
+              className={cn(
+                'h-1 flex-1 rounded-full transition-colors duration-300 touch-manipulation',
+                isDone && 'bg-elec-yellow',
+                isActive && 'bg-elec-yellow/90',
+                !isDone && !isActive && 'bg-white/[0.08]'
+              )}
+            />
+          );
+        })}
+      </div>
     </div>
   );
 
@@ -316,7 +406,6 @@ export function AddJobPackDialog({
     <div className="flex gap-3 mt-6 pt-4">
       {currentStep > 1 ? (
         <SecondaryButton onClick={() => setCurrentStep((prev) => prev - 1)} fullWidth>
-          <ChevronLeft className="h-4 w-4 mr-1" />
           Back
         </SecondaryButton>
       ) : (
@@ -338,22 +427,10 @@ export function AddJobPackDialog({
           fullWidth
         >
           Next
-          <ChevronRight className="h-4 w-4 ml-1" />
         </PrimaryButton>
       ) : (
-        <PrimaryButton
-          onClick={handleSubmit}
-          disabled={createJobPack.isPending}
-          fullWidth
-        >
-          {createJobPack.isPending ? (
-            'Creating...'
-          ) : (
-            <>
-              <Zap className="h-4 w-4 mr-2" />
-              Create Pack
-            </>
-          )}
+        <PrimaryButton onClick={handleSubmit} disabled={createJobPack.isPending} fullWidth>
+          {createJobPack.isPending ? 'Creating…' : 'Create pack'}
         </PrimaryButton>
       )}
     </div>
@@ -365,22 +442,22 @@ export function AddJobPackDialog({
       case 1:
         // Step 1: Source Selection
         return (
-          <div className="space-y-4">
-            <div className="text-center mb-5">
-              <h2 className="text-lg font-semibold text-white">Create Job Pack</h2>
-              <p className="text-[12.5px] text-white">
-                Start from scratch or import from an existing job
+          <div className="space-y-5">
+            <div>
+              <Eyebrow>New job pack</Eyebrow>
+              <h2 className="mt-1.5 text-[19px] font-semibold text-white tracking-tight">
+                How do you want to start?
+              </h2>
+              <p className="mt-1 text-[12.5px] text-white/55">
+                From scratch, an existing job, or read it straight off a job sheet.
               </p>
             </div>
 
-            <div className="grid gap-3">
-              <div
-                className={cn(
-                  'p-5 rounded-2xl border cursor-pointer transition-all duration-200 active:scale-[0.98]',
-                  sourceType === 'new'
-                    ? 'border-elec-yellow bg-elec-yellow/10'
-                    : 'border-white/[0.08] bg-[hsl(0_0%_12%)] hover:bg-[hsl(0_0%_15%)]'
-                )}
+            <div className="space-y-2.5">
+              <SourceCard
+                label="Start from scratch"
+                desc="Build the pack step by step"
+                selected={sourceType === 'new'}
                 onClick={() => {
                   setSourceType('new');
                   setSelectedJobId(null);
@@ -397,52 +474,63 @@ export function AddJobPackDialog({
                     briefingContent: '',
                   });
                 }}
-              >
-                <div className="flex items-center gap-4">
-                  <div
-                    className={cn(
-                      'p-3 rounded-xl transition-colors',
-                      sourceType === 'new' ? 'bg-elec-yellow text-black' : 'bg-white/[0.06] text-white'
-                    )}
-                  >
-                    <Plus className="h-6 w-6" />
-                  </div>
-                  <div className="flex-1">
-                    <p className="font-semibold text-white">New Job Pack</p>
-                    <p className="text-[12.5px] text-white">Create from scratch</p>
-                  </div>
-                  {sourceType === 'new' && <CheckCircle2 className="h-6 w-6 text-elec-yellow" />}
-                </div>
-              </div>
-
-              <div
-                className={cn(
-                  'p-5 rounded-2xl border cursor-pointer transition-all duration-200 active:scale-[0.98]',
-                  sourceType === 'existing'
-                    ? 'border-elec-yellow bg-elec-yellow/10'
-                    : 'border-white/[0.08] bg-[hsl(0_0%_12%)] hover:bg-[hsl(0_0%_15%)]'
-                )}
+              />
+              <SourceCard
+                label="From an existing job"
+                desc="Pull in a job you've already created"
+                selected={sourceType === 'existing'}
                 onClick={() => setSourceType('existing')}
-              >
-                <div className="flex items-center gap-4">
-                  <div
-                    className={cn(
-                      'p-3 rounded-xl transition-colors',
-                      sourceType === 'existing' ? 'bg-elec-yellow text-black' : 'bg-white/[0.06] text-white'
-                    )}
-                  >
-                    <Briefcase className="h-6 w-6" />
-                  </div>
-                  <div className="flex-1">
-                    <p className="font-semibold text-white">From Existing Job</p>
-                    <p className="text-[12.5px] text-white">Import job details</p>
-                  </div>
-                  {sourceType === 'existing' && (
-                    <CheckCircle2 className="h-6 w-6 text-elec-yellow" />
-                  )}
-                </div>
-              </div>
+              />
+              <SourceCard
+                label="From a job sheet"
+                desc="Upload a spec or description — we read it for you"
+                tag="AI"
+                selected={sourceType === 'document'}
+                onClick={() => {
+                  setSourceType('document');
+                  setExtractError(null);
+                }}
+              />
             </div>
+
+            {sourceType === 'document' && (
+              <div>
+                <label
+                  className={cn(
+                    'flex flex-col items-center justify-center gap-2 px-4 py-8 rounded-xl border border-dashed text-center transition-colors',
+                    isExtracting
+                      ? 'border-elec-yellow/40 bg-elec-yellow/[0.04] cursor-wait'
+                      : 'border-white/15 bg-white/[0.02] hover:bg-white/[0.04] cursor-pointer'
+                  )}
+                >
+                  <input
+                    type="file"
+                    accept="image/*,application/pdf"
+                    className="hidden"
+                    disabled={isExtracting}
+                    onChange={(ev) => {
+                      const f = ev.target.files?.[0];
+                      if (f) handleDocumentUpload(f);
+                      ev.target.value = '';
+                    }}
+                  />
+                  {isExtracting ? (
+                    <>
+                      <Loader2 className="h-5 w-5 text-elec-yellow animate-spin" />
+                      <p className="text-[12.5px] text-white">Reading the job sheet…</p>
+                    </>
+                  ) : (
+                    <>
+                      <p className="text-[13px] font-medium text-white">Tap to upload a job sheet</p>
+                      <p className="text-[11.5px] text-white/55">
+                        Photo or PDF — spec, scope of works, or description
+                      </p>
+                    </>
+                  )}
+                </label>
+                {extractError && <p className="mt-2 text-[11.5px] text-red-400">{extractError}</p>}
+              </div>
+            )}
 
             {sourceType === 'existing' && (
               <div className="mt-4 space-y-2">

@@ -1,4 +1,5 @@
 import { useState, useCallback, useEffect, useRef, lazy, Suspense } from 'react';
+import { EmployerMate } from '@/components/employer/EmployerMate';
 import { useSearchParams, useNavigate } from 'react-router-dom';
 import { AnimatePresence, motion } from 'framer-motion';
 import { useQueryClient } from '@tanstack/react-query';
@@ -455,6 +456,7 @@ const EmployerDashboard = () => {
 
   const previousSectionRef = useRef<Section | null>(null);
   const [navigationDirection, setNavigationDirection] = useState<'forward' | 'backward'>('forward');
+  const [mateOpen, setMateOpen] = useState(false);
 
   useEffect(() => {
     if (previousSectionRef.current && previousSectionRef.current !== activeSection) {
@@ -659,7 +661,7 @@ const EmployerDashboard = () => {
   const renderSection = () => {
     switch (activeSection) {
       case 'overview':
-        return <OverviewSection onNavigate={handleNavigate} />;
+        return <OverviewSection onNavigate={handleNavigate} onOpenMate={() => setMateOpen(true)} />;
       case 'peoplehub':
         return <PeopleHub onNavigate={handleNavigate} />;
       case 'financehub':
@@ -753,7 +755,7 @@ const EmployerDashboard = () => {
       case 'aiquote':
         return <AIQuoteSection onNavigate={handleNavigate} />;
       default:
-        return <OverviewSection onNavigate={handleNavigate} />;
+        return <OverviewSection onNavigate={handleNavigate} onOpenMate={() => setMateOpen(true)} />;
     }
   };
 
@@ -801,6 +803,12 @@ const EmployerDashboard = () => {
         </main>
       </div>
 
+      <EmployerMate
+        open={mateOpen}
+        onOpenChange={setMateOpen}
+        pageContext={currentMeta?.title}
+        showLauncher={!isOverview}
+      />
     </>
   );
 };
