@@ -10,15 +10,8 @@
 import { useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { ArrowLeft, CheckCircle2 } from 'lucide-react';
-import {
-  PageFrame,
-  PageHero,
-  itemVariants,
-} from '@/components/college/primitives';
-import {
-  Eyebrow,
-  SectionHeader,
-} from '@/components/apprentice-hub/portfolio/PortfolioPrimitives';
+import { PageFrame, PageHero, itemVariants } from '@/components/college/primitives';
+import { Eyebrow, SectionHeader } from '@/components/apprentice-hub/portfolio/PortfolioPrimitives';
 
 interface CoreCert {
   title: string;
@@ -101,13 +94,13 @@ const specialistCategories: { category: string; growth: string; certs: Specialis
     category: 'Electric vehicle charging',
     growth: '45%',
     certs: [
-      { name: 'City & Guilds 2919 (EV Charging)', cost: '£400–£600', duration: '2 days' },
+      { name: 'City & Guilds 2921 (EV Charging)', cost: '£400–£600', duration: '2 days' },
       { name: 'Smart charging & load management', cost: '£300–£500', duration: '1 day' },
       {
         name: 'EV infrastructure certification',
         cost: '£500–£800',
         duration: '2–3 days',
-        note: 'The OZEV Electric Vehicle Homecharge Scheme (EVHS) closed in March 2024. Current EV certification focuses on the IET Code of Practice for EV Charging Equipment Installation.',
+        note: 'The OZEV Electric Vehicle Homecharge Scheme (EVHS) closed to homeowners on 31 March 2022. Current EV certification focuses on the IET Code of Practice for EV Charging Equipment Installation.',
       },
     ],
   },
@@ -132,7 +125,7 @@ const specialistCategories: { category: string; growth: string; certs: Specialis
     growth: 'Established',
     certs: [
       { name: 'Solar PV installation', cost: '£800–£1,200', duration: '5 days' },
-      { name: 'City & Guilds 2399 (PV design)', cost: '£600–£900', duration: '3 days' },
+      { name: 'City & Guilds 2922 (Solar PV)', cost: '£600–£900', duration: '3 days' },
     ],
   },
   {
@@ -161,7 +154,11 @@ const specialistCategories: { category: string; growth: string; certs: Specialis
     category: 'Data centres',
     growth: '35%',
     certs: [
-      { name: 'CDCDP (Certified Data Centre Design Professional)', cost: '£2,000–£3,500', duration: '5 days' },
+      {
+        name: 'CDCDP (Certified Data Centre Design Professional)',
+        cost: '£2,000–£3,500',
+        duration: '5 days',
+      },
       { name: 'UPS systems & power distribution', cost: '£800–£1,500', duration: '3 days' },
       {
         name: 'Raised floor & containment systems',
@@ -229,7 +226,40 @@ const planningTips = [
   'Check if your employer will fund training — many will cover all or part',
   'Book courses well in advance — popular ones fill up months ahead',
   'Keep a CPD log of all training and development activities',
-  'Join a competent person scheme once you\'re working independently',
+  "Join a competent person scheme once you're working independently",
+];
+
+const qualificationRoute = [
+  {
+    step: 'Level 2 & 3 Diploma',
+    code: 'C&G 2365 (or EAL equivalent)',
+    detail:
+      'The classroom knowledge — installation theory, science and the regs. The foundation, but not enough on its own to qualify.',
+  },
+  {
+    step: 'NVQ Level 3 competence',
+    code: 'C&G 2357 / 5357',
+    detail:
+      'On-site competence, evidenced in a portfolio. 5357 is the integrated apprenticeship qualification (knowledge + competence in one); 2357 is the standalone NVQ route for adults and improvers.',
+  },
+  {
+    step: '18th Edition',
+    code: 'C&G 2382 — BS 7671:2018+A4:2026',
+    detail:
+      'The wiring-regs exam, required for the ECS Gold card and almost every electrician role. The A4 version (2382-26) is the only one sat from 16 October 2026.',
+  },
+  {
+    step: 'AM2S end-point assessment',
+    code: 'NET · standard ST0152',
+    detail:
+      'The 2½-day practical gateway. Pass it — with your NVQ and 18th Edition — and you are a qualified electrician.',
+  },
+  {
+    step: 'ECS Gold card',
+    code: 'via the JIB',
+    detail:
+      'Your proof of competence for site access. Needs the Level 3 NVQ, a recognised BS 7671 qualification, and a current ECS Health, Safety & Environmental assessment — which you re-sit at every 3-year renewal.',
+  },
 ];
 
 const Certifications = () => {
@@ -255,6 +285,51 @@ const Certifications = () => {
         />
       </motion.div>
 
+      {/* ── Qualification route ──────────────────────────────────── */}
+      <motion.section variants={itemVariants} className="space-y-3">
+        <SectionHeader
+          eyebrow="The route"
+          title="How you actually qualify"
+          meta="From the classroom to the Gold card — the path every apprentice walks"
+        />
+        <ol className="space-y-2">
+          {qualificationRoute.map((q, i) => (
+            <li
+              key={q.step}
+              className="rounded-xl border border-white/[0.06] bg-[hsl(0_0%_10%)] p-4 sm:p-5"
+            >
+              <div className="flex items-start gap-3">
+                <div className="h-8 w-8 rounded-md border border-elec-yellow/30 bg-elec-yellow/[0.06] flex items-center justify-center flex-shrink-0">
+                  <span className="text-[13px] font-mono font-semibold text-elec-yellow tabular-nums">
+                    {i + 1}
+                  </span>
+                </div>
+                <div className="flex-1 min-w-0 space-y-1">
+                  <div className="flex items-baseline justify-between gap-3 flex-wrap">
+                    <h3 className="text-[15px] font-semibold text-white tracking-tight">
+                      {q.step}
+                    </h3>
+                    <span className="text-[11px] font-mono text-white/55">{q.code}</span>
+                  </div>
+                  <p className="text-[13px] text-white/85 leading-relaxed pt-0.5">{q.detail}</p>
+                </div>
+              </div>
+            </li>
+          ))}
+        </ol>
+        <div className="rounded-xl border border-white/[0.06] bg-[hsl(0_0%_10%)] p-4">
+          <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/55">
+            No apprenticeship? The experienced-worker route
+          </span>
+          <p className="mt-1.5 text-[13px] text-white/80 leading-relaxed">
+            Adults already working in the trade can qualify through the Experienced Worker
+            Assessment (EWA — e.g. C&G 2346) and the{' '}
+            <span className="text-white font-medium">AM2E</span>, instead of a formal apprenticeship
+            and AM2S.
+          </p>
+        </div>
+      </motion.section>
+
       {/* ── Core certifications ──────────────────────────────────── */}
       <motion.section variants={itemVariants} className="space-y-3">
         <SectionHeader
@@ -271,9 +346,7 @@ const Certifications = () => {
               <h3 className="text-[15px] font-semibold text-white tracking-tight leading-snug">
                 {cert.title}
               </h3>
-              <p className="text-[13px] text-white/85 leading-relaxed">
-                {cert.description}
-              </p>
+              <p className="text-[13px] text-white/85 leading-relaxed">{cert.description}</p>
               <div className="grid grid-cols-2 sm:grid-cols-4 gap-2 sm:gap-3 pt-1 border-t border-white/[0.04]">
                 <KpiTile label="Provider" value={cert.provider} />
                 <KpiTile label="Cost" value={cert.cost} mono />
@@ -325,18 +398,14 @@ const Certifications = () => {
                     key={c.name}
                     className="rounded-md border border-white/[0.06] bg-white/[0.02] p-3 space-y-1"
                   >
-                    <p className="text-[13px] font-medium text-white leading-snug">
-                      {c.name}
-                    </p>
+                    <p className="text-[13px] font-medium text-white leading-snug">{c.name}</p>
                     <div className="flex items-center gap-2 text-[11px] font-mono tabular-nums text-white/55">
                       <span>{c.cost}</span>
                       <span>·</span>
                       <span>{c.duration}</span>
                     </div>
                     {c.note && (
-                      <p className="text-[11.5px] text-white/70 leading-relaxed mt-1">
-                        {c.note}
-                      </p>
+                      <p className="text-[11.5px] text-white/70 leading-relaxed mt-1">{c.note}</p>
                     )}
                   </li>
                 ))}
@@ -367,9 +436,7 @@ const Certifications = () => {
                   {scheme.cost}
                 </span>
               </div>
-              <p className="text-[13px] text-white/85 leading-relaxed">
-                {scheme.description}
-              </p>
+              <p className="text-[13px] text-white/85 leading-relaxed">{scheme.description}</p>
               <ul className="space-y-1.5">
                 {scheme.benefits.map((b) => (
                   <li
@@ -413,11 +480,10 @@ const Certifications = () => {
         <div className="rounded-xl border border-elec-yellow/25 bg-elec-yellow/[0.04] p-4 sm:p-5 space-y-1.5">
           <Eyebrow className="text-elec-yellow/85">Recommended order</Eyebrow>
           <p className="text-[13.5px] text-white/85 leading-relaxed">
-            Years 1–3: 18th Edition + AM2 + Part P. Years 3–5: 2391 + PAT Testing
-            + first specialist cert (EV, Solar, or Fire Alarm). Year 5+: advanced
-            specialisms (BESS, HV, Data Centres, PLC) + competent person scheme.
-            This gives you the widest range of opportunities while building on
-            solid foundations.
+            Years 1–3: 18th Edition + AM2 + Part P. Years 3–5: 2391 + PAT Testing + first specialist
+            cert (EV, Solar, or Fire Alarm). Year 5+: advanced specialisms (BESS, HV, Data Centres,
+            PLC) + competent person scheme. This gives you the widest range of opportunities while
+            building on solid foundations.
           </p>
         </div>
       </motion.section>
@@ -425,9 +491,8 @@ const Certifications = () => {
       {/* ── Footnote ─────────────────────────────────────────────── */}
       <motion.section variants={itemVariants}>
         <p className="text-[11px] text-white/40 leading-relaxed">
-          Certification costs and durations are indicative and vary by provider
-          and location. Check with approved training providers for current
-          pricing. Reflects BS 7671:2018+A4:2026.
+          Certification costs and durations are indicative and vary by provider and location. Check
+          with approved training providers for current pricing. Reflects BS 7671:2018+A4:2026.
         </p>
       </motion.section>
     </PageFrame>
@@ -436,15 +501,7 @@ const Certifications = () => {
 
 /* ─────────────────── KPI tile ─────────────────── */
 
-function KpiTile({
-  label,
-  value,
-  mono,
-}: {
-  label: string;
-  value: string;
-  mono?: boolean;
-}) {
+function KpiTile({ label, value, mono }: { label: string; value: string; mono?: boolean }) {
   return (
     <div className="space-y-0.5 min-w-0">
       <Eyebrow className="text-[9px]">{label}</Eyebrow>

@@ -9,15 +9,8 @@
 import { useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { ArrowLeft, CheckCircle2 } from 'lucide-react';
-import {
-  PageFrame,
-  PageHero,
-  itemVariants,
-} from '@/components/college/primitives';
-import {
-  Eyebrow,
-  SectionHeader,
-} from '@/components/apprentice-hub/portfolio/PortfolioPrimitives';
+import { PageFrame, PageHero, itemVariants } from '@/components/college/primitives';
+import { Eyebrow, SectionHeader } from '@/components/apprentice-hub/portfolio/PortfolioPrimitives';
 
 interface CareerPath {
   title: string;
@@ -88,7 +81,7 @@ const careerPaths: CareerPath[] = [
     timeframe: '1–3 years + specialist certification',
     demand: 'Very High',
     description:
-      'Install and commission electric vehicle charging infrastructure for domestic, commercial, and public locations. A rapidly growing sector driven by the 2035 petrol/diesel ban.',
+      'Install and commission electric vehicle charging infrastructure for domestic, commercial, and public locations. A rapidly growing sector driven by the 2030 phase-out of new petrol and diesel cars.',
     dailyActivities: [
       'Pre-installation site surveys — assessing supply capacity and cable routes',
       'Installing dedicated EV circuits from consumer units or distribution boards',
@@ -96,7 +89,7 @@ const careerPaths: CareerPath[] = [
       'Commissioning smart chargers — WiFi setup, load management, OCPP configuration',
       'Completing installation certificates and customer handover documentation',
     ],
-    requirements: ['18th Edition', 'City & Guilds 2919', 'EV infrastructure regulations'],
+    requirements: ['18th Edition', 'City & Guilds 2921', 'EV infrastructure regulations'],
     progression: 'Fleet installations, charging network contracts, or EV consultancy',
   },
   {
@@ -174,7 +167,7 @@ const progressionStages = [
     stage: 1,
     title: 'Apprentice',
     duration: '3–4 years',
-    salary: '£16,000–£22,000',
+    salary: '£15,000–£27,000',
     description:
       'Learn the fundamentals through college study and on-site practical experience. Build core skills in installation, testing, and safe working practices.',
   },
@@ -201,6 +194,27 @@ const progressionStages = [
     salary: '£45,000–£80,000+',
     description:
       'Lead teams, run your own business, or become a recognised specialist. Opportunities in management, consultancy, training, and design.',
+  },
+];
+
+const jibGrades = [
+  {
+    grade: 'Electrician',
+    rate: '£18.38/hr · ~£35,800',
+    requires:
+      'Level 3 NVQ plus the AM2S end-point assessment and the 18th Edition. This is the grade that earns you the ECS Gold card.',
+  },
+  {
+    grade: 'Approved Electrician',
+    rate: '£20.08/hr · ~£41,700',
+    requires:
+      'Electrician grade plus around two years’ experience and the 2391-52 inspection & testing qualification, taking on added responsibility for verifying work.',
+  },
+  {
+    grade: 'Technician',
+    rate: '£22.70/hr · ~£47,100',
+    requires:
+      'Approved grade plus further experience and a Level 4 qualification — an HNC, or design & verification (e.g. the 2396).',
   },
 ];
 
@@ -244,6 +258,29 @@ const planningTips = [
   'Consider whether you want to be employed, self-employed, or run a business',
   'Stay informed about industry trends — EV, renewables, and smart tech are growing fast',
   'Invest in professional skills alongside technical ones — communication and business acumen matter',
+];
+
+const selfEmployedRoutes = [
+  {
+    title: 'Day rate vs salary',
+    detail:
+      'Self-employed sparks charge £200–£350+ a day against a ~£35k–£45k salary — but you cover your own holidays, sick pay, pension, tools, van and downtime. The headline rate is not the take-home.',
+  },
+  {
+    title: 'Sole trader vs limited',
+    detail:
+      'Sole trader is simplest to set up; a limited company can be more tax-efficient once established and adds liability protection. Most subcontractors work under CIS (Construction Industry Scheme) — 20% deducted at source, reconciled in your tax return.',
+  },
+  {
+    title: 'Cover yourself',
+    detail:
+      "Public liability insurance is essential — most main contractors won't let you on site without it. Add professional indemnity if you design, and keep your ECS card and qualifications current.",
+  },
+  {
+    title: 'Becoming a Qualified Supervisor',
+    detail:
+      'Register your business with a competent person scheme (NICEIC / NAPIT) as a Qualified Supervisor and you can self-certify domestic notifiable work, issue certificates, and take on the recurring landlord EICR market.',
+  },
 ];
 
 const demandTone: Record<CareerPath['demand'], string> = {
@@ -302,9 +339,7 @@ const CareerPathways = () => {
                 </span>
               </div>
 
-              <p className="text-[13.5px] text-white/85 leading-relaxed">
-                {path.description}
-              </p>
+              <p className="text-[13.5px] text-white/85 leading-relaxed">{path.description}</p>
 
               {/* Mini KPI strip */}
               <div className="grid grid-cols-3 gap-2 sm:gap-3 pt-1 border-t border-white/[0.04]">
@@ -389,6 +424,43 @@ const CareerPathways = () => {
         </ol>
       </motion.section>
 
+      {/* ── JIB grade ladder ──────────────────────────────────────── */}
+      <motion.section variants={itemVariants} className="space-y-3">
+        <SectionHeader
+          eyebrow="JIB grades"
+          title="The pay ladder, by grade"
+          meta="JIB national standard rates (2026) — London and travel allowances are added on top"
+        />
+        <ol className="space-y-2">
+          {jibGrades.map((g) => (
+            <li
+              key={g.grade}
+              className="rounded-xl border border-white/[0.06] bg-[hsl(0_0%_10%)] p-4 sm:p-5"
+            >
+              <div className="flex items-baseline justify-between gap-3 flex-wrap">
+                <h3 className="text-[15px] font-semibold text-white tracking-tight">{g.grade}</h3>
+                <span className="text-[11px] font-mono text-elec-yellow tabular-nums">
+                  {g.rate}
+                </span>
+              </div>
+              <p className="text-[13px] text-white/85 leading-relaxed pt-1.5">{g.requires}</p>
+            </li>
+          ))}
+        </ol>
+        <div className="rounded-xl border border-elec-yellow/20 bg-elec-yellow/[0.04] p-4">
+          <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-elec-yellow/80">
+            The gateway
+          </span>
+          <p className="mt-1.5 text-[13px] text-white/80 leading-relaxed">
+            The gate onto the ladder is the{' '}
+            <span className="text-white font-medium">AM2S end-point assessment</span> — the 2½-day
+            practical at the end of your apprenticeship (standard ST0152). Pass it alongside your
+            Level 3 NVQ and the 18th Edition, and you qualify, earn your ECS Gold card, and step
+            onto the Electrician grade above.
+          </p>
+        </div>
+      </motion.section>
+
       {/* ── Salary factors ────────────────────────────────────────── */}
       <motion.section variants={itemVariants} className="space-y-3">
         <SectionHeader
@@ -403,9 +475,7 @@ const CareerPathways = () => {
               className="rounded-xl border border-white/[0.06] bg-[hsl(0_0%_10%)] p-4 sm:p-5 space-y-1.5"
             >
               <div className="flex items-baseline justify-between gap-3 flex-wrap">
-                <h3 className="text-[14px] font-semibold text-white">
-                  {item.factor}
-                </h3>
+                <h3 className="text-[14px] font-semibold text-white">{item.factor}</h3>
                 <span
                   className={
                     'text-[10px] font-medium uppercase tracking-[0.14em] px-1.5 py-0.5 rounded-md border ' +
@@ -417,9 +487,27 @@ const CareerPathways = () => {
                   {item.impact} impact
                 </span>
               </div>
-              <p className="text-[13px] text-white/85 leading-relaxed">
-                {item.detail}
-              </p>
+              <p className="text-[13px] text-white/85 leading-relaxed">{item.detail}</p>
+            </li>
+          ))}
+        </ul>
+      </motion.section>
+
+      {/* ── Going self-employed ──────────────────────────────────── */}
+      <motion.section variants={itemVariants} className="space-y-3">
+        <SectionHeader
+          eyebrow="Working for yourself"
+          title="Going self-employed"
+          meta="The day-rate dream — and the bits nobody mentions"
+        />
+        <ul className="space-y-2">
+          {selfEmployedRoutes.map((r) => (
+            <li
+              key={r.title}
+              className="rounded-xl border border-white/[0.06] bg-[hsl(0_0%_10%)] p-4 sm:p-5 space-y-1.5"
+            >
+              <h3 className="text-[14px] font-semibold text-white tracking-tight">{r.title}</h3>
+              <p className="text-[13px] text-white/85 leading-relaxed">{r.detail}</p>
             </li>
           ))}
         </ul>
@@ -452,10 +540,9 @@ const CareerPathways = () => {
         <div className="rounded-xl border border-elec-yellow/25 bg-elec-yellow/[0.04] p-4 sm:p-5 space-y-2">
           <Eyebrow className="text-elec-yellow/85">Start exploring this week</Eyebrow>
           <p className="text-[13.5px] text-white/85 leading-relaxed">
-            Ask your supervisor or training officer which path they started on and
-            how their career has evolved. Shadow a colleague in a different
-            specialism for a day if your employer allows it. The more exposure
-            you get early, the better your decisions land.
+            Ask your supervisor or training officer which path they started on and how their career
+            has evolved. Shadow a colleague in a different specialism for a day if your employer
+            allows it. The more exposure you get early, the better your decisions land.
           </p>
         </div>
       </motion.section>
@@ -463,9 +550,9 @@ const CareerPathways = () => {
       {/* ── Footnote ─────────────────────────────────────────────── */}
       <motion.section variants={itemVariants}>
         <p className="text-[11px] text-white/40 leading-relaxed">
-          Salary data based on current UK electrical industry averages from JIB
-          grade rates, recruitment data, and industry surveys. Actual salaries
-          vary by region, employer, and individual experience.
+          Salary data based on current UK electrical industry averages from JIB grade rates,
+          recruitment data, and industry surveys. Actual salaries vary by region, employer, and
+          individual experience.
         </p>
       </motion.section>
     </PageFrame>
