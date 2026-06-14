@@ -38,6 +38,7 @@ interface SiteVisitCaptureStepProps {
     question?: string
   ) => void;
   onReorderRooms?: (roomIds: string[]) => void;
+  onReorderItems?: (roomId: string, itemIds: string[]) => void;
   captureSeconds?: number;
   onCaptureTimerTick?: (seconds: number) => void;
 }
@@ -58,6 +59,7 @@ export const SiteVisitCaptureStep = ({
   getPromptResponse,
   setPromptResponse,
   onReorderRooms,
+  onReorderItems,
   captureSeconds = 0,
   onCaptureTimerTick,
 }: SiteVisitCaptureStepProps) => {
@@ -198,6 +200,7 @@ export const SiteVisitCaptureStep = ({
               onAddItem={onAddItem}
               onUpdateItem={onUpdateItem}
               onRemoveItem={onRemoveItem}
+              onReorderItems={onReorderItems}
               onUpdateRoomNotes={onUpdateRoomNotes}
               onAddPhoto={onAddPhoto}
               onRemovePhoto={onRemovePhoto}

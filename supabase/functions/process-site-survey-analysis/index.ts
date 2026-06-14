@@ -94,7 +94,12 @@ Deno.serve(async (req) => {
         })
         .eq('id', jobId);
 
-      // Simple keyword-based pricing lookup (no embedding needed for basic items)
+      // Pricing lookup against the LIVE supplier-price feed
+      // (marketplace_products — refreshed daily by the elec-pipeline) via the
+      // relevance-ranked match_marketplace_products RPC. Replaces the old
+      // pricing_embeddings lookup, which was ~4 months stale AND selected
+      // columns that no longer existed, so it silently returned nothing and
+      // the AI priced materials with no real anchor.
       let pricingContext = '';
       try {
         const itemDescriptions = (inputData.rooms || [])
@@ -104,28 +109,55 @@ Deno.serve(async (req) => {
             )
           )
           .filter(Boolean)
-          .slice(0, 20);
+          .slice(0, 15);
 
-        if (itemDescriptions.length > 0) {
-          const { data: pricingData } = await supabase
-            .from('pricing_embeddings')
-            .select('description, unit_price, unit, supplier')
-            .or(
-              itemDescriptions
-                .map((d: string) => `description.ilike.%${d.split(' ')[0]}%`)
-                .join(',')
+        // One OR-query per captured item: significant words (skip short/stop
+        // words) joined with " or " — websearch_to_tsquery treats "or" as a
+        // disjunction, so "Double Socket (13A)" → "double or socket or 13a".
+        const STOP = new Set([
+          'the', 'and', 'for', 'with', 'new', 'each', 'unit', 'type',
+          'gang', 'way', 'amp', 'volt',
+        ]);
+        const itemQueries = Array.from(
+          new Set(
+            itemDescriptions.map((d: string) =>
+              String(d)
+                .toLowerCase()
+                .split(/[^a-z0-9]+/)
+                .filter((w) => w.length >= 4 && !STOP.has(w))
+                .slice(0, 4)
+                .join(' or ')
             )
-            .limit(50);
+          )
+        ).filter((q) => q.length > 0);
+
+        if (itemQueries.length > 0) {
+          const { data: pricingData, error: pricingErr } = await supabase.rpc(
+            'match_marketplace_products',
+            { item_queries: itemQueries, per_item: 3 }
+          );
+
+          if (pricingErr) {
+            console.warn('[PROCESS-SURVEY] match_marketplace_products error:', pricingErr.message);
+          }
 
           if (pricingData && pricingData.length > 0) {
+            // Group by captured-item query so the model maps a price to the
+            // right material rather than reading a flat soup.
+            const byQuery = new Map<string, string[]>();
+            for (const row of pricingData as Array<Record<string, unknown>>) {
+              const key = String(row.query_text).replace(/ or /g, ' ');
+              const line = `${row.name}: £${row.current_price}`;
+              if (!byQuery.has(key)) byQuery.set(key, []);
+              byQuery.get(key)!.push(line);
+            }
             pricingContext =
-              '\n=== REFERENCE PRICING ===\n' +
-              pricingData
-                .map(
-                  (p: Record<string, unknown>) =>
-                    `${p.description}: £${p.unit_price}/${p.unit} (${p.supplier})`
-                )
-                .join('\n');
+              '\n=== REFERENCE PRICING (live UK supplier prices, GBP) ===\n' +
+              Array.from(byQuery.entries())
+                .map(([q, lines]) => `For "${q}":\n  ${lines.join('\n  ')}`)
+                .join('\n') +
+              '\nBase each material unit price on the closest matching product above. ' +
+              'If nothing matches, fall back to typical UK trade prices.';
           }
         }
       } catch (pricingErr) {

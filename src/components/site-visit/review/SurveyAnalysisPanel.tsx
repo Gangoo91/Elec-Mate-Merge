@@ -1,11 +1,18 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { Loader2, ListChecks, FileText, RotateCcw } from 'lucide-react';
+import { Loader2, ListChecks, FileText, RotateCcw, Plus, X } from 'lucide-react';
 import { Button } from '@/components/ui/button';
+import { DecimalInput } from '@/components/ui/decimal-input';
 import { cn } from '@/lib/utils';
 import { useSiteSurveyAnalysis } from '@/hooks/useSiteSurveyAnalysis';
 import { useSurveyMaterialsActions } from '@/hooks/useSurveyMaterialsActions';
+import { WholesalerRFQButton } from './WholesalerRFQButton';
 import type { SiteVisit } from '@/types/siteVisit';
-import type { SurveyAnalysisResult, RegulatoryFlag, SurveyIssue } from '@/types/surveyAnalysis';
+import type {
+  SurveyAnalysisResult,
+  RegulatoryFlag,
+  SurveyIssue,
+  MaterialItem,
+} from '@/types/surveyAnalysis';
 
 interface SurveyAnalysisPanelProps {
   visit: SiteVisit;
@@ -49,29 +56,33 @@ const gbp = (n: number) =>
 function CostSummary({
   summary,
   labour,
+  materialsOverride,
 }: {
   summary: SurveyAnalysisResult['cost_summary'];
   labour: SurveyAnalysisResult['labour_estimate'];
+  /** Live materials total once the user has edited the list — keeps the
+   *  header in step with the editable table below. */
+  materialsOverride?: number;
 }) {
+  const materialsGbp = materialsOverride ?? summary.materials_gbp;
+  const totalGbp = summary.total_gbp - summary.materials_gbp + materialsGbp;
   return (
     <div>
       <div className="flex items-end justify-between gap-3">
         <div>
           <SectionEyebrow>ESTIMATED TOTAL</SectionEyebrow>
           <p className="mt-1.5 text-[32px] font-semibold leading-none tracking-tight text-elec-yellow tabular-nums sm:text-[38px]">
-            {gbp(summary.total_gbp)}
+            {gbp(totalGbp)}
           </p>
         </div>
-        <p className="pb-1 text-[11px] capitalize text-white/45">
-          {summary.confidence} confidence
-        </p>
+        <p className="pb-1 text-[11px] capitalize text-white/45">{summary.confidence} confidence</p>
       </div>
 
       <div className="mt-4 overflow-hidden rounded-xl border border-white/[0.08]">
         <div className="flex items-center justify-between bg-white/[0.02] px-3.5 py-2.5">
           <span className="text-[13px] text-white/75">Materials</span>
           <span className="text-[13px] font-medium tabular-nums text-white">
-            {gbp(summary.materials_gbp)}
+            {gbp(materialsGbp)}
           </span>
         </div>
         <div className="flex items-center justify-between border-t border-white/[0.05] bg-white/[0.02] px-3.5 py-2.5">
@@ -94,31 +105,93 @@ function CostSummary({
   );
 }
 
-function MaterialsTable({ items }: { items: SurveyAnalysisResult['materials_list'] }) {
-  const total = items.reduce((sum, i) => sum + i.est_price_gbp * i.quantity, 0);
+/**
+ * Editable materials table — ELE-1120. The AI estimate is a starting point;
+ * the spark can correct quantity, unit, price and description, add or remove
+ * lines, all on the review screen before it flows to the quote / materials
+ * list. Totals (and the cost header above) update live.
+ */
+function EditableMaterialsTable({
+  items,
+  onChange,
+}: {
+  items: MaterialItem[];
+  onChange: (next: MaterialItem[]) => void;
+}) {
+  const total = items.reduce((sum, i) => sum + (i.est_price_gbp || 0) * (i.quantity || 0), 0);
+
+  const update = (idx: number, patch: Partial<MaterialItem>) =>
+    onChange(items.map((it, i) => (i === idx ? { ...it, ...patch } : it)));
+  const remove = (idx: number) => onChange(items.filter((_, i) => i !== idx));
+  const add = () =>
+    onChange([...items, { description: '', quantity: 1, unit: 'each', est_price_gbp: 0 }]);
+
+  const fieldCls =
+    'bg-white/[0.05] border border-white/[0.10] rounded-lg text-white caret-white px-2 ' +
+    'focus:outline-none focus:border-elec-yellow focus:ring-2 focus:ring-elec-yellow/20 touch-manipulation';
+
   return (
     <div>
-      <SectionEyebrow>MATERIALS · {items.length}</SectionEyebrow>
+      <div className="flex items-center justify-between">
+        <SectionEyebrow>MATERIALS · {items.length}</SectionEyebrow>
+        <span className="text-[11px] text-white/45">Tap any field to edit</span>
+      </div>
       <div className="mt-2 overflow-hidden rounded-xl border border-white/[0.08]">
         {items.map((item, i) => (
-          <div
-            key={i}
-            className={cn(
-              'flex items-start justify-between gap-3 px-3.5 py-2.5',
-              i > 0 && 'border-t border-white/[0.05]'
-            )}
-          >
-            <div className="min-w-0 flex-1">
-              <p className="text-[13px] leading-snug text-white">{item.description}</p>
-              <p className="mt-0.5 text-[11px] tabular-nums text-white/45">
-                {item.quantity} {item.unit} × {gbp(item.est_price_gbp)}
-              </p>
+          <div key={i} className={cn('px-3 py-3', i > 0 && 'border-t border-white/[0.05]')}>
+            <div className="flex items-start gap-2">
+              <input
+                value={item.description}
+                onChange={(e) => update(i, { description: e.target.value })}
+                placeholder="Item description"
+                className={cn(fieldCls, 'h-11 min-w-0 flex-1 text-[13px]')}
+              />
+              <button
+                type="button"
+                onClick={() => remove(i)}
+                aria-label="Remove item"
+                className="flex h-11 w-11 flex-shrink-0 items-center justify-center rounded-lg text-white/40 transition-colors hover:text-red-400 active:bg-white/[0.06] touch-manipulation"
+              >
+                <X className="h-4 w-4" />
+              </button>
             </div>
-            <span className="flex-shrink-0 text-[13px] font-medium tabular-nums text-white">
-              {gbp(item.est_price_gbp * item.quantity)}
-            </span>
+            <div className="mt-2 flex items-center gap-2">
+              <DecimalInput
+                value={item.quantity}
+                onChange={(v) => update(i, { quantity: v })}
+                className={cn(fieldCls, 'h-11 w-14 text-center text-[13px]')}
+              />
+              <input
+                value={item.unit}
+                onChange={(e) => update(i, { unit: e.target.value })}
+                placeholder="unit"
+                className={cn(fieldCls, 'h-11 w-16 text-center text-[12px]')}
+              />
+              <span className="text-[12px] text-white/40">×</span>
+              <div className="relative min-w-0 flex-1">
+                <span className="pointer-events-none absolute left-2.5 top-1/2 -translate-y-1/2 text-[13px] text-white/70">
+                  £
+                </span>
+                <DecimalInput
+                  value={item.est_price_gbp}
+                  onChange={(v) => update(i, { est_price_gbp: v })}
+                  className={cn(fieldCls, 'h-11 w-full pl-6 text-[13px]')}
+                />
+              </div>
+              <span className="w-20 flex-shrink-0 text-right text-[13px] font-medium tabular-nums text-white">
+                {gbp((item.est_price_gbp || 0) * (item.quantity || 0))}
+              </span>
+            </div>
           </div>
         ))}
+        <button
+          type="button"
+          onClick={add}
+          className="flex h-11 w-full items-center justify-center gap-1.5 border-t border-white/[0.08] text-[12px] font-medium text-white/60 transition-colors hover:text-white active:bg-white/[0.04] touch-manipulation"
+        >
+          <Plus className="h-3.5 w-3.5" />
+          Add item
+        </button>
         <div className="flex items-center justify-between border-t border-white/[0.08] bg-white/[0.02] px-3.5 py-2.5">
           <span className="text-[13px] font-medium text-white">Materials total</span>
           <span className="text-[13px] font-semibold tabular-nums text-white">{gbp(total)}</span>
@@ -292,6 +365,18 @@ export const SurveyAnalysisPanel = ({ visit, autoStart = false }: SurveyAnalysis
   const [isSavingList, setIsSavingList] = useState(false);
   const autoStartedRef = useRef(false);
 
+  // ELE-1120: editable copy of the AI materials list. Seeded from each fresh
+  // analysis result; the spark's edits flow into "Send to quote" / "Save to
+  // materials list" and the live cost header.
+  const [materials, setMaterials] = useState<MaterialItem[]>([]);
+  useEffect(() => {
+    if (result?.materials_list) setMaterials(result.materials_list);
+  }, [result]);
+  const materialsTotal = materials.reduce(
+    (s, i) => s + (i.est_price_gbp || 0) * (i.quantity || 0),
+    0
+  );
+
   const hasData = visit.rooms.length > 0;
 
   // Auto-run once per mount when there's scope and no prior result. The
@@ -354,39 +439,42 @@ export const SurveyAnalysisPanel = ({ visit, autoStart = false }: SurveyAnalysis
       {/* Results */}
       {status === 'completed' && result && (
         <div className="space-y-5">
-          <CostSummary summary={result.cost_summary} labour={result.labour_estimate} />
+          <CostSummary
+            summary={result.cost_summary}
+            labour={result.labour_estimate}
+            materialsOverride={materialsTotal}
+          />
 
-          {result.materials_list.length > 0 && (
-            <>
-              <MaterialsTable items={result.materials_list} />
-              <div className="flex flex-col gap-2 sm:flex-row">
-                <Button
-                  onClick={() => sendToQuote(visit, result.materials_list)}
-                  variant="outline"
-                  className="h-11 flex-1 touch-manipulation rounded-xl border-white/[0.15] bg-white/[0.04] text-[13px] font-medium text-white transition-transform hover:bg-white/[0.08] active:scale-[0.98]"
-                >
-                  <FileText className="mr-2 h-4 w-4" />
-                  Send to quote
-                </Button>
-                <Button
-                  onClick={async () => {
-                    setIsSavingList(true);
-                    await saveToMaterialsList(visit, result.materials_list);
-                    setIsSavingList(false);
-                  }}
-                  disabled={isSavingList}
-                  variant="outline"
-                  className="h-11 flex-1 touch-manipulation rounded-xl border-white/[0.15] bg-white/[0.04] text-[13px] font-medium text-white transition-transform hover:bg-white/[0.08] active:scale-[0.98]"
-                >
-                  {isSavingList ? (
-                    <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-                  ) : (
-                    <ListChecks className="mr-2 h-4 w-4" />
-                  )}
-                  Save to materials list
-                </Button>
-              </div>
-            </>
+          <EditableMaterialsTable items={materials} onChange={setMaterials} />
+          {materials.length > 0 && (
+            <div className="flex flex-col gap-2 sm:flex-row">
+              <Button
+                onClick={() => sendToQuote(visit, materials)}
+                variant="outline"
+                className="h-11 flex-1 touch-manipulation rounded-xl border-white/[0.15] bg-white/[0.04] text-[13px] font-medium text-white transition-transform hover:bg-white/[0.08] active:scale-[0.98]"
+              >
+                <FileText className="mr-2 h-4 w-4" />
+                Send to quote
+              </Button>
+              <Button
+                onClick={async () => {
+                  setIsSavingList(true);
+                  await saveToMaterialsList(visit, materials);
+                  setIsSavingList(false);
+                }}
+                disabled={isSavingList}
+                variant="outline"
+                className="h-11 flex-1 touch-manipulation rounded-xl border-white/[0.15] bg-white/[0.04] text-[13px] font-medium text-white transition-transform hover:bg-white/[0.08] active:scale-[0.98]"
+              >
+                {isSavingList ? (
+                  <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                ) : (
+                  <ListChecks className="mr-2 h-4 w-4" />
+                )}
+                Save to materials list
+              </Button>
+              <WholesalerRFQButton visit={visit} materials={materials} />
+            </div>
           )}
 
           <RegulatoryFlags flags={result.regulatory_flags} />

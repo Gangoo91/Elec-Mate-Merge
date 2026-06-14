@@ -96,6 +96,7 @@ const STATUS_COLOURS: Record<string, string> = {
 interface SimpleCustomer {
   id: string;
   name: string;
+  address?: string | null;
 }
 
 const ProjectsPage = () => {
@@ -209,7 +210,7 @@ const ProjectsPage = () => {
 
       const { data } = await supabase
         .from('customers')
-        .select('id, name')
+        .select('id, name, address')
         .eq('user_id', user.id)
         .order('name');
 
@@ -228,6 +229,28 @@ const ProjectsPage = () => {
   const [newDueDate, setNewDueDate] = useState('');
   const [newEstimatedValue, setNewEstimatedValue] = useState('');
   const [creating, setCreating] = useState(false);
+
+  // ELE-1122: addresses already on file for the selected customer — their saved
+  // address plus any addresses used on their previous projects (distinct).
+  const customerAddresses = useMemo(() => {
+    if (!newCustomerId) return [];
+    const cust = customers.find((c) => c.id === newCustomerId);
+    const seen = new Set<string>();
+    if (cust?.address?.trim()) seen.add(cust.address.trim());
+    for (const p of projects) {
+      if (p.customerId === newCustomerId && p.location?.trim()) seen.add(p.location.trim());
+    }
+    return Array.from(seen);
+  }, [newCustomerId, customers, projects]);
+
+  // Pre-fill the location with the customer's primary saved address when one is
+  // picked and the field is still empty — they can pick another chip or edit.
+  useEffect(() => {
+    if (newCustomerId && !newLocation && customerAddresses.length > 0) {
+      setNewLocation(customerAddresses[0]);
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [newCustomerId]);
 
   const resetForm = () => {
     setNewTitle('');
@@ -788,6 +811,25 @@ const ProjectsPage = () => {
 
                 <div>
                   <label className="text-[11px] font-medium uppercase tracking-wider text-white/65 mb-1.5 block">Location</label>
+                  {customerAddresses.length > 0 && (
+                    <div className="mb-2 flex flex-wrap gap-1.5">
+                      {customerAddresses.map((addr) => (
+                        <button
+                          key={addr}
+                          type="button"
+                          onClick={() => setNewLocation(addr)}
+                          className={cn(
+                            'rounded-full border px-3 py-1.5 text-[12px] text-left touch-manipulation transition-colors active:scale-[0.98]',
+                            newLocation === addr
+                              ? 'border-elec-yellow bg-elec-yellow/10 text-elec-yellow'
+                              : 'border-white/15 bg-white/[0.04] text-white/70 hover:bg-white/[0.08]'
+                          )}
+                        >
+                          {addr}
+                        </button>
+                      ))}
+                    </div>
+                  )}
                   <Input
                     value={newLocation}
                     onChange={(e) => setNewLocation(e.target.value)}

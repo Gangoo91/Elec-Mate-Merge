@@ -6,7 +6,7 @@
 import React, { useState } from 'react';
 import { Sheet, SheetContent, SheetHeader, SheetTitle } from '@/components/ui/sheet';
 import { Button } from '@/components/ui/button';
-import { Input } from '@/components/ui/input';
+import { DecimalInput } from '@/components/ui/decimal-input';
 import { Check, X, CheckCircle2, Circle, Sparkles, Store, BookOpen, AlertTriangle } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { ScanResult, ScannedInvoiceItem, MaterialMatch } from '@/types/invoice-scanner';
@@ -169,44 +169,34 @@ export function InvoiceScanResults({
                   {/* Bottom Row: Qty × Price = Total */}
                   <div className="flex items-center justify-between mt-3 pl-8">
                     <div className="flex items-center gap-2">
-                      <Input
-                        type="number"
-                        inputMode="decimal"
-                        step="0.01"
-                        min="0"
-                        value={item.quantity === 0 ? '' : item.quantity}
+                      <span
                         onClick={(e) => e.stopPropagation()}
-                        onChange={(e) => {
-                          e.stopPropagation();
-                          const qty = parseFloat(e.target.value) || 0;
-                          onUpdateItem(item.id, { quantity: qty });
-                        }}
-                        className="h-9 w-14 text-[14px] text-center bg-white/[0.05] border-white/[0.08] rounded-lg"
-                      />
+                        onMouseDown={(e) => e.stopPropagation()}
+                      >
+                        <DecimalInput
+                          value={item.quantity}
+                          onChange={(qty) => onUpdateItem(item.id, { quantity: qty })}
+                          className="h-9 w-14 text-[14px] text-center bg-white/[0.05] border border-white/[0.08] rounded-lg text-white caret-white focus:outline-none focus:border-elec-yellow focus:ring-2 focus:ring-elec-yellow/20"
+                        />
+                      </span>
                       <span className="text-white">×</span>
-                      <div className="relative">
-                        <span className="absolute left-2.5 top-1/2 -translate-y-1/2 text-[14px] text-white">
+                      <div
+                        className="relative"
+                        onClick={(e) => e.stopPropagation()}
+                        onMouseDown={(e) => e.stopPropagation()}
+                      >
+                        <span className="pointer-events-none absolute left-2.5 top-1/2 -translate-y-1/2 text-[14px] text-white">
                           £
                         </span>
-                        <Input
-                          type="number"
-                          inputMode="decimal"
-                          step="0.01"
-                          min="0"
+                        <DecimalInput
                           placeholder="0.00"
-                          value={item.unitPrice === 0 ? '' : item.unitPrice.toFixed(2)}
-                          onMouseDown={(e) => e.stopPropagation()}
-                          onClick={(e) => e.stopPropagation()}
-                          onChange={(e) => {
-                            e.stopPropagation();
-                            const price = parseFloat(e.target.value) || 0;
-                            onUpdateItem(item.id, { unitPrice: price });
-                          }}
+                          value={item.unitPrice}
+                          onChange={(price) => onUpdateItem(item.id, { unitPrice: price })}
                           className={cn(
-                            'h-9 w-20 text-[14px] pl-6 bg-white/[0.05] rounded-lg',
+                            'h-9 w-20 text-[14px] pl-6 bg-white/[0.05] border rounded-lg text-white caret-white focus:outline-none focus:ring-2 focus:ring-elec-yellow/20',
                             item.unitPrice === 0
                               ? 'border-red-500/50 focus:border-red-400'
-                              : 'border-white/[0.08]'
+                              : 'border-white/[0.08] focus:border-elec-yellow'
                           )}
                         />
                       </div>

@@ -1,4 +1,5 @@
 import { InvoiceSettings } from '@/types/invoice';
+import { DecimalInput } from '@/components/ui/decimal-input';
 import type { QuoteItem } from '@/types/quote';
 import { computeQuoteTotals } from '@/utils/quote-calculations';
 import { useMemo } from 'react';
@@ -263,19 +264,12 @@ export const InvoiceSettingsStep = ({
                 <label className={labelClass}>
                   {(settings?.discountType || 'percentage') === 'percentage' ? 'Percentage (%)' : 'Amount (£)'}
                 </label>
-                <input
-                  type="text"
-                  inputMode="decimal"
+                <DecimalInput
                   style={darkStyle}
                   placeholder={(settings?.discountType || 'percentage') === 'percentage' ? '20' : '150.00'}
                   className={inputClass}
-                  value={settings?.discountValue || ''}
-                  onChange={(e) => {
-                    const value = e.target.value;
-                    if (value === '' || /^\d*\.?\d*$/.test(value)) {
-                      onUpdateSettings({ discountValue: value === '' ? 0 : parseFloat(value) || 0 });
-                    }
-                  }}
+                  value={settings?.discountValue || 0}
+                  onChange={(val) => onUpdateSettings({ discountValue: val })}
                 />
               </div>
               <div>
@@ -307,16 +301,15 @@ export const InvoiceSettingsStep = ({
             <div key={cat}>
               <label className={`${labelClass} capitalize`}>{cat}</label>
               <div className="relative">
-                <input
-                  type="number"
-                  step="0.1"
+                <DecimalInput
+                  allowNegative
                   placeholder="0"
                   style={darkStyle}
                   className={`${inputClass} pr-8`}
-                  value={settings?.categoryAdjustments?.[cat] ?? ''}
-                  onChange={(e) => {
-                    const v = e.target.value;
-                    const next = v === '' ? undefined : parseFloat(v);
+                  value={settings?.categoryAdjustments?.[cat] ?? 0}
+                  onChange={(val) => {
+                    // 0 / cleared means "no adjustment" — keep the map clean
+                    const next = val === 0 ? undefined : val;
                     onUpdateSettings({
                       categoryAdjustments: {
                         ...(settings?.categoryAdjustments || {}),

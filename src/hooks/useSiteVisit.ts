@@ -47,6 +47,7 @@ export interface UseSiteVisitReturn {
   removeRoom: (roomId: string) => void;
   updateRoomNotes: (roomId: string, notes: string) => void;
   reorderRooms: (roomIds: string[]) => void;
+  reorderItems: (roomId: string, itemIds: string[]) => void;
   setActiveRoom: (roomId: string | null) => void;
 
   // Items
@@ -235,6 +236,25 @@ export function useSiteVisit(initialVisit?: Partial<SiteVisit>): UseSiteVisitRet
     }));
   }, []);
 
+  const reorderItems = useCallback((roomId: string, itemIds: string[]) => {
+    setVisit((v) => ({
+      ...v,
+      rooms: v.rooms.map((r) =>
+        r.id === roomId
+          ? {
+              ...r,
+              items: itemIds
+                .map((id, idx) => {
+                  const item = r.items.find((i) => i.id === id);
+                  return item ? { ...item, sortOrder: idx } : null;
+                })
+                .filter(Boolean) as SiteVisitItem[],
+            }
+          : r
+      ),
+    }));
+  }, []);
+
   const setActiveRoom = useCallback((roomId: string | null) => {
     setActiveRoomId(roomId);
   }, []);
@@ -366,6 +386,7 @@ export function useSiteVisit(initialVisit?: Partial<SiteVisit>): UseSiteVisitRet
     removeRoom,
     updateRoomNotes,
     reorderRooms,
+    reorderItems,
     setActiveRoom,
     addItem,
     updateItem,

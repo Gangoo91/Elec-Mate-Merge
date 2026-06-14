@@ -325,6 +325,7 @@ export const SiteVisitWizard = ({ initialVisit, onComplete }: SiteVisitWizardPro
                 getPromptResponse={sv.getPromptResponse}
                 setPromptResponse={sv.setPromptResponse}
                 onReorderRooms={sv.reorderRooms}
+                onReorderItems={sv.reorderItems}
                 captureSeconds={captureSeconds}
                 onCaptureTimerTick={setCaptureSeconds}
               />

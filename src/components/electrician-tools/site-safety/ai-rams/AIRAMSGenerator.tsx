@@ -25,6 +25,10 @@ import { storageGetSync, storageSetSync, storageRemoveSync, storageGetJSONSync }
 
 const EXPECTED_TOTAL_SECONDS = 180; // 3 minutes visual countdown
 const RAMS_LOCAL_DRAFT_KEY = 'rams-local-draft';
+// Mirrors INPUT_DRAFT_KEY in AIRAMSInput — the autosaved input-form draft.
+// Written/read there via raw localStorage, so clear it the same way (not
+// storageRemoveSync, which targets Preferences/cache on native).
+const RAMS_INPUT_DRAFT_KEY = 'rams-input-draft-v1';
 const SAVE_RETRY_DELAYS = [5000, 15000, 30000]; // Exponential backoff: 5s, 15s, 30s
 
 interface AIRAMSGeneratorProps {
@@ -170,6 +174,17 @@ export const AIRAMSGenerator: React.FC<AIRAMSGeneratorProps> = ({ onBack }) => {
       });
     }
   }, [status, ramsData, celebrationShown, currentJobId]);
+
+  // ELE-1116: clear the autosaved input-form draft only once a generation has
+  // genuinely SUCCEEDED. A failed generation keeps the draft so "Try Again"
+  // (which routes through handleStartOver) can restore the form. Guarded by
+  // currentJobId so a stale 'complete' status after Start Over can't wipe a
+  // freshly-typed draft.
+  useEffect(() => {
+    if (status === 'complete' && currentJobId) {
+      try { localStorage.removeItem(RAMS_INPUT_DRAFT_KEY); } catch { /* ignore */ }
+    }
+  }, [status, currentJobId]);
 
   // Show error notification (prevent duplicate toasts for old jobs)
   useEffect(() => {

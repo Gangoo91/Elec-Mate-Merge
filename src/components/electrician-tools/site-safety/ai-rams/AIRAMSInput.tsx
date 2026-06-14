@@ -328,8 +328,9 @@ export const AIRAMSInput: React.FC<AIRAMSInputProps> = ({ onGenerate, isProcessi
   const handleSubmit = () => {
     if (jobDescription && projectInfo.projectName) {
       const finalScale = manualScale || detectedScale;
-      // Clear the input draft once generation starts — the result draft takes over
-      try { localStorage.removeItem(INPUT_DRAFT_KEY); } catch { /* ignore */ }
+      // Keep the input draft until generation SUCCEEDS — it's cleared in
+      // AIRAMSGenerator once status === 'complete'. Deleting it here wiped the
+      // form when a failed generation was retried via "Try Again" (ELE-1116).
       onGenerate(jobDescription, projectInfo, finalScale, attachments);
     }
   };
