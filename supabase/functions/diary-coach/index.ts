@@ -296,11 +296,14 @@ serve(async (req: Request) => {
       // 2. KSB progress
       supabase.from('user_ksb_progress').select('ksb_code, status').eq('user_id', user.id),
 
-      // 3. Regulations search
+      // 3. BS 7671 — ground in the authoritative bs7671_facets (A4:2026), NOT
+      //    the stale A3 regulations tables. match_bs7671_for_text is text-only
+      //    and returns reg number/title/content + an is_a4_change flag.
       recentTasks.length > 0
-        ? supabase.rpc('search_regulations_intelligence_hybrid', {
-            query_text: taskQueryTextShort,
-            match_count: 3,
+        ? supabase.rpc('match_bs7671_for_text', {
+            q_text: taskQueryTextShort,
+            doc_type: 'bs7671', // the standard itself — not OSG/GN3 section numbers
+            max_results: 3,
           })
         : Promise.resolve({ data: null }),
 
@@ -320,10 +323,9 @@ serve(async (req: Request) => {
       if (practicalData && practicalData.length > 0) {
         ragContext += '\n\n--- Relevant Practical Knowledge ---\n';
         for (const item of practicalData.slice(0, 3)) {
+          // Topic only — practical-work rows carry STALE A3 reg numbers, so we
+          // never surface those; BS 7671 grounding comes from the facets query.
           ragContext += `- ${item.primary_topic || item.description || ''}\n`;
-          if (item.bs7671_regulations?.length) {
-            ragContext += `  Regulations: ${item.bs7671_regulations.join(', ')}\n`;
-          }
         }
       }
     } else {
@@ -351,13 +353,15 @@ serve(async (req: Request) => {
       console.warn('[diary-coach] KSB lookup failed:', ksbResult.reason);
     }
 
-    // Process regulations results
+    // Process BS 7671 facets (A4:2026) results
     if (regsResult.status === 'fulfilled') {
       const regsData = regsResult.value.data;
       if (regsData && regsData.length > 0) {
-        ragContext += '\n\n--- Relevant BS 7671 Regulations ---\n';
+        ragContext += '\n\n--- Relevant BS 7671:2018+A4:2026 Regulations ---\n';
         for (const reg of regsData.slice(0, 2)) {
-          ragContext += `- Reg ${reg.regulation_number || ''}: ${(reg.content || reg.primary_topic || '').substring(0, 200)}\n`;
+          const a4 = reg.is_a4_change ? ' [A4:2026 change]' : '';
+          const title = reg.reg_title ? ` ${reg.reg_title}` : '';
+          ragContext += `- Reg ${reg.reg_number || ''}${title}${a4}: ${(reg.content || reg.primary_topic || '').substring(0, 220)}\n`;
         }
       }
     } else {
@@ -444,7 +448,7 @@ serve(async (req: Request) => {
       detailGuidance = `\n\nNote: None of the recent entries include a "what I learned" reflection. In your recommendation, gently coach on what makes a strong diary entry — specific tasks with measurements, regulation references, and reflections on what went well or could improve.`;
     }
 
-    const systemPrompt = `You are an encouraging, experienced electrical training coach reviewing an apprentice electrician's diary entries. You have 30 years of experience in the UK electrical industry and know BS 7671:2018+A3:2024 inside-out.
+    const systemPrompt = `You are an encouraging, experienced electrical training coach reviewing an apprentice electrician's diary entries. You have 30 years of experience in the UK electrical industry and know BS 7671:2018+A4:2026 inside-out.
 
 Your job is to:
 1. Summarise their recent work activity
@@ -452,7 +456,7 @@ Your job is to:
 3. Comment on their mood/wellbeing trends
 4. Give one specific, actionable recommendation
 5. Provide genuine, personalised encouragement
-6. Share a relevant BS 7671 regulation or safety tip based on their work
+6. Share a relevant BS 7671 safety tip based on their work. Only cite a regulation NUMBER if it appears in the "Relevant BS 7671:2018+A4:2026 Regulations" context below — never invent or recall regulation numbers from memory. If no regulation context is provided, give a general safety tip without a number.
 7. Suggest which KSB they could evidence from their recent activities
 8. If qualification requirements context is provided, note which assessment criteria their recent work covers and suggest specific evidence they could add to their portfolio
 9. From the diary entries provided (each has an ID), identify up to 3 that would make the strongest portfolio evidence. Return them in portfolioNudges with the entry ID, date, a short nudge message (e.g. "Strong evidence for Unit 304"), the most relevant unit code, and confidence (0-100). Only include entries where confidence > 60.

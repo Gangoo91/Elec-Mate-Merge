@@ -173,7 +173,7 @@ const Subsection9_1 = ({ subsectionId, isCompleted, markAsComplete }: Subsection
             <div className="mt-4 p-4 bg-white/10 rounded-lg text-sm">
               <p className="font-medium mb-1 text-elec-yellow">Regulatory Note:</p>
               <p>
-                BS 7671 Chapter 61 details inspection requirements, while Chapter 62 covers testing.
+                BS 7671 Chapter 64 details inspection requirements, while Chapter 65 covers testing.
                 Certificates must be issued by competent persons and provide a declaration of safety
                 and compliance. Copies must be provided to the person ordering the work, and
                 appropriate information given to the user. Documentation should be retained for

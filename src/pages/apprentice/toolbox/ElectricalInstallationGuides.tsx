@@ -96,7 +96,7 @@ const ElectricalInstallationGuides = () => {
           4 installation types
         </span>
         <span className="bg-white/10 border border-white/10 rounded-full px-3 py-1">
-          BS 7671:2018+A3:2024
+          BS 7671:2018+A4:2026
         </span>
       </div>
 
@@ -167,7 +167,7 @@ const ElectricalInstallationGuides = () => {
         <div className="space-y-1">
           <p className="text-white text-sm font-semibold">Compliance Reminder</p>
           <p className="text-white text-sm">
-            All electrical work must comply with BS 7671:2018+A3:2024, Part P Building Regulations,
+            All electrical work must comply with BS 7671:2018+A4:2026, Part P Building Regulations,
             and GN3 Inspection &amp; Testing guidance. Always check for the latest amendments.
           </p>
         </div>

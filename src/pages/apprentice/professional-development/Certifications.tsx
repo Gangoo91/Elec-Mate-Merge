@@ -41,7 +41,7 @@ const coreCertifications: CoreCert[] = [
     renewalRequired: false,
     prerequisites: 'No formal prerequisites — but basic electrical knowledge strongly recommended',
     description:
-      'The foundation of all UK electrical work. Covers the requirements of BS 7671:2018+A2:2022 for the design, erection, and verification of electrical installations. Mandatory for anyone carrying out electrical work.',
+      'The foundation of all UK electrical work. Covers the requirements of BS 7671:2018+A4:2026 for the design, erection, and verification of electrical installations. Mandatory for anyone carrying out electrical work.',
   },
   {
     title: 'AM2 Practical Assessment',

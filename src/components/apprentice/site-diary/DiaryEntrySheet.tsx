@@ -7,6 +7,9 @@
  */
 
 import { useState, useCallback, useEffect, useMemo, useRef } from 'react';
+import { todayLocalISO } from '@/lib/localDate';
+import { compressImageForUpload } from '@/utils/imageUploadUtils';
+import { EvidenceImage } from '@/components/shared/EvidenceImage';
 import { Sheet, SheetContent, SheetHeader, SheetTitle } from '@/components/ui/ui/sheet';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
@@ -78,7 +81,7 @@ export function DiaryEntrySheet({
 }: DiaryEntrySheetProps) {
   const isEditing = !!existingEntry;
   const haptic = useHaptic();
-  const today = new Date().toISOString().split('T')[0];
+  const today = todayLocalISO();
   const [date, setDate] = useState(initialDate || today);
   const [siteName, setSiteName] = useState('');
   const [supervisor, setSupervisor] = useState('');
@@ -120,7 +123,7 @@ export function DiaryEntrySheet({
       setPhotos(existingEntry.photos || []);
     } else if (!existingEntry && open) {
       // Reset for new entry — use initialDate if provided (from calendar tap)
-      setDate(initialDate || new Date().toISOString().split('T')[0]);
+      setDate(initialDate || todayLocalISO());
       setSiteName('');
       setSupervisor('');
       setTaskInput('');
@@ -173,15 +176,26 @@ export function DiaryEntrySheet({
           data: { user },
         } = await supabase.auth.getUser();
         if (!user) throw new Error('You must be logged in to upload photos');
-        const fileExt = file.name.split('.').pop();
-        const fileName = `${user.id}/diary/${Date.now()}.${fileExt}`;
+        // Compress + convert (iPhone HEIC → JPEG) before upload: faster on a
+        // weak site signal, far smaller storage, consistent type.
+        const compressed = await compressImageForUpload(file);
+        const ext = compressed.type === 'image/png' ? 'png' : 'jpg';
+        const fileName = `${user.id}/diary/${Date.now()}.${ext}`;
+        // Private-ready bucket (same model as portfolio/OJT evidence): stored
+        // URL is resolved to a signed URL at display time via <EvidenceImage>,
+        // so site photos are never world-readable, and "Add to Portfolio"
+        // carries a reference the portfolio already knows how to resolve.
         const { data, error } = await supabase.storage
-          .from('visual-uploads')
-          .upload(fileName, file, { cacheControl: '3600', upsert: false });
+          .from('portfolio-evidence')
+          .upload(fileName, compressed, {
+            cacheControl: '3600',
+            upsert: false,
+            contentType: compressed.type || 'image/jpeg',
+          });
         if (error) throw error;
         const {
           data: { publicUrl },
-        } = supabase.storage.from('visual-uploads').getPublicUrl(data.path);
+        } = supabase.storage.from('portfolio-evidence').getPublicUrl(data.path);
         setPhotos((prev) => [...prev, publicUrl]);
         toast.success(`Photo ${photos.length + 1}/${MAX_PHOTOS} uploaded`);
       } catch (error) {
@@ -225,9 +239,12 @@ export function DiaryEntrySheet({
       hours_spent: parsedHours && parsedHours > 0 ? parsedHours : null,
     };
 
-    await onSave(entry);
-    onOpenChange(false);
+    // Only close on a successful save — createEntry/updateEntry return null on
+    // failure (and toast the error), so a dropped signal keeps the form open
+    // with everything the apprentice typed still here.
+    const saved = await onSave(entry);
     setIsSaving(false);
+    if (saved) onOpenChange(false);
   };
 
   return (
@@ -242,7 +259,7 @@ export function DiaryEntrySheet({
             <div className="flex items-center justify-between">
               <div>
                 <SheetTitle className="text-lg font-bold text-white">
-                  {isEditing ? 'Edit Entry' : date === new Date().toISOString().split('T')[0] ? 'Log Today' : 'Log Entry'}
+                  {isEditing ? 'Edit Entry' : date === todayLocalISO() ? 'Log Today' : 'Log Entry'}
                 </SheetTitle>
                 <p className="text-xs text-white mt-0.5">
                   {new Date(date + 'T00:00:00').toLocaleDateString('en-GB', {
@@ -535,7 +552,7 @@ export function DiaryEntrySheet({
                         key={i}
                         className="relative aspect-square rounded-xl overflow-hidden border border-white/10 bg-white/[0.03]"
                       >
-                        <img
+                        <EvidenceImage
                           src={url}
                           alt={`Photo ${i + 1}`}
                           className="w-full h-full object-cover"

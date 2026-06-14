@@ -350,7 +350,7 @@ export const siteAssessmentChecklist: ChecklistCategory[] = [
         text: 'Adequate working space around electrical equipment (minimum 600mm)',
         whyItMatters:
           'Cramped working conditions increase the risk of accidental contact with live parts and limit escape routes.',
-        regulation: 'BS 7671:2018+A2:2022 Reg 513.1',
+        regulation: 'BS 7671:2018+A4:2026 Reg 513.1',
         riskLevel: 'critical',
       },
       {
@@ -493,7 +493,7 @@ export const siteAssessmentChecklist: ChecklistCategory[] = [
         text: 'Colour identification possible in lighting conditions',
         whyItMatters:
           'Correct cable colour identification is critical. Poor lighting or certain lamp types can make brown and grey look identical.',
-        regulation: 'BS 7671:2018+A2:2022',
+        regulation: 'BS 7671:2018+A4:2026',
         riskLevel: 'critical',
       },
       {
@@ -546,7 +546,7 @@ export const siteAssessmentChecklist: ChecklistCategory[] = [
         text: 'Cable routes and fixing points accessible',
         whyItMatters:
           'Planning cable routes in advance prevents rework and ensures compliance with separation requirements.',
-        regulation: 'BS 7671:2018+A2:2022 Reg 521',
+        regulation: 'BS 7671:2018+A4:2026 Reg 521',
         riskLevel: 'important',
       },
       {
@@ -654,7 +654,7 @@ export const siteAssessmentChecklist: ChecklistCategory[] = [
         text: 'Consumer unit condition and accessibility',
         whyItMatters:
           'A damaged or inaccessible CU prevents safe isolation and makes fault finding dangerous.',
-        regulation: 'BS 7671:2018+A2:2022 Reg 132.12',
+        regulation: 'BS 7671:2018+A4:2026 Reg 132.12',
         riskLevel: 'critical',
       },
       {
@@ -669,7 +669,7 @@ export const siteAssessmentChecklist: ChecklistCategory[] = [
         text: 'Main switch operation and labelling',
         whyItMatters:
           'The main switch must be clearly labelled and easily operable for emergency disconnection.',
-        regulation: 'BS 7671:2018+A2:2022 Reg 537',
+        regulation: 'BS 7671:2018+A4:2026 Reg 537',
         riskLevel: 'critical',
       },
       {
@@ -677,8 +677,24 @@ export const siteAssessmentChecklist: ChecklistCategory[] = [
         text: 'RCD protection appropriate and functioning',
         whyItMatters:
           'RCDs save lives by disconnecting in milliseconds when a fault is detected. They must trip within required times.',
-        regulation: 'BS 7671:2018+A2:2022 Reg 411.3',
+        regulation: 'BS 7671:2018+A4:2026 Reg 411.3',
         riskLevel: 'critical',
+      },
+      {
+        id: 'cu-afdd',
+        text: 'AFDD protection where required (socket-outlet final circuits in higher-risk premises)',
+        whyItMatters:
+          'A4:2026 requires Arc Fault Detection Devices on single-phase AC socket-outlet final circuits up to 32A in higher-risk residential buildings, HMOs, purpose-built student accommodation and care homes — they catch series and parallel arc faults that MCBs and RCDs miss.',
+        regulation: 'BS 7671:2018+A4:2026 Reg 421.1.7',
+        riskLevel: 'important',
+      },
+      {
+        id: 'cu-spd',
+        text: 'Surge Protection Device (SPD) fitted or its omission risk-assessed',
+        whyItMatters:
+          'Transient overvoltages from lightning or switching can destroy electronics and start fires. A4:2026 requires SPD protection unless a documented risk assessment justifies leaving it out.',
+        regulation: 'BS 7671:2018+A4:2026 Reg 443.4',
+        riskLevel: 'important',
       },
       {
         id: 'cu-breakers',
@@ -699,7 +715,7 @@ export const siteAssessmentChecklist: ChecklistCategory[] = [
         text: 'IP rating appropriate for location',
         whyItMatters:
           'Consumer units in garages, bathrooms, or outdoors need higher IP ratings to prevent moisture ingress.',
-        regulation: 'BS 7671:2018+A2:2022',
+        regulation: 'BS 7671:2018+A4:2026',
         riskLevel: 'important',
       },
       {
@@ -707,7 +723,7 @@ export const siteAssessmentChecklist: ChecklistCategory[] = [
         text: 'Isolation and switching arrangements adequate',
         whyItMatters:
           'Every circuit must have means of isolation for safe maintenance. Inadequate isolation puts lives at risk.',
-        regulation: 'BS 7671:2018+A2:2022 Reg 537',
+        regulation: 'BS 7671:2018+A4:2026 Reg 537',
         riskLevel: 'critical',
       },
     ],
@@ -725,7 +741,7 @@ export const siteAssessmentChecklist: ChecklistCategory[] = [
         text: 'Cable types and conditions throughout installation',
         whyItMatters:
           'Old or damaged cables may not meet current regulations and could be a fire or shock hazard.',
-        regulation: 'BS 7671:2018+A2:2022',
+        regulation: 'BS 7671:2018+A4:2026',
         riskLevel: 'critical',
       },
       {
@@ -733,7 +749,7 @@ export const siteAssessmentChecklist: ChecklistCategory[] = [
         text: 'Cable supports and fixing methods adequate',
         whyItMatters:
           'Unsupported cables sag, overheat at pinch points, and are vulnerable to mechanical damage.',
-        regulation: 'BS 7671:2018+A2:2022 Reg 522',
+        regulation: 'BS 7671:2018+A4:2026 Reg 522',
         riskLevel: 'important',
       },
       {
@@ -748,7 +764,7 @@ export const siteAssessmentChecklist: ChecklistCategory[] = [
         text: 'Appropriate cable sizes for circuit loading',
         whyItMatters:
           'Undersized cables overheat under load, degrading insulation and eventually causing fire.',
-        regulation: 'BS 7671:2018+A2:2022 Reg 523',
+        regulation: 'BS 7671:2018+A4:2026 Reg 523',
         riskLevel: 'critical',
       },
       {
@@ -756,7 +772,7 @@ export const siteAssessmentChecklist: ChecklistCategory[] = [
         text: 'Junction boxes and connections accessible',
         whyItMatters:
           'Inaccessible connections cannot be inspected or maintained, and concealed faults are harder to find.',
-        regulation: 'BS 7671:2018+A2:2022 Reg 526',
+        regulation: 'BS 7671:2018+A4:2026 Reg 526',
         riskLevel: 'important',
       },
       {
@@ -764,7 +780,7 @@ export const siteAssessmentChecklist: ChecklistCategory[] = [
         text: 'Cable identification and labelling present',
         whyItMatters:
           'Poor labelling increases the risk of working on the wrong circuit and makes fault finding much harder.',
-        regulation: 'BS 7671:2018+A2:2022 Reg 514',
+        regulation: 'BS 7671:2018+A4:2026 Reg 514',
         riskLevel: 'important',
       },
       {
@@ -772,7 +788,7 @@ export const siteAssessmentChecklist: ChecklistCategory[] = [
         text: 'Segregation of different voltage systems',
         whyItMatters:
           'Mixing low voltage and extra-low voltage cables without proper segregation can introduce dangerous voltages.',
-        regulation: 'BS 7671:2018+A2:2022 Reg 528',
+        regulation: 'BS 7671:2018+A4:2026 Reg 528',
         riskLevel: 'critical',
       },
       {
@@ -797,7 +813,7 @@ export const siteAssessmentChecklist: ChecklistCategory[] = [
         text: 'Main earthing terminal condition and connection',
         whyItMatters:
           'The MET is the foundation of the entire earthing system. A poor connection here compromises all protection.',
-        regulation: 'BS 7671:2018+A2:2022 Reg 542',
+        regulation: 'BS 7671:2018+A4:2026 Reg 542',
         riskLevel: 'critical',
       },
       {
@@ -805,7 +821,7 @@ export const siteAssessmentChecklist: ChecklistCategory[] = [
         text: 'Earthing conductor size and condition',
         whyItMatters:
           'An undersized earthing conductor may not carry fault current, preventing protective devices from operating.',
-        regulation: 'BS 7671:2018+A2:2022 Reg 542',
+        regulation: 'BS 7671:2018+A4:2026 Reg 542',
         riskLevel: 'critical',
       },
       {
@@ -813,7 +829,7 @@ export const siteAssessmentChecklist: ChecklistCategory[] = [
         text: 'Equipotential bonding to services complete',
         whyItMatters:
           'Main bonding connects gas, water, and other services to earth, preventing dangerous voltages between them.',
-        regulation: 'BS 7671:2018+A2:2022 Reg 544.1',
+        regulation: 'BS 7671:2018+A4:2026 Reg 544.1',
         riskLevel: 'critical',
       },
       {
@@ -821,7 +837,7 @@ export const siteAssessmentChecklist: ChecklistCategory[] = [
         text: 'Supplementary bonding where required',
         whyItMatters:
           'In special locations like bathrooms, supplementary bonding provides additional protection against electric shock.',
-        regulation: 'BS 7671:2018+A2:2022 Reg 701',
+        regulation: 'BS 7671:2018+A4:2026 Reg 701',
         riskLevel: 'important',
       },
       {
@@ -829,7 +845,7 @@ export const siteAssessmentChecklist: ChecklistCategory[] = [
         text: 'Earth electrode system (if applicable)',
         whyItMatters:
           'TT installations rely on the earth electrode for fault protection. Its resistance must be tested regularly.',
-        regulation: 'BS 7671:2018+A2:2022 Reg 542.2',
+        regulation: 'BS 7671:2018+A4:2026 Reg 542.2',
         riskLevel: 'critical',
       },
       {
@@ -837,7 +853,7 @@ export const siteAssessmentChecklist: ChecklistCategory[] = [
         text: 'Continuity of protective conductors',
         whyItMatters:
           'A broken CPC means exposed metalwork could become live during a fault with no protection.',
-        regulation: 'BS 7671:2018+A2:2022 Reg 543',
+        regulation: 'BS 7671:2018+A4:2026 Reg 543',
         riskLevel: 'critical',
       },
       {
@@ -845,7 +861,7 @@ export const siteAssessmentChecklist: ChecklistCategory[] = [
         text: 'Bonding conductor sizes comply with BS 7671',
         whyItMatters:
           'Undersized bonding conductors cannot carry prospective fault current, defeating the purpose of the bond.',
-        regulation: 'BS 7671:2018+A2:2022 Reg 544',
+        regulation: 'BS 7671:2018+A4:2026 Reg 544',
         riskLevel: 'critical',
       },
       {
@@ -853,7 +869,7 @@ export const siteAssessmentChecklist: ChecklistCategory[] = [
         text: 'Earth fault loop impedance within limits',
         whyItMatters:
           'If Zs is too high, protective devices will not disconnect fast enough during a fault, leaving you exposed to shock.',
-        regulation: 'BS 7671:2018+A2:2022 Reg 411',
+        regulation: 'BS 7671:2018+A4:2026 Reg 411',
         riskLevel: 'critical',
       },
     ],
@@ -871,7 +887,7 @@ export const siteAssessmentChecklist: ChecklistCategory[] = [
         text: 'RCD testing and operation within limits',
         whyItMatters:
           'RCDs must trip within 300ms at rated current and 40ms at 5x rated current. Slow RCDs do not protect.',
-        regulation: 'BS 7671:2018+A2:2022 Reg 411.3',
+        regulation: 'BS 7671:2018+A4:2026 Reg 411.3',
         riskLevel: 'critical',
       },
       {
@@ -947,7 +963,7 @@ export const siteAssessmentChecklist: ChecklistCategory[] = [
         text: 'Installation complies with current edition of BS 7671',
         whyItMatters:
           'Non-compliant installations may have safety deficiencies that need addressing before new work begins.',
-        regulation: 'BS 7671:2018+A2:2022',
+        regulation: 'BS 7671:2018+A4:2026',
         riskLevel: 'critical',
       },
       {
@@ -955,7 +971,7 @@ export const siteAssessmentChecklist: ChecklistCategory[] = [
         text: 'Test results within acceptable limits',
         whyItMatters:
           'Out-of-limits results indicate faults that must be rectified before the installation can be certified safe.',
-        regulation: 'BS 7671:2018+A2:2022 Ch 61',
+        regulation: 'BS 7671:2018+A4:2026 Ch 64',
         riskLevel: 'critical',
       },
       {
@@ -963,7 +979,7 @@ export const siteAssessmentChecklist: ChecklistCategory[] = [
         text: 'Periodic inspection due dates noted',
         whyItMatters:
           'Overdue periodic inspections mean the installation has not been checked for developing faults.',
-        regulation: 'BS 7671:2018+A2:2022 Ch 62',
+        regulation: 'BS 7671:2018+A4:2026 Ch 65',
         riskLevel: 'important',
       },
       {
@@ -971,7 +987,7 @@ export const siteAssessmentChecklist: ChecklistCategory[] = [
         text: 'Any departures from BS 7671 recorded',
         whyItMatters:
           'All departures must be documented with justification. Undocumented departures create liability issues.',
-        regulation: 'BS 7671:2018+A2:2022 Reg 120.3',
+        regulation: 'BS 7671:2018+A4:2026 Reg 120.3',
         riskLevel: 'important',
       },
       {

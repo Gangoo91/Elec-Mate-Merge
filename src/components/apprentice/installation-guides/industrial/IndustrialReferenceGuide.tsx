@@ -68,7 +68,7 @@ const IndustrialReferenceGuide = () => {
       category: 'Industrial Installations',
       standards: [
         {
-          code: 'BS 7671:2018+A3:2024',
+          code: 'BS 7671:2018+A4:2026',
           title: 'Requirements for Electrical Installations',
           scope: 'General electrical requirements',
         },

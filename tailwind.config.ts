@@ -8,6 +8,20 @@ export default {
     './app/**/*.{ts,tsx}',
     './src/**/*.{ts,tsx}',
   ],
+  // Specialist installation guides build colour classes dynamically
+  // (`bg-${item.color}-500/10`), which JIT can't see as literals — without this
+  // the EV/Solar/overview panels render unstyled. Bounded to the exact colour
+  // set + shades/opacities those guides use.
+  safelist: [
+    {
+      pattern:
+        /(bg|text|border)-(amber|blue|cyan|emerald|fuchsia|green|indigo|lime|orange|pink|purple|red|sky|slate|teal|yellow)-(200|300|400|500)/,
+    },
+    {
+      pattern:
+        /(bg|border)-(amber|blue|cyan|emerald|fuchsia|green|indigo|lime|orange|pink|purple|red|sky|slate|teal|yellow)-(500)\/(10|20|30|40)/,
+    },
+  ],
   prefix: '',
   theme: {
     container: {

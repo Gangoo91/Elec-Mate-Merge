@@ -7,7 +7,7 @@ export const diversityAndDemand: FlashcardData[] = [
     id: 'dd1',
     question: "What is the definition of 'maximum demand' as used in BS 7671?",
     answer:
-      'Maximum demand is the maximum current that a circuit, or an entire installation, is expected to draw at any given time. It is defined in Part 2 of BS 7671:2018+A2:2022 and is used to determine the rating of protective devices, cable sizes, and the capacity of the incoming supply.',
+      'Maximum demand is the maximum current that a circuit, or an entire installation, is expected to draw at any given time. It is defined in Part 2 of BS 7671:2018+A4:2026 and is used to determine the rating of protective devices, cable sizes, and the capacity of the incoming supply.',
     category: 'Maximum Demand',
     difficulty: 'easy',
   },

@@ -236,7 +236,7 @@ const SafetyFundamentals = () => {
       {/* ── Footnote ──────────────────────────────────────────────── */}
       <motion.section variants={itemVariants}>
         <p className="text-[11px] text-white/40 leading-relaxed">
-          Safety guidance referenced from BS 7671:2018+A2:2022, the Health and
+          Safety guidance referenced from BS 7671:2018+A4:2026, the Health and
           Safety at Work Act 1974, the Electricity at Work Regulations 1989, HSE
           guidance note GS38, and current industry best practice. Always follow
           your employer's specific safety procedures and risk assessments. If in

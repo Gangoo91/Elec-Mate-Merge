@@ -8,6 +8,7 @@
  */
 
 import { useState, useMemo } from 'react';
+import { todayLocalISO } from '@/lib/localDate';
 import { ChevronLeft, ChevronRight } from 'lucide-react';
 import type { SiteDiaryEntry } from '@/hooks/site-diary/useSiteDiaryEntries';
 
@@ -67,7 +68,7 @@ export function DiaryCalendarView({ entries, onDayTap, onEmptyDayTap, selectedDa
     });
   };
 
-  const today = new Date().toISOString().split('T')[0];
+  const today = todayLocalISO();
 
   return (
     <div className="rounded-xl bg-white/[0.03] border border-white/[0.06] p-4">

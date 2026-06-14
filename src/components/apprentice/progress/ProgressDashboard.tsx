@@ -19,10 +19,12 @@
 
 import { useEffect, useMemo } from 'react';
 import { XPHeroCard } from './XPHeroCard';
+import { AchievementGallery } from './AchievementGallery';
 import { SkillRadarChart } from './SkillRadarChart';
 import { FlashcardMasteryWheel } from './FlashcardMasteryWheel';
 import { RecentActivityFeed } from './RecentActivityFeed';
 import { EPAGradePredictor } from './EPAGradePredictor';
+import { Am2ReadinessRow } from '@/components/apprentice/am2/Am2ReadinessRing';
 import { TopicMasteryList, type TopicRow } from './TopicMasteryList';
 import { useUnifiedProgress } from '@/hooks/useUnifiedProgress';
 import { useAchievementChecker } from '@/hooks/useAchievementChecker';
@@ -48,7 +50,8 @@ export function ProgressDashboard() {
 
   const { results: quizResults, getPerformanceByCategory } = useQuizResults();
   const { getSetProgress } = useFlashcardProgress();
-  const { checkAchievements, getUnlockedCount, getTotalCount } = useAchievementChecker();
+  const { checkAchievements, getAllAchievements, getUnlockedCount, getTotalCount, nextUp } =
+    useAchievementChecker();
 
   useEffect(() => {
     checkAchievements();
@@ -160,6 +163,18 @@ export function ProgressDashboard() {
           achievementsTotal={getTotalCount()}
         />
       </div>
+
+      {/* Achievements gallery — rarity tiers finally on display.
+          The Today page's next-badge row deep-links here. */}
+      <AchievementGallery
+        achievements={getAllAchievements()}
+        unlockedCount={getUnlockedCount()}
+        totalCount={getTotalCount()}
+        nextUp={nextUp}
+      />
+
+      {/* AM2 readiness — compact link row into the simulator */}
+      <Am2ReadinessRow />
 
       {/* Topic mastery — full width */}
       <TopicMasteryList topics={topics} />

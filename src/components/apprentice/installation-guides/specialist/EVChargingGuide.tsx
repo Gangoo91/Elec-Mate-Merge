@@ -332,7 +332,7 @@ const EVChargingGuide = () => {
       {
         type: 'Dynamic Load Management (DLM)',
         description: 'Real-time adjustment of charging current based on other loads',
-        when: 'Maximize charging speed while respecting supply limits',
+        when: 'Maximise charging speed while respecting supply limits',
         implementation: 'CT clamp on supply monitors total load, charger adjusts accordingly',
       },
       {

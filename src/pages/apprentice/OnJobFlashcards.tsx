@@ -333,7 +333,7 @@ const OnJobFlashcards = () => {
               type="button"
               onClick={() => setActiveLevel(tab.id)}
               className={`
-              flex-1 py-2 rounded-lg text-sm font-medium
+              flex-1 min-h-[44px] py-2 rounded-lg text-sm font-medium
               border touch-manipulation active:scale-[0.96] transition-all
               ${
                 activeLevel === tab.id
@@ -385,7 +385,7 @@ const OnJobFlashcards = () => {
               type="button"
               onClick={() => setActiveCategory(activeCategory === cat.id ? 'all' : cat.id)}
               className={`
-              px-3 py-1.5 rounded-lg text-xs font-medium
+              min-h-[44px] px-3 py-1.5 rounded-lg text-xs font-medium
               border touch-manipulation active:scale-[0.96] transition-all
               ${
                 activeCategory === cat.id

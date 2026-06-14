@@ -70,7 +70,7 @@ export const ukQualifications: UKQualification[] = [
     cost: '£300-£500',
     awarding_body: 'City & Guilds, NICEIC, NAPIT',
     description: 'Wiring regulations qualification',
-    renewal: 'Stay current with BS 7671:2018+A3:2024 updates',
+    renewal: 'Stay current with BS 7671:2018+A4:2026 updates',
   },
   {
     level: 'Level 3',

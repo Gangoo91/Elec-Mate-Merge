@@ -6,7 +6,7 @@ export const bs7671Regulations: FlashcardData[] = [
     id: 'bs1',
     question: 'What is the current edition of BS 7671?',
     answer:
-      '18th Edition (2018) with Amendment 3 (2024). A2:2022 added prosumer requirements. A3:2024 added Regulation 530.3.201 for bidirectional/unidirectional devices.',
+      '18th Edition (2018), now to Amendment 4 — BS 7671:2018+A4:2026. The amendment trail: A2:2022 added prosumer requirements; A3:2024 added Reg 530.3.201 for bidirectional/unidirectional devices; A4:2026 is the current amendment you must work to.',
     category: 'Parts & Structure',
     difficulty: 'easy',
   },

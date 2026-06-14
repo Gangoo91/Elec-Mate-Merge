@@ -6,7 +6,8 @@
  * wider container so the page works on desktop without wasting screen.
  *
  * Sections (top → bottom):
- *   1. Hero readiness gauge (kept, reskinned via existing AM2ReadinessGauge)
+ *   1. Hero — Am2ReadinessRing (session-based score, explainable bands,
+ *      exam-date chip, timed-mock CTA)
  *   2. Recalculate + last-calculated stamp
  *   3. Risk banner
  *   4. Connected-grid of 4 mode cards — matches /apprentice/hub style:
@@ -29,7 +30,7 @@ import {
   Target,
 } from 'lucide-react';
 import { cn } from '@/lib/utils';
-import { AM2ReadinessGauge } from './AM2ReadinessGauge';
+import { Am2ReadinessRing } from '@/components/apprentice/am2/Am2ReadinessRing';
 import { AM2JourneyPanel } from './AM2JourneyPanel';
 import {
   useAM2Readiness,
@@ -178,9 +179,11 @@ export function AM2ReadinessDashboard({ onNavigateToTab }: AM2ReadinessDashboard
       animate="visible"
       className="space-y-6 sm:space-y-8 px-4 sm:px-6 lg:px-8 py-5"
     >
-      {/* Hero readiness gauge */}
+      {/* Hero — session-based readiness ring with explainable bands,
+          exam-date chip and the timed-mock CTA. The per-mode component
+          scores still drive the risk banner + mode cards below. */}
       <motion.div variants={fadeUp} className="flex flex-col items-center pt-2">
-        <AM2ReadinessGauge score={data.overallScore} status={data.overallStatus} size={200} />
+        <Am2ReadinessRing onRunMock={() => onNavigateToTab('mock-day')} />
         <div className="mt-3 flex items-center gap-3">
           <button
             onClick={recalculate}

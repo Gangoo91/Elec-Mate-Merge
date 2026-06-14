@@ -41,7 +41,12 @@ export const XP_RULES: Record<ActivityType, XPRule> = {
     baseXP: 30,
     scoreMultiplier: 0.7, // + score% * 0.7
     bonusXP: 50, // perfect score bonus
-    defaultDurationMinutes: 1, // per question
+    defaultDurationMinutes: 1, // per question — fallback when time isn't measured
+    // Callers that measure real elapsed time (e.g. the revision session)
+    // pass actualMinutes and it wins; callers without it (useQuizResults)
+    // fall through to the per-question estimate above. Estimated minutes
+    // must never beat measured minutes on the OTJ ledger.
+    usesActualDuration: true,
     complianceCategory: 'Self-study',
   },
   site_diary_entry: {

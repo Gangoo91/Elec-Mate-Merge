@@ -71,7 +71,7 @@ export const courseCategories = [
 export const enhancedCareerCourses: EnhancedCareerCourse[] = [
   {
     id: 1,
-    title: '18th Edition Wiring Regulations (BS 7671:2018+A3:2024)',
+    title: '18th Edition Wiring Regulations (BS 7671:2018+A4:2026)',
     provider: 'NICEIC Academy',
     description:
       'Comprehensive training on the latest IET Wiring Regulations, covering all amendments and updates essential for UK electrical installations.',

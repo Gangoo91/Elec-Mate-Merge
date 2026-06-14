@@ -208,7 +208,8 @@ const CultureSectionView = ({ section, progress, onBack }: CultureSectionViewPro
                             e.stopPropagation();
                             progress.toggleBookmark(q.id);
                           }}
-                          className="p-2 rounded-lg touch-manipulation active:scale-95"
+                          aria-label={isBookmarked ? 'Remove bookmark' : 'Bookmark this'}
+                          className="min-h-[44px] min-w-[44px] flex items-center justify-center rounded-lg touch-manipulation active:scale-95"
                         >
                           {isBookmarked ? (
                             <BookmarkCheck className="h-4 w-4 text-elec-yellow" />

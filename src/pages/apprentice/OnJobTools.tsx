@@ -165,7 +165,7 @@ const DAILY_TIPS = [
     category: 'Documentation',
   },
   {
-    tip: 'GN3 voltage indicator — prove, test, prove. Never skip the second prove. Your life depends on it.',
+    tip: 'GS38 voltage indicator, per GN3 — prove, test, prove. Never skip the second prove. Your life depends on it.',
     category: 'Safe isolation',
   },
   {

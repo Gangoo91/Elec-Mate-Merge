@@ -60,6 +60,12 @@ import { useToast } from '@/hooks/use-toast';
 import { useAuth } from '@/contexts/AuthContext';
 import { useHaptic } from '@/hooks/useHaptic';
 import {
+  saveDraft,
+  loadDraft,
+  clearDraft,
+  type CaptureDraft,
+} from '@/lib/captureDrafts';
+import {
   Eyebrow,
   PrimaryAction,
   SecondaryAction,
@@ -117,6 +123,17 @@ const EVIDENCE_TYPES: { v: EvidenceType; label: string }[] = [
 ];
 
 const todayISO = () => new Date().toISOString().slice(0, 10);
+
+// Coarse, human relative time for the draft banner — "25 min ago".
+function relativeTime(ts: number): string {
+  const mins = Math.max(0, Math.round((Date.now() - ts) / 60000));
+  if (mins < 1) return 'just now';
+  if (mins < 60) return `${mins} min ago`;
+  const hrs = Math.round(mins / 60);
+  if (hrs < 24) return `${hrs} ${hrs === 1 ? 'hour' : 'hours'} ago`;
+  const days = Math.round(hrs / 24);
+  return `${days} ${days === 1 ? 'day' : 'days'} ago`;
+}
 
 // Turn the AI STAR draft into editable prose the apprentice owns and can reword.
 function formatReflection(r: ReflectionDraft): string {
@@ -338,6 +355,166 @@ export function UnifiedCaptureSheet({
         write confirms (apprentices capture on flaky site signal). ──────── */
   const [isSaving, setIsSaving] = useState(false);
 
+  /* ─── Offline draft survival (IndexedDB) ──────────────────────────
+        Signal drops mid-capture, the app gets killed in the background,
+        uploads fail and the apprentice gives up — the entry must survive.
+        Content debounce-saves to IDB while the sheet is open; reopening
+        offers Resume/Discard. Cleared ONLY on a successful save or an
+        explicit discard — never on mere sheet close. ──────────────────── */
+  const [pendingDraft, setPendingDraft] = useState<CaptureDraft | null>(null);
+  const draftCheckedRef = useRef(false);
+  // Warn once per mount if the backup can't be written (IDB missing/quota).
+  const draftWarnedRef = useRef(false);
+  // Monotonic guard against a stale debounce-save resurrecting a draft after
+  // it's been deliberately cleared (saveDraft + clearDraft use separate IDB
+  // connections, so completion order isn't guaranteed). Bumped on every
+  // clear; a debounce save landing after a bump re-clears.
+  const draftEpochRef = useRef(0);
+  const clearDraftNow = (uid: string) => {
+    draftEpochRef.current += 1;
+    void clearDraft(uid);
+  };
+
+  // Latest files, readable from stable listeners/timers without stale closures.
+  const filesRef = useRef<UploadedFile[]>(files);
+  useEffect(() => {
+    filesRef.current = files;
+  }, [files]);
+
+  const draftHasContent =
+    files.length > 0 ||
+    title.trim().length > 0 ||
+    description.trim().length > 0 ||
+    voiceText.trim().length > 0;
+
+  // A seeded sheet has content the moment it opens (title/ACs/context from
+  // the job idea), so draftHasContent alone would persist that untouched
+  // scaffold within 2s — silently overwriting any REAL unfinished draft in
+  // IDB (one draft per user). Only persist a seeded session once the
+  // apprentice has actually added something of their own.
+  const seededUntouched = (): boolean => {
+    if (!seededRef.current || !seed) return false;
+    return (
+      files.length === 0 &&
+      title === (seed.title ?? '') &&
+      voiceText === (seed.context ?? '') &&
+      description === '' &&
+      reflectionText === '' &&
+      siteRef === '' &&
+      role === '' &&
+      evidenceType === '' &&
+      witnessName === '' &&
+      witnessRole === '' &&
+      witnessDate === '' &&
+      !authenticityConfirmed &&
+      JSON.stringify(selectedACs) === JSON.stringify(seed.acRefs ?? [])
+    );
+  };
+  // Plain boolean so the debounce effect can depend on it directly.
+  const seededScaffoldOnly = seededUntouched();
+
+  // Snapshot the live capture as a draft record. Raw File blobs go into
+  // IDB (structured-cloneable) — never blob: URLs, which die with the
+  // session. storageUrl is kept so restore doesn't re-upload.
+  const draftSnapshot = (): CaptureDraft => ({
+    fields: {
+      title,
+      description,
+      voiceText,
+      reflectionText,
+      selectedACs,
+      workDate,
+      siteRef,
+      role,
+      evidenceType,
+      witnessName,
+      witnessRole,
+      witnessDate,
+      authenticityConfirmed,
+    },
+    files: files.map((f) => ({
+      name: f.file.name,
+      type: f.file.type,
+      blob: f.file,
+      storageUrl: f.storageUrl,
+    })),
+    savedAt: Date.now(),
+  });
+  const draftSnapshotRef = useRef(draftSnapshot);
+  useEffect(() => {
+    draftSnapshotRef.current = draftSnapshot;
+  });
+
+  // On open (and not seeded — a seed is a deliberate fresh capture brief),
+  // look for a leftover draft and offer it. Never auto-restore silently.
+  useEffect(() => {
+    if (!open) {
+      draftCheckedRef.current = false;
+      setPendingDraft(null);
+      return;
+    }
+    if (draftCheckedRef.current || !user?.id) return;
+    draftCheckedRef.current = true;
+    if (seed) return;
+    void loadDraft(user.id).then((d) => {
+      if (!d) return;
+      const f = d.fields;
+      const hasContent =
+        d.files.length > 0 ||
+        [f.title, f.description, f.voiceText].some(
+          (v) => typeof v === 'string' && v.trim().length > 0
+        );
+      if (hasContent) setPendingDraft(d);
+    });
+  }, [open, user?.id, seed]);
+
+  // Debounced persistence — ~2s after the last change while the sheet has
+  // content. Paused during save (success clears the draft instead).
+  useEffect(() => {
+    if (!open || !user?.id || isSaving || !draftHasContent || seededScaffoldOnly) return;
+    const uid = user.id;
+    const timer = window.setTimeout(() => {
+      const epoch = draftEpochRef.current;
+      void saveDraft(uid, draftSnapshotRef.current()).then((ok) => {
+        // A clear/discard/save happened while this write was in flight —
+        // its delete may have lost the IDB race, so re-clear.
+        if (ok && draftEpochRef.current !== epoch) {
+          void clearDraft(uid);
+          return;
+        }
+        if (!ok && !draftWarnedRef.current) {
+          draftWarnedRef.current = true;
+          toast({
+            title: "Couldn't save a backup of this entry",
+            description: 'Your work is still here — save it before closing the app.',
+          });
+        }
+      });
+    }, 2000);
+    return () => window.clearTimeout(timer);
+  }, [
+    open,
+    user?.id,
+    isSaving,
+    draftHasContent,
+    seededScaffoldOnly,
+    files,
+    title,
+    description,
+    voiceText,
+    reflectionText,
+    selectedACs,
+    workDate,
+    siteRef,
+    role,
+    evidenceType,
+    witnessName,
+    witnessRole,
+    witnessDate,
+    authenticityConfirmed,
+    toast,
+  ]);
+
   /* ─── Assessor-ready save nudge (soft — never blocks) ─────────────── */
   const [showReadinessNudge, setShowReadinessNudge] = useState(false);
   const readinessAck = useRef(false);
@@ -450,6 +627,10 @@ export function UnifiedCaptureSheet({
   /* ─── Reset ───────────────────────────────────────────────────────── */
   const resetForm = () => {
     setStep('capture');
+    // Release blob: preview URLs — they otherwise live until page unload.
+    for (const f of filesRef.current) {
+      if (f.previewUrl) URL.revokeObjectURL(f.previewUrl);
+    }
     setFiles([]);
     setTitle('');
     setDescription('');
@@ -562,14 +743,9 @@ export function UnifiedCaptureSheet({
     }
   };
 
-  /* ─── Retry a failed upload ──────────────────────────────────────── */
-  const retryUpload = async (id: string) => {
-    const target = files.find((f) => f.id === id);
-    if (!target || target.uploading) return;
-    setFiles((prev) =>
-      prev.map((f) => (f.id === id ? { ...f, uploading: true, error: undefined } : f))
-    );
-    const url = await uploadFile(target.file);
+  /* ─── Upload one file and mark the outcome on its chip ──────────── */
+  const uploadAndMark = async (id: string, file: File): Promise<string | null> => {
+    const url = await uploadFile(file);
     setFiles((prev) =>
       prev.map((f) =>
         f.id === id
@@ -582,6 +758,19 @@ export function UnifiedCaptureSheet({
           : f
       )
     );
+    return url;
+  };
+
+  /* ─── Retry a failed upload ──────────────────────────────────────── */
+  // Reads via filesRef so it's safe to call from the 'online' listener
+  // (which would otherwise close over a stale files array).
+  const retryUpload = async (id: string) => {
+    const target = filesRef.current.find((f) => f.id === id);
+    if (!target || target.uploading) return;
+    setFiles((prev) =>
+      prev.map((f) => (f.id === id ? { ...f, uploading: true, error: undefined } : f))
+    );
+    const url = await uploadAndMark(id, target.file);
     if (!url) {
       toast({
         title: 'Upload failed again',
@@ -589,6 +778,92 @@ export function UnifiedCaptureSheet({
         variant: 'destructive',
       });
     }
+  };
+
+  /* ─── Auto-retry failed uploads when signal returns ──────────────── */
+  useEffect(() => {
+    if (!open) return;
+    const onOnline = () => {
+      const failed = filesRef.current.filter((f) => f.error && !f.uploading);
+      if (!failed.length) return;
+      toast({ title: 'Back online — retrying uploads' });
+      for (const f of failed) void retryUpload(f.id);
+    };
+    window.addEventListener('online', onOnline);
+    return () => window.removeEventListener('online', onOnline);
+    // retryUpload is recreated per render but reads live state via refs —
+    // resubscribing on every change would add nothing.
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [open]);
+
+  /* ─── Draft restore / discard (explicit — never silent) ──────────── */
+  const handleResumeDraft = () => {
+    const d = pendingDraft;
+    if (!d) return;
+    haptic.light();
+    setPendingDraft(null);
+
+    // Spread defensively — a draft from an older/newer app version may
+    // miss fields or carry unknown ones; unknowns are simply ignored.
+    const f = d.fields;
+    const str = (v: unknown): string => (typeof v === 'string' ? v : '');
+    setTitle(str(f.title));
+    setDescription(str(f.description));
+    setVoiceText(str(f.voiceText));
+    setReflectionText(str(f.reflectionText));
+    setSelectedACs(
+      Array.isArray(f.selectedACs)
+        ? f.selectedACs.filter((x): x is string => typeof x === 'string')
+        : []
+    );
+    setWorkDate(str(f.workDate) || todayISO());
+    setSiteRef(str(f.siteRef));
+    setRole(str(f.role));
+    const et = str(f.evidenceType);
+    setEvidenceType(EVIDENCE_TYPES.some((t) => t.v === et) ? (et as EvidenceType) : '');
+    setWitnessName(str(f.witnessName));
+    setWitnessRole(str(f.witnessRole));
+    setWitnessDate(str(f.witnessDate));
+    setAuthenticityConfirmed(f.authenticityConfirmed === true);
+
+    // Rebuild real File objects from the stored blobs — last session's
+    // blob: preview URLs are dead, so regenerate them fresh. Files that
+    // already reached storage keep their storageUrl (no re-upload); the
+    // rest queue for upload now.
+    const restored: UploadedFile[] = d.files.map((df) => {
+      const file = new File([df.blob], df.name, { type: df.type });
+      return {
+        id: `f-${Date.now()}-${Math.random().toString(36).slice(2, 8)}`,
+        file,
+        previewUrl: file.type.startsWith('image/') ? URL.createObjectURL(file) : '',
+        storageUrl: df.storageUrl,
+        uploading: !df.storageUrl,
+      };
+    });
+    // Restore REPLACES the file list — release any previews it displaces.
+    for (const f of filesRef.current) {
+      if (f.previewUrl) URL.revokeObjectURL(f.previewUrl);
+    }
+    setFiles(restored);
+    setStep('details');
+    for (const uf of restored) {
+      if (!uf.storageUrl) void uploadAndMark(uf.id, uf.file);
+    }
+  };
+
+  const handleDiscardDraft = () => {
+    haptic.light();
+    setPendingDraft(null);
+    if (user?.id) clearDraftNow(user.id);
+  };
+
+  /* ─── Close (NOT discard) — flush the draft, then reset local state.
+        IDB keeps the backup until a successful save or explicit discard. */
+  const handleSheetClose = () => {
+    if (user?.id && draftHasContent && !seededUntouched()) {
+      void saveDraft(user.id, draftSnapshot());
+    }
+    resetForm();
   };
 
   /* ─── Run streaming analysis ─────────────────────────────────────── */
@@ -778,7 +1053,9 @@ export function UnifiedCaptureSheet({
         },
       });
 
-      // Only now is it actually saved.
+      // Only now is it actually saved — the offline backup is stale, drop it.
+      if (user?.id) clearDraftNow(user.id);
+      setPendingDraft(null);
       haptic.success();
       // Coverage moment — when ACs were claimed, say where that unit now
       // stands instead of a flat "saved". Fire-and-forget so a slow query
@@ -840,7 +1117,7 @@ export function UnifiedCaptureSheet({
     <Sheet
       open={open}
       onOpenChange={(v) => {
-        if (!v) resetForm();
+        if (!v) handleSheetClose();
         onOpenChange(v);
       }}
     >
@@ -869,6 +1146,39 @@ export function UnifiedCaptureSheet({
           </SheetHeader>
 
           <div className="flex-1 overflow-y-auto px-4 sm:px-6 pb-32">
+            {/* Unfinished-entry banner — restoring is always explicit */}
+            {pendingDraft && step === 'capture' && (
+              <div className="mt-2 rounded-xl border border-elec-yellow/30 bg-elec-yellow/[0.05] p-4 space-y-3">
+                <div className="space-y-1">
+                  <Eyebrow>Unfinished entry</Eyebrow>
+                  <p className="text-[13px] text-white/85 leading-snug">
+                    From {relativeTime(pendingDraft.savedAt)}
+                    {pendingDraft.files.length > 0 &&
+                      ` — ${pendingDraft.files.length} ${
+                        pendingDraft.files.length === 1 ? 'photo' : 'photos'
+                      }`}
+                    . Pick up where you left off?
+                  </p>
+                </div>
+                <div className="grid grid-cols-2 gap-2">
+                  <button
+                    type="button"
+                    onClick={handleDiscardDraft}
+                    className="h-11 rounded-xl border border-white/[0.08] bg-[hsl(0_0%_10%)] text-[13px] font-medium text-white/70 hover:bg-white/[0.04] transition-colors touch-manipulation"
+                  >
+                    Discard
+                  </button>
+                  <button
+                    type="button"
+                    onClick={handleResumeDraft}
+                    className="h-11 rounded-xl bg-elec-yellow text-black text-[13px] font-semibold hover:bg-elec-yellow/90 transition-colors touch-manipulation"
+                  >
+                    Resume
+                  </button>
+                </div>
+              </div>
+            )}
+
             {/* Step 1: Capture */}
             {step === 'capture' && (
               <div className="space-y-5 py-2">
@@ -1515,7 +1825,7 @@ export function UnifiedCaptureSheet({
                 <SecondaryAction
                   label="Cancel"
                   onClick={() => {
-                    resetForm();
+                    handleSheetClose();
                     onOpenChange(false);
                   }}
                 />

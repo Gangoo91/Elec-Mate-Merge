@@ -217,7 +217,7 @@ const mentalPrep = [
 
 const resources = [
   {
-    title: 'BS 7671:2018+A2:2022',
+    title: 'BS 7671:2018+A4:2026',
     description:
       'The Wiring Regulations — your primary reference. A3:2024 is a free supplement adding Reg 530.3.201.',
   },

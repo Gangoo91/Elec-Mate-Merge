@@ -21,7 +21,7 @@ import {
 const DomesticReferenceGuide = () => {
   const bs7671References = {
     title: 'BS 7671 Key Regulations Reference',
-    edition: '18th Edition Amendment 3 (2022)',
+    edition: '18th Edition — BS 7671:2018+A4:2026',
     sections: [
       {
         part: 'Part 1: Scope, Object and Fundamental Principles',
@@ -55,7 +55,8 @@ const DomesticReferenceGuide = () => {
           {
             reg: '411.3.4',
             topic: 'Additional RCD',
-            description: 'All circuits (domestic) require 30mA RCD protection (AMD3)',
+            description:
+              '30mA RCD additional protection required for AC socket-outlets ≤32A and final circuits supplying lighting in dwellings',
           },
           {
             reg: '411.4.5',
@@ -88,9 +89,9 @@ const DomesticReferenceGuide = () => {
             description: 'Cables in walls must be in prescribed zones or protected',
           },
           {
-            reg: '522.8.1',
+            reg: '522.8.10',
             topic: 'Buried Cables',
-            description: 'Requirements for cables installed underground',
+            description: 'Underground cables must be marked by cable covers or marker tape',
           },
           {
             reg: '526.3',
@@ -470,7 +471,7 @@ const DomesticReferenceGuide = () => {
 
   const usefulReferences = [
     {
-      resource: 'BS 7671:2018+A2:2022',
+      resource: 'BS 7671:2018+A4:2026',
       description: 'Requirements for Electrical Installations (18th Edition AMD3)',
     },
     { resource: 'IET Wiring Regulations', description: 'Published version with commentary' },
