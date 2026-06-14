@@ -181,7 +181,7 @@ function StudentPicker({
                       {getCohortName ? getCohortName(s.cohort_id) : ''}
                     </div>
                   </div>
-                  <span className="text-white/40 text-[14px] shrink-0">→</span>
+                  <span className="text-white/70 text-[14px] shrink-0">→</span>
                 </button>
               </li>
             );

@@ -166,7 +166,7 @@ export function SlideEditorSheet({
                   onChange={(e) => setTweak(e.target.value)}
                   placeholder="e.g. make it more practical with a real on-site example, swap the reg cite for 411.3.2.1, make the image close-up of the consumer unit"
                   rows={3}
-                  className="mt-2 w-full px-3 py-2 rounded-lg bg-white/[0.03] border border-white/[0.10] text-[12.5px] text-white placeholder:text-white/40 focus:outline-none focus:border-elec-yellow/50 touch-manipulation resize-none"
+                  className="mt-2 w-full px-3 py-2 rounded-lg bg-white/[0.03] border border-white/[0.10] text-[12.5px] text-white placeholder:text-white/70 focus:outline-none focus:border-elec-yellow/50 touch-manipulation resize-none"
                 />
                 <button
                   type="button"
@@ -631,12 +631,12 @@ function splitLines(s: string): string[] {
 
 const inputCls = cn(
   'w-full h-10 px-3 rounded-lg bg-white/[0.03] border border-white/[0.10]',
-  'text-[13px] text-white placeholder:text-white/40',
+  'text-[13px] text-white placeholder:text-white/70',
   'focus:outline-none focus:border-elec-yellow/50 touch-manipulation'
 );
 
 const textareaCls = cn(
   'w-full px-3 py-2 rounded-lg bg-white/[0.03] border border-white/[0.10]',
-  'text-[13px] text-white placeholder:text-white/40 leading-relaxed',
+  'text-[13px] text-white placeholder:text-white/70 leading-relaxed',
   'focus:outline-none focus:border-elec-yellow/50 touch-manipulation resize-y'
 );

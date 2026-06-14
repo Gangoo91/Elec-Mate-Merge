@@ -58,7 +58,7 @@ export function LearnerQuickJump() {
       <div className="flex items-baseline justify-between gap-3">
         <h2 className="text-base sm:text-lg font-semibold text-foreground">Jump to a learner</h2>
         {students.length > 0 && (
-          <span className="text-[11px] text-white/40">{students.length} learners</span>
+          <span className="text-[11px] text-white/70">{students.length} learners</span>
         )}
       </div>
 
@@ -70,7 +70,7 @@ export function LearnerQuickJump() {
       />
 
       {!query && atRisk.length > 0 && (
-        <div className="mt-2 text-[11px] uppercase tracking-[0.14em] text-white/40">
+        <div className="mt-2 text-[11px] uppercase tracking-[0.14em] text-white/70">
           Needs attention
         </div>
       )}
@@ -99,7 +99,7 @@ export function LearnerQuickJump() {
                       {s.risk_level}
                     </span>
                   )}
-                  <span className="text-white/30 text-[13px]" aria-hidden>
+                  <span className="text-white/60 text-[13px]" aria-hidden>
                     →
                   </span>
                 </span>

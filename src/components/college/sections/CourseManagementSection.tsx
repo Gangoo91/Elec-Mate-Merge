@@ -183,7 +183,7 @@ function CourseRow({
         course.otj_required_hours == null ? (
           <Pill tone="amber">Set OTJ</Pill>
         ) : course.status === 'Active' ? (
-          <span className="text-white/30 text-[16px]">→</span>
+          <span className="text-white/60 text-[16px]">→</span>
         ) : (
           <span className="inline-flex items-center text-[11px] font-medium px-2 py-0.5 rounded-full border bg-white/[0.04] text-white/55 border-white/[0.1]">
             Inactive

@@ -298,19 +298,19 @@ export function ScheduleLessonDialog({
                 month: 'long',
                 year: 'numeric',
               })}
-              <span className="mx-2 text-white/30">·</span>
+              <span className="mx-2 text-white/60">·</span>
               <span className="font-mono tabular-nums">
                 {startTime} → {endTime}
               </span>
               {room && (
                 <>
-                  <span className="mx-2 text-white/30">·</span>
+                  <span className="mx-2 text-white/60">·</span>
                   <span>{room}</span>
                 </>
               )}
               {cohortId && (
                 <>
-                  <span className="mx-2 text-white/30">·</span>
+                  <span className="mx-2 text-white/60">·</span>
                   <span className="text-elec-yellow">
                     {cohorts.find((c) => c.id === cohortId)?.name}
                   </span>

@@ -44,7 +44,7 @@ const chip = (on: boolean) =>
   }`;
 
 const inputCls =
-  'w-full h-11 px-3 rounded-lg bg-white/[0.03] border border-white/[0.08] text-[14px] text-white placeholder:text-white/40 focus:outline-none focus:border-white/30 touch-manipulation';
+  'w-full h-11 px-3 rounded-lg bg-white/[0.03] border border-white/[0.08] text-[14px] text-white placeholder:text-white/70 focus:outline-none focus:border-white/30 touch-manipulation';
 
 export function SectionSupportNeeds({
   id,

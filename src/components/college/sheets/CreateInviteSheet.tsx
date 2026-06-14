@@ -274,7 +274,7 @@ export function CreateInviteSheet({ open, onOpenChange, onCreated }: Props) {
                     or copy the code only
                   </button>
                 </div>
-                <p className="mt-3 text-[11px] text-white/40 break-all px-2">{joinLink}</p>
+                <p className="mt-3 text-[11px] text-white/70 break-all px-2">{joinLink}</p>
               </div>
             </FormCard>
           ) : (
@@ -333,7 +333,7 @@ export function CreateInviteSheet({ open, onOpenChange, onCreated }: Props) {
                         {courses.map((c) => (
                           <SelectItem key={c.id} value={c.id}>
                             {c.name}
-                            <span className="text-white/40">
+                            <span className="text-white/70">
                               {c.level ? ` · ${c.level}` : ''}
                               {c.code ? ` · ${c.code}` : ''}
                             </span>

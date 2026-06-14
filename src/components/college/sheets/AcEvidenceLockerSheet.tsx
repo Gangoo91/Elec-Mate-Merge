@@ -699,7 +699,7 @@ export function AcEvidenceLockerSheet({
                 }}
                 placeholder="The prose that backs up your judgement — why you're confident this AC is met, what evidence you weighted most, any concerns. This is what an IQA reads first."
                 rows={4}
-                className="w-full px-3 py-2 rounded-lg bg-white/[0.03] border border-white/[0.10] text-[13px] text-white placeholder:text-white/40 leading-relaxed focus:outline-none focus:border-elec-yellow/50 touch-manipulation resize-y"
+                className="w-full px-3 py-2 rounded-lg bg-white/[0.03] border border-white/[0.10] text-[13px] text-white placeholder:text-white/70 leading-relaxed focus:outline-none focus:border-elec-yellow/50 touch-manipulation resize-y"
               />
               <div className="mt-2 flex items-center justify-between gap-2 flex-wrap">
                 <p className="text-[10.5px] text-white/55 italic">
@@ -826,7 +826,7 @@ export function AcEvidenceLockerSheet({
                           <div className="mt-1 flex items-center gap-2 text-[10.5px] text-white">
                             {piece.recorded_by && <span>{piece.recorded_by}</span>}
                             {piece.recorded_by && piece.occurred_at && (
-                              <span className="text-white/30">·</span>
+                              <span className="text-white/60">·</span>
                             )}
                             {piece.occurred_at && (
                               <span className="tabular-nums">

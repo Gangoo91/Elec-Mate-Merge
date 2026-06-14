@@ -701,7 +701,7 @@ const CollegeDashboard = () => {
                 >
                   <Search className="h-3.5 w-3.5 shrink-0" />
                   <span className="text-[12px] font-medium hidden sm:inline">Search learners</span>
-                  <kbd className="hidden lg:inline text-[10px] font-medium text-white/40 border border-white/15 rounded px-1 ml-0.5">
+                  <kbd className="hidden lg:inline text-[10px] font-medium text-white/70 border border-white/15 rounded px-1 ml-0.5">
                     ⌘K
                   </kbd>
                 </button>

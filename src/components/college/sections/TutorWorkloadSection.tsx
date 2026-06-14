@@ -94,7 +94,7 @@ export function TutorWorkloadSection() {
         )}
 
         {!loading && rows.length === 0 && (
-          <div className="rounded-2xl border border-dashed border-white/10 px-4 py-10 text-center text-sm text-white/40">
+          <div className="rounded-2xl border border-dashed border-white/10 px-4 py-10 text-center text-sm text-white/70">
             No active tutors found in this college.
           </div>
         )}
@@ -180,7 +180,7 @@ function SummaryTile({
         {label}
       </div>
       <div className="mt-1 text-2xl font-semibold text-white">{value}</div>
-      {note && <div className="text-[10px] text-white/40 mt-0.5">{note}</div>}
+      {note && <div className="text-[10px] text-white/70 mt-0.5">{note}</div>}
     </div>
   );
 }

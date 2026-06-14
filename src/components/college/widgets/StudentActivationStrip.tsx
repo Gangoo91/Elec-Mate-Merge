@@ -42,7 +42,7 @@ export function StudentActivationStrip({ onShareInvite, collegeId }: Props) {
           <div className="mt-1 flex items-baseline gap-2">
             <span className="text-[22px] font-semibold text-white tabular-nums">
               {activated}
-              <span className="text-white/40">/{total}</span>
+              <span className="text-white/70">/{total}</span>
             </span>
             <span
               className={`text-[12px] font-medium ${allIn ? 'text-green-400' : 'text-white/55'}`}
@@ -87,11 +87,11 @@ export function StudentActivationStrip({ onShareInvite, collegeId }: Props) {
           {pendingLearners.slice(0, 40).map((l) => (
             <div key={l.id} className="flex items-center justify-between gap-3 text-[12.5px]">
               <span className="truncate text-white/85">{l.name}</span>
-              <span className="shrink-0 truncate text-white/40">{l.email ?? 'no email'}</span>
+              <span className="shrink-0 truncate text-white/70">{l.email ?? 'no email'}</span>
             </div>
           ))}
           {pendingLearners.length > 40 && (
-            <div className="pt-1 text-[11px] text-white/40">
+            <div className="pt-1 text-[11px] text-white/70">
               +{pendingLearners.length - 40} more
             </div>
           )}

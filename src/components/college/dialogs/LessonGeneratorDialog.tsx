@@ -335,13 +335,13 @@ export function LessonGeneratorDialog({
           </ResponsiveDialogTitle>
           <ResponsiveDialogDescription className="text-[12.5px] sm:text-[13px] text-white leading-relaxed">
             <span className="font-mono tabular-nums text-white">{qualificationCode}</span>
-            <span className="mx-2 text-white/30">·</span>
+            <span className="mx-2 text-white/60">·</span>
             <span>
               Unit <span className="font-mono tabular-nums">{unitCode}</span>
             </span>
             {unitTitle && (
               <>
-                <span className="mx-2 text-white/30">·</span>
+                <span className="mx-2 text-white/60">·</span>
                 <span>{unitTitle}</span>
               </>
             )}
@@ -465,7 +465,7 @@ export function LessonGeneratorDialog({
               <div className="flex items-center gap-3 text-[12px] text-white shrink-0">
                 <span className="tabular-nums">
                   <span className="text-white font-medium">{selected.size}</span>
-                  <span className="text-white/30"> / {totalAcs}</span>
+                  <span className="text-white/60"> / {totalAcs}</span>
                 </span>
                 {selected.size > 0 && (
                   <button
@@ -534,7 +534,7 @@ export function LessonGeneratorDialog({
                   }}
                   className="w-full"
                 />
-                <div className="mt-2 flex justify-between text-[10px] font-mono tabular-nums text-white/30">
+                <div className="mt-2 flex justify-between text-[10px] font-mono tabular-nums text-white/60">
                   {LENGTH_TICKS.map((t) => (
                     <span key={t}>{t}</span>
                   ))}
@@ -616,13 +616,13 @@ export function LessonGeneratorDialog({
                 <span>
                   <span className="text-white font-medium tabular-nums">{selected.size}</span>{' '}
                   criter{selected.size === 1 ? 'ion' : 'ia'}
-                  <span className="mx-2 text-white/30">·</span>
+                  <span className="mx-2 text-white/60">·</span>
                   <span className="text-white tabular-nums">{length}</span> min
-                  <span className="mx-2 text-white/30">·</span>
+                  <span className="mx-2 text-white/60">·</span>
                   <span>{modeLabel}</span>
                   {(diff || hs || hw) && (
                     <>
-                      <span className="mx-2 text-white/30">·</span>
+                      <span className="mx-2 text-white/60">·</span>
                       <span className="text-white">
                         {[diff && 'Diff', hs && 'H&S', hw && 'HW'].filter(Boolean).join(' · ')}
                       </span>
@@ -719,7 +719,7 @@ function PresetCard({
           never has to wrap awkwardly across columns. */}
       <div className="text-[11px] text-white tabular-nums leading-snug">
         <span className="font-medium">{timeLabel}</span>
-        <span className="text-white/30 mx-1.5">·</span>
+        <span className="text-white/60 mx-1.5">·</span>
         <span className="capitalize">{preset.mode}</span>
       </div>
       <div className="flex-1" />
@@ -764,7 +764,7 @@ function LoGroup({
       {/* LO header */}
       <div className="px-4 sm:px-5 py-3 sm:py-3.5 flex items-start justify-between gap-3 border-b border-white/[0.05]">
         <div className="flex items-start gap-3 min-w-0 flex-1">
-          <span className="text-[10px] font-mono tabular-nums text-white/30 mt-0.5 shrink-0 w-8">
+          <span className="text-[10px] font-mono tabular-nums text-white/60 mt-0.5 shrink-0 w-8">
             LO&nbsp;{loNum}
           </span>
           <div className="text-[12.5px] text-white leading-snug flex-1">{loText}</div>
@@ -776,7 +776,7 @@ function LoGroup({
         >
           <span className="tabular-nums">
             <span className={count > 0 ? 'text-elec-yellow font-medium' : ''}>{count}</span>
-            <span className="text-white/30"> / {total}</span>
+            <span className="text-white/60"> / {total}</span>
           </span>
           <span className="font-medium">{allSelected ? 'Clear' : 'All'}</span>
         </button>

@@ -141,7 +141,7 @@ export function SectionNextBestAction({ id, studentId, studentName, onAction }: 
                   Reads risk, OTJ, attendance, portfolio, observations, ILP — returns the 3-5 highest-leverage things to do today.
                 </div>
               </div>
-              <ChevronRight className="h-5 w-5 text-white/40 flex-shrink-0" />
+              <ChevronRight className="h-5 w-5 text-white/70 flex-shrink-0" />
             </div>
           </button>
         )}

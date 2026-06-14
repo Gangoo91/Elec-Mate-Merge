@@ -171,7 +171,7 @@ export function ParentContactsSheet({
                             )}
                             <Pill tone="blue">{c.digest_frequency}</Pill>
                             {c.digest_last_sent_at && (
-                              <span className="text-[10px] text-white/40">
+                              <span className="text-[10px] text-white/70">
                                 last sent{' '}
                                 {new Date(c.digest_last_sent_at).toLocaleDateString('en-GB')}
                               </span>

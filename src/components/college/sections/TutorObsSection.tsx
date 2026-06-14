@@ -65,7 +65,7 @@ export function TutorObsSection() {
       )}
 
       {!loading && rollup.length === 0 && (
-        <div className="rounded-2xl border border-dashed border-white/10 px-4 py-10 text-center text-sm text-white/40">
+        <div className="rounded-2xl border border-dashed border-white/10 px-4 py-10 text-center text-sm text-white/70">
           No observations recorded yet.
         </div>
       )}
@@ -150,7 +150,7 @@ export function TutorObsSection() {
                 </div>
                 {o.focus_area && (
                   <div className="mt-2 text-xs text-white/60">
-                    <span className="text-white/40">Focus:</span> {o.focus_area}
+                    <span className="text-white/70">Focus:</span> {o.focus_area}
                   </div>
                 )}
                 {(o.strengths || o.areas_for_development) && (

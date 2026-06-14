@@ -1806,9 +1806,9 @@ function GenerationProgress() {
           </ShimmerHeading>
           <div className="mt-2 flex items-center gap-3 text-[12px] text-white">
             <span className="tabular-nums">{elapsed}s elapsed</span>
-            <span className="text-white/30">·</span>
+            <span className="text-white/60">·</span>
             <span className="tabular-nums">~{remainingSec}s left</span>
-            <span className="text-white/30">·</span>
+            <span className="text-white/60">·</span>
             <span>Then ~5s per photo</span>
           </div>
 

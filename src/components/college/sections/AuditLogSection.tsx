@@ -207,7 +207,7 @@ export function AuditLogSection() {
         {loading && <div className="text-sm text-white/60">Loading audit log…</div>}
 
         {!loading && filtered.length === 0 && (
-          <div className="rounded-2xl border border-dashed border-white/10 px-4 py-10 text-center text-sm text-white/40">
+          <div className="rounded-2xl border border-dashed border-white/10 px-4 py-10 text-center text-sm text-white/70">
             No audit entries match the current filters.
           </div>
         )}
@@ -239,7 +239,7 @@ export function AuditLogSection() {
                     </div>
                   )}
                 </div>
-                <div className="text-[11px] tabular-nums text-white/40 shrink-0">
+                <div className="text-[11px] tabular-nums text-white/70 shrink-0">
                   {new Date(row.created_at).toLocaleString('en-GB', {
                     day: 'numeric',
                     month: 'short',

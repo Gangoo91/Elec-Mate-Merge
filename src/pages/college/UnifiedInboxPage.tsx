@@ -156,7 +156,7 @@ export default function UnifiedInboxPage() {
             value={search}
             onChange={(e) => setSearch(e.target.value)}
             placeholder="Filter by name, content, or cohort"
-            className="w-full h-11 px-3.5 rounded-lg bg-[hsl(0_0%_10%)] border border-white/[0.08] text-[13px] text-white placeholder:text-white/40 focus:outline-none focus:border-white/30 touch-manipulation"
+            className="w-full h-11 px-3.5 rounded-lg bg-[hsl(0_0%_10%)] border border-white/[0.08] text-[13px] text-white placeholder:text-white/70 focus:outline-none focus:border-white/30 touch-manipulation"
           />
         </div>
 
@@ -286,7 +286,7 @@ function InboxRow({ item, onOpen }: { item: InboxItem; onOpen: () => void }) {
             {item.context && (
               <>
                 <span className="truncate">{item.context}</span>
-                <span className="text-white/30">·</span>
+                <span className="text-white/60">·</span>
               </>
             )}
             <span>{formatRel(item.occurred_at)}</span>

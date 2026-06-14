@@ -676,7 +676,7 @@ function AckPanel({
       </div>
       <div className="mt-2 text-[20px] font-semibold tabular-nums text-white">
         {count}
-        <span className="text-white/40 text-[14px]"> / {target}</span>
+        <span className="text-white/70 text-[14px]"> / {target}</span>
         <span className="ml-2 text-[12px] font-medium text-white/55">{pct}%</span>
       </div>
       <div className="mt-3 h-1.5 w-full bg-white/[0.06] rounded-full overflow-hidden">

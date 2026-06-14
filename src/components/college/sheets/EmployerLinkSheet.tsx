@@ -410,7 +410,7 @@ function Field({
         value={value}
         onChange={(e) => onChange(e.target.value)}
         placeholder={placeholder}
-        className="w-full h-11 px-3 rounded-lg bg-[hsl(0_0%_12%)] border border-white/[0.08] text-[14px] text-white placeholder:text-white/40 focus:border-elec-yellow/40 focus:ring-1 focus:ring-elec-yellow/20 outline-none touch-manipulation"
+        className="w-full h-11 px-3 rounded-lg bg-[hsl(0_0%_12%)] border border-white/[0.08] text-[14px] text-white placeholder:text-white/70 focus:border-elec-yellow/40 focus:ring-1 focus:ring-elec-yellow/20 outline-none touch-manipulation"
       />
     </label>
   );

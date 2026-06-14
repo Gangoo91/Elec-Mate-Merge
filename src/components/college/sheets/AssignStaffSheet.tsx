@@ -184,7 +184,7 @@ export function AssignStaffSheet({
             return (
               <SelectItem key={s.user_id} value={s.user_id}>
                 {s.name}
-                <span className="text-white/40">
+                <span className="text-white/70">
                   {' · '}
                   {roleLabel[s.role] ?? s.role}
                   {qualKey && qualified ? ' ✓' : ''}
@@ -240,7 +240,7 @@ export function AssignStaffSheet({
                 {picker('Tutor', tutorId, setTutorId)}
                 {picker('Assessor', assessorId, setAssessorId, 'assessor_qual')}
                 {picker('IQA', iqaId, setIqaId, 'iqa_qual')}
-                <p className="text-[11px] text-white/40 pt-1">
+                <p className="text-[11px] text-white/70 pt-1">
                   ✓ marks staff who hold the relevant assessor / IQA qualification.
                 </p>
               </FormCard>

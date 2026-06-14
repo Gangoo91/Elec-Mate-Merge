@@ -57,12 +57,12 @@ export function OtjForecastBadge({ studentId, compact }: Props) {
 
       <div className="mt-3 space-y-1.5 text-xs text-white/70">
         <div>
-          <span className="text-white/40">So far:</span> {forecast.current_hours}h ·{' '}
-          <span className="text-white/40">pace:</span> {forecast.weekly_pace_hours}h/wk
+          <span className="text-white/70">So far:</span> {forecast.current_hours}h ·{' '}
+          <span className="text-white/70">pace:</span> {forecast.weekly_pace_hours}h/wk
         </div>
         <div>
-          <span className="text-white/40">Days left:</span> {forecast.days_remaining} ·{' '}
-          <span className="text-white/40">forecast at end:</span>{' '}
+          <span className="text-white/70">Days left:</span> {forecast.days_remaining} ·{' '}
+          <span className="text-white/70">forecast at end:</span>{' '}
           {forecast.forecast_hours_at_end}h
         </div>
         {forecast.shortfall_hours < 0 && (

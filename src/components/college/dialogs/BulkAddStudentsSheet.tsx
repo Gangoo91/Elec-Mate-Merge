@@ -386,7 +386,7 @@ export function BulkAddStudentsSheet({ open, onOpenChange, defaultCohortId }: Pr
                     rows={8}
                     spellCheck={false}
                     placeholder={`name\temail\tphone\tuln\tcohort\nJane Smith\tjane@example.com\t07700900000\t1234567890\tElectrical L3 — 2026 intake`}
-                    className="w-full min-h-[180px] px-3 py-2.5 rounded-lg bg-white/[0.03] border border-white/[0.08] text-[13px] text-white placeholder:text-white/40 leading-relaxed focus:outline-none focus:border-white/30 focus:ring-2 focus:ring-elec-yellow/30 font-mono touch-manipulation resize-y"
+                    className="w-full min-h-[180px] px-3 py-2.5 rounded-lg bg-white/[0.03] border border-white/[0.08] text-[13px] text-white placeholder:text-white/70 leading-relaxed focus:outline-none focus:border-white/30 focus:ring-2 focus:ring-elec-yellow/30 font-mono touch-manipulation resize-y"
                   />
                 </Field>
 
@@ -522,7 +522,7 @@ export function BulkAddStudentsSheet({ open, onOpenChange, defaultCohortId }: Pr
                 className={cn(
                   'inline-flex items-center h-11 px-4 rounded-lg text-[13px] font-semibold text-black transition-colors touch-manipulation',
                   submitting || validRows.length === 0
-                    ? 'bg-white/[0.05] text-white/40'
+                    ? 'bg-white/[0.05] text-white/70'
                     : 'bg-elec-yellow hover:bg-elec-yellow/90'
                 )}
               >

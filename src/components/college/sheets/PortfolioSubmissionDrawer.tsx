@@ -253,7 +253,7 @@ export function PortfolioSubmissionDrawer({
                   {posting ? 'Sending…' : 'Send'}
                 </PrimaryButton>
               </div>
-              <div className="mt-1.5 text-[10.5px] text-white/40">
+              <div className="mt-1.5 text-[10.5px] text-white/70">
                 ⌘ + Enter to send · This appears live in the apprentice's portfolio
               </div>
             </div>

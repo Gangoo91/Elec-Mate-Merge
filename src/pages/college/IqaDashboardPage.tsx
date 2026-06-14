@@ -497,7 +497,7 @@ function SamplingPlanRow({
         <div className="shrink-0 text-right">
           <div className="text-[18px] font-semibold tabular-nums text-white">
             {sampled}
-            <span className="text-white/40 text-[12px]"> / {total}</span>
+            <span className="text-white/70 text-[12px]"> / {total}</span>
           </div>
           <div className="mt-0.5 text-[10.5px] text-white/55 tabular-nums">
             {sampledPct}% sampled

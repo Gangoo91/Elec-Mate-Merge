@@ -508,11 +508,11 @@ function QueueRow({
           <div className="mt-1 text-[12.5px] text-white truncate">{item.quiz_title}</div>
           <div className="mt-1 flex items-center flex-wrap gap-x-2 gap-y-0.5 text-[11px] text-white">
             {item.cohort_name && <span className="truncate">{item.cohort_name}</span>}
-            {item.cohort_name && <span className="text-white/30">·</span>}
+            {item.cohort_name && <span className="text-white/60">·</span>}
             <span>Submitted {submittedRel}</span>
             {item.status === 'awaiting_review' && (
               <>
-                <span className="text-white/30">·</span>
+                <span className="text-white/60">·</span>
                 <span className="text-amber-200">
                   {item.n_awaiting_review} answer{item.n_awaiting_review === 1 ? '' : 's'} to sign
                   off
@@ -521,7 +521,7 @@ function QueueRow({
             )}
             {item.status === 'awaiting_ai' && (
               <>
-                <span className="text-white/30">·</span>
+                <span className="text-white/60">·</span>
                 <span className="text-blue-200">{item.n_awaiting_ai} awaiting AI</span>
               </>
             )}

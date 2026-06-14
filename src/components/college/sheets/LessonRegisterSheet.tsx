@@ -386,7 +386,7 @@ export function LessonRegisterSheet({
               value={search}
               onChange={(e) => setSearch(e.target.value)}
               placeholder="Search names…"
-              className="flex-1 h-9 px-3 rounded-lg bg-white/[0.03] border border-white/[0.08] text-[13px] text-white placeholder:text-white/40 focus:outline-none focus:border-white/30 touch-manipulation"
+              className="flex-1 h-9 px-3 rounded-lg bg-white/[0.03] border border-white/[0.08] text-[13px] text-white placeholder:text-white/70 focus:outline-none focus:border-white/30 touch-manipulation"
             />
             {stats.unmarked > 0 && (
               <button
@@ -528,7 +528,7 @@ function RegisterRowItem({
           disabled={!row.status}
           className={cn(
             'text-[11.5px] font-medium transition-colors touch-manipulation',
-            row.status ? 'text-white hover:text-white' : 'text-white/40 cursor-not-allowed'
+            row.status ? 'text-white hover:text-white' : 'text-white/70 cursor-not-allowed'
           )}
         >
           {!row.status
@@ -547,7 +547,7 @@ function RegisterRowItem({
           onChange={(e) => onNotesChange(e.target.value)}
           onBlur={onNotesBlur}
           placeholder="e.g. arrived 10 min late, signed in at reception"
-          className="mt-2 w-full h-10 px-3 rounded-lg bg-white/[0.03] border border-white/[0.08] text-[13px] text-white placeholder:text-white/40 focus:outline-none focus:border-white/30 touch-manipulation"
+          className="mt-2 w-full h-10 px-3 rounded-lg bg-white/[0.03] border border-white/[0.08] text-[13px] text-white placeholder:text-white/70 focus:outline-none focus:border-white/30 touch-manipulation"
         />
       )}
     </div>

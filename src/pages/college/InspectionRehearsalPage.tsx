@@ -153,7 +153,7 @@ export default function InspectionRehearsalPage() {
                   >
                     <div>
                       <div>{SCENARIO_LABEL[h.scenario]}</div>
-                      <div className="text-xs text-white/40">
+                      <div className="text-xs text-white/70">
                         {new Date(h.created_at).toLocaleString('en-GB')} • {h.status}
                       </div>
                     </div>
@@ -208,7 +208,7 @@ export default function InspectionRehearsalPage() {
                   <div className="mt-1.5 text-sm text-white/90 whitespace-pre-line">{t.content}</div>
                   {t.feedback && (
                     <div className="mt-2 rounded-lg bg-black/30 px-3 py-2 text-xs text-white/60">
-                      <span className="text-white/40">Inspector feedback:</span> {t.feedback}
+                      <span className="text-white/70">Inspector feedback:</span> {t.feedback}
                     </div>
                   )}
                 </div>

@@ -174,13 +174,13 @@ export default function QipTrackerPage() {
                 <div className="mb-3 flex items-center gap-2">
                   <span className={cn('h-1.5 w-1.5 rounded-full', toneDot[col.tone])} />
                   <h2 className="text-sm font-semibold text-white">{col.label}</h2>
-                  <span className="ml-auto text-xs text-white/40">
+                  <span className="ml-auto text-xs text-white/70">
                     {grouped[col.key].length}
                   </span>
                 </div>
 
                 {grouped[col.key].length === 0 ? (
-                  <div className="rounded-lg border border-dashed border-white/10 px-3 py-6 text-center text-xs text-white/40">
+                  <div className="rounded-lg border border-dashed border-white/10 px-3 py-6 text-center text-xs text-white/70">
                     None
                   </div>
                 ) : (

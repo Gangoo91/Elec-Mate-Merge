@@ -449,7 +449,7 @@ function CategoryGroup({
         </div>
         <div className="text-[10.5px] tabular-nums text-white whitespace-nowrap">
           <span className="text-emerald-300 font-medium">{inDate}</span>
-          <span className="text-white/30"> · </span>
+          <span className="text-white/60"> · </span>
           <span className={cn(action > 0 ? 'text-amber-300 font-medium' : 'text-white')}>
             {action} action
           </span>

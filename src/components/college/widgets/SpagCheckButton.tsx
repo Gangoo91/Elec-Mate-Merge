@@ -162,7 +162,7 @@ export function SpagCheckButton({
                     <span className="font-mono text-white/80 line-through decoration-red-400/60">
                       {issue.original}
                     </span>
-                    <span className="text-white/40">→</span>
+                    <span className="text-white/70">→</span>
                     <span className="font-mono text-emerald-300">{issue.suggestion}</span>
                   </div>
                   <div className="mt-1 text-white/60">{issue.explanation}</div>

@@ -560,7 +560,7 @@ export function SectionAcMatrix({ studentId, studentUserId, studentName }: Props
             value={search}
             onChange={(e) => setSearch(e.target.value)}
             placeholder="Filter by AC code, criterion text or unit"
-            className="w-full h-10 px-3 rounded-lg bg-[hsl(0_0%_8%)] border border-white/[0.10] text-[12.5px] text-white placeholder:text-white/40 focus:outline-none focus:border-white/30 touch-manipulation"
+            className="w-full h-10 px-3 rounded-lg bg-[hsl(0_0%_8%)] border border-white/[0.10] text-[12.5px] text-white placeholder:text-white/70 focus:outline-none focus:border-white/30 touch-manipulation"
           />
         </div>
       </div>
@@ -737,7 +737,7 @@ export function SectionAcMatrix({ studentId, studentUserId, studentName }: Props
             onChange={(e) => setBulkNarrative(e.target.value)}
             placeholder="One shared narrative across these ACs (optional but recommended). Tip: 'AI draft for all' fills this in from the evidence on each AC."
             rows={3}
-            className="w-full px-3 py-2 rounded-lg bg-white/[0.03] border border-white/[0.10] text-[12.5px] text-white placeholder:text-white/40 leading-relaxed focus:outline-none focus:border-elec-yellow/50 touch-manipulation resize-y"
+            className="w-full px-3 py-2 rounded-lg bg-white/[0.03] border border-white/[0.10] text-[12.5px] text-white placeholder:text-white/70 leading-relaxed focus:outline-none focus:border-elec-yellow/50 touch-manipulation resize-y"
           />
           <p className="text-[10.5px] text-white/55 italic">
             Saving stamps "signed by you, today" on each AC + flips status. The IQA will see the

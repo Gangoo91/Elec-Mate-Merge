@@ -1306,7 +1306,7 @@ function SectionRiskPanel({
                   >
                     {dot}
                     {inner}
-                    <span className="mt-0.5 text-white/30 text-[13px] shrink-0" aria-hidden>
+                    <span className="mt-0.5 text-white/60 text-[13px] shrink-0" aria-hidden>
                       →
                     </span>
                   </button>
@@ -1462,7 +1462,7 @@ function SectionCoverage({
                   </div>
                   <div className="text-[12px] text-white/75 tabular-nums">
                     <span className="text-white font-medium">{done}</span>
-                    <span className="text-white/40"> / {items.length}</span>
+                    <span className="text-white/70"> / {items.length}</span>
                   </div>
                 </div>
                 <div className="px-4 sm:px-5 py-4 flex flex-wrap gap-1.5">

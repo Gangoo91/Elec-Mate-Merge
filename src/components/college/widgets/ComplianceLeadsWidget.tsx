@@ -155,7 +155,7 @@ export function ComplianceLeadsWidget() {
             <span className="text-white/45"> people</span>
             {rolesUnassigned > 0 && (
               <>
-                <span className="text-white/30"> · </span>
+                <span className="text-white/60"> · </span>
                 <span className="text-amber-300/85">
                   {rolesUnassigned} role{rolesUnassigned === 1 ? '' : 's'} unset
                 </span>

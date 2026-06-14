@@ -62,7 +62,7 @@ export function AssessorDriftPanel() {
                   <span className="text-red-300">{reds.length}</span> needs intervention
                 </>
               )}
-              {reds.length > 0 && ambers.length > 0 && <span className="text-white/40"> · </span>}
+              {reds.length > 0 && ambers.length > 0 && <span className="text-white/70"> · </span>}
               {ambers.length > 0 && (
                 <>
                   <span className="text-amber-300">{ambers.length}</span> to watch

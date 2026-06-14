@@ -165,7 +165,7 @@ function ReviewList({
       {loading && <div className="text-sm text-white/60">Loading…</div>}
 
       {!loading && reviews.length === 0 && (
-        <div className="rounded-2xl border border-dashed border-white/10 px-4 py-10 text-center text-sm text-white/40">
+        <div className="rounded-2xl border border-dashed border-white/10 px-4 py-10 text-center text-sm text-white/70">
           No tripartite reviews scheduled yet. Click <strong>Schedule review</strong> to start one.
         </div>
       )}
@@ -343,7 +343,7 @@ function ReviewForm({
         </div>
       </div>
 
-      <div className="text-xs text-white/40">
+      <div className="text-xs text-white/70">
         A standard 6-item agenda will be added. You can edit it later when capturing outcomes.
       </div>
 
@@ -533,7 +533,7 @@ function SignatureRow({
       <div>
         <div className="text-sm text-white">{partyLabel}</div>
         {signedAt ? (
-          <div className="text-[11px] text-white/40">
+          <div className="text-[11px] text-white/70">
             Signed by {name || 'unknown'} ·{' '}
             {new Date(signedAt).toLocaleString('en-GB', {
               day: 'numeric',
@@ -543,7 +543,7 @@ function SignatureRow({
             })}
           </div>
         ) : (
-          <div className="text-[11px] text-white/40">Not yet signed</div>
+          <div className="text-[11px] text-white/70">Not yet signed</div>
         )}
       </div>
       {signedAt ? (

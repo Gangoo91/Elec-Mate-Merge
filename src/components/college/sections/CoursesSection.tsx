@@ -58,7 +58,7 @@ export function CoursesSection() {
         </button>
         {selectedQual && (
           <>
-            <span className="text-white/30">/</span>
+            <span className="text-white/60">/</span>
             <button
               onClick={() => {
                 setSelectedUnit(null);
@@ -75,7 +75,7 @@ export function CoursesSection() {
         )}
         {selectedUnit && (
           <>
-            <span className="text-white/30">/</span>
+            <span className="text-white/60">/</span>
             <span className="text-white">Unit {selectedUnit.unit_code}</span>
           </>
         )}

@@ -282,7 +282,7 @@ function BreakdownCard({
                 <div className="flex items-center gap-2">
                   <span className={cn('inline-block h-1.5 w-1.5 rounded-full', SOURCE_DOT[s])} />
                   <span className="text-white/85">{SOURCE_LABEL[s]}</span>
-                  <span className="text-white/40 tabular-nums">{stat.entries}</span>
+                  <span className="text-white/70 tabular-nums">{stat.entries}</span>
                 </div>
                 <span className="text-white/85 tabular-nums">{fmtMins(stat.minutes)}</span>
               </div>

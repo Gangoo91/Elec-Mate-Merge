@@ -335,7 +335,7 @@ export function LiveLessonSection({ lessonId, onBack }: LiveLessonSectionProps) 
                         className={`h-9 min-w-[2.25rem] px-1.5 rounded-lg border text-[12px] font-semibold transition-colors touch-manipulation ${
                           active
                             ? opt.active
-                            : 'border-white/10 text-white/40 active:bg-white/[0.06]'
+                            : 'border-white/10 text-white/70 active:bg-white/[0.06]'
                         }`}
                       >
                         {opt.short}

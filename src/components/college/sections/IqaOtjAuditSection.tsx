@@ -136,7 +136,7 @@ export function IqaOtjAuditSection() {
       )}
 
       {!loading && queue.length === 0 && (
-        <div className="rounded-2xl border border-dashed border-white/10 px-4 py-10 text-center text-sm text-white/40">
+        <div className="rounded-2xl border border-dashed border-white/10 px-4 py-10 text-center text-sm text-white/70">
           No assessor-verified OTJ entries to sample. Check back when assessors verify new
           entries.
         </div>
@@ -196,7 +196,7 @@ export function IqaOtjAuditSection() {
 
               {row.verification_rationale && (
                 <div className="rounded-lg bg-black/20 px-3 py-2 text-[12px] text-white/70">
-                  <span className="text-white/40">Assessor said:</span>{' '}
+                  <span className="text-white/70">Assessor said:</span>{' '}
                   {row.verification_rationale}
                 </div>
               )}

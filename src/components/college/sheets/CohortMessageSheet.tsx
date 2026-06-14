@@ -168,7 +168,7 @@ export function CohortMessageSheet({
                 }
                 className="touch-manipulation text-base border-white/30 focus:border-yellow-500"
               />
-              <p className="mt-1 text-[11px] text-white/40">
+              <p className="mt-1 text-[11px] text-white/70">
                 Double line breaks become paragraphs. Single line breaks stay on the
                 next line. UK English only — apprentices read this on their phone.
               </p>

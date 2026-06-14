@@ -701,7 +701,7 @@ function InboxRowCard({
                   acting === 'reject'
                     ? 'bg-rose-500/60 text-white/85'
                     : rationale.trim().length === 0
-                      ? 'bg-white/[0.05] text-white/40'
+                      ? 'bg-white/[0.05] text-white/70'
                       : 'bg-rose-500 text-white hover:bg-rose-400'
                 )}
               >

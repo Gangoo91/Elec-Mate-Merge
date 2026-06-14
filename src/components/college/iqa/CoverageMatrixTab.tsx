@@ -197,7 +197,7 @@ export function CoverageMatrixTab({ targetPct = 20, sinceDays = null }: Props) {
                     const cell = cellMap.get(`${samplerId}::${cohortId}`);
                     if (!cell) {
                       return (
-                        <td key={cohortId} className="px-3 py-3 text-center text-white/30">
+                        <td key={cohortId} className="px-3 py-3 text-center text-white/60">
                           —
                         </td>
                       );

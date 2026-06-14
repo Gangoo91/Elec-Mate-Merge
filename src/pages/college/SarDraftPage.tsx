@@ -316,7 +316,7 @@ export default function SarDraftPage() {
                               key={i}
                               className="rounded-lg border border-white/10 bg-black/20 px-3 py-2 text-sm"
                             >
-                              <div className="text-[11px] uppercase tracking-wide text-white/40">
+                              <div className="text-[11px] uppercase tracking-wide text-white/70">
                                 {e.label}
                               </div>
                               <div className="text-white/90">{e.value}</div>

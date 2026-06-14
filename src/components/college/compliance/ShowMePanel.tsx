@@ -119,7 +119,7 @@ export function ShowMePanel() {
               aria-label="Inspector evidence search — type a natural-language question"
               autoComplete="off"
               spellCheck={false}
-              className="w-full h-11 pl-9 pr-3 rounded-xl bg-white/[0.03] border border-white/[0.08] text-[14px] text-white placeholder:text-white/40 focus:outline-none focus:border-white/30 focus:ring-2 focus:ring-purple-300/30 touch-manipulation"
+              className="w-full h-11 pl-9 pr-3 rounded-xl bg-white/[0.03] border border-white/[0.08] text-[14px] text-white placeholder:text-white/70 focus:outline-none focus:border-white/30 focus:ring-2 focus:ring-purple-300/30 touch-manipulation"
               disabled={loading}
             />
           </div>

@@ -519,7 +519,7 @@ export function StudentMessageSheet({
                         <div className="text-[13px] leading-relaxed whitespace-pre-wrap">
                           {m.body}
                         </div>
-                        <div className="mt-1 text-[10px] text-white/30 tabular-nums flex items-center gap-1.5">
+                        <div className="mt-1 text-[10px] text-white/60 tabular-nums flex items-center gap-1.5">
                           <span>
                             {new Date(m.created_at).toLocaleString('en-GB', {
                               day: 'numeric',
@@ -530,7 +530,7 @@ export function StudentMessageSheet({
                           </span>
                           {isOptimistic && (
                             <>
-                              <span className="text-white/30">·</span>
+                              <span className="text-white/60">·</span>
                               <span>sending…</span>
                             </>
                           )}

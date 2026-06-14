@@ -271,7 +271,7 @@ export function AiAuthorPolicySheet({ open, onOpenChange, initialCategory }: Pro
                       drafting
                         ? 'bg-elec-yellow/40 text-black/70'
                         : topic.trim().length < 4
-                          ? 'bg-white/[0.05] text-white/40'
+                          ? 'bg-white/[0.05] text-white/70'
                           : 'bg-elec-yellow text-black hover:bg-elec-yellow/90'
                     )}
                   >
