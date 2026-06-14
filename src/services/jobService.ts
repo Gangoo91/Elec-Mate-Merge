@@ -2,6 +2,29 @@ import { supabase } from '@/integrations/supabase/client';
 
 export type JobStatus = 'Active' | 'Pending' | 'Completed' | 'On Hold' | 'Cancelled';
 
+// Turn a job's address into map coordinates via the shared geocode-location
+// edge function (Google Geocoding, UK-biased). Best-effort: a geocode miss must
+// never block saving the job — the map just won't pin it until the address is
+// good. Coords flow on to worker presence pins via the timesheet_presence trigger.
+export const geocodeAddress = async (
+  location: string | null | undefined
+): Promise<{ lat: number; lng: number } | null> => {
+  if (!location || !location.trim()) return null;
+  try {
+    const { data, error } = await supabase.functions.invoke('geocode-location', {
+      body: { location },
+    });
+    if (error) return null;
+    const loc = (data as { location?: { lat?: number; lng?: number } } | null)?.location;
+    if (loc && typeof loc.lat === 'number' && typeof loc.lng === 'number') {
+      return { lat: loc.lat, lng: loc.lng };
+    }
+    return null;
+  } catch {
+    return null;
+  }
+};
+
 export interface Job {
   id: string;
   user_id: string;
@@ -104,9 +127,14 @@ export const createJob = async (
   const { data: userData } = await supabase.auth.getUser();
   if (!userData.user) throw new Error('Not authenticated');
 
+  // Auto-geocode the address so the job pins on the live map (unless coords passed in).
+  let coords: { lat: number; lng: number } | null =
+    job.lat != null && job.lng != null ? { lat: job.lat, lng: job.lng } : null;
+  if (!coords && job.location) coords = await geocodeAddress(job.location);
+
   const { data, error } = await supabase
     .from('employer_jobs')
-    .insert({ ...job, user_id: userData.user.id })
+    .insert({ ...job, ...(coords ?? {}), user_id: userData.user.id })
     .select()
     .single();
 
@@ -119,9 +147,26 @@ export const createJob = async (
 };
 
 export const updateJob = async (id: string, updates: Partial<Job>): Promise<Job | null> => {
+  // If the address is being set (and coords weren't supplied), re-geocode so the
+  // pin follows. If the address was cleared, drop the old coords. On a geocode miss
+  // we leave existing coords untouched — a transient failure shouldn't wipe a pin.
+  const patch: Partial<Job> = { ...updates };
+  if (updates.location !== undefined && updates.lat == null && updates.lng == null) {
+    if (!updates.location) {
+      patch.lat = null;
+      patch.lng = null;
+    } else {
+      const coords = await geocodeAddress(updates.location);
+      if (coords) {
+        patch.lat = coords.lat;
+        patch.lng = coords.lng;
+      }
+    }
+  }
+
   const { data, error } = await supabase
     .from('employer_jobs')
-    .update({ ...updates, updated_at: new Date().toISOString() })
+    .update({ ...patch, updated_at: new Date().toISOString() })
     .eq('id', id)
     .select()
     .single();

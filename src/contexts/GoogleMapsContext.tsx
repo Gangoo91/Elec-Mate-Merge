@@ -1,11 +1,38 @@
 import { createContext, useContext, useState, useEffect, ReactNode } from 'react';
 import { useJsApiLoader } from '@react-google-maps/api';
 import { getSetting, setSetting, clearSetting } from '@/services/settingsService';
+import { supabase } from '@/integrations/supabase/client';
 
 const SETTINGS_KEY = 'google_maps_api_key';
 
 // Check for environment variable first (for app-wide API key)
 const ENV_API_KEY = import.meta.env.VITE_GOOGLE_MAPS_API_KEY || '';
+
+// The app-managed key is a process-wide constant — fetch it once and share the
+// result (and the in-flight promise) across every GoogleMapsProvider mount so we
+// don't hit get-google-maps-key on each map surface.
+let cachedAppKey: string | null = null;
+let appKeyPromise: Promise<string | null> | null = null;
+async function fetchAppMapsKey(): Promise<string | null> {
+  if (cachedAppKey) return cachedAppKey;
+  if (!appKeyPromise) {
+    appKeyPromise = (async () => {
+      try {
+        const { data, error } = await supabase.functions.invoke('get-google-maps-key');
+        const key = (data as { apiKey?: string } | null)?.apiKey;
+        if (!error && key) {
+          cachedAppKey = key;
+          return key;
+        }
+      } catch {
+        // ignore — caller falls back to a user-saved key
+      }
+      appKeyPromise = null; // allow a retry on the next mount if it failed
+      return null;
+    })();
+  }
+  return appKeyPromise;
+}
 
 interface GoogleMapsContextType {
   isLoaded: boolean;
@@ -56,14 +83,24 @@ export function GoogleMapsProvider({ children }: { children: ReactNode }) {
   useEffect(() => {
     const loadApiKey = async () => {
       try {
-        // Use environment variable if available (app-wide key)
+        // 1) Build-time env key, if configured (app-wide).
         if (ENV_API_KEY) {
           setApiKeyState(ENV_API_KEY);
           setIsLoadingKey(false);
           return;
         }
 
-        // Fall back to user-specific key from Supabase
+        // 2) App-managed key served from the GoogleAPI secret — zero setup for
+        //    the user (no "paste your API key" screen). This is the normal path.
+        //    Cached process-wide so repeat map surfaces don't refetch it.
+        const appKey = await fetchAppMapsKey();
+        if (appKey) {
+          setApiKeyState(appKey);
+          setIsLoadingKey(false);
+          return;
+        }
+
+        // 3) Last resort: a key the user saved themselves.
         const value = await getSetting(SETTINGS_KEY);
         if (value) {
           setApiKeyState(value);

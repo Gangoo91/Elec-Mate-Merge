@@ -1,4 +1,4 @@
-import { useState, useMemo } from 'react';
+import { useState, useMemo, useEffect } from 'react';
 import { RefreshCw, Upload, X } from 'lucide-react';
 import { Input } from '@/components/ui/input';
 import {
@@ -37,6 +37,7 @@ import {
 } from '@/hooks/useFinance';
 import { ImportPriceBookDialog } from '../dialogs/ImportPriceBookDialog';
 import { EditPriceBookItemSheet } from '../dialogs/EditPriceBookItemSheet';
+import { useCompanyProfile } from '@/hooks/useCompanyProfile';
 import { toast } from 'sonner';
 import type { PriceBookItem } from '@/services/financeService';
 
@@ -61,6 +62,9 @@ const TABS = [
   { value: 'markup', label: 'Markup' },
 ];
 
+// Equipment = the chargeable-kit slice of the same price book (no separate table).
+const EQUIPMENT_CATEGORIES = ['Tools', 'Testing', 'Safety'];
+
 export function PriceBookSection() {
   const [search, setSearch] = useState('');
   const [category, setCategory] = useState('All');
@@ -77,6 +81,16 @@ export function PriceBookSection() {
 
   const { data: stats, isLoading: statsLoading, refetch: refetchStats } = usePriceBookStats();
 
+  // Equipment is the same price book scoped to chargeable-kit categories.
+  const isEquipment = tab === 'equipment';
+  const effectiveCategory = isEquipment
+    ? EQUIPMENT_CATEGORIES.includes(category)
+      ? category
+      : 'Tools'
+    : category === 'All'
+      ? undefined
+      : category;
+
   const {
     data: searchResults,
     isLoading: searchLoading,
@@ -84,11 +98,45 @@ export function PriceBookSection() {
     fetchNextPage,
     isFetchingNextPage,
     refetch: refetchSearch,
-  } = useSearchPriceBook(search, category === 'All' ? undefined : category);
+  } = useSearchPriceBook(search, effectiveCategory);
 
   const createItem = useCreatePriceBookItem();
   const updateItem = useUpdatePriceBookItem();
   const deleteItem = useDeletePriceBookItem();
+
+  // Labour rates + markup rules live on company_profiles — these are the firm
+  // commercials that drive every quote, so we edit them here rather than add tables.
+  const { companyProfile, saveCompanyProfile, loading: profileLoading } = useCompanyProfile();
+  const [dayRate, setDayRate] = useState('');
+  const [hourlyRate, setHourlyRate] = useState('');
+  const [overhead, setOverhead] = useState('');
+  const [profit, setProfit] = useState('');
+  const [markup, setMarkup] = useState('');
+  const [savingRates, setSavingRates] = useState(false);
+
+  // company_profiles.markup is the firm's default % — quick-add and quoting use it.
+  const companyMarkup = (companyProfile as { markup?: number } | null)?.markup;
+  const defaultMarkupPct = companyMarkup != null && companyMarkup > 0 ? companyMarkup : 30;
+
+  useEffect(() => {
+    if (!companyProfile) return;
+    setDayRate(companyProfile.day_rate != null ? String(companyProfile.day_rate) : '');
+    setHourlyRate(companyProfile.hourly_rate != null ? String(companyProfile.hourly_rate) : '');
+    setOverhead(
+      companyProfile.overhead_percentage != null ? String(companyProfile.overhead_percentage) : ''
+    );
+    setProfit(companyProfile.profit_margin != null ? String(companyProfile.profit_margin) : '');
+    setMarkup(companyMarkup != null ? String(companyMarkup) : '');
+  }, [companyProfile, companyMarkup]);
+
+  const saveRates = async (patch: Partial<typeof companyProfile>) => {
+    setSavingRates(true);
+    try {
+      await saveCompanyProfile(patch as never);
+    } finally {
+      setSavingRates(false);
+    }
+  };
 
   const items = searchResults?.pages.flatMap((p) => p.items) || [];
   const totalFound = searchResults?.pages[0]?.total || 0;
@@ -120,7 +168,7 @@ export function PriceBookSection() {
     }
 
     const buyPrice = parseFloat(newItemBuyPrice) || 0;
-    const sellPrice = buyPrice * 1.3;
+    const sellPrice = buyPrice * (1 + defaultMarkupPct / 100);
 
     try {
       await createItem.mutateAsync({
@@ -144,13 +192,25 @@ export function PriceBookSection() {
     }
   };
 
+  const showItemActions = tab === 'materials' || tab === 'equipment';
   const heroActions = (
     <>
-      <SecondaryButton onClick={() => setShowImportDialog(true)}>
-        <Upload className="h-4 w-4 mr-2" />
-        Import
-      </SecondaryButton>
-      <PrimaryButton onClick={() => setShowQuickAdd(true)}>Add item</PrimaryButton>
+      {showItemActions && (
+        <>
+          <SecondaryButton onClick={() => setShowImportDialog(true)}>
+            <Upload className="h-4 w-4 mr-2" />
+            Import
+          </SecondaryButton>
+          <PrimaryButton
+            onClick={() => {
+              setNewItemCategory(tab === 'equipment' ? 'Tools' : 'Cable');
+              setShowQuickAdd(true);
+            }}
+          >
+            Add item
+          </PrimaryButton>
+        </>
+      )}
       <IconButton onClick={refresh} aria-label="Refresh">
         <RefreshCw className="h-4 w-4" />
       </IconButton>
@@ -269,9 +329,11 @@ className={`${inputClass} pl-7`}
             {newItemBuyPrice && (
               <div className="flex items-center gap-2">
                 <Pill tone="emerald">
-                  Sell £{(parseFloat(newItemBuyPrice) * 1.3).toFixed(2)}
+                  Sell £{(parseFloat(newItemBuyPrice) * (1 + defaultMarkupPct / 100)).toFixed(2)}
                 </Pill>
-                <span className="text-[12px] text-white">30% markup applied</span>
+                <span className="text-[12px] text-white">
+                  {defaultMarkupPct}% markup applied
+                </span>
               </div>
             )}
 
@@ -299,50 +361,159 @@ className={`${inputClass} pl-7`}
                   : 'Markup rules'
           }
           meta={
-            <Pill tone="amber">
-              {search.length >= 2
-                ? `${totalFound.toLocaleString()} matches`
-                : `${stats?.totalItems?.toLocaleString() ?? 0} items`}
-            </Pill>
+            showItemActions ? (
+              <Pill tone="amber">
+                {search.length >= 2
+                  ? `${totalFound.toLocaleString()} matches`
+                  : `${stats?.totalItems?.toLocaleString() ?? 0} items`}
+              </Pill>
+            ) : undefined
           }
-          action={search ? 'Clear' : undefined}
-          onAction={search ? () => setSearch('') : undefined}
+          action={search && showItemActions ? 'Clear' : undefined}
+          onAction={search && showItemActions ? () => setSearch('') : undefined}
         />
 
-        <div className="px-5 sm:px-6 py-3 border-b border-white/[0.06] flex flex-wrap gap-2">
-          {CATEGORIES.map((cat) => {
-            const active = category === cat;
-            return (
-              <button
-                key={cat}
-                onClick={() => setCategory(cat)}
-                className={
-                  'h-8 px-3 rounded-full text-[12px] font-medium whitespace-nowrap touch-manipulation transition-colors ' +
-                  (active
-                    ? 'bg-elec-yellow text-black'
-                    : 'bg-white/[0.04] border border-white/[0.08] text-white hover:bg-white/[0.08]')
-                }
-              >
-                {cat}
-              </button>
-            );
-          })}
-        </div>
+        {(tab === 'materials' || isEquipment) && (
+          <div className="px-5 sm:px-6 py-3 border-b border-white/[0.06] flex flex-wrap gap-2">
+            {(isEquipment ? EQUIPMENT_CATEGORIES : CATEGORIES).map((cat) => {
+              const active = (isEquipment ? effectiveCategory : category) === cat;
+              return (
+                <button
+                  key={cat}
+                  onClick={() => setCategory(cat)}
+                  className={
+                    'h-8 px-3 rounded-full text-[12px] font-medium whitespace-nowrap touch-manipulation transition-colors ' +
+                    (active
+                      ? 'bg-elec-yellow text-black'
+                      : 'bg-white/[0.04] border border-white/[0.08] text-white hover:bg-white/[0.08]')
+                  }
+                >
+                  {cat}
+                </button>
+              );
+            })}
+          </div>
+        )}
 
-        {tab !== 'materials' ? (
-          <EmptyState
-            title={
-              tab === 'labour'
-                ? 'Labour rates coming soon'
-                : tab === 'equipment'
-                  ? 'Equipment coming soon'
-                  : 'Markup rules coming soon'
-            }
-            description="Switch to Materials to manage your live price book."
-            action="View materials"
-            onAction={() => setTab('materials')}
-            className="rounded-none border-0"
-          />
+        {tab === 'labour' ? (
+          <div className="p-5 sm:p-6 space-y-5">
+            <p className="text-[13px] text-white/70">
+              Your standard charge-out rates. These feed quote and job pricing.
+            </p>
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+              <div>
+                <label className="text-[12px] text-white/70 mb-1.5 block">Day rate</label>
+                <div className="relative">
+                  <span className="absolute left-3 top-1/2 -translate-y-1/2 text-white">£</span>
+                  <Input
+                    type="number"
+                    inputMode="decimal"
+                    placeholder="0.00"
+                    value={dayRate}
+                    onChange={(e) => setDayRate(e.target.value)}
+                    className={`${inputClass} pl-7`}
+                    step="0.01"
+                  />
+                </div>
+              </div>
+              <div>
+                <label className="text-[12px] text-white/70 mb-1.5 block">Hourly rate</label>
+                <div className="relative">
+                  <span className="absolute left-3 top-1/2 -translate-y-1/2 text-white">£</span>
+                  <Input
+                    type="number"
+                    inputMode="decimal"
+                    placeholder="0.00"
+                    value={hourlyRate}
+                    onChange={(e) => setHourlyRate(e.target.value)}
+                    className={`${inputClass} pl-7`}
+                    step="0.01"
+                  />
+                </div>
+              </div>
+            </div>
+            <PrimaryButton
+              onClick={() =>
+                saveRates({
+                  day_rate: dayRate === '' ? null : parseFloat(dayRate),
+                  hourly_rate: hourlyRate === '' ? null : parseFloat(hourlyRate),
+                })
+              }
+              disabled={savingRates || profileLoading}
+              fullWidth
+            >
+              {savingRates ? 'Saving…' : 'Save labour rates'}
+            </PrimaryButton>
+          </div>
+        ) : tab === 'markup' ? (
+          <div className="p-5 sm:p-6 space-y-5">
+            <p className="text-[13px] text-white/70">
+              Default commercials applied across quotes. Per-item markup lives on each material.
+            </p>
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+              <div>
+                <label className="text-[12px] text-white/70 mb-1.5 block">Overhead %</label>
+                <div className="relative">
+                  <Input
+                    type="number"
+                    inputMode="decimal"
+                    placeholder="0"
+                    value={overhead}
+                    onChange={(e) => setOverhead(e.target.value)}
+                    className={`${inputClass} pr-7`}
+                    step="0.5"
+                  />
+                  <span className="absolute right-3 top-1/2 -translate-y-1/2 text-white">%</span>
+                </div>
+              </div>
+              <div>
+                <label className="text-[12px] text-white/70 mb-1.5 block">Profit margin %</label>
+                <div className="relative">
+                  <Input
+                    type="number"
+                    inputMode="decimal"
+                    placeholder="0"
+                    value={profit}
+                    onChange={(e) => setProfit(e.target.value)}
+                    className={`${inputClass} pr-7`}
+                    step="0.5"
+                  />
+                  <span className="absolute right-3 top-1/2 -translate-y-1/2 text-white">%</span>
+                </div>
+              </div>
+              <div>
+                <label className="text-[12px] text-white/70 mb-1.5 block">Default markup %</label>
+                <div className="relative">
+                  <Input
+                    type="number"
+                    inputMode="decimal"
+                    placeholder="30"
+                    value={markup}
+                    onChange={(e) => setMarkup(e.target.value)}
+                    className={`${inputClass} pr-7`}
+                    step="1"
+                  />
+                  <span className="absolute right-3 top-1/2 -translate-y-1/2 text-white">%</span>
+                </div>
+              </div>
+            </div>
+            <p className="text-[12px] text-white/50">
+              Default markup is applied to new price-book items added via quick-add.
+            </p>
+            <PrimaryButton
+              onClick={() =>
+                saveRates({
+                  overhead_percentage: overhead === '' ? null : parseFloat(overhead),
+                  profit_margin: profit === '' ? null : parseFloat(profit),
+                  markup: markup === '' ? null : parseFloat(markup),
+                })
+              }
+              disabled={savingRates || profileLoading}
+              fullWidth
+            >
+              {savingRates ? 'Saving…' : 'Save markup rules'}
+            </PrimaryButton>
+          </div>
         ) : search.length < 2 ? (
           <EmptyState
             title="Type at least 2 characters to search"

@@ -255,7 +255,7 @@ export function PeopleHub({ onNavigate }: PeopleHubProps) {
     [locations]
   );
   const onLeaveCount = useMemo(
-    () => locations.filter((l) => l.status === 'On Leave' || l.status === 'Off Duty').length,
+    () => locations.filter((l) => l.status === 'On Leave').length,
     [locations]
   );
 

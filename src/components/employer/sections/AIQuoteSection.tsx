@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { JobPackSelector } from '@/components/employer/smart-docs/JobPackSelector';
 import { useJobPacks } from '@/hooks/useJobPacks';
+import { useCreateQuote, useNextQuoteNumber } from '@/hooks/useFinance';
 import { supabase } from '@/integrations/supabase/client';
 import { useToast } from '@/hooks/use-toast';
 import type { Section } from '@/pages/employer/EmployerDashboard';
@@ -24,7 +25,7 @@ import {
   textareaClass,
   fieldLabelClass,
 } from '@/components/employer/editorial';
-import { RefreshCw, Sparkles, Loader2, Download, Plus, Trash2 } from 'lucide-react';
+import { RefreshCw, Sparkles, Loader2, Download, Plus, Trash2, FileCheck } from 'lucide-react';
 
 interface AIQuoteSectionProps {
   onNavigate: (section: Section) => void;
@@ -61,6 +62,10 @@ export function AIQuoteSection({ onNavigate }: AIQuoteSectionProps) {
   const [result, setResult] = useState<any>(null);
   const [error, setError] = useState<string | null>(null);
   const [history, setHistory] = useState<HistoryEntry[]>([]);
+  const [isSaving, setIsSaving] = useState(false);
+
+  const createQuote = useCreateQuote();
+  const { data: nextQuoteNumber } = useNextQuoteNumber();
 
   const selectedJobPack = jobPacks.find((jp) => jp.id === selectedJobPackId);
 
@@ -195,6 +200,49 @@ export function AIQuoteSection({ onNavigate }: AIQuoteSectionProps) {
     URL.revokeObjectURL(url);
   };
 
+  // Persist the generated draft as a real employer quote (mirrors CreateQuoteDialog
+  // so it shows up in Quotes & Invoices, can be sent, accepted, converted, etc.).
+  const handleSaveQuote = async () => {
+    const validItems = lineItems.filter((item) => item.description.trim() && item.unitPrice > 0);
+    if (validItems.length === 0) return;
+    setIsSaving(true);
+    try {
+      const validUntil = new Date();
+      validUntil.setDate(validUntil.getDate() + 30);
+      await createQuote.mutateAsync({
+        quote_number: nextQuoteNumber || `QU-${new Date().getFullYear()}-0001`,
+        client: clientName,
+        client_address: clientAddress || null,
+        job_title: selectedJobPack?.title || null,
+        description: projectDescription,
+        value: total,
+        status: 'Draft',
+        valid_until: validUntil.toISOString().split('T')[0],
+        job_id: null,
+        created_by: 'Admin',
+        line_items: validItems.map((i) => ({
+          id: i.id,
+          description: i.description,
+          quantity: i.quantity,
+          unit: 'item',
+          unitPrice: i.unitPrice,
+          total: i.quantity * i.unitPrice,
+          type: 'material',
+        })),
+        vat_rate: 20,
+        subtotal,
+        vat_amount: vat,
+      } as never);
+      // Mark the newest draft (prepended → index 0) as saved.
+      setHistory((prev) => prev.map((h, idx) => (idx === 0 ? { ...h, saved: true } : h)));
+      onNavigate('quotes');
+    } catch {
+      // useCreateQuote surfaces its own error toast
+    } finally {
+      setIsSaving(false);
+    }
+  };
+
   const handleReset = () => {
     setResult(null);
     setError(null);
@@ -220,7 +268,7 @@ export function AIQuoteSection({ onNavigate }: AIQuoteSectionProps) {
       <PageHero
         eyebrow="Smart Docs"
         title="AI Quote Generator"
-        description="Draft a quote from your line items — AI pricing is coming."
+        description="Build a quote from your line items — VAT calculated and saved straight to your quotes."
         tone="yellow"
         actions={
           <IconButton onClick={handleRefresh} aria-label="Reset form">
@@ -453,10 +501,23 @@ className={`${inputClass} tabular-nums`}
                 £{total.toFixed(2)}
               </span>
             </div>
-            <PrimaryButton onClick={handleDownload} fullWidth size="lg">
-              <Download className="h-4 w-4 mr-2" />
-              Download quote
+            <PrimaryButton
+              onClick={handleSaveQuote}
+              fullWidth
+              size="lg"
+              disabled={isSaving || !nextQuoteNumber}
+            >
+              {isSaving ? (
+                <Loader2 className="h-4 w-4 mr-2 animate-spin" />
+              ) : (
+                <FileCheck className="h-4 w-4 mr-2" />
+              )}
+              {isSaving ? 'Saving…' : 'Save as quote'}
             </PrimaryButton>
+            <SecondaryButton onClick={handleDownload} fullWidth size="lg">
+              <Download className="h-4 w-4 mr-2" />
+              Download
+            </SecondaryButton>
           </div>
         </ListCard>
       )}

@@ -5,7 +5,6 @@ import { SecondaryButton, IconButton } from './editorial';
 import { Navigation, Users, RefreshCw, Building2 } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { useGoogleMaps } from '@/contexts/GoogleMapsContext';
-import { GoogleMapsApiKeyInput } from './GoogleMapsApiKeyInput';
 import type { WorkerLocationWithEmployee } from '@/services/locationService';
 import type { Job } from '@/services/jobService';
 import type { OfficeLocation } from '@/services/settingsService';
@@ -53,7 +52,7 @@ export function LiveWorkerMap({
   isLoading,
   className,
 }: LiveWorkerMapProps) {
-  const { isLoaded, loadError, apiKey, clearApiKey } = useGoogleMaps();
+  const { isLoaded, loadError, apiKey, isLoadingKey } = useGoogleMaps();
   const [selectedWorker, setSelectedWorker] = useState<WorkerLocationWithEmployee | null>(null);
   const [selectedJob, setSelectedJob] = useState<Job | null>(null);
   const [selectedOffice, setSelectedOffice] = useState(false);
@@ -93,26 +92,24 @@ export function LiveWorkerMap({
     [workerLocations, jobs, officeLocation]
   );
 
-  // API key input view
-  if (!apiKey) {
+  // The Maps key is provided by the app (get-google-maps-key) — the user is
+  // never asked for one. While it loads, show a clean placeholder.
+  if (isLoadingKey) {
     return (
-      <div className={className}>
-        <GoogleMapsApiKeyInput
-          title="Live Worker Map"
-          description="Enter your Google Maps API key to enable the live worker tracking map."
-        />
+      <div className={cn('bg-[hsl(0_0%_12%)] border border-white/[0.06] rounded-2xl overflow-hidden', className)}>
+        <div className="p-6 text-center">
+          <p className="text-white">Loading map…</p>
+        </div>
       </div>
     );
   }
 
-  if (loadError) {
+  // Loaded but no key / failed to load — don't spin forever; show a real state.
+  if (loadError || !apiKey) {
     return (
       <div className={cn('bg-[hsl(0_0%_12%)] border border-white/[0.06] rounded-2xl overflow-hidden', className)}>
         <div className="p-6 text-center">
-          <p className="text-red-400">Error loading Google Maps. Please check your API key.</p>
-          <SecondaryButton className="mt-4" onClick={clearApiKey}>
-            Reset API Key
-          </SecondaryButton>
+          <p className="text-white/70">Map unavailable right now.</p>
         </div>
       </div>
     );

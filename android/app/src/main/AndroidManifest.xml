@@ -73,6 +73,11 @@
     <!-- Camera — photo capture for certificates, site safety, inspections -->
     <uses-permission android:name="android.permission.CAMERA" />
 
+    <!-- Location — optional "share my live location" check-in on the worker app
+         (iOS equivalents already declared in Info.plist). -->
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+
     <!--
       Photo selection uses the Android Photo Picker (@capacitor/camera v8),
       which needs NO media permission on Android 13+. READ_MEDIA_IMAGES /

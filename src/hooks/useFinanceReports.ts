@@ -403,10 +403,42 @@ export function useFinanceQuickStats() {
   const { data: profitability, isLoading: profitLoading } = useProfitabilitySummary();
   const { data: cashFlow, isLoading: cashLoading } = useCashFlowSummary();
   const { data: expenseCategories, isLoading: expLoading } = useExpensesByCategory();
+  const { invoices, expenses, isLoading: dataLoading } = useFinanceData();
 
-  const isLoading = profitLoading || cashLoading || expLoading;
+  const isLoading = profitLoading || cashLoading || expLoading || dataLoading;
 
   const topExpenseCategory = expenseCategories.length > 0 ? expenseCategories[0] : null;
+
+  // Current calendar-month totals + the expense-approval pipeline. The "This
+  // month" card and the expenses cards in ReportsSection read these fields;
+  // without them those cards silently showed £0.
+  const monthly = useMemo(() => {
+    const now = new Date();
+    const monthStart = new Date(now.getFullYear(), now.getMonth(), 1);
+    const inThisMonth = (d?: string | null) => {
+      if (!d) return false;
+      const dt = new Date(d);
+      return dt >= monthStart && dt <= now;
+    };
+    const monthlyInvoiced = invoices
+      .filter((inv) => inThisMonth(inv.created_at))
+      .reduce((s, inv) => s + Number(inv.amount || 0), 0);
+    const monthlyExpenses = expenses
+      .filter((exp) => inThisMonth(exp.submitted_date))
+      .reduce((s, exp) => s + Number(exp.amount || 0), 0);
+    const pending = expenses.filter((e) => e.status === 'Pending');
+    const pendingExpenseAmount = pending.reduce((s, e) => s + Number(e.amount || 0), 0);
+    const approvedUnpaidExpenses = expenses
+      .filter((e) => e.status === 'Approved')
+      .reduce((s, e) => s + Number(e.amount || 0), 0);
+    return {
+      monthlyInvoiced,
+      monthlyExpenses,
+      pendingExpenses: pending.length,
+      pendingExpenseAmount,
+      approvedUnpaidExpenses,
+    };
+  }, [invoices, expenses]);
 
   return {
     isLoading,
@@ -419,6 +451,7 @@ export function useFinanceQuickStats() {
     avgDaysToPayment: cashFlow.avgDaysToPayment,
     topExpenseCategory: topExpenseCategory?.category || 'N/A',
     topExpenseAmount: topExpenseCategory?.total || 0,
+    ...monthly,
   };
 }
 

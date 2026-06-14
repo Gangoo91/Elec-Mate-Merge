@@ -193,7 +193,13 @@ export function TeamMemberSheet({
         return 'bg-white/30'; // Off Duty / unknown
     }
   };
-  const presenceSince = presence?.checked_in_at || presence?.last_updated;
+  // The location row embeds the job under the table-name key `employer_jobs`.
+  const presenceJobTitle = (presence as { employer_jobs?: { title?: string } } | undefined)
+    ?.employer_jobs?.title;
+  const presenceSince =
+    presence?.status === 'Off Duty'
+      ? presence?.checked_out_at || presence?.last_updated
+      : presence?.checked_in_at || presence?.last_updated;
 
   const handleCall = () => (window.location.href = `tel:${employee.phone}`);
   const handleEmergencyCall = () => {
@@ -325,8 +331,8 @@ export function TeamMemberSheet({
                   <div className="flex-1 min-w-0">
                     <p className="font-medium text-white truncate">
                       {presence.status}
-                      {presence.jobs?.title && (
-                        <span className="text-xs text-white font-normal"> · {presence.jobs.title}</span>
+                      {presenceJobTitle && (
+                        <span className="text-xs text-white font-normal"> · {presenceJobTitle}</span>
                       )}
                     </p>
                     <p className="text-xs text-white">

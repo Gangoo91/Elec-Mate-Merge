@@ -244,16 +244,16 @@ export function ExpensesSection({ mode, currentEmployeeId }: ExpensesSectionProp
       <StatStrip
         columns={4}
         stats={[
-          { label: 'Pending', value: stats?.pendingCount ?? 0, tone: 'orange' },
+          { label: 'Pending', value: stats?.pending?.count ?? 0, tone: 'orange' },
           {
-            label: 'Approved 30d',
-            value: stats?.approvedCount ?? 0,
+            label: 'Approved',
+            value: stats?.approved?.count ?? 0,
             tone: 'emerald',
           },
-          { label: 'Rejected', value: stats?.rejectedCount ?? 0, tone: 'red' },
+          { label: 'Rejected', value: stats?.rejected?.count ?? 0, tone: 'red' },
           {
-            label: 'Total this month £',
-            value: (stats?.totalThisMonth ?? 0).toLocaleString('en-GB', {
+            label: 'Total £',
+            value: (stats?.total?.total ?? 0).toLocaleString('en-GB', {
               minimumFractionDigits: 2,
               maximumFractionDigits: 2,
             }),

@@ -6,6 +6,7 @@ import { Sheet, SheetContent, SheetHeader, SheetTitle } from '@/components/ui/sh
 import { Checkbox } from '@/components/ui/checkbox';
 import { ScrollArea } from '@/components/ui/scroll-area';
 import { useEmployees } from '@/hooks/useEmployees';
+import { useWorkerLocations } from '@/hooks/useWorkerLocations';
 import { AddEmployeeDialog } from '@/components/employer/dialogs/AddEmployeeDialog';
 import { TeamInviteSheet } from '@/components/employer/sheets/TeamInviteSheet';
 import { EditEmployeeDialog } from '@/components/employer/dialogs/EditEmployeeDialog';
@@ -82,6 +83,16 @@ const getInitials = (name: string): string => {
 
 export function EmployeesSection() {
   const { data: employees = [], isLoading, error, refetch, isRefetching } = useEmployees();
+  // Live on-site presence (clock-in derived) keyed by employee id — drives the
+  // real-time "On site" pill so the roster shows who's actually working now.
+  const { data: workerLocations = [] } = useWorkerLocations();
+  const liveStatusByEmployee = useMemo(() => {
+    const m = new Map<string, string>();
+    for (const loc of workerLocations) {
+      if (loc.employee_id && loc.status) m.set(loc.employee_id, loc.status);
+    }
+    return m;
+  }, [workerLocations]);
   const { data: activeSeatCount = 0 } = useQuery({
     queryKey: ['employer-seat-count'],
     queryFn: async () => {
@@ -392,6 +403,8 @@ export function EmployeesSection() {
               {filteredEmployees.map((employee) => {
                 const isSelected = selectedEmployeeIds.includes(employee.id);
                 const availability = getAvailability(employee);
+                const liveStatus = liveStatusByEmployee.get(employee.id);
+                const isOnSite = liveStatus === 'On Site' || liveStatus === 'En Route';
                 const teamRole = getTeamRole(employee.team_role);
                 const subtitleParts: string[] = [employee.role];
                 if (employee.certifications_count > 0)
@@ -414,7 +427,7 @@ export function EmployeesSection() {
                         )}
                         <Avatar
                           initials={employee.avatar_initials || getInitials(employee.name)}
-                          online={availability === 'Available' || availability === 'On Job'}
+                          online={isOnSite || availability === 'Available' || availability === 'On Job'}
                         />
                       </div>
                     }
@@ -423,7 +436,13 @@ export function EmployeesSection() {
                     trailing={
                       <>
                         <Pill tone={ROLE_TONE[teamRole]}>{teamRole}</Pill>
-                        <Pill tone={AVAILABILITY_TONE[availability]}>{availability}</Pill>
+                        {isOnSite ? (
+                          <Pill tone={liveStatus === 'En Route' ? 'blue' : 'emerald'}>
+                            {liveStatus}
+                          </Pill>
+                        ) : (
+                          <Pill tone={AVAILABILITY_TONE[availability]}>{availability}</Pill>
+                        )}
                       </>
                     }
                     onClick={() => handleItemClick(employee)}

@@ -40,6 +40,7 @@ import { useQuery } from '@tanstack/react-query';
 import { getOfficeLocation } from '@/services/settingsService';
 import { toast } from '@/hooks/use-toast';
 import { getCurrentPosition } from '@/utils/geolocation';
+import { createCommunication } from '@/services/communicationService';
 import {
   PageFrame,
   PageHero,
