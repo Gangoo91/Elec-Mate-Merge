@@ -218,6 +218,7 @@ export function LeaveRequestSheet({ open, onOpenChange }: LeaveRequestSheetProps
   return (
     <Sheet open={open} onOpenChange={handleClose}>
       <SheetContent
+        hideCloseButton
         side="bottom"
         className="h-[85vh] p-0 rounded-t-2xl overflow-hidden sm:max-w-lg sm:mx-auto"
       >
