@@ -22,6 +22,7 @@ import {
   AlertDialogTitle,
 } from '@/components/ui/alert-dialog';
 import { InvoiceSendDropdown } from '@/components/electrician/invoice-builder/InvoiceSendDropdown';
+import { PartialPaymentDialog } from '@/components/electrician/invoice-builder/PartialPaymentDialog';
 import { useAccountingIntegrations } from '@/hooks/useAccountingIntegrations';
 import { PANEL } from '@/components/electrician/shared/surfaces';
 
@@ -43,6 +44,8 @@ const InvoiceViewPage = () => {
   const [isSyncing, setIsSyncing] = useState(false);
   const [isRefreshingFromProvider, setIsRefreshingFromProvider] = useState(false);
   const [totalPaid, setTotalPaid] = useState<number>(0);
+  const [partialPayments, setPartialPayments] = useState<unknown[]>([]);
+  const [showRecordPayment, setShowRecordPayment] = useState(false);
   const { hasConnectedProvider, syncInvoice, refreshInvoiceStatus, recordExternalPayment, integrations } =
     useAccountingIntegrations();
 
@@ -168,6 +171,7 @@ const InvoiceViewPage = () => {
 
       setInvoice(quoteData);
       setTotalPaid(data.total_paid != null ? parseFloat(String(data.total_paid)) : 0);
+      setPartialPayments(Array.isArray(data.partial_payments) ? data.partial_payments : []);
     } catch (error) {
       console.error('Error fetching invoice:', error);
       toast({ title: 'Error loading invoice', description: 'Failed to load invoice.', variant: 'destructive' });
@@ -1000,6 +1004,21 @@ const InvoiceViewPage = () => {
                 </button>
               )}
 
+              {!isPaid && (
+                <button
+                  onClick={() => { setShowActionsSheet(false); setShowRecordPayment(true); }}
+                  className="flex flex-col items-start gap-2.5 p-3.5 rounded-xl border touch-manipulation active:scale-[0.98] transition-all text-left select-none bg-emerald-500/[0.06] border-emerald-500/[0.15] hover:bg-emerald-500/[0.1]"
+                >
+                  <span className="h-10 w-10 rounded-xl flex items-center justify-center bg-emerald-500/[0.1] border border-emerald-500/[0.15]">
+                    <CreditCard className="h-4 w-4 text-emerald-400" />
+                  </span>
+                  <span>
+                    <span className="block text-[13px] font-semibold text-white">Record payment</span>
+                    <span className="block text-[11px] text-white/55 mt-0.5">Log a part or full payment received</span>
+                  </span>
+                </button>
+              )}
+
               <button
                 onClick={() => { setShowActionsSheet(false); handleDownloadPDF(); }}
                 className="flex flex-col items-start gap-2.5 p-3.5 rounded-xl border touch-manipulation active:scale-[0.98] transition-all text-left select-none bg-white/[0.04] border-white/[0.08] hover:bg-white/[0.06]"
@@ -1160,6 +1179,13 @@ const InvoiceViewPage = () => {
         pdfFilename={pdfFilename}
         errorMessage={generationError}
         documentLabel="Invoice"
+      />
+
+      <PartialPaymentDialog
+        invoice={{ ...invoice, total_paid: totalPaid, partial_payments: partialPayments } as Quote}
+        open={showRecordPayment}
+        onOpenChange={setShowRecordPayment}
+        onPaymentRecorded={fetchInvoice}
       />
     </div>
   );
