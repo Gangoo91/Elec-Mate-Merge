@@ -1,8 +1,8 @@
-import { useEffect, useMemo } from 'react';
+import { useMemo } from 'react';
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { toast } from 'sonner';
 import { supabase } from '@/integrations/supabase/client';
-import { realtimeChannelName } from '@/lib/realtimeChannel';
+import { useRealtimeInvalidate } from '@/hooks/useRealtimeInvalidate';
 import { useAuth } from '@/contexts/AuthContext';
 import type { ExpenseClaim } from '@/services/financeService';
 import { v4 as uuidv4 } from 'uuid';
@@ -80,21 +80,11 @@ export function useExpenses(filters?: ExpenseFilters) {
 
   // Live: a worker submitting (or editing) an expense — any change to the
   // company's rows (RLS-scoped) refreshes the employer list instantly.
-  useEffect(() => {
-    const channel = supabase
-      .channel(realtimeChannelName('expense-claims'))
-      .on(
-        'postgres_changes',
-        { event: '*', schema: 'public', table: 'employer_expense_claims' },
-        () => {
-          queryClient.invalidateQueries({ queryKey: ['expense_claims'] });
-        }
-      )
-      .subscribe();
-    return () => {
-      supabase.removeChannel(channel);
-    };
-  }, [queryClient]);
+  useRealtimeInvalidate(
+    'expense-claims',
+    [{ table: 'employer_expense_claims' }],
+    [['expense_claims']]
+  );
 
   // Calculate stats
   const stats = useMemo((): ExpenseStats => {

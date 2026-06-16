@@ -14,13 +14,11 @@
  * the source sheet unchanged in behaviour.
  */
 
-import { useEffect, useMemo, useState } from 'react';
-import { useQueryClient } from '@tanstack/react-query';
+import { useMemo, useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { format, isToday, isYesterday } from 'date-fns';
 import { Clock, Loader2, Play, Square, PenLine, ArrowLeft } from 'lucide-react';
-import { supabase } from '@/integrations/supabase/client';
-import { realtimeChannelName } from '@/lib/realtimeChannel';
+import { useRealtimeInvalidate } from '@/hooks/useRealtimeInvalidate';
 import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
 import {
@@ -113,35 +111,16 @@ export default function TimesheetPage() {
   const { data: jobs, isLoading: jobsLoading } = useActiveJobs();
   const createTimesheet = useCreateTimesheet();
 
-  const queryClient = useQueryClient();
-
   // Live: an employer decision (approve / reject) on one of this worker's
   // timesheets updates the page instantly — no manual reload. Invalidating the
   // timesheets root also refreshes the clock-state restore that reads the same
   // table on mount.
-  useEffect(() => {
-    if (!employeeId) return;
-    const channel = supabase
-      .channel(realtimeChannelName('worker-timesheets'))
-      .on(
-        'postgres_changes',
-        {
-          event: '*',
-          schema: 'public',
-          table: 'employer_timesheets',
-          filter: `employee_id=eq.${employeeId}`,
-        },
-        () => {
-          queryClient.invalidateQueries({ queryKey: ['timesheets', 'employee', employeeId] });
-          queryClient.invalidateQueries({ queryKey: ['todays-hours', employeeId] });
-          queryClient.invalidateQueries({ queryKey: ['timesheets'] });
-        }
-      )
-      .subscribe();
-    return () => {
-      supabase.removeChannel(channel);
-    };
-  }, [employeeId, queryClient]);
+  useRealtimeInvalidate(
+    'worker-timesheets',
+    [{ table: 'employer_timesheets', filter: `employee_id=eq.${employeeId}` }],
+    [['timesheets', 'employee', employeeId], ['todays-hours', employeeId], ['timesheets']],
+    Boolean(employeeId)
+  );
 
   const [view, setView] = useState<TimesheetView>('overview');
   const [historyFilter, setHistoryFilter] = useState<HistoryFilter>('week');
@@ -500,47 +479,47 @@ export default function TimesheetPage() {
                   {/* This-week day breakdown */}
                   <div>
                     <Divider label="This week" />
-              <div className="mt-4 rounded-2xl bg-white/[0.03] border border-white/[0.06] p-4">
-                {isLoadingTimesheets ? (
-                  <LoadingState className="py-8" />
-                ) : (
-                  <div className="flex items-end justify-between gap-2 sm:gap-3">
-                    {weekBreakdown.days.map((d) => {
-                      const pct = d.hours > 0 ? (d.hours / weekBreakdown.maxHours) * 100 : 0;
-                      return (
-                        <div
-                          key={d.date}
-                          className="flex-1 flex flex-col items-center gap-2 min-w-0"
-                        >
-                          <span className="text-[11px] font-semibold tabular-nums text-white/70 h-4">
-                            {d.hours > 0 ? `${formatHours(d.hours)}` : ''}
-                          </span>
-                          <div className="w-full h-24 rounded-lg bg-white/[0.04] flex items-end overflow-hidden">
-                            <div
-                              className={cn(
-                                'w-full rounded-lg transition-all',
-                                d.isToday ? 'bg-elec-yellow' : 'bg-emerald-500/60'
-                              )}
-                              style={{ height: `${pct}%` }}
-                            />
-                          </div>
-                          <span
-                            className={cn(
-                              'text-[11px] font-medium',
-                              d.isToday
-                                ? 'text-elec-yellow'
-                                : d.isFuture
-                                  ? 'text-white/25'
-                                  : 'text-white/55'
-                            )}
-                          >
-                            {d.label}
-                          </span>
+                    <div className="mt-4 rounded-2xl bg-white/[0.03] border border-white/[0.06] p-4">
+                      {isLoadingTimesheets ? (
+                        <LoadingState className="py-8" />
+                      ) : (
+                        <div className="flex items-end justify-between gap-2 sm:gap-3">
+                          {weekBreakdown.days.map((d) => {
+                            const pct = d.hours > 0 ? (d.hours / weekBreakdown.maxHours) * 100 : 0;
+                            return (
+                              <div
+                                key={d.date}
+                                className="flex-1 flex flex-col items-center gap-2 min-w-0"
+                              >
+                                <span className="text-[11px] font-semibold tabular-nums text-white/70 h-4">
+                                  {d.hours > 0 ? `${formatHours(d.hours)}` : ''}
+                                </span>
+                                <div className="w-full h-24 rounded-lg bg-white/[0.04] flex items-end overflow-hidden">
+                                  <div
+                                    className={cn(
+                                      'w-full rounded-lg transition-all',
+                                      d.isToday ? 'bg-elec-yellow' : 'bg-emerald-500/60'
+                                    )}
+                                    style={{ height: `${pct}%` }}
+                                  />
+                                </div>
+                                <span
+                                  className={cn(
+                                    'text-[11px] font-medium',
+                                    d.isToday
+                                      ? 'text-elec-yellow'
+                                      : d.isFuture
+                                        ? 'text-white/25'
+                                        : 'text-white/55'
+                                  )}
+                                >
+                                  {d.label}
+                                </span>
+                              </div>
+                            );
+                          })}
                         </div>
-                      );
-                    })}
-                  </div>
-                )}
+                      )}
                     </div>
                   </div>
                 </>
@@ -549,80 +528,80 @@ export default function TimesheetPage() {
                 /* Recent history + filter */
                 <div>
                   <div className="flex items-center justify-between gap-3">
-                <Divider label="History" className="flex-1" />
-                <div className="flex items-center rounded-lg bg-white/[0.04] border border-white/[0.06] p-0.5 shrink-0">
-                  {(['week', 'all'] as const).map((f) => (
-                    <button
-                      key={f}
-                      type="button"
-                      onClick={() => setHistoryFilter(f)}
-                      aria-pressed={historyFilter === f}
-                      className={cn(
-                        'px-3 h-8 rounded-md text-[12px] font-medium transition-all touch-manipulation',
-                        historyFilter === f
-                          ? 'bg-white/[0.1] text-white'
-                          : 'text-white/50 hover:text-white/80'
-                      )}
-                    >
-                      {f === 'week' ? 'This week' : 'All'}
-                    </button>
-                  ))}
-                </div>
-              </div>
+                    <Divider label="History" className="flex-1" />
+                    <div className="flex items-center rounded-lg bg-white/[0.04] border border-white/[0.06] p-0.5 shrink-0">
+                      {(['week', 'all'] as const).map((f) => (
+                        <button
+                          key={f}
+                          type="button"
+                          onClick={() => setHistoryFilter(f)}
+                          aria-pressed={historyFilter === f}
+                          className={cn(
+                            'px-3 h-8 rounded-md text-[12px] font-medium transition-all touch-manipulation',
+                            historyFilter === f
+                              ? 'bg-white/[0.1] text-white'
+                              : 'text-white/50 hover:text-white/80'
+                          )}
+                        >
+                          {f === 'week' ? 'This week' : 'All'}
+                        </button>
+                      ))}
+                    </div>
+                  </div>
 
-              <div className="mt-3">
-                {isLoadingTimesheets ? (
-                  <LoadingState className="py-10" />
-                ) : recent.length === 0 ? (
-                  <EmptyState
-                    title={
-                      historyFilter === 'week'
-                        ? 'Nothing logged this week'
-                        : 'No timesheets yet'
-                    }
-                    description="Your clocked and logged hours will appear here."
-                  />
-                ) : (
-                  <ListCard>
-                    <ListCardHeader
-                      title="Logged hours"
-                      meta={
-                        <span className="text-[11px] text-white/45 tabular-nums">
-                          {recent.length}
-                        </span>
-                      }
-                    />
-                    <ListBody>
-                      {recent.map((t) => {
-                        const jobTitle = t.job_id ? jobTitleById.get(t.job_id) : undefined;
-                        return (
-                          <ListRow
-                            key={t.id}
-                            accent={statusTone(t.status)}
-                            title={relativeDay(t.date)}
-                            subtitle={
-                              jobTitle ||
-                              (t.clock_in && t.clock_out
-                                ? `${format(new Date(t.clock_in), 'HH:mm')} – ${format(
-                                    new Date(t.clock_out),
-                                    'HH:mm'
-                                  )}`
-                                : 'Logged hours')
-                            }
-                            trailing={
-                              <div className="flex items-center gap-2.5">
-                                <span className="text-[15px] font-semibold text-white tabular-nums">
-                                  {formatHours(t.total_hours || 0)}h
-                                </span>
-                                <Pill tone={statusTone(t.status)}>{t.status}</Pill>
-                              </div>
-                            }
-                          />
-                        );
-                      })}
-                    </ListBody>
-                  </ListCard>
-                )}
+                  <div className="mt-3">
+                    {isLoadingTimesheets ? (
+                      <LoadingState className="py-10" />
+                    ) : recent.length === 0 ? (
+                      <EmptyState
+                        title={
+                          historyFilter === 'week'
+                            ? 'Nothing logged this week'
+                            : 'No timesheets yet'
+                        }
+                        description="Your clocked and logged hours will appear here."
+                      />
+                    ) : (
+                      <ListCard>
+                        <ListCardHeader
+                          title="Logged hours"
+                          meta={
+                            <span className="text-[11px] text-white/45 tabular-nums">
+                              {recent.length}
+                            </span>
+                          }
+                        />
+                        <ListBody>
+                          {recent.map((t) => {
+                            const jobTitle = t.job_id ? jobTitleById.get(t.job_id) : undefined;
+                            return (
+                              <ListRow
+                                key={t.id}
+                                accent={statusTone(t.status)}
+                                title={relativeDay(t.date)}
+                                subtitle={
+                                  jobTitle ||
+                                  (t.clock_in && t.clock_out
+                                    ? `${format(new Date(t.clock_in), 'HH:mm')} – ${format(
+                                        new Date(t.clock_out),
+                                        'HH:mm'
+                                      )}`
+                                    : 'Logged hours')
+                                }
+                                trailing={
+                                  <div className="flex items-center gap-2.5">
+                                    <span className="text-[15px] font-semibold text-white tabular-nums">
+                                      {formatHours(t.total_hours || 0)}h
+                                    </span>
+                                    <Pill tone={statusTone(t.status)}>{t.status}</Pill>
+                                  </div>
+                                }
+                              />
+                            );
+                          })}
+                        </ListBody>
+                      </ListCard>
+                    )}
                   </div>
                 </div>
               }
@@ -847,9 +826,7 @@ export default function TimesheetPage() {
                 <Input
                   type="time"
                   value={manualData.endTime}
-                  onChange={(e) =>
-                    setManualData((prev) => ({ ...prev, endTime: e.target.value }))
-                  }
+                  onChange={(e) => setManualData((prev) => ({ ...prev, endTime: e.target.value }))}
                   className={inputClass}
                 />
               </Field>

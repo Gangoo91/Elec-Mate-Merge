@@ -47,6 +47,40 @@ const CHART_AXIS = 'rgba(255,255,255,0.6)';
 export default function AdminAnalytics() {
   const [dateRange, setDateRange] = useState<DateRangeKey>('30d');
 
+  // Real active-user metrics from the event log (user_events) — DAU/WAU/MAU +
+  // a contiguous 30-day daily-active trend. Replaces the old presence-based
+  // sparkline, which only saw each user's latest last_seen.
+  const { data: activeMetrics } = useQuery({
+    queryKey: ['admin-active-user-metrics'],
+    queryFn: async () => {
+      const { data, error } = await supabase
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        .rpc('get_active_user_metrics' as any);
+      if (error) throw error;
+      return (data ?? null) as {
+        dau: number;
+        wau: number;
+        mau: number;
+        trend: { day: string; active: number }[];
+      } | null;
+    },
+    staleTime: 60 * 1000,
+    refetchInterval: 60 * 1000,
+  });
+
+  // Cohort-correct retention curve (D1/7/14/30/60/90) from the event log.
+  const { data: retention } = useQuery({
+    queryKey: ['admin-retention-curve'],
+    queryFn: async () => {
+      const { data, error } = await supabase
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        .rpc('get_retention_curve' as any);
+      if (error) throw error;
+      return (data ?? []) as { day: number; eligible: number; retained: number; pct: number }[];
+    },
+    staleTime: 5 * 60 * 1000,
+  });
+
   const { data: forecastData } = useQuery({
     queryKey: ['admin-revenue-forecast'],
     queryFn: async () => {
@@ -333,7 +367,11 @@ export default function AdminAnalytics() {
     : [];
 
   return (
-    <PullToRefresh onRefresh={async () => { await refetch(); }}>
+    <PullToRefresh
+      onRefresh={async () => {
+        await refetch();
+      }}
+    >
       <PageFrame>
         <PageHero
           eyebrow="Tools"
@@ -371,27 +409,29 @@ export default function AdminAnalytics() {
               stats={[
                 {
                   label: 'DAU',
-                  value: analytics.activeUsers,
+                  value: activeMetrics?.dau ?? 0,
                   tone: 'emerald',
-                  sub: `${analytics.retention.toFixed(1)}% of total`,
+                  sub: 'active today',
                 },
                 {
                   label: 'WAU',
-                  value: analytics.weekSignups,
+                  value: activeMetrics?.wau ?? 0,
                   tone: 'blue',
-                  sub: `${analytics.weekGrowth >= 0 ? '+' : ''}${analytics.weekGrowth.toFixed(0)}% vs prev`,
+                  sub: 'last 7 days',
                 },
                 {
                   label: 'MAU',
-                  value: analytics.monthSignups,
+                  value: activeMetrics?.mau ?? 0,
                   tone: 'purple',
-                  sub: `${analytics.monthGrowth >= 0 ? '+' : ''}${analytics.monthGrowth.toFixed(0)}% vs prev`,
+                  sub: 'last 30 days',
                 },
                 {
-                  label: 'Retention',
-                  value: analytics.retention.toFixed(1),
+                  label: 'Stickiness',
+                  value: activeMetrics?.mau
+                    ? `${Math.round((activeMetrics.dau / activeMetrics.mau) * 100)}%`
+                    : '—',
                   accent: true,
-                  sub: `${analytics.rangeSignups} in range`,
+                  sub: 'DAU ÷ MAU',
                 },
               ]}
             />
@@ -448,14 +488,17 @@ export default function AdminAnalytics() {
             <ListCard>
               <ListCardHeader
                 tone="emerald"
-                title="Daily active users (7d)"
-                meta={<Pill tone="yellow">{analytics.activeUsers}</Pill>}
+                title="Daily active users (30d)"
+                meta={<Pill tone="yellow">{activeMetrics?.dau ?? 0}</Pill>}
               />
               <div className="p-4 sm:p-5">
                 <div className="h-56 w-full">
                   <ResponsiveContainer width="100%" height="100%">
                     <BarChart
-                      data={analytics.dailyActive}
+                      data={(activeMetrics?.trend ?? []).map((t) => ({
+                        date: format(new Date(t.day), 'd MMM'),
+                        count: t.active,
+                      }))}
                       margin={{ top: 8, right: 8, left: -18, bottom: 0 }}
                     >
                       <CartesianGrid stroke={CHART_GRID} strokeDasharray="3 3" vertical={false} />
@@ -492,9 +535,62 @@ export default function AdminAnalytics() {
 
             <ListCard>
               <ListCardHeader
-                title="Conversion funnel"
-                meta={<Pill tone="yellow">5 steps</Pill>}
+                tone="blue"
+                title="Retention"
+                meta={
+                  <Pill tone="blue">{retention?.find((r) => r.day === 30)?.pct ?? 0}% D30</Pill>
+                }
               />
+              <div className="p-4 sm:p-5">
+                <div className="h-56 w-full">
+                  <ResponsiveContainer width="100%" height="100%">
+                    <LineChart
+                      data={(retention ?? []).map((r) => ({ label: `D${r.day}`, pct: r.pct }))}
+                      margin={{ top: 8, right: 8, left: -18, bottom: 0 }}
+                    >
+                      <CartesianGrid stroke={CHART_GRID} strokeDasharray="3 3" vertical={false} />
+                      <XAxis
+                        dataKey="label"
+                        tick={{ fill: CHART_AXIS, fontSize: 11 }}
+                        stroke={CHART_GRID}
+                        tickLine={false}
+                        axisLine={false}
+                      />
+                      <YAxis
+                        domain={[0, 100]}
+                        unit="%"
+                        tick={{ fill: CHART_AXIS, fontSize: 11 }}
+                        stroke={CHART_GRID}
+                        tickLine={false}
+                        axisLine={false}
+                      />
+                      <Tooltip
+                        contentStyle={{
+                          background: 'hsl(0 0% 10%)',
+                          border: '1px solid rgba(255,255,255,0.08)',
+                          borderRadius: 12,
+                          color: '#ffffff',
+                          fontSize: 12,
+                        }}
+                        labelStyle={{ color: '#ffffff' }}
+                        cursor={{ stroke: CHART_GRID }}
+                      />
+                      <Line
+                        type="monotone"
+                        dataKey="pct"
+                        stroke={CHART_STROKE}
+                        strokeWidth={2}
+                        dot={{ r: 3, fill: CHART_STROKE }}
+                        activeDot={{ r: 4 }}
+                      />
+                    </LineChart>
+                  </ResponsiveContainer>
+                </div>
+              </div>
+            </ListCard>
+
+            <ListCard>
+              <ListCardHeader title="Conversion funnel" meta={<Pill tone="yellow">5 steps</Pill>} />
               <div className="p-4 sm:p-5">
                 <StatStrip
                   columns={5}

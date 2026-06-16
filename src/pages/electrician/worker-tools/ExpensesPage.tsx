@@ -9,8 +9,7 @@
  * Data layer is unchanged: useMyJobs('active') + useMyExpenses().
  */
 
-import { useEffect, useMemo, useState } from 'react';
-import { useQueryClient } from '@tanstack/react-query';
+import { useMemo, useState } from 'react';
 import { Camera, Loader2, Send, Plus, ArrowLeft } from 'lucide-react';
 import {
   Select,
@@ -23,8 +22,7 @@ import { cn } from '@/lib/utils';
 import { toast } from 'sonner';
 import { useMyJobs, useMyExpenses } from '@/hooks/useWorkerSelfService';
 import { useMyEmployeeRecord } from '@/hooks/useWorkerLocations';
-import { supabase } from '@/integrations/supabase/client';
-import { realtimeChannelName } from '@/lib/realtimeChannel';
+import { useRealtimeInvalidate } from '@/hooks/useRealtimeInvalidate';
 import { WorkerToolPage } from '@/pages/electrician/worker-tools/WorkerToolPage';
 import {
   Pill,
@@ -107,32 +105,16 @@ export default function ExpensesPage() {
   const { recentExpenses, isLoading, submitExpense, isSubmitting } = useMyExpenses();
 
   const employeeId = useMyEmployeeRecord().data?.id;
-  const queryClient = useQueryClient();
 
   // Live: an employer decision (approve / reject / mark paid) on one of this
   // worker's expense claims updates the page instantly — no manual reload. The
   // claims list is keyed by ['my-expenses', employeeId] (see useMyExpenses).
-  useEffect(() => {
-    if (!employeeId) return;
-    const channel = supabase
-      .channel(realtimeChannelName('worker-expenses'))
-      .on(
-        'postgres_changes',
-        {
-          event: '*',
-          schema: 'public',
-          table: 'employer_expense_claims',
-          filter: `employee_id=eq.${employeeId}`,
-        },
-        () => {
-          queryClient.invalidateQueries({ queryKey: ['my-expenses', employeeId] });
-        }
-      )
-      .subscribe();
-    return () => {
-      supabase.removeChannel(channel);
-    };
-  }, [employeeId, queryClient]);
+  useRealtimeInvalidate(
+    'worker-expenses',
+    [{ table: 'employer_expense_claims', filter: `employee_id=eq.${employeeId}` }],
+    [['my-expenses', employeeId]],
+    Boolean(employeeId)
+  );
 
   const resetForm = () => {
     setCategory('');
@@ -172,11 +154,7 @@ export default function ExpensesPage() {
   // Stored Capitalised ('Pending') — normalise before matching
   const getStatusPill = (status: string) => {
     const match = statusTone[(status || '').toLowerCase()];
-    return match ? (
-      <Pill tone={match.tone}>{match.label}</Pill>
-    ) : (
-      <Pill tone="blue">{status}</Pill>
-    );
+    return match ? <Pill tone={match.tone}>{match.label}</Pill> : <Pill tone="blue">{status}</Pill>;
   };
 
   const parsedAmount = parseFloat(amount);
@@ -223,7 +201,7 @@ export default function ExpensesPage() {
   const filterTabs = STATUS_FILTERS.map((f) => ({
     value: f.value,
     label: f.label,
-    count: f.value === 'all' ? recentCount : statusCounts[f.value] ?? 0,
+    count: f.value === 'all' ? recentCount : (statusCounts[f.value] ?? 0),
   }));
 
   // ───────────────────────── SUBMIT FORM ─────────────────────────

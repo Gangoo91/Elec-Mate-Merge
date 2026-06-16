@@ -10,8 +10,7 @@
  * unchanged from CommsSheet — only the chrome and UX have changed.
  */
 
-import { useMemo, useState, useEffect } from 'react';
-import { useQueryClient } from '@tanstack/react-query';
+import { useMemo, useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { formatDistanceToNow, parseISO } from 'date-fns';
 import {
@@ -25,9 +24,8 @@ import {
 } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { toast } from 'sonner';
-import { supabase } from '@/integrations/supabase/client';
-import { realtimeChannelName } from '@/lib/realtimeChannel';
 import { useWorkerSelfService } from '@/hooks/useWorkerSelfService';
+import { useRealtimeInvalidate } from '@/hooks/useRealtimeInvalidate';
 import {
   Communication,
   CommunicationPriority,
@@ -107,42 +105,21 @@ const needsAcknowledgement = (priority: CommunicationPriority) =>
   priority === 'urgent' || priority === 'high';
 
 export default function CommsPage() {
-  const {
-    employee,
-    employeeId,
-    communications,
-    isLoadingComms,
-    markAsRead,
-    acknowledgeMessage,
-  } = useWorkerSelfService();
-
-  const queryClient = useQueryClient();
+  const { employee, employeeId, communications, isLoadingComms, markAsRead, acknowledgeMessage } =
+    useWorkerSelfService();
 
   // Live: an employer sending a message (a new recipient row for this worker) —
   // or any change to one of this worker's recipient rows — refreshes the page
   // instantly, with no manual reload.
-  useEffect(() => {
-    if (!employeeId) return;
-    const channel = supabase
-      .channel(realtimeChannelName('worker-comms'))
-      .on(
-        'postgres_changes',
-        {
-          event: '*',
-          schema: 'public',
-          table: 'employer_communication_recipients',
-          filter: `employee_id=eq.${employeeId}`,
-        },
-        () => {
-          queryClient.invalidateQueries({ queryKey: ['my-communications', employeeId] });
-          queryClient.invalidateQueries({ queryKey: ['communications', 'unread', employeeId] });
-        }
-      )
-      .subscribe();
-    return () => {
-      supabase.removeChannel(channel);
-    };
-  }, [employeeId, queryClient]);
+  useRealtimeInvalidate(
+    'worker-comms',
+    [{ table: 'employer_communication_recipients', filter: `employee_id=eq.${employeeId}` }],
+    [
+      ['my-communications', employeeId],
+      ['communications', 'unread', employeeId],
+    ],
+    Boolean(employeeId)
+  );
 
   const [step, setStep] = useState<CommsStep>('list');
   const [filter, setFilter] = useState<CommsFilter>('all');
@@ -329,8 +306,7 @@ export default function CommsPage() {
   // Detail body — shared between the mobile detail step and the persistent
   // lg detail panel. `withBack` toggles the mobile-only back affordance.
   const renderDetailBody = (comm: CommWithRecipient, withBack: boolean) => {
-    const ackPending =
-      needsAcknowledgement(comm.priority) && !comm.recipient.acknowledged_at;
+    const ackPending = needsAcknowledgement(comm.priority) && !comm.recipient.acknowledged_at;
 
     return (
       <div className="space-y-5">
@@ -405,20 +381,13 @@ export default function CommsPage() {
         {needsAcknowledgement(comm.priority) && comm.recipient.acknowledged_at && (
           <div className="rounded-xl bg-emerald-500/[0.08] border border-emerald-500/20 px-4 py-3 flex items-center gap-2.5">
             <CheckCheck className="h-4 w-4 text-emerald-400 shrink-0" />
-            <p className="text-[12.5px] text-emerald-300">
-              You have acknowledged this message.
-            </p>
+            <p className="text-[12.5px] text-emerald-300">You have acknowledged this message.</p>
           </div>
         )}
 
         {/* Acknowledge action */}
         {ackPending && (
-          <PrimaryButton
-            onClick={handleAcknowledge}
-            disabled={isAcknowledging}
-            fullWidth
-            size="lg"
-          >
+          <PrimaryButton onClick={handleAcknowledge} disabled={isAcknowledging} fullWidth size="lg">
             {isAcknowledging ? (
               <>
                 <span className="h-4 w-4 mr-2 rounded-full border-2 border-black/40 border-t-transparent animate-spin" />

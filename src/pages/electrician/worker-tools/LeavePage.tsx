@@ -11,8 +11,7 @@
  * guard and every handler are carried over from the sheet unchanged in behaviour.
  */
 
-import { useState, useMemo, useEffect } from 'react';
-import { useQueryClient } from '@tanstack/react-query';
+import { useState, useMemo } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { format, parseISO, addDays, formatDistanceToNow } from 'date-fns';
 import {
@@ -31,8 +30,7 @@ import { Switch } from '@/components/ui/switch';
 import { cn } from '@/lib/utils';
 import { toast } from 'sonner';
 import { useWorkerSelfService } from '@/hooks/useWorkerSelfService';
-import { supabase } from '@/integrations/supabase/client';
-import { realtimeChannelName } from '@/lib/realtimeChannel';
+import { useRealtimeInvalidate } from '@/hooks/useRealtimeInvalidate';
 import { WorkerToolPage } from '@/pages/electrician/worker-tools/WorkerToolPage';
 import { LeaveType, LeaveStatus } from '@/services/types';
 import {
@@ -110,33 +108,18 @@ export default function LeavePage() {
     getLeaveTypeName,
   } = useWorkerSelfService();
 
-  const queryClient = useQueryClient();
-
   // Live: an employer decision (approve / reject) on one of this worker's leave
   // requests updates the page instantly — no manual reload. (The decision push
   // notification already fires server-side; this keeps the open page in sync.)
-  useEffect(() => {
-    if (!employeeId) return;
-    const channel = supabase
-      .channel(realtimeChannelName('worker-leave'))
-      .on(
-        'postgres_changes',
-        {
-          event: '*',
-          schema: 'public',
-          table: 'employer_leave_requests',
-          filter: `employee_id=eq.${employeeId}`,
-        },
-        () => {
-          queryClient.invalidateQueries({ queryKey: ['my-leave-requests', employeeId] });
-          queryClient.invalidateQueries({ queryKey: ['my-leave-allowance', employeeId] });
-        }
-      )
-      .subscribe();
-    return () => {
-      supabase.removeChannel(channel);
-    };
-  }, [employeeId, queryClient]);
+  useRealtimeInvalidate(
+    'worker-leave',
+    [{ table: 'employer_leave_requests', filter: `employee_id=eq.${employeeId}` }],
+    [
+      ['my-leave-requests', employeeId],
+      ['my-leave-allowance', employeeId],
+    ],
+    Boolean(employeeId)
+  );
 
   const [view, setView] = useState<LeaveView>('list');
   const [selectedType, setSelectedType] = useState<LeaveType | null>(null);

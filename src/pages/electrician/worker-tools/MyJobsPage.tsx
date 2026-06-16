@@ -9,13 +9,11 @@
  * driven by local state (no new route).
  */
 
-import { useEffect, useMemo, useState, type ReactNode } from 'react';
-import { useQueryClient } from '@tanstack/react-query';
+import { useMemo, useState, type ReactNode } from 'react';
 import { motion } from 'framer-motion';
 import { MapPin, Calendar, ChevronRight, ArrowLeft, User } from 'lucide-react';
 import { cn } from '@/lib/utils';
-import { supabase } from '@/integrations/supabase/client';
-import { realtimeChannelName } from '@/lib/realtimeChannel';
+import { useRealtimeInvalidate } from '@/hooks/useRealtimeInvalidate';
 import {
   Pill,
   StatStrip,
@@ -116,33 +114,17 @@ export default function MyJobsPage() {
   // query key from — used to scope the realtime subscription below.
   const { data: employee } = useMyEmployeeRecord();
   const employeeId = employee?.id;
-  const queryClient = useQueryClient();
 
   // Live: the employer assigning or updating a job for this worker refreshes the
   // job list instantly — no manual reload. Filtered to this worker's rows;
   // invalidates the my-jobs prefix so all filter variants (active/completed/all)
   // refetch.
-  useEffect(() => {
-    if (!employeeId) return;
-    const channel = supabase
-      .channel(realtimeChannelName('worker-jobs'))
-      .on(
-        'postgres_changes',
-        {
-          event: '*',
-          schema: 'public',
-          table: 'employer_job_assignments',
-          filter: `employee_id=eq.${employeeId}`,
-        },
-        () => {
-          queryClient.invalidateQueries({ queryKey: ['my-jobs', employeeId] });
-        }
-      )
-      .subscribe();
-    return () => {
-      supabase.removeChannel(channel);
-    };
-  }, [employeeId, queryClient]);
+  useRealtimeInvalidate(
+    'worker-jobs',
+    [{ table: 'employer_job_assignments', filter: `employee_id=eq.${employeeId}` }],
+    [['my-jobs', employeeId]],
+    Boolean(employeeId)
+  );
 
   const filterLabel = filter === 'all' ? '' : filter;
 
@@ -479,8 +461,12 @@ function DetailRow({
     <div className="flex items-start gap-3">
       <Icon className="h-4 w-4 text-white/45 shrink-0 mt-0.5" />
       <div className="min-w-0">
-        <div className="text-[10px] font-medium uppercase tracking-wider text-white/55">{label}</div>
-        <div className="mt-0.5 text-[13.5px] text-white break-words leading-relaxed">{children}</div>
+        <div className="text-[10px] font-medium uppercase tracking-wider text-white/55">
+          {label}
+        </div>
+        <div className="mt-0.5 text-[13.5px] text-white break-words leading-relaxed">
+          {children}
+        </div>
       </div>
     </div>
   );

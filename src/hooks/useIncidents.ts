@@ -1,7 +1,6 @@
-import { useEffect } from 'react';
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { supabase } from '@/integrations/supabase/client';
-import { realtimeChannelName } from '@/lib/realtimeChannel';
+import { useRealtimeInvalidate } from '@/hooks/useRealtimeInvalidate';
 import { useToast } from '@/hooks/use-toast';
 
 // Types based on database schema
@@ -51,9 +50,11 @@ export interface Incident {
   resolved_at?: string;
 }
 
-export type CreateIncidentInput = Omit<Incident, 'id' | 'employer_id' | 'created_at' | 'updated_at'>;
+export type CreateIncidentInput = Omit<
+  Incident,
+  'id' | 'employer_id' | 'created_at' | 'updated_at'
+>;
 export type UpdateIncidentInput = Partial<CreateIncidentInput>;
-
 
 // The employer_incidents table is narrower than the report form. The mapper
 // folds the extra detail into description/actions_taken on write, and
@@ -82,7 +83,8 @@ const incidentToRow = (input: Partial<CreateIncidentInput>) => {
   if (input.first_aid_given) extras.push('First aid given');
   if (input.supervisor_notified)
     extras.push(`Supervisor notified${input.supervisor_name ? `: ${input.supervisor_name}` : ''}`);
-  if (input.potential_consequences) extras.push(`Potential consequences: ${input.potential_consequences}`);
+  if (input.potential_consequences)
+    extras.push(`Potential consequences: ${input.potential_consequences}`);
   if (input.follow_up_required)
     extras.push(`Follow-up required${input.follow_up_notes ? `: ${input.follow_up_notes}` : ''}`);
 
@@ -105,26 +107,10 @@ const incidentToRow = (input: Partial<CreateIncidentInput>) => {
 
 // Fetch all incidents for the current user
 export function useIncidents() {
-  const queryClient = useQueryClient();
-
   // Live: a worker reporting an incident (any change to the team's rows) refreshes
   // the employer Safety list instantly — no manual reload. RLS scopes both the
   // refetch and the realtime events to the user's company, so no filter is needed.
-  useEffect(() => {
-    const channel = supabase
-      .channel(realtimeChannelName('incidents'))
-      .on(
-        'postgres_changes',
-        { event: '*', schema: 'public', table: 'employer_incidents' },
-        () => {
-          queryClient.invalidateQueries({ queryKey: ['incidents'] });
-        }
-      )
-      .subscribe();
-    return () => {
-      supabase.removeChannel(channel);
-    };
-  }, [queryClient]);
+  useRealtimeInvalidate('incidents', [{ table: 'employer_incidents' }], [['incidents']]);
 
   return useQuery({
     queryKey: ['incidents'],
@@ -236,7 +222,9 @@ export function useIncidentStats() {
           open: data.filter((i) => !['resolved', 'closed'].includes(i.status)).length,
           resolved: data.filter((i) => i.status === 'resolved').length,
           closed: data.filter((i) => i.status === 'closed').length,
-          nearMisses: data.filter((i) => (i.incident_type || '').toLowerCase().replace(' ', '_') === 'near_miss').length,
+          nearMisses: data.filter(
+            (i) => (i.incident_type || '').toLowerCase().replace(' ', '_') === 'near_miss'
+          ).length,
           critical: data.filter((i) => i.severity === 'critical').length,
           high: data.filter((i) => i.severity === 'high').length,
         };

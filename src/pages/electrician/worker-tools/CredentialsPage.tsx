@@ -6,14 +6,12 @@
  * layer is carried over unchanged from the source sheet.
  */
 
-import { useEffect, useMemo, useState } from 'react';
-import { useQueryClient } from '@tanstack/react-query';
+import { useMemo, useState } from 'react';
 import { Award, AlertTriangle, CheckCircle2, ExternalLink } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { useMyCredentials } from '@/hooks/useWorkerSelfService';
 import { useMyEmployeeRecord } from '@/hooks/useWorkerLocations';
-import { supabase } from '@/integrations/supabase/client';
-import { realtimeChannelName } from '@/lib/realtimeChannel';
+import { useRealtimeInvalidate } from '@/hooks/useRealtimeInvalidate';
 import { WorkerToolPage } from '@/pages/electrician/worker-tools/WorkerToolPage';
 import {
   Eyebrow,
@@ -46,31 +44,15 @@ export default function CredentialsPage() {
   // The worker's own roster row id — the same id useMyCredentials reads
   // internally (and the second part of its query key).
   const employeeId = useMyEmployeeRecord().data?.id;
-  const queryClient = useQueryClient();
 
   // Live: an employer adding or updating a certification against this worker's
   // roster row updates the page instantly — no manual reload.
-  useEffect(() => {
-    if (!employeeId) return;
-    const channel = supabase
-      .channel(realtimeChannelName('worker-credentials'))
-      .on(
-        'postgres_changes',
-        {
-          event: '*',
-          schema: 'public',
-          table: 'employer_certifications',
-          filter: `employee_id=eq.${employeeId}`,
-        },
-        () => {
-          queryClient.invalidateQueries({ queryKey: ['my-credentials', employeeId] });
-        }
-      )
-      .subscribe();
-    return () => {
-      supabase.removeChannel(channel);
-    };
-  }, [employeeId, queryClient]);
+  useRealtimeInvalidate(
+    'worker-credentials',
+    [{ table: 'employer_certifications', filter: `employee_id=eq.${employeeId}` }],
+    [['my-credentials', employeeId]],
+    Boolean(employeeId)
+  );
 
   const getExpiryStatus = (expiryDate: string): ExpiryInfo => {
     const now = new Date();
@@ -141,17 +123,13 @@ export default function CredentialsPage() {
   const visibleCertifications = useMemo(() => {
     if (filter === 'all') return sortedCertifications;
     if (filter === 'valid') {
-      return sortedCertifications.filter(
-        ({ expiry }) => !expiry || expiry.status === 'valid'
-      );
+      return sortedCertifications.filter(({ expiry }) => !expiry || expiry.status === 'valid');
     }
     // attention: expired + due soon
     return sortedCertifications.filter(
       ({ expiry }) =>
         expiry &&
-        (expiry.status === 'expired' ||
-          expiry.status === 'expiring' ||
-          expiry.status === 'warning')
+        (expiry.status === 'expired' || expiry.status === 'expiring' || expiry.status === 'warning')
     );
   }, [sortedCertifications, filter]);
 
@@ -186,169 +164,169 @@ export default function CredentialsPage() {
         <div className="grid grid-cols-1 gap-6 sm:gap-8 lg:grid-cols-[2fr_3fr]">
           {/* Left column (desktop) / first (mobile): Elec-ID identity + status */}
           <div className="space-y-6 sm:space-y-8 min-w-0">
-          {/* Elec-ID identity card */}
-          <section>
-            <Eyebrow className="mb-2">Digital identity</Eyebrow>
-            <div className="relative rounded-2xl bg-gradient-to-br from-elec-yellow/[0.12] to-white/[0.02] border border-elec-yellow/20 p-5 overflow-hidden">
-              <div className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-elec-yellow/80 via-amber-400/70 to-orange-400/70 opacity-80" />
-              <div className="flex items-start justify-between gap-3">
-                <div className="min-w-0">
-                  <p className="text-[15px] font-semibold text-white leading-tight">Elec-ID</p>
-                  <p className="text-[12px] text-white/60 mt-0.5">Digital identity card</p>
+            {/* Elec-ID identity card */}
+            <section>
+              <Eyebrow className="mb-2">Digital identity</Eyebrow>
+              <div className="relative rounded-2xl bg-gradient-to-br from-elec-yellow/[0.12] to-white/[0.02] border border-elec-yellow/20 p-5 overflow-hidden">
+                <div className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-elec-yellow/80 via-amber-400/70 to-orange-400/70 opacity-80" />
+                <div className="flex items-start justify-between gap-3">
+                  <div className="min-w-0">
+                    <p className="text-[15px] font-semibold text-white leading-tight">Elec-ID</p>
+                    <p className="text-[12px] text-white/60 mt-0.5">Digital identity card</p>
+                  </div>
+                  <Pill tone={verified ? 'emerald' : 'amber'} className="shrink-0">
+                    {verified ? (
+                      <>
+                        <CheckCircle2 className="h-3 w-3 mr-1" aria-hidden />
+                        Verified
+                      </>
+                    ) : (
+                      'Pending'
+                    )}
+                  </Pill>
                 </div>
-                <Pill tone={verified ? 'emerald' : 'amber'} className="shrink-0">
-                  {verified ? (
-                    <>
-                      <CheckCircle2 className="h-3 w-3 mr-1" aria-hidden />
-                      Verified
-                    </>
-                  ) : (
-                    'Pending'
-                  )}
-                </Pill>
-              </div>
 
-              <div className="mt-4 pt-4 border-t border-white/[0.08]">
-                <Eyebrow>Card number</Eyebrow>
-                <p className="mt-1.5 text-[20px] font-semibold text-white font-mono tracking-wide tabular-nums">
-                  {cardNumber ?? 'Not issued yet'}
-                </p>
-                {!cardNumber && (
-                  <p className="mt-1 text-[11.5px] text-white/45 leading-snug">
-                    Your employer issues your Elec-ID. Speak to them to get set up.
+                <div className="mt-4 pt-4 border-t border-white/[0.08]">
+                  <Eyebrow>Card number</Eyebrow>
+                  <p className="mt-1.5 text-[20px] font-semibold text-white font-mono tracking-wide tabular-nums">
+                    {cardNumber ?? 'Not issued yet'}
                   </p>
-                )}
+                  {!cardNumber && (
+                    <p className="mt-1 text-[11.5px] text-white/45 leading-snug">
+                      Your employer issues your Elec-ID. Speak to them to get set up.
+                    </p>
+                  )}
+                </div>
+
+                <Link to="/elec-id" className="mt-4 block">
+                  <PrimaryButton size="lg" fullWidth>
+                    <ExternalLink className="h-5 w-5 mr-2" aria-hidden />
+                    View full credentials
+                  </PrimaryButton>
+                </Link>
               </div>
+            </section>
 
-              <Link to="/elec-id" className="mt-4 block">
-                <PrimaryButton size="lg" fullWidth>
-                  <ExternalLink className="h-5 w-5 mr-2" aria-hidden />
-                  View full credentials
-                </PrimaryButton>
-              </Link>
-            </div>
-          </section>
-
-          {/* Certifications summary — glanceable status at a glance */}
-          {certifications.length > 0 && (
-            <StatStrip
-              columns={3}
-              stats={[
-                { label: 'Valid', value: summary.valid, tone: 'emerald' },
-                {
-                  label: 'Due soon',
-                  value: summary.dueSoon,
-                  tone: summary.dueSoon > 0 ? 'amber' : undefined,
-                },
-                {
-                  label: 'Expired',
-                  value: summary.expired,
-                  tone: summary.expired > 0 ? 'red' : undefined,
-                },
-              ]}
-            />
-          )}
+            {/* Certifications summary — glanceable status at a glance */}
+            {certifications.length > 0 && (
+              <StatStrip
+                columns={3}
+                stats={[
+                  { label: 'Valid', value: summary.valid, tone: 'emerald' },
+                  {
+                    label: 'Due soon',
+                    value: summary.dueSoon,
+                    tone: summary.dueSoon > 0 ? 'amber' : undefined,
+                  },
+                  {
+                    label: 'Expired',
+                    value: summary.expired,
+                    tone: summary.expired > 0 ? 'red' : undefined,
+                  },
+                ]}
+              />
+            )}
           </div>
 
           {/* Right column (desktop) / second (mobile): certifications list */}
           <div className="space-y-6 sm:space-y-8 min-w-0">
-          {/* Certifications list */}
-          <section className="space-y-4">
-            <div className="flex items-center justify-between">
-              <Eyebrow>Certifications</Eyebrow>
-              {certifications.length > 0 && (
-                <span className="text-[11px] text-white/40 tabular-nums">
-                  {certifications.length} on file
-                </span>
-              )}
-            </div>
+            {/* Certifications list */}
+            <section className="space-y-4">
+              <div className="flex items-center justify-between">
+                <Eyebrow>Certifications</Eyebrow>
+                {certifications.length > 0 && (
+                  <span className="text-[11px] text-white/40 tabular-nums">
+                    {certifications.length} on file
+                  </span>
+                )}
+              </div>
 
-            {certifications.length === 0 ? (
-              <EmptyState
-                title="No certifications on file"
-                description="Your employer records your certifications against your profile. Speak to them to get your tickets added."
-              />
-            ) : (
-              <>
-                <FilterBar
-                  tabs={[
-                    { value: 'all', label: 'All', count: summary.total },
-                    { value: 'attention', label: 'Needs attention', count: needsAttention },
-                    { value: 'valid', label: 'Valid', count: summary.valid },
-                  ]}
-                  activeTab={filter}
-                  onTabChange={(v) => setFilter(v as FilterValue)}
+              {certifications.length === 0 ? (
+                <EmptyState
+                  title="No certifications on file"
+                  description="Your employer records your certifications against your profile. Speak to them to get your tickets added."
                 />
-
-                {visibleCertifications.length === 0 ? (
-                  <EmptyState
-                    title="Nothing here"
-                    description={
-                      filter === 'attention'
-                        ? 'None of your certifications need attention right now.'
-                        : 'No certifications match this filter.'
-                    }
+              ) : (
+                <>
+                  <FilterBar
+                    tabs={[
+                      { value: 'all', label: 'All', count: summary.total },
+                      { value: 'attention', label: 'Needs attention', count: needsAttention },
+                      { value: 'valid', label: 'Valid', count: summary.valid },
+                    ]}
+                    activeTab={filter}
+                    onTabChange={(v) => setFilter(v as FilterValue)}
                   />
-                ) : (
-                  <div className="space-y-2.5">
-                    {visibleCertifications.map(({ cert, expiry }) => (
-                      <div
-                        key={cert.id}
-                        className="rounded-xl bg-white/[0.03] border border-white/[0.06] p-4 transition-colors hover:bg-white/[0.06]"
-                      >
-                        <div className="flex items-start justify-between gap-3">
-                          <div className="flex items-start gap-3 min-w-0 flex-1">
-                            <div className="h-9 w-9 rounded-lg bg-white/[0.04] border border-white/[0.06] flex items-center justify-center shrink-0">
-                              <Award className="h-4 w-4 text-white/70" aria-hidden />
-                            </div>
-                            <div className="min-w-0 flex-1">
-                              <p className="text-[14px] font-semibold text-white leading-snug">
-                                {cert.name}
-                              </p>
-                              {cert.issuer && (
-                                <p className="text-[12px] text-white/60 mt-0.5">{cert.issuer}</p>
-                              )}
-                              {cert.certificate_number && (
-                                <p className="text-[11px] text-white/45 font-mono mt-1">
-                                  #{cert.certificate_number}
+
+                  {visibleCertifications.length === 0 ? (
+                    <EmptyState
+                      title="Nothing here"
+                      description={
+                        filter === 'attention'
+                          ? 'None of your certifications need attention right now.'
+                          : 'No certifications match this filter.'
+                      }
+                    />
+                  ) : (
+                    <div className="space-y-2.5">
+                      {visibleCertifications.map(({ cert, expiry }) => (
+                        <div
+                          key={cert.id}
+                          className="rounded-xl bg-white/[0.03] border border-white/[0.06] p-4 transition-colors hover:bg-white/[0.06]"
+                        >
+                          <div className="flex items-start justify-between gap-3">
+                            <div className="flex items-start gap-3 min-w-0 flex-1">
+                              <div className="h-9 w-9 rounded-lg bg-white/[0.04] border border-white/[0.06] flex items-center justify-center shrink-0">
+                                <Award className="h-4 w-4 text-white/70" aria-hidden />
+                              </div>
+                              <div className="min-w-0 flex-1">
+                                <p className="text-[14px] font-semibold text-white leading-snug">
+                                  {cert.name}
                                 </p>
-                              )}
+                                {cert.issuer && (
+                                  <p className="text-[12px] text-white/60 mt-0.5">{cert.issuer}</p>
+                                )}
+                                {cert.certificate_number && (
+                                  <p className="text-[11px] text-white/45 font-mono mt-1">
+                                    #{cert.certificate_number}
+                                  </p>
+                                )}
+                              </div>
                             </div>
+                            {expiry && (
+                              <Pill tone={expiry.tone} className="shrink-0">
+                                {expiry.status === 'expired' && (
+                                  <AlertTriangle className="h-3 w-3 mr-1" aria-hidden />
+                                )}
+                                {expiry.status === 'valid' && (
+                                  <CheckCircle2 className="h-3 w-3 mr-1" aria-hidden />
+                                )}
+                                {expiry.label}
+                              </Pill>
+                            )}
                           </div>
-                          {expiry && (
-                            <Pill tone={expiry.tone} className="shrink-0">
-                              {expiry.status === 'expired' && (
-                                <AlertTriangle className="h-3 w-3 mr-1" aria-hidden />
-                              )}
-                              {expiry.status === 'valid' && (
-                                <CheckCircle2 className="h-3 w-3 mr-1" aria-hidden />
-                              )}
-                              {expiry.label}
-                            </Pill>
+                          {cert.expiry_date && (
+                            <div className="mt-3 pt-3 border-t border-white/[0.06] flex items-center justify-between">
+                              <span className="inline-flex items-center gap-1.5 text-[11px] uppercase tracking-wide text-white/40">
+                                {expiry && expiry.status !== 'valid' && <Dot tone={expiry.tone} />}
+                                {expiry && expiry.status === 'expired' ? 'Expired' : 'Expires'}
+                              </span>
+                              <span className="text-[12.5px] font-medium text-white tabular-nums">
+                                {new Date(cert.expiry_date).toLocaleDateString('en-GB', {
+                                  day: 'numeric',
+                                  month: 'short',
+                                  year: 'numeric',
+                                })}
+                              </span>
+                            </div>
                           )}
                         </div>
-                        {cert.expiry_date && (
-                          <div className="mt-3 pt-3 border-t border-white/[0.06] flex items-center justify-between">
-                            <span className="inline-flex items-center gap-1.5 text-[11px] uppercase tracking-wide text-white/40">
-                              {expiry && expiry.status !== 'valid' && <Dot tone={expiry.tone} />}
-                              {expiry && expiry.status === 'expired' ? 'Expired' : 'Expires'}
-                            </span>
-                            <span className="text-[12.5px] font-medium text-white tabular-nums">
-                              {new Date(cert.expiry_date).toLocaleDateString('en-GB', {
-                                day: 'numeric',
-                                month: 'short',
-                                year: 'numeric',
-                              })}
-                            </span>
-                          </div>
-                        )}
-                      </div>
-                    ))}
-                  </div>
-                )}
-              </>
-            )}
-          </section>
+                      ))}
+                    </div>
+                  )}
+                </>
+              )}
+            </section>
           </div>
         </div>
       )}

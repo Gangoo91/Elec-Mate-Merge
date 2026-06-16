@@ -24,6 +24,7 @@ import { useMyTasks } from '@/hooks/useJobTasks';
 import { useQsTeamContext } from '@/hooks/useQsReview';
 import { useQsPendingCount } from '@/hooks/useQsReviewQueue';
 import { Eyebrow, containerVariants, itemVariants } from '@/components/college/primitives';
+import { WorkerNotificationsBell } from '@/components/worker-tools/WorkerNotificationsBell';
 
 // Dev mode whitelist - allows access without employee record
 const DEV_WHITELIST = ['founder@elec-mate.com', 'andrewgangoo91@gmail.com'];
@@ -168,7 +169,10 @@ const EditorialToolGrid = ({
 
             <div className="mt-5 flex items-center justify-between gap-3 pt-3 border-t border-white/[0.05]">
               <span
-                className={cn('text-[11px] truncate tabular-nums', card.metaTone ?? 'text-white/55')}
+                className={cn(
+                  'text-[11px] truncate tabular-nums',
+                  card.metaTone ?? 'text-white/55'
+                )}
               >
                 {card.meta ?? 'Open'}
               </span>
@@ -535,6 +539,7 @@ export default function WorkerToolsHub() {
                 Worker Tools
               </h1>
             </div>
+            <WorkerNotificationsBell />
           </div>
         </div>
       </div>
@@ -592,9 +597,27 @@ export default function WorkerToolsHub() {
         <StatBand stats={glanceStats} onOpen={go} />
 
         <EditorialToolGrid number="02" label="WORK" cards={workCards} onOpen={go} />
-        <EditorialToolGrid number="03" label="PAY & TIME" cards={payCards} columns="three" onOpen={go} />
-        <EditorialToolGrid number="04" label="KIT & RECORDS" cards={recordCards} columns="three" onOpen={go} />
-        <EditorialToolGrid number="05" label="COMMS & REPORTS" cards={commsCards} columns="two" onOpen={go} />
+        <EditorialToolGrid
+          number="03"
+          label="PAY & TIME"
+          cards={payCards}
+          columns="three"
+          onOpen={go}
+        />
+        <EditorialToolGrid
+          number="04"
+          label="KIT & RECORDS"
+          cards={recordCards}
+          columns="three"
+          onOpen={go}
+        />
+        <EditorialToolGrid
+          number="05"
+          label="COMMS & REPORTS"
+          cards={commsCards}
+          columns="two"
+          onOpen={go}
+        />
       </div>
     </div>
   );

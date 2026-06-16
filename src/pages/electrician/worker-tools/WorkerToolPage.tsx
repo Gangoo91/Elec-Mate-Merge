@@ -18,6 +18,7 @@ import { cn } from '@/lib/utils';
 import { useAuth } from '@/contexts/AuthContext';
 import { useWorkerSelfService } from '@/hooks/useWorkerSelfService';
 import { Eyebrow, containerVariants, itemVariants } from '@/components/college/primitives';
+import { WorkerNotificationsBell } from '@/components/worker-tools/WorkerNotificationsBell';
 
 // Keep in sync with WorkerToolsHub's dev whitelist.
 const DEV_WHITELIST = ['founder@elec-mate.com', 'andrewgangoo91@gmail.com'];
@@ -89,6 +90,7 @@ export function WorkerToolPage({
                 {title}
               </h1>
             </div>
+            <WorkerNotificationsBell />
           </div>
         </div>
       </div>

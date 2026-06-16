@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState } from 'react';
+import { useMemo, useState } from 'react';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import {
   Loader2,
@@ -11,7 +11,7 @@ import {
 } from 'lucide-react';
 import { toast } from 'sonner';
 import { supabase } from '@/integrations/supabase/client';
-import { realtimeChannelName } from '@/lib/realtimeChannel';
+import { useRealtimeInvalidate } from '@/hooks/useRealtimeInvalidate';
 import SignatureInput from '@/components/signature/SignatureInput';
 import { useMyEmployeeRecord } from '@/hooks/useWorkerLocations';
 import { WorkerToolPage } from '@/pages/electrician/worker-tools/WorkerToolPage';
@@ -130,27 +130,12 @@ export default function SignOffsPage() {
   // Live: when the office sends a new job pack (inserts an acknowledgement row
   // for this worker) — or updates one — the list refreshes instantly, no manual
   // reload. RLS + the employee_id filter scope this to the worker's own packs.
-  useEffect(() => {
-    if (!me?.id) return;
-    const channel = supabase
-      .channel(realtimeChannelName('worker-pack-signoffs'))
-      .on(
-        'postgres_changes',
-        {
-          event: '*',
-          schema: 'public',
-          table: 'employer_job_pack_acknowledgements',
-          filter: `employee_id=eq.${me.id}`,
-        },
-        () => {
-          queryClient.invalidateQueries({ queryKey: ['my-pack-signoffs', me.id] });
-        }
-      )
-      .subscribe();
-    return () => {
-      supabase.removeChannel(channel);
-    };
-  }, [me?.id, queryClient]);
+  useRealtimeInvalidate(
+    'worker-pack-signoffs',
+    [{ table: 'employer_job_pack_acknowledgements', filter: `employee_id=eq.${me?.id}` }],
+    [['my-pack-signoffs', me?.id]],
+    Boolean(me?.id)
+  );
 
   const [selected, setSelected] = useState<PackSignOff | null>(null);
   const [signature, setSignature] = useState<string | null>(null);
@@ -240,9 +225,7 @@ export default function SignOffsPage() {
           <div className="flex items-center gap-2.5 rounded-xl bg-emerald-500/10 border border-emerald-500/20 p-4">
             <CheckCircle2 className="h-4 w-4 text-emerald-400 shrink-0" />
             <div className="min-w-0">
-              <p className="text-[13px] text-white">
-                Signed {fullTimestamp(s.acknowledged_at!)}
-              </p>
+              <p className="text-[13px] text-white">Signed {fullTimestamp(s.acknowledged_at!)}</p>
               <p className="text-[11.5px] text-white/55">
                 {relativeTime(s.acknowledged_at!)} · the office has been notified
               </p>

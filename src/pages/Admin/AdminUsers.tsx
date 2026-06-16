@@ -265,9 +265,7 @@ export default function AdminUsers() {
             );
             break;
           case 'trials':
-            allUsers = allUsers.filter(
-              (u: UserProfile) => !u.subscribed && !u.free_access_granted
-            );
+            allUsers = allUsers.filter((u: UserProfile) => !u.subscribed && !u.free_access_granted);
             break;
           case 'subscribed':
             allUsers = allUsers.filter((u: UserProfile) => u.subscribed);
@@ -276,7 +274,9 @@ export default function AdminUsers() {
             allUsers = allUsers.filter((u: UserProfile) => u.free_access_granted);
             break;
           case 'never_logged_in':
-            allUsers = allUsers.filter((u: UserProfile) => !u.last_sign_in && !u.last_seen);
+            // profiles.last_sign_in is a dead column (always NULL) — never gate on it.
+            // No presence record (last_seen) is the real "never active" signal.
+            allUsers = allUsers.filter((u: UserProfile) => !u.last_seen);
             break;
         }
       }
@@ -306,7 +306,15 @@ export default function AdminUsers() {
         'user_id, login_count, page_view_count, total_seconds_tracked, feature_use_count, active_days, unique_pages_visited'
       );
       const scoreMap = new Map<string, number>();
-      const rawMap = new Map<string, { login_count: number; page_view_count: number; total_seconds_tracked: number; unique_pages_visited: number }>();
+      const rawMap = new Map<
+        string,
+        {
+          login_count: number;
+          page_view_count: number;
+          total_seconds_tracked: number;
+          unique_pages_visited: number;
+        }
+      >();
       for (const row of rows || []) {
         scoreMap.set(row.user_id, calculateEngagementScore(row));
         rawMap.set(row.user_id, {
@@ -359,9 +367,7 @@ export default function AdminUsers() {
         sorted.sort((a, b) => (a.full_name || '').localeCompare(b.full_name || ''));
         break;
       case 'joined':
-        sorted.sort(
-          (a, b) => new Date(b.created_at).getTime() - new Date(a.created_at).getTime()
-        );
+        sorted.sort((a, b) => new Date(b.created_at).getTime() - new Date(a.created_at).getTime());
         break;
       case 'last_active':
         sorted.sort((a, b) => {
@@ -397,7 +403,15 @@ export default function AdminUsers() {
         'user_id, login_count, page_view_count, total_seconds_tracked, feature_use_count, active_days, unique_pages_visited'
       );
       const scoreMap = new Map<string, number>();
-      const rawMap = new Map<string, { login_count: number; page_view_count: number; total_seconds_tracked: number; unique_pages_visited: number }>();
+      const rawMap = new Map<
+        string,
+        {
+          login_count: number;
+          page_view_count: number;
+          total_seconds_tracked: number;
+          unique_pages_visited: number;
+        }
+      >();
       for (const row of rows || []) {
         scoreMap.set(row.user_id, calculateEngagementScore(row));
         rawMap.set(row.user_id, {
@@ -811,11 +825,7 @@ export default function AdminUsers() {
               <IconButton onClick={exportCSV} aria-label="Export CSV">
                 <Download className="h-4 w-4" />
               </IconButton>
-              <IconButton
-                onClick={() => refetch()}
-                disabled={isFetching}
-                aria-label="Refresh"
-              >
+              <IconButton onClick={() => refetch()} disabled={isFetching} aria-label="Refresh">
                 <RefreshCw className={`h-4 w-4 ${isFetching ? 'animate-spin' : ''}`} />
               </IconButton>
             </>
@@ -921,10 +931,7 @@ export default function AdminUsers() {
                   <XCircle className="h-4 w-4 mr-1.5" />
                   Revoke
                 </Button>
-                <IconButton
-                  onClick={() => setSelectedIds(new Set())}
-                  aria-label="Clear selection"
-                >
+                <IconButton onClick={() => setSelectedIds(new Set())} aria-label="Clear selection">
                   <X className="h-4 w-4" />
                 </IconButton>
               </div>
@@ -935,10 +942,7 @@ export default function AdminUsers() {
         {isLoading ? (
           <LoadingBlocks />
         ) : users?.length === 0 ? (
-          <EmptyState
-            title="No users found"
-            description="Try adjusting your search or filters."
-          />
+          <EmptyState title="No users found" description="Try adjusting your search or filters." />
         ) : (
           <ListCard>
             <ListCardHeader
@@ -998,11 +1002,7 @@ export default function AdminUsers() {
                       },
                     ]}
                   >
-                    <div
-                      className={`relative ${
-                        isSelected ? 'bg-white/[0.04]' : ''
-                      }`}
-                    >
+                    <div className={`relative ${isSelected ? 'bg-white/[0.04]' : ''}`}>
                       <ListRow
                         accent={accentTone}
                         lead={
@@ -1040,9 +1040,7 @@ export default function AdminUsers() {
                         }
                         title={
                           <span className="flex items-center gap-1.5">
-                            <span className="truncate">
-                              {user.full_name || 'No name'}
-                            </span>
+                            <span className="truncate">{user.full_name || 'No name'}</span>
                             {user.admin_role && (
                               <Shield className="h-3 w-3 text-elec-yellow shrink-0" />
                             )}
@@ -1054,9 +1052,7 @@ export default function AdminUsers() {
                               {user.email || (user.username ? `@${user.username}` : '—')}
                             </span>
                             <span className="flex items-center gap-1.5 flex-wrap">
-                              <Pill tone={accentTone}>
-                                {user.role || 'visitor'}
-                              </Pill>
+                              <Pill tone={accentTone}>{user.role || 'visitor'}</Pill>
                               {tier && <Pill tone={tier.tone}>{tier.label}</Pill>}
                               {engagementScore !== undefined && (
                                 <Pill
@@ -1141,8 +1137,9 @@ export default function AdminUsers() {
                   role: selectedUser.role || undefined,
                   subscribed: selectedUser.subscribed,
                   subscription_tier: selectedUser.subscription_tier || undefined,
-                  subscription_end: (selectedUser as Record<string, unknown>)
-                    .subscription_end as string | undefined,
+                  subscription_end: (selectedUser as Record<string, unknown>).subscription_end as
+                    | string
+                    | undefined,
                   stripe_customer_id: selectedUser.stripe_customer_id || undefined,
                   free_access_granted: selectedUser.free_access_granted,
                   free_access_expires_at: (selectedUser as Record<string, unknown>)
@@ -1183,10 +1180,7 @@ export default function AdminUsers() {
                     </>
                   )}
                 </Button>
-                <IconButton
-                  onClick={() => setDeleteDialogOpen(true)}
-                  aria-label="Delete user"
-                >
+                <IconButton onClick={() => setDeleteDialogOpen(true)} aria-label="Delete user">
                   <Trash2 className="h-4 w-4" />
                 </IconButton>
               </div>
@@ -1314,9 +1308,7 @@ export default function AdminUsers() {
         {isSuperAdmin && selectedUser?.subscribed && (
           <div className="hidden">
             <button
-              onClick={() =>
-                selectedUser && revokeSubscriptionMutation.mutate(selectedUser.id)
-              }
+              onClick={() => selectedUser && revokeSubscriptionMutation.mutate(selectedUser.id)}
               disabled={revokeSubscriptionMutation.isPending}
             >
               revoke

@@ -15,8 +15,7 @@
  *  - Relative "x days ago" timestamps on shifts.
  *  - Keeps the loading state and all source data hooks/derivations unchanged.
  */
-import { useEffect, useMemo, useState } from 'react';
-import { useQueryClient } from '@tanstack/react-query';
+import { useMemo, useState } from 'react';
 import {
   startOfWeek,
   endOfWeek,
@@ -27,8 +26,7 @@ import {
   format,
   formatDistanceToNowStrict,
 } from 'date-fns';
-import { supabase } from '@/integrations/supabase/client';
-import { realtimeChannelName } from '@/lib/realtimeChannel';
+import { useRealtimeInvalidate } from '@/hooks/useRealtimeInvalidate';
 import { useMyEmployeeRecord } from '@/hooks/useWorkerLocations';
 import { useEmployeeTimesheets } from '@/hooks/useTimesheets';
 import { useMyExpenses } from '@/hooks/useExpenses';
@@ -66,48 +64,24 @@ export default function MyPayPage() {
   );
   const { expenses = [], isLoading: expensesLoading } = useMyExpenses(employee?.id);
 
-  const queryClient = useQueryClient();
-
   // Live: an employer approving/paying this worker's timesheets or expense
   // claims updates the pay summary instantly — no manual reload. Pay is derived
   // from both tables, so subscribe to each (filtered to this worker's rows) and
   // invalidate the exact keys behind the page's data.
   const employeeId = employee?.id;
-  useEffect(() => {
-    if (!employeeId) return;
-    const channel = supabase
-      .channel(realtimeChannelName('worker-pay'))
-      .on(
-        'postgres_changes',
-        {
-          event: '*',
-          schema: 'public',
-          table: 'employer_timesheets',
-          filter: `employee_id=eq.${employeeId}`,
-        },
-        () => {
-          queryClient.invalidateQueries({ queryKey: ['timesheets', 'employee', employeeId] });
-          queryClient.invalidateQueries({ queryKey: ['my-employee-record'] });
-        }
-      )
-      .on(
-        'postgres_changes',
-        {
-          event: '*',
-          schema: 'public',
-          table: 'employer_expense_claims',
-          filter: `employee_id=eq.${employeeId}`,
-        },
-        () => {
-          queryClient.invalidateQueries({ queryKey: ['my_expense_claims', employeeId] });
-          queryClient.invalidateQueries({ queryKey: ['my-employee-record'] });
-        }
-      )
-      .subscribe();
-    return () => {
-      supabase.removeChannel(channel);
-    };
-  }, [employeeId, queryClient]);
+  useRealtimeInvalidate(
+    'worker-pay',
+    [
+      { table: 'employer_timesheets', filter: `employee_id=eq.${employeeId}` },
+      { table: 'employer_expense_claims', filter: `employee_id=eq.${employeeId}` },
+    ],
+    [
+      ['timesheets', 'employee', employeeId],
+      ['my_expense_claims', employeeId],
+      ['my-employee-record'],
+    ],
+    Boolean(employeeId)
+  );
 
   // Which period the contributing-shifts breakdown shows.
   const [period, setPeriod] = useState<'week' | 'month'>('week');
@@ -262,64 +236,60 @@ export default function MyPayPage() {
           <>
             {/* Contributing approved shifts, filterable by period */}
             <ListCard>
-        <ListCardHeader
-          title="Approved shifts"
-          tone="yellow"
-          meta={
-            <span className="text-[11px] text-white/45">
-              {usingFallback
-                ? 'recent'
-                : period === 'week'
-                  ? 'this week'
-                  : 'this month'}
-            </span>
-          }
-        />
-        <div className="px-4 sm:px-5 pt-3.5">
-          <FilterBar
-            tabs={[
-              { value: 'week', label: 'This week' },
-              { value: 'month', label: 'This month' },
-            ]}
-            activeTab={period}
-            onTabChange={(v) => setPeriod(v as 'week' | 'month')}
-          />
-        </div>
-        {shifts.length > 0 ? (
-          <ListBody>
-            {shifts.map((t) => {
-              const hours = Number(t.total_hours) || 0;
-              const rel = relative(t.date);
-              return (
-                <ListRow
-                  key={t.id}
-                  title={t.date ? format(parseISO(t.date), 'EEE d MMM yyyy') : '—'}
-                  subtitle={
-                    isDayRate
-                      ? `${hours.toFixed(1)}h worked${rel ? ` · ${rel}` : ''}`
-                      : `${hours.toFixed(1)}h × ${gbp(rate)}${rel ? ` · ${rel}` : ''}`
-                  }
-                  trailing={
-                    isDayRate ? (
-                      <span className="text-[12px] font-medium text-white/45">Day rate</span>
-                    ) : (
-                      <span className="text-[14px] font-semibold text-white tabular-nums">
-                        {gbp(hours * rate)}
-                      </span>
-                    )
-                  }
+              <ListCardHeader
+                title="Approved shifts"
+                tone="yellow"
+                meta={
+                  <span className="text-[11px] text-white/45">
+                    {usingFallback ? 'recent' : period === 'week' ? 'this week' : 'this month'}
+                  </span>
+                }
+              />
+              <div className="px-4 sm:px-5 pt-3.5">
+                <FilterBar
+                  tabs={[
+                    { value: 'week', label: 'This week' },
+                    { value: 'month', label: 'This month' },
+                  ]}
+                  activeTab={period}
+                  onTabChange={(v) => setPeriod(v as 'week' | 'month')}
                 />
-              );
-            })}
-          </ListBody>
-        ) : (
-          <div className="p-4 sm:p-5">
-            <EmptyState
-              title="No approved hours yet"
-              description="Once your employer approves a timesheet, the contributing shifts show here."
-            />
-          </div>
-        )}
+              </div>
+              {shifts.length > 0 ? (
+                <ListBody>
+                  {shifts.map((t) => {
+                    const hours = Number(t.total_hours) || 0;
+                    const rel = relative(t.date);
+                    return (
+                      <ListRow
+                        key={t.id}
+                        title={t.date ? format(parseISO(t.date), 'EEE d MMM yyyy') : '—'}
+                        subtitle={
+                          isDayRate
+                            ? `${hours.toFixed(1)}h worked${rel ? ` · ${rel}` : ''}`
+                            : `${hours.toFixed(1)}h × ${gbp(rate)}${rel ? ` · ${rel}` : ''}`
+                        }
+                        trailing={
+                          isDayRate ? (
+                            <span className="text-[12px] font-medium text-white/45">Day rate</span>
+                          ) : (
+                            <span className="text-[14px] font-semibold text-white tabular-nums">
+                              {gbp(hours * rate)}
+                            </span>
+                          )
+                        }
+                      />
+                    );
+                  })}
+                </ListBody>
+              ) : (
+                <div className="p-4 sm:p-5">
+                  <EmptyState
+                    title="No approved hours yet"
+                    description="Once your employer approves a timesheet, the contributing shifts show here."
+                  />
+                </div>
+              )}
             </ListCard>
           </>
         }
@@ -327,44 +297,45 @@ export default function MyPayPage() {
           <>
             {/* Expenses owed breakdown */}
             <ListCard>
-        <ListCardHeader
-          title="Expenses owed"
-          tone="emerald"
-          meta={
-            <span className="text-[12px] font-semibold text-emerald-400 tabular-nums">
-              {gbp(pay.expensesOwed)}
-            </span>
-          }
-        />
-        {pay.owedExpenses.length > 0 ? (
-          <ListBody>
-            {pay.owedExpenses.map((e) => {
-              const rel = relative(e.submitted_date);
-              return (
-                <ListRow
-                  key={e.id}
-                  title={e.description || e.category || 'Expense'}
-                  subtitle={
-                    [e.category, rel ? `submitted ${rel}` : null].filter(Boolean).join(' · ') ||
-                    undefined
-                  }
-                  trailing={
-                    <span className="text-[14px] font-semibold text-emerald-400 tabular-nums">
-                      {gbp(Number(e.amount) || 0)}
-                    </span>
-                  }
-                />
-              );
-            })}
-          </ListBody>
-        ) : (
-          <div className="p-4 sm:p-5">
-            <EmptyState
-              title="Nothing owed"
-              description="Approved-but-unpaid expense claims appear here so you can see what you're owed."
-            />
-          </div>
-        )}
+              <ListCardHeader
+                title="Expenses owed"
+                tone="emerald"
+                meta={
+                  <span className="text-[12px] font-semibold text-emerald-400 tabular-nums">
+                    {gbp(pay.expensesOwed)}
+                  </span>
+                }
+              />
+              {pay.owedExpenses.length > 0 ? (
+                <ListBody>
+                  {pay.owedExpenses.map((e) => {
+                    const rel = relative(e.submitted_date);
+                    return (
+                      <ListRow
+                        key={e.id}
+                        title={e.description || e.category || 'Expense'}
+                        subtitle={
+                          [e.category, rel ? `submitted ${rel}` : null]
+                            .filter(Boolean)
+                            .join(' · ') || undefined
+                        }
+                        trailing={
+                          <span className="text-[14px] font-semibold text-emerald-400 tabular-nums">
+                            {gbp(Number(e.amount) || 0)}
+                          </span>
+                        }
+                      />
+                    );
+                  })}
+                </ListBody>
+              ) : (
+                <div className="p-4 sm:p-5">
+                  <EmptyState
+                    title="Nothing owed"
+                    description="Approved-but-unpaid expense claims appear here so you can see what you're owed."
+                  />
+                </div>
+              )}
             </ListCard>
           </>
         }
