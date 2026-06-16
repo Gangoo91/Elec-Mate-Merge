@@ -213,7 +213,7 @@ export default function LearningReview() {
         await loadSuggestions();
       }}
     >
-      <div className="container mx-auto py-8 space-y-6 pb-20">
+      <div className="container mx-auto px-4 sm:px-6 py-8 space-y-6 pb-20">
         <Card>
           <CardHeader>
             <div className="flex items-center gap-3">
@@ -227,20 +227,20 @@ export default function LearningReview() {
             </div>
           </CardHeader>
           <CardContent>
-            <div className="mb-4 flex gap-4">
-              <Card className="flex-1 p-4">
+            <div className="mb-4 grid grid-cols-3 gap-2 sm:gap-4">
+              <Card className="p-3 sm:p-4">
                 <div className="text-2xl font-bold text-elec-yellow">
                   {suggestions.filter((s) => s.status === 'pending').length}
                 </div>
                 <div className="text-sm text-muted-foreground">Pending Review</div>
               </Card>
-              <Card className="flex-1 p-4">
+              <Card className="p-3 sm:p-4">
                 <div className="text-2xl font-bold text-green-500">
                   {suggestions.filter((s) => s.status === 'implemented').length}
                 </div>
                 <div className="text-sm text-muted-foreground">Implemented</div>
               </Card>
-              <Card className="flex-1 p-4">
+              <Card className="p-3 sm:p-4">
                 <div className="text-2xl font-bold text-red-500">
                   {suggestions.filter((s) => s.status === 'rejected').length}
                 </div>
@@ -253,111 +253,113 @@ export default function LearningReview() {
                 No learning suggestions yet. Feedback analysis runs weekly.
               </div>
             ) : (
-              <Table>
-                <TableHeader>
-                  <TableRow>
-                    <TableHead>Agent</TableHead>
-                    <TableHead>Type</TableHead>
-                    <TableHead>Frequency</TableHead>
-                    <TableHead>Suggested Fix</TableHead>
-                    <TableHead>Status</TableHead>
-                    <TableHead>Actions</TableHead>
-                  </TableRow>
-                </TableHeader>
-                <TableBody>
-                  {suggestions.map((suggestion) => (
-                    <TableRow key={suggestion.id}>
-                      <TableCell className="font-medium">{suggestion.agent_name}</TableCell>
-                      <TableCell>
-                        <Badge variant="outline">{suggestion.issue_type}</Badge>
-                      </TableCell>
-                      <TableCell>
-                        <Badge variant="secondary">{suggestion.pattern_frequency}x</Badge>
-                      </TableCell>
-                      <TableCell className="max-w-md">
-                        {editingId === suggestion.id ? (
-                          <Textarea
-                            value={editedContent}
-                            onChange={(e) => setEditedContent(e.target.value)}
-                            className="min-h-[100px] font-mono text-xs"
-                          />
-                        ) : (
-                          <div className="text-sm">
-                            <p className="font-semibold">
-                              {String(suggestion.suggested_knowledge_update?.topic ?? '')}
-                            </p>
-                            <p className="text-muted-foreground line-clamp-2">
-                              {String(suggestion.suggested_knowledge_update?.content ?? '')}
-                            </p>
-                          </div>
-                        )}
-                      </TableCell>
-                      <TableCell>{getStatusBadge(suggestion.status)}</TableCell>
-                      <TableCell>
-                        <div className="flex gap-2">
-                          {suggestion.status === 'pending' && (
-                            <>
-                              {editingId === suggestion.id ? (
-                                <>
-                                  <Button
-                                    size="sm"
-                                    className="h-11 touch-manipulation"
-                                    onClick={() => saveEdit(suggestion)}
-                                    disabled={!!processing}
-                                  >
-                                    Save
-                                  </Button>
-                                  <Button
-                                    size="sm"
-                                    variant="outline"
-                                    className="h-11 touch-manipulation"
-                                    onClick={() => setEditingId(null)}
-                                  >
-                                    Cancel
-                                  </Button>
-                                </>
-                              ) : (
-                                <>
-                                  <Button
-                                    size="sm"
-                                    onClick={() => startEditing(suggestion)}
-                                    variant="outline"
-                                    className="h-11 touch-manipulation"
-                                    disabled={!!processing}
-                                  >
-                                    <Edit className="h-3 w-3" />
-                                  </Button>
-                                  <Button
-                                    size="sm"
-                                    onClick={() => handleApprove(suggestion)}
-                                    disabled={processing === suggestion.id}
-                                    className="h-11 touch-manipulation bg-green-500 hover:bg-green-600"
-                                  >
-                                    {processing === suggestion.id ? (
-                                      <Loader2 className="h-3 w-3 animate-spin" />
-                                    ) : (
-                                      <CheckCircle2 className="h-3 w-3" />
-                                    )}
-                                  </Button>
-                                  <Button
-                                    size="sm"
-                                    variant="destructive"
-                                    className="h-11 touch-manipulation"
-                                    onClick={() => handleReject(suggestion.id)}
-                                    disabled={processing === suggestion.id}
-                                  >
-                                    <XCircle className="h-3 w-3" />
-                                  </Button>
-                                </>
-                              )}
-                            </>
-                          )}
-                        </div>
-                      </TableCell>
+              <div className="overflow-x-auto -mx-2 sm:mx-0">
+                <Table className="min-w-[680px]">
+                  <TableHeader>
+                    <TableRow>
+                      <TableHead>Agent</TableHead>
+                      <TableHead>Type</TableHead>
+                      <TableHead>Frequency</TableHead>
+                      <TableHead>Suggested Fix</TableHead>
+                      <TableHead>Status</TableHead>
+                      <TableHead>Actions</TableHead>
                     </TableRow>
-                  ))}
-                </TableBody>
-              </Table>
+                  </TableHeader>
+                  <TableBody>
+                    {suggestions.map((suggestion) => (
+                      <TableRow key={suggestion.id}>
+                        <TableCell className="font-medium">{suggestion.agent_name}</TableCell>
+                        <TableCell>
+                          <Badge variant="outline">{suggestion.issue_type}</Badge>
+                        </TableCell>
+                        <TableCell>
+                          <Badge variant="secondary">{suggestion.pattern_frequency}x</Badge>
+                        </TableCell>
+                        <TableCell className="max-w-md">
+                          {editingId === suggestion.id ? (
+                            <Textarea
+                              value={editedContent}
+                              onChange={(e) => setEditedContent(e.target.value)}
+                              className="min-h-[100px] font-mono text-xs"
+                            />
+                          ) : (
+                            <div className="text-sm">
+                              <p className="font-semibold">
+                                {String(suggestion.suggested_knowledge_update?.topic ?? '')}
+                              </p>
+                              <p className="text-muted-foreground line-clamp-2">
+                                {String(suggestion.suggested_knowledge_update?.content ?? '')}
+                              </p>
+                            </div>
+                          )}
+                        </TableCell>
+                        <TableCell>{getStatusBadge(suggestion.status)}</TableCell>
+                        <TableCell>
+                          <div className="flex gap-2">
+                            {suggestion.status === 'pending' && (
+                              <>
+                                {editingId === suggestion.id ? (
+                                  <>
+                                    <Button
+                                      size="sm"
+                                      className="h-11 touch-manipulation"
+                                      onClick={() => saveEdit(suggestion)}
+                                      disabled={!!processing}
+                                    >
+                                      Save
+                                    </Button>
+                                    <Button
+                                      size="sm"
+                                      variant="outline"
+                                      className="h-11 touch-manipulation"
+                                      onClick={() => setEditingId(null)}
+                                    >
+                                      Cancel
+                                    </Button>
+                                  </>
+                                ) : (
+                                  <>
+                                    <Button
+                                      size="sm"
+                                      onClick={() => startEditing(suggestion)}
+                                      variant="outline"
+                                      className="h-11 touch-manipulation"
+                                      disabled={!!processing}
+                                    >
+                                      <Edit className="h-3 w-3" />
+                                    </Button>
+                                    <Button
+                                      size="sm"
+                                      onClick={() => handleApprove(suggestion)}
+                                      disabled={processing === suggestion.id}
+                                      className="h-11 touch-manipulation bg-green-500 hover:bg-green-600"
+                                    >
+                                      {processing === suggestion.id ? (
+                                        <Loader2 className="h-3 w-3 animate-spin" />
+                                      ) : (
+                                        <CheckCircle2 className="h-3 w-3" />
+                                      )}
+                                    </Button>
+                                    <Button
+                                      size="sm"
+                                      variant="destructive"
+                                      className="h-11 touch-manipulation"
+                                      onClick={() => handleReject(suggestion.id)}
+                                      disabled={processing === suggestion.id}
+                                    >
+                                      <XCircle className="h-3 w-3" />
+                                    </Button>
+                                  </>
+                                )}
+                              </>
+                            )}
+                          </div>
+                        </TableCell>
+                      </TableRow>
+                    ))}
+                  </TableBody>
+                </Table>
+              </div>
             )}
           </CardContent>
         </Card>

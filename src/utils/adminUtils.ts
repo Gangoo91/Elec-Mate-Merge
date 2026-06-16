@@ -66,7 +66,21 @@ export interface EngagementData {
   feature_use_count: number;
   active_days: number;
   unique_pages_visited: number;
+  last_activity?: string | null;
 }
+
+/**
+ * Whole days since a user was last active, or null if never tracked.
+ */
+export const daysSinceActive = (lastActivity: string | null | undefined): number | null => {
+  if (!lastActivity) return null;
+  const ms = Date.now() - new Date(lastActivity).getTime();
+  if (Number.isNaN(ms)) return null;
+  return Math.max(0, Math.floor(ms / 86_400_000));
+};
+
+/** A paying user is "dormant" once they've gone quiet for 30+ days (churn risk). */
+export const DORMANT_DAYS = 30;
 
 /**
  * Calculate a 0-100 engagement score from activity summary data.

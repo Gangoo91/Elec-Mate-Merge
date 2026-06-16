@@ -6,13 +6,15 @@ import { toast } from '@/hooks/use-toast';
 import { useState, useCallback, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { cn } from '@/lib/utils';
-import { RefreshCw } from 'lucide-react';
+import { RefreshCw, Smartphone, Monitor } from 'lucide-react';
 import {
   getInitials,
   calculateEngagementScore,
   getScoreColor,
   SCORE_COLOR_MAP,
   formatTimeShort,
+  daysSinceActive,
+  DORMANT_DAYS,
   type EngagementData,
 } from '@/utils/adminUtils';
 import { AnimatedCounter } from '@/components/dashboard/AnimatedCounter';
@@ -212,6 +214,7 @@ export default function AdminDashboard() {
   const [showChurned, setShowChurned] = useState(false);
   const [showAllSignups, setShowAllSignups] = useState(false);
   const [showAllOnline, setShowAllOnline] = useState(false);
+  const [showAllAtRisk, setShowAllAtRisk] = useState(false);
   const [syncing, setSyncing] = useState(false);
 
   const { data: rcStats } = useQuery<{
@@ -269,6 +272,26 @@ export default function AdminDashboard() {
       }>;
     },
     staleTime: 60000,
+  });
+
+  const { data: atRiskSubs } = useQuery({
+    queryKey: ['admin-at-risk-subscribers'],
+    queryFn: async () => {
+      const { data, error } = await supabase.rpc('get_at_risk_subscribers' as any, {
+        p_days: 30,
+        p_limit: 50,
+      });
+      if (error) throw error;
+      return (data ?? []) as Array<{
+        user_id: string;
+        full_name: string | null;
+        subscription_tier: string | null;
+        subscription_source: string | null;
+        last_active: string | null;
+        days_quiet: number;
+      }>;
+    },
+    staleTime: 5 * 60 * 1000,
   });
 
   const syncRC = async () => {
@@ -349,13 +372,15 @@ export default function AdminDashboard() {
   const { data: onlineUsers } = useQuery<OnlineUser[]>({
     queryKey: ['admin-online-users'],
     queryFn: async () => {
+      const fiveMinAgo = new Date(Date.now() - 5 * 60 * 1000).toISOString();
       const { data } = await supabase
         .from('user_presence')
         .select(
           'user_id, last_seen, status, session_started_at, current_page, device_info, profiles(full_name, role, avatar_url)'
         )
+        .gte('last_seen', fiveMinAgo)
         .order('last_seen', { ascending: false })
-        .limit(10);
+        .limit(200);
       return (data || []) as OnlineUser[];
     },
     staleTime: 10 * 1000,
@@ -427,6 +452,19 @@ export default function AdminDashboard() {
   const liveUserCount =
     onlineUsers?.filter((a) => new Date(a.last_seen).getTime() > Date.now() - 5 * 60 * 1000)
       .length || 0;
+
+  // What live users are actually doing right now, grouped by top-level area
+  const liveHotspots = Object.entries(
+    (onlineUsers ?? [])
+      .filter((a) => new Date(a.last_seen).getTime() > Date.now() - 5 * 60 * 1000)
+      .reduce<Record<string, number>>((acc, a) => {
+        const area = (a.current_page?.replace(/^\//, '').split('/')[0] || 'Home').trim();
+        acc[area] = (acc[area] || 0) + 1;
+        return acc;
+      }, {})
+  )
+    .sort((a, b) => b[1] - a[1])
+    .slice(0, 6);
 
   if (isLoading || stripeLoading) {
     return (
@@ -686,6 +724,19 @@ export default function AdminDashboard() {
               (onlineUsers?.length || 0) > 5 ? () => setShowAllOnline(!showAllOnline) : undefined
             }
           />
+          {liveHotspots.length > 0 && (
+            <div className="flex flex-wrap gap-1.5 px-4 sm:px-5 pt-3.5 pb-0.5">
+              {liveHotspots.map(([area, n]) => (
+                <span
+                  key={area}
+                  className="inline-flex items-center gap-1.5 rounded-full bg-white/[0.05] border border-white/10 px-2.5 py-1 text-[11px] text-white/80"
+                >
+                  <span className="truncate max-w-[140px]">{area}</span>
+                  <span className="text-elec-yellow font-semibold tabular-nums">{n}</span>
+                </span>
+              ))}
+            </div>
+          )}
           {!onlineUsers || onlineUsers.length === 0 ? (
             <EmptyState
               title="No active users"
@@ -698,15 +749,47 @@ export default function AdminDashboard() {
                 const diffMins = Math.floor((Date.now() - lastSeenMs) / 60000);
                 const isOnline = diffMins < 5;
                 const profile = activity.profiles;
-                const currentPage =
-                  activity.current_page?.replace(/^\//, '').split('/')[0] || 'Home';
+                const currentPage = (
+                  activity.current_page?.replace(/^\//, '').split('/')[0] || 'Home'
+                ).trim();
+                const di = activity.device_info as { isMobile?: boolean; platform?: string } | null;
+                const platform = di?.platform || '';
+                const deviceLabel =
+                  platform === 'iPhone'
+                    ? 'iPhone'
+                    : platform === 'iPad'
+                      ? 'iPad'
+                      : platform === 'MacIntel'
+                        ? 'Mac'
+                        : platform === 'Win32'
+                          ? 'Windows'
+                          : di?.isMobile
+                            ? 'Mobile'
+                            : 'Web';
+                const DeviceIcon = di?.isMobile ? Smartphone : Monitor;
+                const sessionMs = activity.session_started_at
+                  ? Date.now() - new Date(activity.session_started_at).getTime()
+                  : 0;
+                const sessionMin = Math.max(0, Math.floor(sessionMs / 60000));
+                const sessionLabel =
+                  sessionMin >= 60
+                    ? `${Math.floor(sessionMin / 60)}h ${sessionMin % 60}m`
+                    : `${sessionMin}m`;
                 return (
                   <ListRow
                     key={activity.user_id}
                     lead={<Avatar initials={getInitials(profile?.full_name)} online={isOnline} />}
                     title={profile?.full_name || 'Unknown'}
                     subtitle={
-                      isOnline ? `Active now · ${currentPage}` : `${diffMins}m ago · ${currentPage}`
+                      isOnline
+                        ? `Active now · ${sessionLabel} · ${currentPage}`
+                        : `${diffMins}m ago · ${currentPage}`
+                    }
+                    trailing={
+                      <span className="flex items-center gap-1 text-[11px] text-white/55">
+                        <DeviceIcon className="h-3.5 w-3.5 shrink-0" />
+                        <span className="hidden sm:inline">{deviceLabel}</span>
+                      </span>
                     }
                     onClick={() => {
                       const matched = baseUsers?.find((u) => u.id === activity.user_id);
@@ -839,6 +922,8 @@ export default function AdminDashboard() {
                       {sortedPaidUsers.map((u) => {
                         const matched = baseUsers?.find((bu) => bu.id === u.id);
                         const score = calculateEngagementScore(u.engagement);
+                        const since = daysSinceActive(u.engagement?.last_activity);
+                        const dormantDays = since !== null && since >= DORMANT_DAYS ? since : null;
                         return (
                           <ListRow
                             key={u.id}
@@ -859,7 +944,16 @@ export default function AdminDashboard() {
                                 )}
                               </span>
                             }
-                            trailing={<Pill tone="emerald">Paying</Pill>}
+                            trailing={
+                              <>
+                                {dormantDays !== null && (
+                                  <Pill tone={dormantDays >= 60 ? 'red' : 'amber'}>
+                                    {dormantDays}d quiet
+                                  </Pill>
+                                )}
+                                <Pill tone="emerald">Paying</Pill>
+                              </>
+                            }
                             onClick={() => matched && setSelectedUser(matched)}
                           />
                         );
@@ -893,6 +987,8 @@ export default function AdminDashboard() {
                               ? 'orange'
                               : 'blue';
                         const score = calculateEngagementScore(t.engagement);
+                        const since = daysSinceActive(t.engagement?.last_activity);
+                        const dormantDays = since !== null && since >= DORMANT_DAYS ? since : null;
                         return (
                           <ListRow
                             key={t.id}
@@ -914,13 +1010,20 @@ export default function AdminDashboard() {
                               </span>
                             }
                             trailing={
-                              <Pill tone={urgencyTone}>
-                                {daysLeft !== null
-                                  ? daysLeft <= 0
-                                    ? 'Today'
-                                    : `${daysLeft}d`
-                                  : 'Trial'}
-                              </Pill>
+                              <>
+                                {dormantDays !== null && (
+                                  <Pill tone={dormantDays >= 60 ? 'red' : 'amber'}>
+                                    {dormantDays}d quiet
+                                  </Pill>
+                                )}
+                                <Pill tone={urgencyTone}>
+                                  {daysLeft !== null
+                                    ? daysLeft <= 0
+                                      ? 'Today'
+                                      : `${daysLeft}d`
+                                    : 'Trial'}
+                                </Pill>
+                              </>
                             }
                             onClick={() => matched && setSelectedUser(matched)}
                           />
@@ -976,6 +1079,57 @@ export default function AdminDashboard() {
               )}
             </ListCard>
           </div>
+        )}
+
+        {/* Churn risk — paying users gone quiet (pre-churn) ─ */}
+        {atRiskSubs && atRiskSubs.length > 0 && (
+          <ListCard>
+            <ListCardHeader
+              tone="orange"
+              title="Churn Risk"
+              meta={
+                <span className="text-[11px] text-orange-400 font-medium tabular-nums">
+                  {atRiskSubs.length} paying · quiet 30d+
+                </span>
+              }
+              action={
+                atRiskSubs.length > 6
+                  ? showAllAtRisk
+                    ? 'Show less'
+                    : `Show all ${atRiskSubs.length}`
+                  : undefined
+              }
+              onAction={atRiskSubs.length > 6 ? () => setShowAllAtRisk(!showAllAtRisk) : undefined}
+            />
+            <ListBody>
+              {atRiskSubs.slice(0, showAllAtRisk ? atRiskSubs.length : 6).map((u) => {
+                const matched = baseUsers?.find((bu) => bu.id === u.user_id);
+                const tone: Tone = u.days_quiet >= 60 ? 'red' : 'orange';
+                return (
+                  <ListRow
+                    key={u.user_id}
+                    accent={tone}
+                    lead={<Avatar initials={getInitials(u.full_name)} />}
+                    title={u.full_name || 'Unknown'}
+                    subtitle={
+                      <span className="capitalize">
+                        {(u.subscription_tier || 'paid').replace('_', ' ')}
+                        {u.subscription_source
+                          ? ` · ${u.subscription_source.replace('_', ' ')}`
+                          : ''}
+                      </span>
+                    }
+                    trailing={
+                      <Pill tone={tone}>
+                        {u.days_quiet >= 9999 ? 'never active' : `${u.days_quiet}d quiet`}
+                      </Pill>
+                    }
+                    onClick={() => matched && setSelectedUser(matched)}
+                  />
+                );
+              })}
+            </ListBody>
+          </ListCard>
         )}
 
         {/* Recently churned ──────────────────────────── */}

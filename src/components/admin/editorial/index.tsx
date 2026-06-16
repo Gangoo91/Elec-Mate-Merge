@@ -109,19 +109,10 @@ export const rowVariants = {
    Atoms
    ──────────────────────────────────────────────────────── */
 
-export function Eyebrow({
-  children,
-  className,
-}: {
-  children: ReactNode;
-  className?: string;
-}) {
+export function Eyebrow({ children, className }: { children: ReactNode; className?: string }) {
   return (
     <div
-      className={cn(
-        'text-[10px] font-medium uppercase tracking-[0.18em] text-white',
-        className
-      )}
+      className={cn('text-[10px] font-medium uppercase tracking-[0.18em] text-white', className)}
     >
       {children}
     </div>
@@ -159,17 +150,15 @@ export function Dot({ tone = 'yellow', className }: { tone?: Tone; className?: s
   );
 }
 
-export function PulseDot({
-  tone = 'green',
-  className,
-}: {
-  tone?: Tone;
-  className?: string;
-}) {
+export function PulseDot({ tone = 'green', className }: { tone?: Tone; className?: string }) {
   return (
     <span
       aria-hidden
-      className={cn('inline-block h-2 w-2 rounded-full shrink-0 animate-pulse', toneDot[tone], className)}
+      className={cn(
+        'inline-block h-2 w-2 rounded-full shrink-0 animate-pulse',
+        toneDot[tone],
+        className
+      )}
     />
   );
 }
@@ -263,9 +252,7 @@ export function PageHero({
           )}
           {meta && <div className="mt-3">{meta}</div>}
         </div>
-        {actions && (
-          <div className="shrink-0 flex items-center gap-2 flex-wrap">{actions}</div>
-        )}
+        {actions && <div className="shrink-0 flex items-center gap-2 flex-wrap">{actions}</div>}
       </div>
     </motion.div>
   );
@@ -355,9 +342,7 @@ export function HeroNumber({
           <div className="text-[40px] sm:text-6xl lg:text-7xl font-semibold text-white tracking-tight leading-none tabular-nums">
             {value}
           </div>
-          {caption && (
-            <div className="mt-2 text-[13px] text-white">{caption}</div>
-          )}
+          {caption && <div className="mt-2 text-[13px] text-white">{caption}</div>}
         </div>
         {columns && columns.length > 0 && (
           <div
@@ -452,12 +437,7 @@ interface StatStripProps {
   className?: string;
 }
 
-export function StatStrip({
-  stats,
-  columns = 4,
-  numbered = false,
-  className,
-}: StatStripProps) {
+export function StatStrip({ stats, columns = 4, numbered = false, className }: StatStripProps) {
   const colClass =
     columns === 5
       ? 'grid-cols-2 md:grid-cols-3 lg:grid-cols-5'
@@ -525,11 +505,7 @@ export function StatStrip({
             {content}
           </motion.button>
         ) : (
-          <motion.div
-            key={`${stat.label}-${i}`}
-            variants={itemVariants}
-            className={baseClass}
-          >
+          <motion.div key={`${stat.label}-${i}`} variants={itemVariants} className={baseClass}>
             {content}
           </motion.div>
         );
@@ -550,13 +526,7 @@ interface AlertRowProps {
   onClick?: () => void;
 }
 
-export function AlertRow({
-  title,
-  subtitle,
-  trailing,
-  tone = 'orange',
-  onClick,
-}: AlertRowProps) {
+export function AlertRow({ title, subtitle, trailing, tone = 'orange', onClick }: AlertRowProps) {
   const base =
     'group relative w-full flex items-center gap-4 bg-[hsl(0_0%_12%)] border border-white/[0.06] rounded-2xl overflow-hidden px-5 sm:px-6 py-4 sm:py-5 text-left touch-manipulation transition-colors';
   const inner = (
@@ -570,9 +540,7 @@ export function AlertRow({
       <Dot tone={tone} />
       <div className="flex-1 min-w-0">
         <div className="text-sm sm:text-[15px] font-semibold text-white truncate">{title}</div>
-        {subtitle && (
-          <div className="mt-0.5 text-[12px] text-white truncate">{subtitle}</div>
-        )}
+        {subtitle && <div className="mt-0.5 text-[12px] text-white truncate">{subtitle}</div>}
       </div>
       {trailing && <div className="shrink-0">{trailing}</div>}
       <Arrow className="shrink-0" />
@@ -605,13 +573,7 @@ export function AlertRow({
    List card + list row
    ──────────────────────────────────────────────────────── */
 
-export function ListCard({
-  className,
-  children,
-}: {
-  className?: string;
-  children: ReactNode;
-}) {
+export function ListCard({ className, children }: { className?: string; children: ReactNode }) {
   return (
     <div
       className={cn(
@@ -700,17 +662,12 @@ export function ListRow({
   const Inner = (
     <>
       {accent && (
-        <span
-          aria-hidden
-          className={cn('w-[3px] h-10 rounded-full shrink-0', toneDot[accent])}
-        />
+        <span aria-hidden className={cn('w-[3px] h-10 rounded-full shrink-0', toneDot[accent])} />
       )}
       {lead && <div className="shrink-0">{lead}</div>}
       <div className="flex-1 min-w-0">
         <div className="text-[14px] font-medium text-white truncate">{title}</div>
-        {subtitle && (
-          <div className="mt-0.5 text-[11.5px] text-white truncate">{subtitle}</div>
-        )}
+        {subtitle && <div className="mt-0.5 text-[11.5px] text-white truncate">{subtitle}</div>}
       </div>
       {trailing && <div className="shrink-0 flex items-center gap-2">{trailing}</div>}
       {onClick && (
@@ -821,8 +778,7 @@ export function HubCard({
   badge,
   cta = 'Open',
 }: HubCardProps) {
-  const minH =
-    size === 'sm' ? 'min-h-[140px] sm:min-h-[160px]' : 'min-h-[180px] sm:min-h-[220px]';
+  const minH = size === 'sm' ? 'min-h-[140px] sm:min-h-[160px]' : 'min-h-[180px] sm:min-h-[220px]';
   const titleClass =
     size === 'sm'
       ? 'text-lg sm:text-xl font-semibold'
@@ -849,13 +805,9 @@ export function HubCard({
         </Eyebrow>
         {badge && <span className="shrink-0">{badge}</span>}
       </div>
-      <h3 className={cn('mt-3 text-white tracking-tight leading-[1.1]', titleClass)}>
-        {title}
-      </h3>
+      <h3 className={cn('mt-3 text-white tracking-tight leading-[1.1]', titleClass)}>{title}</h3>
       {description && (
-        <p className="mt-2 text-[12.5px] leading-relaxed text-white max-w-[34ch]">
-          {description}
-        </p>
+        <p className="mt-2 text-[12.5px] leading-relaxed text-white max-w-[34ch]">{description}</p>
       )}
       <div className="flex-grow" />
       <div className="mt-5 flex items-center justify-between pt-3.5 border-t border-white/[0.06]">
@@ -999,10 +951,7 @@ export function LoadingBlocks({ className }: { className?: string }) {
       <div className="h-24 bg-white/[0.03] rounded-2xl border border-white/[0.06]" />
       <div className="grid grid-cols-2 sm:grid-cols-4 gap-px bg-white/[0.06] rounded-2xl overflow-hidden">
         {[...Array(4)].map((_, i) => (
-          <div
-            key={i}
-            className="h-24 bg-[hsl(0_0%_12%)] border-white/[0.06]"
-          />
+          <div key={i} className="h-24 bg-[hsl(0_0%_12%)] border-white/[0.06]" />
         ))}
       </div>
       <div className="h-80 bg-white/[0.03] rounded-2xl border border-white/[0.06]" />
@@ -1055,7 +1004,7 @@ export function IconButton({
       disabled={disabled}
       aria-label={ariaLabel}
       className={cn(
-        'h-10 w-10 rounded-full bg-white/[0.04] border border-white/[0.08] text-white flex items-center justify-center hover:bg-white/[0.08] hover:text-white transition-colors disabled:opacity-50 disabled:cursor-not-allowed touch-manipulation',
+        'h-11 w-11 rounded-full bg-white/[0.04] border border-white/[0.08] text-white flex items-center justify-center hover:bg-white/[0.08] hover:text-white transition-colors disabled:opacity-50 disabled:cursor-not-allowed touch-manipulation',
         className
       )}
     >
@@ -1068,22 +1017,13 @@ export function IconButton({
    Page frame
    ──────────────────────────────────────────────────────── */
 
-export function PageFrame({
-  children,
-  className,
-}: {
-  children: ReactNode;
-  className?: string;
-}) {
+export function PageFrame({ children, className }: { children: ReactNode; className?: string }) {
   return (
     <motion.div
       variants={containerVariants}
       initial="hidden"
       animate="visible"
-      className={cn(
-        'mx-auto max-w-7xl space-y-8 sm:space-y-10 lg:space-y-14 pb-24',
-        className
-      )}
+      className={cn('mx-auto max-w-7xl space-y-8 sm:space-y-10 lg:space-y-14 pb-24', className)}
     >
       {children}
     </motion.div>
@@ -1154,12 +1094,7 @@ export function FilterBar({
                     className="absolute inset-0 bg-elec-yellow rounded-full"
                   />
                 )}
-                <span
-                  className={cn(
-                    'relative z-10',
-                    isActive ? 'text-black' : 'text-white'
-                  )}
-                >
+                <span className={cn('relative z-10', isActive ? 'text-black' : 'text-white')}>
                   {tab.label}
                   {typeof tab.count === 'number' && (
                     <span
@@ -1186,7 +1121,7 @@ export function FilterBar({
               value={search ?? ''}
               onChange={(e) => onSearchChange(e.target.value)}
               placeholder={searchPlaceholder}
-              className="h-10 pl-4 pr-10 w-full bg-[hsl(0_0%_12%)] border border-white/[0.08] rounded-full text-[13px] text-white placeholder:text-white/35 focus:outline-none focus:border-elec-yellow/60 focus-visible:ring-2 focus-visible:ring-elec-yellow/30 transition-colors touch-manipulation"
+              className="h-11 pl-4 pr-10 w-full bg-[hsl(0_0%_12%)] border border-white/[0.08] rounded-full text-[13px] text-white placeholder:text-white/35 focus:outline-none focus:border-elec-yellow/60 focus-visible:ring-2 focus-visible:ring-elec-yellow/30 transition-colors touch-manipulation"
             />
             <Kbd className="absolute right-2 top-1/2 -translate-y-1/2">/</Kbd>
           </div>
@@ -1201,13 +1136,7 @@ export function FilterBar({
    Keyboard shortcut hint
    ──────────────────────────────────────────────────────── */
 
-export function Kbd({
-  children,
-  className,
-}: {
-  children: ReactNode;
-  className?: string;
-}) {
+export function Kbd({ children, className }: { children: ReactNode; className?: string }) {
   return (
     <span
       className={cn(

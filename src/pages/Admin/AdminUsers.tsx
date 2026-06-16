@@ -350,6 +350,38 @@ export default function AdminUsers() {
     [users]
   );
 
+  // Real paying customers — read from the same live source as the dashboard
+  // (Stripe active + App Store + Play Store), NOT the profiles.subscribed flag,
+  // which overcounts (stale rows + comped accounts). Matches the dashboard figure.
+  const { data: realPaying } = useQuery({
+    queryKey: ['admin-users-real-paying'],
+    staleTime: 60_000,
+    refetchInterval: 60_000,
+    queryFn: async () => {
+      const {
+        data: { session },
+      } = await supabase.auth.getSession();
+      if (!session) return null;
+      const headers = { Authorization: `Bearer ${session.access_token}` };
+      const [stripeRes, rcRes] = await Promise.all([
+        supabase.functions.invoke('admin-stripe-stats', { headers }),
+        supabase.functions.invoke('admin-revenuecat-stats', { headers }),
+      ]);
+      const stripe =
+        (stripeRes.data as { stripe?: { activeSubscriptions?: number } } | null)?.stripe
+          ?.activeSubscriptions ?? 0;
+      const rc = rcRes.data as {
+        subscribersBySource?: { app_store?: number; play_store?: number };
+        revenuecat?: { activeSubscriptions?: number };
+      } | null;
+      const playStore = rc?.subscribersBySource?.play_store ?? 0;
+      const appStoreDb = rc?.subscribersBySource?.app_store ?? 0;
+      const rcLivePaid = rc?.revenuecat?.activeSubscriptions ?? 0;
+      const appStore = rcLivePaid > 0 ? Math.max(rcLivePaid - playStore, appStoreDb) : appStoreDb;
+      return stripe + appStore + playStore;
+    },
+  });
+
   const sortedUsers = useMemo(() => {
     if (!users) return [];
     let filtered = [...users];
@@ -792,20 +824,12 @@ export default function AdminUsers() {
     URL.revokeObjectURL(url);
   };
 
-  const tierPill = (user: UserProfile): { tone: Tone; label: string } | null => {
-    if (user.subscribed && user.stripe_customer_id) {
-      return {
-        tone: 'amber',
-        label: `Pro${user.subscription_tier ? ` · ${user.subscription_tier}` : ''}`,
-      };
-    }
-    if (user.free_access_granted) {
-      return { tone: 'emerald', label: 'Free access' };
-    }
-    if (user.subscribed) {
-      return { tone: 'amber', label: user.subscription_tier || 'Subscribed' };
-    }
-    return null;
+  // Clear, non-redundant status (role is already shown separately, so don't
+  // repeat the tier name here). Comped takes priority over the subscribed flag.
+  const statusBadge = (user: UserProfile): { tone: Tone; label: string } => {
+    if (user.free_access_granted) return { tone: 'emerald', label: 'Comped' };
+    if (user.subscribed) return { tone: 'amber', label: 'Paying' };
+    return { tone: 'cyan', label: 'Free' };
   };
 
   return (
@@ -837,7 +861,12 @@ export default function AdminUsers() {
           stats={[
             { label: 'Total', value: stats.total },
             { label: 'Online', value: stats.online, tone: 'green' },
-            { label: 'Paying', value: stats.subscribed, accent: true },
+            {
+              label: 'Paying',
+              value: realPaying ?? '…',
+              accent: true,
+              sub: 'Stripe + App + Play',
+            },
             { label: 'New this week', value: stats.thisWeek, tone: 'emerald' },
           ]}
         />
@@ -970,7 +999,7 @@ export default function AdminUsers() {
                 const joinedDays = user.created_at
                   ? differenceInDays(new Date(), new Date(user.created_at))
                   : null;
-                const tier = tierPill(user);
+                const status = statusBadge(user);
                 const engagementScore = effectiveEngagementMap?.get(user.id);
                 const rawEngagement = effectiveEngagementRawMap?.get(user.id);
                 const isSelected = selectedIds.has(user.id);
@@ -1053,7 +1082,7 @@ export default function AdminUsers() {
                             </span>
                             <span className="flex items-center gap-1.5 flex-wrap">
                               <Pill tone={accentTone}>{user.role || 'visitor'}</Pill>
-                              {tier && <Pill tone={tier.tone}>{tier.label}</Pill>}
+                              <Pill tone={status.tone}>{status.label}</Pill>
                               {engagementScore !== undefined && (
                                 <Pill
                                   tone={
@@ -1102,6 +1131,20 @@ export default function AdminUsers() {
                               )}
                             </span>
                           </span>
+                        }
+                        trailing={
+                          <button
+                            type="button"
+                            onClick={(e) => {
+                              e.stopPropagation();
+                              openGrantSheet(user);
+                            }}
+                            className="h-11 w-11 flex items-center justify-center rounded-full text-emerald-400 hover:bg-emerald-500/10 active:bg-emerald-500/15 touch-manipulation shrink-0"
+                            aria-label={`Grant free access to ${user.full_name || 'user'}`}
+                            title="Grant free access"
+                          >
+                            <Gift className="h-4 w-4" />
+                          </button>
                         }
                         onClick={() => handleUserClick(user)}
                       />

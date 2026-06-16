@@ -81,6 +81,26 @@ export default function AdminAnalytics() {
     staleTime: 5 * 60 * 1000,
   });
 
+  // Per-role KPIs (users, paying, conversion %, weekly-active) — diagnose which
+  // role's product is under-performing.
+  const { data: roleKpis } = useQuery({
+    queryKey: ['admin-role-kpis'],
+    queryFn: async () => {
+      const { data, error } = await supabase
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        .rpc('get_role_kpis' as any);
+      if (error) throw error;
+      return (data ?? []) as {
+        role: string;
+        total: number;
+        paying: number;
+        wau: number;
+        conv_pct: number;
+      }[];
+    },
+    staleTime: 5 * 60 * 1000,
+  });
+
   const { data: forecastData } = useQuery({
     queryKey: ['admin-revenue-forecast'],
     queryFn: async () => {
@@ -587,6 +607,22 @@ export default function AdminAnalytics() {
                   </ResponsiveContainer>
                 </div>
               </div>
+            </ListCard>
+
+            <ListCard>
+              <ListCardHeader tone="purple" title="By role" />
+              <ListBody>
+                {(roleKpis ?? [])
+                  .filter((r) => r.total >= 5)
+                  .map((r) => (
+                    <ListRow
+                      key={r.role}
+                      title={<span className="capitalize">{r.role}</span>}
+                      subtitle={`${r.total} users · ${r.paying} paying · ${r.wau} active/wk`}
+                      trailing={<Pill tone="emerald">{r.conv_pct}% conv</Pill>}
+                    />
+                  ))}
+              </ListBody>
             </ListCard>
 
             <ListCard>

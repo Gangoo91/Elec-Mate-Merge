@@ -73,6 +73,7 @@ Deno.serve(async (req) => {
       feature_use_count: number;
       active_days: number;
       unique_pages_visited: number;
+      last_activity: string | null;
     } | null;
 
     // Separate trials from paid
@@ -114,6 +115,7 @@ Deno.serve(async (req) => {
         feature_use_count: number;
         active_days: number;
         unique_pages_visited: number;
+        last_activity: string | null;
       }
     > = {};
 
@@ -121,7 +123,7 @@ Deno.serve(async (req) => {
       const { data: engagementRows } = await supabaseAdmin
         .from('user_activity_summary')
         .select(
-          'user_id, login_count, page_view_count, total_seconds_tracked, feature_use_count, active_days, unique_pages_visited'
+          'user_id, login_count, page_view_count, total_seconds_tracked, feature_use_count, active_days, unique_pages_visited, last_activity'
         )
         .in('user_id', subscriberIds);
 
@@ -133,7 +135,31 @@ Deno.serve(async (req) => {
           feature_use_count: row.feature_use_count || 0,
           active_days: row.active_days || 0,
           unique_pages_visited: row.unique_pages_visited || 0,
+          last_activity: row.last_activity || null,
         };
+      }
+
+      // Subscribers with no activity in the last 30 days are absent from the
+      // (30-day) view above, so their engagement ring would show a misleading 0
+      // — common for App Store/Play Store subs who haven't opened the app in a
+      // while. Backfill them from lifetime engagement so every paying user shows
+      // a real score instead of a blank zero.
+      const missingIds = subscriberIds.filter((id) => !engagementMap[id]);
+      if (missingIds.length > 0) {
+        const { data: lifetimeRows } = await supabaseAdmin.rpc('get_lifetime_engagement', {
+          p_user_ids: missingIds,
+        });
+        for (const row of lifetimeRows || []) {
+          engagementMap[row.user_id] = {
+            login_count: row.login_count || 0,
+            page_view_count: row.page_view_count || 0,
+            total_seconds_tracked: row.total_seconds_tracked || 0,
+            feature_use_count: row.feature_use_count || 0,
+            active_days: row.active_days || 0,
+            unique_pages_visited: row.unique_pages_visited || 0,
+            last_activity: row.last_activity || null,
+          };
+        }
       }
     }
 
@@ -230,7 +256,11 @@ Deno.serve(async (req) => {
       { headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
     );
   } catch (error) {
-    await captureException(error, { functionName: 'admin-revenuecat-stats', requestUrl: req.url, requestMethod: req.method });
+    await captureException(error, {
+      functionName: 'admin-revenuecat-stats',
+      requestUrl: req.url,
+      requestMethod: req.method,
+    });
     return new Response(JSON.stringify({ error: (error as Error).message }), {
       status: 400,
       headers: { ...corsHeaders, 'Content-Type': 'application/json' },
