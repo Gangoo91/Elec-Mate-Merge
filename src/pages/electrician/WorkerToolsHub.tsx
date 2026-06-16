@@ -10,7 +10,7 @@
  * cells and stat tiles navigate to those pages (no bottom sheets).
  */
 
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import useSEO from '@/hooks/useSEO';
 import { motion } from 'framer-motion';
@@ -25,6 +25,7 @@ import { useQsTeamContext } from '@/hooks/useQsReview';
 import { useQsPendingCount } from '@/hooks/useQsReviewQueue';
 import { Eyebrow, containerVariants, itemVariants } from '@/components/college/primitives';
 import { WorkerNotificationsBell } from '@/components/worker-tools/WorkerNotificationsBell';
+import { MessagesSheet } from '@/components/auth/MessagesSheet';
 
 // Dev mode whitelist - allows access without employee record
 const DEV_WHITELIST = ['founder@elec-mate.com', 'andrewgangoo91@gmail.com'];
@@ -90,7 +91,8 @@ interface ToolCard {
   meta?: string;
   metaTone?: string;
   badge?: number;
-  to: string;
+  to?: string;
+  onClick?: () => void;
 }
 
 const EditorialToolGrid = ({
@@ -138,7 +140,7 @@ const EditorialToolGrid = ({
           <button
             key={card.id}
             type="button"
-            onClick={() => onOpen(card.to)}
+            onClick={() => (card.onClick ? card.onClick() : card.to && onOpen(card.to))}
             aria-label={card.title}
             className="group relative bg-[hsl(0_0%_10%)] hover:bg-[hsl(0_0%_15%)] transition-colors p-5 sm:p-6 lg:p-7 text-left touch-manipulation flex flex-col h-full focus:outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-elec-yellow/60"
           >
@@ -247,6 +249,8 @@ export default function WorkerToolsHub() {
   });
   const navigate = useNavigate();
   const go = (to: string) => navigate(to);
+
+  const [messagesOpen, setMessagesOpen] = useState(false);
 
   const { user } = useAuth();
   const { data: myTasks = [] } = useMyTasks();
@@ -508,6 +512,14 @@ export default function WorkerToolsHub() {
       to: `${BASE}/comms`,
     },
     {
+      id: 'messages',
+      eyebrow: 'Chat',
+      title: 'Messages',
+      description: 'Message your employer and team directly.',
+      meta: 'Open chat',
+      onClick: () => setMessagesOpen(true),
+    },
+    {
       id: 'reports',
       eyebrow: 'Report',
       title: 'Reports',
@@ -619,6 +631,8 @@ export default function WorkerToolsHub() {
           onOpen={go}
         />
       </div>
+
+      <MessagesSheet open={messagesOpen} onOpenChange={setMessagesOpen} />
     </div>
   );
 }
