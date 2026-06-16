@@ -1,16 +1,7 @@
 import { useState } from 'react';
 import { Quote } from '@/types/quote';
-import {
-  Sheet,
-  SheetContent,
-  SheetHeader,
-  SheetTitle,
-  SheetDescription,
-} from '@/components/ui/sheet';
-import { Button } from '@/components/ui/button';
-import { Label } from '@/components/ui/label';
-import { Input } from '@/components/ui/input';
-import { Textarea } from '@/components/ui/textarea';
+import { Sheet, SheetContent, SheetTitle, SheetDescription } from '@/components/ui/sheet';
+import { VisuallyHidden } from '@radix-ui/react-visually-hidden';
 import {
   Select,
   SelectContent,
@@ -18,14 +9,23 @@ import {
   SelectTrigger,
   SelectValue,
 } from '@/components/ui/select';
-import { Calendar } from '@/components/ui/calendar';
-import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover';
 import { format } from 'date-fns';
-import { CalendarIcon, Loader2, CheckCircle, PoundSterling, CreditCard } from 'lucide-react';
+import { Loader2, CheckCircle } from 'lucide-react';
 import { supabase } from '@/integrations/supabase/client';
 import { toast } from '@/hooks/use-toast';
 import { cn } from '@/lib/utils';
-import { Progress } from '@/components/ui/progress';
+import {
+  SheetShell,
+  Field,
+  Eyebrow,
+  Dot,
+  PrimaryButton,
+  SecondaryButton,
+  inputClass,
+  textareaClass,
+  selectTriggerClass,
+  selectContentClass,
+} from '@/components/employer/editorial';
 
 interface PartialPayment {
   id: string;
@@ -36,6 +36,12 @@ interface PartialPayment {
   notes?: string;
 }
 
+type InvoiceWithPayments = Quote & {
+  partial_payments?: PartialPayment[];
+  total_paid?: number;
+  invoice_paid_at?: string;
+};
+
 interface PartialPaymentDialogProps {
   invoice: Quote;
   open: boolean;
@@ -43,12 +49,29 @@ interface PartialPaymentDialogProps {
   onPaymentRecorded: () => void;
 }
 
+const formatCurrency = (value: number) => {
+  const safe = typeof value === 'number' && !isNaN(value) ? value : 0;
+  return new Intl.NumberFormat('en-GB', { style: 'currency', currency: 'GBP' }).format(safe);
+};
+
+const methodLabel = (m: string) =>
+  ({
+    bank_transfer: 'Bank transfer',
+    card: 'Card',
+    cash: 'Cash',
+    cheque: 'Cheque',
+    bacs: 'BACS',
+    faster_payment: 'Faster Payment',
+    other: 'Other',
+  })[m] || m.replace(/_/g, ' ');
+
 export const PartialPaymentDialog = ({
   invoice,
   open,
   onOpenChange,
   onPaymentRecorded,
 }: PartialPaymentDialogProps) => {
+  const inv = invoice as InvoiceWithPayments;
   const [amount, setAmount] = useState('');
   const [paymentDate, setPaymentDate] = useState<Date>(new Date());
   const [paymentMethod, setPaymentMethod] = useState<string>('bank_transfer');
@@ -56,20 +79,21 @@ export const PartialPaymentDialog = ({
   const [notes, setNotes] = useState<string>('');
   const [isSubmitting, setIsSubmitting] = useState(false);
 
-  const formatCurrency = (value: number) => {
-    const safeValue = typeof value === 'number' && !isNaN(value) ? value : 0;
-    return new Intl.NumberFormat('en-GB', { style: 'currency', currency: 'GBP' }).format(safeValue);
-  };
-
-  // Calculate remaining balance with NaN protection
-  const existingPayments = (invoice as any).partial_payments || [];
+  // Balance — netted off existing part-payments (NaN-protected).
+  const existingPayments: PartialPayment[] = inv.partial_payments || [];
   const totalPaid =
-    (invoice as any).total_paid ||
-    existingPayments.reduce((sum: number, p: PartialPayment) => sum + (p.amount || 0), 0);
-  const invoiceTotal =
-    typeof invoice.total === 'number' && !isNaN(invoice.total) ? invoice.total : 0;
-  const remainingBalance = invoiceTotal - totalPaid;
+    inv.total_paid ?? existingPayments.reduce((sum, p) => sum + (p.amount || 0), 0);
+  const invoiceTotal = typeof invoice.total === 'number' && !isNaN(invoice.total) ? invoice.total : 0;
+  const remainingBalance = Math.max(0, invoiceTotal - totalPaid);
   const paidPercentage = invoiceTotal > 0 ? Math.min((totalPaid / invoiceTotal) * 100, 100) : 0;
+
+  const resetForm = () => {
+    setAmount('');
+    setPaymentDate(new Date());
+    setPaymentMethod('bank_transfer');
+    setPaymentReference('');
+    setNotes('');
+  };
 
   const handleRecordPayment = async () => {
     const paymentAmount = parseFloat(amount);
@@ -82,8 +106,7 @@ export const PartialPaymentDialog = ({
       });
       return;
     }
-
-    if (paymentAmount > remainingBalance) {
+    if (paymentAmount > remainingBalance + 0.005) {
       toast({
         title: 'Amount exceeds balance',
         description: `Maximum payment is ${formatCurrency(remainingBalance)}`,
@@ -94,13 +117,11 @@ export const PartialPaymentDialog = ({
 
     try {
       setIsSubmitting(true);
-
       const {
         data: { user },
       } = await supabase.auth.getUser();
       if (!user) throw new Error('User not authenticated');
 
-      // Create new payment record
       const newPayment: PartialPayment = {
         id: crypto.randomUUID(),
         amount: paymentAmount,
@@ -112,9 +133,8 @@ export const PartialPaymentDialog = ({
 
       const updatedPayments = [...existingPayments, newPayment];
       const newTotalPaid = totalPaid + paymentAmount;
-      const isFullyPaid = newTotalPaid >= invoice.total;
+      const isFullyPaid = newTotalPaid >= invoiceTotal;
 
-      // Update quotes table with new payment
       const { error: updateError } = await supabase
         .from('quotes')
         .update({
@@ -126,10 +146,9 @@ export const PartialPaymentDialog = ({
           invoice_payment_reference: isFullyPaid ? paymentReference : null,
         })
         .eq('id', invoice.id);
-
       if (updateError) throw updateError;
 
-      // Also record in invoice_payments table
+      // Mirror into invoice_payments (best-effort secondary log).
       const { error: paymentError } = await supabase.from('invoice_payments').insert({
         quote_id: invoice.id,
         user_id: user.id,
@@ -139,26 +158,19 @@ export const PartialPaymentDialog = ({
         payment_reference: paymentReference || null,
         notes: notes || null,
       });
-
       if (paymentError) console.error('Error recording payment:', paymentError);
 
       toast({
         title: isFullyPaid ? 'Invoice fully paid' : 'Payment recorded',
         description: isFullyPaid
           ? `Invoice ${invoice.invoice_number} has been marked as fully paid`
-          : `${formatCurrency(paymentAmount)} payment recorded. ${formatCurrency(invoice.total - newTotalPaid)} remaining.`,
+          : `${formatCurrency(paymentAmount)} recorded. ${formatCurrency(invoiceTotal - newTotalPaid)} remaining.`,
         variant: 'success',
       });
 
       onPaymentRecorded();
       onOpenChange(false);
-
-      // Reset form
-      setAmount('');
-      setPaymentDate(new Date());
-      setPaymentMethod('bank_transfer');
-      setPaymentReference('');
-      setNotes('');
+      resetForm();
     } catch (error) {
       console.error('Error recording payment:', error);
       toast({
@@ -171,156 +183,172 @@ export const PartialPaymentDialog = ({
     }
   };
 
+  const canSubmit = !isSubmitting && !!amount && parseFloat(amount) > 0;
+
   return (
     <Sheet open={open} onOpenChange={onOpenChange}>
-      <SheetContent side="bottom" className="h-[85vh] rounded-t-2xl p-0 flex flex-col">
-        <div className="flex flex-col h-full bg-background">
-          {/* Header */}
-          <SheetHeader className="px-6 pt-6 pb-4 border-b border-border/50">
-            <SheetTitle className="text-xl">Record Payment</SheetTitle>
-            <SheetDescription>
-              Invoice {invoice.invoice_number} - {invoice.client?.name}
-            </SheetDescription>
-          </SheetHeader>
+      <SheetContent
+        side="bottom"
+        hideCloseButton
+        className="h-[88vh] p-0 rounded-t-2xl overflow-hidden sm:max-w-lg sm:mx-auto"
+      >
+        <VisuallyHidden>
+          <SheetTitle>Record payment</SheetTitle>
+          <SheetDescription>Log a part or full payment received against this invoice.</SheetDescription>
+        </VisuallyHidden>
 
-          {/* Scrollable Content */}
-          <div className="flex-1 overflow-y-auto overscroll-contain px-6 py-4 space-y-6">
-            {/* Progress Card */}
-            <div className="rounded-xl bg-gradient-to-br from-emerald-500/15 to-emerald-500/5 border border-emerald-500/20 p-4 space-y-3">
-              <div className="flex items-center justify-between">
-                <div className="flex items-center gap-2 text-emerald-400">
-                  <PoundSterling className="h-5 w-5" />
-                  <span className="font-medium">Payment Progress</span>
-                </div>
-                <span className="text-sm text-white">{paidPercentage.toFixed(0)}%</span>
-              </div>
-              <Progress value={paidPercentage} className="h-3 bg-emerald-500/20" />
-              <div className="flex justify-between text-sm">
-                <div>
-                  <span className="text-white">Paid: </span>
-                  <span className="font-semibold text-emerald-400">
-                    {formatCurrency(totalPaid)}
-                  </span>
-                </div>
-                <div>
-                  <span className="text-white">Remaining: </span>
-                  <span className="font-semibold">{formatCurrency(remainingBalance)}</span>
-                </div>
-              </div>
-              <div className="text-center pt-2 border-t border-emerald-500/20">
-                <span className="text-xs text-white">Invoice Total: </span>
-                <span className="text-lg font-bold">{formatCurrency(invoice.total)}</span>
-              </div>
+        <SheetShell
+          eyebrow={`Invoice ${invoice.invoice_number}`}
+          title="Record payment"
+          description={invoice.client?.name || undefined}
+          footer={
+            <>
+              <SecondaryButton
+                onClick={() => onOpenChange(false)}
+                disabled={isSubmitting}
+                size="lg"
+                className="flex-1"
+              >
+                Cancel
+              </SecondaryButton>
+              <PrimaryButton
+                onClick={handleRecordPayment}
+                disabled={!canSubmit}
+                size="lg"
+                className="flex-1 gap-2"
+              >
+                {isSubmitting ? (
+                  <>
+                    <Loader2 className="h-4 w-4 animate-spin" />
+                    Saving…
+                  </>
+                ) : (
+                  <>
+                    <CheckCircle className="h-4 w-4" />
+                    {canSubmit ? `Record ${formatCurrency(parseFloat(amount))}` : 'Record payment'}
+                  </>
+                )}
+              </PrimaryButton>
+            </>
+          }
+        >
+          {/* Balance summary */}
+          <div className="rounded-2xl border border-white/[0.06] bg-[hsl(0_0%_12%)] p-5 space-y-3">
+            <Eyebrow>{remainingBalance > 0 ? 'Outstanding' : 'Fully paid'}</Eyebrow>
+            <div
+              className={cn(
+                'text-[38px] font-semibold tabular-nums leading-none',
+                remainingBalance > 0 ? 'text-elec-yellow' : 'text-emerald-400'
+              )}
+            >
+              {formatCurrency(remainingBalance)}
             </div>
+            <div className="h-2 rounded-full bg-white/[0.06] overflow-hidden">
+              <div
+                className="h-full rounded-full bg-emerald-400 transition-all"
+                style={{ width: `${paidPercentage}%` }}
+              />
+            </div>
+            <div className="flex items-center justify-between text-[12px]">
+              <span className="text-white/55">
+                Paid{' '}
+                <span className="font-semibold tabular-nums text-emerald-400">
+                  {formatCurrency(totalPaid)}
+                </span>
+              </span>
+              <span className="text-white/55">
+                Total{' '}
+                <span className="font-semibold tabular-nums text-white">
+                  {formatCurrency(invoiceTotal)}
+                </span>
+              </span>
+            </div>
+          </div>
 
-            {/* Payment History */}
-            {existingPayments.length > 0 && (
-              <div className="space-y-2">
-                <h4 className="text-sm font-medium text-white">Payment History</h4>
-                <div className="space-y-2">
-                  {existingPayments.map((payment: PartialPayment) => (
-                    <div
-                      key={payment.id}
-                      className="flex items-center justify-between p-3 bg-card rounded-lg border border-border/50"
-                    >
-                      <div className="flex items-center gap-3">
-                        <div className="h-8 w-8 rounded-full bg-emerald-500/20 flex items-center justify-center">
-                          <CheckCircle className="h-4 w-4 text-emerald-500" />
-                        </div>
-                        <div>
-                          <p className="font-medium text-sm">{formatCurrency(payment.amount)}</p>
-                          <p className="text-xs text-white">
-                            {format(new Date(payment.date), 'dd MMM yyyy')} -{' '}
-                            {payment.method.replace('_', ' ')}
-                          </p>
-                        </div>
+          {/* Payment history (with delete) */}
+          {existingPayments.length > 0 && (
+            <div className="space-y-2">
+              <Eyebrow>Payment history</Eyebrow>
+              <div className="rounded-2xl border border-white/[0.06] bg-[hsl(0_0%_12%)] divide-y divide-white/[0.06] overflow-hidden">
+                {existingPayments.map((payment) => (
+                  <div key={payment.id} className="flex items-center gap-3 px-4 py-3">
+                    <Dot tone="emerald" />
+                    <div className="flex-1 min-w-0">
+                      <div className="text-[14px] font-medium text-white tabular-nums">
+                        {formatCurrency(payment.amount)}
+                      </div>
+                      <div className="text-[11.5px] text-white/55 truncate">
+                        {format(new Date(payment.date), 'dd MMM yyyy')} · {methodLabel(payment.method)}
+                        {payment.reference ? ` · ${payment.reference}` : ''}
                       </div>
                     </div>
-                  ))}
-                </div>
+                    <CheckCircle className="h-4 w-4 text-emerald-400/70 shrink-0" />
+                  </div>
+                ))}
               </div>
-            )}
+            </div>
+          )}
 
-            {/* New Payment Form */}
+          {/* New payment */}
+          {remainingBalance > 0 ? (
             <div className="space-y-4">
-              <h4 className="text-sm font-medium text-white flex items-center gap-2">
-                <CreditCard className="h-4 w-4" />
-                New Payment
-              </h4>
+              <Eyebrow>New payment</Eyebrow>
 
-              {/* Payment Amount */}
-              <div className="space-y-2">
-                <Label htmlFor="amount">Payment Amount</Label>
+              <Field label="Payment amount">
                 <div className="relative">
-                  <span className="absolute left-3 top-1/2 -translate-y-1/2 text-white">
-                    £
-                  </span>
-                  <Input
-                    id="amount"
+                  <span className="absolute left-3.5 top-1/2 -translate-y-1/2 text-white/50">£</span>
+                  <input
+                    inputMode="decimal"
                     type="number"
                     step="0.01"
                     min="0.01"
                     max={remainingBalance}
-                    placeholder={`Max ${formatCurrency(remainingBalance)}`}
+                    placeholder={`Up to ${formatCurrency(remainingBalance)}`}
                     value={amount}
                     onChange={(e) => setAmount(e.target.value)}
-                    className="pl-7 h-12 text-lg"
+                    className={cn(inputClass, 'pl-7 text-lg')}
                   />
                 </div>
-                <div className="flex gap-2">
-                  <Button
+                <div className="flex gap-2 pt-1">
+                  <button
                     type="button"
-                    variant="outline"
-                    size="sm"
                     onClick={() => setAmount((remainingBalance / 2).toFixed(2))}
+                    className="h-8 px-3 rounded-full text-[12px] font-medium bg-white/[0.05] border border-white/[0.1] text-white hover:bg-white/[0.1] touch-manipulation"
                   >
                     50%
-                  </Button>
-                  <Button
+                  </button>
+                  <button
                     type="button"
-                    variant="outline"
-                    size="sm"
                     onClick={() => setAmount(remainingBalance.toFixed(2))}
+                    className="h-8 px-3 rounded-full text-[12px] font-medium bg-white/[0.05] border border-white/[0.1] text-white hover:bg-white/[0.1] touch-manipulation"
                   >
-                    Full Balance
-                  </Button>
+                    Full balance
+                  </button>
                 </div>
-              </div>
+              </Field>
 
-              {/* Payment Date */}
-              <div className="space-y-2">
-                <Label>Payment Date</Label>
-                <Popover>
-                  <PopoverTrigger asChild>
-                    <Button
-                      variant="outline"
-                      className="w-full justify-start text-left font-normal h-11"
-                    >
-                      <CalendarIcon className="mr-2 h-4 w-4" />
-                      {format(paymentDate, 'PPP')}
-                    </Button>
-                  </PopoverTrigger>
-                  <PopoverContent className="w-auto p-0" align="start">
-                    <Calendar
-                      mode="single"
-                      selected={paymentDate}
-                      onSelect={(date) => date && setPaymentDate(date)}
-                      initialFocus
-                    />
-                  </PopoverContent>
-                </Popover>
-              </div>
+              <Field label="Payment date">
+                <input
+                  type="date"
+                  value={format(paymentDate, 'yyyy-MM-dd')}
+                  max={format(new Date(), 'yyyy-MM-dd')}
+                  onChange={(e) => {
+                    if (!e.target.value) return;
+                    const next = new Date(`${e.target.value}T00:00:00`);
+                    if (!isNaN(next.getTime())) setPaymentDate(next);
+                  }}
+                  className={inputClass}
+                />
+              </Field>
 
-              {/* Payment Method */}
-              <div className="space-y-2">
-                <Label>Payment Method</Label>
+              <Field label="Payment method">
                 <Select value={paymentMethod} onValueChange={setPaymentMethod}>
-                  <SelectTrigger className="h-11">
+                  <SelectTrigger className={selectTriggerClass}>
                     <SelectValue placeholder="Select payment method" />
                   </SelectTrigger>
-                  <SelectContent>
-                    <SelectItem value="bank_transfer">Bank Transfer</SelectItem>
-                    <SelectItem value="card">Card Payment</SelectItem>
+                  <SelectContent className={selectContentClass}>
+                    <SelectItem value="bank_transfer">Bank transfer</SelectItem>
+                    <SelectItem value="card">Card payment</SelectItem>
                     <SelectItem value="cash">Cash</SelectItem>
                     <SelectItem value="cheque">Cheque</SelectItem>
                     <SelectItem value="bacs">BACS</SelectItem>
@@ -328,69 +356,34 @@ export const PartialPaymentDialog = ({
                     <SelectItem value="other">Other</SelectItem>
                   </SelectContent>
                 </Select>
-              </div>
+              </Field>
 
-              {/* Payment Reference */}
-              <div className="space-y-2">
-                <Label htmlFor="payment-reference">
-                  Reference <span className="text-white text-xs">(Optional)</span>
-                </Label>
-                <Input
-                  id="payment-reference"
-                  placeholder="Transaction ID, Cheque Number, etc."
+              <Field label="Reference" hint="Optional">
+                <input
+                  placeholder="Transaction ID, cheque number, etc."
                   value={paymentReference}
                   onChange={(e) => setPaymentReference(e.target.value)}
-                  className="h-11"
+                  className={inputClass}
                 />
-              </div>
+              </Field>
 
-              {/* Notes */}
-              <div className="space-y-2">
-                <Label htmlFor="notes">
-                  Notes <span className="text-white text-xs">(Optional)</span>
-                </Label>
-                <Textarea
-                  id="notes"
-                  placeholder="Any additional payment details..."
+              <Field label="Notes" hint="Optional">
+                <textarea
+                  placeholder="Any additional payment details…"
                   value={notes}
                   onChange={(e) => setNotes(e.target.value)}
                   rows={2}
+                  className={textareaClass}
                 />
-              </div>
+              </Field>
             </div>
-          </div>
-
-          {/* Fixed Footer */}
-          <div className="border-t border-border/50 p-4 bg-background">
-            <div className="flex gap-3">
-              <Button
-                variant="outline"
-                onClick={() => onOpenChange(false)}
-                disabled={isSubmitting}
-                className="flex-1 h-12"
-              >
-                Cancel
-              </Button>
-              <Button
-                onClick={handleRecordPayment}
-                disabled={isSubmitting || !amount || parseFloat(amount) <= 0}
-                className="flex-1 h-12 bg-emerald-500 hover:bg-emerald-600"
-              >
-                {isSubmitting ? (
-                  <>
-                    <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-                    Recording...
-                  </>
-                ) : (
-                  <>
-                    <CheckCircle className="mr-2 h-4 w-4" />
-                    Record Payment
-                  </>
-                )}
-              </Button>
+          ) : (
+            <div className="rounded-2xl border border-emerald-500/20 bg-emerald-500/[0.06] px-4 py-4 flex items-center gap-3">
+              <CheckCircle className="h-5 w-5 text-emerald-400 shrink-0" />
+              <p className="text-[13px] text-white">This invoice is fully paid — nothing left to record.</p>
             </div>
-          </div>
-        </div>
+          )}
+        </SheetShell>
       </SheetContent>
     </Sheet>
   );

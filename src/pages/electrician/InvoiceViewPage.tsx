@@ -2,7 +2,8 @@ import { useParams, useNavigate } from 'react-router-dom';
 import { Helmet } from 'react-helmet';
 import { cn } from '@/lib/utils';
 import { Loader2, ArrowLeft, MoreHorizontal, Mail, Phone, Pencil, Copy, Download, Check, Bell, RefreshCw, Trash2, Send, CreditCard } from 'lucide-react';
-import { Sheet, SheetContent } from '@/components/ui/sheet';
+import { Sheet, SheetContent, SheetTitle, SheetDescription } from '@/components/ui/sheet';
+import { VisuallyHidden } from '@radix-ui/react-visually-hidden';
 import { useEffect, useState, useMemo, Fragment } from 'react';
 import { supabase } from '@/integrations/supabase/client';
 import { Quote } from '@/types/quote';
@@ -913,6 +914,10 @@ const InvoiceViewPage = () => {
           side="bottom"
           className="rounded-t-2xl p-0 max-h-[85vh] overflow-y-auto overscroll-contain border-t border-white/[0.10]"
         >
+          <VisuallyHidden>
+            <SheetTitle>Invoice actions</SheetTitle>
+            <SheetDescription>Actions for invoice {invoice.invoice_number}</SheetDescription>
+          </VisuallyHidden>
           <div className="w-full px-4 sm:px-6 pt-3 pb-[max(20px,env(safe-area-inset-bottom))]">
             <div className="mx-auto h-1 w-10 rounded-full bg-white/[0.15] mb-4" />
 
