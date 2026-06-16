@@ -540,7 +540,7 @@ export default function TodayPage() {
                   key={id}
                   type="button"
                   onClick={() => navigate(to)}
-                  className="group w-full flex items-center gap-3 px-4 py-3 text-left touch-manipulation hover:bg-elec-yellow/[0.04] transition-colors"
+                  className="group w-full flex items-center gap-3 px-4 py-3 text-left touch-manipulation hover:bg-white/[0.06] transition-colors"
                 >
                   <span
                     className={cn(
@@ -591,7 +591,7 @@ export default function TodayPage() {
                 className={cn(
                   'h-[72px] rounded-2xl border border-white/[0.06] bg-[hsl(0_0%_10%)]',
                   'flex flex-col items-center justify-center gap-1.5 touch-manipulation',
-                  'hover:bg-elec-yellow/[0.04] active:scale-[0.98] transition-all'
+                  'hover:bg-[hsl(0_0%_15%)] active:scale-[0.98] transition-all'
                 )}
               >
                 <Icon className="h-5 w-5 text-elec-yellow" strokeWidth={2} />
@@ -607,7 +607,7 @@ export default function TodayPage() {
             <button
               type="button"
               onClick={() => navigate('/apprentice/hub?tab=progress')}
-              className="group w-full flex items-center gap-3 rounded-2xl border border-white/[0.06] bg-[hsl(0_0%_10%)] px-4 py-3.5 text-left touch-manipulation hover:bg-elec-yellow/[0.04] transition-colors"
+              className="group w-full flex items-center gap-3 rounded-2xl border border-white/[0.06] bg-[hsl(0_0%_10%)] px-4 py-3.5 text-left touch-manipulation hover:bg-[hsl(0_0%_15%)] transition-colors"
             >
               <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg border border-elec-yellow/20 bg-elec-yellow/[0.06]">
                 <Trophy className="h-4 w-4 text-elec-yellow" strokeWidth={2} />
@@ -639,7 +639,7 @@ export default function TodayPage() {
             <button
               type="button"
               onClick={() => navigate('/apprentice/college-plan')}
-              className="group w-full flex items-center gap-3 rounded-2xl border border-white/[0.06] bg-[hsl(0_0%_10%)] px-4 py-3.5 text-left touch-manipulation hover:bg-elec-yellow/[0.04] transition-colors"
+              className="group w-full flex items-center gap-3 rounded-2xl border border-white/[0.06] bg-[hsl(0_0%_10%)] px-4 py-3.5 text-left touch-manipulation hover:bg-[hsl(0_0%_15%)] transition-colors"
             >
               <GraduationCap className="h-5 w-5 shrink-0 text-elec-yellow" strokeWidth={2} />
               <span className="flex-1 min-w-0">

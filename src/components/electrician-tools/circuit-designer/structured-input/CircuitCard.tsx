@@ -213,7 +213,7 @@ export const CircuitCard = ({
               className={cn(
                 'w-full h-11 px-4 rounded-xl flex items-center justify-between',
                 'bg-[hsl(0_0%_10%)] border border-white/[0.10]',
-                'hover:border-white/20 hover:bg-elec-yellow/[0.04]',
+                'hover:border-white/20 hover:bg-[hsl(0_0%_15%)]',
                 'text-[13px] font-medium text-white',
                 'transition-colors active:scale-[0.99]',
                 'touch-manipulation'

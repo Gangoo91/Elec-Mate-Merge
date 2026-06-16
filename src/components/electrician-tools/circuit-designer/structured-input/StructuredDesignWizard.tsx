@@ -458,7 +458,7 @@ export const StructuredDesignWizard = ({
                 onClick={() => isClickable && handleStepClick(index)}
                 className={cn(
                   'group relative bg-[hsl(0_0%_10%)] px-3 py-3 lg:px-4 lg:py-4 text-left touch-manipulation transition-all',
-                  isClickable && 'hover:bg-elec-yellow/[0.04] active:scale-[0.99]',
+                  isClickable && 'hover:bg-[hsl(0_0%_15%)] active:scale-[0.99]',
                   isActive &&
                     'bg-gradient-to-br from-elec-yellow/[0.10] via-amber-500/[0.03] to-transparent'
                 )}

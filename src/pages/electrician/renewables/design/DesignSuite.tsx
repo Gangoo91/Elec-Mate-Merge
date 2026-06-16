@@ -187,7 +187,7 @@ export default function DesignSuite() {
               variants={item}
               type="button"
               onClick={() => navigate(c.to)}
-              className="group text-left rounded-2xl border border-white/[0.1] bg-white/[0.025] hover:border-elec-yellow/35 hover:bg-elec-yellow/[0.04] transition-colors p-5 touch-manipulation"
+              className="group text-left rounded-2xl border border-white/[0.1] bg-white/[0.025] hover:border-elec-yellow/35 hover:bg-white/[0.08] transition-colors p-5 touch-manipulation"
             >
               <div className="flex items-center gap-2.5">
                 <span className={`h-2 w-2 rounded-full ${c.dot}`} aria-hidden />

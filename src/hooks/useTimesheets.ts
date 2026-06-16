@@ -1,5 +1,7 @@
+import { useEffect } from 'react';
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { supabase } from '@/integrations/supabase/client';
+import { realtimeChannelName } from '@/lib/realtimeChannel';
 
 export interface Timesheet {
   id: string;
@@ -143,6 +145,27 @@ export const deleteTimesheet = async (id: string): Promise<boolean> => {
 
 // React Query hooks
 export const useTimesheets = (startDate?: string, endDate?: string) => {
+  const queryClient = useQueryClient();
+
+  // Live: a worker clocking in/out or submitting a timesheet (any change to the
+  // team's rows) refreshes the employer list instantly — no manual reload. RLS
+  // scopes both the refetch and the realtime events to the user's company.
+  useEffect(() => {
+    const channel = supabase
+      .channel(realtimeChannelName('timesheets'))
+      .on(
+        'postgres_changes',
+        { event: '*', schema: 'public', table: 'employer_timesheets' },
+        () => {
+          queryClient.invalidateQueries({ queryKey: ['timesheets'] });
+        }
+      )
+      .subscribe();
+    return () => {
+      supabase.removeChannel(channel);
+    };
+  }, [queryClient]);
+
   return useQuery({
     queryKey: ['timesheets', startDate, endDate],
     queryFn: () => getTimesheets(startDate, endDate),

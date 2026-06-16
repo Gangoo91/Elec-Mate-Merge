@@ -242,7 +242,7 @@ function CollegeStats({
               onClick={s.onClick}
               className={cn(
                 'group relative bg-[hsl(0_0%_10%)] px-4 py-5 sm:px-7 sm:py-8 flex flex-col text-left touch-manipulation active:scale-[0.99]',
-                'hover:bg-elec-yellow/[0.04] transition-all',
+                'hover:bg-[hsl(0_0%_15%)] transition-all',
                 s.accent &&
                   'bg-gradient-to-br from-elec-yellow/[0.08] via-amber-500/[0.03] to-transparent hover:from-elec-yellow/[0.14]'
               )}
@@ -310,7 +310,7 @@ function CollegeHubs({ hubs }: { hubs: HubDef[] }) {
             key={hub.title}
             type="button"
             onClick={hub.onOpen}
-            className="group relative bg-[hsl(0_0%_10%)] hover:bg-elec-yellow/[0.04] active:scale-[0.99] transition-all p-5 sm:p-7 text-left touch-manipulation flex flex-col min-h-[160px] sm:min-h-[200px]"
+            className="group relative bg-[hsl(0_0%_10%)] hover:bg-[hsl(0_0%_15%)] active:scale-[0.99] transition-all p-5 sm:p-7 text-left touch-manipulation flex flex-col min-h-[160px] sm:min-h-[200px]"
           >
             <div className="flex items-baseline gap-2">
               <span className="text-[10.5px] font-semibold uppercase tracking-[0.18em] text-elec-yellow tabular-nums">

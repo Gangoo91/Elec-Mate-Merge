@@ -643,7 +643,7 @@ export default function CustomersPage() {
                           'inline-flex h-7 items-center gap-1.5 rounded-full border px-2.5 text-[11.5px] font-medium transition-colors touch-manipulation',
                           active
                             ? 'border-elec-yellow/40 bg-elec-yellow/[0.12] text-elec-yellow'
-                            : 'border-white/[0.08] bg-white/[0.04] text-white/75 hover:border-elec-yellow/30 hover:bg-elec-yellow/[0.04] hover:text-elec-yellow'
+                            : 'border-white/[0.08] bg-white/[0.04] text-white/75 hover:border-elec-yellow/30 hover:bg-white/[0.08] hover:text-elec-yellow'
                         )}
                       >
                         {tag}
@@ -1035,7 +1035,7 @@ export default function CustomersPage() {
                 <button
                   key={t}
                   onClick={() => setBulkTagDraft(t)}
-                  className="inline-flex h-7 items-center rounded-full border border-white/[0.08] bg-white/[0.04] px-2.5 text-[11.5px] font-medium text-white/65 transition-colors hover:border-elec-yellow/30 hover:bg-elec-yellow/[0.04] hover:text-elec-yellow touch-manipulation"
+                  className="inline-flex h-7 items-center rounded-full border border-white/[0.08] bg-white/[0.04] px-2.5 text-[11.5px] font-medium text-white/65 transition-colors hover:border-elec-yellow/30 hover:bg-white/[0.08] hover:text-elec-yellow touch-manipulation"
                 >
                   + {t}
                 </button>

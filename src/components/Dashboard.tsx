@@ -230,7 +230,7 @@ const QuickStartStrip = ({
           key={q.title}
           type="button"
           onClick={q.onClick}
-          className="group relative bg-[hsl(0_0%_10%)] hover:bg-elec-yellow/[0.04] transition-colors px-5 py-5 sm:px-6 sm:py-6 flex flex-col text-left touch-manipulation"
+          className="group relative bg-[hsl(0_0%_10%)] hover:bg-[hsl(0_0%_15%)] transition-colors px-5 py-5 sm:px-6 sm:py-6 flex flex-col text-left touch-manipulation"
         >
           <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-white/50">
             {q.eyebrow}
@@ -308,7 +308,7 @@ const InspHeadlineStats = ({
             onClick={stat.onClick}
             className={cn(
               'group relative bg-[hsl(0_0%_10%)] px-5 py-6 sm:px-7 sm:py-8 flex flex-col text-left touch-manipulation',
-              'hover:bg-elec-yellow/[0.04] transition-colors',
+              'hover:bg-[hsl(0_0%_15%)] transition-colors',
               stat.accent &&
                 'bg-gradient-to-br from-elec-yellow/[0.06] via-amber-500/[0.02] to-transparent hover:from-elec-yellow/[0.10]'
             )}
@@ -410,7 +410,7 @@ const EditorialToolGrid = ({
               if (card.onClick) card.onClick();
               else if (card.to) navigate(card.to);
             }}
-            className="group relative bg-[hsl(0_0%_10%)] hover:bg-elec-yellow/[0.04] transition-colors p-5 sm:p-6 lg:p-7 text-left touch-manipulation flex flex-col h-full"
+            className="group relative bg-[hsl(0_0%_10%)] hover:bg-[hsl(0_0%_15%)] transition-colors p-5 sm:p-6 lg:p-7 text-left touch-manipulation flex flex-col h-full"
           >
             <div className="flex items-baseline justify-between gap-2">
               <div className="flex items-baseline gap-2">
@@ -515,7 +515,7 @@ const ContinueRow = ({
       <button
         type="button"
         onClick={onClick}
-        className="group w-full text-left p-5 sm:p-6 lg:p-7 hover:bg-elec-yellow/[0.04] transition-colors touch-manipulation flex flex-col gap-3"
+        className="group w-full text-left p-5 sm:p-6 lg:p-7 hover:bg-white/[0.06] transition-colors touch-manipulation flex flex-col gap-3"
       >
         <div className="flex items-baseline gap-2">
           <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-elec-yellow/80">

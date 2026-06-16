@@ -29,7 +29,7 @@ import { useEmployeeAssignments, useDeleteJobAssignment } from '@/hooks/useJobAs
 import { useCertificationsByEmployee } from '@/hooks/useCertifications';
 import { useEmployeeTimesheets } from '@/hooks/useTimesheets';
 import { useMyExpenses } from '@/hooks/useExpenses';
-import { useLeaveRequests } from '@/hooks/useEmployeeLeave';
+import { useTeamLeaveRequests } from '@/hooks/useTeamLeave';
 import { useWorkerLocations } from '@/hooks/useWorkerLocations';
 import { differenceInDays, parseISO, format } from 'date-fns';
 import { CreateElecIDForEmployeeDialog } from '@/components/employer/dialogs/CreateElecIDForEmployeeDialog';
@@ -105,7 +105,7 @@ export function TeamMemberSheet({
   const { data: rawCerts = [] } = useCertificationsByEmployee(employee?.id);
   const { data: rawTimesheets = [] } = useEmployeeTimesheets(employee?.id || '');
   const { expenses: rawExpenses = [] } = useMyExpenses(employee?.id);
-  const { data: allLeave = [] } = useLeaveRequests();
+  const { data: allLeave = [] } = useTeamLeaveRequests();
   const { data: workerLocations = [] } = useWorkerLocations();
   const [activeTab, setActiveTab] = useState('details');
   const [createElecIdOpen, setCreateElecIdOpen] = useState(false);

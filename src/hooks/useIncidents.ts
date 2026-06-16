@@ -1,5 +1,7 @@
+import { useEffect } from 'react';
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { supabase } from '@/integrations/supabase/client';
+import { realtimeChannelName } from '@/lib/realtimeChannel';
 import { useToast } from '@/hooks/use-toast';
 
 // Types based on database schema
@@ -103,6 +105,27 @@ const incidentToRow = (input: Partial<CreateIncidentInput>) => {
 
 // Fetch all incidents for the current user
 export function useIncidents() {
+  const queryClient = useQueryClient();
+
+  // Live: a worker reporting an incident (any change to the team's rows) refreshes
+  // the employer Safety list instantly — no manual reload. RLS scopes both the
+  // refetch and the realtime events to the user's company, so no filter is needed.
+  useEffect(() => {
+    const channel = supabase
+      .channel(realtimeChannelName('incidents'))
+      .on(
+        'postgres_changes',
+        { event: '*', schema: 'public', table: 'employer_incidents' },
+        () => {
+          queryClient.invalidateQueries({ queryKey: ['incidents'] });
+        }
+      )
+      .subscribe();
+    return () => {
+      supabase.removeChannel(channel);
+    };
+  }, [queryClient]);
+
   return useQuery({
     queryKey: ['incidents'],
     queryFn: async (): Promise<Incident[]> => {

@@ -179,7 +179,7 @@ export function EditorialHubGrid({ number = '03', label = 'YOUR HUBS' }: Editori
             <button
               key={hub.id}
               onClick={() => handleHubClick(hub)}
-              className="group relative bg-[hsl(0_0%_10%)] hover:bg-elec-yellow/[0.04] transition-colors p-6 sm:p-7 lg:p-8 text-left touch-manipulation flex flex-col min-h-[220px] sm:min-h-[260px]"
+              className="group relative bg-[hsl(0_0%_10%)] hover:bg-[hsl(0_0%_15%)] transition-colors p-6 sm:p-7 lg:p-8 text-left touch-manipulation flex flex-col min-h-[220px] sm:min-h-[260px]"
             >
               <div className="flex items-baseline justify-between gap-2">
                 <div className="flex items-baseline gap-2">

@@ -191,7 +191,7 @@ export const CustomerListRow = ({
                       e.stopPropagation();
                       onTagClick(tag);
                     }}
-                    className="inline-flex h-5 items-center rounded-full border border-white/[0.08] bg-white/[0.04] px-2 text-[10.5px] font-medium text-white/75 transition-colors hover:border-elec-yellow/30 hover:bg-elec-yellow/[0.04] hover:text-elec-yellow touch-manipulation"
+                    className="inline-flex h-5 items-center rounded-full border border-white/[0.08] bg-white/[0.04] px-2 text-[10.5px] font-medium text-white/75 transition-colors hover:border-elec-yellow/30 hover:bg-white/[0.08] hover:text-elec-yellow touch-manipulation"
                   >
                     {tag}
                   </button>

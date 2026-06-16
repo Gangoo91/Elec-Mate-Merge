@@ -422,7 +422,7 @@ export default function StudyCentreIndex() {
                   onClick={stat.onClick}
                   className={cn(
                     'group relative bg-[hsl(0_0%_10%)] px-5 py-6 sm:px-7 sm:py-8 flex flex-col text-left touch-manipulation',
-                    'hover:bg-elec-yellow/[0.04] transition-colors',
+                    'hover:bg-[hsl(0_0%_15%)] transition-colors',
                     stat.accent &&
                       'bg-gradient-to-br from-elec-yellow/[0.06] via-amber-500/[0.02] to-transparent hover:from-elec-yellow/[0.10]'
                   )}
@@ -474,7 +474,7 @@ export default function StudyCentreIndex() {
               <div className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-elec-yellow/0 via-elec-yellow/60 to-elec-yellow/0 pointer-events-none" />
               <Link
                 to={lastLocation.path}
-                className="group block w-full text-left p-5 sm:p-6 lg:p-7 hover:bg-elec-yellow/[0.04] transition-colors touch-manipulation flex flex-col gap-3"
+                className="group block w-full text-left p-5 sm:p-6 lg:p-7 hover:bg-white/[0.06] transition-colors touch-manipulation flex flex-col gap-3"
               >
                 <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-elec-yellow/80">
                   Continue where you left off
@@ -522,7 +522,7 @@ export default function StudyCentreIndex() {
                   key={c.id}
                   type="button"
                   onClick={() => navigate(c.href)}
-                  className="group relative bg-[hsl(0_0%_10%)] hover:bg-elec-yellow/[0.04] transition-colors p-6 sm:p-7 lg:p-8 text-left touch-manipulation flex flex-col min-h-[220px] sm:min-h-[240px]"
+                  className="group relative bg-[hsl(0_0%_10%)] hover:bg-[hsl(0_0%_15%)] transition-colors p-6 sm:p-7 lg:p-8 text-left touch-manipulation flex flex-col min-h-[220px] sm:min-h-[240px]"
                 >
                   <div className="flex items-baseline gap-2">
                     <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-elec-yellow/80 tabular-nums">
@@ -578,7 +578,7 @@ export default function StudyCentreIndex() {
             <div className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-elec-yellow/0 via-elec-yellow/60 to-elec-yellow/0 pointer-events-none" />
             <Link
               to="/study-centre/videos"
-              className="group block w-full text-left p-5 sm:p-6 lg:p-7 hover:bg-elec-yellow/[0.04] transition-colors touch-manipulation"
+              className="group block w-full text-left p-5 sm:p-6 lg:p-7 hover:bg-white/[0.06] transition-colors touch-manipulation"
             >
               <div className="flex flex-col sm:flex-row sm:items-center gap-5 sm:gap-7">
                 {/* Thumbnail strip */}

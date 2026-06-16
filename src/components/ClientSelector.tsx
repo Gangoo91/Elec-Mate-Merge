@@ -178,7 +178,7 @@ const ClientSelector = ({ onSelectCustomer, selectedCustomerId }: ClientSelector
                         onClick={() => handleSelectCustomer(customer)}
                         className={cn(
                           'w-full text-left px-5 sm:px-6 py-4 flex items-start gap-4 touch-manipulation transition-colors',
-                          'hover:bg-elec-yellow/[0.04] active:bg-elec-yellow/[0.06]',
+                          'hover:bg-white/[0.06] active:bg-elec-yellow/[0.06]',
                           isCurrent && 'bg-elec-yellow/[0.06]'
                         )}
                       >

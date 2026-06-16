@@ -470,7 +470,7 @@ function ModeCard({
     <button
       type="button"
       onClick={onTap}
-      className="group relative bg-[hsl(0_0%_10%)] hover:bg-elec-yellow/[0.04] transition-colors p-5 sm:p-6 text-left touch-manipulation flex flex-col h-full min-h-[300px] sm:min-h-[320px] lg:min-h-[340px]"
+      className="group relative bg-[hsl(0_0%_10%)] hover:bg-[hsl(0_0%_15%)] transition-colors p-5 sm:p-6 text-left touch-manipulation flex flex-col h-full min-h-[300px] sm:min-h-[320px] lg:min-h-[340px]"
     >
       {/* Top — eyebrow + status pill. flex-wrap so a long status doesn't
           shove the eyebrow off-screen on narrow widths. */}

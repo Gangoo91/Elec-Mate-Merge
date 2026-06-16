@@ -105,7 +105,7 @@ const ProfessionalToolGuide = () => {
                 key={card.id}
                 onClick={() => toggleCategory(card.id)}
                 className={cn(
-                  'group relative bg-[hsl(0_0%_10%)] hover:bg-elec-yellow/[0.04] transition-colors p-5 sm:p-6 text-left touch-manipulation flex flex-col min-h-[140px]',
+                  'group relative bg-[hsl(0_0%_10%)] hover:bg-[hsl(0_0%_15%)] transition-colors p-5 sm:p-6 text-left touch-manipulation flex flex-col min-h-[140px]',
                   isActive && 'bg-elec-yellow/[0.06] hover:bg-elec-yellow/[0.10]'
                 )}
               >

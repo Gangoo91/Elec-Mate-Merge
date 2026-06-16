@@ -158,6 +158,21 @@ const TutorPage = lazy(() => import('@/pages/electrician-tools/TutorPage'));
 const AIMethodStatementPage = lazy(() => import('@/pages/electrician-tools/AIMethodStatementPage'));
 const PremiumCVBuilder = lazy(() => import('@/components/cv-builder/premium/PremiumCVBuilder'));
 const WorkerToolsHub = lazy(() => import('@/pages/electrician/WorkerToolsHub'));
+// Worker Tools sub-pages (routed; replaced the bottom sheets)
+const WTStatusPage = lazy(() => import('@/pages/electrician/worker-tools/StatusPage'));
+const WTTimesheetPage = lazy(() => import('@/pages/electrician/worker-tools/TimesheetPage'));
+const WTMyPayPage = lazy(() => import('@/pages/electrician/worker-tools/MyPayPage'));
+const WTLeavePage = lazy(() => import('@/pages/electrician/worker-tools/LeavePage'));
+const WTCommsPage = lazy(() => import('@/pages/electrician/worker-tools/CommsPage'));
+const WTMyJobsPage = lazy(() => import('@/pages/electrician/worker-tools/MyJobsPage'));
+const WTMyTasksPage = lazy(() => import('@/pages/electrician/worker-tools/MyTasksPage'));
+const WTSignOffsPage = lazy(() => import('@/pages/electrician/worker-tools/SignOffsPage'));
+const WTCredentialsPage = lazy(() => import('@/pages/electrician/worker-tools/CredentialsPage'));
+const WTMyEquipmentPage = lazy(() => import('@/pages/electrician/worker-tools/MyEquipmentPage'));
+const WTProgressNotesPage = lazy(() => import('@/pages/electrician/worker-tools/ProgressNotesPage'));
+const WTExpensesPage = lazy(() => import('@/pages/electrician/worker-tools/ExpensesPage'));
+const WTReportsPage = lazy(() => import('@/pages/electrician/worker-tools/ReportsPage'));
+const WTQsReviewPage = lazy(() => import('@/pages/electrician/worker-tools/QsReviewPage'));
 const CalendarPage = lazy(() => import('@/pages/electrician/CalendarPage'));
 const SnaggingPage = lazy(() => import('@/pages/electrician/SnaggingPage'));
 const BusinessAIPage = lazy(() => import('@/components/business-ai/BusinessAIPage'));
@@ -184,6 +199,21 @@ const ElectricianHubRoutes = () => (
         </LazyRoute>
       }
     />
+    {/* Worker Tools sub-pages (routed; replaced the bottom sheets) */}
+    <Route path="worker-tools/status" element={<LazyRoute><WTStatusPage /></LazyRoute>} />
+    <Route path="worker-tools/timesheets" element={<LazyRoute><WTTimesheetPage /></LazyRoute>} />
+    <Route path="worker-tools/pay" element={<LazyRoute><WTMyPayPage /></LazyRoute>} />
+    <Route path="worker-tools/leave" element={<LazyRoute><WTLeavePage /></LazyRoute>} />
+    <Route path="worker-tools/comms" element={<LazyRoute><WTCommsPage /></LazyRoute>} />
+    <Route path="worker-tools/jobs" element={<LazyRoute><WTMyJobsPage /></LazyRoute>} />
+    <Route path="worker-tools/tasks" element={<LazyRoute><WTMyTasksPage /></LazyRoute>} />
+    <Route path="worker-tools/signoffs" element={<LazyRoute><WTSignOffsPage /></LazyRoute>} />
+    <Route path="worker-tools/credentials" element={<LazyRoute><WTCredentialsPage /></LazyRoute>} />
+    <Route path="worker-tools/equipment" element={<LazyRoute><WTMyEquipmentPage /></LazyRoute>} />
+    <Route path="worker-tools/progress-notes" element={<LazyRoute><WTProgressNotesPage /></LazyRoute>} />
+    <Route path="worker-tools/expenses" element={<LazyRoute><WTExpensesPage /></LazyRoute>} />
+    <Route path="worker-tools/reports" element={<LazyRoute><WTReportsPage /></LazyRoute>} />
+    <Route path="worker-tools/qs-reviews" element={<LazyRoute><WTQsReviewPage /></LazyRoute>} />
 
     {/* Business AI - sales, onboarding, dashboard */}
     <Route

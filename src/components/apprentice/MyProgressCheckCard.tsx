@@ -85,7 +85,7 @@ export function MyProgressCheckCard() {
               <button
                 type="button"
                 onClick={() => act(action)}
-                className="group w-full flex items-center gap-3 px-4 sm:px-5 py-3 text-left touch-manipulation hover:bg-elec-yellow/[0.04] transition-colors"
+                className="group w-full flex items-center gap-3 px-4 sm:px-5 py-3 text-left touch-manipulation hover:bg-white/[0.06] transition-colors"
               >
                 <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg border border-elec-yellow/20 bg-elec-yellow/[0.06]">
                   <Icon className="h-4 w-4 text-elec-yellow" strokeWidth={2} />

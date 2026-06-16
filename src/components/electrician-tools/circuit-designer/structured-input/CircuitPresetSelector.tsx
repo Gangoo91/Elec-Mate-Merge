@@ -52,7 +52,7 @@ export const CircuitPresetSelector = ({
               }}
               className={cn(
                 'group relative bg-[hsl(0_0%_10%)] border rounded-2xl px-4 py-5 sm:px-5 sm:py-6 flex flex-col text-left touch-manipulation transition-all min-h-[140px]',
-                'hover:bg-elec-yellow/[0.04] active:scale-[0.99]',
+                'hover:bg-[hsl(0_0%_15%)] active:scale-[0.99]',
                 isSelected
                   ? 'border-elec-yellow/60 bg-gradient-to-br from-elec-yellow/[0.10] via-amber-500/[0.03] to-transparent'
                   : 'border-white/[0.10] hover:border-white/20'

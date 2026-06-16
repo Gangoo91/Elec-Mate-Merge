@@ -707,6 +707,7 @@ export interface SnagReport {
   severity: string;
   description: string;
   location?: string;
+  status?: string;
   created_at: string;
 }
 
@@ -725,7 +726,7 @@ export const useSnagReports = (jobId?: string) => {
 
       let query = supabase
         .from('job_issues')
-        .select('id, job_id, severity, description, location, created_at')
+        .select('id, job_id, severity, description, location, status, created_at')
         .order('created_at', { ascending: false })
         .limit(10);
 
@@ -795,10 +796,56 @@ export const useSnagReports = (jobId?: string) => {
     },
   });
 
+  // Safety reports (near-miss / incident) go to employer_incidents — the safety
+  // counterpart to a quality snag. Same form, different destination.
+  const submitIncidentMutation = useMutation({
+    mutationFn: async ({
+      jobId: jId,
+      severity,
+      description,
+      location,
+      incidentType,
+    }: {
+      jobId: string;
+      severity: string;
+      description: string;
+      location?: string;
+      incidentType: string;
+    }) => {
+      if (!employeeId) throw new Error('No employee ID');
+      const { data: job, error: jobError } = await supabase
+        .from('employer_jobs')
+        .select('user_id')
+        .eq('id', jId)
+        .single();
+      if (jobError || !job) throw jobError || new Error('Job not found');
+
+      const { data, error } = await supabase
+        .from('employer_incidents')
+        .insert({
+          employer_id: job.user_id,
+          job_id: jId,
+          title: description.slice(0, 80),
+          description,
+          incident_type: incidentType,
+          severity,
+          status: 'open',
+          reported_by: employeeId,
+          location: location || null,
+        })
+        .select()
+        .single();
+      if (error) throw error;
+      return data;
+    },
+  });
+
   return {
     recentSnags: recentSnagsQuery.data,
     isLoading: recentSnagsQuery.isLoading,
     submitSnag: submitSnagMutation.mutateAsync,
     isSubmitting: submitSnagMutation.isPending,
+    submitIncident: submitIncidentMutation.mutateAsync,
+    isSubmittingIncident: submitIncidentMutation.isPending,
   };
 };

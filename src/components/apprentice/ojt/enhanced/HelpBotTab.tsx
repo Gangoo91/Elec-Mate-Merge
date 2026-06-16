@@ -521,7 +521,7 @@ const HelpBotTab = () => {
               <button
                 key={i}
                 onClick={() => handleSendMessage(p)}
-                className="group text-left rounded-xl border border-white/[0.08] bg-[hsl(0_0%_8%)] hover:border-elec-yellow/45 hover:bg-elec-yellow/[0.04] transition-colors px-4 py-3.5 sm:py-4 touch-manipulation active:scale-[0.99]"
+                className="group text-left rounded-xl border border-white/[0.08] bg-[hsl(0_0%_8%)] hover:border-elec-yellow/45 hover:bg-[hsl(0_0%_15%)] transition-colors px-4 py-3.5 sm:py-4 touch-manipulation active:scale-[0.99]"
               >
                 <div className="flex items-baseline gap-2.5">
                   <span className="text-[10px] font-mono tabular-nums text-elec-yellow/70 shrink-0 mt-0.5">

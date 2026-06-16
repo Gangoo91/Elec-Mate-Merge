@@ -58,7 +58,7 @@ export function TodayQueue({
               <button
                 key={item.id}
                 onClick={() => navigate(item.href)}
-                className="group relative w-full flex items-center gap-4 px-5 sm:px-7 py-4 sm:py-5 text-left touch-manipulation hover:bg-elec-yellow/[0.04] transition-colors"
+                className="group relative w-full flex items-center gap-4 px-5 sm:px-7 py-4 sm:py-5 text-left touch-manipulation hover:bg-white/[0.06] transition-colors"
               >
                 {/* Numbered eyebrow — yellow, tabular, signature anchor */}
                 <span className="text-[10px] font-medium tracking-[0.18em] text-elec-yellow/70 tabular-nums shrink-0 w-7">

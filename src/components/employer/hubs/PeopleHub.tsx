@@ -1,8 +1,9 @@
-import { useMemo, useState } from 'react';
-import { useQuery } from '@tanstack/react-query';
+import { useEffect, useMemo, useState, type ReactNode } from 'react';
+import { useQuery, useQueryClient } from '@tanstack/react-query';
 import { differenceInDays, formatDistanceToNow, parseISO } from 'date-fns';
 import { Loader2, Plus, RefreshCw, Send, Sparkles } from 'lucide-react';
 import { supabase } from '@/integrations/supabase/client';
+import { realtimeChannelName } from '@/lib/realtimeChannel';
 import type { Section } from '@/pages/employer/EmployerDashboard';
 import {
   PageFrame,
@@ -168,6 +169,27 @@ function useTodaysActivity() {
 
 export function PeopleHub({ onNavigate }: PeopleHubProps) {
   const [nudgeDismissed, setNudgeDismissed] = useState(false);
+  const queryClient = useQueryClient();
+
+  // Live: a worker changing status / GPS (any change to the team's location
+  // rows) refreshes the on-site snapshot and activity feed instantly — no
+  // manual reload. Team-wide (no filter); RLS scopes events to this company.
+  useEffect(() => {
+    const channel = supabase
+      .channel(realtimeChannelName('people-hub-worker-locations'))
+      .on(
+        'postgres_changes',
+        { event: '*', schema: 'public', table: 'employer_worker_locations' },
+        () => {
+          queryClient.invalidateQueries({ queryKey: ['worker-locations'] });
+          queryClient.invalidateQueries({ queryKey: ['people-hub-activity'] });
+        }
+      )
+      .subscribe();
+    return () => {
+      supabase.removeChannel(channel);
+    };
+  }, [queryClient]);
 
   const {
     data: employees = [],
@@ -745,7 +767,7 @@ function QuickAction({
   label: string;
   sub: string;
   tone: Tone;
-  icon?: React.ReactNode;
+  icon?: ReactNode;
   badge?: number;
   onClick: () => void;
 }) {

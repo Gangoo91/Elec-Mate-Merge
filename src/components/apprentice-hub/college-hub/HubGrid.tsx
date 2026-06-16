@@ -156,7 +156,7 @@ export function HubGrid({ stats }: HubGridProps) {
               <button
                 type="button"
                 onClick={() => navigate(card.route)}
-                className="group w-full flex items-center gap-3 px-4 py-3.5 text-left touch-manipulation hover:bg-elec-yellow/[0.04] transition-colors"
+                className="group w-full flex items-center gap-3 px-4 py-3.5 text-left touch-manipulation hover:bg-white/[0.06] transition-colors"
               >
                 <span className="w-6 shrink-0 text-[11px] font-mono text-elec-yellow/70 tabular-nums">
                   {String(i + 1).padStart(2, '0')}
@@ -201,7 +201,7 @@ export function HubGrid({ stats }: HubGridProps) {
             key={card.eyebrow}
             type="button"
             onClick={() => navigate(card.route)}
-            className="group relative bg-[hsl(0_0%_10%)] hover:bg-elec-yellow/[0.04] transition-colors p-5 lg:p-6 text-left touch-manipulation flex flex-col h-full"
+            className="group relative bg-[hsl(0_0%_10%)] hover:bg-[hsl(0_0%_15%)] transition-colors p-5 lg:p-6 text-left touch-manipulation flex flex-col h-full"
           >
             <div className="flex items-baseline justify-between gap-2 flex-wrap">
               <div className="flex items-baseline gap-2">

@@ -215,7 +215,7 @@ function ConfidenceBtn({
     <button
       type="button"
       onClick={onClick}
-      className="h-auto rounded-xl border border-white/[0.10] bg-[hsl(0_0%_8%)] hover:border-elec-yellow/40 hover:bg-elec-yellow/[0.04] transition-colors py-2.5 px-2 flex flex-col items-center gap-1 touch-manipulation active:scale-[0.97]"
+      className="h-auto rounded-xl border border-white/[0.10] bg-[hsl(0_0%_8%)] hover:border-elec-yellow/40 hover:bg-[hsl(0_0%_15%)] transition-colors py-2.5 px-2 flex flex-col items-center gap-1 touch-manipulation active:scale-[0.97]"
     >
       <span className={cn('inline-flex items-center gap-1', accent)}>
         {icon}

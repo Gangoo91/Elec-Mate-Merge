@@ -313,7 +313,7 @@ const ArticleCard = ({ article, index }: { article: NewsArticle; index: number }
       href={externalHref}
       target="_blank"
       rel="noopener noreferrer"
-      className="group relative bg-[hsl(0_0%_10%)] hover:bg-elec-yellow/[0.04] transition-colors text-left flex flex-col h-full cursor-pointer touch-manipulation overflow-hidden"
+      className="group relative bg-[hsl(0_0%_10%)] hover:bg-[hsl(0_0%_15%)] transition-colors text-left flex flex-col h-full cursor-pointer touch-manipulation overflow-hidden"
     >
       {/* Photo — full-bleed at the top, fixed aspect for visual rhythm.
           When there's no image we render a tinted accent panel so cards

@@ -1,5 +1,7 @@
+import { useEffect } from 'react';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { supabase } from '@/integrations/supabase/client';
+import { realtimeChannelName } from '@/lib/realtimeChannel';
 
 /**
  * Employer-side leave management over employer_leave_requests — the SAME
@@ -32,6 +34,27 @@ export interface TeamAllowance {
 const LEAVE_KEY = ['team-leave-requests'];
 
 export const useTeamLeaveRequests = () => {
+  const queryClient = useQueryClient();
+
+  // Live: a worker submitting or cancelling a leave request (any change to the
+  // team's rows) refreshes the employer list instantly — no manual reload.
+  useEffect(() => {
+    const channel = supabase
+      .channel(realtimeChannelName('team-leave'))
+      .on(
+        'postgres_changes',
+        { event: '*', schema: 'public', table: 'employer_leave_requests' },
+        () => {
+          queryClient.invalidateQueries({ queryKey: LEAVE_KEY });
+          queryClient.invalidateQueries({ queryKey: ['team-holiday-allowances'] });
+        }
+      )
+      .subscribe();
+    return () => {
+      supabase.removeChannel(channel);
+    };
+  }, [queryClient]);
+
   return useQuery({
     queryKey: LEAVE_KEY,
     queryFn: async (): Promise<TeamLeaveRequest[]> => {

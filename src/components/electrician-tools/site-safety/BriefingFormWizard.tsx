@@ -616,7 +616,7 @@ export const BriefingFormWizard = ({
                   'group flex flex-col items-center justify-center gap-3',
                   'py-8 rounded-2xl border-2 border-dashed',
                   'border-white/15 hover:border-elec-yellow/40',
-                  'bg-white/[0.03] hover:bg-elec-yellow/[0.04]',
+                  'bg-white/[0.03] hover:bg-white/[0.08]',
                   'cursor-pointer transition-all duration-300',
                   uploadingPhotos && 'pointer-events-none opacity-50'
                 )}

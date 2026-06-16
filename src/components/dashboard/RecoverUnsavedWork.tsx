@@ -189,7 +189,7 @@ const RecoverUnsavedWork: React.FC<RecoverUnsavedWorkProps> = ({ onNavigate, cla
           <button
             type="button"
             onClick={() => setShowSheet(true)}
-            className="group w-full text-left p-5 sm:p-6 hover:bg-elec-yellow/[0.04] transition-colors touch-manipulation flex flex-col gap-3"
+            className="group w-full text-left p-5 sm:p-6 hover:bg-white/[0.06] transition-colors touch-manipulation flex flex-col gap-3"
           >
             <div className="flex items-baseline gap-2">
               <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-elec-yellow/80 tabular-nums">

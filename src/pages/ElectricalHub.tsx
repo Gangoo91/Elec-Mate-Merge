@@ -203,7 +203,7 @@ const EditorialToolGrid = ({
             key={card.id}
             type="button"
             onClick={() => navigate(card.to)}
-            className="group relative bg-[hsl(0_0%_10%)] hover:bg-elec-yellow/[0.04] transition-colors p-5 sm:p-6 lg:p-7 text-left touch-manipulation flex flex-col h-full"
+            className="group relative bg-[hsl(0_0%_10%)] hover:bg-[hsl(0_0%_15%)] transition-colors p-5 sm:p-6 lg:p-7 text-left touch-manipulation flex flex-col h-full"
           >
             <div className="flex items-baseline justify-between gap-2">
               <div className="flex items-baseline gap-2">

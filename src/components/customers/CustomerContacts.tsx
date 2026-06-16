@@ -97,7 +97,7 @@ export const CustomerContacts: React.FC<Props> = ({ customerId }) => {
               <button
                 key={r}
                 onClick={() => setDraft({ ...draft, role: r })}
-                className="flex h-7 items-center rounded-full border border-white/[0.08] bg-white/[0.04] px-2.5 text-[11.5px] font-medium text-white/65 transition-colors hover:border-elec-yellow/30 hover:bg-elec-yellow/[0.04] hover:text-elec-yellow touch-manipulation"
+                className="flex h-7 items-center rounded-full border border-white/[0.08] bg-white/[0.04] px-2.5 text-[11.5px] font-medium text-white/65 transition-colors hover:border-elec-yellow/30 hover:bg-white/[0.08] hover:text-elec-yellow touch-manipulation"
               >
                 {r}
               </button>

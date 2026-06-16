@@ -81,7 +81,7 @@ const JobCell = ({ job, index }: { job: LatestJob; index: number }) => {
   const isExternal = !!job.external_url;
 
   const Body = (
-    <div className="group relative bg-[hsl(0_0%_10%)] hover:bg-elec-yellow/[0.04] transition-colors p-5 sm:p-6 lg:p-7 text-left flex flex-col h-full cursor-pointer touch-manipulation">
+    <div className="group relative bg-[hsl(0_0%_10%)] hover:bg-[hsl(0_0%_15%)] transition-colors p-5 sm:p-6 lg:p-7 text-left flex flex-col h-full cursor-pointer touch-manipulation">
       <div className="flex items-baseline justify-between gap-2">
         <div className="flex items-baseline gap-2">
           <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-elec-yellow/80 tabular-nums">

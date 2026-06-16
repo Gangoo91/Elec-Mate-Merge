@@ -143,7 +143,7 @@ function EditablePill({
     truncate && display.length > truncate ? `${display.slice(0, truncate)}…` : display;
 
   return (
-    <div className="group inline-flex h-9 items-center rounded-lg border border-white/[0.08] bg-white/[0.04] transition-colors hover:border-elec-yellow/30 hover:bg-elec-yellow/[0.04]">
+    <div className="group inline-flex h-9 items-center rounded-lg border border-white/[0.08] bg-white/[0.04] transition-colors hover:border-elec-yellow/30 hover:bg-white/[0.08]">
       {value && href ? (
         <a
           href={href}

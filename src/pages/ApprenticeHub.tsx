@@ -201,7 +201,7 @@ const ApprenticeHeadlineStats = ({
             onClick={stat.onClick}
             className={cn(
               'group relative bg-[hsl(0_0%_10%)] px-5 py-6 sm:px-7 sm:py-8 flex flex-col text-left touch-manipulation',
-              'hover:bg-elec-yellow/[0.04] transition-colors',
+              'hover:bg-[hsl(0_0%_15%)] transition-colors',
               stat.accent &&
                 'bg-gradient-to-br from-elec-yellow/[0.06] via-amber-500/[0.02] to-transparent hover:from-elec-yellow/[0.10]'
             )}
@@ -311,7 +311,7 @@ const EditorialToolGrid = ({
               else if (card.href) window.open(card.href, '_blank', 'noopener,noreferrer');
               else if (card.to) navigate(card.to);
             }}
-            className="group relative bg-[hsl(0_0%_10%)] hover:bg-elec-yellow/[0.04] transition-colors p-5 sm:p-6 lg:p-7 text-left touch-manipulation flex flex-col h-full min-h-[200px] sm:min-h-[300px] lg:min-h-[320px]"
+            className="group relative bg-[hsl(0_0%_10%)] hover:bg-[hsl(0_0%_15%)] transition-colors p-5 sm:p-6 lg:p-7 text-left touch-manipulation flex flex-col h-full min-h-[200px] sm:min-h-[300px] lg:min-h-[320px]"
           >
             <div className="flex items-center justify-between gap-2 flex-wrap">
               {card.logo ? (
@@ -778,7 +778,7 @@ export default function ApprenticeHub() {
                   key={step.to}
                   type="button"
                   onClick={() => navigate(step.to)}
-                  className="group w-full flex items-center gap-4 p-4 sm:p-5 text-left touch-manipulation hover:bg-elec-yellow/[0.04] transition-colors"
+                  className="group w-full flex items-center gap-4 p-4 sm:p-5 text-left touch-manipulation hover:bg-white/[0.06] transition-colors"
                 >
                   <span className="w-5 shrink-0 text-[13px] font-mono text-elec-yellow/80">
                     {i + 1}
@@ -838,7 +838,7 @@ export default function ApprenticeHub() {
             <button
               type="button"
               onClick={() => navigate('/apprentice/college-plan')}
-              className="group w-full text-left p-5 sm:p-6 lg:p-7 hover:bg-elec-yellow/[0.04] transition-colors touch-manipulation flex flex-col gap-3"
+              className="group w-full text-left p-5 sm:p-6 lg:p-7 hover:bg-white/[0.06] transition-colors touch-manipulation flex flex-col gap-3"
             >
               <div className="flex items-baseline justify-between gap-3">
                 <div className="flex items-baseline gap-2">

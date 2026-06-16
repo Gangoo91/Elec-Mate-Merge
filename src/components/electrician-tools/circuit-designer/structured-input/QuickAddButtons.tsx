@@ -75,7 +75,7 @@ export const QuickAddButtons = ({ installationType, onAddCircuit }: QuickAddButt
             className={cn(
               'bg-[hsl(0_0%_10%)] border border-white/[0.10] rounded-xl px-4 h-11',
               'text-[13px] font-medium text-white',
-              'hover:border-white/20 hover:bg-elec-yellow/[0.04]',
+              'hover:border-white/20 hover:bg-[hsl(0_0%_15%)]',
               'active:scale-[0.99] transition-colors',
               'touch-manipulation'
             )}
