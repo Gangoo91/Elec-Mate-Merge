@@ -109,6 +109,39 @@ export const useSignatureProfiles = () => {
       }
     }
 
+    // ELE-1128 / ELE-1134 — the signature library was a separate, usually-empty
+    // store, so the Signature Manager showed "No signatures saved" even when the
+    // user already had a signature set in their Inspector Profile (Settings →
+    // Inspector Profile). One source of truth: if the library is empty, surface
+    // the inspector-profile signature(s) so the same signature flows everywhere.
+    if (profiles && profiles.length === 0) {
+      try {
+        const {
+          data: { user },
+        } = await supabase.auth.getUser();
+        if (user) {
+          const { data: inspRows } = await (supabase as any)
+            .from('inspector_profiles')
+            .select('id, name, signature_data, is_default, created_at')
+            .eq('user_id', user.id) // scope to THIS user — never surface others' signatures
+            .order('is_default', { ascending: false });
+          if (Array.isArray(inspRows)) {
+            profiles = (inspRows as SignatureRow[])
+              .filter((r) => r.signature_data)
+              .map((r) => ({
+                id: `inspector-${r.id}`,
+                name: r.name || 'My signature',
+                signatureData: r.signature_data,
+                createdAt: r.created_at || new Date().toISOString(),
+                isDefault: !!r.is_default,
+              }));
+          }
+        }
+      } catch (error) {
+        console.error('Failed to seed signature from inspector profile:', error);
+      }
+    }
+
     setSignatures(profiles);
     setIsLoading(false);
   };

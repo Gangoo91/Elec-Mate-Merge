@@ -589,6 +589,17 @@ export async function formatEicJson(
 
     existing_installation_comments: formData.existingInstallationComments || '',
 
+    // Schedule of Test Results footer — "Tested by" (ELE-1114). EICR already
+    // emits these keys; EIC was missing them, so the schedule signature printed
+    // blank. Auto-populate the signature from the inspector's saved signature
+    // when the schedule-specific field is empty, so the user doesn't have to
+    // sign the schedule separately. Name + date fall back to the inspector /
+    // inspection date already captured elsewhere on the cert.
+    schedule_tested_by_name: formData.scheduleTestedByName || formData.inspectorName || '',
+    schedule_tested_by_date: formData.scheduleTestedByDate || formData.inspectionDate || '',
+    schedule_tested_by_signature:
+      formData.scheduleTestedBySignature || formData.inspectorSignature || '',
+
     declarations: {
       additional_notes: formData.additionalNotes || '',
       // "Inspected By" section removed from UI — fall back to the Inspector

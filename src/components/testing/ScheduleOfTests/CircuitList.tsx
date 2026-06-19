@@ -19,6 +19,7 @@ import { cn } from '@/lib/utils';
 import {
   Save,
   Trash2,
+  Copy,
   ChevronLeft,
   ChevronRight,
   Zap,
@@ -43,6 +44,7 @@ interface CircuitListProps {
   circuits: TestResult[];
   onUpdate: (id: string, field: keyof TestResult, value: string) => void;
   onRemove: (id: string) => void;
+  onDuplicate?: (id: string) => void;
   onBulkUpdate?: (id: string, updates: Partial<TestResult>) => void;
   onMoveUp?: (id: string) => void;
   onMoveDown?: (id: string) => void;
@@ -60,6 +62,7 @@ export const CircuitList: React.FC<CircuitListProps> = ({
   circuits,
   onUpdate,
   onRemove,
+  onDuplicate,
   onBulkUpdate,
   onMoveUp,
   onMoveDown,
@@ -130,6 +133,15 @@ export const CircuitList: React.FC<CircuitListProps> = ({
     setEditingCircuit(null);
     setEditedValues({});
   }, [editingCircuit, onRemove]);
+
+  // ELE-1171 — duplicate this circuit (copy added directly below), then close
+  // the sheet so the new copy is visible and ready to edit.
+  const handleDuplicate = useCallback(() => {
+    if (!editingCircuit || !onDuplicate) return;
+    onDuplicate(editingCircuit.id);
+    setEditingCircuit(null);
+    setEditedValues({});
+  }, [editingCircuit, onDuplicate]);
 
   const handleMarkAsSpare = useCallback(() => {
     if (!editingCircuit) return;
@@ -286,6 +298,7 @@ export const CircuitList: React.FC<CircuitListProps> = ({
               onChange={handleFieldChange}
               onSave={handleSave}
               onDelete={handleDelete}
+              onDuplicate={onDuplicate ? handleDuplicate : undefined}
               onClose={handleClose}
               onMarkAsSpare={handleMarkAsSpare}
               onNavigate={navigateCircuit}
@@ -321,6 +334,7 @@ interface CircuitEditFormProps {
   onChange: (field: keyof TestResult, value: string) => void;
   onSave: () => void;
   onDelete: () => void;
+  onDuplicate?: () => void;
   onClose: () => void;
   onMarkAsSpare?: () => void;
   onNavigate: (direction: 'prev' | 'next') => void;
@@ -334,6 +348,7 @@ const CircuitEditForm: React.FC<CircuitEditFormProps> = ({
   onChange,
   onSave,
   onDelete,
+  onDuplicate,
   onClose,
   onMarkAsSpare,
   onNavigate,
@@ -548,6 +563,17 @@ const CircuitEditForm: React.FC<CircuitEditFormProps> = ({
           <Trash2 className="h-4 w-4 mr-1" />
           Delete
         </Button>
+        {onDuplicate && (
+          <Button
+            variant="outline"
+            size="sm"
+            onClick={onDuplicate}
+            className="h-11 px-3 text-white border-white/20 touch-manipulation"
+          >
+            <Copy className="h-4 w-4 mr-1" />
+            Duplicate
+          </Button>
+        )}
         {onMarkAsSpare && (
           <Button variant="outline" size="sm" onClick={onMarkAsSpare} className="h-11 px-3 text-white border-white/20 touch-manipulation">
             Spare

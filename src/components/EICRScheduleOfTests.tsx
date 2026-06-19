@@ -1443,6 +1443,34 @@ const EICRScheduleOfTests = ({ formData, onUpdate, onOpenBoardScan }: EICRSchedu
     [onUpdate]
   );
 
+  // ELE-1171 — duplicate a circuit row: clone all its details (type, rating,
+  // wiring, test values), give it a fresh id, and drop it directly below the
+  // original so the inspector can tweak just what differs. Deep-cloned so the
+  // copy never shares nested references with the source.
+  const duplicateTestResult = useCallback(
+    (id: string) => {
+      setTestResults((prev) => {
+        const index = prev.findIndex((result) => result.id === id);
+        if (index === -1) return prev;
+        const source = prev[index];
+        const copy = (
+          typeof structuredClone === 'function'
+            ? structuredClone(source)
+            : JSON.parse(JSON.stringify(source))
+        ) as TestResult;
+        copy.id = crypto.randomUUID();
+        const next = [...prev];
+        next.splice(index + 1, 0, copy);
+        onUpdate('scheduleOfTests', next);
+        return next;
+      });
+      toast.success('Circuit duplicated', {
+        description: 'A copy was added below — edit its details as needed.',
+      });
+    },
+    [onUpdate]
+  );
+
   const removeTestResult = useCallback(
     (id: string) => {
       setTestResults((prev) => {
@@ -2890,6 +2918,7 @@ const EICRScheduleOfTests = ({ formData, onUpdate, onOpenBoardScan }: EICRSchedu
                             circuits={boardCircuits}
                             onUpdate={updateTestResult}
                             onRemove={removeTestResult}
+                            onDuplicate={duplicateTestResult}
                             onBulkUpdate={handleBulkUpdate}
                             onMoveUp={reorderTestResultUp}
                             onMoveDown={reorderTestResultDown}
