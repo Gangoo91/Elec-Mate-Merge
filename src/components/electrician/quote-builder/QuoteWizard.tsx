@@ -226,24 +226,28 @@ export const QuoteWizard = ({
 
   const voiceForm = useOptionalVoiceFormContext();
 
+  // Keep a live ref to the latest quote so the localStorage fallback timer can
+  // stay stable instead of resetting on every keystroke (ELE-1163).
+  const quoteRef = useRef(quote);
+  useEffect(() => {
+    quoteRef.current = quote;
+  }, [quote]);
+
   // Cloud auto-save is handled by useQuoteBuilder — also keep localStorage as fallback
   useEffect(() => {
     const saveTimer = setInterval(() => {
-      if (
-        quote.client?.name ||
-        quote.jobDetails?.title ||
-        (quote.items && quote.items.length > 0)
-      ) {
-        draftStorage.saveDraft('quote', quote.id || null, {
-          client: quote.client,
-          jobDetails: quote.jobDetails,
-          items: quote.items,
-          settings: quote.settings,
+      const q = quoteRef.current;
+      if (q.client?.name || q.jobDetails?.title || (q.items && q.items.length > 0)) {
+        draftStorage.saveDraft('quote', q.id || null, {
+          client: q.client,
+          jobDetails: q.jobDetails,
+          items: q.items,
+          settings: q.settings,
         });
       }
     }, 15000); // localStorage every 15s as fallback (cloud saves every 10s)
     return () => clearInterval(saveTimer);
-  }, [quote]);
+  }, []);
 
   // Draft recovery
   const handleRecoverDraft = useCallback(() => {
@@ -466,10 +470,12 @@ export const QuoteWizard = ({
           Creating
         </span>
         <div className="inline-flex p-1 rounded-xl bg-white/[0.05] border border-white/[0.10]">
-          {([
-            [false, 'Quote'],
-            [true, 'Estimate'],
-          ] as [boolean, string][]).map(([val, label]) => {
+          {(
+            [
+              [false, 'Quote'],
+              [true, 'Estimate'],
+            ] as [boolean, string][]
+          ).map(([val, label]) => {
             const active = !!quote.settings?.isEstimate === val;
             return (
               <button

@@ -165,7 +165,7 @@ const SettingsDialog: React.FC<SettingsDialogProps> = ({ isOpen, onClose }) => {
             'quote_validity_days, deposit_percentage, warranty_period, accent_color, quote_terms'
           )
           .eq('user_id', user.id)
-          .single();
+          .maybeSingle();
 
         if (data) {
           if (data.quote_validity_days) setQuoteValidityDays(data.quote_validity_days);
@@ -212,25 +212,38 @@ const SettingsDialog: React.FC<SettingsDialogProps> = ({ isOpen, onClose }) => {
         custom: customTerms,
       });
 
-      const { error } = await supabase
+      const payload = {
+        quote_validity_days: quoteValidityDays,
+        deposit_percentage: depositPercentage,
+        warranty_period: warrantyPeriod,
+        accent_color: accentColor,
+        quote_terms: termsJson,
+      };
+
+      // ELE-1168 — a plain .update() silently no-ops when the user has no
+      // company_profiles row yet (it matches zero rows but returns no error),
+      // so settings looked "saved" but never persisted. Detect that and insert.
+      const { data: updated, error } = await supabase
         .from('company_profiles')
-        .update({
-          quote_validity_days: quoteValidityDays,
-          deposit_percentage: depositPercentage,
-          warranty_period: warrantyPeriod,
-          accent_color: accentColor,
-          quote_terms: termsJson,
-        })
-        .eq('user_id', user.id);
+        .update(payload)
+        .eq('user_id', user.id)
+        .select('id');
 
       if (error) throw error;
 
+      if (!updated || updated.length === 0) {
+        const { error: insertError } = await supabase
+          .from('company_profiles')
+          .insert({ user_id: user.id, company_name: '', ...payload });
+        if (insertError) throw insertError;
+      }
+
       toast({ title: 'Saved', description: 'Quote settings saved successfully' });
-    } catch (err: any) {
+    } catch (err) {
       console.error('Error saving quote settings:', err);
       toast({
         title: 'Error',
-        description: err.message || 'Failed to save settings',
+        description: err instanceof Error ? err.message : 'Failed to save settings',
         variant: 'destructive',
       });
     } finally {

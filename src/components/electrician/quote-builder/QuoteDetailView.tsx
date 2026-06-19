@@ -420,7 +420,11 @@ export const QuoteDetailView = ({ quote }: QuoteDetailViewProps) => {
             <div className="flex items-center gap-2 text-sm">
               <Clock className="h-4 w-4 text-elec-yellow" />
               <span className="text-white">Estimated Duration:</span>
-              <span className="text-white font-medium">{quote.jobDetails.estimatedDuration}</span>
+              <span className="text-white font-medium">
+                {quote.jobDetails.estimatedDuration === 'Other'
+                  ? quote.jobDetails.customDuration || 'Other'
+                  : quote.jobDetails.estimatedDuration}
+              </span>
             </div>
           )}
         </Card>
@@ -540,16 +544,23 @@ export const QuoteDetailView = ({ quote }: QuoteDetailViewProps) => {
             .map((b) => {
               const isMarkup = b.categoryAdjustmentDelta > 0;
               return (
-                <div
-                  key={b.category}
-                  className="flex justify-between text-[12px] -mt-1"
-                >
-                  <span className={cn('capitalize', isMarkup ? 'text-amber-300/80' : 'text-emerald-300/80')}>
+                <div key={b.category} className="flex justify-between text-[12px] -mt-1">
+                  <span
+                    className={cn(
+                      'capitalize',
+                      isMarkup ? 'text-amber-300/80' : 'text-emerald-300/80'
+                    )}
+                  >
                     {b.category} {isMarkup ? 'markup' : 'discount'} (
                     {b.categoryAdjustmentPercent > 0 ? '+' : ''}
                     {b.categoryAdjustmentPercent}%)
                   </span>
-                  <span className={cn('font-medium tabular-nums', isMarkup ? 'text-amber-300' : 'text-emerald-300')}>
+                  <span
+                    className={cn(
+                      'font-medium tabular-nums',
+                      isMarkup ? 'text-amber-300' : 'text-emerald-300'
+                    )}
+                  >
                     {isMarkup ? '+' : '-'}£{Math.abs(b.categoryAdjustmentDelta).toFixed(2)}
                   </span>
                 </div>
@@ -595,7 +606,9 @@ export const QuoteDetailView = ({ quote }: QuoteDetailViewProps) => {
             <>
               <div className="flex justify-between text-white pt-1">
                 <span className="text-white/80">Less: CIS ({cisT.cisRate}% on labour)</span>
-                <span className="font-medium text-red-300 tabular-nums">−£{cisT.cisAmount.toFixed(2)}</span>
+                <span className="font-medium text-red-300 tabular-nums">
+                  −£{cisT.cisAmount.toFixed(2)}
+                </span>
               </div>
               <div className="flex justify-between text-lg font-bold">
                 <span className="text-white">Net payable</span>
@@ -606,7 +619,8 @@ export const QuoteDetailView = ({ quote }: QuoteDetailViewProps) => {
 
           {cisT.reverseCharge && (
             <p className="text-[11px] text-white/55 mt-2 leading-relaxed">
-              Reverse charge: customer to account to HMRC for the VAT — £{cisT.notionalVat.toFixed(2)} @ {quote.settings?.vatRate ?? 20}%.
+              Reverse charge: customer to account to HMRC for the VAT — £
+              {cisT.notionalVat.toFixed(2)} @ {quote.settings?.vatRate ?? 20}%.
             </p>
           )}
         </div>

@@ -1,4 +1,4 @@
-import { useState, useCallback, useEffect, useRef, createElement } from 'react';
+import { useState, useCallback, useEffect, useMemo, useRef, createElement } from 'react';
 import { Quote, QuoteItem, QuoteClient, QuoteSettings, JobDetails } from '@/types/quote';
 import { v4 as uuidv4 } from 'uuid';
 import { toast } from '@/hooks/use-toast';
@@ -200,15 +200,23 @@ export const useQuoteBuilder = (onQuoteGenerated?: () => void, initialQuote?: Qu
     }
   }, [calculateTotals, getDraftSnapshot, quote]);
 
+  // Keep the autosave timer STABLE. Previously this effect depended on
+  // persistDraft (which changes identity every render) and quote.items, so
+  // every keystroke tore the interval down and set it back up. That churn could
+  // drop keystrokes / kill backspace in the job-description field on mobile
+  // WebViews (ELE-1163). Read the latest persistDraft via a ref instead; it
+  // already no-ops when the draft is empty.
+  const persistDraftRef = useRef(persistDraft);
   useEffect(() => {
-    if (!quote.client?.name && (!quote.items || quote.items.length === 0)) return;
+    persistDraftRef.current = persistDraft;
+  }, [persistDraft]);
 
+  useEffect(() => {
     const timer = window.setInterval(() => {
-      void persistDraft();
+      void persistDraftRef.current();
     }, 10000);
-
     return () => window.clearInterval(timer);
-  }, [persistDraft, quote.client?.name, quote.items]);
+  }, []);
 
   // Best-effort persistence when the page is backgrounded or closed.
   useEffect(() => {
@@ -488,8 +496,12 @@ export const useQuoteBuilder = (onQuoteGenerated?: () => void, initialQuote?: Qu
     [priceAdjustment]
   );
 
+  // Memoise so consumers get a stable quote reference between renders that
+  // don't actually change the quote (part of the ELE-1163 re-render reduction).
+  const computedQuote = useMemo(() => calculateTotals(), [calculateTotals]);
+
   return {
-    quote: calculateTotals(),
+    quote: computedQuote,
     currentStep,
     priceAdjustment,
     setPriceAdjustment,

@@ -213,8 +213,7 @@ function buildInvoiceTermsList(invoiceTermsJson: string | null): string[] {
 function applyItemAdjustment(item: any) {
   const qty = parseFloat(item.quantity) || 0;
   const rawUnit = parseFloat(item.unitPrice) || parseFloat(item.unit_price) || 0;
-  const adj =
-    typeof item.itemAdjustmentPercent === 'number' ? item.itemAdjustmentPercent : 0;
+  const adj = typeof item.itemAdjustmentPercent === 'number' ? item.itemAdjustmentPercent : 0;
   const effectiveUnit = adj !== 0 ? rawUnit * (1 + adj / 100) : rawUnit;
   const effectiveTotal = qty * effectiveUnit;
   let description = item.description || item.name || '';
@@ -293,6 +292,25 @@ serve(async (req) => {
     const freshQuote = quote;
     const freshCompanyProfile = companyProfile;
 
+    // ELE-1168 — resolve the brand colour ONCE. The Settings UI only exposes
+    // accent_color, so it should drive the document's dominant colour. All
+    // #000000 is the broken legacy default (ELE-1077), not a deliberate choice,
+    // so treat it as unset and fall back to primary_color / the blue default.
+    const isUsableColor = (c?: string | null) => !!c && c !== '#000000';
+    const brandPrimary =
+      (isUsableColor(freshCompanyProfile?.accent_color) && freshCompanyProfile?.accent_color) ||
+      (isUsableColor(freshCompanyProfile?.primary_color) &&
+      !(
+        freshCompanyProfile?.primary_color === '#000000' &&
+        freshCompanyProfile?.secondary_color === '#000000'
+      )
+        ? freshCompanyProfile?.primary_color
+        : '') ||
+      '#1e40af';
+    const brandAccent =
+      (isUsableColor(freshCompanyProfile?.accent_color) && freshCompanyProfile?.accent_color) ||
+      '#F59E0B';
+
     // ELE-956 — for v2+ quotes, compute the variation diff (added /
     // removed / changed line items) so the PDF template can render
     // "what changed since v{n-1}" the same way the email + public web
@@ -311,10 +329,7 @@ serve(async (req) => {
       totalDelta: number;
     } | null = null;
     try {
-      if (
-        (freshQuote?.version_number || 1) > 1 &&
-        freshQuote?.supersedes_id
-      ) {
+      if ((freshQuote?.version_number || 1) > 1 && freshQuote?.supersedes_id) {
         const supabaseUrl = Deno.env.get('SUPABASE_URL');
         const serviceKey = Deno.env.get('SUPABASE_SERVICE_ROLE_KEY');
         if (supabaseUrl && serviceKey) {
@@ -348,8 +363,7 @@ serve(async (req) => {
               if (Number(prevRow.unitPrice || 0) !== Number(cur.unitPrice || 0))
                 fields.push('unitPrice');
               if (fields.length > 0) {
-                const delta =
-                  Number(cur.totalPrice || 0) - Number(prevRow.totalPrice || 0);
+                const delta = Number(cur.totalPrice || 0) - Number(prevRow.totalPrice || 0);
                 changed.push({
                   itemId: String(cur.id),
                   description: String(cur.description || ''),
@@ -359,9 +373,7 @@ serve(async (req) => {
               }
             }
           }
-          const removed = prevItems.filter(
-            (i: { id: string }) => !currentById.has(i.id)
-          );
+          const removed = prevItems.filter((i: { id: string }) => !currentById.has(i.id));
           const totalDelta =
             added.reduce((s, i) => s + Number((i as { totalPrice?: number }).totalPrice || 0), 0) -
             removed.reduce(
@@ -674,8 +686,7 @@ serve(async (req) => {
       // and categoryTotals are built so the customer sees one combined
       // price per line and the subtotal reconciles. The category-adjustment
       // totals lines are short-circuited to empty further down.
-      const invHideMarkupFromCustomer =
-        freshQuote?.settings?.hideMarkupFromCustomer === true;
+      const invHideMarkupFromCustomer = freshQuote?.settings?.hideMarkupFromCustomer === true;
       if (invHideMarkupFromCustomer) {
         const adj = freshQuote?.settings?.categoryAdjustments || {};
         for (const it of adjustedRawItems) {
@@ -716,7 +727,6 @@ serve(async (req) => {
             unitPriceFormatted: gbp(categoryTotals[category]),
             amountFormatted: gbp(categoryTotals[category]),
           }));
-
       } else {
         // Detailed view: Show all items individually with adjustments applied.
         // ELE-T-inv-extra — also surface labour breakdown (hours/rate/worker)
@@ -731,8 +741,13 @@ serve(async (req) => {
           // as nonsense ("Materials — 1 hour"); normalise to 'each'.
           unit: (() => {
             const u = String(it.raw.unit || 'each').toLowerCase();
-            const hourly = (parseFloat(it.raw.hours) > 0) || (parseFloat(it.raw.hourlyRate) > 0) || (parseFloat(it.raw.hourly_rate) > 0);
-            return ['hour', 'hours', 'day', 'days'].includes(u) && !hourly ? 'each' : (it.raw.unit || 'each');
+            const hourly =
+              parseFloat(it.raw.hours) > 0 ||
+              parseFloat(it.raw.hourlyRate) > 0 ||
+              parseFloat(it.raw.hourly_rate) > 0;
+            return ['hour', 'hours', 'day', 'days'].includes(u) && !hourly
+              ? 'each'
+              : it.raw.unit || 'each';
           })(),
           unitPrice: it.unitPrice,
           totalPrice: it.totalPrice,
@@ -742,8 +757,7 @@ serve(async (req) => {
           subcategory: it.raw.subcategory || '',
           workerType: it.raw.workerType || it.raw.worker_type || '',
           hours: parseFloat(it.raw.hours) || 0,
-          hourlyRate:
-            parseFloat(it.raw.hourlyRate) || parseFloat(it.raw.hourly_rate) || 0,
+          hourlyRate: parseFloat(it.raw.hourlyRate) || parseFloat(it.raw.hourly_rate) || 0,
           itemAdjustmentPercent: it.adjustmentPercent || 0,
           itemAdjustmentLabel: it.adjustmentLabel || '',
         }));
@@ -769,15 +783,14 @@ serve(async (req) => {
         // metadata when set). Reads new column names from the invoices
         // table, then falls back to legacy invoice_* names on quotes
         // table for backwards compat with the pre-March-2026 dual-write.
-        isPaid:
-          freshQuote?.status === 'paid' ||
-          freshQuote?.invoice_status === 'paid',
-        paidAt: (freshQuote?.paid_at || freshQuote?.invoice_paid_at)
-          ? new Date(freshQuote.paid_at || freshQuote.invoice_paid_at).toLocaleDateString(
-              'en-GB',
-              { day: '2-digit', month: '2-digit', year: 'numeric' }
-            )
-          : null,
+        isPaid: freshQuote?.status === 'paid' || freshQuote?.invoice_status === 'paid',
+        paidAt:
+          freshQuote?.paid_at || freshQuote?.invoice_paid_at
+            ? new Date(freshQuote.paid_at || freshQuote.invoice_paid_at).toLocaleDateString(
+                'en-GB',
+                { day: '2-digit', month: '2-digit', year: 'numeric' }
+              )
+            : null,
         paymentMethod: freshQuote?.payment_method || freshQuote?.invoice_payment_method || null,
         paymentReference:
           freshQuote?.payment_reference || freshQuote?.invoice_payment_reference || null,
@@ -817,10 +830,18 @@ serve(async (req) => {
           description:
             freshQuote?.jobDetails?.description || freshQuote?.job_details?.description || '',
           location: freshQuote?.jobDetails?.location || freshQuote?.job_details?.location || '',
-          estimatedDuration:
-            freshQuote?.jobDetails?.estimatedDuration ||
-            freshQuote?.job_details?.estimatedDuration ||
-            '',
+          // ELE-1165/1166 — resolve "Other" to the custom text for invoices too.
+          estimatedDuration: (() => {
+            const ed =
+              freshQuote?.jobDetails?.estimatedDuration ||
+              freshQuote?.job_details?.estimatedDuration ||
+              '';
+            const cd =
+              freshQuote?.jobDetails?.customDuration ||
+              freshQuote?.job_details?.customDuration ||
+              '';
+            return ed === 'Other' ? cd || 'Other' : ed;
+          })(),
           customDuration:
             freshQuote?.jobDetails?.customDuration || freshQuote?.job_details?.customDuration || '',
           workStartDate:
@@ -844,46 +865,34 @@ serve(async (req) => {
         // ELE-T-inv-extra — Stripe pay-now link (template renders a CTA
         // block when present and the invoice is unpaid). Column lives
         // directly on invoices.stripe_payment_link_url.
-        payLink:
-          (freshQuote as Record<string, unknown> | null)?.stripe_payment_link_url || null,
+        payLink: (freshQuote as Record<string, unknown> | null)?.stripe_payment_link_url || null,
         // ELE-T-inv-extra — partial payment surfacing. total_paid is stored
         // in POUNDS (verified against live rows: 263.10 paid of 877.00 —
         // the previous /100 here treated it as pence and would have printed
         // £2.63). partialPayments is a JSONB array of past payment events.
         totalPaidFormatted: (() => {
-          const tp = Number(
-            (freshQuote as Record<string, unknown> | null)?.total_paid || 0
-          );
+          const tp = Number((freshQuote as Record<string, unknown> | null)?.total_paid || 0);
           return tp > 0 ? `£${tp.toFixed(2)}` : null;
         })(),
-        totalPaid: Number(
-          (freshQuote as Record<string, unknown> | null)?.total_paid || 0
-        ),
+        totalPaid: Number((freshQuote as Record<string, unknown> | null)?.total_paid || 0),
         partialPayments:
-          ((freshQuote as Record<string, unknown> | null)
-            ?.partial_payments as unknown[]) || [],
+          ((freshQuote as Record<string, unknown> | null)?.partial_payments as unknown[]) || [],
         // ELE-T-inv-extra — linked certificate (when invoice has a cert
         // attached, template shows a small "Certificate attached" callout
         // with the cert reference + type).
-        linkedCertificate:
-          (freshQuote as Record<string, unknown> | null)?.linked_certificate_id
-            ? {
-                id: (freshQuote as Record<string, unknown>).linked_certificate_id,
-                reference: (freshQuote as Record<string, unknown>)
-                  .linked_certificate_reference,
-                type: (freshQuote as Record<string, unknown>).linked_certificate_type,
-                pdfUrl: (freshQuote as Record<string, unknown>)
-                  .linked_certificate_pdf_url,
-              }
-            : null,
+        linkedCertificate: (freshQuote as Record<string, unknown> | null)?.linked_certificate_id
+          ? {
+              id: (freshQuote as Record<string, unknown>).linked_certificate_id,
+              reference: (freshQuote as Record<string, unknown>).linked_certificate_reference,
+              type: (freshQuote as Record<string, unknown>).linked_certificate_type,
+              pdfUrl: (freshQuote as Record<string, unknown>).linked_certificate_pdf_url,
+            }
+          : null,
       };
 
       // ELE-888 + ELE-891 — calculate totals using item-adjusted lines + per-category
       const settings = freshQuote?.settings || {};
-      const itemAdjustedInvSubtotal = adjustedRawItems.reduce(
-        (sum, it) => sum + it.totalPrice,
-        0
-      );
+      const itemAdjustedInvSubtotal = adjustedRawItems.reduce((sum, it) => sum + it.totalPrice, 0);
       // When hideMarkupFromCustomer is on, the markup is already baked
       // into adjustedRawItems above — skip the explicit category-adjustment
       // lines so the template doesn't render them AND we don't double-count.
@@ -935,11 +944,14 @@ serve(async (req) => {
         ? 0
         : settings.categoryAdjustments?.labour || 0;
       const invLabourFinal = invLabourItemAdjusted * (1 + invLabourCatPct / 100);
-      const invLabourNet = itemsSubtotal > 0 ? invNetAfterDiscount * (invLabourFinal / itemsSubtotal) : 0;
+      const invLabourNet =
+        itemsSubtotal > 0 ? invNetAfterDiscount * (invLabourFinal / itemsSubtotal) : 0;
       const invCisEnabled = !!settings.cisEnabled;
       const invCisRate = invCisEnabled ? Number(settings.cisRate) || 0 : 0;
       const invCisAmount = invCisEnabled ? round2cis(invLabourNet * (invCisRate / 100)) : 0;
-      const invNotionalVat = invReverseCharge ? round2cis(invNetAfterDiscount * ((settings.vatRate || 20) / 100)) : 0;
+      const invNotionalVat = invReverseCharge
+        ? round2cis(invNetAfterDiscount * ((settings.vatRate || 20) / 100))
+        : 0;
       const invNetPayable = round2cis(total - invCisAmount);
 
       // ELE-954 — "Deposit paid" summary. Resolved from (in priority):
@@ -955,10 +967,11 @@ serve(async (req) => {
       let depositPaidPennies = 0;
       let depositInvoiceIdRef: string | null = null;
 
-      const settingsDepositApplied =
-        (invForDeposit?.settings as Record<string, unknown> | undefined)?.depositApplied as
-          | { paidAt?: string; amount?: number; depositInvoiceId?: string }
-          | undefined;
+      const settingsDepositApplied = (
+        invForDeposit?.settings as Record<string, unknown> | undefined
+      )?.depositApplied as
+        | { paidAt?: string; amount?: number; depositInvoiceId?: string }
+        | undefined;
       if (settingsDepositApplied?.paidAt && Number(settingsDepositApplied.amount) > 0) {
         depositPaidIso = settingsDepositApplied.paidAt;
         depositPaidPennies = Math.round(Number(settingsDepositApplied.amount) * 100);
@@ -1057,10 +1070,13 @@ serve(async (req) => {
               .eq('entity_id', invRow.id as string)
               .maybeSingle();
             if (opens?.last_opened_at) {
-              lastViewedAt = new Date(opens.last_opened_at as string).toLocaleString(
-                'en-GB',
-                { day: '2-digit', month: 'short', year: 'numeric', hour: '2-digit', minute: '2-digit' }
-              );
+              lastViewedAt = new Date(opens.last_opened_at as string).toLocaleString('en-GB', {
+                day: '2-digit',
+                month: 'short',
+                year: 'numeric',
+                hour: '2-digit',
+                minute: '2-digit',
+              });
               viewCount = Number(opens.open_count || 0);
             }
           }
@@ -1099,8 +1115,7 @@ serve(async (req) => {
           balanceDueFormatted: `£${balanceDue.toFixed(2)}`,
           // ELE-T-inv-extra — audit trail fields (lookups above).
           parentQuoteNumber,
-          parentQuoteId:
-            (freshQuote as Record<string, unknown> | null)?.parent_quote_id || null,
+          parentQuoteId: (freshQuote as Record<string, unknown> | null)?.parent_quote_id || null,
           depositInvoiceNumber,
           lastViewedAt,
           viewCount,
@@ -1142,17 +1157,17 @@ serve(async (req) => {
         branding: {
           // ELE-1077 — both colours pure black is the broken legacy default,
           // not a brand choice; treat as unset so PDFs aren't all-black.
-          primaryColor:
-            freshCompanyProfile?.primary_color &&
-            !(freshCompanyProfile.primary_color === '#000000' && freshCompanyProfile?.secondary_color === '#000000')
-              ? freshCompanyProfile.primary_color
-              : '#1e40af',
+          // ELE-1168 — accent-driven brand colour (see brandPrimary above).
+          primaryColor: brandPrimary,
           secondaryColor:
             freshCompanyProfile?.secondary_color &&
-            !(freshCompanyProfile.primary_color === '#000000' && freshCompanyProfile?.secondary_color === '#000000')
+            !(
+              freshCompanyProfile.primary_color === '#000000' &&
+              freshCompanyProfile?.secondary_color === '#000000'
+            )
               ? freshCompanyProfile.secondary_color
               : '#1F2937',
-          accentColor: freshCompanyProfile?.accent_color || '#F59E0B',
+          accentColor: brandAccent,
         },
         // Professional credentials (scheme logo etc.)
         credentials: {
@@ -1175,7 +1190,6 @@ serve(async (req) => {
         _cache_bust: Date.now(),
         _generated_at: new Date().toISOString(),
       };
-
     } else {
       // Get items from quote - handle both camelCase and snake_case
       const quoteItems = freshQuote?.items || [];
@@ -1215,10 +1229,7 @@ serve(async (req) => {
         transformedItems.map((i: any) => ({ category: i.category, effectiveTotal: i.totalPrice })),
         quoteSettings
       );
-      const categoryAdjustmentDelta = categoryAdjustmentLines.reduce(
-        (sum, c) => sum + c.delta,
-        0
-      );
+      const categoryAdjustmentDelta = categoryAdjustmentLines.reduce((sum, c) => sum + c.delta, 0);
       const itemsSubtotal = itemAdjustedSubtotal + categoryAdjustmentDelta;
 
       // Customer-facing markup-absorption (settings.hideMarkupFromCustomer).
@@ -1333,10 +1344,10 @@ serve(async (req) => {
           logo_url: freshCompanyProfile?.logo_url || freshCompanyProfile?.logo_data_url || '',
           vat_number: freshCompanyProfile?.vat_number || '',
           company_number: freshCompanyProfile?.company_number || '',
-          // Ensure colors have defaults
-          primary_color: freshCompanyProfile?.primary_color || '#1e40af',
+          // ELE-1168 — accent-driven brand colour (see brandPrimary/brandAccent).
+          primary_color: brandPrimary,
           secondary_color: freshCompanyProfile?.secondary_color || '#1F2937',
-          accent_color: freshCompanyProfile?.accent_color || '#F59E0B',
+          accent_color: brandAccent,
         },
         // Quote details
         quote: {
@@ -1385,14 +1396,12 @@ serve(async (req) => {
           variationDiff,
           // ELE-954 — deposit info (amount in £ for templates)
           depositRequired: !!freshQuote?.deposit_required,
-          depositAmount:
-            freshQuote?.deposit_amount_pennies
-              ? freshQuote.deposit_amount_pennies / 100
-              : null,
-          depositAmountFormatted:
-            freshQuote?.deposit_amount_pennies
-              ? `£${(freshQuote.deposit_amount_pennies / 100).toFixed(2)}`
-              : null,
+          depositAmount: freshQuote?.deposit_amount_pennies
+            ? freshQuote.deposit_amount_pennies / 100
+            : null,
+          depositAmountFormatted: freshQuote?.deposit_amount_pennies
+            ? `£${(freshQuote.deposit_amount_pennies / 100).toFixed(2)}`
+            : null,
           depositInvoiceId: freshQuote?.deposit_invoice_id || null,
           depositPaidAt: freshQuote?.deposit_paid_at
             ? new Date(freshQuote.deposit_paid_at).toLocaleDateString('en-GB', {
@@ -1402,8 +1411,7 @@ serve(async (req) => {
               })
             : null,
           // ELE-955 — booked slot info
-          isBooked:
-            !!(freshQuote?.booked_slot_start && freshQuote?.booked_slot_end),
+          isBooked: !!(freshQuote?.booked_slot_start && freshQuote?.booked_slot_end),
           bookedSlotStart: freshQuote?.booked_slot_start
             ? new Date(freshQuote.booked_slot_start).toLocaleString('en-GB', {
                 weekday: 'short',
@@ -1435,8 +1443,7 @@ serve(async (req) => {
         // a single template snippet works for both. Falls back to the
         // company profile when no per-quote override is set.
         bank_details: (() => {
-          const bd =
-            freshQuote?.settings?.bankDetails || freshCompanyProfile?.bank_details || {};
+          const bd = freshQuote?.settings?.bankDetails || freshCompanyProfile?.bank_details || {};
           return {
             bank_name: bd?.bankName || bd?.bank_name || '',
             account_name:
@@ -1451,7 +1458,12 @@ serve(async (req) => {
           title: jobDetails.title || '',
           description: jobDetails.description || '',
           location: jobDetails.location || '',
-          estimatedDuration: jobDetails.estimatedDuration || jobDetails.estimated_duration || '',
+          // ELE-1165/1166 — when "Other" is chosen the real value lives in
+          // customDuration; resolve it here so the template never prints "Other".
+          estimatedDuration:
+            (jobDetails.estimatedDuration || jobDetails.estimated_duration) === 'Other'
+              ? jobDetails.customDuration || jobDetails.custom_duration || 'Other'
+              : jobDetails.estimatedDuration || jobDetails.estimated_duration || '',
           customDuration: jobDetails.customDuration || jobDetails.custom_duration || '',
           workStartDate: jobDetails.workStartDate || jobDetails.work_start_date || '',
           specialRequirements:
@@ -1511,17 +1523,17 @@ serve(async (req) => {
         branding: {
           // ELE-1077 — both colours pure black is the broken legacy default,
           // not a brand choice; treat as unset so PDFs aren't all-black.
-          primaryColor:
-            freshCompanyProfile?.primary_color &&
-            !(freshCompanyProfile.primary_color === '#000000' && freshCompanyProfile?.secondary_color === '#000000')
-              ? freshCompanyProfile.primary_color
-              : '#1e40af',
+          // ELE-1168 — accent-driven brand colour (see brandPrimary above).
+          primaryColor: brandPrimary,
           secondaryColor:
             freshCompanyProfile?.secondary_color &&
-            !(freshCompanyProfile.primary_color === '#000000' && freshCompanyProfile?.secondary_color === '#000000')
+            !(
+              freshCompanyProfile.primary_color === '#000000' &&
+              freshCompanyProfile?.secondary_color === '#000000'
+            )
               ? freshCompanyProfile.secondary_color
               : '#1F2937',
-          accentColor: freshCompanyProfile?.accent_color || '#F59E0B',
+          accentColor: brandAccent,
         },
         // Business settings
         settings: {
@@ -1551,14 +1563,15 @@ serve(async (req) => {
         useVat: quoteSettings.vatRegistered === true,
         vatRate: quoteSettings.vatRate || 20,
         // Linked certificate (if quote was created from an EICR/EIC/Minor Works cert)
-        linkedCertificate: (freshQuote?.linked_certificate_id || freshQuote?.linked_certificate_type)
-          ? {
-              id: freshQuote?.linked_certificate_id || null,
-              type: freshQuote?.linked_certificate_type || null,
-              reference: freshQuote?.linked_certificate_reference || null,
-              pdfUrl: freshQuote?.linked_certificate_pdf_url || null,
-            }
-          : null,
+        linkedCertificate:
+          freshQuote?.linked_certificate_id || freshQuote?.linked_certificate_type
+            ? {
+                id: freshQuote?.linked_certificate_id || null,
+                type: freshQuote?.linked_certificate_type || null,
+                reference: freshQuote?.linked_certificate_reference || null,
+                pdfUrl: freshQuote?.linked_certificate_pdf_url || null,
+              }
+            : null,
         // Cache busting timestamp
         _cache_bust: Date.now(),
         _generated_at: new Date().toISOString(),
@@ -1661,7 +1674,11 @@ serve(async (req) => {
       }
     );
   } catch (error) {
-    await captureException(error, { functionName: 'generate-pdf-monkey', requestUrl: req.url, requestMethod: req.method });
+    await captureException(error, {
+      functionName: 'generate-pdf-monkey',
+      requestUrl: req.url,
+      requestMethod: req.method,
+    });
     console.error('[PDF-MONKEY] Error:', error.message);
     return new Response(JSON.stringify({ error: error.message }), {
       status: 500,

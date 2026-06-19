@@ -35,7 +35,7 @@ const inputClass =
 
 const labelClass = 'text-[11px] font-medium uppercase tracking-wider text-white/65 mb-1.5 block';
 
-export const JobDetailsStep = ({ jobDetails, onUpdate }: JobDetailsStepProps) => {
+const JobDetailsStepInner = ({ jobDetails, onUpdate }: JobDetailsStepProps) => {
   const [showOptional, setShowOptional] = useState(false);
   const [dateOpen, setDateOpen] = useState(false);
 
@@ -121,7 +121,10 @@ export const JobDetailsStep = ({ jobDetails, onUpdate }: JobDetailsStepProps) =>
           <label className={labelClass}>Proposed start date</label>
           {startTbd ? (
             <div
-              className={cn(inputClass, 'flex items-center justify-between text-left text-white/70')}
+              className={cn(
+                inputClass,
+                'flex items-center justify-between text-left text-white/70'
+              )}
             >
               To be decided
               <CalendarIcon className="ml-2 h-4 w-4 flex-shrink-0 text-white/30" />
@@ -226,3 +229,7 @@ export const JobDetailsStep = ({ jobDetails, onUpdate }: JobDetailsStepProps) =>
     </div>
   );
 };
+
+// Memoised (ELE-1163) so the step only re-renders when its own props change,
+// not on every unrelated quote-state update during typing.
+export const JobDetailsStep = React.memo(JobDetailsStepInner);
