@@ -106,6 +106,15 @@ const RecoverUnsavedWork: React.FC<RecoverUnsavedWorkProps> = ({ onNavigate, cla
     toast({ title: 'Draft opened', description: 'Continue where you left off.' });
   };
 
+  // ELE-1162 — Opening the confirm AlertDialog while the Sheet is still open
+  // mounts two radix dialogs at once; their focus-traps and scroll-locks collide
+  // and freeze the page. When a delete is triggered from INSIDE the sheet, close
+  // the sheet first, then open the confirm once it has finished unmounting.
+  const confirmFromSheet = (open: () => void) => {
+    setShowSheet(false);
+    setTimeout(open, 280); // ~ sheet exit animation
+  };
+
   const handleDelete = async () => {
     if (!user) return;
     setIsDeleting(true);
@@ -293,7 +302,7 @@ const RecoverUnsavedWork: React.FC<RecoverUnsavedWorkProps> = ({ onNavigate, cla
                     {/* Delete + chevron */}
                     <div className="flex items-center gap-0.5 pr-2 flex-shrink-0">
                       <button
-                        onClick={() => setDeleteTarget(draft)}
+                        onClick={() => confirmFromSheet(() => setDeleteTarget(draft))}
                         className="w-8 h-8 rounded-lg flex items-center justify-center text-white/30 hover:text-red-400 hover:bg-red-500/10 transition-colors touch-manipulation"
                       >
                         <Trash2 className="h-3.5 w-3.5" />
@@ -309,7 +318,7 @@ const RecoverUnsavedWork: React.FC<RecoverUnsavedWorkProps> = ({ onNavigate, cla
           {/* Sheet footer */}
           <div className="flex-shrink-0 px-5 py-4 border-t border-white/[0.06]">
             <button
-              onClick={() => setDeleteAll(true)}
+              onClick={() => confirmFromSheet(() => setDeleteAll(true))}
               className="w-full h-11 rounded-xl bg-red-500/10 border border-red-500/20 text-red-400 text-sm font-medium flex items-center justify-center gap-2 active:scale-[0.98] transition-all touch-manipulation"
             >
               <Trash2 className="h-4 w-4" />

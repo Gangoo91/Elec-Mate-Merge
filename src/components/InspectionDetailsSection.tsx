@@ -5,7 +5,15 @@ import { Label } from '@/components/ui/label';
 import { Textarea } from '@/components/ui/textarea';
 import FormSelectSheet from '@/components/ui/form-select-sheet';
 import { Button } from '@/components/ui/button';
-import { Calendar, Calculator, ClipboardList, CalendarCheck, Telescope, Info } from 'lucide-react';
+import {
+  Calendar,
+  Calculator,
+  ClipboardList,
+  CalendarCheck,
+  Telescope,
+  Info,
+  Eraser,
+} from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { useIsMobile } from '@/hooks/use-mobile';
 import { useHaptic } from '@/hooks/useHaptic';
@@ -138,8 +146,12 @@ const InspectionDetailsSectionInner = ({ formData, onUpdate }: InspectionDetails
     const fields = Object.keys(STANDARD_SCOPE_TEXT) as StandardScopeField[];
     let filled = 0;
     fields.forEach((field) => {
-      const current = (formData[field] || '').trim();
-      if (!current && !isFieldMarker(formData[field])) {
+      // Fill blanks AND N/A markers (ELE-1169): inspectors often set Limitations
+      // to "N/A", and an explicit "Apply" should replace that — only genuinely
+      // typed text is preserved.
+      const hasRealText =
+        !!(formData[field] || '').toString().trim() && !isFieldMarker(formData[field]);
+      if (!hasRealText) {
         onUpdate(field, STANDARD_SCOPE_TEXT[field]);
         filled += 1;
       }
@@ -161,6 +173,10 @@ const InspectionDetailsSectionInner = ({ formData, onUpdate }: InspectionDetails
   );
 
   useEffect(() => {
+    // A DUPLICATED cert loads with the source's scope already populated. Don't
+    // let that carried-over text overwrite the inspector's own saved scope
+    // (ELE-1160) — only genuine edits on a normal cert should update the store.
+    if (formData.duplicatedFrom) return;
     const fields = Object.keys(STANDARD_SCOPE_TEXT) as StandardScopeField[];
     const trio = {} as SavedScope;
     let hasText = false;
@@ -188,9 +204,11 @@ const InspectionDetailsSectionInner = ({ formData, onUpdate }: InspectionDetails
     const fields = Object.keys(STANDARD_SCOPE_TEXT) as StandardScopeField[];
     let filled = 0;
     fields.forEach((field) => {
-      const current = (formData[field] || '').trim();
       const saved = (savedScope[field] || '').trim();
-      if (saved && !current && !isFieldMarker(formData[field])) {
+      // Fill blanks AND N/A markers (ELE-1169) — only genuinely typed text is kept.
+      const hasRealText =
+        !!(formData[field] || '').toString().trim() && !isFieldMarker(formData[field]);
+      if (saved && !hasRealText) {
         onUpdate(field, savedScope[field]);
         filled += 1;
       }
@@ -204,6 +222,25 @@ const InspectionDetailsSectionInner = ({ formData, onUpdate }: InspectionDetails
           : 'All scope fields already contain text — nothing was overwritten.',
     });
   }, [savedScope, formData, haptic, onUpdate, toast]);
+
+  // Escape hatch (ELE-1160): a duplicated cert carries the source's scope text,
+  // which the blank-only Apply buttons can't overwrite — leaving the inspector
+  // stuck with stale wording. Let them clear the scope fields in one tap, then
+  // re-apply their saved/standard wording.
+  const clearScope = useCallback(() => {
+    haptic.light();
+    (['extentOfInspection', 'limitationsOfInspection', 'operationalLimitations'] as const).forEach(
+      (f) => onUpdate(f, '')
+    );
+    toast({
+      title: 'Scope cleared',
+      description: 'Now tap Apply my saved or Apply standard wording.',
+    });
+  }, [haptic, onUpdate, toast]);
+
+  const hasScopeText = (
+    ['extentOfInspection', 'limitationsOfInspection', 'operationalLimitations'] as const
+  ).some((f) => ((formData[f] || '') as string).trim() && !isFieldMarker(formData[f]));
 
   // Get recommended interval based on property type
   const getRecommendedInterval = (propertyType: string) => {
@@ -435,6 +472,17 @@ const InspectionDetailsSectionInner = ({ formData, onUpdate }: InspectionDetails
         <div className="space-y-3 py-3">
           {/* Scope wording shortcuts — fill blank fields in one tap */}
           <div className="flex justify-end gap-2 -mt-1">
+            {hasScopeText && (
+              <Button
+                type="button"
+                variant="ghost"
+                onClick={clearScope}
+                className="h-8 gap-1.5 px-2.5 text-xs font-medium text-white/60 hover:text-white hover:bg-white/[0.06] touch-manipulation"
+              >
+                <Eraser className="h-3.5 w-3.5" />
+                Clear scope
+              </Button>
+            )}
             {hasSavedScope && (
               <Button
                 type="button"

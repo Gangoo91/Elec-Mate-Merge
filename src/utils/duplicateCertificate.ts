@@ -90,9 +90,13 @@ const IDENTITY_FIELDS_TO_STRIP = [
   'acceptanceStatus',
   'clientSignature',
   'clientSignatureDate',
-  // Defects/observations — specific to that property
+  // Defects/observations + client-specific scope — specific to that property
   'defectObservations',
   'observations',
+  // Who the inspection scope was agreed with — the previous client's name; must
+  // not carry into a new cert (ELE-1160). extentOfInspection is deliberately
+  // kept: it's generic BS 7671 boilerplate reused across the block-of-flats flow.
+  'agreedWith',
   'limitationsOfInspection',
   'operationalLimitations',
   // Photos — uploaded to that specific cert

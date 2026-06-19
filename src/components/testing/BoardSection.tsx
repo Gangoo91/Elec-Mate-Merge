@@ -19,12 +19,7 @@ import {
 import { cn } from '@/lib/utils';
 import { DistributionBoard, MAIN_BOARD_ID, isMainBoard as isMainBoardFn } from '@/types/distributionBoard';
 import { MobileSelectPicker } from '@/components/ui/mobile-select-picker';
-import {
-  SPD_MAKES,
-  getSpdModelsForMake,
-  SPD_LOCATIONS,
-  SPD_RATED_KA,
-} from '@/constants/spdData';
+import { SPD_MAKES, SPD_LOCATIONS } from '@/constants/spdData';
 import {
   FieldLimitationBadge,
   isFieldMarker,
@@ -785,8 +780,11 @@ const BoardSection: React.FC<BoardSectionProps> = ({
                     </div>
                   </div>
 
-                  {/* Details grid — Location / Make / Model / Rated kA */}
-                  <div className="grid grid-cols-2 lg:grid-cols-4 gap-3">
+                  {/* Details grid — Location / Make.
+                      Model + Rated kA fields removed per ELE-1161 (Craig Soper).
+                      spdModel / spdRatedCurrentKa remain in the data model + PDF
+                      formatter so existing saved certs keep their values. */}
+                  <div className="grid grid-cols-2 gap-3">
                     <div className="space-y-1.5">
                       <Label className="text-[11px] font-semibold text-white uppercase tracking-wider">
                         Location
@@ -832,52 +830,6 @@ const BoardSection: React.FC<BoardSectionProps> = ({
                           triggerClassName="h-11 bg-white/[0.03] border-white/[0.08] rounded-lg text-white [&>span]:text-white data-[placeholder]:text-white [&[data-placeholder]>span]:text-white hover:bg-white/[0.05] transition-colors"
                         />
                       )}
-                    </div>
-                    <div className="space-y-1.5">
-                      <Label className="text-[11px] font-semibold text-white uppercase tracking-wider">
-                        Model
-                      </Label>
-                      {/* ELE-871 — free text when model isn't in dropdown for the make */}
-                      {board.spdModel &&
-                      !getSpdModelsForMake(board.spdMake || '').some(
-                        (o) => o.value === board.spdModel
-                      ) ? (
-                        <Input
-                          value={board.spdModel}
-                          onChange={(e) => onUpdateBoard(board.id, 'spdModel', e.target.value)}
-                          placeholder="Enter SPD model"
-                          className="h-11 bg-white/[0.03] border-white/[0.08] text-white placeholder:text-white/40"
-                        />
-                      ) : (
-                        <MobileSelectPicker
-                          value={board.spdModel || ''}
-                          onValueChange={(v) => {
-                            const next = v === '__custom__' ? 'Custom' : v;
-                            onUpdateBoard(board.id, 'spdModel', next);
-                          }}
-                          options={[
-                            ...getSpdModelsForMake(board.spdMake || ''),
-                            { value: '__custom__', label: 'Other (type your own)…' },
-                          ]}
-                          placeholder={board.spdMake ? 'Select' : 'Pick make first'}
-                          title="SPD Model"
-                          disabled={!board.spdMake}
-                          triggerClassName="h-11 bg-white/[0.03] border-white/[0.08] rounded-lg text-white [&>span]:text-white data-[placeholder]:text-white [&[data-placeholder]>span]:text-white hover:bg-white/[0.05] transition-colors"
-                        />
-                      )}
-                    </div>
-                    <div className="space-y-1.5">
-                      <Label className="text-[11px] font-semibold text-white uppercase tracking-wider">
-                        Rated kA
-                      </Label>
-                      <MobileSelectPicker
-                        value={board.spdRatedCurrentKa || ''}
-                        onValueChange={(v) => onUpdateBoard(board.id, 'spdRatedCurrentKa', v)}
-                        options={SPD_RATED_KA}
-                        placeholder="Select"
-                        title="Rated kA"
-                        triggerClassName="h-11 bg-white/[0.03] border-white/[0.08] rounded-lg text-white [&>span]:text-white data-[placeholder]:text-white [&[data-placeholder]>span]:text-white hover:bg-white/[0.05] transition-colors"
-                      />
                     </div>
                   </div>
                 </div>
