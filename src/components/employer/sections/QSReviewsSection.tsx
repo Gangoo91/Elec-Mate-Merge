@@ -11,6 +11,7 @@ import { useEffect } from 'react';
 import { supabase } from '@/integrations/supabase/client';
 import SignatureInput from '@/components/signature/SignatureInput';
 import QsCertReviewBody from '@/components/employer/sections/QsCertReviewBody';
+import { ReportPdfViewer } from '@/components/reports/ReportPdfViewer';
 import {
   ListCard,
   ListCardHeader,
@@ -69,7 +70,16 @@ export function QSReviewsSection() {
             const ok = await openPrintRegister({
               title: 'QS Review Register',
               subtitle: 'Qualifying Supervisor certificate sign-off record',
-              columns: ['Certificate', 'Type', 'Client', 'Electrician', 'Submitted', 'Status', 'Reviewed by', 'Reviewed'],
+              columns: [
+                'Certificate',
+                'Type',
+                'Client',
+                'Electrician',
+                'Submitted',
+                'Status',
+                'Reviewed by',
+                'Reviewed',
+              ],
               rows: items.map((it) => [
                 it.report_id,
                 it.report_type.toUpperCase(),
@@ -193,6 +203,7 @@ function QsReviewDetailSheet({ item, onClose }: { item: QsQueueItem | null; onCl
   const [signature, setSignature] = useState<string | null>(null);
   const [comments, setComments] = useState('');
   const [mode, setMode] = useState<'view' | 'approve' | 'return'>('view');
+  const [pdfOpen, setPdfOpen] = useState(false);
 
   // Pre-fill the reviewer's name from their profile — typing it every
   // approval is needless friction.
@@ -340,14 +351,23 @@ function QsReviewDetailSheet({ item, onClose }: { item: QsQueueItem | null; onCl
                       </p>
                     </div>
                   )}
-                  {detail?.report?.pdf_url && (
-                    <button
-                      type="button"
-                      onClick={() => window.open(detail.report.pdf_url!, '_blank')}
-                      className="text-[12px] font-medium text-elec-yellow touch-manipulation"
-                    >
-                      View generated PDF →
-                    </button>
+                  {item?.report_id && (
+                    <>
+                      <button
+                        type="button"
+                        onClick={() => setPdfOpen(true)}
+                        className="text-[12px] font-medium text-elec-yellow touch-manipulation"
+                      >
+                        View PDF →
+                      </button>
+                      {/* Shared I&T viewer — generates the cert PDF on demand,
+                          so it works even when pdf_url was never pre-stored. */}
+                      <ReportPdfViewer
+                        reportId={item.report_id}
+                        open={pdfOpen}
+                        onOpenChange={setPdfOpen}
+                      />
+                    </>
                   )}
                 </div>
 

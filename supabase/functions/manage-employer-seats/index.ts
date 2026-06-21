@@ -13,7 +13,8 @@ import Stripe from 'https://esm.sh/stripe@14.21.0?target=deno';
 
 const corsHeaders = {
   'Access-Control-Allow-Origin': '*',
-  'Access-Control-Allow-Headers': 'authorization, x-client-info, apikey, content-type, x-supabase-timeout, x-request-id',
+  'Access-Control-Allow-Headers':
+    'authorization, x-client-info, apikey, content-type, x-supabase-timeout, x-request-id',
 };
 
 Deno.serve(async (req) => {
@@ -75,7 +76,20 @@ Deno.serve(async (req) => {
       status: 'active',
       limit: 5,
     });
-    const sub = subs.data[0];
+    // Target the EMPLOYER base subscription specifically. An employer may also
+    // hold a Mate/electrician subscription, so never blindly take data[0].
+    // Prefer the sub that already carries the seat item, else the one with the
+    // employer base price, else fall back to the first active sub.
+    const EMPLOYER_BASE_PRICE_IDS = [
+      'price_1SlyAT2RKw5t5RAmUmTRGimH', // employer monthly
+      'price_1SlyB82RKw5t5RAmN447YJUW', // employer annual
+    ];
+    const subHasPrice = (s: Stripe.Subscription, ids: string[]) =>
+      s.items.data.some((i) => ids.includes(i.price.id));
+    const sub =
+      subs.data.find((s) => subHasPrice(s, [seatPriceId])) ??
+      subs.data.find((s) => subHasPrice(s, EMPLOYER_BASE_PRICE_IDS)) ??
+      subs.data[0];
     if (!sub) {
       return new Response(JSON.stringify({ success: true, status: 'no_active_subscription' }), {
         headers: { ...corsHeaders, 'Content-Type': 'application/json' },

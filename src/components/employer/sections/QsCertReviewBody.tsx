@@ -337,18 +337,331 @@ function Limitations({ data }: { data: CertData }) {
   );
 }
 
+/* ── Detail rows (label / value list) ─────────────────────────────────────── */
+
+function DetailRows({ rows }: { rows: { label: string; value: string }[] }) {
+  if (rows.length === 0) return null;
+  return (
+    <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-5 gap-y-1.5">
+      {rows.map((r) => (
+        <div
+          key={r.label}
+          className="flex items-baseline justify-between gap-3 border-b border-white/[0.04] pb-1"
+        >
+          <span className="text-[11px] text-white/40 shrink-0">{r.label}</span>
+          <span className="text-[12.5px] text-white/85 text-right break-words">{r.value}</span>
+        </div>
+      ))}
+    </div>
+  );
+}
+
+// Build a label/value list, skipping blank fields.
+function buildRows(
+  data: CertData,
+  spec: { label: string; keys: string[]; suffix?: string; join?: string }[]
+): { label: string; value: string }[] {
+  const rows: { label: string; value: string }[] = [];
+  for (const s of spec) {
+    const parts = s.keys
+      .map((k) => data?.[k])
+      .filter((v) => present(v))
+      .map(asText);
+    if (parts.length === 0) continue;
+    rows.push({ label: s.label, value: parts.join(s.join ?? ' ') + (s.suffix ?? '') });
+  }
+  return rows;
+}
+
+/* ── Installation & purpose ───────────────────────────────────────────────── */
+
+function InstallationDetails({ data }: { data: CertData }) {
+  const rows = buildRows(data, [
+    { label: 'Client', keys: ['clientName'] },
+    { label: 'Occupier', keys: ['occupier'] },
+    { label: 'Installation', keys: ['installationAddress'] },
+    { label: 'Type', keys: ['installationType'] },
+    { label: 'Property', keys: ['propertyType'] },
+    { label: 'Purpose', keys: ['purposeOfInspection', 'otherPurpose'] },
+    { label: 'Extent', keys: ['extentOfInspection'] },
+    { label: 'Last inspection', keys: ['dateOfLastInspection'] },
+  ]);
+  if (rows.length === 0) return null;
+  return (
+    <div className="space-y-2.5">
+      <SectionTitle dot="bg-white/50">Installation &amp; purpose</SectionTitle>
+      <DetailRows rows={rows} />
+    </div>
+  );
+}
+
+/* ── Supply & earthing ────────────────────────────────────────────────────── */
+
+function SupplyEarthing({ reportType, data }: QsCertReviewBodyProps) {
+  if (reportType === 'minor-works') return null;
+  const rows = buildRows(data, [
+    { label: 'Earthing system', keys: ['earthingArrangement'] },
+    { label: 'Supply type', keys: ['supplyType'] },
+    { label: 'Voltage', keys: ['supplyVoltage', 'supplyVoltageCustom'], suffix: ' V', join: '' },
+    { label: 'Frequency', keys: ['supplyFrequency'] },
+    { label: 'Phases', keys: ['phases'] },
+    { label: 'PFC', keys: ['prospectiveFaultCurrent'], suffix: ' kA' },
+    { label: 'Ze (external)', keys: ['externalZe'], suffix: ' Ω' },
+    { label: 'Main switch', keys: ['mainSwitchType', 'mainSwitchRating'] },
+    { label: 'Main switch BS EN', keys: ['mainSwitchBsEn'] },
+    {
+      label: 'Earthing conductor',
+      keys: ['mainEarthingConductorType', 'mainEarthingConductorSize'],
+    },
+    { label: 'Main bonding', keys: ['mainBondingConductorType', 'mainBondingSize'] },
+    { label: 'Max demand', keys: ['maximumDemand', 'maximumDemandUnit'] },
+  ]);
+  if (rows.length === 0) return null;
+  return (
+    <div className="space-y-2.5">
+      <SectionTitle dot="bg-purple-400">Supply &amp; earthing</SectionTitle>
+      <DetailRows rows={rows} />
+    </div>
+  );
+}
+
+/* ── Schedule of inspections (the visual-inspection checklist) ─────────────── */
+
+function normaliseOutcome(outcome: unknown): string {
+  return asText(outcome)
+    .toLowerCase()
+    .replace(/[^a-z0-9]/g, '');
+}
+
+// Anything that isn't a clean pass / N-A is worth the QS's eye.
+function isFlaggedOutcome(outcome: unknown): boolean {
+  const o = normaliseOutcome(outcome);
+  return ![
+    'satisfactory',
+    'acceptable',
+    'pass',
+    'ok',
+    'na',
+    'notapplicable',
+    'lim',
+    'limitation',
+    '',
+  ].includes(o);
+}
+
+function OutcomeBadge({ outcome }: { outcome: unknown }) {
+  const o = normaliseOutcome(outcome);
+  const raw = asText(outcome);
+  let style = 'border-emerald-400/30 text-emerald-300';
+  let label = raw || '—';
+  if (o === 'c1' || o === 'unsatisfactory') {
+    style = CODE_STYLE.C1;
+    label = o === 'c1' ? 'C1' : 'Unsat.';
+  } else if (o === 'c2') {
+    style = CODE_STYLE.C2;
+    label = 'C2';
+  } else if (o === 'c3') {
+    style = CODE_STYLE.C3;
+    label = 'C3';
+  } else if (o === 'fi') {
+    style = CODE_STYLE.FI;
+    label = 'FI';
+  } else if (o === 'na' || o === 'notapplicable') {
+    style = 'border-white/15 text-white/40';
+    label = 'N/A';
+  } else if (o === 'lim' || o === 'limitation') {
+    style = 'bg-amber-500/10 border-amber-500/30 text-amber-200';
+    label = 'LIM';
+  } else if (o === 'satisfactory' || o === 'acceptable' || o === 'pass' || o === 'ok') {
+    label = '✓';
+  }
+  return (
+    <span
+      className={cn(
+        'text-[10px] font-semibold uppercase tracking-wide border rounded px-1.5 py-0.5 shrink-0',
+        style
+      )}
+    >
+      {label}
+    </span>
+  );
+}
+
+function ScheduleOfInspections({ reportType, data }: QsCertReviewBodyProps) {
+  const [showAll, setShowAll] = useState(false);
+  if (reportType === 'minor-works') return null;
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const items: any[] = Array.isArray(data?.inspectionItems) ? data.inspectionItems : [];
+  if (items.length === 0) return null;
+
+  const flaggedCount = items.filter((it) => isFlaggedOutcome(it?.outcome)).length;
+  // Default to the items a QS must scrutinise; full list on demand.
+  const visible = showAll ? items : items.filter((it) => isFlaggedOutcome(it?.outcome));
+
+  // Group visible items by their schedule section.
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const groups = new Map<string, any[]>();
+  for (const it of visible) {
+    const key = [it?.sectionNumber, it?.section].filter(Boolean).join(' · ') || 'Other';
+    if (!groups.has(key)) groups.set(key, []);
+    groups.get(key)!.push(it);
+  }
+
+  return (
+    <div className="space-y-2.5">
+      <SectionTitle dot="bg-cyan-400">
+        Schedule of inspections ({items.length}
+        {flaggedCount > 0 ? ` · ${flaggedCount} to review` : ' · all satisfactory'})
+      </SectionTitle>
+
+      {visible.length === 0 ? (
+        <p className="text-sm text-white/50">
+          No items flagged.{' '}
+          <button
+            type="button"
+            onClick={() => setShowAll(true)}
+            className="text-elec-yellow touch-manipulation"
+          >
+            Show all {items.length} items →
+          </button>
+        </p>
+      ) : (
+        <div className="space-y-3">
+          {[...groups.entries()].map(([section, rows]) => (
+            <div key={section} className="space-y-1.5">
+              <p className="text-[10px] uppercase tracking-[0.12em] text-white/40">{section}</p>
+              {rows.map((it, i) => (
+                <div
+                  key={it?.id || i}
+                  className="flex items-start gap-2.5 border-b border-white/[0.04] pb-1.5"
+                >
+                  <span className="text-[11px] text-white/40 tabular-nums shrink-0 w-8">
+                    {asText(it?.number)}
+                  </span>
+                  <div className="flex-1 min-w-0">
+                    <p className="text-[12.5px] text-white/85">{asText(it?.item)}</p>
+                    {present(it?.clause) && (
+                      <p className="text-[10px] text-white/35">Reg {asText(it.clause)}</p>
+                    )}
+                    {present(it?.notes) && (
+                      <p className="text-[11px] text-white/55 mt-0.5 whitespace-pre-wrap">
+                        {asText(it.notes)}
+                      </p>
+                    )}
+                  </div>
+                  <OutcomeBadge outcome={it?.outcome} />
+                </div>
+              ))}
+            </div>
+          ))}
+
+          {!showAll && flaggedCount > 0 && (
+            <button
+              type="button"
+              onClick={() => setShowAll(true)}
+              className="flex items-center gap-1 text-[12px] font-medium text-elec-yellow touch-manipulation"
+            >
+              <ChevronDown className="h-3.5 w-3.5" />
+              Show all {items.length} inspection items
+            </button>
+          )}
+          {showAll && (
+            <button
+              type="button"
+              onClick={() => setShowAll(false)}
+              className="text-[12px] font-medium text-elec-yellow touch-manipulation"
+            >
+              Show flagged only
+            </button>
+          )}
+        </div>
+      )}
+    </div>
+  );
+}
+
+/* ── Distribution boards ──────────────────────────────────────────────────── */
+
+function DistributionBoards({ reportType, data }: QsCertReviewBodyProps) {
+  if (reportType === 'minor-works') return null;
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const boards: any[] = Array.isArray(data?.distributionBoards) ? data.distributionBoards : [];
+  if (boards.length === 0) return null;
+  return (
+    <div className="space-y-2.5">
+      <SectionTitle dot="bg-blue-400">Distribution boards ({boards.length})</SectionTitle>
+      <div className="space-y-2.5">
+        {boards.map((b, i) => (
+          <div key={b?.id || i} className="rounded-xl border border-white/[0.06] p-3">
+            <p className="text-[13px] font-medium text-white">
+              {[b?.reference, b?.name].filter(Boolean).join(' — ') || `Board ${i + 1}`}
+            </p>
+            <div className="mt-1.5 flex flex-wrap gap-x-4 gap-y-1">
+              {present(b?.location) && <ValueChip label="Location" value={asText(b.location)} />}
+              {present(b?.type) && <ValueChip label="Type" value={asText(b.type)} />}
+              {present(b?.zdb) && <ValueChip label="Zdb" value={`${asText(b.zdb)}Ω`} />}
+              {present(b?.ipf) && <ValueChip label="IPF" value={`${asText(b.ipf)}kA`} />}
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
+  );
+}
+
+/* ── Overall outcome ──────────────────────────────────────────────────────── */
+
+function OverallOutcome({ reportType, data }: QsCertReviewBodyProps) {
+  if (reportType === 'minor-works') return null;
+  const assessment = asText(data?.overallAssessment || data?.satisfactoryForContinuedUse);
+  const a = assessment.toLowerCase();
+  const satisfactory = a === 'satisfactory' || a === 'yes';
+  const unsatisfactory = a === 'unsatisfactory' || a === 'no';
+  const rows = buildRows(data, [
+    { label: 'Next inspection', keys: ['nextInspectionDate'] },
+    { label: 'Interval', keys: ['inspectionInterval'] },
+    { label: 'Reason', keys: ['intervalReasons'] },
+  ]);
+  if (!present(assessment) && rows.length === 0) return null;
+  return (
+    <div className="space-y-2.5">
+      <SectionTitle dot="bg-green-400">Overall outcome</SectionTitle>
+      {present(assessment) && (
+        <span
+          className={cn(
+            'inline-block text-[11px] font-semibold uppercase tracking-wide border rounded px-2 py-0.5',
+            satisfactory
+              ? 'border-emerald-400/40 text-emerald-300'
+              : unsatisfactory
+                ? 'bg-red-500/20 border-red-500/40 text-red-300'
+                : 'border-white/20 text-white/70'
+          )}
+        >
+          {satisfactory ? 'Satisfactory' : unsatisfactory ? 'Unsatisfactory' : assessment}
+        </span>
+      )}
+      <DetailRows rows={rows} />
+    </div>
+  );
+}
+
 /* ── Composition ──────────────────────────────────────────────────────────── */
 
 export function QsCertReviewBody({ reportType, data }: QsCertReviewBodyProps) {
   return (
     <div className="space-y-5">
+      <InstallationDetails data={data} />
+      <SupplyEarthing reportType={reportType} data={data} />
+      <ScheduleOfInspections reportType={reportType} data={data} />
       <Observations reportType={reportType} data={data} />
       {reportType === 'minor-works' ? (
         <MinorWorksTests data={data} />
       ) : (
         <CircuitSchedule data={data} />
       )}
+      <DistributionBoards reportType={reportType} data={data} />
       <Limitations data={data} />
+      <OverallOutcome reportType={reportType} data={data} />
       <Declarations reportType={reportType} data={data} />
     </div>
   );

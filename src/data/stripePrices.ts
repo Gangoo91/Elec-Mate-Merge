@@ -40,6 +40,12 @@ export const stripePrices = {
   },
 };
 
+// Employer per-seat add-on (£9.99/mo). Billed as a quantity line-item on the
+// employer base subscription via the manage-employer-seats edge function.
+// The edge function reads the EMPLOYER_SEAT_PRICE_ID secret (same value);
+// this constant exists for reference and any client-side display.
+export const EMPLOYER_SEAT_PRICE_ID = 'price_1TkfWZ2RKw5t5RAmBPSZzc6X';
+
 // ─── Feature groups (shared between monthly / yearly — price differs only) ────
 const APPRENTICE_GROUPS: FeatureGroup[] = [
   {

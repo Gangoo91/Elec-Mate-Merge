@@ -6,11 +6,7 @@ import { useQueryClient } from '@tanstack/react-query';
 import { useToast } from '@/hooks/use-toast';
 import useSEO from '@/hooks/useSEO';
 import { ChevronLeft, RefreshCw } from 'lucide-react';
-import {
-  IconButton,
-  LoadingBlocks,
-  Eyebrow,
-} from '@/components/employer/editorial';
+import { IconButton, LoadingBlocks, Eyebrow } from '@/components/employer/editorial';
 
 const OverviewSection = lazy(() =>
   import('@/components/employer/sections/OverviewSection').then((m) => ({
@@ -149,6 +145,11 @@ const ClientPortalSection = lazy(() =>
     default: m.ClientPortalSection,
   }))
 );
+const ApprenticeProgressSection = lazy(() =>
+  import('@/components/employer/sections/ApprenticeProgressSection').then((m) => ({
+    default: m.ApprenticeProgressSection,
+  }))
+);
 const TalentPoolSection = lazy(() =>
   import('@/components/employer/sections/TalentPoolSection').then((m) => ({
     default: m.TalentPoolSection,
@@ -227,7 +228,6 @@ const SmartDocsHub = lazy(() =>
   import('@/components/employer/hubs/SmartDocsHub').then((m) => ({ default: m.SmartDocsHub }))
 );
 
-
 export type Section =
   | 'overview'
   | 'jobpacks'
@@ -251,6 +251,7 @@ export type Section =
   | 'testing'
   | 'clientportal'
   | 'talentpool'
+  | 'apprentices'
   | 'vacancies'
   | 'procurement'
   | 'expenses'
@@ -284,6 +285,7 @@ const getParentSection = (section: Section): Section => {
     timesheets: 'peoplehub',
     comms: 'peoplehub',
     talentpool: 'peoplehub',
+    apprentices: 'peoplehub',
     vacancies: 'peoplehub',
     quotes: 'financehub',
     tenders: 'financehub',
@@ -372,10 +374,15 @@ const sectionMetadata: Record<Section, SectionMeta> = {
     queryKeys: ['employer-employees', 'talentPool', 'vacancies'],
   },
   team: { eyebrow: 'People', title: 'Your Team', queryKeys: ['employer-employees'] },
-  elecid: { eyebrow: 'People', title: 'Credentials', queryKeys: ['employer-employees', 'certifications'] },
+  elecid: {
+    eyebrow: 'People',
+    title: 'Credentials',
+    queryKeys: ['employer-employees', 'certifications'],
+  },
   timesheets: { eyebrow: 'People', title: 'Timesheets', queryKeys: ['timesheets'] },
   comms: { eyebrow: 'People', title: 'Communications', queryKeys: ['communications'] },
   talentpool: { eyebrow: 'People', title: 'Talent Pool', queryKeys: ['talentPool'] },
+  apprentices: { eyebrow: 'People', title: 'Apprentices', queryKeys: ['apprentice-progress'] },
   vacancies: { eyebrow: 'People', title: 'Vacancies', queryKeys: ['vacancies', 'applications'] },
   financehub: {
     eyebrow: 'Hub',
@@ -385,7 +392,11 @@ const sectionMetadata: Record<Section, SectionMeta> = {
   quotes: { eyebrow: 'Finance', title: 'Quotes & Invoices', queryKeys: ['quotes', 'invoices'] },
   tenders: { eyebrow: 'Finance', title: 'Tenders', queryKeys: ['tenders'] },
   expenses: { eyebrow: 'Finance', title: 'Expenses', queryKeys: ['expenses'] },
-  procurement: { eyebrow: 'Finance', title: 'Procurement', queryKeys: ['procurement', 'suppliers'] },
+  procurement: {
+    eyebrow: 'Finance',
+    title: 'Procurement',
+    queryKeys: ['procurement', 'suppliers'],
+  },
   financials: { eyebrow: 'Finance', title: 'Job Financials', queryKeys: ['jobFinancials'] },
   reports: { eyebrow: 'Finance', title: 'Reports', queryKeys: ['reports'] },
   signatures: { eyebrow: 'Finance', title: 'Signatures' },
@@ -466,7 +477,6 @@ const EmployerDashboard = () => {
     }
     previousSectionRef.current = activeSection;
   }, [activeSection]);
-
 
   const handleNavigate = useCallback((section: Section | string) => {
     const sectionMap: Record<string, Section> = {
@@ -672,6 +682,8 @@ const EmployerDashboard = () => {
         return <SafetyHub onNavigate={handleNavigate} />;
       case 'talentpool':
         return <TalentPoolSection />;
+      case 'apprentices':
+        return <ApprenticeProgressSection />;
       case 'vacancies':
         return <JobVacanciesSection />;
       case 'procurement':
@@ -795,7 +807,13 @@ const EmployerDashboard = () => {
               transition={pageTransition}
               className="w-full"
             >
-              <Suspense fallback={<div className="mx-auto max-w-7xl pt-6"><LoadingBlocks /></div>}>
+              <Suspense
+                fallback={
+                  <div className="mx-auto max-w-7xl pt-6">
+                    <LoadingBlocks />
+                  </div>
+                }
+              >
                 {renderSection()}
               </Suspense>
             </motion.div>

@@ -37,6 +37,7 @@ import { useTimesheets } from '@/hooks/useTimesheets';
 import { useCommunicationStats } from '@/hooks/useCommunications';
 import { useElecIdProfiles } from '@/hooks/useElecId';
 import { useWorkerLocations } from '@/hooks/useWorkerLocations';
+import { useApprenticeProgress } from '@/hooks/useApprenticeProgress';
 
 interface PeopleHubProps {
   onNavigate: (section: Section) => void;
@@ -290,12 +291,17 @@ export function PeopleHub({ onNavigate }: PeopleHubProps) {
 
   /* ── Navigation ────────────────────────────────────────────── */
 
+  const { data: apprenticeRows } = useApprenticeProgress();
+  const apprenticeCount = apprenticeRows?.length ?? 0;
+  const apprenticeReviewsOverdue = apprenticeRows?.filter((r) => r.reviewOverdue).length ?? 0;
+
   const onOpenEmployees = () => onNavigate('team');
   const onOpenElecID = () => onNavigate('elecid');
   const onOpenTimesheets = () => onNavigate('timesheets');
   const onOpenComms = () => onNavigate('comms');
   const onOpenTalentPool = () => onNavigate('talentpool');
   const onOpenVacancies = () => onNavigate('vacancies');
+  const onOpenApprentices = () => onNavigate('apprentices');
 
   /* ── Alerts surfaced at top ─────────────────────────────────── */
 
@@ -701,6 +707,32 @@ export function PeopleHub({ onNavigate }: PeopleHubProps) {
             }
             cta="Open"
             onClick={onOpenVacancies}
+          />
+        </HubGrid>
+      </div>
+
+      {/* Development ──────────────────────────────────────── */}
+      <div className="space-y-4 sm:space-y-5">
+        <SectionHeader eyebrow="Training" title="Development" />
+        <HubGrid columns={2}>
+          <HubCard
+            tone="emerald"
+            number="07"
+            eyebrow="Apprentices"
+            title="Apprentice Progress"
+            description="Live college progress for apprentices on your books — off-the-job hours, attendance and EPA."
+            meta={
+              apprenticeCount > 0
+                ? `${apprenticeCount} apprentice${apprenticeCount === 1 ? '' : 's'}${apprenticeReviewsOverdue > 0 ? ` · ${apprenticeReviewsOverdue} review${apprenticeReviewsOverdue === 1 ? '' : 's'} overdue` : ''}`
+                : 'No apprentices linked yet'
+            }
+            badge={
+              apprenticeReviewsOverdue > 0 ? (
+                <Pill tone="red">{apprenticeReviewsOverdue} overdue</Pill>
+              ) : undefined
+            }
+            cta="Open"
+            onClick={onOpenApprentices}
           />
         </HubGrid>
       </div>

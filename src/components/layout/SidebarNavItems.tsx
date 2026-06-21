@@ -1,3 +1,5 @@
+import { EMPLOYER_ALLOWED_EMAILS } from '@/config/employerAccess';
+
 export type NavItem = {
   name: string;
   path: string;
@@ -38,11 +40,7 @@ export const mainNavItems: NavItem[] = [
     name: 'Employer Hub',
     path: '/employer',
     roles: ['visitor', 'apprentice', 'electrician', 'employer', 'admin', 'beta_tester'],
-    allowedEmails: [
-      'founder@elec-mate.com',
-      'andrewgangoo91@gmail.com',
-      'info@precisionei.co.uk',
-    ],
+    allowedEmails: EMPLOYER_ALLOWED_EMAILS,
   },
   {
     name: 'College Hub',

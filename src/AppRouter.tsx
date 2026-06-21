@@ -13,6 +13,7 @@ import Layout from '@/components/layout/Layout';
 import ProtectedRoute from '@/components/auth/ProtectedRoute';
 import PendingCollegeInviteRedeemer from '@/components/college/PendingCollegeInviteRedeemer';
 const CollegeGuard = lazy(() => import('@/components/auth/CollegeGuard'));
+const EmployerGuard = lazy(() => import('@/components/auth/EmployerGuard'));
 
 // Critical pages use lazyWithRetry for automatic retry on chunk failures
 const Walkthrough = lazyWithRetry(() => import('@/pages/Walkthrough'));
@@ -2018,7 +2019,9 @@ const AppRouter = () => {
               element={
                 <SentryErrorBoundary section="Employer Hub">
                   <LazyRoute>
-                    <EmployerDashboard />
+                    <EmployerGuard>
+                      <EmployerDashboard />
+                    </EmployerGuard>
                   </LazyRoute>
                 </SentryErrorBoundary>
               }

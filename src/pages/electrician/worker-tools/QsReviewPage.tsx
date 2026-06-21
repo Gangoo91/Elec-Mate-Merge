@@ -20,6 +20,7 @@ import { useToast } from '@/hooks/use-toast';
 import { openPrintRegister } from '@/utils/printRegister';
 import SignatureInput from '@/components/signature/SignatureInput';
 import QsCertReviewBody from '@/components/employer/sections/QsCertReviewBody';
+import { ReportPdfViewer } from '@/components/reports/ReportPdfViewer';
 import { WorkerToolPage } from '@/pages/electrician/worker-tools/WorkerToolPage';
 import {
   StatStrip,
@@ -382,8 +383,18 @@ function QueueAndDetail({
             accent: counts.pending > 0,
             onClick: () => setTab('pending'),
           },
-          { label: 'Approved', value: counts.approved, tone: 'emerald', onClick: () => setTab('approved') },
-          { label: 'Returned', value: counts.returned, tone: 'red', onClick: () => setTab('returned') },
+          {
+            label: 'Approved',
+            value: counts.approved,
+            tone: 'emerald',
+            onClick: () => setTab('approved'),
+          },
+          {
+            label: 'Returned',
+            value: counts.returned,
+            tone: 'red',
+            onClick: () => setTab('returned'),
+          },
           { label: 'Total', value: allItems.length, onClick: () => setTab('all') },
         ]}
       />
@@ -429,6 +440,7 @@ function QsReviewDetail({ item, onBack }: { item: QsQueueItem; onBack: () => voi
   const [signature, setSignature] = useState<string | null>(null);
   const [comments, setComments] = useState('');
   const [mode, setMode] = useState<'view' | 'approve' | 'return'>('view');
+  const [pdfOpen, setPdfOpen] = useState(false);
 
   // Pre-fill the reviewer's name from their profile — typing it every
   // approval is needless friction.
@@ -542,8 +554,8 @@ function QsReviewDetail({ item, onBack }: { item: QsQueueItem; onBack: () => voi
       {!isLoading && isError && (
         <div className="rounded-2xl border border-orange-500/30 bg-orange-500/10 px-4 py-3">
           <p className="text-sm text-orange-300">
-            This certificate is no longer available — it may have been deleted by the electrician. It
-            cannot be reviewed.
+            This certificate is no longer available — it may have been deleted by the electrician.
+            It cannot be reviewed.
           </p>
         </div>
       )}
@@ -572,15 +584,23 @@ function QsReviewDetail({ item, onBack }: { item: QsQueueItem; onBack: () => voi
                 <p className="text-sm text-white/80 whitespace-pre-wrap">{item.submitted_note}</p>
               </div>
             )}
-            {detail?.report?.pdf_url && (
-              <button
-                type="button"
-                onClick={() => window.open(detail.report.pdf_url!, '_blank')}
-                className="inline-flex items-center gap-1.5 text-[12.5px] font-medium text-elec-yellow touch-manipulation"
-              >
-                View generated PDF
-                <ExternalLink className="h-3.5 w-3.5" />
-              </button>
+            {item?.report_id && (
+              <>
+                <button
+                  type="button"
+                  onClick={() => setPdfOpen(true)}
+                  className="inline-flex items-center gap-1.5 text-[12.5px] font-medium text-elec-yellow touch-manipulation"
+                >
+                  View PDF
+                  <ExternalLink className="h-3.5 w-3.5" />
+                </button>
+                {/* Shared I&T viewer — generates the cert PDF on demand. */}
+                <ReportPdfViewer
+                  reportId={item.report_id}
+                  open={pdfOpen}
+                  onOpenChange={setPdfOpen}
+                />
+              </>
             )}
           </div>
 
@@ -690,12 +710,7 @@ function QsReviewDetail({ item, onBack }: { item: QsQueueItem; onBack: () => voi
                 />
               </Field>
               <div className="flex flex-col gap-3">
-                <DestructiveButton
-                  size="lg"
-                  fullWidth
-                  disabled={!canReturn}
-                  onClick={handleReturn}
-                >
+                <DestructiveButton size="lg" fullWidth disabled={!canReturn} onClick={handleReturn}>
                   {isWorking ? (
                     <Loader2 className="h-4 w-4 mr-2 animate-spin" />
                   ) : (

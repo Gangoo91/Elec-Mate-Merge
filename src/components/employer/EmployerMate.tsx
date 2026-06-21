@@ -2,6 +2,7 @@ import { useEffect, useRef, useState } from 'react';
 import ReactMarkdown from 'react-markdown';
 import remarkGfm from 'remark-gfm';
 import jsPDF from 'jspdf';
+import { getBrandColour, ensureSpace, addAccentBar } from '@/utils/pdfBrand';
 import { Sheet, SheetContent, SheetTitle, SheetDescription } from '@/components/ui/sheet';
 import { supabase, SUPABASE_URL, SUPABASE_PUBLISHABLE_KEY } from '@/integrations/supabase/client';
 import { Sparkles, ArrowUp, X, Loader2, Copy, Check, FileDown } from 'lucide-react';
@@ -13,11 +14,14 @@ const markdownClass =
 function downloadPdf(text: string) {
   const doc = new jsPDF({ unit: 'pt', format: 'a4' });
   const margin = 48;
+  const lineHeight = 15;
+  const brand = getBrandColour();
   const pageW = doc.internal.pageSize.getWidth();
-  const pageH = doc.internal.pageSize.getHeight();
   const width = pageW - margin * 2;
+  addAccentBar(doc, brand, 6);
   doc.setFont('helvetica', 'bold');
   doc.setFontSize(15);
+  doc.setTextColor(brand[0], brand[1], brand[2]);
   doc.text('Employer Mate', margin, margin);
   doc.setFont('helvetica', 'normal');
   doc.setFontSize(9);
@@ -32,12 +36,9 @@ function downloadPdf(text: string) {
   const lines = doc.splitTextToSize(clean, width) as string[];
   let y = margin + 40;
   for (const line of lines) {
-    if (y > pageH - margin) {
-      doc.addPage();
-      y = margin;
-    }
+    y = ensureSpace(doc, y, lineHeight, { bottomMargin: margin, topAfterBreak: margin });
     doc.text(line, margin, y);
-    y += 15;
+    y += lineHeight;
   }
   doc.save('employer-mate-advice.pdf');
 }
@@ -67,7 +68,8 @@ export function MateEntryCard({ onOpen }: { onOpen: () => void }) {
             </span>
           </div>
           <p className="mt-0.5 text-[12.5px] text-white/60">
-            Ask about costing, tendering, hiring &amp; cashflow — grounded in the standards and your live numbers.
+            Ask about costing, tendering, hiring &amp; cashflow — grounded in the standards and your
+            live numbers.
           </p>
         </div>
         <span className="text-elec-yellow/70 text-[15px] group-hover:translate-x-0.5 transition-transform shrink-0">
@@ -87,8 +89,8 @@ const SUGGESTIONS = [
 
 /**
  * Employer Mate — the firm owner's AI partner. Omnipresent across the Employer
- * Hub; advice is grounded in the authoritative employer_knowledge RAG via the
- * employer-ai-assistant edge function. Page-aware (passes the active section).
+ * Hub; advice is grounded in Elec-Mate's authoritative employer knowledge base
+ * via the employer-ai-assistant edge function. Page-aware (passes the active section).
  */
 export function EmployerMate({
   pageContext,
@@ -129,7 +131,9 @@ export function EmployerMate({
     setMessages([...next, { role: 'assistant', content: '' }]);
     setSending(true);
     try {
-      const { data: { session } } = await supabase.auth.getSession();
+      const {
+        data: { session },
+      } = await supabase.auth.getSession();
       const resp = await fetch(`${SUPABASE_URL}/functions/v1/employer-ai-assistant`, {
         method: 'POST',
         headers: {
@@ -157,7 +161,10 @@ export function EmployerMate({
       if (!acc.trim()) {
         setMessages((m) => {
           const copy = [...m];
-          copy[copy.length - 1] = { role: 'assistant', content: "I couldn't answer that — try rephrasing." };
+          copy[copy.length - 1] = {
+            role: 'assistant',
+            content: "I couldn't answer that — try rephrasing.",
+          };
           return copy;
         });
       }
@@ -204,7 +211,9 @@ export function EmployerMate({
             <div className="flex items-center justify-between px-4 py-3 border-b border-white/[0.06]">
               <div className="flex items-center gap-2">
                 <Sparkles className="h-4 w-4 text-elec-yellow" />
-                <SheetTitle className="text-[14px] font-semibold text-white">Employer Mate</SheetTitle>
+                <SheetTitle className="text-[14px] font-semibold text-white">
+                  Employer Mate
+                </SheetTitle>
                 <span className="text-[10px] font-medium uppercase tracking-[0.16em] text-white/40">
                   Business partner
                 </span>
@@ -225,8 +234,8 @@ export function EmployerMate({
                 <div className="pt-6">
                   <p className="text-[15px] font-semibold text-white">Ask me about your firm.</p>
                   <p className="mt-1 text-[12.5px] text-white/55">
-                    Costing, tendering, contracts, CIS &amp; VAT, hiring — grounded in the standards,
-                    and aware of your live jobs, invoices and team.
+                    Costing, tendering, contracts, CIS &amp; VAT, hiring — grounded in the
+                    standards, and aware of your live jobs, invoices and team.
                   </p>
                   <div className="mt-4 space-y-2">
                     {SUGGESTIONS.map((s) => (
@@ -251,7 +260,10 @@ export function EmployerMate({
                     </div>
                   </div>
                 ) : (
-                  <div key={i} className="rounded-2xl border border-white/[0.06] bg-white/[0.03] px-3.5 py-3">
+                  <div
+                    key={i}
+                    className="rounded-2xl border border-white/[0.06] bg-white/[0.03] px-3.5 py-3"
+                  >
                     <div className={markdownClass}>
                       <ReactMarkdown remarkPlugins={[remarkGfm]}>{m.content}</ReactMarkdown>
                     </div>
