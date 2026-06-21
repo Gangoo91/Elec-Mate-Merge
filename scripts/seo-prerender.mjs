@@ -63,7 +63,37 @@ const NAV_TIMEOUT_MS = 45_000;
 const HYDRATION_TIMEOUT_MS = 20_000;
 const POST_HYDRATION_WAIT_MS = 700; // give JSON-LD injection a beat to settle
 
+// Hard wall-clock budget. With ~1,400 routes a pathological timeout tail could
+// otherwise push past Vercel's build limit and fail the WHOLE build (no dist).
+// When the deadline hits we stop pulling new routes and ship whatever rendered;
+// the rest keep their meta-only fallback. Routes are prioritised by GSC traffic
+// (below) so a truncated run always covers the highest-value pages first.
+const MAX_PRERENDER_MS = Number(argValue('--max-ms')) || 30 * 60_000; // 30 min
+
 const BASE_URL = `http://localhost:${PORT}`;
+
+// ---------------------------------------------------------------------------
+// Browser launch — Vercel/CI builds run on Amazon Linux, where Playwright's
+// bundled Chromium is missing system shared libs and `playwright install
+// --with-deps` can't run (dnf, not apt). @sparticuz/chromium ships a
+// self-contained Linux Chromium (v149, matching Playwright 1.60's Chromium 148)
+// that runs there with no system deps. Locally (macOS/Windows) the bundled
+// Chromium works fine, so we only reach for @sparticuz on Linux.
+// ---------------------------------------------------------------------------
+async function launchBrowser() {
+  if (process.platform === 'linux') {
+    const mod = await import('@sparticuz/chromium');
+    const sparticuz = mod.default || mod;
+    const executablePath = await sparticuz.executablePath();
+    // Drop --single-process: it crashes when driving multiple parallel browser
+    // contexts (our worker pool), which is exactly how we render.
+    const launchArgs = (sparticuz.args || []).filter((a) => a !== '--single-process');
+    console.log(`[prerender] launching @sparticuz/chromium (linux) at ${executablePath}`);
+    return chromium.launch({ executablePath, args: launchArgs, headless: true });
+  }
+  console.log('[prerender] launching Playwright bundled Chromium (local)');
+  return chromium.launch();
+}
 
 // ---------------------------------------------------------------------------
 // 1. Discover SEO routes
@@ -97,9 +127,36 @@ function discoverRoutes() {
     console.log(`[prerender] added ${count} mock-exam routes from sitemap-mock-exams.xml`);
   }
 
-  // Dedupe + stable sort
-  const unique = Array.from(new Set(out)).sort();
-  return LIMIT ? unique.slice(0, LIMIT) : unique;
+  // Dedupe + stable sort (prioritisation + LIMIT applied by the caller)
+  return Array.from(new Set(out)).sort();
+}
+
+// Order routes by GSC impressions (highest-traffic first) so that, if the
+// wall-clock deadline truncates the run, the most valuable pages are already
+// rendered. Routes with no GSC history sort after, alphabetically (stable).
+function prioritiseRoutes(routes) {
+  const impressions = new Map();
+  try {
+    const gscPath = join(ROOT, 'scripts/seo-engine/gsc-pages-90d.json');
+    if (existsSync(gscPath)) {
+      const gsc = JSON.parse(readFileSync(gscPath, 'utf-8'));
+      // The export carries one row per (host, slug) — both www and apex appear,
+      // so a slug can repeat. Sum impressions across duplicates rather than
+      // letting the last (often tiny apex) row clobber the real www figure.
+      for (const row of gsc) {
+        if (row && row.slug) {
+          impressions.set(row.slug, (impressions.get(row.slug) || 0) + (row.impressions || 0));
+        }
+      }
+      console.log(`[prerender] prioritising by GSC impressions (${impressions.size} pages with history)`);
+    }
+  } catch (err) {
+    console.warn(`[prerender] could not load GSC priorities, using alpha order: ${err.message}`);
+  }
+  return [...routes].sort((a, b) => {
+    const diff = (impressions.get(b) || 0) - (impressions.get(a) || 0);
+    return diff !== 0 ? diff : a.localeCompare(b);
+  });
 }
 
 // ---------------------------------------------------------------------------
@@ -276,18 +333,25 @@ async function renderHomepageLast(browser, stats) {
 // 4. Main
 // ---------------------------------------------------------------------------
 (async () => {
-  const routes = discoverRoutes();
-  console.log(`[prerender] discovered ${routes.length} routes${LIMIT ? ` (limited to ${LIMIT})` : ''}`);
+  let routes = prioritiseRoutes(discoverRoutes());
+  if (LIMIT) routes = routes.slice(0, LIMIT);
+  console.log(`[prerender] discovered ${routes.length} routes${LIMIT ? ` (limited to top ${LIMIT} by traffic)` : ''}`);
 
   const preview = await startPreviewServer();
-  const browser = await chromium.launch();
+  const browser = await launchBrowser();
 
   const stats = { succeeded: [], failed: [], startedAt: new Date().toISOString() };
 
-  // Worker pool
+  // Worker pool — stop pulling new routes once the wall-clock budget is spent.
+  const deadline = Date.now() + MAX_PRERENDER_MS;
+  let deadlineHit = false;
   let nextIdx = 0;
   async function worker() {
     while (nextIdx < routes.length) {
+      if (Date.now() > deadline) {
+        deadlineHit = true;
+        break;
+      }
       const i = nextIdx++;
       await renderRoute(browser, routes[i], stats);
       // Tiny throttle so we don't saturate
@@ -295,6 +359,13 @@ async function renderHomepageLast(browser, stats) {
     }
   }
   await Promise.all(Array.from({ length: CONCURRENCY }, worker));
+  if (deadlineHit) {
+    const done = stats.succeeded.length + stats.failed.length;
+    console.warn(
+      `[prerender] ⏱  wall-clock budget (${(MAX_PRERENDER_MS / 60000).toFixed(0)}m) reached — ` +
+        `rendered ${done}/${routes.length}; remaining ${routes.length - done} keep meta-only fallback.`,
+    );
+  }
 
   await renderHomepageLast(browser, stats);
 
@@ -305,6 +376,7 @@ async function renderHomepageLast(browser, stats) {
     /* ignore */
   }
 
+  const renderedCount = stats.succeeded.length + stats.failed.length;
   const manifest = {
     generatedAt: new Date().toISOString(),
     durationMs: Date.now() - new Date(stats.startedAt).getTime(),
@@ -312,6 +384,8 @@ async function renderHomepageLast(browser, stats) {
     total: routes.length,
     succeeded: stats.succeeded.length,
     failed: stats.failed.length,
+    deadlineHit,
+    skippedForDeadline: deadlineHit ? routes.length - renderedCount : 0,
     warningsSummary: stats.succeeded.reduce((acc, r) => {
       for (const w of r.warnings) acc[w] = (acc[w] || 0) + 1;
       return acc;

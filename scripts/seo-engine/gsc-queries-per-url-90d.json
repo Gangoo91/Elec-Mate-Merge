@@ -2,10 +2,10 @@
   "/guides/smart-home-wiring-cost": [
     {
       "query": "cost of smart home installation",
-      "impressions": 1,
+      "impressions": 2,
       "clicks": 0,
       "ctr": 0,
-      "position": 16
+      "position": 25
     },
     {
       "query": "home smart wiring",
@@ -16,33 +16,70 @@
     },
     {
       "query": "how much does professional smart home installation cost and is it worth it in great britain?",
-      "impressions": 9,
+      "impressions": 12,
       "clicks": 0,
       "ctr": 0,
-      "position": 9.333333333333334
+      "position": 7.5
     },
     {
       "query": "smart home cabling cost",
-      "impressions": 10,
+      "impressions": 23,
       "clicks": 0,
       "ctr": 0,
-      "position": 16.2
+      "position": 11.608695652173912
     },
     {
       "query": "smart home electrical wiring cost",
-      "impressions": 4,
+      "impressions": 6,
       "clicks": 0,
       "ctr": 0,
-      "position": 31
+      "position": 22.666666666666668
+    }
+  ],
+  "/guides/ze-values-uk": [
+    {
+      "query": "maximum ze for tns system 18th edition",
+      "impressions": 89,
+      "clicks": 5,
+      "ctr": 0.056179775280898875,
+      "position": 4.269662921348315
+    },
+    {
+      "query": "earth loop impedance",
+      "impressions": 39,
+      "clicks": 3,
+      "ctr": 0.07692307692307693,
+      "position": 2.230769230769231
+    },
+    {
+      "query": "max ze values",
+      "impressions": 97,
+      "clicks": 3,
+      "ctr": 0.030927835051546393,
+      "position": 5.371134020618556
+    },
+    {
+      "query": "maximum ze for tt system 18th edition",
+      "impressions": 181,
+      "clicks": 3,
+      "ctr": 0.016574585635359115,
+      "position": 5.696132596685083
+    },
+    {
+      "query": "maximum ze values",
+      "impressions": 54,
+      "clicks": 3,
+      "ctr": 0.05555555555555555,
+      "position": 4.351851851851851
     }
   ],
   "/tools/cable-sizing-calculator": [
     {
       "query": "bs 7671 cable sizing",
-      "impressions": 8,
+      "impressions": 7,
       "clicks": 1,
-      "ctr": 0.125,
-      "position": 2.125
+      "ctr": 0.14285714285714285,
+      "position": 2.142857142857143
     },
     {
       "query": "what is the value of k?",
@@ -50,6 +87,13 @@
       "clicks": 1,
       "ctr": 1,
       "position": 5
+    },
+    {
+      "query": "100 amp cable size",
+      "impressions": 1,
+      "clicks": 0,
+      "ctr": 0,
+      "position": 3
     },
     {
       "query": "10mm cable current rating",
@@ -60,54 +104,10 @@
     },
     {
       "query": "11kv cable size calculation",
-      "impressions": 2,
-      "clicks": 0,
-      "ctr": 0,
-      "position": 64.5
-    },
-    {
-      "query": "16 amp cable size",
       "impressions": 1,
       "clicks": 0,
       "ctr": 0,
-      "position": 2
-    }
-  ],
-  "/guides/ze-values-uk": [
-    {
-      "query": "maximum ze for tns system 18th edition",
-      "impressions": 71,
-      "clicks": 4,
-      "ctr": 0.056338028169014086,
-      "position": 4.774647887323944
-    },
-    {
-      "query": "ze value",
-      "impressions": 43,
-      "clicks": 3,
-      "ctr": 0.06976744186046512,
-      "position": 3.604651162790698
-    },
-    {
-      "query": "max ze for tns",
-      "impressions": 445,
-      "clicks": 2,
-      "ctr": 0.0044943820224719105,
-      "position": 5.3393258426966295
-    },
-    {
-      "query": "max ze on tt system",
-      "impressions": 76,
-      "clicks": 2,
-      "ctr": 0.02631578947368421,
-      "position": 6.578947368421052
-    },
-    {
-      "query": "max ze values",
-      "impressions": 87,
-      "clicks": 2,
-      "ctr": 0.022988505747126436,
-      "position": 6.068965517241379
+      "position": 60
     }
   ],
   "/guides/electrical-symbols-chart": [
@@ -116,21 +116,28 @@
       "impressions": 175,
       "clicks": 10,
       "ctr": 0.05714285714285714,
-      "position": 5.651428571428571
+      "position": 5.645714285714286
     },
     {
       "query": "bs en 60617 symbols",
-      "impressions": 99,
+      "impressions": 103,
       "clicks": 7,
-      "ctr": 0.0707070707070707,
-      "position": 6.141414141414141
+      "ctr": 0.06796116504854369,
+      "position": 6.310679611650485
+    },
+    {
+      "query": "british standard electrical symbols",
+      "impressions": 31,
+      "clicks": 2,
+      "ctr": 0.06451612903225806,
+      "position": 9.35483870967742
     },
     {
       "query": "electrical symbols for drawings uk",
-      "impressions": 21,
+      "impressions": 22,
       "clicks": 2,
-      "ctr": 0.09523809523809523,
-      "position": 11.238095238095237
+      "ctr": 0.09090909090909091,
+      "position": 11.136363636363637
     },
     {
       "query": "iec 60617",
@@ -138,87 +145,154 @@
       "clicks": 2,
       "ctr": 0.045454545454545456,
       "position": 21.181818181818183
-    },
-    {
-      "query": "british standard electrical symbols",
-      "impressions": 27,
-      "clicks": 1,
-      "ctr": 0.037037037037037035,
-      "position": 8.481481481481481
     }
   ],
   "/guides/apprentice-electrician-salary": [
     {
-      "query": "electrician apprentice salary uk 2026",
+      "query": "2nd year electrical apprentice wage",
+      "impressions": 25,
+      "clicks": 1,
+      "ctr": 0.04,
+      "position": 9.28
+    },
+    {
+      "query": "3rd year apprentice wage electrician",
+      "impressions": 7,
+      "clicks": 1,
+      "ctr": 0.14285714285714285,
+      "position": 7.714285714285714
+    },
+    {
+      "query": "3rd year electrical apprentice wage uk",
+      "impressions": 34,
+      "clicks": 1,
+      "ctr": 0.029411764705882353,
+      "position": 7.735294117647059
+    },
+    {
+      "query": "4th year electrical apprentice wage",
+      "impressions": 41,
+      "clicks": 1,
+      "ctr": 0.024390243902439025,
+      "position": 7.7317073170731705
+    },
+    {
+      "query": "how much do 3rd year electrical apprentices make",
       "impressions": 3,
-      "clicks": 0,
-      "ctr": 0,
-      "position": 1.6666666666666665
-    },
-    {
-      "query": "electrician building",
-      "impressions": 1,
-      "clicks": 0,
-      "ctr": 0,
-      "position": 3
-    },
-    {
-      "query": "jib electrician pay rates 2026 uk",
-      "impressions": 2,
-      "clicks": 0,
-      "ctr": 0,
-      "position": 8
-    },
-    {
-      "query": "jib electrician rates 2026 uk",
-      "impressions": 3,
-      "clicks": 0,
-      "ctr": 0,
-      "position": 10
-    },
-    {
-      "query": "uk electrician hourly rate 2026",
-      "impressions": 3,
-      "clicks": 0,
-      "ctr": 0,
-      "position": 8.666666666666668
+      "clicks": 1,
+      "ctr": 0.3333333333333333,
+      "position": 6.666666666666667
     }
   ],
   "/guides/appendix-4-tables-bs-7671": [
     {
       "query": "bs 7671 appendix 4",
-      "impressions": 57,
-      "clicks": 4,
-      "ctr": 0.07017543859649122,
-      "position": 5.754385964912281
-    },
-    {
-      "query": "appendix 4 of bs 7671",
-      "impressions": 59,
-      "clicks": 2,
-      "ctr": 0.03389830508474576,
-      "position": 4.864406779661017
+      "impressions": 71,
+      "clicks": 8,
+      "ctr": 0.11267605633802817,
+      "position": 5.352112676056338
     },
     {
       "query": "bs7671 appendix 4",
-      "impressions": 57,
-      "clicks": 2,
-      "ctr": 0.03508771929824561,
-      "position": 5.982456140350878
-    },
-    {
-      "query": "current carrying capacity table bs7671",
-      "impressions": 11,
-      "clicks": 2,
-      "ctr": 0.18181818181818182,
-      "position": 7.818181818181818
+      "impressions": 58,
+      "clicks": 3,
+      "ctr": 0.05172413793103448,
+      "position": 5.810344827586207
     },
     {
       "query": "appendix 4 bs7671",
-      "impressions": 27,
+      "impressions": 29,
+      "clicks": 2,
+      "ctr": 0.06896551724137931,
+      "position": 5.068965517241379
+    },
+    {
+      "query": "appendix 4 of bs 7671",
+      "impressions": 62,
+      "clicks": 2,
+      "ctr": 0.03225806451612903,
+      "position": 4.64516129032258
+    },
+    {
+      "query": "current carrying capacity table bs7671",
+      "impressions": 17,
+      "clicks": 2,
+      "ctr": 0.11764705882352941,
+      "position": 6.9411764705882355
+    }
+  ],
+  "/tools/disconnection-time-calculator": [
+    {
+      "query": "max disconnection times 0.4 or 5 18th edition",
+      "impressions": 22,
+      "clicks": 3,
+      "ctr": 0.13636363636363635,
+      "position": 10.090909090909092
+    },
+    {
+      "query": "the disconnection time allowed for a 40a final circuit connected to a tn system is:",
+      "impressions": 50,
+      "clicks": 2,
+      "ctr": 0.04,
+      "position": 4.720000000000001
+    },
+    {
+      "query": "0.4 or 5 second disconnection time",
+      "impressions": 14,
       "clicks": 1,
-      "ctr": 0.037037037037037035,
-      "position": 5.333333333333333
+      "ctr": 0.07142857142857142,
+      "position": 4.857142857142858
+    },
+    {
+      "query": "bs7671 disconnection times",
+      "impressions": 14,
+      "clicks": 1,
+      "ctr": 0.07142857142857142,
+      "position": 7.5
+    },
+    {
+      "query": "disconnection time for tt system",
+      "impressions": 40,
+      "clicks": 1,
+      "ctr": 0.025,
+      "position": 5.775
+    }
+  ],
+  "/loop-impedance-testing-guide": [
+    {
+      "query": "difference between ze and zs",
+      "impressions": 73,
+      "clicks": 2,
+      "ctr": 0.0273972602739726,
+      "position": 6.2465753424657535
+    },
+    {
+      "query": "loop impedance test results",
+      "impressions": 4,
+      "clicks": 1,
+      "ctr": 0.25,
+      "position": 3.25
+    },
+    {
+      "query": "what does ze mean in electrical terms",
+      "impressions": 13,
+      "clicks": 1,
+      "ctr": 0.07692307692307693,
+      "position": 3.923076923076923
+    },
+    {
+      "query": "ze and zs explained",
+      "impressions": 41,
+      "clicks": 1,
+      "ctr": 0.024390243902439025,
+      "position": 6.951219512195122
+    },
+    {
+      "query": "ze zs",
+      "impressions": 19,
+      "clicks": 1,
+      "ctr": 0.05263157894736842,
+      "position": 6.631578947368421
     }
   ],
   "/tools/cable-volt-drop-three-phase": [
@@ -258,101 +332,34 @@
       "position": 26.5625
     }
   ],
-  "/tools/disconnection-time-calculator": [
-    {
-      "query": "the disconnection time allowed for a 40a final circuit connected to a tn system is:",
-      "impressions": 41,
-      "clicks": 2,
-      "ctr": 0.04878048780487805,
-      "position": 5.536585365853658
-    },
-    {
-      "query": "0.4 or 5 second disconnection time",
-      "impressions": 8,
-      "clicks": 1,
-      "ctr": 0.125,
-      "position": 5
-    },
-    {
-      "query": "bs7671 disconnection times",
-      "impressions": 7,
-      "clicks": 1,
-      "ctr": 0.14285714285714285,
-      "position": 8
-    },
-    {
-      "query": "disconnection time for tt system",
-      "impressions": 30,
-      "clicks": 1,
-      "ctr": 0.03333333333333333,
-      "position": 5.6
-    },
-    {
-      "query": "disconnection times bs7671",
-      "impressions": 42,
-      "clicks": 1,
-      "ctr": 0.023809523809523808,
-      "position": 6.476190476190476
-    }
-  ],
-  "/loop-impedance-testing-guide": [
-    {
-      "query": "loop impedance test results",
-      "impressions": 4,
-      "clicks": 1,
-      "ctr": 0.25,
-      "position": 3.25
-    },
-    {
-      "query": "ze and zs explained",
-      "impressions": 27,
-      "clicks": 1,
-      "ctr": 0.037037037037037035,
-      "position": 8.777777777777779
-    },
-    {
-      "query": "\"zs\" earth fault loop impedance ze r1 r2",
-      "impressions": 4,
-      "clicks": 0,
-      "ctr": 0,
-      "position": 9.5
-    },
-    {
-      "query": "\"zs+os-min(zs,os)+ws\"",
-      "impressions": 1,
-      "clicks": 0,
-      "ctr": 0,
-      "position": 2
-    },
-    {
-      "query": ",zs",
-      "impressions": 1,
-      "clicks": 0,
-      "ctr": 0,
-      "position": 1
-    }
-  ],
   "/guides/max-demand-calculation-guide": [
     {
       "query": "bs7671 diversity table",
-      "impressions": 5,
-      "clicks": 1,
-      "ctr": 0.2,
-      "position": 4.8
+      "impressions": 11,
+      "clicks": 2,
+      "ctr": 0.18181818181818182,
+      "position": 7
     },
     {
       "query": "maximum demand calculator uk",
-      "impressions": 17,
+      "impressions": 19,
       "clicks": 1,
-      "ctr": 0.058823529411764705,
-      "position": 12.235294117647058
+      "ctr": 0.05263157894736842,
+      "position": 10.68421052631579
     },
     {
-      "query": "maximum demand load on certificate",
+      "query": "maximum demand kva calculation formula",
       "impressions": 5,
       "clicks": 1,
       "ctr": 0.2,
-      "position": 21.2
+      "position": 4.4
+    },
+    {
+      "query": "maximum demand load on certificate",
+      "impressions": 8,
+      "clicks": 1,
+      "ctr": 0.125,
+      "position": 12.625
     },
     {
       "query": "yes",
@@ -360,87 +367,43 @@
       "clicks": 1,
       "ctr": 0.2,
       "position": 4.8
-    },
-    {
-      "query": "admd calculator",
-      "impressions": 2,
-      "clicks": 0,
-      "ctr": 0,
-      "position": 8.5
     }
   ],
-  "/tools/power-factor-calculator": [
+  "/bonding-conductors-guide": [
     {
-      "query": "kvar to kw calculator",
-      "impressions": 29,
-      "clicks": 2,
-      "ctr": 0.06896551724137931,
-      "position": 4.793103448275862
+      "query": "18th edition earth bonding cable size pdf",
+      "impressions": 82,
+      "clicks": 3,
+      "ctr": 0.036585365853658534,
+      "position": 4.951219512195122
     },
     {
-      "query": "power factor calculator kw kvar",
-      "impressions": 119,
-      "clicks": 2,
-      "ctr": 0.01680672268907563,
-      "position": 3.53781512605042
-    },
-    {
-      "query": "calculate power factor from kw and kvar",
-      "impressions": 12,
+      "query": "bonding conductor",
+      "impressions": 52,
       "clicks": 1,
-      "ctr": 0.08333333333333333,
-      "position": 3.1666666666666665
+      "ctr": 0.019230769230769232,
+      "position": 8.692307692307693
     },
     {
-      "query": "kvar to kw",
-      "impressions": 28,
-      "clicks": 1,
-      "ctr": 0.03571428571428571,
-      "position": 3.2142857142857144
-    },
-    {
-      "query": "kw to kvar formula three phase",
-      "impressions": 2,
-      "clicks": 1,
-      "ctr": 0.5,
-      "position": 1
-    }
-  ],
-  "/guides/ring-vs-radial-circuits": [
-    {
-      "query": "32a ring circuit",
+      "query": "16 mm",
       "impressions": 1,
       "clicks": 0,
       "ctr": 0,
-      "position": 1
+      "position": 2
     },
     {
-      "query": "appendix 15 bs7671",
-      "impressions": 4,
-      "clicks": 0,
-      "ctr": 0,
-      "position": 10.25
-    },
-    {
-      "query": "dedicated radial circuit",
+      "query": "16mm copper",
       "impressions": 1,
       "clicks": 0,
       "ctr": 0,
-      "position": 11
+      "position": 4
     },
     {
-      "query": "difference between ring and radial circuit",
+      "query": "18th edition earth bonding",
       "impressions": 1,
       "clicks": 0,
       "ctr": 0,
-      "position": 1
-    },
-    {
-      "query": "extend",
-      "impressions": 1,
-      "clicks": 0,
-      "ctr": 0,
-      "position": 17
+      "position": 44
     }
   ],
   "/polarity-test-guide": [
@@ -480,161 +443,138 @@
       "position": 3.4
     }
   ],
-  "/bonding-conductors-guide": [
+  "/guides/ring-vs-radial-circuits": [
     {
-      "query": "18th edition earth bonding cable size pdf",
-      "impressions": 68,
-      "clicks": 3,
-      "ctr": 0.04411764705882353,
-      "position": 5.147058823529412
-    },
-    {
-      "query": "bonding conductor",
-      "impressions": 36,
-      "clicks": 1,
-      "ctr": 0.027777777777777776,
-      "position": 7.75
-    },
-    {
-      "query": "18th edition earth bonding",
+      "query": "32a ring circuit",
       "impressions": 1,
       "clicks": 0,
       "ctr": 0,
-      "position": 44
+      "position": 1
     },
     {
-      "query": "18th edition earth bonding cable size",
-      "impressions": 64,
+      "query": "appendix 15 bs7671",
+      "impressions": 4,
       "clicks": 0,
       "ctr": 0,
-      "position": 7.609375
+      "position": 10.25
     },
     {
-      "query": "6mm bonding eicr code",
-      "impressions": 2,
+      "query": "dedicated radial circuit",
+      "impressions": 1,
       "clicks": 0,
       "ctr": 0,
-      "position": 15
-    }
-  ],
-  "/tools/busbar-sizing-calculator": [
-    {
-      "query": "busbar calculator",
-      "impressions": 303,
-      "clicks": 17,
-      "ctr": 0.056105610561056105,
-      "position": 7.32013201320132
+      "position": 11
     },
     {
-      "query": "busbar size calculator",
-      "impressions": 122,
-      "clicks": 10,
-      "ctr": 0.08196721311475409,
-      "position": 7.721311475409836
+      "query": "difference between ring and radial circuit",
+      "impressions": 1,
+      "clicks": 0,
+      "ctr": 0,
+      "position": 1
     },
     {
-      "query": "copper busbar size and current rating calculator",
-      "impressions": 90,
-      "clicks": 10,
-      "ctr": 0.1111111111111111,
-      "position": 5.2444444444444445
-    },
-    {
-      "query": "busbar current calculator",
-      "impressions": 47,
-      "clicks": 6,
-      "ctr": 0.1276595744680851,
-      "position": 5.914893617021277
-    },
-    {
-      "query": "bus bar size calculator",
-      "impressions": 93,
-      "clicks": 5,
-      "ctr": 0.053763440860215055,
-      "position": 6.397849462365591
+      "query": "extend",
+      "impressions": 1,
+      "clicks": 0,
+      "ctr": 0,
+      "position": 17
     }
   ],
   "/continuity-testing-guide": [
     {
-      "query": "a ring final circuit is wired in 2.5/1.5mm squared twin and cpc cable. from step 1 of the est, the end-to-end r1 is measured at 0.05 ohms. what value is the end-to-end r2 expected to be?",
+      "query": "continuity of cpc test",
+      "impressions": 42,
+      "clicks": 1,
+      "ctr": 0.023809523809523808,
+      "position": 4.857142857142858
+    },
+    {
+      "query": "radial",
+      "impressions": 1,
+      "clicks": 1,
+      "ctr": 1,
+      "position": 3
+    },
+    {
+      "query": "\"r1=r, r2=r, r3=2r, r4=2r, r5=2r/3\" circuit",
       "impressions": 1,
       "clicks": 0,
       "ctr": 0,
-      "position": 1
+      "position": 8
     },
     {
-      "query": "acceptable continuity test results",
+      "query": "\"st r2, r5\" \"not r2, r2\" \"jnz l02\"",
       "impressions": 1,
       "clicks": 0,
       "ctr": 0,
-      "position": 12
+      "position": 8
     },
     {
-      "query": "acceptable ring continuity test results",
-      "impressions": 26,
-      "clicks": 0,
-      "ctr": 0,
-      "position": 8.038461538461538
-    },
-    {
-      "query": "an open circuit exists on a protective conductor. one instrument that should be used to detect the fault is",
+      "query": "\"z(r1, r2, r3) = 6\" circuit",
       "impressions": 1,
       "clicks": 0,
       "ctr": 0,
-      "position": 1
-    },
-    {
-      "query": "basic electrical training",
-      "impressions": 1,
-      "clicks": 0,
-      "ctr": 0,
-      "position": 4
+      "position": 2
     }
   ],
-  "/guides/special-locations-part-7-bs-7671": [
+  "/tools/power-factor-calculator": [
     {
-      "query": "special locations bs7671",
-      "impressions": 147,
-      "clicks": 4,
-      "ctr": 0.027210884353741496,
-      "position": 5.394557823129252
+      "query": "power factor calculator kw kvar",
+      "impressions": 130,
+      "clicks": 3,
+      "ctr": 0.023076923076923078,
+      "position": 3.5076923076923077
     },
     {
-      "query": "bs7671 part 7",
-      "impressions": 34,
+      "query": "kvar to kw calculator",
+      "impressions": 32,
       "clicks": 2,
-      "ctr": 0.058823529411764705,
-      "position": 2.5294117647058822
+      "ctr": 0.0625,
+      "position": 5.96875
     },
     {
-      "query": "bs7671 special locations list",
-      "impressions": 30,
+      "query": "calculate power factor from kw and kvar",
+      "impressions": 10,
       "clicks": 1,
-      "ctr": 0.03333333333333333,
-      "position": 3.066666666666667
+      "ctr": 0.1,
+      "position": 2.4
     },
     {
-      "query": "list of special locations bs7671",
-      "impressions": 38,
+      "query": "kvar to kw",
+      "impressions": 33,
       "clicks": 1,
-      "ctr": 0.02631578947368421,
-      "position": 3.3421052631578947
+      "ctr": 0.030303030303030304,
+      "position": 4.151515151515151
     },
     {
-      "query": "special location",
-      "impressions": 29,
+      "query": "kw to kvar formula three phase",
+      "impressions": 4,
       "clicks": 1,
-      "ctr": 0.034482758620689655,
-      "position": 6.379310344827586
+      "ctr": 0.25,
+      "position": 9
     }
   ],
   "/guides/radial-circuit-explained": [
     {
-      "query": "radial circuit",
-      "impressions": 425,
+      "query": "20a radial circuit",
+      "impressions": 36,
       "clicks": 1,
-      "ctr": 0.002352941176470588,
-      "position": 4.527058823529412
+      "ctr": 0.027777777777777776,
+      "position": 6
+    },
+    {
+      "query": "radial circuit",
+      "impressions": 416,
+      "clicks": 1,
+      "ctr": 0.002403846153846154,
+      "position": 5.896634615384615
+    },
+    {
+      "query": "radial circuit uk",
+      "impressions": 17,
+      "clicks": 1,
+      "ctr": 0.058823529411764705,
+      "position": 8.235294117647058
     },
     {
       "query": "radial circuits uk",
@@ -644,62 +584,48 @@
       "position": 8.5
     },
     {
-      "query": "radial wiring system",
-      "impressions": 6,
-      "clicks": 1,
-      "ctr": 0.16666666666666666,
-      "position": 9
-    },
-    {
-      "query": "what is a radial circuit",
-      "impressions": 193,
-      "clicks": 1,
-      "ctr": 0.0051813471502590676,
-      "position": 5.321243523316062
-    },
-    {
-      "query": "16a radial circuit",
+      "query": "100m of 2.5mm twin and earth",
       "impressions": 1,
       "clicks": 0,
       "ctr": 0,
-      "position": 16
+      "position": 2
     }
   ],
-  "/tools/adiabatic-equation-calculator": [
+  "/guides/special-locations-part-7-bs-7671": [
     {
-      "query": "adiabatic equation calculator",
-      "impressions": 345,
-      "clicks": 26,
-      "ctr": 0.07536231884057971,
-      "position": 5.260869565217392
+      "query": "special locations bs7671",
+      "impressions": 154,
+      "clicks": 5,
+      "ctr": 0.032467532467532464,
+      "position": 4.961038961038961
     },
     {
-      "query": "adiabatic calculator",
-      "impressions": 57,
-      "clicks": 6,
-      "ctr": 0.10526315789473684,
-      "position": 5.578947368421052
-    },
-    {
-      "query": "adiabatic equation",
-      "impressions": 277,
+      "query": "bs7671 part 7",
+      "impressions": 41,
       "clicks": 3,
-      "ctr": 0.010830324909747292,
-      "position": 4.898916967509026
+      "ctr": 0.07317073170731707,
+      "position": 2.048780487804878
     },
     {
-      "query": "cpc size calculator",
-      "impressions": 83,
+      "query": "bs7671 special locations list",
+      "impressions": 35,
       "clicks": 2,
-      "ctr": 0.024096385542168676,
-      "position": 10.409638554216867
+      "ctr": 0.05714285714285714,
+      "position": 3
     },
     {
-      "query": "adiabatic calculation",
-      "impressions": 6,
+      "query": "list of special locations bs7671",
+      "impressions": 43,
+      "clicks": 2,
+      "ctr": 0.046511627906976744,
+      "position": 3.0697674418604652
+    },
+    {
+      "query": "bs 7671 section 712",
+      "impressions": 11,
       "clicks": 1,
-      "ctr": 0.16666666666666666,
-      "position": 15.333333333333334
+      "ctr": 0.09090909090909091,
+      "position": 4.727272727272727
     }
   ],
   "/guides/section-722-ev-charging-complete-guide": [
@@ -739,44 +665,88 @@
       "position": 1
     }
   ],
-  "/tools/lighting-lux-calculator": [
+  "/tools/adiabatic-equation-calculator": [
     {
-      "query": "lux level calculation",
-      "impressions": 133,
+      "query": "adiabatic equation calculator",
+      "impressions": 408,
+      "clicks": 29,
+      "ctr": 0.07107843137254902,
+      "position": 5.333333333333333
+    },
+    {
+      "query": "adiabatic calculator",
+      "impressions": 71,
+      "clicks": 7,
+      "ctr": 0.09859154929577464,
+      "position": 5.450704225352113
+    },
+    {
+      "query": "adiabatic equation",
+      "impressions": 303,
+      "clicks": 3,
+      "ctr": 0.009900990099009901,
+      "position": 5.574257425742574
+    },
+    {
+      "query": "adiabatic equation electrical",
+      "impressions": 171,
+      "clicks": 2,
+      "ctr": 0.011695906432748537,
+      "position": 7.350877192982456
+    },
+    {
+      "query": "cpc size calculator",
+      "impressions": 97,
+      "clicks": 2,
+      "ctr": 0.020618556701030927,
+      "position": 10.443298969072165
+    }
+  ],
+  "/tools/busbar-sizing-calculator": [
+    {
+      "query": "busbar calculator",
+      "impressions": 305,
+      "clicks": 18,
+      "ctr": 0.05901639344262295,
+      "position": 7.340983606557377
+    },
+    {
+      "query": "copper busbar size and current rating calculator",
+      "impressions": 89,
+      "clicks": 10,
+      "ctr": 0.11235955056179775,
+      "position": 5.292134831460674
+    },
+    {
+      "query": "busbar size calculator",
+      "impressions": 118,
+      "clicks": 9,
+      "ctr": 0.07627118644067797,
+      "position": 7.686440677966102
+    },
+    {
+      "query": "busbar current calculator",
+      "impressions": 45,
       "clicks": 5,
-      "ctr": 0.03759398496240601,
-      "position": 10.413533834586467
+      "ctr": 0.1111111111111111,
+      "position": 5.888888888888889
     },
     {
-      "query": "lux calculation",
-      "impressions": 157,
-      "clicks": 2,
-      "ctr": 0.012738853503184714,
-      "position": 9.184713375796179
-    },
-    {
-      "query": "lux calculation online free",
-      "impressions": 34,
-      "clicks": 2,
-      "ctr": 0.058823529411764705,
-      "position": 7
-    },
-    {
-      "query": "lux level calculator",
-      "impressions": 130,
-      "clicks": 2,
-      "ctr": 0.015384615384615385,
-      "position": 8.069230769230769
-    },
-    {
-      "query": "calculate lux level",
-      "impressions": 16,
-      "clicks": 1,
-      "ctr": 0.0625,
-      "position": 6.125
+      "query": "busbar sizing calculation",
+      "impressions": 48,
+      "clicks": 5,
+      "ctr": 0.10416666666666667,
+      "position": 7.479166666666667
     }
   ],
   "/ev-charging-legislation": [
+    {
+      "query": "as an operations director how to get our ev charging stations tested and certified uk",
+      "impressions": 1,
+      "clicks": 0,
+      "ctr": 0,
+      "position": 1
+    },
     {
       "query": "as an operations director which uk body can certify our fleet electrification infrastructure",
       "impressions": 1,
@@ -785,139 +755,280 @@
       "position": 4
     },
     {
-      "query": "building code electric vehicle charging",
-      "impressions": 4,
+      "query": "bs 7671 section 722",
+      "impressions": 2,
       "clicks": 0,
       "ctr": 0,
-      "position": 49.25
+      "position": 1
     },
     {
-      "query": "building regs ev charging",
-      "impressions": 3,
-      "clicks": 0,
-      "ctr": 0,
-      "position": 17.333333333333332
-    },
-    {
-      "query": "building regs part s",
-      "impressions": 16,
-      "clicks": 0,
-      "ctr": 0,
-      "position": 20.25
-    },
-    {
-      "query": "building regulations electric vehicle charging",
-      "impressions": 60,
-      "clicks": 0,
-      "ctr": 0,
-      "position": 39.96666666666667
-    }
-  ],
-  "/compare/best-ai-tool-electricians": [
-    {
-      "query": "ai electrician",
-      "impressions": 33,
-      "clicks": 1,
-      "ctr": 0.030303030303030304,
-      "position": 6.333333333333333
-    },
-    {
-      "query": "ai for electricians",
-      "impressions": 382,
-      "clicks": 1,
-      "ctr": 0.002617801047120419,
-      "position": 24.850785340314136
-    },
-    {
-      "query": "ai tools for electricians",
-      "impressions": 239,
-      "clicks": 1,
-      "ctr": 0.0041841004184100415,
-      "position": 18.196652719665273
-    },
-    {
-      "query": "best ai for electricians",
-      "impressions": 39,
-      "clicks": 1,
-      "ctr": 0.02564102564102564,
-      "position": 6.0256410256410255
-    },
-    {
-      "query": "elec-mate ai",
-      "impressions": 13,
-      "clicks": 1,
-      "ctr": 0.07692307692307693,
-      "position": 2.6153846153846154
-    }
-  ],
-  "/guides/pricing-electrical-work-per-point": [
-    {
-      "query": "price per point electrical installation uk",
-      "impressions": 62,
-      "clicks": 4,
-      "ctr": 0.06451612903225806,
-      "position": 4.629032258064516
-    },
-    {
-      "query": "electrical pricing per point",
-      "impressions": 16,
-      "clicks": 2,
-      "ctr": 0.125,
-      "position": 5.5
-    },
-    {
-      "query": "electrician price per point",
-      "impressions": 121,
-      "clicks": 2,
-      "ctr": 0.01652892561983471,
-      "position": 7.983471074380165
-    },
-    {
-      "query": "how much per point electrical",
-      "impressions": 18,
-      "clicks": 2,
-      "ctr": 0.1111111111111111,
-      "position": 4.777777777777778
-    },
-    {
-      "query": "price per point electrical installation",
-      "impressions": 40,
-      "clicks": 2,
-      "ctr": 0.05,
-      "position": 8.1
-    }
-  ],
-  "/guides/bathroom-electrical-zones-bs7671": [
-    {
-      "query": "bathroom electric zones",
-      "impressions": 1,
-      "clicks": 0,
-      "ctr": 0,
-      "position": 9
-    },
-    {
-      "query": "bathroom electrical zones",
-      "impressions": 3,
-      "clicks": 0,
-      "ctr": 0,
-      "position": 20
-    },
-    {
-      "query": "bathroom zone 0",
+      "query": "bs7671",
       "impressions": 1,
       "clicks": 0,
       "ctr": 0,
       "position": 3
     },
     {
-      "query": "bathroom zones",
+      "query": "building code electric vehicle charging",
+      "impressions": 5,
+      "clicks": 0,
+      "ctr": 0,
+      "position": 44.2
+    }
+  ],
+  "/guides/pricing-electrical-work-per-point": [
+    {
+      "query": "price per point electrical installation uk",
+      "impressions": 75,
+      "clicks": 5,
+      "ctr": 0.06666666666666667,
+      "position": 4.253333333333334
+    },
+    {
+      "query": "how much per point electrical",
+      "impressions": 20,
+      "clicks": 3,
+      "ctr": 0.15,
+      "position": 4.4
+    },
+    {
+      "query": "electrical pricing per point",
+      "impressions": 19,
+      "clicks": 2,
+      "ctr": 0.10526315789473684,
+      "position": 5.157894736842105
+    },
+    {
+      "query": "electrician price per point",
+      "impressions": 150,
+      "clicks": 2,
+      "ctr": 0.013333333333333334,
+      "position": 6.886666666666667
+    },
+    {
+      "query": "price per point electrical installation",
+      "impressions": 50,
+      "clicks": 2,
+      "ctr": 0.04,
+      "position": 7.74
+    }
+  ],
+  "/guides/earth-fault-loop-impedance-too-high": [
+    {
+      "query": "earth loop impedance values table",
+      "impressions": 9,
+      "clicks": 1,
+      "ctr": 0.1111111111111111,
+      "position": 9.11111111111111
+    },
+    {
+      "query": "high earth fault loop impedance",
+      "impressions": 1,
+      "clicks": 1,
+      "ctr": 1,
+      "position": 6
+    },
+    {
+      "query": "16a",
+      "impressions": 1,
+      "clicks": 0,
+      "ctr": 0,
+      "position": 8
+    },
+    {
+      "query": "2",
+      "impressions": 1,
+      "clicks": 0,
+      "ctr": 0,
+      "position": 9
+    },
+    {
+      "query": "32a type b mcb max zs",
+      "impressions": 2,
+      "clicks": 0,
+      "ctr": 0,
+      "position": 1
+    }
+  ],
+  "/tools/lighting-lux-calculator": [
+    {
+      "query": "lux level calculation",
+      "impressions": 131,
+      "clicks": 4,
+      "ctr": 0.030534351145038167,
+      "position": 8.48091603053435
+    },
+    {
+      "query": "lux level calculator",
+      "impressions": 138,
+      "clicks": 4,
+      "ctr": 0.028985507246376812,
+      "position": 6.811594202898551
+    },
+    {
+      "query": "lux calculation",
+      "impressions": 166,
+      "clicks": 2,
+      "ctr": 0.012048192771084338,
+      "position": 9.210843373493976
+    },
+    {
+      "query": "lux calculation online free",
+      "impressions": 39,
+      "clicks": 2,
+      "ctr": 0.05128205128205128,
+      "position": 7.230769230769231
+    },
+    {
+      "query": "lux calculator",
+      "impressions": 106,
+      "clicks": 2,
+      "ctr": 0.018867924528301886,
+      "position": 14.867924528301886
+    }
+  ],
+  "/compare/best-ai-tool-electricians": [
+    {
+      "query": "ai electrician",
+      "impressions": 52,
+      "clicks": 2,
+      "ctr": 0.038461538461538464,
+      "position": 6.0576923076923075
+    },
+    {
+      "query": "electrician ai",
+      "impressions": 74,
+      "clicks": 2,
+      "ctr": 0.02702702702702703,
+      "position": 10.54054054054054
+    },
+    {
+      "query": "ai for electrical",
+      "impressions": 6,
+      "clicks": 1,
+      "ctr": 0.16666666666666666,
+      "position": 11.833333333333334
+    },
+    {
+      "query": "ai for electricians",
+      "impressions": 409,
+      "clicks": 1,
+      "ctr": 0.0024449877750611247,
+      "position": 18.726161369193154
+    },
+    {
+      "query": "ai tools for electricians",
+      "impressions": 306,
+      "clicks": 1,
+      "ctr": 0.0032679738562091504,
+      "position": 16.00653594771242
+    }
+  ],
+  "/guides/earth-fault-loop-impedance-calculation": [
+    {
+      "query": "calculate ze",
+      "impressions": 5,
+      "clicks": 1,
+      "ctr": 0.2,
+      "position": 15
+    },
+    {
+      "query": "earth loop impedance calculation",
+      "impressions": 9,
+      "clicks": 1,
+      "ctr": 0.1111111111111111,
+      "position": 13
+    },
+    {
+      "query": "\"zs\" earth fault loop impedance",
+      "impressions": 2,
+      "clicks": 0,
+      "ctr": 0,
+      "position": 10
+    },
+    {
+      "query": "0.6?",
+      "impressions": 1,
+      "clicks": 0,
+      "ctr": 0,
+      "position": 2
+    },
+    {
+      "query": "0.81",
+      "impressions": 1,
+      "clicks": 0,
+      "ctr": 0,
+      "position": 2
+    }
+  ],
+  "/guides/construction-site-temporary-supply": [
+    {
+      "query": "\"244 gwh\" \"132kv\" hydropower",
+      "impressions": 1,
+      "clicks": 0,
+      "ctr": 0,
+      "position": 3
+    },
+    {
+      "query": "\"figure 10b\" \"reactive power requirements for rpps of category c\"",
+      "impressions": 2,
+      "clicks": 0,
+      "ctr": 0,
+      "position": 2
+    },
+    {
+      "query": "\"industrial facility consumes a total of 300 kw\" scott-t 2400 v 240 v two-phase 5-wire",
+      "impressions": 3,
+      "clicks": 0,
+      "ctr": 0,
+      "position": 6.666666666666667
+    },
+    {
+      "query": "\"industrial ip. urban. 10 (kw).\" \"urban_lt_new_service_connection_charges_30.04.24.pdf\"",
+      "impressions": 1,
+      "clicks": 0,
+      "ctr": 0,
+      "position": 3
+    },
+    {
+      "query": "\"kellogg switchboard\" \"capacity\" \"subscribers\" \"electrical review\"",
+      "impressions": 1,
+      "clicks": 0,
+      "ctr": 0,
+      "position": 2
+    }
+  ],
+  "/guides/cable-colour-codes-uk": [
+    {
+      "query": "cable codes uk",
+      "impressions": 9,
+      "clicks": 1,
+      "ctr": 0.1111111111111111,
+      "position": 16.444444444444443
+    },
+    {
+      "query": "20 pair cable colour code",
+      "impressions": 3,
+      "clicks": 0,
+      "ctr": 0,
+      "position": 11
+    },
+    {
+      "query": "20 pair colour code",
+      "impressions": 2,
+      "clicks": 0,
+      "ctr": 0,
+      "position": 21.5
+    },
+    {
+      "query": "24vdc cable colours uk",
       "impressions": 4,
       "clicks": 0,
       "ctr": 0,
-      "position": 72.25
+      "position": 10.5
     },
     {
-      "query": "bs 7671 bathroom zones",
+      "query": "2way switch symbol",
       "impressions": 1,
       "clicks": 0,
       "ctr": 0,
@@ -927,10 +1038,10 @@
   "/guides/reference-methods-cable-installation": [
     {
       "query": "bs 7671 reference method c clipped direct",
-      "impressions": 3,
+      "impressions": 2,
       "clicks": 0,
       "ctr": 0,
-      "position": 8.333333333333332
+      "position": 8.5
     },
     {
       "query": "bs 7671 reference methods",
@@ -961,189 +1072,41 @@
       "position": 66.66666666666667
     }
   ],
-  "/guides/mock-exams-electrician": [
+  "/guides/bathroom-electrical-zones-bs7671": [
     {
-      "query": "18th edition mock exam",
-      "impressions": 509,
-      "clicks": 10,
-      "ctr": 0.019646365422396856,
-      "position": 10.68958742632613
+      "query": "701.411.3.3",
+      "impressions": 5,
+      "clicks": 0,
+      "ctr": 0,
+      "position": 3.8
     },
     {
-      "query": "2391 mock exam",
-      "impressions": 435,
-      "clicks": 8,
-      "ctr": 0.01839080459770115,
-      "position": 7.501149425287356
-    },
-    {
-      "query": "2391 mock exam multiple choice free",
-      "impressions": 163,
-      "clicks": 5,
-      "ctr": 0.03067484662576687,
-      "position": 8.184049079754601
-    },
-    {
-      "query": "2391 mock exam multiple choice",
-      "impressions": 66,
-      "clicks": 3,
-      "ctr": 0.045454545454545456,
-      "position": 7.4393939393939394
-    },
-    {
-      "query": "2391 mock test",
-      "impressions": 41,
-      "clicks": 3,
-      "ctr": 0.07317073170731707,
-      "position": 8.195121951219512
-    }
-  ],
-  "/guides/cable-colour-codes-uk": [
-    {
-      "query": "cable codes uk",
-      "impressions": 8,
-      "clicks": 1,
-      "ctr": 0.125,
-      "position": 14.875
-    },
-    {
-      "query": "20 pair cable colour code",
+      "query": "701.415.2",
       "impressions": 1,
       "clicks": 0,
       "ctr": 0,
-      "position": 16
+      "position": 10
     },
     {
-      "query": "20 pair colour code",
-      "impressions": 3,
-      "clicks": 0,
-      "ctr": 0,
-      "position": 36
-    },
-    {
-      "query": "24vdc cable colours uk",
+      "query": "ano",
       "impressions": 1,
       "clicks": 0,
       "ctr": 0,
-      "position": 11
+      "position": 18
     },
     {
-      "query": "3 core and earth cable colours",
+      "query": "bathroom circuit requirements",
       "impressions": 1,
       "clicks": 0,
       "ctr": 0,
-      "position": 48
-    }
-  ],
-  "/guides/am2-exam-tips": [
-    {
-      "query": "am2 online exam tips",
-      "impressions": 23,
-      "clicks": 3,
-      "ctr": 0.13043478260869565,
-      "position": 5.434782608695652
+      "position": 59
     },
     {
-      "query": "am2 fault finding tips",
-      "impressions": 54,
-      "clicks": 2,
-      "ctr": 0.037037037037037035,
-      "position": 9.592592592592593
-    },
-    {
-      "query": "am2 exam simulator",
-      "impressions": 7,
-      "clicks": 1,
-      "ctr": 0.14285714285714285,
-      "position": 12.142857142857142
-    },
-    {
-      "query": "am2 fault finding",
-      "impressions": 20,
-      "clicks": 1,
-      "ctr": 0.05,
-      "position": 21
-    },
-    {
-      "query": "am2 online exam questions and answers pdf",
-      "impressions": 4,
-      "clicks": 1,
-      "ctr": 0.25,
-      "position": 12.75
-    }
-  ],
-  "/guides/caravan-park-electrical": [
-    {
-      "query": "10th",
+      "query": "bathroom code requirements",
       "impressions": 1,
       "clicks": 0,
       "ctr": 0,
-      "position": 7
-    },
-    {
-      "query": "5 amp round pin extension lead",
-      "impressions": 1,
-      "clicks": 0,
-      "ctr": 0,
-      "position": 4
-    },
-    {
-      "query": "calculation method",
-      "impressions": 1,
-      "clicks": 0,
-      "ctr": 0,
-      "position": 4
-    },
-    {
-      "query": "campervan wiring regulations",
-      "impressions": 1,
-      "clicks": 0,
-      "ctr": 0,
-      "position": 56
-    },
-    {
-      "query": "campsite",
-      "impressions": 1,
-      "clicks": 0,
-      "ctr": 0,
-      "position": 9
-    }
-  ],
-  "/guides/electric-shock-from-tap": [
-    {
-      "query": "electric shock through tap",
-      "impressions": 9,
-      "clicks": 1,
-      "ctr": 0.1111111111111111,
-      "position": 9.222222222222221
-    },
-    {
-      "query": "how to fix electric shock from water from tap",
-      "impressions": 124,
-      "clicks": 1,
-      "ctr": 0.008064516129032258,
-      "position": 7.564516129032258
-    },
-    {
-      "query": "can i die from this",
-      "impressions": 1,
-      "clicks": 0,
-      "ctr": 0,
-      "position": 3
-    },
-    {
-      "query": "can water shock you",
-      "impressions": 3,
-      "clicks": 0,
-      "ctr": 0,
-      "position": 22.666666666666668
-    },
-    {
-      "query": "current in bathroom taps",
-      "impressions": 1,
-      "clicks": 0,
-      "ctr": 0,
-      "position": 20
+      "position": 32
     }
   ],
   "/niceic-vs-napit-comparison": [
@@ -1183,115 +1146,300 @@
       "position": 11
     }
   ],
-  "/guides/earth-fault-loop-impedance-too-high": [
+  "/guides/electric-shock-from-tap": [
     {
-      "query": "high earth fault loop impedance",
+      "query": "electric shock through tap",
+      "impressions": 11,
+      "clicks": 1,
+      "ctr": 0.09090909090909091,
+      "position": 8.818181818181818
+    },
+    {
+      "query": "how to fix electric shock from water from tap",
+      "impressions": 174,
+      "clicks": 1,
+      "ctr": 0.005747126436781609,
+      "position": 7.224137931034483
+    },
+    {
+      "query": "can i die from this",
+      "impressions": 1,
+      "clicks": 0,
+      "ctr": 0,
+      "position": 3
+    },
+    {
+      "query": "can water shock you",
+      "impressions": 4,
+      "clicks": 0,
+      "ctr": 0,
+      "position": 22.5
+    },
+    {
+      "query": "continuous",
+      "impressions": 1,
+      "clicks": 0,
+      "ctr": 0,
+      "position": 2
+    }
+  ],
+  "/guides/mock-exams-electrician": [
+    {
+      "query": "18th edition mock exam",
+      "impressions": 541,
+      "clicks": 11,
+      "ctr": 0.02033271719038817,
+      "position": 10.975970425138632
+    },
+    {
+      "query": "2391 mock exam",
+      "impressions": 464,
+      "clicks": 8,
+      "ctr": 0.017241379310344827,
+      "position": 7.631465517241379
+    },
+    {
+      "query": "2391 mock exam multiple choice free",
+      "impressions": 171,
+      "clicks": 5,
+      "ctr": 0.029239766081871343,
+      "position": 8.28654970760234
+    },
+    {
+      "query": "2391 mock exam multiple choice",
+      "impressions": 70,
+      "clicks": 3,
+      "ctr": 0.04285714285714286,
+      "position": 7.6
+    },
+    {
+      "query": "2391 mock test",
+      "impressions": 41,
+      "clicks": 3,
+      "ctr": 0.07317073170731707,
+      "position": 8.195121951219512
+    }
+  ],
+  "/guides/caravan-park-electrical": [
+    {
+      "query": "can you check this please",
       "impressions": 1,
       "clicks": 1,
       "ctr": 1,
-      "position": 6
+      "position": 1
     },
     {
-      "query": "32a type b mcb max zs",
+      "query": "static caravan electrical regulations",
+      "impressions": 44,
+      "clicks": 1,
+      "ctr": 0.022727272727272728,
+      "position": 8.136363636363637
+    },
+    {
+      "query": "10th",
+      "impressions": 1,
+      "clicks": 0,
+      "ctr": 0,
+      "position": 7
+    },
+    {
+      "query": "5 amp round pin extension lead",
+      "impressions": 1,
+      "clicks": 0,
+      "ctr": 0,
+      "position": 4
+    },
+    {
+      "query": "best protection",
+      "impressions": 1,
+      "clicks": 0,
+      "ctr": 0,
+      "position": 1
+    }
+  ],
+  "/guides/part-p-building-regulations": [
+    {
+      "query": "approved doc p",
+      "impressions": 3,
+      "clicks": 0,
+      "ctr": 0,
+      "position": 23.666666666666668
+    },
+    {
+      "query": "approved document p",
+      "impressions": 13,
+      "clicks": 0,
+      "ctr": 0,
+      "position": 24.384615384615383
+    },
+    {
+      "query": "approved document p electrical safety dwellings gov.uk",
       "impressions": 2,
+      "clicks": 0,
+      "ctr": 0,
+      "position": 4.5
+    },
+    {
+      "query": "approved document part p",
+      "impressions": 10,
+      "clicks": 0,
+      "ctr": 0,
+      "position": 27.5
+    },
+    {
+      "query": "are the iee wiring regulations statutory",
+      "impressions": 3,
+      "clicks": 0,
+      "ctr": 0,
+      "position": 64.66666666666666
+    }
+  ],
+  "/tools/earth-loop-impedance-calculator": [
+    {
+      "query": "fault loop impedance calculator",
+      "impressions": 283,
+      "clicks": 1,
+      "ctr": 0.0035335689045936395,
+      "position": 27.6113074204947
+    },
+    {
+      "query": "zs calculator",
+      "impressions": 29,
+      "clicks": 1,
+      "ctr": 0.034482758620689655,
+      "position": 7.620689655172414
+    },
+    {
+      "query": "\"zs\" earth fault loop impedance ze r1 r2",
+      "impressions": 4,
+      "clicks": 0,
+      "ctr": 0,
+      "position": 9.75
+    },
+    {
+      "query": "1667 ohms",
+      "impressions": 2,
+      "clicks": 0,
+      "ctr": 0,
+      "position": 11
+    },
+    {
+      "query": "2.5 twin and earth cable 100m",
+      "impressions": 1,
+      "clicks": 0,
+      "ctr": 0,
+      "position": 8
+    }
+  ],
+  "/guides/am2-exam-tips": [
+    {
+      "query": "am2 online exam tips",
+      "impressions": 31,
+      "clicks": 3,
+      "ctr": 0.0967741935483871,
+      "position": 6.129032258064516
+    },
+    {
+      "query": "am2 fault finding tips",
+      "impressions": 51,
+      "clicks": 2,
+      "ctr": 0.0392156862745098,
+      "position": 9.392156862745098
+    },
+    {
+      "query": "am2 exam simulator",
+      "impressions": 4,
+      "clicks": 1,
+      "ctr": 0.25,
+      "position": 12.25
+    },
+    {
+      "query": "am2 fault finding",
+      "impressions": 19,
+      "clicks": 1,
+      "ctr": 0.05263157894736842,
+      "position": 19.68421052631579
+    },
+    {
+      "query": "am2 online exam",
+      "impressions": 15,
+      "clicks": 1,
+      "ctr": 0.06666666666666667,
+      "position": 18.466666666666665
+    }
+  ],
+  "/guides/insulation-resistance-testing-bs7671": [
+    {
+      "query": "4",
+      "impressions": 1,
+      "clicks": 1,
+      "ctr": 1,
+      "position": 1
+    },
+    {
+      "query": "minimum insulation resistance value acceptable",
+      "impressions": 4,
+      "clicks": 1,
+      "ctr": 0.25,
+      "position": 10.75
+    },
+    {
+      "query": "0.86",
+      "impressions": 1,
       "clicks": 0,
       "ctr": 0,
       "position": 1
     },
     {
-      "query": "bs 3036 max zs",
+      "query": "250v",
+      "impressions": 1,
+      "clicks": 0,
+      "ctr": 0,
+      "position": 2
+    },
+    {
+      "query": "5 out of 5",
       "impressions": 2,
       "clicks": 0,
       "ctr": 0,
-      "position": 7.5
-    },
-    {
-      "query": "bs7671 max zs table",
-      "impressions": 1,
-      "clicks": 0,
-      "ctr": 0,
-      "position": 8
-    },
-    {
-      "query": "bs7671 table 41.3",
-      "impressions": 6,
-      "clicks": 0,
-      "ctr": 0,
-      "position": 7.166666666666667
+      "position": 1.5
     }
   ],
-  "/guides/protective-earthing-bonding": [
+  "/guides/low-insulation-resistance": [
     {
-      "query": "18th edition earth bonding",
+      "query": "rezystancja izolacji",
       "impressions": 1,
-      "clicks": 0,
-      "ctr": 0,
-      "position": 64
-    },
-    {
-      "query": "18th edition earth bonding cable size",
-      "impressions": 2,
-      "clicks": 0,
-      "ctr": 0,
-      "position": 26.5
-    },
-    {
-      "query": "4mm² twin and earth cable earth conductor size bs 7671",
-      "impressions": 1,
-      "clicks": 0,
-      "ctr": 0,
-      "position": 19
-    },
-    {
-      "query": "bonding cable size",
-      "impressions": 1,
-      "clicks": 0,
-      "ctr": 0,
-      "position": 55
-    },
-    {
-      "query": "bonding conductor",
-      "impressions": 1,
-      "clicks": 0,
-      "ctr": 0,
-      "position": 58
-    }
-  ],
-  "/tools/battery-backup-calculator": [
-    {
-      "query": "battery backup calculation",
-      "impressions": 6,
       "clicks": 1,
-      "ctr": 0.16666666666666666,
-      "position": 14.666666666666666
+      "ctr": 1,
+      "position": 2
     },
     {
-      "query": "battery backup calculator for ups",
+      "query": "what causes low insulation resistance readings",
       "impressions": 12,
       "clicks": 1,
       "ctr": 0.08333333333333333,
-      "position": 27.333333333333332
+      "position": 4.416666666666666
     },
     {
-      "query": "ups backup calculator",
-      "impressions": 7,
+      "query": "what is a bad insulation resistance reading",
+      "impressions": 8,
       "clicks": 1,
-      "ctr": 0.14285714285714285,
-      "position": 21
+      "ctr": 0.125,
+      "position": 6.25
     },
     {
-      "query": "ups battery backup calculator",
-      "impressions": 28,
-      "clicks": 1,
-      "ctr": 0.03571428571428571,
-      "position": 24.678571428571427
+      "query": "1m弱",
+      "impressions": 1,
+      "clicks": 0,
+      "ctr": 0,
+      "position": 5
     },
     {
-      "query": "ups battery calculator",
-      "impressions": 17,
-      "clicks": 1,
-      "ctr": 0.058823529411764705,
-      "position": 36
+      "query": "30+ years old",
+      "impressions": 1,
+      "clicks": 0,
+      "ctr": 0,
+      "position": 1
     }
   ],
   "/guides/gold-card-requirements-electrician": [
@@ -1331,41 +1479,337 @@
       "position": 8
     }
   ],
-  "/guides/earth-fault-loop-impedance-calculation": [
+  "/guides/protective-earthing-bonding": [
     {
-      "query": "\"zs\" earth fault loop impedance",
-      "impressions": 4,
+      "query": "\"table c 3.1\" \"small office\" \"load no air-conditioning\" \"120\"",
+      "impressions": 6,
       "clicks": 0,
       "ctr": 0,
-      "position": 10.5
+      "position": 2
     },
     {
-      "query": "b10",
+      "query": "\"table c 3.1\" \"small office\" \"load no air-conditioning\" \"55\"",
+      "impressions": 31,
+      "clicks": 0,
+      "ctr": 0,
+      "position": 2
+    },
+    {
+      "query": "\"table c 3.1\" \"small office\" \"load no air-conditioning\" \"60\"",
+      "impressions": 2,
+      "clicks": 0,
+      "ctr": 0,
+      "position": 2
+    },
+    {
+      "query": "\"table c 3.1\" \"small office\" \"load no air-conditioning\" \"70\"",
+      "impressions": 5,
+      "clicks": 0,
+      "ctr": 0,
+      "position": 2
+    },
+    {
+      "query": "18th edition earth bonding",
       "impressions": 1,
       "clicks": 0,
       "ctr": 0,
-      "position": 4
+      "position": 64
+    }
+  ],
+  "/guides/napit-certificate-guide": [
+    {
+      "query": "napit certificate",
+      "impressions": 229,
+      "clicks": 1,
+      "ctr": 0.004366812227074236,
+      "position": 9.152838427947598
     },
     {
-      "query": "bs88 fuse",
+      "query": "napit requirements",
+      "impressions": 13,
+      "clicks": 1,
+      "ctr": 0.07692307692307693,
+      "position": 11.461538461538462
+    },
+    {
+      "query": "2391 course near me",
       "impressions": 1,
       "clicks": 0,
       "ctr": 0,
       "position": 3
     },
     {
-      "query": "calculate earth fault loop impedance",
-      "impressions": 50,
+      "query": "answers",
+      "impressions": 1,
       "clicks": 0,
       "ctr": 0,
-      "position": 32.22
+      "position": 11
     },
     {
-      "query": "calculate fault loop impedance",
-      "impressions": 45,
+      "query": "bristol",
+      "impressions": 1,
       "clicks": 0,
       "ctr": 0,
-      "position": 24.57777777777778
+      "position": 8
+    }
+  ],
+  "/extension-lead-safety": [
+    {
+      "query": "1 socket extension lead 1m screwfix",
+      "impressions": 1,
+      "clicks": 0,
+      "ctr": 0,
+      "position": 7
+    },
+    {
+      "query": "1300w",
+      "impressions": 1,
+      "clicks": 0,
+      "ctr": 0,
+      "position": 1
+    },
+    {
+      "query": "2 plug extension lead",
+      "impressions": 1,
+      "clicks": 0,
+      "ctr": 0,
+      "position": 6
+    },
+    {
+      "query": "3 metre extension cable",
+      "impressions": 1,
+      "clicks": 0,
+      "ctr": 0,
+      "position": 6
+    },
+    {
+      "query": "3 metre extension lead with switches",
+      "impressions": 1,
+      "clicks": 0,
+      "ctr": 0,
+      "position": 4
+    }
+  ],
+  "/tools/battery-backup-calculator": [
+    {
+      "query": "battery backup calculation",
+      "impressions": 7,
+      "clicks": 1,
+      "ctr": 0.14285714285714285,
+      "position": 18
+    },
+    {
+      "query": "ups backup calculator",
+      "impressions": 7,
+      "clicks": 1,
+      "ctr": 0.14285714285714285,
+      "position": 21
+    },
+    {
+      "query": "ups battery backup calculator",
+      "impressions": 30,
+      "clicks": 1,
+      "ctr": 0.03333333333333333,
+      "position": 22.566666666666666
+    },
+    {
+      "query": "ups battery calculator",
+      "impressions": 15,
+      "clicks": 1,
+      "ctr": 0.06666666666666667,
+      "position": 34.46666666666667
+    },
+    {
+      "query": "ups capacity calculator",
+      "impressions": 20,
+      "clicks": 1,
+      "ctr": 0.05,
+      "position": 26.85
+    }
+  ],
+  "/guides/electric-shower-installation": [
+    {
+      "query": "electric shower cable size uk",
+      "impressions": 2,
+      "clicks": 1,
+      "ctr": 0.5,
+      "position": 9
+    },
+    {
+      "query": "10.5 kw shower cable size",
+      "impressions": 1,
+      "clicks": 0,
+      "ctr": 0,
+      "position": 27
+    },
+    {
+      "query": "10.5kw electric shower cable size",
+      "impressions": 6,
+      "clicks": 0,
+      "ctr": 0,
+      "position": 28.166666666666668
+    },
+    {
+      "query": "10.5kw in amps",
+      "impressions": 2,
+      "clicks": 0,
+      "ctr": 0,
+      "position": 42
+    },
+    {
+      "query": "10.5kw shower cable size",
+      "impressions": 4,
+      "clicks": 0,
+      "ctr": 0,
+      "position": 33.75
+    }
+  ],
+  "/guides/electrical-regulations-timeline-uk": [
+    {
+      "query": "14th edition wiring regulations",
+      "impressions": 21,
+      "clicks": 1,
+      "ctr": 0.047619047619047616,
+      "position": 6.571428571428571
+    },
+    {
+      "query": "bs 7671:2018+a4:2026 pdf",
+      "impressions": 2,
+      "clicks": 1,
+      "ctr": 0.5,
+      "position": 12.5
+    },
+    {
+      "query": "14th edition electrical regulations",
+      "impressions": 4,
+      "clicks": 0,
+      "ctr": 0,
+      "position": 9.5
+    },
+    {
+      "query": "14th edition wiring regulations year",
+      "impressions": 7,
+      "clicks": 0,
+      "ctr": 0,
+      "position": 7.857142857142857
+    },
+    {
+      "query": "15th edition wiring regulations",
+      "impressions": 2,
+      "clicks": 0,
+      "ctr": 0,
+      "position": 17
+    }
+  ],
+  "/electric-boiler-installation": [
+    {
+      "query": "electric combi boiler installation",
+      "impressions": 40,
+      "clicks": 1,
+      "ctr": 0.025,
+      "position": 58.05
+    },
+    {
+      "query": "igen nézzük",
+      "impressions": 1,
+      "clicks": 1,
+      "ctr": 1,
+      "position": 6
+    },
+    {
+      "query": "install electric boiler",
+      "impressions": 73,
+      "clicks": 1,
+      "ctr": 0.0136986301369863,
+      "position": 53.52054794520548
+    },
+    {
+      "query": "127w",
+      "impressions": 1,
+      "clicks": 0,
+      "ctr": 0,
+      "position": 1
+    },
+    {
+      "query": "12kw cable size",
+      "impressions": 3,
+      "clicks": 0,
+      "ctr": 0,
+      "position": 5
+    }
+  ],
+  "/guides/bs-7671-18th-edition-guide": [
+    {
+      "query": "bs 7671:2018+a4:2026",
+      "impressions": 16,
+      "clicks": 2,
+      "ctr": 0.125,
+      "position": 8.375
+    },
+    {
+      "query": "bs 7671:2018+a4:2026 pdf",
+      "impressions": 13,
+      "clicks": 2,
+      "ctr": 0.15384615384615385,
+      "position": 10.76923076923077
+    },
+    {
+      "query": "afdd requirements 18th edition pdf free download",
+      "impressions": 1,
+      "clicks": 1,
+      "ctr": 1,
+      "position": 1
+    },
+    {
+      "query": "bs 7671 18th edition amendment 4 pdf free download",
+      "impressions": 2,
+      "clicks": 1,
+      "ctr": 0.5,
+      "position": 1.5
+    },
+    {
+      "query": "lighting",
+      "impressions": 1,
+      "clicks": 1,
+      "ctr": 1,
+      "position": 1
+    }
+  ],
+  "/guides/prospective-fault-current-explained": [
+    {
+      "query": "what is prospective fault current",
+      "impressions": 67,
+      "clicks": 2,
+      "ctr": 0.029850746268656716,
+      "position": 12.373134328358208
+    },
+    {
+      "query": "calculate ipf",
+      "impressions": 3,
+      "clicks": 0,
+      "ctr": 0,
+      "position": 10.333333333333334
+    },
+    {
+      "query": "calculate pfc",
+      "impressions": 5,
+      "clicks": 0,
+      "ctr": 0,
+      "position": 1.8
+    },
+    {
+      "query": "calculating pfc",
+      "impressions": 3,
+      "clicks": 0,
+      "ctr": 0,
+      "position": 14.333333333333334
+    },
+    {
+      "query": "difference between pfc and pscc",
+      "impressions": 5,
+      "clicks": 0,
+      "ctr": 0,
+      "position": 10.2
     }
   ],
   "/guides/gs-38-proving-dead": [
@@ -1399,158 +1843,10 @@
     },
     {
       "query": "gs 38",
-      "impressions": 180,
+      "impressions": 179,
       "clicks": 0,
       "ctr": 0,
-      "position": 10.094444444444445
-    }
-  ],
-  "/tools/earth-loop-impedance-calculator": [
-    {
-      "query": "fault loop impedance calculator",
-      "impressions": 168,
-      "clicks": 1,
-      "ctr": 0.005952380952380952,
-      "position": 23
-    },
-    {
-      "query": "zs calculator",
-      "impressions": 23,
-      "clicks": 1,
-      "ctr": 0.043478260869565216,
-      "position": 7.3478260869565215
-    },
-    {
-      "query": "\"zs\" earth fault loop impedance ze r1 r2",
-      "impressions": 4,
-      "clicks": 0,
-      "ctr": 0,
-      "position": 9.75
-    },
-    {
-      "query": "1667 ohms",
-      "impressions": 2,
-      "clicks": 0,
-      "ctr": 0,
-      "position": 11
-    },
-    {
-      "query": "2.5 twin and earth cable 100m",
-      "impressions": 1,
-      "clicks": 0,
-      "ctr": 0,
-      "position": 8
-    }
-  ],
-  "/guides/napit-certificate-guide": [
-    {
-      "query": "napit certificate",
-      "impressions": 186,
-      "clicks": 1,
-      "ctr": 0.005376344086021506,
-      "position": 8.89247311827957
-    },
-    {
-      "query": "2391 course near me",
-      "impressions": 1,
-      "clicks": 0,
-      "ctr": 0,
-      "position": 3
-    },
-    {
-      "query": "bristol",
-      "impressions": 1,
-      "clicks": 0,
-      "ctr": 0,
-      "position": 8
-    },
-    {
-      "query": "difference between niceic and napit",
-      "impressions": 1,
-      "clicks": 0,
-      "ctr": 0,
-      "position": 3
-    },
-    {
-      "query": "ev charging course napit",
-      "impressions": 1,
-      "clicks": 0,
-      "ctr": 0,
-      "position": 48
-    }
-  ],
-  "/extension-lead-safety": [
-    {
-      "query": "1 socket extension lead 1m screwfix",
-      "impressions": 1,
-      "clicks": 0,
-      "ctr": 0,
-      "position": 7
-    },
-    {
-      "query": "1300w",
-      "impressions": 1,
-      "clicks": 0,
-      "ctr": 0,
-      "position": 1
-    },
-    {
-      "query": "2 plug extension lead",
-      "impressions": 1,
-      "clicks": 0,
-      "ctr": 0,
-      "position": 6
-    },
-    {
-      "query": "6 way extension lead",
-      "impressions": 1,
-      "clicks": 0,
-      "ctr": 0,
-      "position": 5
-    },
-    {
-      "query": "additional protection",
-      "impressions": 1,
-      "clicks": 0,
-      "ctr": 0,
-      "position": 52
-    }
-  ],
-  "/": [
-    {
-      "query": "elec mate",
-      "impressions": 294,
-      "clicks": 222,
-      "ctr": 0.7551020408163265,
-      "position": 2.183673469387755
-    },
-    {
-      "query": "elecmate",
-      "impressions": 185,
-      "clicks": 138,
-      "ctr": 0.745945945945946,
-      "position": 1.0486486486486486
-    },
-    {
-      "query": "elec-mate",
-      "impressions": 158,
-      "clicks": 115,
-      "ctr": 0.7278481012658228,
-      "position": 2.2468354430379747
-    },
-    {
-      "query": "electrical mate",
-      "impressions": 997,
-      "clicks": 97,
-      "ctr": 0.09729187562688064,
-      "position": 4.43530591775326
-    },
-    {
-      "query": "elec mate app",
-      "impressions": 120,
-      "clicks": 95,
-      "ctr": 0.7916666666666666,
-      "position": 1.1083333333333334
+      "position": 10.089385474860336
     }
   ],
   "/tools/earth-rod-resistance-calculator": [
@@ -1563,10 +1859,10 @@
     },
     {
       "query": "\"ra x iδn\" 50 v",
-      "impressions": 6,
+      "impressions": 5,
       "clicks": 0,
       "ctr": 0,
-      "position": 4.666666666666666
+      "position": 4.4
     },
     {
       "query": "calculează",
@@ -1576,240 +1872,240 @@
       "position": 1
     },
     {
+      "query": "chemical earth pit",
+      "impressions": 1,
+      "clicks": 0,
+      "ctr": 0,
+      "position": 4
+    },
+    {
       "query": "earth electrode resistance",
-      "impressions": 22,
+      "impressions": 23,
       "clicks": 0,
       "ctr": 0,
-      "position": 18.636363636363637
-    },
-    {
-      "query": "earth electrode resistance calculation",
-      "impressions": 6,
-      "clicks": 0,
-      "ctr": 0,
-      "position": 20.333333333333332
+      "position": 19.130434782608695
     }
   ],
-  "/guides/electric-shower-installation": [
+  "/guides/iet-code-of-practice-ev": [
     {
-      "query": "electric shower cable size uk",
-      "impressions": 1,
-      "clicks": 1,
-      "ctr": 1,
-      "position": 1
+      "query": "code of practice for electric vehicle charging equipment installation, 5th edition pdf",
+      "impressions": 10,
+      "clicks": 3,
+      "ctr": 0.3,
+      "position": 5
     },
     {
-      "query": "10.5 kw shower cable size",
-      "impressions": 1,
-      "clicks": 0,
-      "ctr": 0,
-      "position": 27
+      "query": "iet code of practice ev charging 5th edition pdf",
+      "impressions": 39,
+      "clicks": 3,
+      "ctr": 0.07692307692307693,
+      "position": 6.794871794871795
     },
     {
-      "query": "10.5kw electric shower cable size",
+      "query": "iet code of practice ev charging 5th edition pdf free download",
+      "impressions": 14,
+      "clicks": 2,
+      "ctr": 0.14285714285714285,
+      "position": 3.357142857142857
+    },
+    {
+      "query": "code of practice for electric vehicle charging equipment installation pdf",
       "impressions": 3,
-      "clicks": 0,
-      "ctr": 0,
-      "position": 30.333333333333332
+      "clicks": 1,
+      "ctr": 0.3333333333333333,
+      "position": 9.666666666666666
     },
     {
-      "query": "10.5kw in amps",
+      "query": "charging code",
       "impressions": 2,
       "clicks": 0,
       "ctr": 0,
-      "position": 42
-    },
-    {
-      "query": "10.5kw shower cable size",
-      "impressions": 2,
-      "clicks": 0,
-      "ctr": 0,
-      "position": 40
+      "position": 12
     }
   ],
-  "/guides/low-insulation-resistance": [
+  "/tools/conduit-fill-calculator": [
     {
-      "query": "what causes low insulation resistance readings",
-      "impressions": 12,
-      "clicks": 1,
-      "ctr": 0.08333333333333333,
-      "position": 4.416666666666666
-    },
-    {
-      "query": "what is a bad insulation resistance reading",
-      "impressions": 6,
-      "clicks": 1,
-      "ctr": 0.16666666666666666,
-      "position": 4.5
-    },
-    {
-      "query": "an insulation resistance test on a 230v circuit gives a result of 0.8 ohms",
-      "impressions": 4,
-      "clicks": 0,
-      "ctr": 0,
-      "position": 1
-    },
-    {
-      "query": "causes of low insulation resistance",
-      "impressions": 121,
-      "clicks": 0,
-      "ctr": 0,
-      "position": 9.37190082644628
-    },
-    {
-      "query": "how can i tell if insulation in a low-voltage circuit is starting to break down?",
-      "impressions": 4,
-      "clicks": 0,
-      "ctr": 0,
-      "position": 9.25
-    }
-  ],
-  "/guides/bs-7671-18th-edition-guide": [
-    {
-      "query": "afdd requirements 18th edition pdf free download",
-      "impressions": 1,
-      "clicks": 1,
-      "ctr": 1,
-      "position": 1
-    },
-    {
-      "query": "lighting",
-      "impressions": 1,
-      "clicks": 1,
-      "ctr": 1,
-      "position": 1
-    },
-    {
-      "query": "18th edition amendment",
+      "query": "cable conduit fill calculator",
       "impressions": 3,
-      "clicks": 0,
-      "ctr": 0,
-      "position": 37.333333333333336
+      "clicks": 1,
+      "ctr": 0.3333333333333333,
+      "position": 23.666666666666668
     },
     {
-      "query": "18th edition amendment 2022",
+      "query": "conduit factor",
+      "impressions": 4,
+      "clicks": 1,
+      "ctr": 0.25,
+      "position": 2.5
+    },
+    {
+      "query": "conduit factor calculation",
+      "impressions": 4,
+      "clicks": 1,
+      "ctr": 0.25,
+      "position": 5.75
+    },
+    {
+      "query": "conduit fill chart",
+      "impressions": 2,
+      "clicks": 1,
+      "ctr": 0.5,
+      "position": 29.5
+    },
+    {
+      "query": "conduit size calculator uk",
+      "impressions": 45,
+      "clicks": 1,
+      "ctr": 0.022222222222222223,
+      "position": 13.644444444444444
+    }
+  ],
+  "/": [
+    {
+      "query": "elec mate",
+      "impressions": 302,
+      "clicks": 225,
+      "ctr": 0.7450331125827815,
+      "position": 2.076158940397351
+    },
+    {
+      "query": "elecmate",
+      "impressions": 194,
+      "clicks": 151,
+      "ctr": 0.7783505154639175,
+      "position": 1.0360824742268042
+    },
+    {
+      "query": "elec-mate",
+      "impressions": 158,
+      "clicks": 111,
+      "ctr": 0.7025316455696202,
+      "position": 2.018987341772152
+    },
+    {
+      "query": "electrical mate",
+      "impressions": 1010,
+      "clicks": 97,
+      "ctr": 0.09603960396039604,
+      "position": 4.516831683168316
+    },
+    {
+      "query": "elec mate app",
+      "impressions": 123,
+      "clicks": 93,
+      "ctr": 0.7560975609756098,
+      "position": 1.1056910569105691
+    }
+  ],
+  "/guides/ecs-card-types": [
+    {
+      "query": "ecs card",
+      "impressions": 172,
+      "clicks": 1,
+      "ctr": 0.005813953488372093,
+      "position": 26.476744186046513
+    },
+    {
+      "query": "ecs cards",
+      "impressions": 62,
+      "clicks": 1,
+      "ctr": 0.016129032258064516,
+      "position": 27.032258064516128
+    },
+    {
+      "query": "2382-22",
       "impressions": 1,
       "clicks": 0,
       "ctr": 0,
-      "position": 30
+      "position": 2
     },
     {
-      "query": "18th edition amendment 4",
-      "impressions": 6,
-      "clicks": 0,
-      "ctr": 0,
-      "position": 39.166666666666664
-    }
-  ],
-  "/guides/electrical-regulations-timeline-uk": [
-    {
-      "query": "14th edition electrical regulations",
+      "query": "am2 for ecs gold card",
       "impressions": 4,
       "clicks": 0,
       "ctr": 0,
-      "position": 9.5
+      "position": 33.5
     },
     {
-      "query": "14th edition wiring regulations",
+      "query": "apply ecs card",
       "impressions": 10,
       "clicks": 0,
       "ctr": 0,
-      "position": 5.6
-    },
-    {
-      "query": "14th edition wiring regulations year",
-      "impressions": 7,
-      "clicks": 0,
-      "ctr": 0,
-      "position": 7.857142857142857
-    },
-    {
-      "query": "15th edition wiring regulations",
-      "impressions": 1,
-      "clicks": 0,
-      "ctr": 0,
-      "position": 15
-    },
-    {
-      "query": "15th edition wiring regulations year",
-      "impressions": 5,
-      "clicks": 0,
-      "ctr": 0,
-      "position": 10.6
+      "position": 55.7
     }
   ],
-  "/electric-boiler-installation": [
+  "/guides/ring-circuit-fault-finding": [
     {
-      "query": "electric combi boiler installation",
-      "impressions": 34,
-      "clicks": 1,
-      "ctr": 0.029411764705882353,
-      "position": 62.44117647058823
-    },
-    {
-      "query": "install electric boiler",
-      "impressions": 58,
-      "clicks": 1,
-      "ctr": 0.017241379310344827,
-      "position": 55.87931034482759
-    },
-    {
-      "query": "12kw cable size",
-      "impressions": 2,
+      "query": "a ring final circuit is tested and these results are found at a socket outlet: step 2 of test line/neutral at socket - 0.3 ohms. step 3 of test line/c.p.c at socket - no reading. a possible reason for this is",
+      "impressions": 3,
       "clicks": 0,
       "ctr": 0,
       "position": 7
     },
     {
-      "query": "12kw shower cable size",
+      "query": "calculate r1 r2 ring main",
       "impressions": 1,
       "clicks": 0,
       "ctr": 0,
-      "position": 1
+      "position": 21
     },
     {
-      "query": "80kw",
+      "query": "calculating r1 r2 on a ring main",
+      "impressions": 1,
+      "clicks": 0,
+      "ctr": 0,
+      "position": 23
+    },
+    {
+      "query": "cripper",
+      "impressions": 1,
+      "clicks": 0,
+      "ctr": 0,
+      "position": 3
+    },
+    {
+      "query": "eicr certificate what do they check",
       "impressions": 1,
       "clicks": 0,
       "ctr": 0,
       "position": 2
     }
   ],
-  "/guides/iet-code-of-practice-ev": [
+  "/guides/bonding-in-bathroom": [
     {
-      "query": "code of practice for electric vehicle charging equipment installation, 5th edition pdf",
-      "impressions": 9,
-      "clicks": 3,
-      "ctr": 0.3333333333333333,
-      "position": 5.444444444444445
-    },
-    {
-      "query": "iet code of practice ev charging 5th edition pdf",
-      "impressions": 28,
-      "clicks": 3,
-      "ctr": 0.10714285714285714,
-      "position": 8.428571428571429
-    },
-    {
-      "query": "code of practice for electric vehicle charging equipment installation pdf",
+      "query": "bonding bath",
       "impressions": 1,
       "clicks": 1,
       "ctr": 1,
-      "position": 11
+      "position": 7
     },
     {
-      "query": "charging code",
+      "query": "supplementary bonding",
+      "impressions": 22,
+      "clicks": 1,
+      "ctr": 0.045454545454545456,
+      "position": 29.40909090909091
+    },
+    {
+      "query": "supplementary bonding conductor",
       "impressions": 3,
-      "clicks": 0,
-      "ctr": 0,
-      "position": 15
+      "clicks": 1,
+      "ctr": 0.3333333333333333,
+      "position": 18.333333333333332
     },
     {
-      "query": "code ev",
+      "query": "411.3.1.2",
       "impressions": 1,
       "clicks": 0,
       "ctr": 0,
-      "position": 27
+      "position": 1
+    },
+    {
+      "query": "6mm?",
+      "impressions": 1,
+      "clicks": 0,
+      "ctr": 0,
+      "position": 1
     }
   ],
   "/electrical-salary-benchmarking": [
@@ -1849,78 +2145,263 @@
       "position": 9
     }
   ],
-  "/guides/construction-site-temporary-supply": [
+  "/guides/first-fix-electrical": [
     {
-      "query": "airtight utility service entry",
-      "impressions": 2,
-      "clicks": 0,
-      "ctr": 0,
-      "position": 58
-    },
-    {
-      "query": "bs 7375",
-      "impressions": 2,
-      "clicks": 0,
-      "ctr": 0,
-      "position": 9
-    },
-    {
-      "query": "building site power",
-      "impressions": 70,
-      "clicks": 0,
-      "ctr": 0,
-      "position": 43.68571428571428
-    },
-    {
-      "query": "building site power supply",
-      "impressions": 6,
-      "clicks": 0,
-      "ctr": 0,
-      "position": 46.166666666666664
-    },
-    {
-      "query": "building site temporary power",
-      "impressions": 27,
-      "clicks": 0,
-      "ctr": 0,
-      "position": 48.592592592592595
-    }
-  ],
-  "/guides/prospective-fault-current-explained": [
-    {
-      "query": "what is prospective fault current",
-      "impressions": 47,
+      "query": "electrical 1st fix",
+      "impressions": 13,
       "clicks": 1,
-      "ctr": 0.02127659574468085,
-      "position": 12.382978723404255
+      "ctr": 0.07692307692307693,
+      "position": 18.307692307692307
     },
     {
-      "query": "calculate pfc",
-      "impressions": 6,
+      "query": "1st and 2nd fix electrical",
+      "impressions": 14,
       "clicks": 0,
       "ctr": 0,
-      "position": 8.666666666666668
+      "position": 25.571428571428573
     },
     {
-      "query": "calculating pfc",
+      "query": "1st fix",
+      "impressions": 1,
+      "clicks": 0,
+      "ctr": 0,
+      "position": 59
+    },
+    {
+      "query": "1st fix 2nd fix 3rd fix electrical",
+      "impressions": 1,
+      "clicks": 0,
+      "ctr": 0,
+      "position": 38
+    },
+    {
+      "query": "1st fix and 2nd fix electrical",
       "impressions": 4,
       "clicks": 0,
       "ctr": 0,
-      "position": 19
+      "position": 49
+    }
+  ],
+  "/guides/cpd-for-electricians": [
+    {
+      "query": "cpd for electricians",
+      "impressions": 38,
+      "clicks": 3,
+      "ctr": 0.07894736842105263,
+      "position": 7.526315789473684
     },
     {
-      "query": "calculating prospective fault current",
+      "query": "napit cpd requirements",
+      "impressions": 62,
+      "clicks": 3,
+      "ctr": 0.04838709677419355,
+      "position": 6.370967741935484
+    },
+    {
+      "query": "electrical cpd",
+      "impressions": 16,
+      "clicks": 2,
+      "ctr": 0.125,
+      "position": 11.1875
+    },
+    {
+      "query": "electrician cpd",
+      "impressions": 15,
+      "clicks": 1,
+      "ctr": 0.06666666666666667,
+      "position": 7.333333333333333
+    },
+    {
+      "query": "iet cpd requirements",
+      "impressions": 1,
+      "clicks": 1,
+      "ctr": 1,
+      "position": 2
+    }
+  ],
+  "/guides/testing-three-phase-installation": [
+    {
+      "query": "3 phase testing",
+      "impressions": 50,
+      "clicks": 1,
+      "ctr": 0.02,
+      "position": 14.66
+    },
+    {
+      "query": "3 phase testing sequence",
+      "impressions": 17,
+      "clicks": 1,
+      "ctr": 0.058823529411764705,
+      "position": 7.9411764705882355
+    },
+    {
+      "query": "3 fasen schakelaar",
       "impressions": 1,
       "clicks": 0,
       "ctr": 0,
-      "position": 45
+      "position": 2
     },
     {
-      "query": "electrical pfc",
+      "query": "3 phase",
       "impressions": 1,
       "clicks": 0,
       "ctr": 0,
-      "position": 52
+      "position": 12
+    },
+    {
+      "query": "3 phase continuity test",
+      "impressions": 6,
+      "clicks": 0,
+      "ctr": 0,
+      "position": 11
+    }
+  ],
+  "/guides/safe-isolation-procedure-electricians": [
+    {
+      "query": "12 step isolation procedure",
+      "impressions": 1,
+      "clicks": 0,
+      "ctr": 0,
+      "position": 36
+    },
+    {
+      "query": "7 step safe isolation procedure",
+      "impressions": 2,
+      "clicks": 0,
+      "ctr": 0,
+      "position": 1
+    },
+    {
+      "query": "an approved voltage indicator should have test leads fused at",
+      "impressions": 1,
+      "clicks": 0,
+      "ctr": 0,
+      "position": 1
+    },
+    {
+      "query": "approved voltage testers to gs38 should have",
+      "impressions": 5,
+      "clicks": 0,
+      "ctr": 0,
+      "position": 1
+    },
+    {
+      "query": "certificate of isolation",
+      "impressions": 3,
+      "clicks": 0,
+      "ctr": 0,
+      "position": 47.666666666666664
+    }
+  ],
+  "/guides/restaurant-electrical-requirements": [
+    {
+      "query": "commercial kitchen electrical requirements",
+      "impressions": 10,
+      "clicks": 2,
+      "ctr": 0.2,
+      "position": 5
+    },
+    {
+      "query": "commercial kitchen electrical installation",
+      "impressions": 17,
+      "clicks": 1,
+      "ctr": 0.058823529411764705,
+      "position": 5
+    },
+    {
+      "query": "all electric commercial kitchen",
+      "impressions": 1,
+      "clicks": 0,
+      "ctr": 0,
+      "position": 12
+    },
+    {
+      "query": "cafe",
+      "impressions": 1,
+      "clicks": 0,
+      "ctr": 0,
+      "position": 1
+    },
+    {
+      "query": "capacidad electrica",
+      "impressions": 1,
+      "clicks": 0,
+      "ctr": 0,
+      "position": 2
+    }
+  ],
+  "/holiday-let-electrical": [
+    {
+      "query": "airbnb+electrical",
+      "impressions": 1,
+      "clicks": 0,
+      "ctr": 0,
+      "position": 12
+    },
+    {
+      "query": "do holiday lets need an eicr",
+      "impressions": 26,
+      "clicks": 0,
+      "ctr": 0,
+      "position": 7.8076923076923075
+    },
+    {
+      "query": "do holiday lets properties require an epc",
+      "impressions": 3,
+      "clicks": 0,
+      "ctr": 0,
+      "position": 86
+    },
+    {
+      "query": "do holiday lets require an epc",
+      "impressions": 12,
+      "clicks": 0,
+      "ctr": 0,
+      "position": 85
+    },
+    {
+      "query": "do i need an electrical certificate if i holiday let my property",
+      "impressions": 248,
+      "clicks": 0,
+      "ctr": 0,
+      "position": 16.217741935483872
+    }
+  ],
+  "/guides/outbuilding-electrical-supply-guide": [
+    {
+      "query": "10mm 3 core swa",
+      "impressions": 1,
+      "clicks": 0,
+      "ctr": 0,
+      "position": 2
+    },
+    {
+      "query": "10mm armoured cable",
+      "impressions": 1,
+      "clicks": 0,
+      "ctr": 0,
+      "position": 4
+    },
+    {
+      "query": "10mm armoured cable 100m",
+      "impressions": 1,
+      "clicks": 0,
+      "ctr": 0,
+      "position": 5
+    },
+    {
+      "query": "2 m length",
+      "impressions": 1,
+      "clicks": 0,
+      "ctr": 0,
+      "position": 1
+    },
+    {
+      "query": "50mm cable",
+      "impressions": 1,
+      "clicks": 0,
+      "ctr": 0,
+      "position": 2
     }
   ],
   "/guides/continuity-testing-electricians-guide": [
@@ -1960,6 +2441,117 @@
       "position": 1
     }
   ],
+  "/guides/swimming-pool-electrical-regulations": [
+    {
+      "query": "2 gang socket",
+      "impressions": 1,
+      "clicks": 0,
+      "ctr": 0,
+      "position": 4
+    },
+    {
+      "query": "above ground pool electrical requirements",
+      "impressions": 2,
+      "clicks": 0,
+      "ctr": 0,
+      "position": 44.5
+    },
+    {
+      "query": "electrical requirements for hot tub",
+      "impressions": 2,
+      "clicks": 0,
+      "ctr": 0,
+      "position": 56
+    },
+    {
+      "query": "electrical requirements for hot tubs",
+      "impressions": 2,
+      "clicks": 0,
+      "ctr": 0,
+      "position": 51
+    },
+    {
+      "query": "electrical safety requirements bathroom australia",
+      "impressions": 2,
+      "clicks": 0,
+      "ctr": 0,
+      "position": 19
+    }
+  ],
+  "/guides/new-build-electrical-cost-per-m2": [
+    {
+      "query": "cost to wire a new house",
+      "impressions": 3,
+      "clicks": 1,
+      "ctr": 0.3333333333333333,
+      "position": 11.333333333333334
+    },
+    {
+      "query": "electrical installation cost per square foot",
+      "impressions": 5,
+      "clicks": 1,
+      "ctr": 0.2,
+      "position": 12.8
+    },
+    {
+      "query": "??",
+      "impressions": 1,
+      "clicks": 0,
+      "ctr": 0,
+      "position": 1
+    },
+    {
+      "query": "average cost for wiring a new house",
+      "impressions": 3,
+      "clicks": 0,
+      "ctr": 0,
+      "position": 1.3333333333333333
+    },
+    {
+      "query": "average cost of electrical installation in 2026",
+      "impressions": 6,
+      "clicks": 0,
+      "ctr": 0,
+      "position": 8.833333333333332
+    }
+  ],
+  "/guides/underfloor-heating-electrical": [
+    {
+      "query": "building regs underfloor heating",
+      "impressions": 1,
+      "clicks": 0,
+      "ctr": 0,
+      "position": 73
+    },
+    {
+      "query": "can you cut electric underfloor heating",
+      "impressions": 1,
+      "clicks": 0,
+      "ctr": 0,
+      "position": 52
+    },
+    {
+      "query": "do heated floors need a dedicated circuit",
+      "impressions": 1,
+      "clicks": 0,
+      "ctr": 0,
+      "position": 9
+    },
+    {
+      "query": "does electric underfloor heating need its own circuit",
+      "impressions": 5,
+      "clicks": 0,
+      "ctr": 0,
+      "position": 6.6
+    },
+    {
+      "query": "does underfloor heating need its own circuit",
+      "impressions": 6,
+      "clicks": 0,
+      "ctr": 0,
+      "position": 6.5
+    }
+  ],
   "/guides/electrician-day-rates-uk": [
     {
       "query": "average electrician day rate uk 2025",
@@ -1970,14 +2562,14 @@
     },
     {
       "query": "average electrician day rate uk 2026",
-      "impressions": 7,
+      "impressions": 6,
       "clicks": 0,
       "ctr": 0,
-      "position": 10.857142857142858
+      "position": 11
     },
     {
       "query": "checkatrade electrician day rate uk 2026",
-      "impressions": 1,
+      "impressions": 2,
       "clicks": 0,
       "ctr": 0,
       "position": 12
@@ -1997,485 +2589,78 @@
       "position": 1
     }
   ],
-  "/guides/cpd-for-electricians": [
+  "/guides/safe-isolation-procedure": [
     {
-      "query": "napit cpd requirements",
-      "impressions": 53,
-      "clicks": 3,
-      "ctr": 0.05660377358490566,
-      "position": 7.264150943396227
-    },
-    {
-      "query": "cpd for electricians",
-      "impressions": 32,
-      "clicks": 2,
-      "ctr": 0.0625,
-      "position": 7.65625
-    },
-    {
-      "query": "electrician cpd",
-      "impressions": 9,
-      "clicks": 1,
-      "ctr": 0.1111111111111111,
-      "position": 6
-    },
-    {
-      "query": "iet cpd requirements",
-      "impressions": 1,
-      "clicks": 1,
-      "ctr": 1,
-      "position": 2
-    },
-    {
-      "query": "niceic cpd",
-      "impressions": 30,
-      "clicks": 1,
-      "ctr": 0.03333333333333333,
-      "position": 10.066666666666666
-    }
-  ],
-  "/guides/ecs-card-types": [
-    {
-      "query": "ecs card",
-      "impressions": 141,
-      "clicks": 1,
-      "ctr": 0.0070921985815602835,
-      "position": 27.659574468085108
-    },
-    {
-      "query": "ecs cards",
-      "impressions": 47,
-      "clicks": 1,
-      "ctr": 0.02127659574468085,
-      "position": 28.97872340425532
-    },
-    {
-      "query": "am2 for ecs gold card",
-      "impressions": 9,
+      "query": "10 step safe isolation procedure",
+      "impressions": 13,
       "clicks": 0,
       "ctr": 0,
-      "position": 33
+      "position": 2.3846153846153846
     },
     {
-      "query": "apply ecs card",
-      "impressions": 10,
-      "clicks": 0,
-      "ctr": 0,
-      "position": 55.7
-    },
-    {
-      "query": "apply for ecs card",
-      "impressions": 2,
-      "clicks": 0,
-      "ctr": 0,
-      "position": 71.5
-    }
-  ],
-  "/guides/bonding-in-bathroom": [
-    {
-      "query": "bonding bath",
-      "impressions": 1,
-      "clicks": 1,
-      "ctr": 1,
-      "position": 7
-    },
-    {
-      "query": "supplementary bonding",
-      "impressions": 16,
-      "clicks": 1,
-      "ctr": 0.0625,
-      "position": 34.6875
-    },
-    {
-      "query": "supplementary bonding conductor",
-      "impressions": 2,
-      "clicks": 1,
-      "ctr": 0.5,
-      "position": 27
-    },
-    {
-      "query": "6mm?",
-      "impressions": 1,
-      "clicks": 0,
-      "ctr": 0,
-      "position": 1
-    },
-    {
-      "query": "701.415.2",
-      "impressions": 5,
-      "clicks": 0,
-      "ctr": 0,
-      "position": 9.6
-    }
-  ],
-  "/tools/conduit-fill-calculator": [
-    {
-      "query": "cable conduit fill calculator",
-      "impressions": 3,
-      "clicks": 1,
-      "ctr": 0.3333333333333333,
-      "position": 23.666666666666668
-    },
-    {
-      "query": "conduit factor",
-      "impressions": 4,
-      "clicks": 1,
-      "ctr": 0.25,
-      "position": 2.5
-    },
-    {
-      "query": "conduit size calculator uk",
-      "impressions": 31,
-      "clicks": 1,
-      "ctr": 0.03225806451612903,
-      "position": 14.290322580645162
-    },
-    {
-      "query": "1 2 emt conduit fill",
-      "impressions": 1,
-      "clicks": 0,
-      "ctr": 0,
-      "position": 53
-    },
-    {
-      "query": "1.5",
-      "impressions": 1,
-      "clicks": 0,
-      "ctr": 0,
-      "position": 2
-    }
-  ],
-  "/guides/first-fix-electrical": [
-    {
-      "query": "1st and 2nd fix electrical",
-      "impressions": 7,
-      "clicks": 0,
-      "ctr": 0,
-      "position": 31
-    },
-    {
-      "query": "1st fix",
-      "impressions": 1,
-      "clicks": 0,
-      "ctr": 0,
-      "position": 59
-    },
-    {
-      "query": "1st fix 2nd fix 3rd fix electrical",
-      "impressions": 1,
-      "clicks": 0,
-      "ctr": 0,
-      "position": 38
-    },
-    {
-      "query": "1st fix and 2nd fix electrical",
+      "query": "10 step safe isolation procedure 3 phase",
       "impressions": 4,
       "clicks": 0,
       "ctr": 0,
-      "position": 49
+      "position": 7.75
     },
     {
-      "query": "1st fix electrical",
-      "impressions": 6,
-      "clicks": 0,
-      "ctr": 0,
-      "position": 31
-    }
-  ],
-  "/holiday-let-electrical": [
-    {
-      "query": "airbnb+electrical",
-      "impressions": 1,
-      "clicks": 0,
-      "ctr": 0,
-      "position": 12
-    },
-    {
-      "query": "do holiday lets need an eicr",
+      "query": "10 steps of safe isolation",
       "impressions": 20,
       "clicks": 0,
       "ctr": 0,
-      "position": 5.6
+      "position": 7.2
     },
     {
-      "query": "do holiday lets properties require an epc",
-      "impressions": 2,
-      "clicks": 0,
-      "ctr": 0,
-      "position": 89
-    },
-    {
-      "query": "do holiday lets require an epc",
-      "impressions": 5,
-      "clicks": 0,
-      "ctr": 0,
-      "position": 85.6
-    },
-    {
-      "query": "do i need an electrical certificate if i holiday let my property",
-      "impressions": 224,
-      "clicks": 0,
-      "ctr": 0,
-      "position": 14.941964285714286
-    }
-  ],
-  "/guides/restaurant-electrical-requirements": [
-    {
-      "query": "commercial kitchen electrical requirements",
-      "impressions": 6,
-      "clicks": 2,
-      "ctr": 0.3333333333333333,
-      "position": 6.833333333333333
-    },
-    {
-      "query": "capacidad electrica",
-      "impressions": 1,
-      "clicks": 0,
-      "ctr": 0,
-      "position": 2
-    },
-    {
-      "query": "commercial dishwasher electrical load",
-      "impressions": 1,
-      "clicks": 0,
-      "ctr": 0,
-      "position": 1
-    },
-    {
-      "query": "commercial kitchen",
-      "impressions": 1,
-      "clicks": 0,
-      "ctr": 0,
-      "position": 8
-    },
-    {
-      "query": "commercial kitchen electrical code requirements",
-      "impressions": 1,
-      "clicks": 0,
-      "ctr": 0,
-      "position": 3
-    }
-  ],
-  "/guides/ring-circuit-fault-finding": [
-    {
-      "query": "a ring final circuit is tested and these results are found at a socket outlet: step 2 of test line/neutral at socket - 0.3 ohms. step 3 of test line/c.p.c at socket - no reading. a possible reason for this is",
-      "impressions": 1,
-      "clicks": 0,
-      "ctr": 0,
-      "position": 12
-    },
-    {
-      "query": "how to test a ring circuit",
-      "impressions": 1,
-      "clicks": 0,
-      "ctr": 0,
-      "position": 33
-    },
-    {
-      "query": "how to test a ring main",
-      "impressions": 1,
-      "clicks": 0,
-      "ctr": 0,
-      "position": 34
-    },
-    {
-      "query": "how to test a ring main circuit",
-      "impressions": 2,
-      "clicks": 0,
-      "ctr": 0,
-      "position": 36.5
-    },
-    {
-      "query": "how to work out r1 r2 on a ring main",
-      "impressions": 1,
-      "clicks": 0,
-      "ctr": 0,
-      "position": 8
-    }
-  ],
-  "/guides/safe-isolation-procedure-electricians": [
-    {
-      "query": "7 step safe isolation procedure",
-      "impressions": 2,
-      "clicks": 0,
-      "ctr": 0,
-      "position": 1
-    },
-    {
-      "query": "an approved voltage indicator should have test leads fused at",
-      "impressions": 1,
-      "clicks": 0,
-      "ctr": 0,
-      "position": 1
-    },
-    {
-      "query": "approved voltage testers to gs38 should have",
-      "impressions": 5,
-      "clicks": 0,
-      "ctr": 0,
-      "position": 1
-    },
-    {
-      "query": "certificate of isolation",
-      "impressions": 1,
-      "clicks": 0,
-      "ctr": 0,
-      "position": 60
-    },
-    {
-      "query": "electrical isolation",
-      "impressions": 36,
-      "clicks": 0,
-      "ctr": 0,
-      "position": 72.22222222222223
-    }
-  ],
-  "/guides/mock-exams-electrical": [
-    {
-      "query": "2391 mock exam",
-      "impressions": 23,
-      "clicks": 2,
-      "ctr": 0.08695652173913043,
-      "position": 33.43478260869565
-    },
-    {
-      "query": "2392 mock exam multiple choice",
-      "impressions": 2,
-      "clicks": 2,
-      "ctr": 1,
-      "position": 43
-    },
-    {
-      "query": "18th edition mock exam",
-      "impressions": 53,
-      "clicks": 1,
-      "ctr": 0.018867924528301886,
-      "position": 46.471698113207545
-    },
-    {
-      "query": "2391 inspection and testing mock exam",
-      "impressions": 1,
-      "clicks": 1,
-      "ctr": 1,
-      "position": 21
-    },
-    {
-      "query": "ev charging mock exam",
-      "impressions": 11,
-      "clicks": 1,
-      "ctr": 0.09090909090909091,
-      "position": 10.363636363636363
-    }
-  ],
-  "/tools/minor-works-certificate": [
-    {
-      "query": "minor works certificate download",
+      "query": "10 steps safe isolation",
       "impressions": 4,
-      "clicks": 1,
-      "ctr": 0.25,
-      "position": 12.75
-    },
-    {
-      "query": "18th edition minor works certificate pdf",
-      "impressions": 3,
       "clicks": 0,
       "ctr": 0,
-      "position": 15.333333333333334
+      "position": 10.5
     },
+    {
+      "query": "10 steps to safe isolation",
+      "impressions": 9,
+      "clicks": 0,
+      "ctr": 0,
+      "position": 6.888888888888889
+    }
+  ],
+  "/guides/minor-works-vs-eic": [
     {
       "query": "bluelight minor works",
-      "impressions": 7,
-      "clicks": 0,
-      "ctr": 0,
-      "position": 49.142857142857146
-    },
-    {
-      "query": "elec mate app",
-      "impressions": 6,
-      "clicks": 0,
-      "ctr": 0,
-      "position": 7.833333333333333
-    },
-    {
-      "query": "elec-mate",
-      "impressions": 1,
-      "clicks": 0,
-      "ctr": 0,
-      "position": 2
-    }
-  ],
-  "/guides/swimming-pool-electrical-regulations": [
-    {
-      "query": "2 gang socket",
-      "impressions": 1,
-      "clicks": 0,
-      "ctr": 0,
-      "position": 4
-    },
-    {
-      "query": "above ground pool electrical requirements",
-      "impressions": 1,
-      "clicks": 0,
-      "ctr": 0,
-      "position": 41
-    },
-    {
-      "query": "electrical requirements for hot tub",
-      "impressions": 1,
-      "clicks": 0,
-      "ctr": 0,
-      "position": 53
-    },
-    {
-      "query": "electrical requirements for hot tubs",
-      "impressions": 1,
-      "clicks": 0,
-      "ctr": 0,
-      "position": 59
-    },
-    {
-      "query": "electrical wiring requirements for swimming pools uk",
       "impressions": 5,
       "clicks": 0,
       "ctr": 0,
-      "position": 17
-    }
-  ],
-  "/fp200-gold-cable-guide": [
-    {
-      "query": "6mm fp200 cable",
-      "impressions": 7,
-      "clicks": 0,
-      "ctr": 0,
-      "position": 41.42857142857143
+      "position": 24
     },
     {
-      "query": "bs 5839-1 pdf",
-      "impressions": 1,
-      "clicks": 0,
-      "ctr": 0,
-      "position": 90
-    },
-    {
-      "query": "bs 7629",
+      "query": "do i need a minor works certificate to change a socket",
       "impressions": 2,
       "clicks": 0,
       "ctr": 0,
-      "position": 34.5
+      "position": 12.5
     },
     {
-      "query": "bs 7629 1",
-      "impressions": 3,
-      "clicks": 0,
-      "ctr": 0,
-      "position": 48
-    },
-    {
-      "query": "bs 7629 cable",
+      "query": "do you need a minor works certificate to change a socket",
       "impressions": 1,
       "clicks": 0,
       "ctr": 0,
-      "position": 27
+      "position": 11
+    },
+    {
+      "query": "eic form",
+      "impressions": 1,
+      "clicks": 0,
+      "ctr": 0,
+      "position": 32
+    },
+    {
+      "query": "eic forms",
+      "impressions": 1,
+      "clicks": 0,
+      "ctr": 0,
+      "position": 11
     }
   ],
   "/guides/ai-tools-for-electricians": [
@@ -2515,198 +2700,124 @@
       "position": 5.5
     }
   ],
-  "/guides/testing-three-phase-installation": [
+  "/eic-certificate": [
     {
-      "query": "3 phase testing",
-      "impressions": 29,
+      "query": "eic forms",
+      "impressions": 11,
       "clicks": 1,
-      "ctr": 0.034482758620689655,
-      "position": 18.448275862068964
+      "ctr": 0.09090909090909091,
+      "position": 11.454545454545455
     },
     {
-      "query": "3 fasen schakelaar",
+      "query": "bs 7671 certificates",
+      "impressions": 6,
+      "clicks": 0,
+      "ctr": 0,
+      "position": 54.166666666666664
+    },
+    {
+      "query": "bs 7671 electrical installation certificate",
+      "impressions": 32,
+      "clicks": 0,
+      "ctr": 0,
+      "position": 56.40625
+    },
+    {
+      "query": "bs7671 certificate",
+      "impressions": 48,
+      "clicks": 0,
+      "ctr": 0,
+      "position": 71.83333333333333
+    },
+    {
+      "query": "bs7671 certificates",
+      "impressions": 1,
+      "clicks": 0,
+      "ctr": 0,
+      "position": 83
+    }
+  ],
+  "/agricultural-electrical-installation": [
+    {
+      "query": "agricultural buildings",
       "impressions": 1,
       "clicks": 0,
       "ctr": 0,
       "position": 2
     },
     {
-      "query": "3 phase",
+      "query": "agricultural electrical installations",
+      "impressions": 16,
+      "clicks": 0,
+      "ctr": 0,
+      "position": 15.4375
+    },
+    {
+      "query": "agricultural establishments cable",
+      "impressions": 8,
+      "clicks": 0,
+      "ctr": 0,
+      "position": 22.5
+    },
+    {
+      "query": "bs 7671:2018+a4:2026 pdf",
       "impressions": 1,
       "clicks": 0,
       "ctr": 0,
-      "position": 12
+      "position": 19
     },
     {
-      "query": "3 phase continuity test",
-      "impressions": 2,
+      "query": "bs7671 amendment 4 pdf free download",
+      "impressions": 1,
       "clicks": 0,
       "ctr": 0,
-      "position": 18
-    },
-    {
-      "query": "3 phase electrical testing",
-      "impressions": 3,
-      "clicks": 0,
-      "ctr": 0,
-      "position": 16.666666666666664
+      "position": 8
     }
   ],
-  "/guides/minor-works-vs-eic": [
+  "/electric-shower-fault-finding": [
     {
-      "query": "bluelight minor works",
-      "impressions": 5,
-      "clicks": 0,
-      "ctr": 0,
-      "position": 24
-    },
-    {
-      "query": "do you need a minor works certificate to change a socket",
+      "query": "akw smartcare plus electric shower",
       "impressions": 1,
       "clicks": 0,
       "ctr": 0,
-      "position": 11
+      "position": 2
     },
     {
-      "query": "eic form",
-      "impressions": 2,
-      "clicks": 0,
-      "ctr": 0,
-      "position": 35
-    },
-    {
-      "query": "eic forms",
-      "impressions": 2,
-      "clicks": 0,
-      "ctr": 0,
-      "position": 23
-    },
-    {
-      "query": "eic full form",
-      "impressions": 7,
-      "clicks": 0,
-      "ctr": 0,
-      "position": 11.857142857142858
-    }
-  ],
-  "/guides/underfloor-heating-electrical": [
-    {
-      "query": "do heated floors need a dedicated circuit",
-      "impressions": 1,
-      "clicks": 0,
-      "ctr": 0,
-      "position": 9
-    },
-    {
-      "query": "does electric underfloor heating need its own circuit",
-      "impressions": 5,
-      "clicks": 0,
-      "ctr": 0,
-      "position": 6.6
-    },
-    {
-      "query": "does underfloor heating need its own circuit",
-      "impressions": 4,
-      "clicks": 0,
-      "ctr": 0,
-      "position": 7.5
-    },
-    {
-      "query": "electric underfloor heating construction details",
-      "impressions": 2,
-      "clicks": 0,
-      "ctr": 0,
-      "position": 65.5
-    },
-    {
-      "query": "electric underfloor heating design",
-      "impressions": 2,
-      "clicks": 0,
-      "ctr": 0,
-      "position": 62
-    }
-  ],
-  "/guides/new-build-electrical-cost-per-m2": [
-    {
-      "query": "average cost for wiring a new house",
-      "impressions": 2,
-      "clicks": 0,
-      "ctr": 0,
-      "position": 1.5
-    },
-    {
-      "query": "average cost of electrical installation in 2026",
-      "impressions": 6,
-      "clicks": 0,
-      "ctr": 0,
-      "position": 8.833333333333332
-    },
-    {
-      "query": "cost of electrical installation in a new house",
-      "impressions": 1,
-      "clicks": 0,
-      "ctr": 0,
-      "position": 11
-    },
-    {
-      "query": "cost of electrical work for new house",
-      "impressions": 1,
-      "clicks": 0,
-      "ctr": 0,
-      "position": 10
-    },
-    {
-      "query": "cost to wire a house per square foot",
-      "impressions": 1,
-      "clicks": 0,
-      "ctr": 0,
-      "position": 29
-    }
-  ],
-  "/guides/outbuilding-electrical-supply-guide": [
-    {
-      "query": "10mm armoured cable",
+      "query": "aqua 3000 electric shower",
       "impressions": 1,
       "clicks": 0,
       "ctr": 0,
       "position": 4
     },
     {
-      "query": "10mm armoured cable 100m",
-      "impressions": 1,
-      "clicks": 0,
-      "ctr": 0,
-      "position": 5
-    },
-    {
-      "query": "armoured cable shed garage consumer unit wiring diagram",
-      "impressions": 1,
-      "clicks": 0,
-      "ctr": 0,
-      "position": 20
-    },
-    {
-      "query": "bush bar electrical",
+      "query": "best electric power shower uk",
       "impressions": 1,
       "clicks": 0,
       "ctr": 0,
       "position": 3
     },
     {
-      "query": "cable over head",
+      "query": "best electric showers uk",
       "impressions": 1,
       "clicks": 0,
       "ctr": 0,
-      "position": 7
+      "position": 3
+    },
+    {
+      "query": "bristan smile electric shower",
+      "impressions": 1,
+      "clicks": 0,
+      "ctr": 0,
+      "position": 6
     }
   ],
   "/guides/rcbo-keeps-tripping-common-causes": [
     {
       "query": "rcbo keeps tripping",
-      "impressions": 49,
+      "impressions": 51,
       "clicks": 1,
-      "ctr": 0.02040816326530612,
-      "position": 5.8979591836734695
+      "ctr": 0.0196078431372549,
+      "position": 5.803921568627451
     },
     {
       "query": "rcbo tripping under load",
@@ -2735,6 +2846,117 @@
       "clicks": 0,
       "ctr": 0,
       "position": 4
+    }
+  ],
+  "/guides/eicr-schedule-of-inspections": [
+    {
+      "query": "schedule of circuit details",
+      "impressions": 2,
+      "clicks": 1,
+      "ctr": 0.5,
+      "position": 5.5
+    },
+    {
+      "query": "schedule of inspections example",
+      "impressions": 16,
+      "clicks": 1,
+      "ctr": 0.0625,
+      "position": 6.9375
+    },
+    {
+      "query": "bs 7671",
+      "impressions": 1,
+      "clicks": 0,
+      "ctr": 0,
+      "position": 1
+    },
+    {
+      "query": "bs7671 frequency of testing",
+      "impressions": 22,
+      "clicks": 0,
+      "ctr": 0,
+      "position": 75.45454545454545
+    },
+    {
+      "query": "bs7671 inspection and testing",
+      "impressions": 1,
+      "clicks": 0,
+      "ctr": 0,
+      "position": 57
+    }
+  ],
+  "/fp200-gold-cable-guide": [
+    {
+      "query": "6mm fp200 cable",
+      "impressions": 7,
+      "clicks": 0,
+      "ctr": 0,
+      "position": 41.42857142857143
+    },
+    {
+      "query": "bs 5839-1 pdf",
+      "impressions": 1,
+      "clicks": 0,
+      "ctr": 0,
+      "position": 90
+    },
+    {
+      "query": "bs 7629",
+      "impressions": 2,
+      "clicks": 0,
+      "ctr": 0,
+      "position": 34.5
+    },
+    {
+      "query": "bs 7629 1",
+      "impressions": 3,
+      "clicks": 0,
+      "ctr": 0,
+      "position": 48
+    },
+    {
+      "query": "bs 7629 cable",
+      "impressions": 1,
+      "clicks": 0,
+      "ctr": 0,
+      "position": 27
+    }
+  ],
+  "/generator-installation-guide": [
+    {
+      "query": "backup generator uk",
+      "impressions": 1,
+      "clicks": 0,
+      "ctr": 0,
+      "position": 1
+    },
+    {
+      "query": "earthing arrangements",
+      "impressions": 1,
+      "clicks": 0,
+      "ctr": 0,
+      "position": 3
+    },
+    {
+      "query": "earthing generator",
+      "impressions": 1,
+      "clicks": 0,
+      "ctr": 0,
+      "position": 56
+    },
+    {
+      "query": "earthing of generators",
+      "impressions": 1,
+      "clicks": 0,
+      "ctr": 0,
+      "position": 27
+    },
+    {
+      "query": "emergency generator installation",
+      "impressions": 91,
+      "clicks": 0,
+      "ctr": 0,
+      "position": 52.57142857142857
     }
   ],
   "/compare/checkatrade-vs-mybuilder-vs-bark": [
@@ -2774,87 +2996,161 @@
       "position": 6
     }
   ],
-  "/agricultural-electrical-installation": [
+  "/guides/mock-exams-electrical": [
     {
-      "query": "agricultural buildings",
+      "query": "2392 mock exam multiple choice",
+      "impressions": 2,
+      "clicks": 2,
+      "ctr": 1,
+      "position": 43
+    },
+    {
+      "query": "periodic inspection and testing mock exam",
+      "impressions": 33,
+      "clicks": 2,
+      "ctr": 0.06060606060606061,
+      "position": 18.939393939393938
+    },
+    {
+      "query": "18th edition amendment 4 mock exam",
       "impressions": 1,
+      "clicks": 1,
+      "ctr": 1,
+      "position": 13
+    },
+    {
+      "query": "2391 mock exam",
+      "impressions": 12,
+      "clicks": 1,
+      "ctr": 0.08333333333333333,
+      "position": 47
+    },
+    {
+      "query": "ev charging mock exam",
+      "impressions": 11,
+      "clicks": 1,
+      "ctr": 0.09090909090909091,
+      "position": 10.363636363636363
+    }
+  ],
+  "/tools/minor-works-certificate": [
+    {
+      "query": "minor works certificate download",
+      "impressions": 4,
+      "clicks": 1,
+      "ctr": 0.25,
+      "position": 12.75
+    },
+    {
+      "query": "18th edition minor works certificate pdf",
+      "impressions": 2,
+      "clicks": 0,
+      "ctr": 0,
+      "position": 9.5
+    },
+    {
+      "query": "bluelight minor works",
+      "impressions": 9,
+      "clicks": 0,
+      "ctr": 0,
+      "position": 50.111111111111114
+    },
+    {
+      "query": "can you give examples",
+      "impressions": 1,
+      "clicks": 0,
+      "ctr": 0,
+      "position": 5
+    },
+    {
+      "query": "elec mate app",
+      "impressions": 2,
       "clicks": 0,
       "ctr": 0,
       "position": 2
-    },
-    {
-      "query": "agricultural electrical installations",
-      "impressions": 12,
-      "clicks": 0,
-      "ctr": 0,
-      "position": 14.166666666666666
-    },
-    {
-      "query": "agricultural establishments cable",
-      "impressions": 7,
-      "clicks": 0,
-      "ctr": 0,
-      "position": 19.142857142857142
-    },
-    {
-      "query": "bs7671 amendment 4 pdf free download",
-      "impressions": 1,
-      "clicks": 0,
-      "ctr": 0,
-      "position": 8
-    },
-    {
-      "query": "bs7671 distribution board height",
-      "impressions": 1,
-      "clicks": 0,
-      "ctr": 0,
-      "position": 37
     }
   ],
-  "/generator-installation-guide": [
+  "/mock-exams/2391-inspection-testing": [
     {
-      "query": "backup generator uk",
+      "query": "2391-52 mock exam",
+      "impressions": 95,
+      "clicks": 11,
+      "ctr": 0.11578947368421053,
+      "position": 5
+    },
+    {
+      "query": "2391 mock exam",
+      "impressions": 157,
+      "clicks": 9,
+      "ctr": 0.05732484076433121,
+      "position": 6.10828025477707
+    },
+    {
+      "query": "initial verification mock exam",
+      "impressions": 42,
+      "clicks": 8,
+      "ctr": 0.19047619047619047,
+      "position": 6.0476190476190474
+    },
+    {
+      "query": "2391 52 mock exam",
+      "impressions": 30,
+      "clicks": 3,
+      "ctr": 0.1,
+      "position": 5.966666666666667
+    },
+    {
+      "query": "2391 online mock exam",
+      "impressions": 8,
+      "clicks": 3,
+      "ctr": 0.375,
+      "position": 6
+    }
+  ],
+  "/tools/cable-tray-sizing-calculator": [
+    {
+      "query": "cable tray calculator",
+      "impressions": 11,
+      "clicks": 1,
+      "ctr": 0.09090909090909091,
+      "position": 21.272727272727273
+    },
+    {
+      "query": "sizing cable tray",
+      "impressions": 7,
+      "clicks": 1,
+      "ctr": 0.14285714285714285,
+      "position": 24
+    },
+    {
+      "query": "trunking size calculator",
+      "impressions": 4,
+      "clicks": 1,
+      "ctr": 0.25,
+      "position": 10.75
+    },
+    {
+      "query": "\"fill at least 50% of the cross-sectional area of the cable core\"",
+      "impressions": 6,
+      "clicks": 0,
+      "ctr": 0,
+      "position": 4.5
+    },
+    {
+      "query": "76591",
       "impressions": 1,
       "clicks": 0,
       "ctr": 0,
-      "position": 1
-    },
-    {
-      "query": "earthing arrangements",
-      "impressions": 1,
-      "clicks": 0,
-      "ctr": 0,
-      "position": 3
-    },
-    {
-      "query": "earthing generator",
-      "impressions": 1,
-      "clicks": 0,
-      "ctr": 0,
-      "position": 56
-    },
-    {
-      "query": "earthing of generators",
-      "impressions": 1,
-      "clicks": 0,
-      "ctr": 0,
-      "position": 27
-    },
-    {
-      "query": "emergency generator installation",
-      "impressions": 81,
-      "clicks": 0,
-      "ctr": 0,
-      "position": 55.5679012345679
+      "position": 4
     }
   ],
   "/electricians/whitehaven": [
     {
       "query": "eicr in sellafield",
-      "impressions": 1506,
+      "impressions": 1582,
       "clicks": 0,
       "ctr": 0,
-      "position": 5.51062416998672
+      "position": 5.61188369152971
     },
     {
       "query": "eicr workington",
@@ -2885,175 +3181,41 @@
       "position": 12
     }
   ],
-  "/guides/part-p-building-regulations-electrical": [
+  "/training/am2-exam-preparation": [
     {
-      "query": "approved document part p",
-      "impressions": 2,
-      "clicks": 0,
-      "ctr": 0,
-      "position": 47
+      "query": "am2 online exam mock",
+      "impressions": 72,
+      "clicks": 7,
+      "ctr": 0.09722222222222222,
+      "position": 8.569444444444445
     },
     {
-      "query": "building regs part p",
-      "impressions": 1,
-      "clicks": 0,
-      "ctr": 0,
-      "position": 5
+      "query": "am2 mock exam",
+      "impressions": 40,
+      "clicks": 2,
+      "ctr": 0.05,
+      "position": 9.3
     },
     {
-      "query": "building regulations part p",
-      "impressions": 1,
-      "clicks": 0,
-      "ctr": 0,
-      "position": 20
-    },
-    {
-      "query": "can i fix myself",
-      "impressions": 1,
-      "clicks": 0,
-      "ctr": 0,
-      "position": 3
-    },
-    {
-      "query": "does part p apply to commercial",
-      "impressions": 11,
-      "clicks": 0,
-      "ctr": 0,
-      "position": 75.45454545454545
-    }
-  ],
-  "/guides/eicr-schedule-of-inspections": [
-    {
-      "query": "schedule of circuit details",
-      "impressions": 1,
-      "clicks": 1,
-      "ctr": 1,
-      "position": 3
-    },
-    {
-      "query": "schedule of inspections example",
-      "impressions": 10,
-      "clicks": 1,
-      "ctr": 0.1,
-      "position": 7
-    },
-    {
-      "query": "bs 7671",
-      "impressions": 1,
-      "clicks": 0,
-      "ctr": 0,
-      "position": 1
-    },
-    {
-      "query": "bs7671 frequency of testing",
-      "impressions": 12,
-      "clicks": 0,
-      "ctr": 0,
-      "position": 76.25
-    },
-    {
-      "query": "bs7671 inspection and testing",
-      "impressions": 1,
-      "clicks": 0,
-      "ctr": 0,
-      "position": 57
-    }
-  ],
-  "/tools/cable-tray-sizing-calculator": [
-    {
-      "query": "cable tray calculator",
+      "query": "am2 practice exam",
       "impressions": 11,
       "clicks": 1,
       "ctr": 0.09090909090909091,
-      "position": 21.272727272727273
+      "position": 7.181818181818182
     },
     {
-      "query": "sizing cable tray",
-      "impressions": 5,
+      "query": "am2 preparation",
+      "impressions": 10,
       "clicks": 1,
-      "ctr": 0.2,
-      "position": 20
+      "ctr": 0.1,
+      "position": 14.9
     },
     {
-      "query": "trunking size calculator",
-      "impressions": 4,
+      "query": "am2 specification example",
+      "impressions": 13,
       "clicks": 1,
-      "ctr": 0.25,
-      "position": 10.75
-    },
-    {
-      "query": "\"fill at least 50% of the cross-sectional area of the cable core\"",
-      "impressions": 6,
-      "clicks": 0,
-      "ctr": 0,
-      "position": 4.5
-    },
-    {
-      "query": "76591",
-      "impressions": 1,
-      "clicks": 0,
-      "ctr": 0,
-      "position": 4
-    }
-  ],
-  "/electricians/cumbria": [
-    {
-      "query": "consumer unit replacements cumbria",
-      "impressions": 2,
-      "clicks": 0,
-      "ctr": 0,
-      "position": 31.5
-    },
-    {
-      "query": "eicr in sellafield",
-      "impressions": 1338,
-      "clicks": 0,
-      "ctr": 0,
-      "position": 5.79372197309417
-    },
-    {
-      "query": "industrial facility decommissioning dumfries",
-      "impressions": 1,
-      "clicks": 0,
-      "ctr": 0,
-      "position": 26
-    }
-  ],
-  "/electric-shower-fault-finding": [
-    {
-      "query": "best electric showers uk",
-      "impressions": 1,
-      "clicks": 0,
-      "ctr": 0,
-      "position": 3
-    },
-    {
-      "query": "bristan smile electric shower",
-      "impressions": 1,
-      "clicks": 0,
-      "ctr": 0,
-      "position": 6
-    },
-    {
-      "query": "electric power shower",
-      "impressions": 1,
-      "clicks": 0,
-      "ctr": 0,
-      "position": 3
-    },
-    {
-      "query": "electric shower",
-      "impressions": 1,
-      "clicks": 0,
-      "ctr": 0,
-      "position": 3
-    },
-    {
-      "query": "electric shower broken",
-      "impressions": 1,
-      "clicks": 0,
-      "ctr": 0,
-      "position": 12
+      "ctr": 0.07692307692307693,
+      "position": 9.923076923076923
     }
   ],
   "/earth-loop-impedance-calculator": [
@@ -3093,279 +3255,212 @@
       "position": 29.53846153846154
     }
   ],
-  "/guides/safe-isolation-procedure": [
+  "/guides/city-guilds-2365-electrical": [
     {
-      "query": "10 step safe isolation procedure",
-      "impressions": 8,
-      "clicks": 0,
-      "ctr": 0,
-      "position": 1
-    },
-    {
-      "query": "10 steps of safe isolation",
+      "query": "+city +& +guilds +electrical",
       "impressions": 1,
       "clicks": 0,
       "ctr": 0,
-      "position": 1
+      "position": 48
     },
     {
-      "query": "10 steps to safe isolation select",
+      "query": "2365",
+      "impressions": 18,
+      "clicks": 0,
+      "ctr": 0,
+      "position": 21.61111111111111
+    },
+    {
+      "query": "2365 city and guilds",
+      "impressions": 50,
+      "clicks": 0,
+      "ctr": 0,
+      "position": 36.7
+    },
+    {
+      "query": "2365 course",
+      "impressions": 46,
+      "clicks": 0,
+      "ctr": 0,
+      "position": 37.04347826086956
+    },
+    {
+      "query": "2365 electrical course",
       "impressions": 1,
       "clicks": 0,
       "ctr": 0,
-      "position": 1
-    },
+      "position": 18
+    }
+  ],
+  "/guides/part-p-building-regulations-electrical": [
     {
-      "query": "12 step isolation procedure",
-      "impressions": 1,
-      "clicks": 0,
-      "ctr": 0,
-      "position": 29
-    },
-    {
-      "query": "7 step safe isolation procedure",
+      "query": "approved document part p",
       "impressions": 2,
       "clicks": 0,
       "ctr": 0,
-      "position": 1
+      "position": 47
+    },
+    {
+      "query": "building regs part p",
+      "impressions": 1,
+      "clicks": 0,
+      "ctr": 0,
+      "position": 5
+    },
+    {
+      "query": "building regulations part p",
+      "impressions": 1,
+      "clicks": 0,
+      "ctr": 0,
+      "position": 20
+    },
+    {
+      "query": "can i fix myself",
+      "impressions": 1,
+      "clicks": 0,
+      "ctr": 0,
+      "position": 3
+    },
+    {
+      "query": "does part p apply to commercial",
+      "impressions": 11,
+      "clicks": 0,
+      "ctr": 0,
+      "position": 75.45454545454545
     }
   ],
-  "/guides/competent-person-scheme-electrical": [
+  "/bs7671-observation-codes": [
     {
-      "query": "competent electrical person",
-      "impressions": 1,
-      "clicks": 0,
-      "ctr": 0,
-      "position": 34
-    },
-    {
-      "query": "competent electrician",
-      "impressions": 6,
-      "clicks": 0,
-      "ctr": 0,
-      "position": 34.833333333333336
-    },
-    {
-      "query": "competent electrician scheme",
-      "impressions": 1,
-      "clicks": 0,
-      "ctr": 0,
-      "position": 27
-    },
-    {
-      "query": "competent person electrical",
-      "impressions": 6,
-      "clicks": 0,
-      "ctr": 0,
-      "position": 32.16666666666667
-    },
-    {
-      "query": "competent person register electrical",
-      "impressions": 1,
-      "clicks": 0,
-      "ctr": 0,
-      "position": 31
-    }
-  ],
-  "/part-p-self-certification": [
-    {
-      "query": "part p competent person scheme",
-      "impressions": 22,
-      "clicks": 2,
-      "ctr": 0.09090909090909091,
-      "position": 2.8181818181818183
-    },
-    {
-      "query": "building regs electrical certificate",
-      "impressions": 1,
-      "clicks": 0,
-      "ctr": 0,
-      "position": 73
-    },
-    {
-      "query": "competent electrical person",
-      "impressions": 1,
-      "clicks": 0,
-      "ctr": 0,
-      "position": 56
-    },
-    {
-      "query": "competent person electrical",
-      "impressions": 4,
-      "clicks": 0,
-      "ctr": 0,
-      "position": 51
-    },
-    {
-      "query": "competent person register",
-      "impressions": 1,
-      "clicks": 0,
-      "ctr": 0,
-      "position": 64
-    }
-  ],
-  "/guides/hmo-electrical-requirements": [
-    {
-      "query": "eicr frequency for hmo uk",
-      "impressions": 6,
-      "clicks": 0,
-      "ctr": 0,
-      "position": 9.5
-    },
-    {
-      "query": "eicr requirement frequency for hmo uk",
-      "impressions": 19,
-      "clicks": 0,
-      "ctr": 0,
-      "position": 5.7894736842105265
-    },
-    {
-      "query": "eicr requirement frequency for hmos uk",
-      "impressions": 5,
-      "clicks": 0,
-      "ctr": 0,
-      "position": 7
-    },
-    {
-      "query": "eicr requirement frequency hmo uk",
-      "impressions": 5,
-      "clicks": 0,
-      "ctr": 0,
-      "position": 7.2
-    },
-    {
-      "query": "eicr requirements for hmo uk",
-      "impressions": 1,
-      "clicks": 0,
-      "ctr": 0,
-      "position": 7
-    }
-  ],
-  "/tools/electrical-testing-calculators": [
-    {
-      "query": "pfc calculator from ze",
-      "impressions": 1,
-      "clicks": 1,
-      "ctr": 1,
-      "position": 1
-    },
-    {
-      "query": "4c1 calculator",
-      "impressions": 1,
-      "clicks": 0,
-      "ctr": 0,
-      "position": 10
-    },
-    {
-      "query": "calculate fault loop impedance",
-      "impressions": 1,
-      "clicks": 0,
-      "ctr": 0,
-      "position": 71
-    },
-    {
-      "query": "calculate r1 r2 from zs",
-      "impressions": 1,
-      "clicks": 0,
-      "ctr": 0,
-      "position": 36
-    },
-    {
-      "query": "calculate ze",
-      "impressions": 3,
-      "clicks": 0,
-      "ctr": 0,
-      "position": 32.33333333333333
-    }
-  ],
-  "/tools/rcd-testing-guide": [
-    {
-      "query": "what is the maximum disconnection time for a 30ma rcd",
-      "impressions": 1,
-      "clicks": 0,
-      "ctr": 0,
-      "position": 11
-    },
-    {
-      "query": "what kind of testing equipment is necessary for rcd characterization and validation",
-      "impressions": 2,
-      "clicks": 0,
-      "ctr": 0,
-      "position": 9
-    }
-  ],
-  "/ev-charger-certificate": [
-    {
-      "query": "ev charger certification",
+      "query": "observation codes",
       "impressions": 3,
       "clicks": 1,
       "ctr": 0.3333333333333333,
       "position": 1
     },
     {
-      "query": "ev charger test certificate",
-      "impressions": 21,
-      "clicks": 1,
-      "ctr": 0.047619047619047616,
-      "position": 9.666666666666666
-    },
-    {
-      "query": "ev installation certificate",
-      "impressions": 9,
-      "clicks": 1,
-      "ctr": 0.1111111111111111,
-      "position": 2.2222222222222223
-    },
-    {
-      "query": "bs 7671 regulations",
+      "query": "c1 c2 c3 and fi mean",
       "impressions": 1,
       "clicks": 0,
       "ctr": 0,
-      "position": 7
+      "position": 24
     },
     {
-      "query": "bs 7671 section 722",
+      "query": "c1 c2 c3 eicr",
       "impressions": 1,
       "clicks": 0,
       "ctr": 0,
-      "position": 1
+      "position": 47
+    },
+    {
+      "query": "c1 c2 c3 eicr codes explained",
+      "impressions": 15,
+      "clicks": 0,
+      "ctr": 0,
+      "position": 62.266666666666666
+    },
+    {
+      "query": "c1 c2 c3 electrical",
+      "impressions": 16,
+      "clicks": 0,
+      "ctr": 0,
+      "position": 53.375
     }
   ],
-  "/guides/city-guilds-2365-electrical": [
+  "/guides/humming-noise-from-consumer-unit": [
     {
-      "query": "2360 city and guilds",
+      "query": "consumer unit buzzing",
+      "impressions": 35,
+      "clicks": 2,
+      "ctr": 0.05714285714285714,
+      "position": 7.485714285714286
+    },
+    {
+      "query": "are they noisy",
+      "impressions": 1,
+      "clicks": 1,
+      "ctr": 1,
+      "position": 1
+    },
+    {
+      "query": "brand new fridges",
       "impressions": 1,
       "clicks": 0,
       "ctr": 0,
-      "position": 33
+      "position": 4
     },
     {
-      "query": "2365",
-      "impressions": 3,
-      "clicks": 0,
-      "ctr": 0,
-      "position": 40.333333333333336
-    },
-    {
-      "query": "2365 city and guilds",
-      "impressions": 4,
-      "clicks": 0,
-      "ctr": 0,
-      "position": 17
-    },
-    {
-      "query": "2365 level 2",
+      "query": "buzzing",
       "impressions": 1,
       "clicks": 0,
       "ctr": 0,
-      "position": 65
+      "position": 2
     },
     {
-      "query": "2393 city and guilds",
+      "query": "constant hum",
       "impressions": 1,
       "clicks": 0,
       "ctr": 0,
-      "position": 69
+      "position": 2
+    }
+  ],
+  "/electricians/cumbria": [
+    {
+      "query": "consumer unit replacements cumbria",
+      "impressions": 2,
+      "clicks": 0,
+      "ctr": 0,
+      "position": 31.5
+    },
+    {
+      "query": "eicr in sellafield",
+      "impressions": 1338,
+      "clicks": 0,
+      "ctr": 0,
+      "position": 5.79372197309417
+    },
+    {
+      "query": "industrial facility decommissioning dumfries",
+      "impressions": 1,
+      "clicks": 0,
+      "ctr": 0,
+      "position": 26
+    }
+  ],
+  "/guides/eicr-limitations": [
+    {
+      "query": "agreed limitations eicr",
+      "impressions": 13,
+      "clicks": 0,
+      "ctr": 0,
+      "position": 10.923076923076923
+    },
+    {
+      "query": "agreed limitations on eicr",
+      "impressions": 22,
+      "clicks": 0,
+      "ctr": 0,
+      "position": 10.818181818181818
+    },
+    {
+      "query": "eic report",
+      "impressions": 1,
+      "clicks": 0,
+      "ctr": 0,
+      "position": 3
+    },
+    {
+      "query": "eicr agreed limitations examples",
+      "impressions": 8,
+      "clicks": 0,
+      "ctr": 0,
+      "position": 10.25
+    },
+    {
+      "query": "eicr extent of sampling",
+      "impressions": 2,
+      "clicks": 0,
+      "ctr": 0,
+      "position": 13
     }
   ]
 }
