@@ -1,5 +1,6 @@
 import jsPDF from 'jspdf';
 import { saveOrSharePdf } from '@/utils/save-or-share-pdf';
+import { getBrandColour, ensureSpace, addAccentBar } from '@/utils/pdfBrand';
 
 interface PortfolioTemplate {
   id: string;
@@ -8,18 +9,27 @@ interface PortfolioTemplate {
   category: string;
   difficulty: 'Beginner' | 'Intermediate' | 'Advanced';
   sections: string[];
+  /** Optional saved company accent colour (hex). Falls back to Elec-Mate navy. */
+  brandColour?: string;
 }
 
 export const generatePortfolioTemplate = (template: PortfolioTemplate) => {
   const pdf = new jsPDF();
   const pageWidth = pdf.internal.pageSize.width;
   const margin = 20;
+  const bulletIndent = margin + 5;
+  const brand = getBrandColour(template.brandColour);
   let yPosition = margin;
+
+  // Brand accent strip + top margin offset
+  addAccentBar(pdf, brand);
 
   // Title
   pdf.setFontSize(20);
   pdf.setFont('helvetica', 'bold');
+  pdf.setTextColor(brand[0], brand[1], brand[2]);
   pdf.text(template.name, margin, yPosition);
+  pdf.setTextColor(0, 0, 0);
   yPosition += 15;
 
   // Description
@@ -31,35 +41,35 @@ export const generatePortfolioTemplate = (template: PortfolioTemplate) => {
 
   // Sections
   template.sections.forEach((section, index) => {
-    // Check if we need a new page
-    if (yPosition > 250) {
-      pdf.addPage();
-      yPosition = margin;
-    }
+    // Keep the whole section block (heading + both bullet groups) together so
+    // sections don't split mid-bullet. Total height ≈ 10 + 6 + 3×5 + 10 + 6 + 3×5 + 15.
+    yPosition = ensureSpace(pdf, yPosition, 92, { bottomMargin: 20, topAfterBreak: margin });
 
     pdf.setFontSize(16);
     pdf.setFont('helvetica', 'bold');
+    pdf.setTextColor(brand[0], brand[1], brand[2]);
     pdf.text(`${index + 1}. ${section}`, margin, yPosition);
+    pdf.setTextColor(0, 0, 0);
     yPosition += 10;
 
     pdf.setFontSize(10);
     pdf.setFont('helvetica', 'normal');
     pdf.text('Instructions:', margin, yPosition);
     yPosition += 6;
-    pdf.text('• Document your work with clear, high-quality evidence', margin + 5, yPosition);
+    pdf.text('• Document your work with clear, high-quality evidence', bulletIndent, yPosition);
     yPosition += 5;
-    pdf.text('• Include photos, written reflections, and assessor feedback', margin + 5, yPosition);
+    pdf.text('• Include photos, written reflections, and assessor feedback', bulletIndent, yPosition);
     yPosition += 5;
-    pdf.text('• Reference relevant standards and regulations', margin + 5, yPosition);
+    pdf.text('• Reference relevant standards and regulations', bulletIndent, yPosition);
     yPosition += 10;
 
     pdf.text('Evidence Required:', margin, yPosition);
     yPosition += 6;
-    pdf.text('• Photographic evidence of work completed', margin + 5, yPosition);
+    pdf.text('• Photographic evidence of work completed', bulletIndent, yPosition);
     yPosition += 5;
-    pdf.text('• Written reflection on learning outcomes', margin + 5, yPosition);
+    pdf.text('• Written reflection on learning outcomes', bulletIndent, yPosition);
     yPosition += 5;
-    pdf.text('• Supervisor/assessor feedback and signatures', margin + 5, yPosition);
+    pdf.text('• Supervisor/assessor feedback and signatures', bulletIndent, yPosition);
     yPosition += 15;
   });
 

@@ -26,6 +26,7 @@ export const useExpensesStorage = () => {
 
   // Convert database row to Expense object
   const convertDbRowToExpense = useCallback(
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     (row: any): Expense => ({
       id: row.id,
       user_id: row.user_id,
@@ -34,6 +35,7 @@ export const useExpensesStorage = () => {
       date: row.date,
       vendor: row.vendor,
       description: row.description,
+      project_id: row.project_id ?? null,
       receipt_url: row.receipt_url,
       mileage_miles: row.mileage_miles ? parseFloat(row.mileage_miles) : null,
       mileage_rate: parseFloat(row.mileage_rate || '0.45'),
@@ -112,6 +114,7 @@ export const useExpensesStorage = () => {
       return channel;
     };
 
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     let channel: any = null;
     setupRealtimeSubscription().then((ch) => {
       channel = ch;
@@ -172,6 +175,7 @@ export const useExpensesStorage = () => {
           date: input.date,
           vendor: input.vendor || null,
           description: input.description || null,
+          project_id: input.project_id ?? null,
           receipt_url: input.receipt_url || null,
           mileage_miles: input.mileage_miles || null,
           mileage_rate: input.mileage_rate || 0.45,
@@ -481,7 +485,7 @@ export const useExpensesStorage = () => {
       };
 
       switch (format) {
-        case 'xero':
+        case 'xero': {
           // Xero CSV format
           const xeroHeaders = ['Date', 'Description', 'Amount', 'Tax Code', 'Category'];
           const xeroRows = dataToExport.map((exp) => [
@@ -493,7 +497,8 @@ export const useExpensesStorage = () => {
           ]);
           return [xeroHeaders, ...xeroRows].map((row) => row.join(',')).join('\n');
 
-        case 'sage':
+        }
+        case 'sage': {
           // Sage CSV format (UK date format)
           const sageHeaders = [
             'Date',
@@ -513,7 +518,8 @@ export const useExpensesStorage = () => {
           ]);
           return [sageHeaders, ...sageRows].map((row) => row.join(',')).join('\n');
 
-        case 'quickbooks':
+        }
+        case 'quickbooks': {
           // QuickBooks CSV format
           const qbHeaders = [
             'Date',
@@ -533,7 +539,8 @@ export const useExpensesStorage = () => {
           ]);
           return [qbHeaders, ...qbRows].map((row) => row.join(',')).join('\n');
 
-        default:
+        }
+        default: {
           // Generic CSV
           const csvHeaders = [
             'Date',
@@ -556,6 +563,7 @@ export const useExpensesStorage = () => {
             exp.receipt_url ? 'Yes' : 'No',
           ]);
           return [csvHeaders, ...csvRows].map((row) => row.join(',')).join('\n');
+        }
       }
     },
     [filteredExpenses]
@@ -647,6 +655,7 @@ export const useExpensesStorage = () => {
 
         // Update local state to reflect synced expenses
         if (syncedCount > 0) {
+          // eslint-disable-next-line @typescript-eslint/no-explicit-any
           const syncedIds = synced.map((s: any) => s.expenseId);
           setExpenses((prev) =>
             prev.map((exp) =>

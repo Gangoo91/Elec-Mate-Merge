@@ -3,6 +3,7 @@ import jsPDF from 'jspdf';
 import 'jspdf-autotable';
 import { format as formatDate } from 'date-fns';
 import { saveOrSharePdf } from '@/utils/save-or-share-pdf';
+import { getBrandColour, addAccentBar, ensureSpace } from '@/utils/pdfBrand';
 
 // Extend jsPDF with autoTable
 declare module 'jspdf' {
@@ -17,6 +18,8 @@ interface ProfessionalPDFOptions {
   logoUrl?: string;
   includeSignatures?: boolean;
   watermark?: string;
+  /** Optional company brand colour (hex) for headers/accent. Falls back to Elec-Mate navy. */
+  brandColour?: string;
 }
 
 // Simple and robust PDF generation function
@@ -31,14 +34,19 @@ export const generateProfessionalElectricalPDF = async (
 
     const pdf = new jsPDF('p', 'mm', 'a4');
     const pageWidth = pdf.internal.pageSize.getWidth();
-    const pageHeight = pdf.internal.pageSize.getHeight();
     const margin = 20;
+    const brand = getBrandColour(options.brandColour);
     let yPosition = margin;
 
-    // Header
+    // Brand accent strip across the top
+    addAccentBar(pdf, brand);
+
+    // Header (H1) — brand colour
+    pdf.setTextColor(brand[0], brand[1], brand[2]);
     pdf.setFont('helvetica', 'bold');
     pdf.setFontSize(20);
     pdf.text(reportType, pageWidth / 2, yPosition, { align: 'center' });
+    pdf.setTextColor(0, 0, 0);
     yPosition += 15;
 
     // Company name
@@ -71,20 +79,23 @@ export const generateProfessionalElectricalPDF = async (
     pdf.setFontSize(10);
 
     for (const line of lines) {
-      // Check if we need a new page
-      if (yPosition > pageHeight - margin) {
-        pdf.addPage();
-        yPosition = margin;
-      }
-
       if (line.trim()) {
         // Handle headers
         if (line.startsWith('#')) {
+          const level = (line.match(/^#+/)?.[0].length ?? 1);
+          const isH1 = level === 1;
+          // Keep the heading with the start of its following block
+          yPosition = ensureSpace(pdf, yPosition, isH1 ? 18 : 14, {
+            bottomMargin: margin,
+            topAfterBreak: margin,
+          });
+          pdf.setTextColor(brand[0], brand[1], brand[2]);
           pdf.setFont('helvetica', 'bold');
-          pdf.setFontSize(14);
+          pdf.setFontSize(isH1 ? 16 : 14);
           const headerText = line.replace(/^#+\s*/, '');
           pdf.text(headerText, margin, yPosition);
           yPosition += 10;
+          pdf.setTextColor(0, 0, 0);
           pdf.setFont('helvetica', 'normal');
           pdf.setFontSize(10);
         } else {
@@ -93,10 +104,10 @@ export const generateProfessionalElectricalPDF = async (
           const textLines = pdf.splitTextToSize(cleanLine, pageWidth - 2 * margin);
 
           for (const textLine of textLines) {
-            if (yPosition > pageHeight - margin) {
-              pdf.addPage();
-              yPosition = margin;
-            }
+            yPosition = ensureSpace(pdf, yPosition, 6, {
+              bottomMargin: margin,
+              topAfterBreak: margin,
+            });
             pdf.text(textLine, margin, yPosition);
             yPosition += 6;
           }
@@ -108,16 +119,17 @@ export const generateProfessionalElectricalPDF = async (
 
     // Signature section if requested
     if (options.includeSignatures) {
-      // Check if we need a new page
-      if (yPosition > pageHeight - 80) {
-        pdf.addPage();
-        yPosition = margin;
-      }
+      // Keep the whole signatures block together
+      yPosition = ensureSpace(pdf, yPosition + 20, 55, {
+        bottomMargin: margin,
+        topAfterBreak: margin,
+      });
 
-      yPosition += 20;
+      pdf.setTextColor(brand[0], brand[1], brand[2]);
       pdf.setFont('helvetica', 'bold');
       pdf.setFontSize(12);
       pdf.text('Signatures', margin, yPosition);
+      pdf.setTextColor(0, 0, 0);
       yPosition += 15;
 
       pdf.setFont('helvetica', 'normal');

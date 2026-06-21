@@ -1,6 +1,6 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Camera, PenLine, ChevronLeft, X, Receipt } from 'lucide-react';
+import { Camera, PenLine, ChevronLeft, ChevronRight, X, Sparkles } from 'lucide-react';
 import { format } from 'date-fns';
 import {
   Sheet,
@@ -14,6 +14,14 @@ import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Textarea } from '@/components/ui/textarea';
 import { Switch } from '@/components/ui/switch';
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from '@/components/ui/select';
+import { useSparkProjects } from '@/hooks/useSparkProjects';
 import {
   ExpenseCategory,
   CreateExpenseInput,
@@ -121,13 +129,34 @@ const COLOUR_CLASSES: Record<string, { bg: string; text: string; border: string 
 
 type AddStep = 'choose' | 'scan' | 'category' | 'form' | 'mileage';
 
+// Sentinel for the "No project" option — Radix Select can't use an empty value.
+const NO_PROJECT = 'none';
+
 interface ExpenseAddSheetProps {
   open: boolean;
   onOpenChange: (open: boolean) => void;
   onSave: (expense: CreateExpenseInput) => Promise<void>;
+  /** Pre-selects a project in the picker (e.g. when opened from a project page). */
+  defaultProjectId?: string;
+  /** When true, the project is fixed to defaultProjectId and the picker is hidden. */
+  lockProject?: boolean;
 }
 
-export function ExpenseAddSheet({ open, onOpenChange, onSave }: ExpenseAddSheetProps) {
+export function ExpenseAddSheet({
+  open,
+  onOpenChange,
+  onSave,
+  defaultProjectId,
+  lockProject = false,
+}: ExpenseAddSheetProps) {
+  // Projects for the optional "Project" picker — own list, by title.
+  const { projects } = useSparkProjects('all');
+  const [projectId, setProjectId] = useState<string>(defaultProjectId ?? NO_PROJECT);
+
+  // Keep the picker in sync if the caller's default changes (e.g. project page).
+  useEffect(() => {
+    setProjectId(defaultProjectId ?? NO_PROJECT);
+  }, [defaultProjectId]);
   const [step, setStep] = useState<AddStep>('choose');
   const [selectedCategory, setSelectedCategory] = useState<ExpenseCategory | null>(null);
   const [formData, setFormData] = useState<Partial<CreateExpenseInput>>({
@@ -149,6 +178,7 @@ export function ExpenseAddSheet({ open, onOpenChange, onSave }: ExpenseAddSheetP
       setSelectedCategory(null);
       setAmountText('');
       setVatText('');
+      setProjectId(defaultProjectId ?? NO_PROJECT);
       setFormData({
         date: new Date().toISOString().split('T')[0],
         tax_deductible: true,
@@ -196,6 +226,7 @@ export function ExpenseAddSheet({ open, onOpenChange, onSave }: ExpenseAddSheetP
         date: formData.date || new Date().toISOString().split('T')[0],
         vendor: formData.vendor,
         description: formData.description,
+        project_id: projectId === NO_PROJECT ? null : projectId,
         receipt_url: formData.receipt_url,
         mileage_miles: formData.mileage_miles,
         mileage_rate: formData.mileage_rate,
@@ -227,6 +258,7 @@ export function ExpenseAddSheet({ open, onOpenChange, onSave }: ExpenseAddSheetP
         date: mileageData.date,
         vendor: null,
         description: mileageData.description || `${mileageData.from} to ${mileageData.to}`,
+        project_id: projectId === NO_PROJECT ? null : projectId,
         mileage_miles: mileageData.miles,
         mileage_rate: formData.mileage_rate,
         mileage_from: mileageData.from,
@@ -264,57 +296,40 @@ export function ExpenseAddSheet({ open, onOpenChange, onSave }: ExpenseAddSheetP
     <Sheet open={open} onOpenChange={handleClose}>
       <SheetContent
         side="bottom"
-        className="h-[85vh] p-0 rounded-t-2xl overflow-hidden sm:max-w-lg sm:mx-auto"
+        className="h-[85vh] p-0 rounded-t-2xl overflow-hidden sm:max-w-lg sm:mx-auto [&>button]:hidden"
       >
         <div className="flex flex-col h-full bg-background">
-          {/* Header */}
-          <SheetHeader className="p-4 border-b border-white/[0.06] flex-shrink-0">
-            <div className="flex items-center justify-between">
+          {/* Header — back (left) · title (centre) · close (right) */}
+          <SheetHeader className="px-2 py-2.5 border-b border-white/[0.06] flex-shrink-0">
+            <div className="flex items-center gap-1">
               {canGoBack ? (
                 <Button
                   variant="ghost"
                   size="icon"
-                  onClick={() => {
-                    if (step === 'form') {
-                      setStep('category');
-                    } else if (step === 'mileage') {
-                      setStep('category');
-                    } else {
-                      setStep('choose');
-                    }
-                  }}
-                  className="h-10 w-10 touch-manipulation"
+                  onClick={() => setStep(step === 'form' || step === 'mileage' ? 'category' : 'choose')}
+                  className="h-10 w-10 shrink-0 touch-manipulation text-white/70 hover:text-white"
+                  aria-label="Back"
                 >
                   <ChevronLeft className="h-5 w-5" />
                 </Button>
               ) : (
-                <Button
-                  variant="ghost"
-                  size="icon"
-                  onClick={handleClose}
-                  className="h-10 w-10 touch-manipulation"
-                >
-                  <X className="h-5 w-5" />
-                </Button>
+                <div className="w-10 shrink-0" />
               )}
-              <SheetTitle className="text-lg font-semibold flex-1 text-center px-2">
+              <SheetTitle className="text-[17px] font-semibold flex-1 text-center px-1 tracking-tight">
                 {getStepTitle()}
               </SheetTitle>
               <SheetDescription className="sr-only">
                 Add a new expense by scanning a receipt or entering details manually
               </SheetDescription>
-              {canGoBack ? (
-                <Button
-                  variant="ghost"
-                  size="icon"
-                  onClick={handleClose}
-                  className="h-10 w-10 touch-manipulation"
-                >
-                  <X className="h-5 w-5" />
-                </Button>
-              ) : (
-                <div className="w-10" />
-              )}
+              <Button
+                variant="ghost"
+                size="icon"
+                onClick={handleClose}
+                className="h-10 w-10 shrink-0 touch-manipulation text-white/70 hover:text-white"
+                aria-label="Close"
+              >
+                <X className="h-5 w-5" />
+              </Button>
             </div>
           </SheetHeader>
 
@@ -328,67 +343,61 @@ export function ExpenseAddSheet({ open, onOpenChange, onSave }: ExpenseAddSheetP
                   initial={{ opacity: 0, x: -20 }}
                   animate={{ opacity: 1, x: 0 }}
                   exit={{ opacity: 0, x: 20 }}
-                  className="p-4 space-y-6"
+                  className="p-4 space-y-4"
                 >
-                  {/* Hero section */}
-                  <div className="text-center pt-4 pb-2">
-                    <div className="w-16 h-16 rounded-2xl bg-gradient-to-br from-elec-yellow/20 to-amber-500/10 flex items-center justify-center mx-auto mb-4 border border-elec-yellow/20">
-                      <Receipt className="h-8 w-8 text-elec-yellow" />
+                  <p className="text-[13px] text-white/55 leading-snug px-0.5">
+                    Snap a receipt and let AI fill in the details, or log it yourself.
+                  </p>
+
+                  {/* Scan — AI hero (primary action) */}
+                  <button
+                    onClick={() => setStep('scan')}
+                    className="w-full text-left p-4 rounded-2xl bg-gradient-to-br from-elec-yellow/[0.16] to-amber-500/[0.05] border border-elec-yellow/30 hover:border-elec-yellow/50 transition-all touch-manipulation active:scale-[0.98] group"
+                  >
+                    <div className="flex items-center gap-3.5">
+                      <div className="w-12 h-12 rounded-xl bg-elec-yellow/20 flex items-center justify-center shrink-0 group-hover:bg-elec-yellow/30 transition-colors">
+                        <Camera className="h-6 w-6 text-elec-yellow" />
+                      </div>
+                      <div className="flex-1 min-w-0">
+                        <div className="flex items-center gap-2">
+                          <p className="font-semibold text-[15px] text-white">Scan a receipt</p>
+                          <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full bg-elec-yellow/20 text-[10px] font-bold text-elec-yellow uppercase tracking-wide">
+                            <Sparkles className="h-3 w-3" /> AI
+                          </span>
+                        </div>
+                        <p className="text-[12.5px] text-white/60 mt-0.5 leading-snug">
+                          Vendor, amount, VAT &amp; date — filled automatically
+                        </p>
+                      </div>
+                      <ChevronRight className="h-5 w-5 text-elec-yellow/60 shrink-0" />
                     </div>
-                    <h3 className="text-lg font-semibold text-foreground">Add New Expense</h3>
-                    <p className="text-sm text-white mt-1">
-                      Scan a receipt or enter details manually
-                    </p>
-                  </div>
+                  </button>
 
-                  {/* Main action buttons */}
-                  <div className="space-y-3">
-                    {/* Scan Receipt - Primary action */}
-                    <button
-                      onClick={() => setStep('scan')}
-                      className="w-full p-4 rounded-2xl bg-gradient-to-br from-elec-yellow/15 to-amber-500/10 border border-elec-yellow/30 hover:border-elec-yellow/50 hover:from-elec-yellow/20 hover:to-amber-500/15 transition-all touch-manipulation active:scale-[0.98] group"
-                    >
-                      <div className="flex items-center gap-4">
-                        <div className="w-14 h-14 rounded-xl bg-elec-yellow/20 flex items-center justify-center group-hover:bg-elec-yellow/30 transition-colors">
-                          <Camera className="h-7 w-7 text-elec-yellow" />
-                        </div>
-                        <div className="flex-1 text-left">
-                          <p className="font-semibold text-foreground">Scan Receipt</p>
-                          <p className="text-sm text-white">
-                            AI extracts vendor, amount & date
-                          </p>
-                        </div>
-                        <div className="px-2.5 py-1 rounded-full bg-elec-yellow/20 text-[11px] font-semibold text-elec-yellow uppercase tracking-wide">
-                          Quick
-                        </div>
+                  {/* Manual entry (secondary) */}
+                  <button
+                    onClick={() => setStep('category')}
+                    className="w-full text-left p-4 rounded-2xl bg-white/[0.03] border border-white/10 hover:border-white/20 hover:bg-white/[0.05] transition-all touch-manipulation active:scale-[0.98] group"
+                  >
+                    <div className="flex items-center gap-3.5">
+                      <div className="w-12 h-12 rounded-xl bg-white/[0.08] flex items-center justify-center shrink-0 group-hover:bg-white/[0.12] transition-colors">
+                        <PenLine className="h-6 w-6 text-white/80" />
                       </div>
-                    </button>
-
-                    {/* Manual Entry */}
-                    <button
-                      onClick={() => setStep('category')}
-                      className="w-full p-4 rounded-2xl bg-white/[0.03] border border-white/10 hover:border-white/20 hover:bg-white/[0.05] transition-all touch-manipulation active:scale-[0.98] group"
-                    >
-                      <div className="flex items-center gap-4">
-                        <div className="w-14 h-14 rounded-xl bg-white/[0.08] flex items-center justify-center group-hover:bg-white/[0.12] transition-colors">
-                          <PenLine className="h-7 w-7 text-white" />
-                        </div>
-                        <div className="flex-1 text-left">
-                          <p className="font-semibold text-foreground">Manual Entry</p>
-                          <p className="text-sm text-white">
-                            Choose category and enter details
-                          </p>
-                        </div>
+                      <div className="flex-1 min-w-0">
+                        <p className="font-semibold text-[15px] text-white">Enter manually</p>
+                        <p className="text-[12.5px] text-white/60 mt-0.5 leading-snug">
+                          Pick a category and add the details
+                        </p>
                       </div>
-                    </button>
-                  </div>
+                      <ChevronRight className="h-5 w-5 text-white/30 shrink-0" />
+                    </div>
+                  </button>
 
-                  {/* Quick category access */}
-                  <div className="pt-4 border-t border-white/[0.06]">
-                    <p className="text-xs text-white mb-4 uppercase tracking-wider font-medium">
-                      Quick Categories
+                  {/* Quick add — jump straight to a category */}
+                  <div className="pt-3 mt-1 border-t border-white/[0.06]">
+                    <p className="text-[11px] text-white/45 mb-3 uppercase tracking-[0.14em] font-semibold">
+                      Quick add
                     </p>
-                    <div className="flex flex-wrap gap-2">
+                    <div className="grid grid-cols-2 gap-2">
                       {EXPENSE_CATEGORIES.slice(0, 8).map((category) => {
                         const Icon = CATEGORY_ICONS[category.id] || MoreHorizontal;
                         const colours =
@@ -398,13 +407,19 @@ export function ExpenseAddSheet({ open, onOpenChange, onSave }: ExpenseAddSheetP
                             key={category.id}
                             onClick={() => handleCategorySelect(category.id)}
                             className={cn(
-                              'inline-flex items-center gap-2 px-3 py-2 rounded-full border touch-manipulation active:scale-[0.97] transition-all',
-                              colours.bg,
+                              'flex items-center gap-2.5 px-3 h-12 rounded-xl border bg-white/[0.03] hover:bg-white/[0.06] touch-manipulation active:scale-[0.97] transition-all',
                               colours.border
                             )}
                           >
-                            <Icon className={cn('h-4 w-4 flex-shrink-0', colours.text)} />
-                            <span className="text-sm font-medium text-foreground/90">
+                            <span
+                              className={cn(
+                                'w-7 h-7 rounded-lg flex items-center justify-center shrink-0',
+                                colours.bg
+                              )}
+                            >
+                              <Icon className={cn('h-4 w-4', colours.text)} />
+                            </span>
+                            <span className="text-[13.5px] font-medium text-white/90 truncate">
                               {category.label}
                             </span>
                           </button>
@@ -542,6 +557,29 @@ export function ExpenseAddSheet({ open, onOpenChange, onSave }: ExpenseAddSheetP
                     )}
                   </div>
 
+                  {/* Project (optional) */}
+                  {!lockProject && (
+                    <div className="space-y-2">
+                      <Label htmlFor="project">Project (optional)</Label>
+                      <Select value={projectId} onValueChange={setProjectId}>
+                        <SelectTrigger
+                          id="project"
+                          className="h-11 touch-manipulation bg-elec-gray border-elec-gray focus:border-elec-yellow focus:ring-elec-yellow data-[state=open]:border-elec-yellow data-[state=open]:ring-2"
+                        >
+                          <SelectValue placeholder="No project" />
+                        </SelectTrigger>
+                        <SelectContent className="z-[100] max-w-[calc(100vw-2rem)] bg-elec-gray border-elec-gray text-foreground">
+                          <SelectItem value={NO_PROJECT}>No project</SelectItem>
+                          {projects.map((p) => (
+                            <SelectItem key={p.id} value={p.id}>
+                              {p.title}
+                            </SelectItem>
+                          ))}
+                        </SelectContent>
+                      </Select>
+                    </div>
+                  )}
+
                   {/* Vendor */}
                   <div className="space-y-2">
                     <Label htmlFor="vendor">Vendor / Store</Label>
@@ -621,8 +659,29 @@ export function ExpenseAddSheet({ open, onOpenChange, onSave }: ExpenseAddSheetP
                   initial={{ opacity: 0, x: -20 }}
                   animate={{ opacity: 1, x: 0 }}
                   exit={{ opacity: 0, x: 20 }}
-                  className="p-4"
+                  className="p-4 space-y-4"
                 >
+                  {!lockProject && (
+                    <div className="space-y-2">
+                      <Label htmlFor="project-mileage">Project (optional)</Label>
+                      <Select value={projectId} onValueChange={setProjectId}>
+                        <SelectTrigger
+                          id="project-mileage"
+                          className="h-11 touch-manipulation bg-elec-gray border-elec-gray focus:border-elec-yellow focus:ring-elec-yellow data-[state=open]:border-elec-yellow data-[state=open]:ring-2"
+                        >
+                          <SelectValue placeholder="No project" />
+                        </SelectTrigger>
+                        <SelectContent className="z-[100] max-w-[calc(100vw-2rem)] bg-elec-gray border-elec-gray text-foreground">
+                          <SelectItem value={NO_PROJECT}>No project</SelectItem>
+                          {projects.map((p) => (
+                            <SelectItem key={p.id} value={p.id}>
+                              {p.title}
+                            </SelectItem>
+                          ))}
+                        </SelectContent>
+                      </Select>
+                    </div>
+                  )}
                   <ExpenseMileageForm onSave={handleMileageSave} isSubmitting={isSubmitting} />
                 </motion.div>
               )}

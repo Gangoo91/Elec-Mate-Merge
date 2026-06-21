@@ -84,6 +84,9 @@ export interface Expense {
   vendor: string | null;
   description: string | null;
 
+  // Project link (ELE-1176) — optional; ties the expense to a spark_projects row
+  project_id: string | null;
+
   // Receipt
   receipt_url: string | null;
 
@@ -115,6 +118,7 @@ export interface CreateExpenseInput {
   date: string;
   vendor?: string | null;
   description?: string | null;
+  project_id?: string | null;
   receipt_url?: string | null;
   mileage_miles?: number | null;
   mileage_rate?: number;

@@ -26,6 +26,10 @@ const InvoiceBuilderCreate = () => {
   const { fetchInvoices } = useInvoiceStorage();
   const [quoteContext, setQuoteContext] = useState<any>(null);
   const [certificateContext, setCertificateContext] = useState<any>(null);
+  const [projectContext, setProjectContext] = useState<{
+    client?: { name: string; email?: string; phone?: string; address: string; postcode: string };
+    jobDetails?: { title: string; description: string; location: string };
+  } | null>(null);
   const [showExitDialog, setShowExitDialog] = useState(false);
   const [isLoadingContext, setIsLoadingContext] = useState(true);
 
@@ -57,9 +61,51 @@ const InvoiceBuilderCreate = () => {
       }
     }
 
+    // If launched from a project (and no quote/certificate context took over),
+    // fetch the project so we can pre-fill the client and job details — mirrors
+    // QuoteBuilderCreate. The project_id back-link is still passed regardless.
+    if (projectId && !quoteSessionId && !certificateSessionId) {
+      (async () => {
+        try {
+          const { data: project } = await supabase
+            .from('spark_projects')
+            .select(
+              'title, description, location, customer_id, customers(name, email, phone, address)'
+            )
+            .eq('id', projectId)
+            .single();
+
+          if (project) {
+            const customer = (project as any).customers;
+            setProjectContext({
+              ...(customer && {
+                client: {
+                  name: customer.name || '',
+                  email: customer.email || '',
+                  phone: customer.phone || '',
+                  address: customer.address || '',
+                  postcode: '',
+                },
+              }),
+              jobDetails: {
+                title: (project as any).title || '',
+                description: (project as any).description || '',
+                location: (project as any).location || '',
+              },
+            });
+          }
+        } catch {
+          // Project context fetch failed — continue without it (blank form)
+        } finally {
+          setIsLoadingContext(false);
+        }
+      })();
+      return; // defer setIsLoadingContext to the async block
+    }
+
     // Mark context loading as complete
     setIsLoadingContext(false);
-  }, [location]);
+  }, [location, projectId]);
 
   const handleInvoiceGenerated = async (invoiceId: string) => {
     fetchInvoices();
@@ -155,6 +201,15 @@ const InvoiceBuilderCreate = () => {
           </div>
         )}
 
+        {projectContext?.client && (
+          <div className="mx-4 mt-4 flex items-center gap-3 p-3.5 rounded-2xl bg-purple-500/10 border border-purple-500/20">
+            <div className="flex-1 min-w-0">
+              <p className="text-[13px] font-semibold text-purple-400">Imported from project</p>
+              <p className="text-[11px] text-white mt-0.5">Client &amp; job details pre-filled</p>
+            </div>
+          </div>
+        )}
+
         {/* Main Content */}
         <main className="px-0 sm:px-2 py-3">
           {isLoadingContext ? (
@@ -166,7 +221,15 @@ const InvoiceBuilderCreate = () => {
               onInvoiceGenerated={handleInvoiceGenerated}
               sourceQuote={quoteContext}
               initialCertificateData={certificateContext}
-              existingInvoice={projectId ? { project_id: projectId } : undefined}
+              existingInvoice={
+                projectId
+                  ? {
+                      project_id: projectId,
+                      ...(projectContext?.client && { client: projectContext.client }),
+                      ...(projectContext?.jobDetails && { jobDetails: projectContext.jobDetails }),
+                    }
+                  : undefined
+              }
             />
           )}
         </main>

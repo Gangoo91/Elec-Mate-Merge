@@ -1,5 +1,6 @@
 import jsPDF from 'jspdf';
 import { saveOrSharePdf } from '@/utils/save-or-share-pdf';
+import { getBrandColour, ensureSpace, addAccentBar } from '@/utils/pdfBrand';
 
 interface AssessmentCriteria {
   id: string;
@@ -10,16 +11,26 @@ interface AssessmentCriteria {
   feedback: string;
 }
 
-export const generateAssessmentReport = (criteria: AssessmentCriteria[], overallScore: number) => {
+export const generateAssessmentReport = (
+  criteria: AssessmentCriteria[],
+  overallScore: number,
+  brandColour?: string
+) => {
   const pdf = new jsPDF();
   const pageWidth = pdf.internal.pageSize.width;
   const margin = 20;
+  const brand = getBrandColour(brandColour);
   let yPosition = margin;
+
+  // Brand accent strip
+  addAccentBar(pdf, brand);
 
   // Header
   pdf.setFontSize(18);
   pdf.setFont('helvetica', 'bold');
+  pdf.setTextColor(brand[0], brand[1], brand[2]);
   pdf.text('Portfolio Quality Assessment Report', margin, yPosition);
+  pdf.setTextColor(0, 0, 0);
   yPosition += 15;
 
   // Overall Score
@@ -42,15 +53,20 @@ export const generateAssessmentReport = (criteria: AssessmentCriteria[], overall
   // Detailed breakdown
   pdf.setFontSize(12);
   pdf.setFont('helvetica', 'bold');
+  pdf.setTextColor(brand[0], brand[1], brand[2]);
   pdf.text('Detailed Assessment Breakdown:', margin, yPosition);
+  pdf.setTextColor(0, 0, 0);
   yPosition += 15;
 
   criteria.forEach((item, index) => {
-    // Check if we need a new page
-    if (yPosition > 240) {
-      pdf.addPage();
-      yPosition = margin;
-    }
+    // Measure this item's height (heading + 3 metadata lines + wrapped feedback)
+    // and keep the whole block together so feedback can't orphan.
+    const feedbackLines = pdf.splitTextToSize(
+      `Feedback: ${item.feedback}`,
+      pageWidth - 2 * margin - 5
+    );
+    const itemHeight = 8 + 6 * 3 + feedbackLines.length * 5 + 10;
+    yPosition = ensureSpace(pdf, yPosition, itemHeight, { bottomMargin: 20, topAfterBreak: margin });
 
     pdf.setFontSize(11);
     pdf.setFont('helvetica', 'bold');
@@ -66,27 +82,11 @@ export const generateAssessmentReport = (criteria: AssessmentCriteria[], overall
     pdf.text(`Status: ${item.status.replace('-', ' ').toUpperCase()}`, margin + 5, yPosition);
     yPosition += 6;
 
-    const feedbackLines = pdf.splitTextToSize(
-      `Feedback: ${item.feedback}`,
-      pageWidth - 2 * margin - 5
-    );
     pdf.text(feedbackLines, margin + 5, yPosition);
     yPosition += feedbackLines.length * 5 + 10;
   });
 
-  // Recommendations
-  if (yPosition > 200) {
-    pdf.addPage();
-    yPosition = margin;
-  }
-
-  pdf.setFontSize(12);
-  pdf.setFont('helvetica', 'bold');
-  pdf.text('Recommendations for Improvement:', margin, yPosition);
-  yPosition += 15;
-
-  pdf.setFontSize(10);
-  pdf.setFont('helvetica', 'normal');
+  // Recommendations — keep heading and all items together so none orphan.
   const recommendations = [
     'Focus on areas with lower scores first',
     'Seek feedback from mentors and assessors',
@@ -94,7 +94,20 @@ export const generateAssessmentReport = (criteria: AssessmentCriteria[], overall
     'Regular self-assessment helps identify gaps early',
     'Use the interactive learning modules to improve skills',
   ];
+  yPosition = ensureSpace(pdf, yPosition, 15 + recommendations.length * 6, {
+    bottomMargin: 20,
+    topAfterBreak: margin,
+  });
 
+  pdf.setFontSize(12);
+  pdf.setFont('helvetica', 'bold');
+  pdf.setTextColor(brand[0], brand[1], brand[2]);
+  pdf.text('Recommendations for Improvement:', margin, yPosition);
+  pdf.setTextColor(0, 0, 0);
+  yPosition += 15;
+
+  pdf.setFontSize(10);
+  pdf.setFont('helvetica', 'normal');
   recommendations.forEach((rec, index) => {
     pdf.text(`${index + 1}. ${rec}`, margin, yPosition);
     yPosition += 6;
@@ -114,9 +127,10 @@ export const generateAssessmentReport = (criteria: AssessmentCriteria[], overall
 
 export const downloadAssessmentReport = async (
   criteria: AssessmentCriteria[],
-  overallScore: number
+  overallScore: number,
+  brandColour?: string
 ) => {
-  const pdf = generateAssessmentReport(criteria, overallScore);
+  const pdf = generateAssessmentReport(criteria, overallScore, brandColour);
   await saveOrSharePdf(
     pdf,
     `Portfolio_Assessment_Report_${new Date().toISOString().split('T')[0]}.pdf`

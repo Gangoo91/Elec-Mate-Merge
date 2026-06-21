@@ -3,6 +3,7 @@ import autoTable from 'jspdf-autotable';
 import { TimeEntry } from '@/types/time-tracking';
 import { format } from 'date-fns';
 import { saveOrSharePdf } from '@/utils/save-or-share-pdf';
+import { getBrandColour, addAccentBar, readableTextOn } from '@/utils/pdfBrand';
 
 interface ReportData {
   studentName: string;
@@ -14,6 +15,8 @@ interface ReportData {
   filterMonth?: string;
   targetHours?: number;
   weeklyHours?: number;
+  /** Optional brand colour (hex). Falls back to the Elec-Mate navy. */
+  brandColour?: string;
 }
 
 export const generateTrainingReport = async (data: ReportData): Promise<void> => {
@@ -21,19 +24,23 @@ export const generateTrainingReport = async (data: ReportData): Promise<void> =>
 
   // Create a new PDF document
   const doc = new jsPDF();
+  const brand = getBrandColour(data.brandColour);
 
   // Set document properties
   doc.setProperties({
     title: 'Off-the-Job Training Report',
     subject: 'Training Report',
-    author: 'ElecConnect LMS',
-    creator: 'ElecConnect LMS',
+    author: 'Elec-Mate',
+    creator: 'Elec-Mate',
   });
+
+  // Brand accent strip
+  addAccentBar(doc, brand, 4);
 
   // Add header
   doc.setFontSize(20);
-  doc.setTextColor(0, 102, 204);
-  doc.text('Off-the-Job Training Report', 105, 15, { align: 'center' });
+  doc.setTextColor(brand[0], brand[1], brand[2]);
+  doc.text('Off-the-Job Training Report', 105, 18, { align: 'center' });
 
   // Add student information
   doc.setFontSize(12);
@@ -98,8 +105,8 @@ export const generateTrainingReport = async (data: ReportData): Promise<void> =>
     head: [['Date', 'Activity', 'Duration', 'Type', 'Notes']],
     body: tableData,
     headStyles: {
-      fillColor: [0, 102, 204],
-      textColor: [255, 255, 255],
+      fillColor: brand,
+      textColor: readableTextOn(brand),
       fontStyle: 'bold',
       fontSize: 9,
     },

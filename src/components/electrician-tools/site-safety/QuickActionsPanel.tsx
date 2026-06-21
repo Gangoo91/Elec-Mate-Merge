@@ -8,6 +8,7 @@ import { useToast } from '@/hooks/use-toast';
 import jsPDF from 'jspdf';
 import { saveOrSharePdf } from '@/utils/save-or-share-pdf';
 import { copyToClipboard } from '@/utils/clipboard';
+import { getBrandColour, ensureSpace, addAccentBar } from '@/utils/pdfBrand';
 
 interface QuickActionsPanelProps {
   briefing: any;
@@ -22,30 +23,67 @@ export const QuickActionsPanel = ({ briefing, onRefresh }: QuickActionsPanelProp
     setGenerating(true);
     try {
       const doc = new jsPDF();
+      const marginX = 20;
+      const contentWidth =
+        doc.internal.pageSize.getWidth() - marginX * 2;
+      const brand = getBrandColour(
+        briefing.company?.accent_color || briefing.brand_colour
+      );
 
-      // Header
+      // Brand accent strip + title
+      addAccentBar(doc, brand);
+      let y = 22;
+      doc.setTextColor(brand[0], brand[1], brand[2]);
       doc.setFontSize(20);
-      doc.text(briefing.briefing_name || 'Team Briefing', 20, 20);
+      doc.text(briefing.briefing_name || 'Team Briefing', marginX, y);
+      doc.setTextColor(0, 0, 0);
 
+      // Meta
       doc.setFontSize(12);
-      doc.text(`Location: ${briefing.location}`, 20, 35);
-      doc.text(`Date: ${new Date(briefing.briefing_date).toLocaleDateString('en-GB')}`, 20, 42);
-      doc.text(`Time: ${briefing.briefing_time}`, 20, 49);
+      y += 15;
+      doc.text(`Location: ${briefing.location}`, marginX, y);
+      y += 7;
+      doc.text(
+        `Date: ${new Date(briefing.briefing_date).toLocaleDateString('en-GB')}`,
+        marginX,
+        y
+      );
+      y += 7;
+      doc.text(`Time: ${briefing.briefing_time}`, marginX, y);
 
-      // Content
+      // Description — wrapped, line-by-line with page-break guard
+      y += 16;
+      doc.setTextColor(brand[0], brand[1], brand[2]);
       doc.setFontSize(14);
-      doc.text('Briefing Description:', 20, 65);
+      y = ensureSpace(doc, y, 10);
+      doc.text('Briefing Description:', marginX, y);
+      doc.setTextColor(0, 0, 0);
       doc.setFontSize(11);
-      const descLines = doc.splitTextToSize(briefing.briefing_description || '', 170);
-      doc.text(descLines, 20, 72);
+      const descLines: string[] = doc.splitTextToSize(
+        briefing.briefing_description || '',
+        contentWidth
+      );
+      y += 7;
+      descLines.forEach((line: string) => {
+        y = ensureSpace(doc, y, 6);
+        doc.text(line, marginX, y);
+        y += 6;
+      });
 
-      // Attendees
+      // Attendees — paginated loop
       if (briefing.attendees && briefing.attendees.length > 0) {
+        y += 10;
+        doc.setTextColor(brand[0], brand[1], brand[2]);
         doc.setFontSize(14);
-        doc.text('Attendees:', 20, 110);
+        y = ensureSpace(doc, y, 10);
+        doc.text('Attendees:', marginX, y);
+        doc.setTextColor(0, 0, 0);
         doc.setFontSize(11);
+        y += 7;
         briefing.attendees.forEach((attendee: any, idx: number) => {
-          doc.text(`${idx + 1}. ${attendee.name}`, 25, 117 + idx * 7);
+          y = ensureSpace(doc, y, 7);
+          doc.text(`${idx + 1}. ${attendee.name}`, marginX + 5, y);
+          y += 7;
         });
       }
 

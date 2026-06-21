@@ -2,6 +2,13 @@ import jsPDF from 'jspdf';
 import autoTable from 'jspdf-autotable';
 import { format } from 'date-fns';
 import { saveOrSharePdf } from '@/utils/save-or-share-pdf';
+import {
+  getBrandColour,
+  fitContain,
+  ensureSpace,
+  addAccentBar,
+  readableTextOn,
+} from '@/utils/pdfBrand';
 
 interface CertificateData {
   companyName?: string;
@@ -17,6 +24,8 @@ interface CertificateData {
   signatureData?: string;
   signedAt?: string;
   referenceId?: string;
+  /** Optional brand colour source (hex or company-profile-like) for the header accent. */
+  brandColour?: string;
 }
 
 async function loadImageAsDataUrl(url: string): Promise<string | null> {
@@ -41,10 +50,13 @@ export async function generateCompletionCertificatePDF(data: CertificateData): P
   const margin = 15;
   let yPos = 0;
 
+  const brand = getBrandColour(data.brandColour);
+
   // --- Header bar ---
   const headerHeight = 40;
-  doc.setFillColor(30, 64, 175);
+  doc.setFillColor(brand[0], brand[1], brand[2]);
   doc.rect(0, 0, pageWidth, headerHeight, 'F');
+  addAccentBar(doc, brand);
 
   // Company logo (if available)
   if (data.companyLogoUrl) {
@@ -106,6 +118,8 @@ export async function generateCompletionCertificatePDF(data: CertificateData): P
 
   // --- Scope of works table ---
   if (data.rooms && data.rooms.length > 0) {
+    // Keep the section heading with at least the table header row.
+    yPos = ensureSpace(doc, yPos, 24, { bottomMargin: 30, topAfterBreak: 20 });
     doc.setFontSize(11);
     doc.setFont('helvetica', 'bold');
     doc.text('Scope of Works', margin, yPos);
@@ -124,7 +138,7 @@ export async function generateCompletionCertificatePDF(data: CertificateData): P
         head: [['Room', 'Item', 'Quantity']],
         body: tableBody,
         theme: 'striped',
-        headStyles: { fillColor: [30, 64, 175], fontSize: 9 },
+        headStyles: { fillColor: brand, textColor: readableTextOn(brand), fontSize: 9 },
         styles: { fontSize: 9 },
         margin: { left: margin, right: margin },
         columnStyles: {
@@ -145,18 +159,19 @@ export async function generateCompletionCertificatePDF(data: CertificateData): P
   const photoHeight = 30;
 
   if (data.beforePhotoUrls && data.beforePhotoUrls.length > 0) {
-    // Check if we need a new page
-    if (yPos + 50 > pageHeight - 30) {
-      doc.addPage();
-      yPos = 20;
-    }
+    const photosToShow = data.beforePhotoUrls.slice(0, 4);
+    const photoRows = Math.ceil(photosToShow.length / maxPhotosPerRow);
+    // Heading (6) + the photo grid; keep the whole block together.
+    yPos = ensureSpace(doc, yPos, 6 + photoRows * (photoHeight + 5), {
+      bottomMargin: 30,
+      topAfterBreak: 20,
+    });
 
     doc.setFontSize(11);
     doc.setFont('helvetica', 'bold');
     doc.text(`Before Photos (${data.beforePhotoUrls.length})`, margin, yPos);
     yPos += 6;
 
-    const photosToShow = data.beforePhotoUrls.slice(0, 4);
     for (let i = 0; i < photosToShow.length; i++) {
       const col = i % maxPhotosPerRow;
       const row = Math.floor(i / maxPhotosPerRow);
@@ -166,7 +181,9 @@ export async function generateCompletionCertificatePDF(data: CertificateData): P
       try {
         const imgData = await loadImageAsDataUrl(photosToShow[i]);
         if (imgData) {
-          doc.addImage(imgData, 'JPEG', x, y, photoWidth, photoHeight);
+          const props = doc.getImageProperties(imgData);
+          const fit = fitContain(props.width, props.height, x, y, photoWidth, photoHeight);
+          doc.addImage(imgData, 'JPEG', fit.x, fit.y, fit.w, fit.h);
         }
       } catch {
         doc.setDrawColor(200, 200, 200);
@@ -174,23 +191,23 @@ export async function generateCompletionCertificatePDF(data: CertificateData): P
       }
     }
 
-    const rows = Math.ceil(photosToShow.length / maxPhotosPerRow);
-    yPos += rows * (photoHeight + 5) + 5;
+    yPos += photoRows * (photoHeight + 5) + 5;
   }
 
   // --- After photos ---
   if (data.afterPhotoUrls && data.afterPhotoUrls.length > 0) {
-    if (yPos + 50 > pageHeight - 30) {
-      doc.addPage();
-      yPos = 20;
-    }
+    const photosToShow = data.afterPhotoUrls.slice(0, 4);
+    const photoRows = Math.ceil(photosToShow.length / maxPhotosPerRow);
+    yPos = ensureSpace(doc, yPos, 6 + photoRows * (photoHeight + 5), {
+      bottomMargin: 30,
+      topAfterBreak: 20,
+    });
 
     doc.setFontSize(11);
     doc.setFont('helvetica', 'bold');
     doc.text(`After Photos (${data.afterPhotoUrls.length})`, margin, yPos);
     yPos += 6;
 
-    const photosToShow = data.afterPhotoUrls.slice(0, 4);
     for (let i = 0; i < photosToShow.length; i++) {
       const col = i % maxPhotosPerRow;
       const row = Math.floor(i / maxPhotosPerRow);
@@ -200,7 +217,9 @@ export async function generateCompletionCertificatePDF(data: CertificateData): P
       try {
         const imgData = await loadImageAsDataUrl(photosToShow[i]);
         if (imgData) {
-          doc.addImage(imgData, 'JPEG', x, y, photoWidth, photoHeight);
+          const props = doc.getImageProperties(imgData);
+          const fit = fitContain(props.width, props.height, x, y, photoWidth, photoHeight);
+          doc.addImage(imgData, 'JPEG', fit.x, fit.y, fit.w, fit.h);
         }
       } catch {
         doc.setDrawColor(200, 200, 200);
@@ -208,16 +227,12 @@ export async function generateCompletionCertificatePDF(data: CertificateData): P
       }
     }
 
-    const rows = Math.ceil(photosToShow.length / maxPhotosPerRow);
-    yPos += rows * (photoHeight + 5) + 5;
+    yPos += photoRows * (photoHeight + 5) + 5;
   }
 
   // --- Signature ---
   if (data.signatureData) {
-    if (yPos + 50 > pageHeight - 30) {
-      doc.addPage();
-      yPos = 20;
-    }
+    yPos = ensureSpace(doc, yPos, 50, { bottomMargin: 30, topAfterBreak: 20 });
 
     doc.setFontSize(11);
     doc.setFont('helvetica', 'bold');
@@ -225,7 +240,9 @@ export async function generateCompletionCertificatePDF(data: CertificateData): P
     yPos += 6;
 
     try {
-      doc.addImage(data.signatureData, 'PNG', margin, yPos, 60, 25);
+      const sigProps = doc.getImageProperties(data.signatureData);
+      const sigFit = fitContain(sigProps.width, sigProps.height, margin, yPos, 60, 25);
+      doc.addImage(data.signatureData, 'PNG', sigFit.x, sigFit.y, sigFit.w, sigFit.h);
       yPos += 28;
     } catch {
       doc.setFontSize(9);

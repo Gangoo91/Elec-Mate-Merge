@@ -7,6 +7,7 @@ import { SafetyPhoto, getCategoryLabel } from '@/hooks/useSafetyPhotos';
 import { toast } from '@/hooks/use-toast';
 import { format } from 'date-fns';
 import { saveOrSharePdf } from '@/utils/save-or-share-pdf';
+import { fitContain, getBrandColour, ensureSpace, addAccentBar } from '@/utils/pdfBrand';
 
 interface Annotation {
   x: number;
@@ -138,11 +139,15 @@ export default function ProjectExportSheet({
       const margin = 15;
       const usableWidth = pageWidth - margin * 2;
 
-      // Header
-      doc.setFillColor(251, 191, 36);
-      doc.rect(0, 0, pageWidth, 35, 'F');
+      // Brand colour (company brand if available, else Elec-Mate navy)
+      const brand = getBrandColour();
 
-      doc.setTextColor(0, 0, 0);
+      // Header
+      doc.setFillColor(brand[0], brand[1], brand[2]);
+      doc.rect(0, 0, pageWidth, 35, 'F');
+      addAccentBar(doc, brand);
+
+      doc.setTextColor(255, 255, 255);
       doc.setFontSize(18);
       doc.setFont('helvetica', 'bold');
       doc.text('Photo Documentation Report', margin, 22);
@@ -179,19 +184,26 @@ export default function ProjectExportSheet({
       doc.text(`Total Photos: ${filteredPhotos.length}`, margin, yPos);
       yPos += 10;
 
-      // Photo grid - 2 per row
+      // Photo grid - 2 per row. Each photo gets a fixed cell box; the image is
+      // drawn aspect-correct (centred) inside it so portrait/square photos no
+      // longer squash.
       const photoWidth = (usableWidth - 10) / 2;
-      const photoHeight = photoWidth * 0.75;
+      const cellHeight = photoWidth * 0.75; // image box height (4:3 envelope)
       let col = 0;
 
       for (let i = 0; i < filteredPhotos.length; i++) {
         const photo = filteredPhotos[i];
         setExportProgress(Math.round(((i + 1) / filteredPhotos.length) * 100));
 
-        const requiredHeight = photoHeight + (includeMetadata ? 35 : 15);
-        if (yPos + requiredHeight > pageHeight - margin) {
-          doc.addPage();
-          yPos = margin;
+        const requiredHeight = cellHeight + (includeMetadata ? 35 : 15);
+        // Page-break awareness: move the whole photo+metadata block to a new
+        // page rather than overflowing into the next cell/page.
+        const newYPos = ensureSpace(doc, yPos, requiredHeight, {
+          bottomMargin: margin,
+          topAfterBreak: margin,
+        });
+        if (newYPos !== yPos) {
+          yPos = newYPos;
           col = 0;
         }
 
@@ -215,17 +227,20 @@ export default function ProjectExportSheet({
             annotationLegend = result.legend;
           }
 
-          doc.addImage(base64, 'JPEG', xPos, yPos, photoWidth, photoHeight);
+          // Aspect-correct, centred draw inside the cell box.
+          const props = doc.getImageProperties(base64);
+          const fit = fitContain(props.width, props.height, xPos, yPos, photoWidth, cellHeight);
+          doc.addImage(base64, 'JPEG', fit.x, fit.y, fit.w, fit.h);
         } catch {
           doc.setFillColor(240, 240, 240);
-          doc.rect(xPos, yPos, photoWidth, photoHeight, 'F');
+          doc.rect(xPos, yPos, photoWidth, cellHeight, 'F');
           doc.setTextColor(150, 150, 150);
           doc.setFontSize(8);
-          doc.text('Image unavailable', xPos + photoWidth / 2 - 15, yPos + photoHeight / 2);
+          doc.text('Image unavailable', xPos + photoWidth / 2 - 15, yPos + cellHeight / 2);
         }
 
         if (includeMetadata) {
-          let metaY = yPos + photoHeight + 6;
+          let metaY = yPos + cellHeight + 6;
 
           doc.setTextColor(60, 60, 60);
           doc.setFontSize(8);
@@ -238,13 +253,17 @@ export default function ProjectExportSheet({
           doc.setFontSize(7);
           doc.setTextColor(100, 100, 100);
 
-          const maxDescLength = 50;
-          const desc =
-            photo.description.length > maxDescLength
-              ? photo.description.substring(0, maxDescLength) + '...'
-              : photo.description;
-          doc.text(desc, xPos, metaY, { maxWidth: photoWidth });
-          metaY += 6;
+          // Wrap the description to the cell width; show 2 lines max, with an
+          // ellipsis on the second line if it overflows.
+          const descLines = doc.splitTextToSize(photo.description || '', photoWidth) as string[];
+          const shownDesc = descLines.slice(0, 2);
+          if (descLines.length > 2 && shownDesc.length === 2) {
+            shownDesc[1] = shownDesc[1].replace(/\s*\S*$/, '') + '…';
+          }
+          if (shownDesc.length > 0) {
+            doc.text(shownDesc, xPos, metaY);
+            metaY += shownDesc.length * 4 + 2;
+          }
 
           if (photo.location) {
             doc.text(`Location: ${photo.location}`, xPos, metaY, {

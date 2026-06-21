@@ -14,6 +14,7 @@ import Stripe from 'https://esm.sh/stripe@14.21.0?target=deno';
 import { Resend } from '../_shared/mailer.ts';
 import { createLogger, generateRequestId } from '../_shared/logger.ts';
 import { captureException } from '../_shared/sentry.ts';
+import { renderDunningEmail } from '../_shared/email-templates/dunning.ts';
 
 const corsHeaders = {
   'Access-Control-Allow-Origin': '*',
@@ -36,189 +37,14 @@ interface FailedPaymentRow {
  * Generate Email 2 — 3-day "Payment Overdue" reminder
  */
 function generateEmail2Html(name: string, amount: string, hostedInvoiceUrl: string): string {
-  return `
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Payment Overdue</title>
-</head>
-<body style="margin: 0; padding: 0; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif; background-color: #f8f9fa;">
-  <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%" style="background-color: #f8f9fa;">
-    <tr>
-      <td style="padding: 20px 10px;">
-        <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%" style="max-width: 600px; margin: 0 auto; background-color: #ffffff; box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08); border-radius: 12px; overflow: hidden;">
-
-          <!-- Header -->
-          <tr>
-            <td style="background: linear-gradient(135deg, #1a1a1a 0%, #2d2d2d 100%); padding: 32px 24px; text-align: center;">
-              <h1 style="margin: 0; color: #FFD700; font-size: 28px; font-weight: 700;">⚡ ElecMate</h1>
-            </td>
-          </tr>
-
-          <!-- Content -->
-          <tr>
-            <td style="padding: 32px 24px;">
-              <!-- Badge -->
-              <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%" style="margin-bottom: 24px;">
-                <tr>
-                  <td align="center">
-                    <span style="display: inline-block; background-color: #fffbeb; color: #d97706; font-weight: 700; font-size: 14px; padding: 8px 20px; border-radius: 20px; border: 1px solid #fde68a;">Payment Overdue</span>
-                  </td>
-                </tr>
-              </table>
-
-              <p style="margin: 0 0 16px; font-size: 16px; line-height: 1.6; color: #374151;">
-                Hi <strong style="color: #1f2937;">${name}</strong>,
-              </p>
-              <p style="margin: 0 0 16px; font-size: 16px; line-height: 1.6; color: #374151;">
-                We wanted to follow up on the payment issue we contacted you about a few days ago. Your subscription payment of <strong>${amount}</strong> is still outstanding.
-              </p>
-              <p style="margin: 0 0 24px; font-size: 16px; line-height: 1.6; color: #374151;">
-                Your access to ElecMate tools is still active for now, but we need your payment details updated to keep things running smoothly.
-              </p>
-
-              <!-- Amount Card -->
-              <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%" style="background-color: #fffbeb; border-radius: 12px; border: 2px solid #fde68a; margin-bottom: 24px;">
-                <tr>
-                  <td style="padding: 24px; text-align: center;">
-                    <p style="margin: 0 0 8px; font-size: 13px; color: #92400e; text-transform: uppercase; letter-spacing: 1px;">Amount due</p>
-                    <p style="margin: 0; font-size: 32px; font-weight: 700; color: #d97706;">${amount}</p>
-                  </td>
-                </tr>
-              </table>
-
-              <!-- CTA Buttons -->
-              <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%">
-                <tr>
-                  <td style="text-align: center; padding: 8px 0;">
-                    <a href="${hostedInvoiceUrl}" style="display: inline-block; background: linear-gradient(135deg, #16a34a 0%, #15803d 100%); color: #ffffff; font-weight: 700; text-decoration: none; padding: 14px 32px; border-radius: 8px; font-size: 16px;">Pay Now</a>
-                  </td>
-                </tr>
-                <tr>
-                  <td style="text-align: center; padding: 8px 0;">
-                    <a href="https://www.elec-mate.com/subscriptions" style="display: inline-block; background: linear-gradient(135deg, #2563eb 0%, #1d4ed8 100%); color: #ffffff; font-weight: 600; text-decoration: none; padding: 12px 28px; border-radius: 8px; font-size: 14px;">Manage Subscription</a>
-                  </td>
-                </tr>
-              </table>
-
-              <p style="margin: 24px 0 0; font-size: 14px; line-height: 1.6; color: #6b7280;">
-                Need help? Just reply to this email and we'll sort it out.
-              </p>
-            </td>
-          </tr>
-
-          <!-- Footer -->
-          <tr>
-            <td style="background: linear-gradient(135deg, #1a1a1a 0%, #0f0f0f 100%); padding: 28px 24px; text-align: center;">
-              <p style="margin: 0 0 8px; font-size: 16px; font-weight: 700; color: #FFD700;">⚡ ElecMate</p>
-              <p style="margin: 0; font-size: 13px; color: #9ca3af;">Professional electrical tools</p>
-            </td>
-          </tr>
-
-        </table>
-      </td>
-    </tr>
-  </table>
-</body>
-</html>
-  `;
+  return renderDunningEmail({ name, amount, payUrl: hostedInvoiceUrl, tone: 'overdue' }).html;
 }
 
 /**
  * Generate Email 3 — 7-day "Final Notice"
  */
 function generateEmail3Html(name: string, amount: string, hostedInvoiceUrl: string): string {
-  return `
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Final Notice</title>
-</head>
-<body style="margin: 0; padding: 0; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif; background-color: #f8f9fa;">
-  <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%" style="background-color: #f8f9fa;">
-    <tr>
-      <td style="padding: 20px 10px;">
-        <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%" style="max-width: 600px; margin: 0 auto; background-color: #ffffff; box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08); border-radius: 12px; overflow: hidden;">
-
-          <!-- Header -->
-          <tr>
-            <td style="background: linear-gradient(135deg, #1a1a1a 0%, #2d2d2d 100%); padding: 32px 24px; text-align: center;">
-              <h1 style="margin: 0; color: #FFD700; font-size: 28px; font-weight: 700;">⚡ ElecMate</h1>
-            </td>
-          </tr>
-
-          <!-- Content -->
-          <tr>
-            <td style="padding: 32px 24px;">
-              <!-- Badge -->
-              <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%" style="margin-bottom: 24px;">
-                <tr>
-                  <td align="center">
-                    <span style="display: inline-block; background-color: #fef2f2; color: #dc2626; font-weight: 700; font-size: 14px; padding: 8px 20px; border-radius: 20px; border: 1px solid #fecaca;">Final Notice</span>
-                  </td>
-                </tr>
-              </table>
-
-              <p style="margin: 0 0 16px; font-size: 16px; line-height: 1.6; color: #374151;">
-                Hi <strong style="color: #1f2937;">${name}</strong>,
-              </p>
-              <p style="margin: 0 0 16px; font-size: 16px; line-height: 1.6; color: #374151;">
-                This is a final reminder about your overdue subscription payment. We haven't been able to process <strong>${amount}</strong> and your ElecMate access will be suspended soon if payment isn't received.
-              </p>
-              <p style="margin: 0 0 24px; font-size: 16px; line-height: 1.6; color: #374151;">
-                You'll lose access to all your certificates, AI tools, quotes, invoices, and study materials. Please update your payment details now to avoid any disruption.
-              </p>
-
-              <!-- Amount Card -->
-              <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%" style="background-color: #fef2f2; border-radius: 12px; border: 2px solid #fecaca; margin-bottom: 24px;">
-                <tr>
-                  <td style="padding: 24px; text-align: center;">
-                    <p style="margin: 0 0 8px; font-size: 13px; color: #991b1b; text-transform: uppercase; letter-spacing: 1px; font-weight: 600;">Final Amount Due</p>
-                    <p style="margin: 0 0 8px; font-size: 36px; font-weight: 700; color: #dc2626;">${amount}</p>
-                    <p style="margin: 0; font-size: 13px; color: #991b1b;">Access will be suspended if not paid</p>
-                  </td>
-                </tr>
-              </table>
-
-              <!-- CTA Buttons -->
-              <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%">
-                <tr>
-                  <td style="text-align: center; padding: 8px 0;">
-                    <a href="${hostedInvoiceUrl}" style="display: inline-block; background: linear-gradient(135deg, #16a34a 0%, #15803d 100%); color: #ffffff; font-weight: 700; text-decoration: none; padding: 16px 40px; border-radius: 8px; font-size: 18px;">Pay Now to Keep Access</a>
-                  </td>
-                </tr>
-                <tr>
-                  <td style="text-align: center; padding: 8px 0;">
-                    <a href="https://www.elec-mate.com/subscriptions" style="display: inline-block; background: linear-gradient(135deg, #2563eb 0%, #1d4ed8 100%); color: #ffffff; font-weight: 600; text-decoration: none; padding: 12px 28px; border-radius: 8px; font-size: 14px;">Manage Subscription</a>
-                  </td>
-                </tr>
-              </table>
-
-              <p style="margin: 24px 0 0; font-size: 14px; line-height: 1.6; color: #6b7280;">
-                If you're having any issues, please reply to this email — we want to help you keep your account.
-              </p>
-            </td>
-          </tr>
-
-          <!-- Footer -->
-          <tr>
-            <td style="background: linear-gradient(135deg, #1a1a1a 0%, #0f0f0f 100%); padding: 28px 24px; text-align: center;">
-              <p style="margin: 0 0 8px; font-size: 16px; font-weight: 700; color: #FFD700;">⚡ ElecMate</p>
-              <p style="margin: 0; font-size: 13px; color: #9ca3af;">Professional electrical tools</p>
-            </td>
-          </tr>
-
-        </table>
-      </td>
-    </tr>
-  </table>
-</body>
-</html>
-  `;
+  return renderDunningEmail({ name, amount, payUrl: hostedInvoiceUrl, tone: 'final' }).html;
 }
 
 serve(async (req: Request) => {
@@ -470,10 +296,10 @@ serve(async (req: Request) => {
         let html: string;
 
         if (emailNumber === 2) {
-          subject = 'Reminder: Your ElecMate subscription payment is overdue';
+          subject = 'Your Elec-Mate payment is overdue';
           html = generateEmail2Html(userName, amountFormatted, payUrl);
         } else {
-          subject = 'Final notice: Your ElecMate access will end soon';
+          subject = 'Final notice — your Elec-Mate subscription';
           html = generateEmail3Html(userName, amountFormatted, payUrl);
         }
 

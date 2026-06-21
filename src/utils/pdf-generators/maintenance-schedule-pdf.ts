@@ -1,5 +1,10 @@
 import jsPDF from 'jspdf';
 import autoTable from 'jspdf-autotable';
+import { getBrandColour, ensureSpace, addAccentBar, readableTextOn } from '@/utils/pdfBrand';
+
+/** Read the finalY of the most recently drawn autoTable (typed accessor). */
+const lastTableFinalY = (doc: jsPDF): number =>
+  (doc as jsPDF & { lastAutoTable?: { finalY: number } }).lastAutoTable?.finalY ?? 0;
 
 export interface MaintenanceScheduleData {
   projectName: string;
@@ -22,10 +27,23 @@ export interface MaintenanceScheduleData {
   notes?: string;
 }
 
-export const generateMaintenanceSchedulePDF = (data: MaintenanceScheduleData): jsPDF => {
+export interface MaintenanceSchedulePDFOptions {
+  /** Optional company brand colour (hex) for the header/accent. Falls back to Elec-Mate navy. */
+  brandColour?: string;
+}
+
+export const generateMaintenanceSchedulePDF = (
+  data: MaintenanceScheduleData,
+  options: MaintenanceSchedulePDFOptions = {}
+): jsPDF => {
   const doc = new jsPDF();
   const pageWidth = doc.internal.pageSize.getWidth();
+  const brand = getBrandColour(options.brandColour);
+  const headText = readableTextOn(brand);
   let yPos = 20;
+
+  // Brand accent strip
+  addAccentBar(doc, brand);
 
   // Title
   doc.setFontSize(20);
@@ -65,7 +83,7 @@ export const generateMaintenanceSchedulePDF = (data: MaintenanceScheduleData): j
     head: [['Equipment', 'Task', 'Frequency', 'Last Done', 'Next Due', 'Responsible']],
     body: taskRows,
     theme: 'grid',
-    headStyles: { fillColor: [6, 182, 212], textColor: [255, 255, 255] },
+    headStyles: { fillColor: brand, textColor: headText },
     styles: { fontSize: 8, cellPadding: 2 },
     columnStyles: {
       0: { cellWidth: 40 },
@@ -77,13 +95,10 @@ export const generateMaintenanceSchedulePDF = (data: MaintenanceScheduleData): j
     },
   });
 
-  yPos = (doc as any).lastAutoTable.finalY + 12;
+  yPos = lastTableFinalY(doc) + 12;
 
-  // Check if new page needed
-  if (yPos > 220) {
-    doc.addPage();
-    yPos = 20;
-  }
+  // Keep the heading with its table (widow/orphan guard)
+  yPos = ensureSpace(doc, yPos, 24, { bottomMargin: 25, topAfterBreak: 20 });
 
   // Inspection Intervals
   doc.setFontSize(14);
@@ -102,18 +117,20 @@ export const generateMaintenanceSchedulePDF = (data: MaintenanceScheduleData): j
     head: [['Inspection Type', 'Interval', 'Next Due']],
     body: inspectionRows,
     theme: 'grid',
-    headStyles: { fillColor: [6, 182, 212], textColor: [255, 255, 255] },
+    headStyles: { fillColor: brand, textColor: headText },
     styles: { fontSize: 9, cellPadding: 3 },
   });
 
-  yPos = (doc as any).lastAutoTable.finalY + 12;
+  yPos = lastTableFinalY(doc) + 12;
 
   // Notes
   if (data.notes) {
-    if (yPos > 220) {
-      doc.addPage();
-      yPos = 20;
-    }
+    doc.setFontSize(10);
+    doc.setFont('helvetica', 'normal');
+    const splitNotes = doc.splitTextToSize(data.notes, pageWidth - 30);
+    // Reserve room for the heading + every wrapped line so the block isn't orphaned/clipped
+    const notesNeeded = 7 + splitNotes.length * 5 + 5;
+    yPos = ensureSpace(doc, yPos, notesNeeded, { bottomMargin: 25, topAfterBreak: 20 });
 
     doc.setFontSize(12);
     doc.setFont('helvetica', 'bold');
@@ -122,7 +139,6 @@ export const generateMaintenanceSchedulePDF = (data: MaintenanceScheduleData): j
 
     doc.setFontSize(10);
     doc.setFont('helvetica', 'normal');
-    const splitNotes = doc.splitTextToSize(data.notes, pageWidth - 30);
     doc.text(splitNotes, 15, yPos);
   }
 

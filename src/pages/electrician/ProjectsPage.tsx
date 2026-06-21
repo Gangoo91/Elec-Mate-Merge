@@ -15,6 +15,7 @@ import {
   Timer,
   Sparkles,
   ChevronRight,
+  LayoutGrid,
 } from 'lucide-react';
 import { Assistant } from '@/components/business-hub/Assistant';
 import { useSparkTasks } from '@/hooks/useSparkTasks';
@@ -47,6 +48,7 @@ import {
 import { supabase } from '@/integrations/supabase/client';
 import { cn } from '@/lib/utils';
 import { PANEL } from '@/components/electrician/shared/surfaces';
+import ProjectActionsSheet from '@/components/project-management/ProjectActionsSheet';
 
 const containerVariants = {
   hidden: { opacity: 0 },
@@ -113,6 +115,7 @@ const ProjectsPage = () => {
     refreshProjects,
   } = useSparkProjects(view);
   const [deleteTarget, setDeleteTarget] = useState<{ id: string; title: string } | null>(null);
+  const [actionsTarget, setActionsTarget] = useState<(typeof projects)[number] | null>(null);
 
   // Task hook — Mate needs the handlers to propose/apply task actions.
   // We load 'all' so the assistant has context regardless of which view we're on.
@@ -619,6 +622,17 @@ const ProjectsPage = () => {
                           <Sparkles className="h-3.5 w-3.5" />
                           Ask Mate
                         </button>
+                        <button
+                          type="button"
+                          aria-label="Project actions"
+                          onClick={(e) => {
+                            e.stopPropagation();
+                            setActionsTarget(project);
+                          }}
+                          className="h-9 w-9 flex items-center justify-center text-white/55 hover:text-white hover:bg-white/[0.06] rounded-lg shrink-0 touch-manipulation"
+                        >
+                          <LayoutGrid className="h-4 w-4" />
+                        </button>
                         <DropdownMenu>
                           <DropdownMenuTrigger asChild>
                             <Button
@@ -697,6 +711,28 @@ const ProjectsPage = () => {
         onCompleteProject={completeProject}
         onDeleteProject={deleteProject}
       />
+
+      {/* Project actions — tile-grid bottom sheet (card mode) */}
+      {actionsTarget && (
+        <ProjectActionsSheet
+          open={!!actionsTarget}
+          onOpenChange={(open) => !open && setActionsTarget(null)}
+          mode="card"
+          projectId={actionsTarget.id}
+          projectTitle={actionsTarget.title}
+          customerName={actionsTarget.customerName}
+          location={actionsTarget.location}
+          status={actionsTarget.status}
+          onComplete={
+            actionsTarget.status === 'completed'
+              ? undefined
+              : () => completeProject(actionsTarget.id)
+          }
+          onDelete={() =>
+            setDeleteTarget({ id: actionsTarget.id, title: actionsTarget.title })
+          }
+        />
+      )}
 
       {/* Delete confirmation dialog */}
       <AlertDialog open={!!deleteTarget} onOpenChange={(open) => !open && setDeleteTarget(null)}>

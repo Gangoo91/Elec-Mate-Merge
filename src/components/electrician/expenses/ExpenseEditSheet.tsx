@@ -26,6 +26,14 @@ import { Label } from '@/components/ui/label';
 import { Textarea } from '@/components/ui/textarea';
 import { Switch } from '@/components/ui/switch';
 import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from '@/components/ui/select';
+import { useSparkProjects } from '@/hooks/useSparkProjects';
+import {
   Expense,
   ExpenseCategory,
   UpdateExpenseInput,
@@ -138,6 +146,9 @@ const COLOUR_CLASSES: Record<string, { bg: string; text: string; border: string 
 
 type EditStep = 'form' | 'category' | 'receipt';
 
+// Sentinel for the "No project" option — Radix Select can't use an empty value.
+const NO_PROJECT = 'none';
+
 interface ExpenseEditSheetProps {
   expense: Expense;
   open: boolean;
@@ -154,6 +165,9 @@ export function ExpenseEditSheet({
   onDelete,
 }: ExpenseEditSheetProps) {
   const [step, setStep] = useState<EditStep>('form');
+  // Projects for the optional "Project" picker — own list, by title.
+  const { projects } = useSparkProjects('all');
+  const [projectId, setProjectId] = useState<string>(expense.project_id ?? NO_PROJECT);
   const [formData, setFormData] = useState<Partial<UpdateExpenseInput>>({
     id: expense.id,
     category: expense.category,
@@ -161,6 +175,7 @@ export function ExpenseEditSheet({
     date: expense.date,
     vendor: expense.vendor,
     description: expense.description,
+    project_id: expense.project_id,
     receipt_url: expense.receipt_url,
     vat_amount: expense.vat_amount,
     tax_deductible: expense.tax_deductible,
@@ -271,6 +286,7 @@ export function ExpenseEditSheet({
         date: formData.date,
         vendor: formData.vendor,
         description: formData.description,
+        project_id: projectId === NO_PROJECT ? null : projectId,
         receipt_url: formData.receipt_url,
         vat_amount: formData.vat_amount,
         tax_deductible: formData.tax_deductible,
@@ -438,6 +454,27 @@ export function ExpenseEditSheet({
                       onChange={(e) => setFormData((prev) => ({ ...prev, vendor: e.target.value }))}
                       className="h-11 touch-manipulation"
                     />
+                  </div>
+
+                  {/* Project (optional) */}
+                  <div className="space-y-2">
+                    <Label htmlFor="project">Project (optional)</Label>
+                    <Select value={projectId} onValueChange={setProjectId}>
+                      <SelectTrigger
+                        id="project"
+                        className="h-11 touch-manipulation bg-elec-gray border-elec-gray focus:border-elec-yellow focus:ring-elec-yellow data-[state=open]:border-elec-yellow data-[state=open]:ring-2"
+                      >
+                        <SelectValue placeholder="No project" />
+                      </SelectTrigger>
+                      <SelectContent className="z-[100] max-w-[calc(100vw-2rem)] bg-elec-gray border-elec-gray text-foreground">
+                        <SelectItem value={NO_PROJECT}>No project</SelectItem>
+                        {projects.map((p) => (
+                          <SelectItem key={p.id} value={p.id}>
+                            {p.title}
+                          </SelectItem>
+                        ))}
+                      </SelectContent>
+                    </Select>
                   </div>
 
                   {/* Description */}

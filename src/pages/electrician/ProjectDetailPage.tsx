@@ -1,5 +1,5 @@
 import { useState, useCallback, useEffect, useMemo } from 'react';
-import { useNavigate, useParams } from 'react-router-dom';
+import { useNavigate, useParams, useSearchParams } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import {
   ArrowLeft,
@@ -29,6 +29,7 @@ import {
   LayoutGrid,
   Timer,
   Sparkles,
+  Receipt,
 } from 'lucide-react';
 import { Assistant } from '@/components/business-hub/Assistant';
 import { Button } from '@/components/ui/button';
@@ -56,9 +57,13 @@ import type { SparkTask } from '@/hooks/useSparkTasks';
 import { useProjectEntities } from '@/hooks/useProjectEntities';
 import { useSparkProjects } from '@/hooks/useSparkProjects';
 import type { ProjectPriority } from '@/hooks/useSparkProjects';
+import { useExpensesStorage } from '@/hooks/useExpensesStorage';
+import { ExpenseAddSheet } from '@/components/electrician/expenses/ExpenseAddSheet';
+import { getCategoryConfig } from '@/types/expense';
 import { TaskForm } from '@/components/tasks/TaskForm';
 import { TaskDetailSheet } from '@/components/tasks/TaskDetailSheet';
 import { LinkEntitySheet } from '@/components/project-management/LinkEntitySheet';
+import ProjectActionsSheet from '@/components/project-management/ProjectActionsSheet';
 import { ProjectDocumentSheet } from '@/components/project-management/ProjectDocumentSheet';
 import { useProjectDocuments } from '@/hooks/useProjectDocuments';
 import { ProjectAINotes } from '@/components/project-management/ProjectAINotes';
@@ -128,6 +133,7 @@ type LinkType =
 const ProjectDetailPage = () => {
   const navigate = useNavigate();
   const { id } = useParams<{ id: string }>();
+  const [searchParams, setSearchParams] = useSearchParams();
   const {
     project,
     tasks,
@@ -203,6 +209,17 @@ const ProjectDetailPage = () => {
   useEffect(() => {
     if (id) fetchDocuments();
   }, [id, fetchDocuments]);
+
+  // ─── Expenses logged against this project (ELE-1176) ─────────────
+  const { expenses, createExpense } = useExpensesStorage();
+  const projectExpenses = useMemo(
+    () => expenses.filter((e) => e.project_id === id),
+    [expenses, id]
+  );
+  const projectSpend = useMemo(
+    () => projectExpenses.reduce((sum, e) => sum + e.amount, 0),
+    [projectExpenses]
+  );
 
   // Split tasks into regular and snagging
   const regularTasks = useMemo(() => tasks.filter((t) => !t.tags.includes('snagging')), [tasks]);
@@ -328,6 +345,15 @@ const ProjectDetailPage = () => {
       minimumFractionDigits: 0,
       maximumFractionDigits: 0,
     }).format(n || 0);
+  // Precise GBP (with pence) for expense figures
+  const formatGBPexact = (n: number): string =>
+    new Intl.NumberFormat('en-GB', {
+      style: 'currency',
+      currency: 'GBP',
+      minimumFractionDigits: 2,
+      maximumFractionDigits: 2,
+    }).format(n || 0);
+
   const visibleTasks = showAllTasks ? regularTasks : regularTasks.slice(0, TASK_PREVIEW_COUNT);
 
   // Sheet states
@@ -339,8 +365,31 @@ const ProjectDetailPage = () => {
   const [editProjectOpen, setEditProjectOpen] = useState(false);
   const [photoSheetOpen, setPhotoSheetOpen] = useState(false);
   const [docSheetOpen, setDocSheetOpen] = useState(false);
+  const [expenseSheetOpen, setExpenseSheetOpen] = useState(false);
   const [confirmDeleteDoc, setConfirmDeleteDoc] = useState<string | null>(null);
   const [confirmDeleteProject, setConfirmDeleteProject] = useState(false);
+  const [actionsSheetOpen, setActionsSheetOpen] = useState(false);
+
+  // Card → detail handoff: open the matching sheet from a `?action=` param,
+  // then clear it so a refresh / back doesn't re-trigger.
+  useEffect(() => {
+    const action = searchParams.get('action');
+    if (!action) return;
+    if (action === 'expense') {
+      setExpenseSheetOpen(true);
+    } else if (action === 'task') {
+      setEditingTask(null);
+      setTaskFormOpen(true);
+    }
+    setSearchParams(
+      (prev) => {
+        const next = new URLSearchParams(prev);
+        next.delete('action');
+        return next;
+      },
+      { replace: true }
+    );
+  }, [searchParams, setSearchParams]);
 
   // Edit project form state
   const [editTitle, setEditTitle] = useState('');
@@ -724,8 +773,8 @@ const ProjectDetailPage = () => {
             )}
           </div>
 
-          {/* Metrics — 3 tiles, hairline dividers */}
-          <div className="grid grid-cols-3 border-t border-white/[0.08] divide-x divide-white/[0.06]">
+          {/* Metrics — 4 tiles (2×2 mobile, 4-up desktop), hairline dividers */}
+          <div className="grid grid-cols-2 sm:grid-cols-4 border-t border-white/[0.08]">
             <div className="px-3 py-3 sm:px-4">
               <p className="text-[10px] font-semibold uppercase tracking-[0.16em] text-white/45">
                 Tasks
@@ -737,7 +786,7 @@ const ProjectDetailPage = () => {
                 {totalTasks > 0 ? `${doneTasks}/${totalTasks} done` : 'No tasks yet'}
               </p>
             </div>
-            <div className="px-3 py-3 sm:px-4">
+            <div className="px-3 py-3 sm:px-4 border-l border-white/[0.06]">
               <p className="text-[10px] font-semibold uppercase tracking-[0.16em] text-white/45">
                 Time logged
               </p>
@@ -748,7 +797,7 @@ const ProjectDetailPage = () => {
                 across all sessions
               </p>
             </div>
-            <div className="px-3 py-3 sm:px-4">
+            <div className="px-3 py-3 sm:px-4 border-t sm:border-t-0 sm:border-l border-white/[0.06]">
               <p className="text-[10px] font-semibold uppercase tracking-[0.16em] text-white/45">
                 {project.estimated_value && project.estimated_value > 0 ? 'Value' : 'Unbilled'}
               </p>
@@ -774,9 +823,27 @@ const ProjectDetailPage = () => {
                     : 'nothing to bill'}
               </p>
             </div>
+            <div className="px-3 py-3 sm:px-4 border-t sm:border-t-0 border-l border-white/[0.06]">
+              <p className="text-[10px] font-semibold uppercase tracking-[0.16em] text-white/45">
+                Spend
+              </p>
+              <p
+                className={cn(
+                  'mt-1 text-[17px] sm:text-[18px] font-bold tabular-nums leading-none',
+                  projectSpend > 0 ? 'text-orange-300' : 'text-white/40'
+                )}
+              >
+                {formatGBPexact(projectSpend)}
+              </p>
+              <p className="mt-1 text-[11.5px] text-white/45 tabular-nums">
+                {projectExpenses.length > 0
+                  ? `${projectExpenses.length} expense${projectExpenses.length === 1 ? '' : 's'}`
+                  : 'no costs yet'}
+              </p>
+            </div>
           </div>
 
-          {/* Action row — Start timer · Ask Mate */}
+          {/* Action row — Start timer · Actions · Ask Mate */}
           <div className="border-t border-white/[0.08] flex items-stretch">
             <button
               type="button"
@@ -786,6 +853,15 @@ const ProjectDetailPage = () => {
             >
               <Timer className="h-3.5 w-3.5" />
               Start timer
+            </button>
+            <div className="w-px bg-white/[0.06]" />
+            <button
+              type="button"
+              onClick={() => setActionsSheetOpen(true)}
+              className="flex-1 h-11 flex items-center justify-center gap-1.5 text-[12.5px] font-semibold text-white hover:bg-white/[0.06] active:bg-white/[0.08] touch-manipulation transition-colors"
+            >
+              <LayoutGrid className="h-3.5 w-3.5 text-elec-yellow" />
+              Actions
             </button>
             <div className="w-px bg-white/[0.06]" />
             <button
@@ -1560,6 +1636,108 @@ const ProjectDetailPage = () => {
           </Collapsible>
         </motion.div>
 
+        {/* ── Expenses & spend Section (ELE-1176) ── */}
+        <motion.div variants={itemVariants}>
+          <Collapsible className={cn(PANEL, 'overflow-hidden')}
+            open={openSections.has('expenses')}
+            onOpenChange={() => toggleSection('expenses')}
+          >
+            <CollapsibleTrigger asChild>
+              <button className="w-full flex items-center justify-between gap-3 px-3.5 sm:px-4 py-3 min-h-[60px] touch-manipulation hover:bg-white/[0.03] active:bg-white/[0.04] transition-colors group text-left">
+                <div className="flex items-center gap-3">
+                  <span className="h-9 w-9 rounded-xl bg-white/[0.05] border border-white/[0.08] flex items-center justify-center flex-shrink-0"><Receipt className="h-4 w-4 text-rose-400" /></span>
+                  <span className="min-w-0">
+                    <span className="block text-[14px] font-semibold text-white leading-tight">Expenses &amp; spend</span>
+                    <span className="block text-[11px] text-white/55 truncate leading-tight mt-0.5">{projectExpenses.length > 0 ? `${projectExpenses.length} expense${projectExpenses.length === 1 ? '' : 's'} · ${formatGBPexact(projectSpend)}` : 'Track what this job costs you'}</span>
+                  </span>
+                </div>
+                <div className="flex items-center gap-2">
+                  {projectExpenses.length > 0 && (
+                    <span className="text-[11px] font-semibold text-white/55 tabular-nums">
+                      {projectExpenses.length}
+                    </span>
+                  )}
+                  <span
+                    role="button"
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      setExpenseSheetOpen(true);
+                    }}
+                    className="text-[12px] font-medium text-elec-yellow/80 group-hover:text-elec-yellow px-2 py-1 rounded-md hover:bg-elec-yellow/[0.08] transition-colors"
+                  >
+                    + Add
+                  </span>
+                  {openSections.has('expenses') ? (
+                    <ChevronUp className="h-4 w-4 text-white/45" />
+                  ) : (
+                    <ChevronDown className="h-4 w-4 text-white/45" />
+                  )}
+                </div>
+              </button>
+            </CollapsibleTrigger>
+            <CollapsibleContent className="px-3.5 sm:px-4 pb-3.5 pt-2.5 space-y-2 border-t border-white/[0.06]">
+              {projectExpenses.length === 0 ? (
+                <div className="flex flex-col items-center py-6 text-center">
+                  <Receipt className="h-7 w-7 text-white mb-2" />
+                  <p className="text-sm text-white mb-3">No expenses logged for this job yet</p>
+                  <button
+                    type="button"
+                    onClick={() => setExpenseSheetOpen(true)}
+                    className="h-11 px-4 rounded-xl bg-gradient-to-r from-rose-400 to-rose-500 text-black text-sm font-bold touch-manipulation active:scale-[0.98] transition-transform"
+                  >
+                    <Plus className="h-4 w-4 inline mr-1" />
+                    Add Expense
+                  </button>
+                </div>
+              ) : (
+                <>
+                  {/* Total spent */}
+                  <div className="flex items-center justify-between p-3 rounded-xl bg-elec-yellow/[0.06] border border-elec-yellow/20">
+                    <span className="text-[12px] font-semibold uppercase tracking-[0.14em] text-white/55">
+                      Total spent
+                    </span>
+                    <span className="text-[18px] font-bold text-elec-yellow tabular-nums">
+                      {formatGBPexact(projectSpend)}
+                    </span>
+                  </div>
+
+                  {/* Linked expenses */}
+                  {projectExpenses.map((exp) => (
+                    <div
+                      key={exp.id}
+                      className="w-full flex items-center justify-between p-3 rounded-xl bg-white/[0.04] border border-white/[0.08]"
+                    >
+                      <div className="min-w-0 text-left">
+                        <p className="text-sm font-medium text-white truncate">
+                          {getCategoryConfig(exp.category).label}
+                          {(exp.vendor || exp.description) && (
+                            <span className="text-white/55 font-normal">
+                              {' · '}
+                              {exp.vendor || exp.description}
+                            </span>
+                          )}
+                        </p>
+                        <p className="text-[11px] text-white/55">{formatDate(exp.date)}</p>
+                      </div>
+                      <span className="text-[14px] font-bold text-white tabular-nums flex-shrink-0 ml-2">
+                        {formatGBPexact(exp.amount)}
+                      </span>
+                    </div>
+                  ))}
+
+                  <button
+                    type="button"
+                    onClick={() => setExpenseSheetOpen(true)}
+                    className="w-full h-11 flex items-center justify-center gap-1.5 rounded-xl border border-dashed border-white/20 text-white text-sm font-medium touch-manipulation active:bg-white/[0.04] transition-colors"
+                  >
+                    <Plus className="h-4 w-4" /> Add Expense
+                  </button>
+                </>
+              )}
+            </CollapsibleContent>
+          </Collapsible>
+        </motion.div>
+
         {/* ── Floor Plans Section ── */}
         <motion.div variants={itemVariants}>
           <Collapsible className={cn(PANEL, 'overflow-hidden')}
@@ -2193,6 +2371,17 @@ const ProjectDetailPage = () => {
         </>
       )}
 
+      {/* Add expense — pre-locked to this project (ELE-1176) */}
+      <ExpenseAddSheet
+        open={expenseSheetOpen}
+        onOpenChange={setExpenseSheetOpen}
+        onSave={async (input) => {
+          await createExpense(input);
+        }}
+        defaultProjectId={project.id}
+        lockProject
+      />
+
       {/* AI sparkle FAB — always-on entry to Mate, with project context */}
       <button
         type="button"
@@ -2232,6 +2421,26 @@ const ProjectDetailPage = () => {
           createUrl={linkConfig[linkType].createUrl}
         />
       )}
+
+      {/* Project actions — tile-grid bottom sheet (create · link · manage) */}
+      <ProjectActionsSheet
+        open={actionsSheetOpen}
+        onOpenChange={setActionsSheetOpen}
+        mode="detail"
+        projectId={project.id}
+        projectTitle={project.title}
+        customerName={project.customer_name}
+        location={project.location}
+        status={project.status}
+        onAddExpense={() => setExpenseSheetOpen(true)}
+        onAddTask={() => {
+          setEditingTask(null);
+          setTaskFormOpen(true);
+        }}
+        onLink={(type) => setLinkType(type)}
+        onComplete={completeProject}
+        onDelete={() => setConfirmDeleteProject(true)}
+      />
 
       {/* Delete document confirmation */}
       {confirmDeleteDoc && (

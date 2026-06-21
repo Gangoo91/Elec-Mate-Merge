@@ -9,6 +9,7 @@ import { serve } from 'https://deno.land/std@0.168.0/http/server.ts';
 import { createClient } from 'https://esm.sh/@supabase/supabase-js@2.49.4';
 import Stripe from 'https://esm.sh/stripe@14.21.0?target=deno';
 import { Resend } from '../_shared/mailer.ts';
+import { renderDunningEmail } from '../_shared/email-templates/dunning.ts';
 import { createLogger, generateRequestId } from '../_shared/logger.ts';
 import { captureException, captureMessage } from '../_shared/sentry.ts';
 import { fireCapiEvent } from '../_shared/meta-capi.ts';
@@ -409,110 +410,14 @@ async function sendPaymentFailedEmail(
 
   const resend = new Resend(resendApiKey);
 
-  const emailHtml = `
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Payment Issue</title>
-</head>
-<body style="margin: 0; padding: 0; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif; background-color: #f8f9fa;">
-  <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%" style="background-color: #f8f9fa;">
-    <tr>
-      <td style="padding: 20px 10px;">
-        <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%" style="max-width: 600px; margin: 0 auto; background-color: #ffffff; box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08); border-radius: 12px; overflow: hidden;">
-
-          <!-- Header -->
-          <tr>
-            <td style="background: linear-gradient(135deg, #1a1a1a 0%, #2d2d2d 100%); padding: 32px 24px; text-align: center;">
-              <h1 style="margin: 0; color: #FFD700; font-size: 28px; font-weight: 700;">⚡ ElecMate</h1>
-            </td>
-          </tr>
-
-          <!-- Content -->
-          <tr>
-            <td style="padding: 32px 24px;">
-              <!-- Badge -->
-              <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%" style="margin-bottom: 24px;">
-                <tr>
-                  <td align="center">
-                    <span style="display: inline-block; background-color: #fef2f2; color: #dc2626; font-weight: 700; font-size: 14px; padding: 8px 20px; border-radius: 20px; border: 1px solid #fecaca;">Payment Issue</span>
-                  </td>
-                </tr>
-              </table>
-
-              <p style="margin: 0 0 16px; font-size: 16px; line-height: 1.6; color: #374151;">
-                Hi <strong style="color: #1f2937;">${name}</strong>,
-              </p>
-              <p style="margin: 0 0 24px; font-size: 16px; line-height: 1.6; color: #374151;">
-                We tried to process your subscription payment of <strong>${amount}</strong>, but it didn't go through. This can happen if your card has expired or there were insufficient funds.
-              </p>
-
-              <!-- Amount Card -->
-              <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%" style="background-color: #fef2f2; border-radius: 12px; border: 2px solid #fecaca; margin-bottom: 24px;">
-                <tr>
-                  <td style="padding: 20px 24px;">
-                    <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%">
-                      <tr>
-                        <td style="font-size: 14px; color: #991b1b;">Amount due:</td>
-                        <td style="text-align: right; font-size: 16px; color: #991b1b; font-weight: 700;">${amount}</td>
-                      </tr>
-                      <tr>
-                        <td style="padding-top: 8px; font-size: 14px; color: #991b1b;">Status:</td>
-                        <td style="text-align: right; padding-top: 8px; font-size: 14px; color: #dc2626; font-weight: 700;">Payment failed</td>
-                      </tr>
-                    </table>
-                  </td>
-                </tr>
-              </table>
-
-              <p style="margin: 0 0 24px; font-size: 16px; line-height: 1.6; color: #374151;">
-                To keep your subscription active, please update your payment details:
-              </p>
-
-              <!-- CTA Buttons -->
-              <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%">
-                <tr>
-                  <td style="text-align: center; padding: 8px 0;">
-                    <a href="${hostedInvoiceUrl}" style="display: inline-block; background: linear-gradient(135deg, #16a34a 0%, #15803d 100%); color: #ffffff; font-weight: 700; text-decoration: none; padding: 14px 32px; border-radius: 8px; font-size: 16px;">Pay Now</a>
-                  </td>
-                </tr>
-                <tr>
-                  <td style="text-align: center; padding: 8px 0;">
-                    <a href="https://www.elec-mate.com/subscriptions" style="display: inline-block; background: linear-gradient(135deg, #2563eb 0%, #1d4ed8 100%); color: #ffffff; font-weight: 600; text-decoration: none; padding: 12px 28px; border-radius: 8px; font-size: 14px;">Manage Subscription</a>
-                  </td>
-                </tr>
-              </table>
-
-              <p style="margin: 24px 0 0; font-size: 14px; line-height: 1.6; color: #6b7280;">
-                If you have any questions, just reply to this email — we're here to help!
-              </p>
-            </td>
-          </tr>
-
-          <!-- Footer -->
-          <tr>
-            <td style="background: linear-gradient(135deg, #1a1a1a 0%, #0f0f0f 100%); padding: 28px 24px; text-align: center;">
-              <p style="margin: 0 0 8px; font-size: 16px; font-weight: 700; color: #FFD700;">⚡ ElecMate</p>
-              <p style="margin: 0; font-size: 13px; color: #9ca3af;">Professional electrical tools</p>
-            </td>
-          </tr>
-
-        </table>
-      </td>
-    </tr>
-  </table>
-</body>
-</html>
-  `;
+  const emailHtml = renderDunningEmail({ name, amount, payUrl: hostedInvoiceUrl, tone: 'failed' }).html;
 
   try {
     const { data, error } = await resend.emails.send({
       from: 'ElecMate <founder@elec-mate.com>',
       replyTo: 'founder@elec-mate.com',
       to: [email],
-      subject: "Your ElecMate payment didn't go through",
+      subject: "Your Elec-Mate payment didn't go through",
       html: emailHtml,
     });
 

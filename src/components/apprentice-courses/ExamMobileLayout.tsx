@@ -97,11 +97,14 @@ export const ExamMobileLayout = ({
         </div>
       </div>
 
-      {/* Main Content - fills remaining space with padding for footer */}
-      <div className="flex-1 overflow-y-auto px-4 pt-4 pb-20">{children}</div>
+      {/* Main Content - fills remaining space with padding for footer (incl. Android nav bar) */}
+      <div className="flex-1 overflow-y-auto px-4 pt-4 pb-[calc(5rem+env(safe-area-inset-bottom))]">
+        {children}
+      </div>
 
-      {/* Compact Footer - Fixed at bottom */}
-      <div className="fixed bottom-0 left-0 right-0 h-[52px] flex items-center justify-between px-3 py-2 bg-[#0d0d0d] border-t border-white/5 z-50 lg:hidden">
+      {/* Compact Footer - Fixed at bottom. ELE-1172: clear the Android system nav
+          bar with safe-area inset so Next/Submit isn't hidden behind it. */}
+      <div className="fixed bottom-0 left-0 right-0 min-h-[52px] flex items-center justify-between px-3 pt-2 pb-[max(0.5rem,env(safe-area-inset-bottom))] bg-[#0d0d0d] border-t border-white/5 z-50 lg:hidden">
         <Button
           onClick={onPrevious}
           disabled={currentQuestion === 0}
