@@ -2,12 +2,19 @@ import React from 'react';
 import { TableHead, TableHeader, TableRow } from '@/components/ui/table';
 import { CheckCircle } from 'lucide-react';
 import { Select, SelectContent, SelectItem, SelectTrigger } from '@/components/ui/select';
-import { rcdBsStandardOptions } from '@/types/protectiveDeviceTypes';
+import {
+  rcdBsStandardOptions,
+  bsStandardOptions,
+  protectiveDeviceCurveOptions,
+} from '@/types/protectiveDeviceTypes';
 import { rcdTypeOptions } from '@/types/wiringTypes';
 
 interface MobileHorizontalScrollTableHeaderProps {
   onFillAllRcdTestButton?: () => void;
   onFillAllAfdd?: () => void;
+  onFillAllBsStandard?: (value: string) => void;
+  onFillAllCurve?: (value: string) => void;
+  onFillAllKa?: (value: string) => void;
   onFillAllRcdBsStandard?: (value: string) => void;
   onFillAllRcdType?: (value: string) => void;
   onFillAllRcdRating?: (value: string) => void;
@@ -24,6 +31,9 @@ export const MobileHorizontalScrollTableHeader: React.FC<
 > = ({
   onFillAllRcdTestButton,
   onFillAllAfdd,
+  onFillAllBsStandard,
+  onFillAllCurve,
+  onFillAllKa,
   onFillAllRcdBsStandard,
   onFillAllRcdType,
   onFillAllRcdRating,
@@ -58,10 +68,72 @@ export const MobileHorizontalScrollTableHeader: React.FC<
         <TableHead className={`${headerCell} w-[110px] min-w-[110px] max-w-[110px]`}>CPC</TableHead>
 
         {/* Protection Group */}
-        <TableHead className={`${headerCell} w-[110px] min-w-[110px] max-w-[110px]`}>BS</TableHead>
-        <TableHead className={`${headerCell} w-[76px] min-w-[76px] max-w-[76px]`}>Ty</TableHead>
+        <TableHead className={`${headerCell} w-[110px] min-w-[110px] max-w-[110px]`}>
+          <div className="flex items-center justify-center gap-0">
+            <span>BS</span>
+            {onFillAllBsStandard && (
+              <Select onValueChange={onFillAllBsStandard}>
+                <SelectTrigger className="h-6 w-6 p-0 border-0 bg-transparent shadow-none [&>svg]:hidden touch-manipulation rounded-full active:bg-white/10">
+                  <span>
+                    <CheckCircle className="h-4 w-4 text-amber-400" />
+                  </span>
+                </SelectTrigger>
+                <SelectContent>
+                  {bsStandardOptions.map((o) => (
+                    <SelectItem key={o.value} value={o.value} className="text-xs">
+                      {o.label}
+                    </SelectItem>
+                  ))}
+                </SelectContent>
+              </Select>
+            )}
+          </div>
+        </TableHead>
+        <TableHead className={`${headerCell} w-[76px] min-w-[76px] max-w-[76px]`}>
+          <div className="flex items-center justify-center gap-0">
+            <span>Ty</span>
+            {onFillAllCurve && (
+              <Select onValueChange={onFillAllCurve}>
+                <SelectTrigger className="h-6 w-6 p-0 border-0 bg-transparent shadow-none [&>svg]:hidden touch-manipulation rounded-full active:bg-white/10">
+                  <span>
+                    <CheckCircle className="h-4 w-4 text-amber-400" />
+                  </span>
+                </SelectTrigger>
+                <SelectContent>
+                  {protectiveDeviceCurveOptions
+                    .filter((o) => o.value !== 'N/A')
+                    .map((o) => (
+                      <SelectItem key={o.value} value={o.value} className="text-xs">
+                        Curve {o.label}
+                      </SelectItem>
+                    ))}
+                </SelectContent>
+              </Select>
+            )}
+          </div>
+        </TableHead>
         <TableHead className={`${headerCell} w-[92px] min-w-[92px] max-w-[92px]`}>A</TableHead>
-        <TableHead className={`${headerCell} w-[83px] min-w-[83px] max-w-[83px]`}>kA</TableHead>
+        <TableHead className={`${headerCell} w-[83px] min-w-[83px] max-w-[83px]`}>
+          <div className="flex items-center justify-center gap-0">
+            <span>kA</span>
+            {onFillAllKa && (
+              <Select onValueChange={onFillAllKa}>
+                <SelectTrigger className="h-6 w-6 p-0 border-0 bg-transparent shadow-none [&>svg]:hidden touch-manipulation rounded-full active:bg-white/10">
+                  <span>
+                    <CheckCircle className="h-4 w-4 text-amber-400" />
+                  </span>
+                </SelectTrigger>
+                <SelectContent>
+                  {['3', '6', '10', '16', '25'].map((v) => (
+                    <SelectItem key={v} value={v} className="text-xs">
+                      {v} kA
+                    </SelectItem>
+                  ))}
+                </SelectContent>
+              </Select>
+            )}
+          </div>
+        </TableHead>
         <TableHead className={`${headerCell} w-[110px] min-w-[110px] max-w-[110px]`}>Zs</TableHead>
 
         {/* RCD Details Group */}

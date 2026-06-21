@@ -1,7 +1,7 @@
 import React from 'react';
 import { TableCell, TableRow } from '@/components/ui/table';
 import { Button } from '@/components/ui/button';
-import { Trash2, ChevronUp, ChevronDown } from 'lucide-react';
+import { Trash2, Copy, ChevronUp, ChevronDown } from 'lucide-react';
 import { TestResult } from '@/types/testResult';
 import { Input } from '@/components/ui/input';
 import {
@@ -27,6 +27,8 @@ import { columnGroups } from '@/utils/mobileTableUtils';
 import ComboboxCell from '@/components/table-cells/ComboboxCell';
 import { cn } from '@/lib/utils';
 import { Calculator } from 'lucide-react';
+import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover';
+import R1R2Calculator from '@/components/R1R2Calculator';
 import { useToast } from '@/hooks/use-toast';
 import { getMaxZsFromDeviceDetails } from '@/utils/zsCalculations';
 
@@ -34,6 +36,7 @@ interface MobileHorizontalScrollTableRowProps {
   result: TestResult;
   onUpdate: (id: string, field: keyof TestResult, value: string) => void;
   onRemove: (id: string) => void;
+  onDuplicate?: (id: string) => void;
   onMoveUp?: (id: string) => void;
   onMoveDown?: (id: string) => void;
   canMoveUp?: boolean;
@@ -44,6 +47,7 @@ const MobileHorizontalScrollTableRowComponent: React.FC<MobileHorizontalScrollTa
   result,
   onUpdate,
   onRemove,
+  onDuplicate,
   onMoveUp,
   onMoveDown,
   canMoveUp = false,
@@ -346,14 +350,37 @@ const MobileHorizontalScrollTableRowComponent: React.FC<MobileHorizontalScrollTa
         </div>
       </TableCell>
       <TableCell className="p-0.5 border-r border-border whitespace-nowrap bg-card w-[110px] min-w-[110px] max-w-[110px]">
-        <Input
-          value={result.r1r2}
-          onChange={(e) => onUpdate(result.id, 'r1r2', e.target.value)}
-          className={inputClassName}
-          placeholder="Ω"
-          type="number"
-          step="0.01"
-        />
+        <div className="flex items-center gap-0.5">
+          <Input
+            value={result.r1r2}
+            onChange={(e) => onUpdate(result.id, 'r1r2', e.target.value)}
+            className={cn(inputClassName, 'min-w-0 flex-1')}
+            placeholder="Ω"
+            type="number"
+            step="0.01"
+          />
+          {/* ELE-1181 — full R1+R2 calculator (cable length + temp) on the table */}
+          <Popover>
+            <PopoverTrigger asChild>
+              <Button
+                type="button"
+                variant="ghost"
+                size="icon"
+                className="h-7 w-6 shrink-0 p-0 text-muted-foreground hover:text-elec-yellow touch-manipulation"
+                title="R1+R2 calculator"
+                aria-label="Open R1+R2 calculator"
+              >
+                <Calculator className="h-3 w-3" />
+              </Button>
+            </PopoverTrigger>
+            <PopoverContent align="end" className="w-80 p-0 border-0 bg-transparent shadow-none">
+              <R1R2Calculator
+                result={result}
+                onUpdate={(field, value) => onUpdate(result.id, field, value)}
+              />
+            </PopoverContent>
+          </Popover>
+        </div>
       </TableCell>
       <TableCell className="p-0.5 border-r border-border whitespace-nowrap bg-card w-[92px] min-w-[92px] max-w-[92px]">
         <Input
@@ -554,6 +581,17 @@ const MobileHorizontalScrollTableRowComponent: React.FC<MobileHorizontalScrollTa
               title="Move down"
             >
               <ChevronDown className="h-4 w-4" />
+            </Button>
+          )}
+          {onDuplicate && (
+            <Button
+              variant="ghost"
+              size="icon"
+              onClick={() => onDuplicate(result.id)}
+              className="h-11 w-9 text-muted-foreground hover:text-elec-yellow hover:bg-muted/40 touch-manipulation"
+              title="Duplicate circuit"
+            >
+              <Copy className="h-4 w-4" />
             </Button>
           )}
           <Button

@@ -1,7 +1,15 @@
 import React, { useState, useMemo } from 'react';
 import { TableRow, TableCell } from '@/components/ui/table';
 import { Button } from '@/components/ui/button';
-import { Trash2, CheckCircle, XCircle, AlertTriangle, ChevronUp, ChevronDown } from 'lucide-react';
+import {
+  Trash2,
+  Copy,
+  CheckCircle,
+  XCircle,
+  AlertTriangle,
+  ChevronUp,
+  ChevronDown,
+} from 'lucide-react';
 import { TestResult } from '@/types/testResult';
 import { validateTestResult } from '@/utils/testValidation';
 import EnhancedRegulationWarningDialog from './EnhancedRegulationWarningDialog';
@@ -32,6 +40,7 @@ interface EnhancedTestResultDesktopTableRowProps {
   result: TestResult;
   onUpdate: (id: string, field: keyof TestResult, value: string) => void;
   onRemove: (id: string) => void;
+  onDuplicate?: (id: string) => void;
   onBulkUpdate?: (id: string, updates: Partial<TestResult>) => void;
   onMoveUp?: (id: string) => void;
   onMoveDown?: (id: string) => void;
@@ -47,6 +56,7 @@ const EnhancedTestResultDesktopTableRow: React.FC<EnhancedTestResultDesktopTable
   result,
   onUpdate,
   onRemove,
+  onDuplicate,
   onBulkUpdate,
   onMoveUp,
   onMoveDown,
@@ -305,6 +315,17 @@ const EnhancedTestResultDesktopTableRow: React.FC<EnhancedTestResultDesktopTable
                 title="Mark as spare way — sets all results to N/A"
               >
                 Spare
+              </Button>
+            )}
+            {onDuplicate && (
+              <Button
+                variant="ghost"
+                size="sm"
+                onClick={() => onDuplicate(result.id)}
+                className="h-7 w-7 p-0 text-muted-foreground hover:text-elec-yellow hover:bg-muted/30 rounded-md transition-colors"
+                title="Duplicate this circuit"
+              >
+                <Copy className="h-4 w-4" />
               </Button>
             )}
             <Button

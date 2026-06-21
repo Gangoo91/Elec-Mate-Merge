@@ -1,21 +1,27 @@
 import { TestResult } from '@/types/testResult';
 
-// Cable resistance values (mΩ/m at 20°C) - from BS 7671 Table 9A
-const CABLE_RESISTANCE_DATA = {
-  '1.0mm': { live: 18.1, cpc: 18.1 },
-  '1.5mm': { live: 12.1, cpc: 12.1 },
-  '2.5mm': { live: 7.41, cpc: 7.41 },
-  '4.0mm': { live: 4.61, cpc: 4.61 },
-  '6.0mm': { live: 3.08, cpc: 3.08 },
-  '10mm': { live: 1.83, cpc: 1.83 },
-  '16mm': { live: 1.15, cpc: 1.15 },
-  '25mm': { live: 0.727, cpc: 0.727 },
-  // Common CPC size variations
-  '1.0mm-1.5mm': { live: 18.1, cpc: 12.1 }, // 1.0mm live, 1.5mm CPC
-  '2.5mm-1.5mm': { live: 7.41, cpc: 12.1 }, // 2.5mm live, 1.5mm CPC
-  '4.0mm-2.5mm': { live: 4.61, cpc: 7.41 }, // 4.0mm live, 2.5mm CPC
-  '6.0mm-4.0mm': { live: 3.08, cpc: 4.61 }, // 6.0mm live, 4.0mm CPC
-  '10mm-6.0mm': { live: 1.83, cpc: 3.08 }, // 10mm live, 6.0mm CPC
+// Single-conductor DC resistance (mΩ/m at 20°C), copper — BS 7671 Table 9A.
+// Verified against bs7671_facets. Keyed by NUMERIC conductor CSA so the lookup
+// works regardless of how the circuit stored the size: '2.5', '2.5mm' and
+// '2.5 mm²' all parse to 2.5 (the old string-keyed map silently returned 0 when
+// the stored value lacked the 'mm' suffix — ELE-1181).
+const RESISTANCE_BY_CSA: Record<string, number> = {
+  '1': 18.1,
+  '1.5': 12.1,
+  '2.5': 7.41,
+  '4': 4.61,
+  '6': 3.08,
+  '10': 1.83,
+  '16': 1.15,
+  '25': 0.727,
+};
+
+// Resistance (mΩ/m at 20°C) for a stored size string, or null if unknown.
+const resistanceForSize = (size: string | null | undefined): number | null => {
+  const csa = parseFloat(size ?? '');
+  if (!isFinite(csa) || csa <= 0) return null;
+  // Normalise the parsed number to its key form (2.5 → '2.5', 4 → '4').
+  return RESISTANCE_BY_CSA[String(csa)] ?? null;
 };
 
 export interface R1R2Calculation {
@@ -35,17 +41,17 @@ export const calculateExpectedR1R2 = (
   lengthMeters: number,
   temperatureCorrection: number = 1.2 // Default 20% increase for operating temperature
 ): number => {
-  const cableKey = cpcSize && cpcSize !== liveSize ? `${liveSize}-${cpcSize}` : liveSize;
+  const rLive = resistanceForSize(liveSize);
+  // CPC defaults to the line size if not separately specified.
+  const rCpc = resistanceForSize(cpcSize || liveSize) ?? rLive;
 
-  const resistance = CABLE_RESISTANCE_DATA[cableKey as keyof typeof CABLE_RESISTANCE_DATA];
-
-  if (!resistance) {
-    console.warn(`Cable resistance data not found for ${cableKey}`);
+  if (rLive == null || rCpc == null) {
+    console.warn(`Cable resistance not found for live "${liveSize}" / cpc "${cpcSize}"`);
     return 0;
   }
 
-  // R1+R2 = (R1 + R2) × length × temperature correction
-  const r1r2PerMeter = (resistance.live + resistance.cpc) / 1000; // Convert mΩ to Ω
+  // R1+R2 = (r_line + r_cpc) per metre × length × temperature correction
+  const r1r2PerMeter = (rLive + rCpc) / 1000; // mΩ/m → Ω/m
   return r1r2PerMeter * lengthMeters * temperatureCorrection;
 };
 
@@ -110,9 +116,10 @@ export const analyseR1R2 = (
   };
 };
 
-// Get cable resistance for a specific size combination
+// Get single-conductor resistance (mΩ/m at 20°C) for a live/cpc combination.
 export const getCableResistance = (liveSize: string, cpcSize?: string) => {
-  const cableKey = cpcSize && cpcSize !== liveSize ? `${liveSize}-${cpcSize}` : liveSize;
-
-  return CABLE_RESISTANCE_DATA[cableKey as keyof typeof CABLE_RESISTANCE_DATA] || null;
+  const live = resistanceForSize(liveSize);
+  const cpc = resistanceForSize(cpcSize || liveSize) ?? live;
+  if (live == null || cpc == null) return null;
+  return { live, cpc };
 };

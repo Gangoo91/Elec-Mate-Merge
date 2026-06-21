@@ -80,7 +80,7 @@ export const PhaseTypeCell: React.FC<PhaseTypeCellProps> = ({ result, onUpdate }
   const value = decode(result);
 
   return (
-    <TableCell className="p-0 h-8 align-middle w-16 min-w-[60px] max-w-[60px]">
+    <TableCell className="p-0 h-8 align-middle w-20 min-w-[78px] max-w-[78px]">
       <Select value={value} onValueChange={(v) => apply(v as PhaseValue, onUpdate, result.id)}>
         <SelectTrigger
           className={[

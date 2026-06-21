@@ -19,11 +19,15 @@ interface EnhancedTestResultDesktopTableHeaderProps {
   onFillAllInsulationVoltage?: (value: string) => void;
   onFillAllInsulationLiveNeutral?: (value: string) => void;
   onFillAllInsulationLiveEarth?: (value: string) => void;
+  onFillAllInsulationNeutralEarth?: (value: string) => void;
   onFillAllPolarity?: (value: string) => void;
   onFillAllFunctional?: (value: string) => void;
   onFillAllWiringType?: (value: string) => void;
   onFillAllRefMethod?: (value: string) => void;
   onFillAllKa?: (value: string) => void;
+  onFillAllBsStandard?: (value: string) => void;
+  onFillAllCurve?: (value: string) => void;
+  onFillAllPhase?: (value: string) => void;
   onFillAllAfddNA?: () => void;
   // ELE-871 — smart RCD per-circuit fill based on bsStandard
   onSmartFillRcd?: () => void;
@@ -43,11 +47,15 @@ const EnhancedTestResultDesktopTableHeader: React.FC<EnhancedTestResultDesktopTa
   onFillAllInsulationVoltage,
   onFillAllInsulationLiveNeutral,
   onFillAllInsulationLiveEarth,
+  onFillAllInsulationNeutralEarth,
   onFillAllPolarity,
   onFillAllFunctional,
   onFillAllWiringType,
   onFillAllRefMethod,
   onFillAllKa,
+  onFillAllBsStandard,
+  onFillAllCurve,
+  onFillAllPhase,
   onFillAllAfddNA,
   onSmartFillRcd,
 }) => {
@@ -234,8 +242,23 @@ const EnhancedTestResultDesktopTableHeader: React.FC<EnhancedTestResultDesktopTa
         </TableHead>
 
         {/* Phase - Always visible */}
-        <TableHead className="sot-header-cell w-16 min-w-[60px] max-w-[60px]" data-group="phase">
-          1P/3P
+        <TableHead className="sot-header-cell w-20 min-w-[78px] max-w-[78px]" data-group="phase">
+          <div className="flex items-center justify-center gap-1.5">
+            <span>1P/3P</span>
+            {onFillAllPhase && (
+              <Popover>
+                <PopoverTrigger asChild>
+                  <button className="sot-fill-all-btn" title="Quick fill all"><CheckCircle className="h-5 w-5" /></button>
+                </PopoverTrigger>
+                <PopoverContent className="w-32 p-2 z-[9999] bg-background border border-white/10" align="center">
+                  <p className="text-[10px] text-white mb-2 font-semibold">Fill all phase</p>
+                  {['1P', '3P'].map((v) => (
+                    <Button key={v} variant="ghost" size="sm" className="w-full justify-start text-xs h-8 text-white hover:text-elec-yellow" onClick={() => onFillAllPhase(v)}>{v}</Button>
+                  ))}
+                </PopoverContent>
+              </Popover>
+            )}
+          </div>
         </TableHead>
 
         {/* Circuit Details */}
@@ -317,13 +340,43 @@ const EnhancedTestResultDesktopTableHeader: React.FC<EnhancedTestResultDesktopTa
               className="sot-header-cell w-40 min-w-[160px] max-w-[160px]"
               data-group="protection"
             >
-              BS (EN)
+              <div className="flex items-center justify-center gap-2">
+                <span>BS (EN)</span>
+                {onFillAllBsStandard && (
+                  <Popover>
+                    <PopoverTrigger asChild>
+                      <button className="sot-fill-all-btn" title="Quick fill all"><CheckCircle className="h-5 w-5" /></button>
+                    </PopoverTrigger>
+                    <PopoverContent className="w-56 p-2 z-[9999] bg-background border border-white/10" align="center">
+                      <p className="text-[10px] text-white mb-2 font-semibold">Fill all BS Standard</p>
+                      {['MCB (BS EN 60898)', 'RCBO (BS EN 61009)', 'Fuse (BS 88)', 'Fuse (BS 1361)', 'Fuse (BS 3036)', 'MCCB (BS EN 60947)'].map((v) => (
+                        <Button key={v} variant="ghost" size="sm" className="w-full justify-start text-xs h-8 text-white hover:text-elec-yellow" onClick={() => onFillAllBsStandard(v)}>{v}</Button>
+                      ))}
+                    </PopoverContent>
+                  </Popover>
+                )}
+              </div>
             </TableHead>
             <TableHead
               className="sot-header-cell w-20 min-w-[75px] max-w-[75px]"
               data-group="protection"
             >
-              Type
+              <div className="flex items-center justify-center gap-2">
+                <span>Type</span>
+                {onFillAllCurve && (
+                  <Popover>
+                    <PopoverTrigger asChild>
+                      <button className="sot-fill-all-btn" title="Quick fill all (MCB/RCBO only)"><CheckCircle className="h-5 w-5" /></button>
+                    </PopoverTrigger>
+                    <PopoverContent className="w-40 p-2 z-[9999] bg-background border border-white/10" align="center">
+                      <p className="text-[10px] text-white mb-2 font-semibold">Fill all curve (MCB/RCBO)</p>
+                      {['B', 'C', 'D'].map((v) => (
+                        <Button key={v} variant="ghost" size="sm" className="w-full justify-start text-xs h-8 text-white hover:text-elec-yellow" onClick={() => onFillAllCurve(v)}>Curve {v}</Button>
+                      ))}
+                    </PopoverContent>
+                  </Popover>
+                )}
+              </div>
             </TableHead>
             <TableHead
               className="sot-header-cell w-20 min-w-[75px] max-w-[75px]"
@@ -768,7 +821,7 @@ const EnhancedTestResultDesktopTableHeader: React.FC<EnhancedTestResultDesktopTa
               r₂
             </TableHead>
             <TableHead
-              className="sot-header-cell w-16 min-w-[65px] max-w-[65px]"
+              className="sot-header-cell w-32 min-w-[132px] max-w-[132px]"
               data-group="continuity"
             >
               R₁+R₂
@@ -961,8 +1014,38 @@ const EnhancedTestResultDesktopTableHeader: React.FC<EnhancedTestResultDesktopTa
               className="sot-header-cell w-28 min-w-[104px] max-w-[104px]"
               data-group="insulation"
             >
-              <div className="flex items-center justify-center">
+              <div className="flex items-center justify-center gap-2">
                 <span>N-E</span>
+                {onFillAllInsulationNeutralEarth && (
+                  <Popover>
+                    <PopoverTrigger asChild>
+                      <button
+                        className="sot-fill-all-btn"
+                        title="Quick fill all Neutral-Earth readings"
+                      >
+                        <CheckCircle className="h-5 w-5 text-amber-400" />
+                      </button>
+                    </PopoverTrigger>
+                    <PopoverContent className="w-48 p-3 bg-background border-border" align="start">
+                      <div className="space-y-1">
+                        {[
+                          { v: '>200', label: '>200 MΩ' },
+                          { v: '>999', label: '>999 MΩ' },
+                          { v: 'N/A', label: 'N/A' },
+                          { v: 'LIM', label: 'LIM' },
+                        ].map((o) => (
+                          <button
+                            key={o.v}
+                            onClick={() => onFillAllInsulationNeutralEarth(o.v)}
+                            className="w-full text-left px-3 py-2 text-sm rounded-md hover:bg-muted hover:text-foreground transition-colors"
+                          >
+                            {o.label}
+                          </button>
+                        ))}
+                      </div>
+                    </PopoverContent>
+                  </Popover>
+                )}
               </div>
             </TableHead>
           </>

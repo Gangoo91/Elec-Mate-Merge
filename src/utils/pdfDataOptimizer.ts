@@ -63,16 +63,24 @@ export const findBase64Images = (data: any, path = ''): Array<{ path: string; si
 //   - /logo/i    → registration_scheme_logo, company_logo, schemeLogo, companyLogo, …
 const PRESERVE_KEY_RE = /signat|logo/i;
 
-const shouldPreserveDataUrl = (key: string): boolean => PRESERVE_KEY_RE.test(key);
+// Signatures and logos are meant to be tiny. If a "preserved" data URL is
+// abnormally large (e.g. a user uploaded a multi-MB image as their company
+// logo — ELE-1177), preserving it defeats the whole size guard and the PDF
+// fails to generate. Above this cap we strip it anyway: a cert with no logo
+// beats a cert that won't render. Normal logos/signatures are far smaller.
+const PRESERVE_MAX_BYTES = 150 * 1024; // ~150KB
+
+const shouldPreserveDataUrl = (key: string, value: string): boolean =>
+  PRESERVE_KEY_RE.test(key) && value.length * 0.75 <= PRESERVE_MAX_BYTES;
 
 /**
  * Strip base64 images from data (for PDF generation fallback).
- * Signature and logo data URLs (matched by key) are preserved; everything else
- * base64 (photos — the heavy payload) is removed so the size guard still bites.
+ * Small signature and logo data URLs (matched by key) are preserved; photos —
+ * and any oversized logo/signature — are removed so the size guard still bites.
  */
 export const stripBase64Images = (data: any, key = ''): any => {
   if (typeof data === 'string' && isBase64DataUrl(data)) {
-    return shouldPreserveDataUrl(key) ? data : ''; // Strip photos; keep signatures + logos
+    return shouldPreserveDataUrl(key, data) ? data : ''; // Strip photos + oversized logos
   } else if (typeof data === 'string') {
     // Preserve all non-base64 strings (required fields like names, addresses)
     return data;

@@ -310,6 +310,27 @@ export const getMaxZsWithRcd = (opts: {
   boardMainRcdRating?: string | null;
   circuitDescription?: string;
 }): { maxZs: number | null; source: 'rcd' | 'overcurrent' | 'unknown'; rcdRating?: string | null } => {
+  // An RCBO / MCB / fuse provides disconnection via its OWN overcurrent element,
+  // so the recorded Max Zs is the BS 7671 Table 41.3 value (verified vs facets:
+  // a Type B 32A RCBO to BS EN 61009-1 = 1.37 Ω, identical to the Type B 32A MCB).
+  // The RCD 50/IΔn limit only governs when the device is a STANDALONE RCD
+  // (BS EN 61008) with no overcurrent characteristic of its own.
+  //
+  // Previously this returned the RCD limit FIRST for any RCD-protected circuit,
+  // so every RCBO showed 50/0.3 = 166.67 Ω (the board main 300 mA RCD) instead
+  // of its real Table 41.3 value. Check the overcurrent table first.
+  const overcurrentMax = getMaxZsFromDeviceDetails(
+    opts.bsStandard,
+    opts.curve,
+    opts.rating,
+    opts.circuitDescription || ''
+  );
+  if (overcurrentMax !== null) {
+    return { maxZs: overcurrentMax, source: 'overcurrent' };
+  }
+
+  // No overcurrent value (e.g. a standalone RCD to BS EN 61008) — fall back to
+  // the RCD-based fault-protection limit (50 / IΔn).
   const rcdProtected = isCircuitRcdProtected({
     rcdRating: opts.rcdRating,
     rcdType: opts.rcdType,
@@ -317,7 +338,6 @@ export const getMaxZsWithRcd = (opts: {
     bsStandard: opts.bsStandard,
     boardHasMainRcd: opts.boardHasMainRcd,
   });
-
   if (rcdProtected) {
     // Prefer the circuit's own RCD rating. Fall back to the board's main RCD rating.
     const effectiveRating =
@@ -330,16 +350,7 @@ export const getMaxZsWithRcd = (opts: {
     }
   }
 
-  const overcurrentMax = getMaxZsFromDeviceDetails(
-    opts.bsStandard,
-    opts.curve,
-    opts.rating,
-    opts.circuitDescription || ''
-  );
-  return {
-    maxZs: overcurrentMax,
-    source: overcurrentMax !== null ? 'overcurrent' : 'unknown',
-  };
+  return { maxZs: null, source: 'unknown' };
 };
 
 /**

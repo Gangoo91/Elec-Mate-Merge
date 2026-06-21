@@ -44,6 +44,57 @@ const isDataUrl = (s: string): boolean => s.startsWith('data:');
 const isAbsoluteUrl = (s: string): boolean => /^https?:\/\//i.test(s);
 const isRelativePath = (s: string): boolean => s.startsWith('/');
 
+// PDF letterhead logos only need to be a few hundred px wide, but some users
+// have uploaded multi-MB images as their company logo. The PDF size guard can't
+// strip them (logos are deliberately preserved so branding survives), so the
+// whole EICR PDF fails to generate (ELE-1177). Downscale any oversized logo
+// data URL before it reaches the PDF payload. Returns the original on any
+// failure — never blocks PDF generation.
+const LOGO_MAX_DIM = 320;
+const LOGO_INLINE_LIMIT_BYTES = 120 * 1024; // ~120KB — above this, downscale
+
+export const downscaleLogoDataUrl = async (dataUrl: string): Promise<string> => {
+  if (!dataUrl || !isDataUrl(dataUrl)) return dataUrl;
+  // Cheap size estimate: base64 decodes to ~0.75× its string length.
+  if (dataUrl.length * 0.75 <= LOGO_INLINE_LIMIT_BYTES) return dataUrl;
+  if (typeof document === 'undefined') return dataUrl; // SSR / non-DOM guard
+  try {
+    return await new Promise<string>((resolve) => {
+      const img = new Image();
+      img.onload = () => {
+        try {
+          let { width, height } = img;
+          if (!width || !height) return resolve(dataUrl);
+          if (width > LOGO_MAX_DIM || height > LOGO_MAX_DIM) {
+            if (width >= height) {
+              height = Math.round((height * LOGO_MAX_DIM) / width);
+              width = LOGO_MAX_DIM;
+            } else {
+              width = Math.round((width * LOGO_MAX_DIM) / height);
+              height = LOGO_MAX_DIM;
+            }
+          }
+          const canvas = document.createElement('canvas');
+          canvas.width = width;
+          canvas.height = height;
+          const ctx = canvas.getContext('2d');
+          if (!ctx) return resolve(dataUrl);
+          ctx.drawImage(img, 0, 0, width, height);
+          // PNG preserves logo transparency; a 320px logo is only a few KB.
+          const out = canvas.toDataURL('image/png');
+          resolve(out && out.length < dataUrl.length ? out : dataUrl);
+        } catch {
+          resolve(dataUrl);
+        }
+      };
+      img.onerror = () => resolve(dataUrl);
+      img.src = dataUrl;
+    });
+  } catch {
+    return dataUrl;
+  }
+};
+
 const matchesBundledScheme = (path: string): boolean =>
   SCHEMES.some((s) => path === s.logoPath);
 
@@ -96,13 +147,14 @@ export const resolveCompanyLogo = async (
   if (!storedLogo) return '';
   // Drop placeholder strings
   if (storedLogo.includes('placeholder')) return '';
-  // 1) Already PDF-safe
-  if (isDataUrl(storedLogo)) return storedLogo;
+  // 1) Already PDF-safe — but downscale if the user uploaded an oversized image
+  //    (ELE-1177): a multi-MB logo bloats the payload past the PDF size limit.
+  if (isDataUrl(storedLogo)) return await downscaleLogoDataUrl(storedLogo);
   if (isAbsoluteUrl(storedLogo)) return storedLogo;
   // 2) Relative path — try to fetch + convert
   if (isRelativePath(storedLogo)) {
     const dataUrl = await fetchAsDataUrl(storedLogo);
-    if (dataUrl) return dataUrl;
+    if (dataUrl) return await downscaleLogoDataUrl(dataUrl);
   }
   // 3) Could not resolve — drop it so the template doesn't render a broken img
   return '';

@@ -14,6 +14,7 @@ interface EnhancedTestResultDesktopTableProps {
   testResults: TestResult[];
   onUpdate: (id: string, field: keyof TestResult, value: string) => void;
   onRemove: (id: string) => void;
+  onDuplicate?: (id: string) => void;
   allResults: TestResult[];
   onBulkUpdate?: (id: string, updates: Partial<TestResult>) => void;
   onMoveUp?: (id: string) => void;
@@ -28,6 +29,7 @@ const EnhancedTestResultDesktopTable: React.FC<EnhancedTestResultDesktopTablePro
   testResults,
   onUpdate,
   onRemove,
+  onDuplicate,
   onBulkUpdate,
   onMoveUp,
   onMoveDown,
@@ -249,6 +251,18 @@ const EnhancedTestResultDesktopTable: React.FC<EnhancedTestResultDesktopTablePro
     toast.success(`All Live-Earth fields filled with ${value} MΩ`);
   };
 
+  // N-E quick-fill was missing (N-E added later in ELE-868); add for parity.
+  const handleFillAllInsulationNeutralEarth = (value: string) => {
+    if (onBulkFieldUpdate) {
+      onBulkFieldUpdate('insulationNeutralEarth', value);
+    } else {
+      testResults.forEach((result) => {
+        onUpdate(result.id, 'insulationNeutralEarth', value);
+      });
+    }
+    toast.success(`All Neutral-Earth fields filled with ${value} MΩ`);
+  };
+
   const handleFillAllPolarity = (value: string) => {
     if (onBulkFieldUpdate) {
       onBulkFieldUpdate('polarity', value);
@@ -285,6 +299,44 @@ const EnhancedTestResultDesktopTable: React.FC<EnhancedTestResultDesktopTablePro
       testResults.forEach((result) => { onUpdate(result.id, 'protectiveDeviceKaRating', value); });
     }
     toast.success(`All kA fields filled with ${value}`);
+  };
+
+  // ELE-1182 — quick-fill for the core protective-device fields (Craig Soper).
+  const handleFillAllBsStandard = (value: string) => {
+    if (onBulkFieldUpdate) {
+      onBulkFieldUpdate('bsStandard', value);
+    } else {
+      testResults.forEach((result) => { onUpdate(result.id, 'bsStandard', value); });
+    }
+    toast.success(`All BS Standard fields filled with ${value}`);
+  };
+
+  // Tripping curve only applies to devices that have one (MCB / RCBO / MCCB);
+  // fuses don't, so they're skipped.
+  const handleFillAllCurve = (value: string) => {
+    const curveApplies = (bs: string) =>
+      bs === 'MCB (BS EN 60898)' || bs === 'RCBO (BS EN 61009)' || bs === 'MCCB (BS EN 60947)';
+    let count = 0;
+    testResults.forEach((result) => {
+      if (curveApplies(result.bsStandard || '')) {
+        onUpdate(result.id, 'protectiveDeviceCurve', value);
+        count += 1;
+      }
+    });
+    toast.success(
+      count > 0
+        ? `Curve ${value} applied to ${count} MCB/RCBO circuit${count === 1 ? '' : 's'}`
+        : 'No MCB/RCBO circuits to apply a curve to'
+    );
+  };
+
+  const handleFillAllPhase = (value: string) => {
+    if (onBulkFieldUpdate) {
+      onBulkFieldUpdate('phaseType', value);
+    } else {
+      testResults.forEach((result) => { onUpdate(result.id, 'phaseType', value); });
+    }
+    toast.success(`All circuits set to ${value}`);
   };
 
   const handleFillAllAfddNA = () => handleFillAllAfdd('N/A');
@@ -405,11 +457,15 @@ const EnhancedTestResultDesktopTable: React.FC<EnhancedTestResultDesktopTablePro
                     onFillAllInsulationVoltage={handleFillAllInsulationVoltage}
                     onFillAllInsulationLiveNeutral={handleFillAllInsulationLiveNeutral}
                     onFillAllInsulationLiveEarth={handleFillAllInsulationLiveEarth}
+                    onFillAllInsulationNeutralEarth={handleFillAllInsulationNeutralEarth}
                     onFillAllPolarity={handleFillAllPolarity}
                     onFillAllFunctional={handleFillAllFunctional}
                     onFillAllWiringType={handleFillAllWiringType}
                     onFillAllRefMethod={handleFillAllRefMethod}
                     onFillAllKa={handleFillAllKa}
+                    onFillAllBsStandard={handleFillAllBsStandard}
+                    onFillAllCurve={handleFillAllCurve}
+                    onFillAllPhase={handleFillAllPhase}
                     onFillAllAfddNA={handleFillAllAfddNA}
                   />
                   <TableBody>
@@ -419,6 +475,7 @@ const EnhancedTestResultDesktopTable: React.FC<EnhancedTestResultDesktopTablePro
                         result={result}
                         onUpdate={onUpdate}
                         onRemove={onRemove}
+                        onDuplicate={onDuplicate}
                         onBulkUpdate={handleBulkUpdate}
                         onMoveUp={onMoveUp}
                         onMoveDown={onMoveDown}

@@ -3,6 +3,7 @@ import { List } from 'react-window';
 import { useHaptic } from '@/hooks/useHaptic';
 import { TestResult } from '@/types/testResult';
 import { CircuitCard } from './CircuitCard';
+import R1R2Calculator from '@/components/R1R2Calculator';
 import { Sheet, SheetContent, SheetHeader, SheetTitle } from '@/components/ui/sheet';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
@@ -548,7 +549,19 @@ const CircuitEditForm: React.FC<CircuitEditFormProps> = ({
       <div className="flex-1 overflow-y-auto px-3 py-3 space-y-4">
         {activeTab === 'circuit' && <CircuitTabContent getValue={getValue} onChange={onChange} />}
 
-        {activeTab === 'tests' && <TestsTabContent getValue={getValue} onChange={onChange} />}
+        {activeTab === 'tests' && (
+          <>
+            <TestsTabContent getValue={getValue} onChange={onChange} />
+            {/* ELE-1181 — R1+R2 Calculator reinstated into the Schedule of Tests
+                circuit editor (dropped in a refactor). Reads this circuit's
+                conductors, computes expected R1+R2, and writes back to the field. */}
+            <R1R2Calculator
+              result={{ ...circuit, ...editedValues } as TestResult}
+              onUpdate={onChange}
+              className="mt-1"
+            />
+          </>
+        )}
 
         {activeTab === 'rcd' && (
           <RcdTabContent getValue={getValue} onChange={onChange} hasRcd={hasRcd} />

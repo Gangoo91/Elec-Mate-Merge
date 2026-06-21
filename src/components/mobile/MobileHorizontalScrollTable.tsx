@@ -9,6 +9,7 @@ interface MobileHorizontalScrollTableProps {
   testResults: TestResult[];
   onUpdate: (id: string, field: keyof TestResult, value: string) => void;
   onRemove: (id: string) => void;
+  onDuplicate?: (id: string) => void;
   onBulkUpdate?: (id: string, updates: Partial<TestResult>) => void;
   onBulkFieldUpdate?: (field: keyof TestResult, value: string) => void;
   onMoveUp?: (id: string) => void;
@@ -19,6 +20,7 @@ export const MobileHorizontalScrollTable: React.FC<MobileHorizontalScrollTablePr
   testResults,
   onUpdate,
   onRemove,
+  onDuplicate,
   onBulkUpdate,
   onBulkFieldUpdate,
   onMoveUp,
@@ -115,6 +117,43 @@ export const MobileHorizontalScrollTable: React.FC<MobileHorizontalScrollTablePr
       description: `${testResults.length} circuit${testResults.length > 1 ? 's' : ''} updated`,
       duration: 2000,
     });
+  };
+
+  // ELE-1182 — quick-fill for the core protective-device fields.
+  const handleFillAllBsStandard = (value: string) => {
+    if (onBulkFieldUpdate) {
+      onBulkFieldUpdate('bsStandard', value);
+    } else {
+      testResults.forEach((result) => onUpdate(result.id, 'bsStandard', value));
+    }
+    toast.success(`All BS Standard fields filled with ${value}`);
+  };
+
+  const handleFillAllCurve = (value: string) => {
+    // Curve only applies to devices that have one (MCB / RCBO / MCCB).
+    const curveApplies = (bs: string) =>
+      bs === 'MCB (BS EN 60898)' || bs === 'RCBO (BS EN 61009)' || bs === 'MCCB (BS EN 60947)';
+    let count = 0;
+    testResults.forEach((result) => {
+      if (curveApplies(result.bsStandard || '')) {
+        onUpdate(result.id, 'protectiveDeviceCurve', value);
+        count += 1;
+      }
+    });
+    toast.success(
+      count > 0
+        ? `Curve ${value} applied to ${count} MCB/RCBO circuit${count === 1 ? '' : 's'}`
+        : 'No MCB/RCBO circuits to apply a curve to'
+    );
+  };
+
+  const handleFillAllKa = (value: string) => {
+    if (onBulkFieldUpdate) {
+      onBulkFieldUpdate('protectiveDeviceKaRating', value);
+    } else {
+      testResults.forEach((result) => onUpdate(result.id, 'protectiveDeviceKaRating', value));
+    }
+    toast.success(`All kA fields filled with ${value}`);
   };
 
   const handleApplyRcdPreset = (
@@ -222,6 +261,9 @@ export const MobileHorizontalScrollTable: React.FC<MobileHorizontalScrollTablePr
           <MobileHorizontalScrollTableHeader
             onFillAllRcdTestButton={handleFillAllRcdTestButton}
             onFillAllAfdd={handleFillAllAfdd}
+            onFillAllBsStandard={handleFillAllBsStandard}
+            onFillAllCurve={handleFillAllCurve}
+            onFillAllKa={handleFillAllKa}
             onFillAllRcdBsStandard={handleFillAllRcdBsStandard}
             onFillAllRcdType={handleFillAllRcdType}
             onFillAllRcdRating={handleFillAllRcdRating}
@@ -243,6 +285,7 @@ export const MobileHorizontalScrollTable: React.FC<MobileHorizontalScrollTablePr
                 result={result}
                 onUpdate={onUpdate}
                 onRemove={onRemove}
+                onDuplicate={onDuplicate}
                 onMoveUp={onMoveUp}
                 onMoveDown={onMoveDown}
                 canMoveUp={onMoveUp ? !firstOfBoardIds.has(result.id) : false}
