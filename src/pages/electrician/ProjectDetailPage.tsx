@@ -64,6 +64,11 @@ import { TaskForm } from '@/components/tasks/TaskForm';
 import { TaskDetailSheet } from '@/components/tasks/TaskDetailSheet';
 import { LinkEntitySheet } from '@/components/project-management/LinkEntitySheet';
 import ProjectActionsSheet from '@/components/project-management/ProjectActionsSheet';
+import { buildAndSaveProjectPack } from '@/utils/project-pack/projectPack';
+import type { ProjectPackCoverData } from '@/utils/project-pack/projectPackCover';
+import { resolveSchemeLogo } from '@/utils/resolveSchemeLogo';
+import { useCompanyProfile } from '@/hooks/useCompanyProfile';
+import { toast } from '@/hooks/use-toast';
 import { ProjectDocumentSheet } from '@/components/project-management/ProjectDocumentSheet';
 import { useProjectDocuments } from '@/hooks/useProjectDocuments';
 import { ProjectAINotes } from '@/components/project-management/ProjectAINotes';
@@ -210,6 +215,8 @@ const ProjectDetailPage = () => {
     if (id) fetchDocuments();
   }, [id, fetchDocuments]);
 
+  const { companyProfile } = useCompanyProfile();
+
   // ─── Expenses logged against this project (ELE-1176) ─────────────
   const { expenses, createExpense } = useExpensesStorage();
   const projectExpenses = useMemo(
@@ -353,6 +360,74 @@ const ProjectDetailPage = () => {
       minimumFractionDigits: 2,
       maximumFractionDigits: 2,
     }).format(n || 0);
+
+  // ─── Export the project handover pack (v1: cover + expenses summary) ─────
+  const handleExportPack = async () => {
+    if (!project) return;
+    toast({
+      title: 'Building project pack…',
+      description: 'Putting the cover and expenses together.',
+    });
+    try {
+      const schemeLogoDataUrl = await resolveSchemeLogo(
+        companyProfile?.scheme_logo_data_url,
+        companyProfile?.registration_scheme
+      );
+      const cover: ProjectPackCoverData = {
+        project: {
+          title: project.title,
+          type: project.project_type,
+          status: project.status,
+          customerName: project.customer_name,
+          location: project.location,
+          startDate: project.start_date,
+        },
+        company: {
+          company_name: companyProfile?.company_name,
+          logo_url: companyProfile?.logo_url,
+          company_phone: companyProfile?.company_phone,
+          company_email: companyProfile?.company_email,
+          company_website: companyProfile?.company_website,
+          registration_scheme: companyProfile?.registration_scheme,
+          registration_number: companyProfile?.registration_number,
+          accent_color: companyProfile?.accent_color,
+        },
+        schemeLogoDataUrl,
+        summary: {
+          value: project.estimated_value || quoteTotal,
+          spend: projectSpend,
+          timeLabel: formatHoursMinutes(timeSummary.totalSec),
+          tasksLabel: totalTasks > 0 ? `${doneTasks}/${totalTasks}` : '—',
+        },
+        contents: [
+          { label: 'Quotes', count: quotes.length },
+          { label: 'Invoices', count: invoices.length },
+          { label: 'Certificates', count: certificates.length },
+          { label: 'RAMS', count: rams.length },
+          { label: 'Site visits', count: siteVisits.length },
+          { label: 'Expenses', count: projectExpenses.length },
+        ],
+      };
+      await buildAndSaveProjectPack({
+        cover,
+        expenses: projectExpenses,
+        expenseTotal: projectSpend,
+        brandHex: companyProfile?.accent_color,
+        fileName: `Project Pack - ${project.title}.pdf`,
+      });
+      toast({
+        title: 'Project pack ready',
+        description: 'Your handover PDF has been saved.',
+      });
+    } catch (err) {
+      console.error('[project-pack] export failed', err);
+      toast({
+        title: 'Export failed',
+        description: 'Could not build the project pack. Please try again.',
+        variant: 'destructive',
+      });
+    }
+  };
 
   const visibleTasks = showAllTasks ? regularTasks : regularTasks.slice(0, TASK_PREVIEW_COUNT);
 
@@ -2440,6 +2515,7 @@ const ProjectDetailPage = () => {
         onLink={(type) => setLinkType(type)}
         onComplete={completeProject}
         onDelete={() => setConfirmDeleteProject(true)}
+        onExportPack={handleExportPack}
       />
 
       {/* Delete document confirmation */}
