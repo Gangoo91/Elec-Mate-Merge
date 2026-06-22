@@ -135,17 +135,60 @@ function Observations({ reportType, data }: QsCertReviewBodyProps) {
 
 /* ── Schedule of tests (EICR / EIC circuit arrays) ────────────────────────── */
 
+// Parse a measured value that may carry comparators/units (">200", "<0.5",
+// "1.37Ω", "N/A") into a number, or null when there's no comparable figure.
+function parseMeasure(v: unknown): number | null {
+  if (v == null) return null;
+  const s = String(v).trim();
+  if (s === '' || /^n\/?a$/i.test(s)) return null;
+  const m = s.match(/-?\d+(\.\d+)?/);
+  return m ? parseFloat(m[0]) : null;
+}
+
+// Objective, data-driven flags for a circuit — each uses the circuit's OWN
+// recorded values (e.g. its stored maxZs), never an invented standard. These
+// are the lines a QS should look at first.
+function circuitFlags(c: CertData): string[] {
+  const flags: string[] = [];
+  const zs = parseMeasure(c.zs);
+  const maxZs = parseMeasure(c.maxZs);
+  if (zs != null && maxZs != null && zs > maxZs) flags.push('Zs > max');
+
+  const ir = parseMeasure(c.insulationLiveEarth ?? c.insulationResistance);
+  if (ir != null && ir < 1) flags.push('IR < 1MΩ');
+
+  const pol = String(c.polarity ?? '').trim();
+  if (pol && !/^(correct|✓|ok|satisfactory|pass|n\/?a)$/i.test(pol)) flags.push('Polarity');
+
+  const rcd = String(c.rcdRating ?? c.rcdType ?? '').trim();
+  const hasRcd = rcd !== '' && !/^n\/?a$/i.test(rcd);
+  const rcdTested = parseMeasure(c.rcdOneX) != null || /✓/.test(String(c.rcdTestButton ?? ''));
+  if (hasRcd && !rcdTested) flags.push('RCD untested');
+
+  return flags;
+}
+
 function CircuitSchedule({ data }: { data: CertData }) {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const circuits: any[] = Array.isArray(data?.scheduleOfTests) ? data.scheduleOfTests : [];
   const [expanded, setExpanded] = useState(false);
   const INITIAL = 8;
-  const visible = expanded ? circuits : circuits.slice(0, INITIAL);
+  const flaggedList = circuits.filter((c) => circuitFlags(c).length > 0);
+  // Collapsed view leads with the circuits that need a QS's eye; if none are
+  // flagged, fall back to the first handful.
+  const visible = expanded
+    ? circuits
+    : flaggedList.length > 0
+      ? flaggedList
+      : circuits.slice(0, INITIAL);
 
   return (
     <div className="space-y-3">
       <SectionTitle dot="bg-blue-400">
-        Schedule of tests{circuits.length > 0 ? ` (${circuits.length} circuits)` : ''}
+        Schedule of tests
+        {circuits.length > 0
+          ? ` (${circuits.length} circuit${circuits.length === 1 ? '' : 's'}${flaggedList.length > 0 ? ` · ${flaggedList.length} to review` : ''})`
+          : ''}
       </SectionTitle>
       {circuits.length === 0 ? (
         <p className="text-sm text-white/50">No test results recorded.</p>
@@ -157,43 +200,78 @@ function CircuitSchedule({ data }: { data: CertData }) {
                 .filter(Boolean)
                 .join(' ');
               const rating = c.protectiveDeviceRating ? `${c.protectiveDeviceRating}A` : '';
+              const flags = circuitFlags(c);
               return (
-                <div key={i} className="px-3 py-2.5 space-y-1">
-                  <p className="text-sm font-medium text-white truncate">
-                    {[c.circuitNumber, c.circuitDescription].filter(Boolean).join(' — ') ||
-                      `Circuit ${i + 1}`}
-                  </p>
-                  <div className="flex flex-wrap gap-x-3 gap-y-0.5">
-                    {(device || rating) && (
-                      <ValueChip label="Device" value={`${device} ${rating}`.trim()} />
-                    )}
-                    {present(c.zs) && <ValueChip label="Zs" value={`${asText(c.zs)}Ω`} />}
-                    {present(c.r1r2) && <ValueChip label="R1+R2" value={`${asText(c.r1r2)}Ω`} />}
-                    {/* Live editors write insulationLiveEarth; insulationResistance is legacy */}
-                    {present(c.insulationLiveEarth || c.insulationResistance) && (
-                      <ValueChip
-                        label="IR"
-                        value={`${asText(c.insulationLiveEarth || c.insulationResistance)}MΩ`}
+                <div
+                  key={i}
+                  className={cn('px-3 py-2.5 space-y-1', flags.length > 0 && 'bg-red-500/[0.07]')}
+                >
+                  <div className="flex items-start gap-2">
+                    {flags.length > 0 && (
+                      <span
+                        aria-hidden
+                        className="mt-1 w-[3px] h-9 rounded-full bg-red-500/70 shrink-0"
                       />
                     )}
-                    {present(c.polarity) && (
-                      <ValueChip label="Polarity" value={asText(c.polarity)} />
-                    )}
-                    {present(c.rcdOneX) && (
-                      <ValueChip label="RCD 1×" value={`${asText(c.rcdOneX)}ms`} />
-                    )}
+                    <div className="flex-1 min-w-0">
+                      <p className="text-sm font-medium text-white truncate">
+                        {[c.circuitNumber, c.circuitDescription].filter(Boolean).join(' — ') ||
+                          `Circuit ${i + 1}`}
+                      </p>
+                      <div className="flex flex-wrap gap-x-3 gap-y-0.5">
+                        {(device || rating) && (
+                          <ValueChip label="Device" value={`${device} ${rating}`.trim()} />
+                        )}
+                        {present(c.zs) && <ValueChip label="Zs" value={`${asText(c.zs)}Ω`} />}
+                        {present(c.maxZs) && (
+                          <ValueChip label="max Zs" value={`${asText(c.maxZs)}Ω`} />
+                        )}
+                        {present(c.r1r2) && (
+                          <ValueChip label="R1+R2" value={`${asText(c.r1r2)}Ω`} />
+                        )}
+                        {/* Live editors write insulationLiveEarth; insulationResistance is legacy */}
+                        {present(c.insulationLiveEarth || c.insulationResistance) && (
+                          <ValueChip
+                            label="IR"
+                            value={`${asText(c.insulationLiveEarth || c.insulationResistance)}MΩ`}
+                          />
+                        )}
+                        {present(c.polarity) && (
+                          <ValueChip label="Polarity" value={asText(c.polarity)} />
+                        )}
+                        {present(c.rcdOneX) && (
+                          <ValueChip label="RCD 1×" value={`${asText(c.rcdOneX)}ms`} />
+                        )}
+                      </div>
+                      {flags.length > 0 && (
+                        <div className="flex flex-wrap gap-1.5 mt-1">
+                          {flags.map((f) => (
+                            <span
+                              key={f}
+                              className="text-[10px] font-semibold uppercase tracking-wide border rounded px-1.5 py-0.5 bg-red-500/20 border-red-500/40 text-red-300"
+                            >
+                              {f}
+                            </span>
+                          ))}
+                        </div>
+                      )}
+                    </div>
                   </div>
                 </div>
               );
             })}
           </div>
-          {circuits.length > INITIAL && (
+          {(circuits.length > visible.length || expanded) && (
             <button
               type="button"
               onClick={() => setExpanded((e) => !e)}
               className="h-11 w-full rounded-lg text-sm font-medium text-elec-yellow bg-white/[0.04] border border-white/[0.08] touch-manipulation active:scale-[0.98] flex items-center justify-center gap-1.5"
             >
-              {expanded ? 'Show fewer circuits' : `Show all ${circuits.length} circuits`}
+              {expanded
+                ? flaggedList.length > 0
+                  ? 'Show flagged only'
+                  : 'Show fewer circuits'
+                : `Show all ${circuits.length} circuits`}
               <ChevronDown
                 className={cn('h-4 w-4 transition-transform', expanded && 'rotate-180')}
               />
