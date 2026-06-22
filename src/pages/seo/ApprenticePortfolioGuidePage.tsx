@@ -565,7 +565,7 @@ export default function ApprenticePortfolioGuidePage() {
         <div className="max-w-4xl mx-auto">
           <SEOAppBridge
             title="Build Your Portfolio + Study for Exams in One App"
-            description="Elec-Mate helps electrical apprentices track their NVQ progress, study for assessments with 2,000+ practice questions…"
+            description="Elec-Mate helps electrical apprentices track their NVQ progress, study for assessments with 20,000+ practice questions…"
             icon={GraduationCap}
           />
           <p className="text-white mt-4 text-sm">

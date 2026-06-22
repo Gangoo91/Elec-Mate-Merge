@@ -1455,13 +1455,21 @@ const EICRSummary = ({ formData: propFormData, onUpdate: propOnUpdate }: EICRSum
         <div className="space-y-3 px-4">
           <div className="h-[2px] w-full rounded-full bg-gradient-to-r from-elec-yellow/40 to-elec-yellow/10" />
 
+          {/*
+            A QS-approved cert is complete by definition — don't grey on an
+            in-editor completeness recompute that can transiently fail and leave
+            an approved cert un-generatable (ELE-1183). Tapping an approved cert
+            then either generates or surfaces the 'edited after approval' toast.
+          */}
           <Button
             className="w-full h-11 bg-elec-yellow text-black hover:bg-elec-yellow/90 font-semibold text-sm rounded-lg transition-all active:scale-[0.98] touch-manipulation"
             onClick={() => {
               haptic.light();
               handleGenerateCertificate();
             }}
-            disabled={!isFormComplete() || isGenerating}
+            disabled={
+              (!isFormComplete() && qsReviewStatus?.status !== 'approved') || isGenerating
+            }
           >
             {isGenerating ? 'Generating...' : 'Generate PDF'}
           </Button>
@@ -1470,7 +1478,7 @@ const EICRSummary = ({ formData: propFormData, onUpdate: propOnUpdate }: EICRSum
             <button
               className="h-11 rounded-lg bg-white/[0.08] border border-white/[0.12] text-xs font-semibold text-white touch-manipulation active:scale-[0.98] disabled:opacity-40"
               onClick={() => { haptic.light(); setShowEmailDialog(true); }}
-              disabled={!isFormComplete()}
+              disabled={!isFormComplete() && qsReviewStatus?.status !== 'approved'}
             >
               Email
             </button>

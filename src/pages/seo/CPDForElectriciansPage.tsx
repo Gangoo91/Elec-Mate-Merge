@@ -491,7 +491,7 @@ const sections = [
         </p>
         <p>
           <strong>Apprentice training:</strong> Level 2 and Level 3 courses, AM2 preparation, EPA
-          simulator, flashcards, and 2,000+ practice questions. Ideal for electricians supporting
+          simulator, flashcards, and 20,000+ practice questions. Ideal for electricians supporting
           apprentices or refreshing their own foundational knowledge.
         </p>
         <p>

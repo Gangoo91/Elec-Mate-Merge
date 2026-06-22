@@ -36,7 +36,7 @@ const keyTakeaways = [
   'JIB/ECS graded rates are significantly higher than the legal minimum. JIB Stage 1 apprentice rates typically start around £8.00 to £9.50 per hour depending on the region and employer, making the electrical trade one of the better-paid apprenticeship pathways.',
   'Pay increases each year of the apprenticeship as you gain experience and pass qualifications. By year 3 or 4, apprentice wages typically reach £12.00 to £16.00 per hour, reflecting your growing contribution on site.',
   'After qualifying with the AM2, Level 3 diploma, and 18th Edition, starting salaries for newly qualified electricians range from £25,000 to £32,000 depending on location and employer. Experienced electricians and self-employed sparks can earn £40,000 to £55,000 or more.',
-  'Elec-Mate helps apprentices earn more faster by accelerating qualification. Flashcards with spaced repetition, 2,000+ practice questions, and mock exams help you pass first time and progress through pay grades without delays from resits.',
+  'Elec-Mate helps apprentices earn more faster by accelerating qualification. Flashcards with spaced repetition, 20,000+ practice questions, and mock exams help you pass first time and progress through pay grades without delays from resits.',
 ];
 
 const faqs = [
@@ -476,7 +476,7 @@ const sections = [
           This is the most efficient way to learn and retain the knowledge you need for exams.
         </p>
         <p>
-          <strong>2,000+ practice questions:</strong> The question bank covers Level 2, Level 3,
+          <strong>20,000+ practice questions:</strong> The question bank covers Level 2, Level 3,
           18th Edition, and AM2 content. Each question includes a detailed explanation of the
           correct answer with regulation references. Practise until you are consistently scoring
           above 80%, and you can be confident of passing the real exam.

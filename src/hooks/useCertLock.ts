@@ -1,7 +1,7 @@
 import { useState, useEffect, useCallback } from 'react';
 import { useToast } from '@/hooks/use-toast';
 import { reportCloud } from '@/utils/reportCloud';
-import { createNewVersion } from '@/utils/reportVersioning';
+import { createNewVersion, getVersionNumber } from '@/utils/reportVersioning';
 import { supabase } from '@/integrations/supabase/client';
 
 interface UseCertLockOptions {
@@ -68,16 +68,25 @@ export function useCertLock({
       return;
     }
     let cancelled = false;
-    reportCloud.getLockMeta(reportId, userId).then((meta) => {
+    reportCloud.getLockMeta(reportId, userId).then(async (meta) => {
       if (cancelled || !meta) return;
       setLockedAt(meta.lockedAt);
-      setEditVersion(meta.editVersion);
       // Part of a version chain if it has a parent (it's v2+) or has been
       // superseded (it has children).
-      setHasVersions(!!(meta.parentReportId || meta.supersededBy));
+      const inChain = !!(meta.parentReportId || meta.supersededBy);
+      setHasVersions(inChain);
       if (meta.id) {
         setDbId((prev) => prev || meta.id);
         onDatabaseId?.(meta.id);
+      }
+      // Show the true version-chain position (V1, V2…), NOT reports.edit_version —
+      // that's a per-save optimistic-lock counter, so a cert saved 5× before issue
+      // would wrongly read "Version 5". Non-chain certs are V1 (no label shown).
+      if (inChain && meta.id) {
+        const chainVersion = await getVersionNumber(meta.id);
+        if (!cancelled) setEditVersion(chainVersion);
+      } else {
+        setEditVersion(1);
       }
     });
     return () => {

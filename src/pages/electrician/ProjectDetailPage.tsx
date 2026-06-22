@@ -30,6 +30,9 @@ import {
   Timer,
   Sparkles,
   Receipt,
+  TrendingUp,
+  Package,
+  Clock,
 } from 'lucide-react';
 import { Assistant } from '@/components/business-hub/Assistant';
 import { Button } from '@/components/ui/button';
@@ -67,6 +70,8 @@ import ProjectActionsSheet from '@/components/project-management/ProjectActionsS
 import { buildAndSaveProjectPack, assembleProjectPackServer } from '@/utils/project-pack/projectPack';
 import type { ProjectPackCoverData } from '@/utils/project-pack/projectPackCover';
 import { resolveSchemeLogo } from '@/utils/resolveSchemeLogo';
+import { computeProjectFinancials, revenueSourceLabel } from '@/utils/projectFinancials';
+import { useProjectMaterials } from '@/hooks/useProjectMaterials';
 import { useCompanyProfile } from '@/hooks/useCompanyProfile';
 import { toast } from '@/hooks/use-toast';
 import { ProjectDocumentSheet } from '@/components/project-management/ProjectDocumentSheet';
@@ -228,6 +233,13 @@ const ProjectDetailPage = () => {
     [projectExpenses]
   );
 
+  // ─── Materials used on this project (from quote/invoice line items, ELE-1014) ──
+  const {
+    materials: projectMaterials,
+    totalCost: materialsTotal,
+    source: materialsSource,
+  } = useProjectMaterials(id);
+
   // Split tasks into regular and snagging
   const regularTasks = useMemo(() => tasks.filter((t) => !t.tags.includes('snagging')), [tasks]);
   const snaggingTasks = useMemo(() => tasks.filter((t) => t.tags.includes('snagging')), [tasks]);
@@ -296,6 +308,19 @@ const ProjectDetailPage = () => {
     };
     // Re-fetch when tasks/invoices change in case an invoice was just attached
   }, [id, tasks.length, invoices.length]);
+
+  // ─── Project economics — one source of truth (revenue / cost / profit) ───
+  const financials = useMemo(
+    () =>
+      computeProjectFinancials({
+        invoiceTotal,
+        quoteTotal,
+        estimatedValue: project?.estimated_value,
+        expenses: projectSpend,
+        totalSeconds: timeSummary.totalSec,
+      }),
+    [invoiceTotal, quoteTotal, project?.estimated_value, projectSpend, timeSummary.totalSec]
+  );
 
   // ─── AI assistant — context-aware prompts ────────────────────────
   const [aiOpen, setAiOpen] = useState(false);
@@ -569,6 +594,170 @@ const ProjectDetailPage = () => {
       month: 'short',
     });
   };
+
+  // ─── "Needs attention" flags — derived from already-loaded data ──────
+  const isCompleted = project?.status === 'completed';
+  const hasAcceptedQuote = quotes.some(
+    (q) => q.status === 'approved' || q.acceptance_status === 'accepted'
+  );
+  const awaitingQuote =
+    !hasAcceptedQuote && quotes.some((q) => q.status === 'sent' || q.status === 'pending');
+  const unpaidInvoice = invoices.some((i) => i.payment_status !== 'paid');
+  const hasUnbilledTime = timeSummary.unbilledValue > 0 && !isCompleted;
+  const noCertificate = certificates.length === 0;
+
+  type AttentionFlag = {
+    key: string;
+    label: string;
+    sub: string;
+    icon: typeof PoundSterling;
+    tint: string;
+    onClick: () => void;
+  };
+  const attentionFlags: AttentionFlag[] = [];
+  if (hasUnbilledTime) {
+    attentionFlags.push({
+      key: 'unbilled',
+      label: `${formatGBP(timeSummary.unbilledValue)} unbilled`,
+      sub: `${formatHoursMinutes(timeSummary.unbilledSec)} — draft an invoice`,
+      icon: PoundSterling,
+      tint: 'text-elec-yellow',
+      onClick: askMateToInvoiceUnbilled,
+    });
+  }
+  if (awaitingQuote) {
+    attentionFlags.push({
+      key: 'quote',
+      label: 'Quote awaiting response',
+      sub: 'Chase the customer or ask Mate',
+      icon: FileText,
+      tint: 'text-blue-400',
+      onClick: () => {
+        if (!openSections.has('quotes')) toggleSection('quotes');
+      },
+    });
+  }
+  if (unpaidInvoice) {
+    attentionFlags.push({
+      key: 'invoice',
+      label: 'Invoice unpaid',
+      sub: 'Awaiting payment',
+      icon: Receipt,
+      tint: 'text-orange-300',
+      onClick: () => {
+        if (!openSections.has('invoices')) toggleSection('invoices');
+      },
+    });
+  }
+  if (noCertificate) {
+    attentionFlags.push({
+      key: 'certificate',
+      label: 'No certificate issued yet',
+      sub: 'Link or create the paperwork',
+      icon: Shield,
+      tint: 'text-amber-400',
+      onClick: () => setLinkType('certificate'),
+    });
+  }
+
+  // ─── Timeline — chronological activity assembled client-side ─────────
+  type TimelineEntry = {
+    key: string;
+    label: string;
+    detail?: string;
+    date?: string;
+    tint: string;
+  };
+  const timelineEntries: TimelineEntry[] = [];
+  if (project) {
+    timelineEntries.push({
+      key: 'project-created',
+      label: 'Project created',
+      date: project.created_at,
+      tint: 'bg-elec-yellow',
+    });
+    if (isCompleted) {
+      timelineEntries.push({
+        key: 'project-completed',
+        label: 'Project completed',
+        tint: 'bg-emerald-400',
+      });
+    }
+  }
+  quotes.forEach((q) =>
+    timelineEntries.push({
+      key: `quote-${q.id}`,
+      label: 'Quote raised',
+      detail: q.total ? formatGBP(q.total) : undefined,
+      date: q.created_at,
+      tint: 'bg-emerald-400',
+    })
+  );
+  invoices.forEach((inv) =>
+    timelineEntries.push({
+      key: `invoice-${inv.id}`,
+      label: 'Invoice raised',
+      detail: inv.total ? formatGBP(inv.total) : undefined,
+      date: inv.created_at,
+      tint: 'bg-blue-400',
+    })
+  );
+  certificates.forEach((cert) =>
+    timelineEntries.push({
+      key: `cert-${cert.id}`,
+      label: 'Certificate',
+      detail: cert.report_type?.toUpperCase().replace(/-/g, ' '),
+      date: cert.created_at,
+      tint: 'bg-amber-400',
+    })
+  );
+  siteVisits.forEach((v) =>
+    timelineEntries.push({
+      key: `visit-${v.id}`,
+      label: 'Site visit',
+      detail: v.property_address || undefined,
+      date: v.created_at,
+      tint: 'bg-sky-400',
+    })
+  );
+  rams.forEach((r) =>
+    timelineEntries.push({
+      key: `rams-${r.id}`,
+      label: 'RAMS',
+      detail: r.job_description || undefined,
+      date: r.created_at,
+      tint: 'bg-purple-400',
+    })
+  );
+  projectExpenses.forEach((exp) =>
+    timelineEntries.push({
+      key: `expense-${exp.id}`,
+      label: 'Expense',
+      detail: formatGBPexact(exp.amount),
+      date: exp.date,
+      tint: 'bg-rose-400',
+    })
+  );
+  tasks
+    .filter((t) => t.status === 'done')
+    .forEach((t) =>
+      timelineEntries.push({
+        key: `task-${t.id}`,
+        label: 'Task completed',
+        detail: t.title,
+        date: t.completedAt,
+        tint: 'bg-white/50',
+      })
+    );
+  // Newest first — undated entries (e.g. project completed) float to the top.
+  timelineEntries.sort((a, b) => {
+    const ta = a.date ? new Date(a.date).getTime() : Infinity;
+    const tb = b.date ? new Date(b.date).getTime() : Infinity;
+    return tb - ta;
+  });
+  const TIMELINE_CAP = 20;
+  const visibleTimeline = timelineEntries.slice(0, TIMELINE_CAP);
+  const timelineOverflow = timelineEntries.length - visibleTimeline.length;
 
   // Task toggle handler
   const handleToggleTask = useCallback(
@@ -974,31 +1163,6 @@ const ProjectDetailPage = () => {
           </div>
         </motion.div>
 
-        {/* Smart suggestion — only renders when there's unbilled time worth flagging */}
-        {timeSummary.unbilledSec > 0 && project.status !== 'completed' && (
-          <motion.div
-            variants={itemVariants}
-            className="rounded-xl bg-elec-yellow/[0.08] border border-elec-yellow/30 px-3.5 py-2.5 flex items-center gap-3"
-          >
-            <Sparkles className="h-4 w-4 text-elec-yellow shrink-0" />
-            <div className="flex-1 min-w-0">
-              <p className="text-[13px] font-medium text-white leading-snug">
-                {formatHoursMinutes(timeSummary.unbilledSec)} unbilled — worth{' '}
-                {formatGBP(timeSummary.unbilledValue)}
-              </p>
-              <p className="text-[11.5px] text-white/55 leading-snug">
-                Ask Mate to draft an invoice for these sessions.
-              </p>
-            </div>
-            <Button
-              onClick={askMateToInvoiceUnbilled}
-              className="bg-elec-yellow hover:bg-elec-yellow/90 text-black h-9 px-3 text-[12px] font-semibold rounded-lg shrink-0"
-            >
-              Draft invoice
-            </Button>
-          </motion.div>
-        )}
-
         {/* ── Mate auto-link suggestions — unlinked items matching this job ── */}
         <motion.div variants={itemVariants}>
           <ProjectSuggestedLinks
@@ -1011,6 +1175,165 @@ const ProjectDetailPage = () => {
             linkSiteVisit={async (lid) => { await linkSiteVisit(lid); refresh(); }}
           />
         </motion.div>
+
+        {/* ── Profitability — revenue · materials · gross profit · earned/hr ── */}
+        {(financials.revenueSource !== 'none' ||
+          financials.materials > 0 ||
+          financials.hours > 0) && (
+          <motion.div variants={itemVariants} className={cn(PANEL, 'overflow-hidden')}>
+            <div className="flex items-center justify-between px-4 py-3 sm:px-5 border-b border-white/[0.06]">
+              <div className="flex items-center gap-3">
+                <span className="h-9 w-9 rounded-xl bg-white/[0.05] border border-white/[0.08] flex items-center justify-center">
+                  <TrendingUp className="h-4 w-4 text-emerald-400" />
+                </span>
+                <div>
+                  <p className="text-[14px] font-semibold text-white leading-tight">Profitability</p>
+                  <p className="text-[11px] text-white/55 leading-tight">Revenue less materials</p>
+                </div>
+              </div>
+              <span className="text-[10.5px] font-medium px-2 py-0.5 rounded-full bg-white/[0.06] text-white/65">
+                {revenueSourceLabel(financials.revenueSource)}
+              </span>
+            </div>
+            <div className="grid grid-cols-2 sm:grid-cols-4">
+              <div className="px-3 py-3 sm:px-4">
+                <p className="text-[10px] font-semibold uppercase tracking-[0.16em] text-white/45">
+                  Revenue
+                </p>
+                <p className="mt-1 text-[17px] sm:text-[18px] font-bold text-white tabular-nums leading-none">
+                  {formatGBP(financials.revenue)}
+                </p>
+              </div>
+              <div className="px-3 py-3 sm:px-4 border-l border-white/[0.06]">
+                <p className="text-[10px] font-semibold uppercase tracking-[0.16em] text-white/45">
+                  Materials
+                </p>
+                <p className="mt-1 text-[17px] sm:text-[18px] font-bold text-orange-300 tabular-nums leading-none">
+                  {formatGBPexact(financials.materials)}
+                </p>
+              </div>
+              <div className="px-3 py-3 sm:px-4 border-t sm:border-t-0 sm:border-l border-white/[0.06]">
+                <p className="text-[10px] font-semibold uppercase tracking-[0.16em] text-white/45">
+                  Gross profit
+                </p>
+                <p
+                  className={cn(
+                    'mt-1 text-[17px] sm:text-[18px] font-bold tabular-nums leading-none',
+                    financials.grossProfit >= 0 ? 'text-emerald-400' : 'text-red-400'
+                  )}
+                >
+                  {formatGBP(financials.grossProfit)}
+                </p>
+                <p className="mt-1 text-[11.5px] text-white/45 tabular-nums">
+                  {financials.marginPct != null ? `${financials.marginPct.toFixed(0)}% margin` : '—'}
+                </p>
+              </div>
+              <div className="px-3 py-3 sm:px-4 border-t sm:border-t-0 border-l border-white/[0.06]">
+                <p className="text-[10px] font-semibold uppercase tracking-[0.16em] text-white/45">
+                  Earned / hr
+                </p>
+                <p className="mt-1 text-[17px] sm:text-[18px] font-bold text-elec-yellow tabular-nums leading-none">
+                  {financials.effectiveHourly != null
+                    ? formatGBPexact(financials.effectiveHourly)
+                    : '—'}
+                </p>
+                <p className="mt-1 text-[11.5px] text-white/45 tabular-nums">
+                  {financials.hours > 0
+                    ? `over ${formatHoursMinutes(financials.hours * 3600)}`
+                    : 'no time logged'}
+                </p>
+              </div>
+            </div>
+          </motion.div>
+        )}
+
+        {/* ── Materials used — line items from quotes & invoices (stock link, ELE-1014) ── */}
+        {projectMaterials.length > 0 && (
+          <motion.div variants={itemVariants} className={cn(PANEL, 'overflow-hidden')}>
+            <div className="flex items-center justify-between px-4 py-3 sm:px-5 border-b border-white/[0.06]">
+              <div className="flex items-center gap-3">
+                <span className="h-9 w-9 rounded-xl bg-white/[0.05] border border-white/[0.08] flex items-center justify-center">
+                  <Package className="h-4 w-4 text-cyan-400" />
+                </span>
+                <div>
+                  <p className="text-[14px] font-semibold text-white leading-tight">Materials used</p>
+                  <p className="text-[11px] text-white/55 leading-tight">
+                    From {materialsSource === 'invoices' ? 'invoices' : 'quotes'} ·{' '}
+                    {formatGBPexact(materialsTotal)}
+                  </p>
+                </div>
+              </div>
+              <span className="text-[11px] font-semibold text-white/55 tabular-nums">
+                {projectMaterials.length}
+              </span>
+            </div>
+            <div className="px-3.5 sm:px-4 py-2 divide-y divide-white/[0.05]">
+              {projectMaterials.slice(0, 8).map((m) => (
+                <div key={m.key} className="flex items-center justify-between gap-3 py-2">
+                  <div className="min-w-0 flex items-center gap-2">
+                    {m.fromInventory && (
+                      <span
+                        title="From your stock"
+                        className="h-1.5 w-1.5 rounded-full bg-cyan-400 shrink-0"
+                      />
+                    )}
+                    <span className="text-[13px] text-white/90 truncate">{m.name}</span>
+                  </div>
+                  <div className="flex items-center gap-3 shrink-0 tabular-nums">
+                    <span className="text-[12px] text-white/45">
+                      ×{m.quantity}
+                      {m.unit ? ` ${m.unit}` : ''}
+                    </span>
+                    <span className="text-[13px] font-semibold text-white">
+                      {formatGBPexact(m.totalCost)}
+                    </span>
+                  </div>
+                </div>
+              ))}
+              {projectMaterials.length > 8 && (
+                <p className="text-[11px] text-white/45 pt-2">+{projectMaterials.length - 8} more</p>
+              )}
+            </div>
+          </motion.div>
+        )}
+
+        {/* ── Needs attention — derived flags, only when something applies ── */}
+        {attentionFlags.length > 0 && (
+          <motion.div variants={itemVariants} className={cn(PANEL, 'overflow-hidden')}>
+            <div className="flex items-center gap-3 px-4 py-3 sm:px-5 border-b border-white/[0.06]">
+              <span className="h-9 w-9 rounded-xl bg-elec-yellow/[0.10] border border-elec-yellow/20 flex items-center justify-center">
+                <AlertTriangle className="h-4 w-4 text-elec-yellow" />
+              </span>
+              <div>
+                <p className="text-[14px] font-semibold text-white leading-tight">Needs attention</p>
+                <p className="text-[11px] text-white/55 leading-tight">
+                  {attentionFlags.length} thing{attentionFlags.length === 1 ? '' : 's'} to action
+                </p>
+              </div>
+            </div>
+            <div className="divide-y divide-white/[0.05]">
+              {attentionFlags.map((flag) => (
+                <button
+                  key={flag.key}
+                  type="button"
+                  onClick={flag.onClick}
+                  className="w-full flex items-center gap-3 px-3.5 sm:px-4 py-3 min-h-[56px] text-left touch-manipulation hover:bg-white/[0.03] active:bg-white/[0.04] transition-colors"
+                >
+                  <flag.icon className={cn('h-4 w-4 shrink-0', flag.tint)} />
+                  <span className="flex-1 min-w-0">
+                    <span className="block text-[13.5px] font-medium text-white leading-tight truncate">
+                      {flag.label}
+                    </span>
+                    <span className="block text-[11.5px] text-white/55 leading-tight truncate mt-0.5">
+                      {flag.sub}
+                    </span>
+                  </span>
+                  <ChevronRight className="h-4 w-4 text-white/45 shrink-0" />
+                </button>
+              ))}
+            </div>
+          </motion.div>
+        )}
 
         {/* ── Sections grid — 2-up on md+, cards expand independently ── */}
         <div className="grid md:grid-cols-2 gap-3 items-start">
@@ -2219,6 +2542,80 @@ const ProjectDetailPage = () => {
                     Upload Document
                   </button>
                 </>
+              )}
+            </CollapsibleContent>
+          </Collapsible>
+        </motion.div>
+
+        {/* ── Timeline Section — chronological activity, collapsed by default ── */}
+        <motion.div variants={itemVariants}>
+          <Collapsible className={cn(PANEL, 'overflow-hidden')}
+            open={openSections.has('timeline')}
+            onOpenChange={() => toggleSection('timeline')}
+          >
+            <CollapsibleTrigger asChild>
+              <button className="w-full flex items-center justify-between gap-3 px-3.5 sm:px-4 py-3 min-h-[60px] touch-manipulation hover:bg-white/[0.03] active:bg-white/[0.04] transition-colors group text-left">
+                <div className="flex items-center gap-3">
+                  <span className="h-9 w-9 rounded-xl bg-white/[0.05] border border-white/[0.08] flex items-center justify-center flex-shrink-0"><Clock className="h-4 w-4 text-elec-yellow" /></span>
+                  <span className="min-w-0">
+                    <span className="block text-[14px] font-semibold text-white leading-tight">Timeline</span>
+                    <span className="block text-[11px] text-white/55 truncate leading-tight mt-0.5">{timelineEntries.length > 0 ? `${timelineEntries.length} event${timelineEntries.length === 1 ? '' : 's'} on this job` : 'Activity as it happens'}</span>
+                  </span>
+                </div>
+                <div className="flex items-center gap-2">
+                  {timelineEntries.length > 0 && (
+                    <span className="text-[11px] font-semibold text-white/55 tabular-nums">
+                      {timelineEntries.length}
+                    </span>
+                  )}
+                  {openSections.has('timeline') ? (
+                    <ChevronUp className="h-4 w-4 text-white/45" />
+                  ) : (
+                    <ChevronDown className="h-4 w-4 text-white/45" />
+                  )}
+                </div>
+              </button>
+            </CollapsibleTrigger>
+            <CollapsibleContent className="px-3.5 sm:px-4 pb-3.5 pt-2.5 border-t border-white/[0.06]">
+              {timelineEntries.length === 0 ? (
+                <div className="flex flex-col items-center py-6 text-center">
+                  <Clock className="h-7 w-7 text-white/40 mb-2" />
+                  <p className="text-sm text-white">Nothing has happened on this job yet.</p>
+                </div>
+              ) : (
+                <ol className="space-y-0">
+                  {visibleTimeline.map((e, i) => (
+                    <li key={e.key} className="flex gap-3">
+                      {/* Dot + connecting line */}
+                      <div className="flex flex-col items-center pt-1.5">
+                        <span className={cn('h-2 w-2 rounded-full shrink-0', e.tint)} />
+                        {i < visibleTimeline.length - 1 && (
+                          <span className="w-px flex-1 bg-white/[0.10] mt-1" />
+                        )}
+                      </div>
+                      <div className="min-w-0 flex-1 pb-3">
+                        <div className="flex items-baseline justify-between gap-2">
+                          <p className="text-[13px] font-medium text-white leading-tight truncate">
+                            {e.label}
+                          </p>
+                          <span className="text-[11px] text-white/45 tabular-nums shrink-0">
+                            {formatShortDate(e.date) || '—'}
+                          </span>
+                        </div>
+                        {e.detail && (
+                          <p className="text-[11.5px] text-white/55 leading-snug truncate mt-0.5">
+                            {e.detail}
+                          </p>
+                        )}
+                      </div>
+                    </li>
+                  ))}
+                  {timelineOverflow > 0 && (
+                    <li className="text-[11.5px] text-white/45 pl-5 pt-1">
+                      +{timelineOverflow} earlier
+                    </li>
+                  )}
+                </ol>
               )}
             </CollapsibleContent>
           </Collapsible>

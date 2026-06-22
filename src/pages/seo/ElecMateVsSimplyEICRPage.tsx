@@ -287,7 +287,7 @@ export default function ElecMateVsSimplyEICRPage() {
           icon: GraduationCap,
           title: '46+ Training Courses',
           description:
-            '18th Edition, Level 2/3, AM2, EPA simulator, EV charging, solar PV, fire alarm, and BMS courses. 2,000+ practice questions and flashcards.',
+            '18th Edition, Level 2/3, AM2, EPA simulator, EV charging, solar PV, fire alarm, and BMS courses. 20,000+ practice questions and flashcards.',
         },
       ]}
       uniqueFeaturesHeading="What Only Elec-Mate Offers"
@@ -330,7 +330,7 @@ export default function ElecMateVsSimplyEICRPage() {
         {
           question: 'Does Elec-Mate include training for apprentices?',
           answer:
-            'Yes. Elec-Mate includes an Apprentice Learning Hub with 46+ training courses covering Level 2 and Level 3 Electrical Installation, AM2 assessment preparation, EPA simulator, 18th Edition BS 7671, and specialist topics. The hub features 2,000+ practice questions, flashcards with spaced repetition, mock exams, and progress tracking. SimplyEICR does not include any training features.',
+            'Yes. Elec-Mate includes an Apprentice Learning Hub with 46+ training courses covering Level 2 and Level 3 Electrical Installation, AM2 assessment preparation, EPA simulator, 18th Edition BS 7671, and specialist topics. The hub features 20,000+ practice questions, flashcards with spaced repetition, mock exams, and progress tracking. SimplyEICR does not include any training features.',
         },
       ]}
       relatedPages={[

@@ -576,7 +576,7 @@ const sections = [
         </p>
         <p>
           <strong>Practise with questions:</strong> Do not just read notes — test yourself.
-          Elec-Mate has 2,000+ practice questions starting at Level 2. When you get an answer wrong,
+          Elec-Mate has 20,000+ practice questions starting at Level 2. When you get an answer wrong,
           read the explanation carefully and understand why the correct answer is correct. This
           active testing is far more effective than passive reading.
         </p>
@@ -589,7 +589,7 @@ const sections = [
         </p>
         <SEOAppBridge
           title="Start Learning from Day 1 with Elec-Mate"
-          description="Level 2 courses, flashcards with spaced repetition, 2,000+ practice questions, electrical symbols guide, site diary, and OJT tracker."
+          description="Level 2 courses, flashcards with spaced repetition, 20,000+ practice questions, electrical symbols guide, site diary, and OJT tracker."
           icon={GraduationCap}
         />
       </>

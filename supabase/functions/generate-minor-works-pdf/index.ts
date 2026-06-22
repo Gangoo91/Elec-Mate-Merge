@@ -423,13 +423,22 @@ function transformFormDataForTemplate(formData: any): MinorWorksPayload {
 /**
  * Format date to DD/MM/YYYY
  */
+// Always output DD/MM/YYYY. Value may already be DD/MM/YYYY (app pre-formats it)
+// or ISO YYYY-MM-DD. new Date('01/03/2036') parses as US MM/DD → 3 Jan, swapping
+// the date (ELE-1167). Handle known shapes explicitly; never re-parse DD/MM.
 function formatDate(dateStr: string | undefined): string {
   if (!dateStr) return '';
+  const s = String(dateStr).trim();
+  if (!s) return '';
+  const dmy = s.match(/^(\d{1,2})\/(\d{1,2})\/(\d{4})$/);
+  if (dmy) return `${dmy[1].padStart(2, '0')}/${dmy[2].padStart(2, '0')}/${dmy[3]}`;
+  const iso = s.match(/^(\d{4})-(\d{2})-(\d{2})/);
+  if (iso) return `${iso[3]}/${iso[2]}/${iso[1]}`;
   try {
-    const date = new Date(dateStr);
-    if (isNaN(date.getTime())) return dateStr;
+    const date = new Date(s);
+    if (isNaN(date.getTime())) return s;
     return date.toLocaleDateString('en-GB');
   } catch {
-    return dateStr;
+    return s;
   }
 }

@@ -620,7 +620,7 @@ const sections = [
         </p>
         <p>
           <strong>Apprentice stage:</strong> The Apprentice Hub provides flashcards with spaced
-          repetition, 2,000+ practice questions, mock exams for Level 2 and Level 3, the AM2
+          repetition, 20,000+ practice questions, mock exams for Level 2 and Level 3, the AM2
           Simulator with timed exercises and AI feedback, the EPA Simulator with AI grading for all
           three components, OJT hour tracking towards the 400-hour target, and the portfolio builder
           with AI-powered criteria mapping.

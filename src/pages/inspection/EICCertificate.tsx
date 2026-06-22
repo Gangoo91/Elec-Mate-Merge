@@ -28,7 +28,7 @@ import { trackFeatureUse } from '@/components/ActivityTracker';
 import EICFormHeader from '@/components/inspection/eic/EICFormHeader';
 import EICFormTabs from '@/components/inspection/eic/EICFormTabs';
 import { useEICTabs } from '@/hooks/useEICTabs';
-import { useEICObservations } from '@/hooks/useEICObservations';
+import { useEICObservations, type EICObservation } from '@/hooks/useEICObservations';
 import { useCompanyProfile } from '@/hooks/useCompanyProfile';
 import CertificateGenerationDialog from '@/components/inspection/CertificateGenerationDialog';
 
@@ -117,6 +117,12 @@ export default function EICCertificate() {
         const reportData = await reportCloud.getReportData(id, user.id);
         if (reportData) {
           setFormData((prev: any) => ({ ...getDefaultFormData(), ...prev, ...(reportData as any) }));
+          // Observations are kept in their own hook, not in formData — restore them
+          // so they survive reload and are visible to QS review (ELE-1064).
+          const savedObs = (reportData as { observations?: unknown }).observations;
+          if (Array.isArray(savedObs)) {
+            observationsProps.setObservations(savedObs as EICObservation[]);
+          }
           setSavedReportId(id);
         }
       } catch (err) {
@@ -124,6 +130,7 @@ export default function EICCertificate() {
       }
     };
     loadSavedCert();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [id, isNew]);
 
   // Check if company branding is available
@@ -286,9 +293,12 @@ export default function EICCertificate() {
         return;
       }
 
-      // Prepare data with status
+      // Prepare data with status. Observations live in their own hook (not in
+      // formData), so they must be merged in explicitly — otherwise they are lost
+      // on reload and invisible to QS review (ELE-1064).
       const dataToSave = {
         ...formData,
+        observations: observationsProps.observations,
         status: 'draft',
       };
 

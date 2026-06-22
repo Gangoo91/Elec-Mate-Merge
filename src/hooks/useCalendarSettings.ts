@@ -12,7 +12,9 @@ interface CalendarSettings {
 }
 
 const DEFAULT_SETTINGS: CalendarSettings = {
-  defaultView: 'month',
+  // Planner-first: a new user with no saved preference lands on Week view.
+  // A user's explicitly chosen view is persisted and merged over this default.
+  defaultView: 'week',
   workingHoursStart: 8,
   workingHoursEnd: 18,
   defaultReminderMinutes: 30,

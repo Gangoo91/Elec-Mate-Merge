@@ -19,6 +19,8 @@ export interface CertificateData {
   canExportToEIC?: boolean;
   /** Latest Qualifying Supervisor review state, when the user is on a company team. */
   qsReviewStatus?: 'pending' | 'approved' | 'returned' | 'cancelled';
+  /** Name of the QS who approved/returned the latest review, when present. */
+  qsReviewerName?: string | null;
 }
 
 const QS_CHIP: Record<string, { label: string; className: string }> = {
@@ -182,11 +184,23 @@ export const CertificateCard: React.FC<CertificateCardProps> = ({
           {certificate.qsReviewStatus && QS_CHIP[certificate.qsReviewStatus] && (
             <span
               className={cn(
-                'text-[9px] font-semibold uppercase tracking-[0.14em] border rounded px-1.5 py-0.5',
+                'inline-flex items-center gap-1 max-w-[160px] text-[9px] font-semibold uppercase tracking-[0.14em] border rounded px-1.5 py-0.5',
                 QS_CHIP[certificate.qsReviewStatus].className
               )}
+              title={
+                certificate.qsReviewerName
+                  ? `${QS_CHIP[certificate.qsReviewStatus].label} — ${certificate.qsReviewerName}`
+                  : undefined
+              }
             >
-              {QS_CHIP[certificate.qsReviewStatus].label}
+              <span className="shrink-0">{QS_CHIP[certificate.qsReviewStatus].label}</span>
+              {certificate.qsReviewerName &&
+                (certificate.qsReviewStatus === 'approved' ||
+                  certificate.qsReviewStatus === 'returned') && (
+                  <span className="font-medium normal-case tracking-normal opacity-80 truncate">
+                    · {certificate.qsReviewerName}
+                  </span>
+                )}
             </span>
           )}
           <span className="text-[9px] font-semibold uppercase tracking-[0.14em] text-white/50 border border-white/[0.12] rounded px-1.5 py-0.5">

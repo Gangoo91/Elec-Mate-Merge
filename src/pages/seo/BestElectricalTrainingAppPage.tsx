@@ -50,7 +50,7 @@ export default function BestElectricalTrainingAppPage() {
       heroSubtitle="Whether you are an apprentice studying for your Level 2/3 exams, preparing for the AM2 assessment, or a qualified electrician revising the 18th Edition, having the right training app makes a measurable difference. This guide reviews every major option available to UK electricians in 2026."
       readingTime={14}
       keyTakeaways={[
-        'Elec-Mate offers 46+ courses, 2,000+ practice questions, flashcards with spaced repetition, mock exams, EPA simulator, and AM2 simulator — plus you get certificates, calculators, and business tools in the same subscription.',
+        'Elec-Mate offers 46+ courses, 20,000+ practice questions, flashcards with spaced repetition, mock exams, EPA simulator, and AM2 simulator — plus you get certificates, calculators, and business tools in the same subscription.',
         'IET apps provide authoritative reference material but are designed as reference tools, not structured learning platforms with practice questions and progress tracking.',
         'YouTube is free but lacks structure, practice questions, progress tracking, and exam simulation. It works best as a supplement to structured study.',
         'Standalone quiz apps typically cover a narrow topic and cannot replace a comprehensive training platform with full courses, flashcards, and mock exams.',
@@ -149,7 +149,7 @@ export default function BestElectricalTrainingAppPage() {
             <>
               <p>
                 Elec-Mate includes the most comprehensive training platform of any electrician app
-                in the UK. With 46+ courses, 2,000+ practice questions, flashcards with spaced
+                in the UK. With 46+ courses, 20,000+ practice questions, flashcards with spaced
                 repetition, mock exams, an EPA simulator, and an AM2 simulator, it covers every
                 stage of an electrician's learning journey.
               </p>
@@ -175,7 +175,7 @@ export default function BestElectricalTrainingAppPage() {
               </ul>
               <SEOAppBridge
                 title="46+ Training Courses — Built Into Elec-Mate"
-                description="2,000+ practice questions, flashcards with spaced repetition, mock exams, EPA simulator, AM2 simulator, and AI study assistant."
+                description="20,000+ practice questions, flashcards with spaced repetition, mock exams, EPA simulator, AM2 simulator, and AI study assistant."
                 icon={GraduationCap}
               />
               <p>
@@ -467,7 +467,7 @@ export default function BestElectricalTrainingAppPage() {
         {
           question: 'What is the best training app for electrical apprentices in the UK?',
           answer:
-            'Elec-Mate is the most comprehensive training app for UK electrical apprentices in 2026. It includes 46+ courses covering Level 2 and Level 3 Electrical Installation, 18th Edition (BS 7671:2018+A4:2026), AM2 assessment preparation, and EPA simulator. The platform offers 2,000+ practice questions with detailed explanations, flashcards with spaced repetition for maximum retention, mock exams under timed conditions, and an AI study assistant that can explain any topic with BS 7671 regulation references. All training is included in the standard subscription from £5.99/month — there are no per-course charges. Apprentices also get access to professional tools (16 certificate types, 70+ calculators, AI tools, business management) that they will use throughout their career.',
+            'Elec-Mate is the most comprehensive training app for UK electrical apprentices in 2026. It includes 46+ courses covering Level 2 and Level 3 Electrical Installation, 18th Edition (BS 7671:2018+A4:2026), AM2 assessment preparation, and EPA simulator. The platform offers 20,000+ practice questions with detailed explanations, flashcards with spaced repetition for maximum retention, mock exams under timed conditions, and an AI study assistant that can explain any topic with BS 7671 regulation references. All training is included in the standard subscription from £5.99/month — there are no per-course charges. Apprentices also get access to professional tools (16 certificate types, 70+ calculators, AI tools, business management) that they will use throughout their career.',
         },
         {
           question: 'Is there an app for 18th Edition revision?',
@@ -497,7 +497,7 @@ export default function BestElectricalTrainingAppPage() {
         {
           question: 'How much does electrical training cost?',
           answer:
-            'Training costs vary enormously depending on the delivery method. Traditional classroom courses for the 18th Edition typically cost £200-400 per course. Online courses from training providers range from £100-500+ per course. Individual BS 7671 quiz apps may be free or a few pounds but cover only one topic. Elec-Mate includes 46+ courses, 2,000+ practice questions, flashcards, mock exams, simulators, and an AI study assistant — all for £5.99/month with the standard subscription. For an apprentice who needs Level 2, Level 3, 18th Edition, AM2 preparation, and EPA simulator, Elec-Mate provides all of these for less than the cost of a single traditional course.',
+            'Training costs vary enormously depending on the delivery method. Traditional classroom courses for the 18th Edition typically cost £200-400 per course. Online courses from training providers range from £100-500+ per course. Individual BS 7671 quiz apps may be free or a few pounds but cover only one topic. Elec-Mate includes 46+ courses, 20,000+ practice questions, flashcards, mock exams, simulators, and an AI study assistant — all for £5.99/month with the standard subscription. For an apprentice who needs Level 2, Level 3, 18th Edition, AM2 preparation, and EPA simulator, Elec-Mate provides all of these for less than the cost of a single traditional course.',
         },
       ]}
       relatedPages={[

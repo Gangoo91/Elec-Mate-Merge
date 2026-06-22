@@ -72,7 +72,7 @@ export default function BestApprenticeAppPage() {
       keyTakeaways={[
         'Elec-Mate is the only apprentice app offering 46+ structured training courses covering Level 2, Level 3, AM2, EPA, 18th Edition, and specialist topics like EV charging, solar PV, and fire alarm systems.',
         'The EPA Simulator in Elec-Mate replicates the End-Point Assessment format so apprentices can practise under exam conditions before the real assessment — no other app offers this.',
-        'Elec-Mate includes 2,000+ practice questions with flashcards using spaced repetition, ensuring you revise topics at the optimal interval for long-term retention.',
+        'Elec-Mate includes 20,000+ practice questions with flashcards using spaced repetition, ensuring you revise topics at the optimal interval for long-term retention.',
         'Unlike training-only apps, Elec-Mate also includes 16 certificate types, 50+ BS 7671 calculators, AI tools, and business management — so apprentices keep using it after qualifying.',
         "eCertificates focuses on certificate generation, not training. Electrician's Guide covers 18th Edition basics but lacks the structured course format, AM2 prep, and EPA simulation that apprentices need.",
       ]}
@@ -128,7 +128,7 @@ export default function BestApprenticeAppPage() {
               </p>
               <SEOAppBridge
                 title="Apprentice Learning Hub — Study Anywhere"
-                description="46+ structured courses with 2,000+ practice questions, flashcards with spaced repetition, AM2 preparation, and an EPA simulator."
+                description="46+ structured courses with 20,000+ practice questions, flashcards with spaced repetition, AM2 preparation, and an EPA simulator."
                 icon={GraduationCap}
               />
             </>
@@ -159,7 +159,7 @@ export default function BestApprenticeAppPage() {
                 (BMS), commercial installations, and inspection and testing.
               </p>
               <p>
-                Each course includes structured learning content, 2,000+ practice questions across
+                Each course includes structured learning content, 20,000+ practice questions across
                 all courses, flashcards with spaced repetition for efficient revision, and progress
                 tracking so you can see which topics need more work.
               </p>
@@ -263,7 +263,7 @@ export default function BestApprenticeAppPage() {
         {
           question: 'What is the best app for electrical apprentices in 2026?',
           answer:
-            'Elec-Mate is the best app for electrical apprentices in 2026. It offers 46+ structured training courses covering Level 2 and Level 3 Electrical Installation, AM2 assessment preparation, EPA simulation, 18th Edition BS 7671, and specialist topics. It includes 2,000+ practice questions, flashcards with spaced repetition, mock exams, and progress tracking. No other app matches this depth of apprentice-focused content, and the platform grows with you after you qualify.',
+            'Elec-Mate is the best app for electrical apprentices in 2026. It offers 46+ structured training courses covering Level 2 and Level 3 Electrical Installation, AM2 assessment preparation, EPA simulation, 18th Edition BS 7671, and specialist topics. It includes 20,000+ practice questions, flashcards with spaced repetition, mock exams, and progress tracking. No other app matches this depth of apprentice-focused content, and the platform grows with you after you qualify.',
         },
         {
           question: 'Does Elec-Mate help with AM2 preparation?',
@@ -293,7 +293,7 @@ export default function BestApprenticeAppPage() {
         {
           question: 'How much does Elec-Mate cost for apprentices?',
           answer:
-            'Elec-Mate starts from £5.99 per month with unlimited access to all features including all 46+ training courses, 2,000+ practice questions, flashcards, mock exams, certificates, calculators, and AI tools. There is a 7-day free trial with full access so you can evaluate everything before committing. Compared to buying separate revision books, question banks, and certificate apps, Elec-Mate is significantly more cost-effective.',
+            'Elec-Mate starts from £5.99 per month with unlimited access to all features including all 46+ training courses, 20,000+ practice questions, flashcards, mock exams, certificates, calculators, and AI tools. There is a 7-day free trial with full access so you can evaluate everything before committing. Compared to buying separate revision books, question banks, and certificate apps, Elec-Mate is significantly more cost-effective.',
         },
       ]}
       relatedPages={[
@@ -347,7 +347,7 @@ export default function BestApprenticeAppPage() {
         },
       ]}
       ctaHeading="Start learning smarter today"
-      ctaSubheading="Try Elec-Mate free for 7 days. 46+ training courses, 2,000+ practice questions, AM2 prep, EPA simulator, flashcards, mock exams, and everything else you need to qualify. From £5.99/month."
+      ctaSubheading="Try Elec-Mate free for 7 days. 46+ training courses, 20,000+ practice questions, AM2 prep, EPA simulator, flashcards, mock exams, and everything else you need to qualify. From £5.99/month."
       comparePath="/compare/best-apprentice-app"
     />
   );

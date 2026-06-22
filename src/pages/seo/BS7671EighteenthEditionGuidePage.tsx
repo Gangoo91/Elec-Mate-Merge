@@ -234,7 +234,7 @@ const sections = [
           </div>
         </div>
         <SEOAppBridge
-          title="2,000+ practice questions covering all 7 parts"
+          title="20,000+ practice questions covering all 7 parts"
           description="Elec-Mate's 18th Edition course covers every part of BS 7671 with practice questions mapped to the City and Guilds 2382-22 exam syllabus."
           icon={GraduationCap}
         />
@@ -583,7 +583,7 @@ const relatedPages = [
     href: '/training/18th-edition-course',
     title: '18th Edition Course',
     description:
-      'Study for the C&G 2382-22 exam with 2,000+ practice questions and AI study assistant.',
+      'Study for the C&G 2382-22 exam with 20,000+ practice questions and AI study assistant.',
     icon: GraduationCap,
     category: 'Training',
   },
