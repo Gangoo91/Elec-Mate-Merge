@@ -64,7 +64,7 @@ import { TaskForm } from '@/components/tasks/TaskForm';
 import { TaskDetailSheet } from '@/components/tasks/TaskDetailSheet';
 import { LinkEntitySheet } from '@/components/project-management/LinkEntitySheet';
 import ProjectActionsSheet from '@/components/project-management/ProjectActionsSheet';
-import { buildAndSaveProjectPack } from '@/utils/project-pack/projectPack';
+import { buildAndSaveProjectPack, assembleProjectPackServer } from '@/utils/project-pack/projectPack';
 import type { ProjectPackCoverData } from '@/utils/project-pack/projectPackCover';
 import { resolveSchemeLogo } from '@/utils/resolveSchemeLogo';
 import { useCompanyProfile } from '@/hooks/useCompanyProfile';
@@ -361,19 +361,23 @@ const ProjectDetailPage = () => {
       maximumFractionDigits: 2,
     }).format(n || 0);
 
-  // ─── Export the project handover pack (v1: cover + expenses summary) ─────
+  // ─── Export the project handover pack (cover + expenses + merged docs) ───
   const handleExportPack = async () => {
     if (!project) return;
     toast({
       title: 'Building project pack…',
-      description: 'Putting the cover and expenses together.',
+      description: 'Gathering the cover, expenses and documents.',
     });
+    const fileName = `Project Pack - ${project.title}.pdf`;
+    const brandHex = companyProfile?.accent_color;
+
+    let cover: ProjectPackCoverData;
     try {
       const schemeLogoDataUrl = await resolveSchemeLogo(
         companyProfile?.scheme_logo_data_url,
         companyProfile?.registration_scheme
       );
-      const cover: ProjectPackCoverData = {
+      cover = {
         project: {
           title: project.title,
           type: project.project_type,
@@ -408,24 +412,44 @@ const ProjectDetailPage = () => {
           { label: 'Expenses', count: projectExpenses.length },
         ],
       };
-      await buildAndSaveProjectPack({
-        cover,
-        expenses: projectExpenses,
-        expenseTotal: projectSpend,
-        brandHex: companyProfile?.accent_color,
-        fileName: `Project Pack - ${project.title}.pdf`,
-      });
+    } catch (err) {
+      console.error('[project-pack] cover build failed', err);
+      toast({ title: 'Export failed', description: 'Could not build the pack.', variant: 'destructive' });
+      return;
+    }
+
+    const packArgs = {
+      cover,
+      expenses: projectExpenses,
+      expenseTotal: projectSpend,
+      brandHex,
+    };
+
+    try {
+      const result = await assembleProjectPackServer({ projectId: project.id, fileName, ...packArgs });
       toast({
         title: 'Project pack ready',
-        description: 'Your handover PDF has been saved.',
+        description:
+          result.included.length > 0
+            ? `Merged ${result.included.length} document${result.included.length === 1 ? '' : 's'} after the cover.`
+            : 'Cover + expenses summary.',
       });
     } catch (err) {
-      console.error('[project-pack] export failed', err);
-      toast({
-        title: 'Export failed',
-        description: 'Could not build the project pack. Please try again.',
-        variant: 'destructive',
-      });
+      console.error('[project-pack] server merge failed, falling back to cover-only', err);
+      try {
+        await buildAndSaveProjectPack({ ...packArgs, fileName });
+        toast({
+          title: 'Pack saved (cover only)',
+          description: 'Couldn’t merge the documents — saved the cover & expenses.',
+        });
+      } catch (err2) {
+        console.error('[project-pack] fallback save failed', err2);
+        toast({
+          title: 'Export failed',
+          description: 'Could not build the project pack. Please try again.',
+          variant: 'destructive',
+        });
+      }
     }
   };
 

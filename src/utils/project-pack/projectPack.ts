@@ -1,14 +1,19 @@
 /**
- * Project Pack — assembler (v1).
+ * Project Pack — assembler.
  *
- * v1 builds a single jsPDF document: the branded cover sheet + a project
- * expenses summary, saved/shared via saveOrSharePdf. v2 will additionally
- * merge the project's document PDFs (quote/cert/invoice/RAMS/site-visit) with
- * pdf-lib once their PDF bytes are confirmed retrievable.
+ * The client builds the branded cover + expenses summary (jsPDF). For the full
+ * handover pack we hand those bytes to the `assemble-project-pack` edge
+ * function, which merges the project's linked document PDFs (quotes, certs,
+ * invoices) server-side (no browser CORS) and returns a signed URL.
+ *
+ * buildAndSaveProjectPack() is the cover-only fallback (used if the server
+ * merge fails) — saves the cover + expenses locally.
  */
 import type jsPDF from 'jspdf';
 import autoTable from 'jspdf-autotable';
 import { saveOrSharePdf } from '@/utils/save-or-share-pdf';
+import { openOrDownloadPdf } from '@/utils/pdf-download';
+import { supabase } from '@/integrations/supabase/client';
 import { getBrandColour, addAccentBar, readableTextOn } from '@/utils/pdfBrand';
 import { getCategoryConfig, type Expense } from '@/types/expense';
 import {
@@ -86,21 +91,15 @@ export interface BuildProjectPackOptions {
   expenses: Expense[];
   expenseTotal: number;
   brandHex?: string;
-  fileName: string;
 }
 
-/**
- * Build the v1 project pack (cover + expenses summary) and save/share it.
- * Resolves the company logo + scheme badge to data URLs for the cover.
- */
-export async function buildAndSaveProjectPack(opts: BuildProjectPackOptions): Promise<void> {
+/** Build the cover + expenses-summary jsPDF doc (resolves logo + scheme badge). */
+export async function buildProjectPackDoc(opts: BuildProjectPackOptions): Promise<jsPDF> {
   const [logoDataUrl, schemeLogoDataUrl] = await Promise.all([
     loadImageAsDataUrl(opts.cover.company.logo_url),
     loadImageAsDataUrl(opts.cover.schemeLogoDataUrl),
   ]);
-
   const doc = generateProjectPackCover({ ...opts.cover, logoDataUrl, schemeLogoDataUrl });
-
   if (opts.expenses.length > 0) {
     addExpensesSummaryPage(doc, {
       expenses: opts.expenses,
@@ -108,6 +107,44 @@ export async function buildAndSaveProjectPack(opts: BuildProjectPackOptions): Pr
       brandHex: opts.brandHex,
     });
   }
+  return doc;
+}
 
+/** Cover-only fallback: save the cover + expenses summary locally. */
+export async function buildAndSaveProjectPack(
+  opts: BuildProjectPackOptions & { fileName: string }
+): Promise<void> {
+  const doc = await buildProjectPackDoc(opts);
   await saveOrSharePdf(doc, opts.fileName);
+}
+
+export interface AssembleResult {
+  included: string[];
+  skipped: string[];
+  pageCount?: number;
+}
+
+/**
+ * Full pack: build the cover, then merge the project's linked document PDFs
+ * server-side and open the result. Throws on failure so the caller can fall
+ * back to buildAndSaveProjectPack.
+ */
+export async function assembleProjectPackServer(
+  opts: BuildProjectPackOptions & { projectId: string; fileName: string }
+): Promise<AssembleResult> {
+  const doc = await buildProjectPackDoc(opts);
+  const coverBase64 = doc.output('datauristring'); // data:application/pdf;base64,...
+
+  const { data, error } = await supabase.functions.invoke('assemble-project-pack', {
+    body: { projectId: opts.projectId, coverBase64, fileName: opts.fileName },
+  });
+  if (error) throw error;
+  if (data?.error) throw new Error(data.error);
+  if (data?.url) await openOrDownloadPdf(data.url, opts.fileName);
+
+  return {
+    included: data?.included ?? [],
+    skipped: data?.skipped ?? [],
+    pageCount: data?.pageCount,
+  };
 }
