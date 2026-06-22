@@ -11,6 +11,7 @@ import { useEffect } from 'react';
 import { supabase } from '@/integrations/supabase/client';
 import SignatureInput from '@/components/signature/SignatureInput';
 import QsCertReviewBody from '@/components/employer/sections/QsCertReviewBody';
+import { QsReviewComments } from '@/components/employer/sections/QsReviewComments';
 import { ReportPdfViewer } from '@/components/reports/ReportPdfViewer';
 import {
   ListCard,
@@ -379,6 +380,9 @@ function QsReviewDetailSheet({ item, onClose }: { item: QsQueueItem | null; onCl
                     data={detail.report.data as Record<string, any>}
                   />
                 )}
+
+                {/* Itemised QS comments — targeted notes + electrician replies */}
+                <QsReviewComments reviewId={item.review_id} authorName={reviewerName} />
 
                 {/* Prior decision (non-pending) */}
                 {!isPending && (
