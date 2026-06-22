@@ -442,6 +442,7 @@ function QsReviewDetail({ item, onBack }: { item: QsQueueItem; onBack: () => voi
   const [comments, setComments] = useState('');
   const [mode, setMode] = useState<'view' | 'approve' | 'return'>('view');
   const [pdfOpen, setPdfOpen] = useState(false);
+  const [commentTarget, setCommentTarget] = useState('');
 
   // Pre-fill the reviewer's name from their profile — typing it every
   // approval is needless friction.
@@ -611,11 +612,16 @@ function QsReviewDetail({ item, onBack }: { item: QsQueueItem; onBack: () => voi
               reportType={item.report_type}
               // eslint-disable-next-line @typescript-eslint/no-explicit-any
               data={detail.report.data as Record<string, any>}
+              onAddComment={setCommentTarget}
             />
           )}
 
           {/* Itemised QS comments — targeted notes + electrician replies */}
-          <QsReviewComments reviewId={item.review_id} authorName={reviewerName} />
+          <QsReviewComments
+            reviewId={item.review_id}
+            authorName={reviewerName}
+            prefillTarget={commentTarget}
+          />
 
           {/* Prior decision (non-pending) */}
           {!isPending && (

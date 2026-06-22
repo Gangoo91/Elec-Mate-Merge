@@ -15,6 +15,22 @@ type CertData = Record<string, any>;
 interface QsCertReviewBodyProps {
   reportType: string;
   data: CertData;
+  /** When provided, each observation/circuit shows a "+ comment" affordance
+      that pre-fills the QS comment composer with that item as the target. */
+  onAddComment?: (targetLabel: string) => void;
+}
+
+/** Small inline "comment on this item" button used per observation / circuit. */
+function CommentButton({ onClick }: { onClick: () => void }) {
+  return (
+    <button
+      type="button"
+      onClick={onClick}
+      className="text-[11px] font-medium text-elec-yellow/80 hover:text-elec-yellow touch-manipulation"
+    >
+      + Comment
+    </button>
+  );
 }
 
 const CODE_STYLE: Record<string, string> = {
@@ -74,7 +90,7 @@ function SignatureRow({ label, name, signed }: { label: string; name?: string; s
 
 /* ── Observations ─────────────────────────────────────────────────────────── */
 
-function Observations({ reportType, data }: QsCertReviewBodyProps) {
+function Observations({ reportType, data, onAddComment }: QsCertReviewBodyProps) {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const raw: any[] = Array.isArray(data?.defectObservations)
     ? data.defectObservations
@@ -124,6 +140,11 @@ function Observations({ reportType, data }: QsCertReviewBodyProps) {
                     {obs.recommendation}
                   </p>
                 )}
+                {onAddComment && (
+                  <CommentButton
+                    onClick={() => onAddComment(`Observation ${i + 1}${code ? ` (${code})` : ''}`)}
+                  />
+                )}
               </div>
             );
           })}
@@ -168,7 +189,13 @@ function circuitFlags(c: CertData): string[] {
   return flags;
 }
 
-function CircuitSchedule({ data }: { data: CertData }) {
+function CircuitSchedule({
+  data,
+  onAddComment,
+}: {
+  data: CertData;
+  onAddComment?: (targetLabel: string) => void;
+}) {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const circuits: any[] = Array.isArray(data?.scheduleOfTests) ? data.scheduleOfTests : [];
   const [expanded, setExpanded] = useState(false);
@@ -253,6 +280,17 @@ function CircuitSchedule({ data }: { data: CertData }) {
                               {f}
                             </span>
                           ))}
+                        </div>
+                      )}
+                      {onAddComment && (
+                        <div className="mt-1">
+                          <CommentButton
+                            onClick={() =>
+                              onAddComment(
+                                `Circuit ${asText(c.circuitNumber) || i + 1}${c.circuitDescription ? ` — ${asText(c.circuitDescription)}` : ''}`
+                              )
+                            }
+                          />
                         </div>
                       )}
                     </div>
@@ -725,17 +763,17 @@ function OverallOutcome({ reportType, data }: QsCertReviewBodyProps) {
 
 /* ── Composition ──────────────────────────────────────────────────────────── */
 
-export function QsCertReviewBody({ reportType, data }: QsCertReviewBodyProps) {
+export function QsCertReviewBody({ reportType, data, onAddComment }: QsCertReviewBodyProps) {
   return (
     <div className="space-y-5">
       <InstallationDetails data={data} />
       <SupplyEarthing reportType={reportType} data={data} />
       <ScheduleOfInspections reportType={reportType} data={data} />
-      <Observations reportType={reportType} data={data} />
+      <Observations reportType={reportType} data={data} onAddComment={onAddComment} />
       {reportType === 'minor-works' ? (
         <MinorWorksTests data={data} />
       ) : (
-        <CircuitSchedule data={data} />
+        <CircuitSchedule data={data} onAddComment={onAddComment} />
       )}
       <DistributionBoards reportType={reportType} data={data} />
       <Limitations data={data} />

@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { CheckCircle2, Circle } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { PrimaryButton, Pill, inputClass, textareaClass } from '@/components/employer/editorial';
@@ -14,13 +14,26 @@ import { useQsReviewComments } from '@/hooks/useQsReviewComments';
 export function QsReviewComments({
   reviewId,
   authorName,
+  prefillTarget,
 }: {
   reviewId: string;
   authorName?: string | null;
+  /** Set when the user taps an item in the cert body — pre-fills the target. */
+  prefillTarget?: string;
 }) {
   const { comments, add, resolve } = useQsReviewComments(reviewId);
   const [body, setBody] = useState('');
   const [label, setLabel] = useState('');
+  const bodyRef = useRef<HTMLTextAreaElement>(null);
+
+  // Tapping a circuit/observation in the cert body pre-fills the target here
+  // and brings the composer into view.
+  useEffect(() => {
+    if (!prefillTarget) return;
+    setLabel(prefillTarget);
+    bodyRef.current?.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    bodyRef.current?.focus();
+  }, [prefillTarget]);
 
   const openCount = comments.filter((c) => !c.resolved).length;
 
@@ -104,6 +117,7 @@ export function QsReviewComments({
           className={inputClass}
         />
         <textarea
+          ref={bodyRef}
           value={body}
           onChange={(e) => setBody(e.target.value)}
           placeholder="Add a comment…"

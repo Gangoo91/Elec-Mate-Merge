@@ -220,6 +220,32 @@ export function OverviewSection({ onNavigate, onOpenMate }: OverviewSectionProps
         </div>
       )}
 
+      {attentionItems.length > 0 && (
+        <div className="space-y-4">
+          <div className="flex items-end justify-between gap-4">
+            <div>
+              <Eyebrow>Actions</Eyebrow>
+              <h2 className="mt-1.5 text-xl sm:text-2xl font-semibold text-white tracking-tight">
+                Action required
+              </h2>
+            </div>
+            <Pill tone="orange">{attentionItems.length}</Pill>
+          </div>
+          <div className="space-y-3">
+            {attentionItems.map((item) => (
+              <AlertRow
+                key={item.key}
+                tone={item.tone}
+                title={item.title}
+                subtitle={item.sub}
+                trailing={item.count ? <Pill tone={item.tone}>{item.count}</Pill> : undefined}
+                onClick={() => onNavigate(item.section)}
+              />
+            ))}
+          </div>
+        </div>
+      )}
+
       <div className="space-y-4">
         <SectionHeader eyebrow="Quick Actions" title="Do next" />
         <div className="grid grid-cols-2 sm:grid-cols-4 gap-px bg-white/[0.06] border border-white/[0.06] rounded-2xl overflow-hidden">
@@ -249,32 +275,6 @@ export function OverviewSection({ onNavigate, onOpenMate }: OverviewSectionProps
           />
         </div>
       </div>
-
-      {attentionItems.length > 0 && (
-        <div className="space-y-4">
-          <div className="flex items-end justify-between gap-4">
-            <div>
-              <Eyebrow>Actions</Eyebrow>
-              <h2 className="mt-1.5 text-xl sm:text-2xl font-semibold text-white tracking-tight">
-                Action required
-              </h2>
-            </div>
-            <Pill tone="orange">{attentionItems.length}</Pill>
-          </div>
-          <div className="space-y-3">
-            {attentionItems.map((item) => (
-              <AlertRow
-                key={item.key}
-                tone={item.tone}
-                title={item.title}
-                subtitle={item.sub}
-                trailing={item.count ? <Pill tone={item.tone}>{item.count}</Pill> : undefined}
-                onClick={() => onNavigate(item.section)}
-              />
-            ))}
-          </div>
-        </div>
-      )}
 
       <div className="space-y-4">
         <SectionHeader eyebrow="Your Hubs" title="Jump into your firm" />
