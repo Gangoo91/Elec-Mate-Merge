@@ -75,6 +75,7 @@ import { openOrDownloadPdf } from '@/utils/pdf-download';
 import { storageSetJSONSync } from '@/utils/storage';
 import { copyToClipboard } from '@/utils/clipboard';
 import QsReviewPanel from '@/components/inspection/shared/QsReviewPanel';
+import { useQsReviewStatus } from '@/hooks/useQsReview';
 
 interface EICRSummaryProps {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -100,6 +101,10 @@ const EICRSummary = ({ formData: propFormData, onUpdate: propOnUpdate }: EICRSum
   const queryClient = useQueryClient();
   const navigate = useNavigate();
   const isMobile = useIsMobile();
+
+  // Needed to give a precise error message when the QS gate blocks PDF generation.
+  // 'approved' + hash mismatch = edited after approval; 'pending' = not yet reviewed.
+  const { data: qsReviewStatus } = useQsReviewStatus(effectiveReportId);
   const haptic = useHaptic();
   const { recordPositiveAction, showReviewPrompt, handleRate, handleDismiss } = useAppReview();
   const {
@@ -233,9 +238,16 @@ const EICRSummary = ({ formData: propFormData, onUpdate: propOnUpdate }: EICRSum
     const { checkQsIssueGate, qsGateMessage } = await import('@/utils/qsGate');
     const gate = await checkQsIssueGate(effectiveReportId);
     if (gate.blocked) {
+      // Distinguish: already approved but cert was edited after approval (hash mismatch)
+      // vs. not yet submitted/approved at all.
+      const alreadyApproved = qsReviewStatus?.status === 'approved';
       toast({
-        title: 'QS approval required',
-        description: qsGateMessage(gate.companyName),
+        title: alreadyApproved
+          ? 'Certificate edited after QS approval'
+          : 'QS approval required',
+        description: alreadyApproved
+          ? `${gate.companyName || 'Your company'} requires QS approval and this certificate was modified after it was countersigned. Re-submit for QS review to get a fresh approval.`
+          : qsGateMessage(gate.companyName),
         variant: 'destructive',
       });
       return;
