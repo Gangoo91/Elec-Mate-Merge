@@ -2,12 +2,7 @@ import { useState, useMemo } from 'react';
 import { copyToClipboard } from '@/utils/clipboard';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
-import {
-  Sheet,
-  SheetContent,
-  SheetHeader,
-  SheetTitle,
-} from '@/components/ui/sheet';
+import { Sheet, SheetContent, SheetHeader, SheetTitle } from '@/components/ui/sheet';
 import {
   Select,
   SelectContent,
@@ -152,8 +147,7 @@ export function SignaturesSection() {
         sig.signer_name.toLowerCase().includes(q) ||
         sig.document_type?.toLowerCase().includes(q);
       if (!matchesSearch) return false;
-      if (activeTab === 'awaiting')
-        return ['Pending', 'Sent', 'Viewed'].includes(sig.status);
+      if (activeTab === 'awaiting') return ['Pending', 'Sent', 'Viewed'].includes(sig.status);
       if (activeTab === 'signed') return sig.status === 'Signed';
       if (activeTab === 'declined') return sig.status === 'Declined';
       if (activeTab === 'expired') return sig.status === 'Expired';
@@ -232,11 +226,7 @@ export function SignaturesSection() {
   const headerActions = (
     <>
       <PrimaryButton onClick={() => setShowNewRequest(true)}>Request signature</PrimaryButton>
-      <IconButton
-        onClick={() => refetch()}
-        aria-label="Refresh"
-        disabled={isFetching}
-      >
+      <IconButton onClick={() => refetch()} aria-label="Refresh" disabled={isFetching}>
         <RefreshCw className={`h-4 w-4 ${isFetching ? 'animate-spin' : ''}`} />
       </IconButton>
     </>
@@ -254,7 +244,7 @@ export function SignaturesSection() {
         />
 
         <StatStrip
-          columns={4}
+          columns={3}
           stats={[
             { label: 'Awaiting', value: isLoading ? '—' : counts.awaiting, tone: 'orange' },
             { label: 'Signed 30d', value: isLoading ? '—' : signed30d, tone: 'emerald' },
@@ -337,7 +327,7 @@ export function SignaturesSection() {
                 placeholder="e.g. Electrical Installation Certificate"
                 value={documentTitle}
                 onChange={(e) => setDocumentTitle(e.target.value)}
-className={inputClass}
+                className={inputClass}
               />
             </div>
 
@@ -383,40 +373,34 @@ className={inputClass}
             <Divider label="Signer" />
 
             <div className="space-y-2">
-              <Label className="text-[12px] uppercase tracking-[0.14em] text-white">
-                Name *
-              </Label>
+              <Label className="text-[12px] uppercase tracking-[0.14em] text-white">Name *</Label>
               <Input
                 placeholder="Customer or client name"
                 value={signerName}
                 onChange={(e) => setSignerName(e.target.value)}
-className={inputClass}
+                className={inputClass}
               />
             </div>
 
             <div className="space-y-2">
-              <Label className="text-[12px] uppercase tracking-[0.14em] text-white">
-                Email
-              </Label>
+              <Label className="text-[12px] uppercase tracking-[0.14em] text-white">Email</Label>
               <Input
                 type="email"
                 placeholder="customer@example.com"
                 value={signerEmail}
                 onChange={(e) => setSignerEmail(e.target.value)}
-className={inputClass}
+                className={inputClass}
               />
             </div>
 
             <div className="space-y-2">
-              <Label className="text-[12px] uppercase tracking-[0.14em] text-white">
-                Phone
-              </Label>
+              <Label className="text-[12px] uppercase tracking-[0.14em] text-white">Phone</Label>
               <Input
                 type="tel"
                 placeholder="07xxx xxxxxx"
                 value={signerPhone}
                 onChange={(e) => setSignerPhone(e.target.value)}
-className={inputClass}
+                className={inputClass}
               />
             </div>
 
@@ -428,7 +412,7 @@ className={inputClass}
                 placeholder="Personal message to include"
                 value={message}
                 onChange={(e) => setMessage(e.target.value)}
-className={inputClass}
+                className={inputClass}
               />
             </div>
           </div>
@@ -453,10 +437,7 @@ className={inputClass}
       </Sheet>
 
       {/* Detail sheet */}
-      <Sheet
-        open={!!detailRequest}
-        onOpenChange={(open) => !open && setDetailRequest(null)}
-      >
+      <Sheet open={!!detailRequest} onOpenChange={(open) => !open && setDetailRequest(null)}>
         <SheetContent
           side="bottom"
           className="h-[85vh] p-0 rounded-t-2xl bg-[hsl(0_0%_10%)] border-white/[0.06] flex flex-col"
@@ -484,22 +465,13 @@ className={inputClass}
                       subtitle={detailRequest.signer_email || 'No email on file'}
                     />
                     {detailRequest.signer_phone && (
-                      <ListRow
-                        title="Phone"
-                        subtitle={detailRequest.signer_phone}
-                      />
+                      <ListRow title="Phone" subtitle={detailRequest.signer_phone} />
                     )}
                     {detailRequest.job && (
-                      <ListRow
-                        title="Linked job"
-                        subtitle={detailRequest.job.title}
-                      />
+                      <ListRow title="Linked job" subtitle={detailRequest.job.title} />
                     )}
                     {detailRequest.linked_invoice && (
-                      <ListRow
-                        title="Linked invoice"
-                        subtitle={detailRequest.linked_invoice}
-                      />
+                      <ListRow title="Linked invoice" subtitle={detailRequest.linked_invoice} />
                     )}
                   </ListBody>
                 </ListCard>

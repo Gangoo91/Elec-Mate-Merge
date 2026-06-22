@@ -280,7 +280,7 @@ export function FleetSection() {
       />
 
       <StatStrip
-        columns={4}
+        columns={3}
         stats={[
           { label: 'Fleet', value: isLoading ? '—' : (stats?.total ?? vehicles?.length ?? 0) },
           {
@@ -289,7 +289,7 @@ export function FleetSection() {
             tone: 'orange',
           },
           { label: 'Services due', value: isLoading ? '—' : servicesDue, tone: 'amber' },
-                  ]}
+        ]}
       />
 
       <FilterBar
@@ -410,7 +410,7 @@ export function FleetSection() {
                 placeholder="AB12 CDE"
                 value={registration}
                 onChange={(e) => setRegistration(e.target.value.toUpperCase())}
-className={inputClass}
+                className={inputClass}
               />
             </div>
             <div className="grid grid-cols-2 gap-4">
@@ -420,7 +420,7 @@ className={inputClass}
                   placeholder="Ford"
                   value={make}
                   onChange={(e) => setMake(e.target.value)}
-  className={inputClass}
+                  className={inputClass}
                 />
               </div>
               <div className="space-y-2">
@@ -429,7 +429,7 @@ className={inputClass}
                   placeholder="Transit"
                   value={model}
                   onChange={(e) => setModel(e.target.value)}
-  className={inputClass}
+                  className={inputClass}
                 />
               </div>
             </div>
@@ -440,7 +440,7 @@ className={inputClass}
                   placeholder="White"
                   value={colour}
                   onChange={(e) => setColour(e.target.value)}
-  className={inputClass}
+                  className={inputClass}
                 />
               </div>
               <div className="space-y-2">
@@ -451,7 +451,7 @@ className={inputClass}
                   placeholder="Driver name"
                   value={assignedTo}
                   onChange={(e) => setAssignedTo(e.target.value)}
-  className={inputClass}
+                  className={inputClass}
                 />
               </div>
             </div>
@@ -464,7 +464,7 @@ className={inputClass}
                   type="date"
                   value={motExpiry}
                   onChange={(e) => setMotExpiry(e.target.value)}
-  className={inputClass}
+                  className={inputClass}
                 />
               </div>
               <div className="space-y-2">
@@ -475,7 +475,7 @@ className={inputClass}
                   type="date"
                   value={taxExpiry}
                   onChange={(e) => setTaxExpiry(e.target.value)}
-  className={inputClass}
+                  className={inputClass}
                 />
               </div>
             </div>
@@ -531,7 +531,7 @@ className={inputClass}
                 type="date"
                 value={fuelDate}
                 onChange={(e) => setFuelDate(e.target.value)}
-className={inputClass}
+                className={inputClass}
               />
             </div>
             <div className="grid grid-cols-2 gap-4">
@@ -543,7 +543,7 @@ className={inputClass}
                   placeholder="45.5"
                   value={litres}
                   onChange={(e) => setLitres(e.target.value)}
-  className={inputClass}
+                  className={inputClass}
                 />
               </div>
               <div className="space-y-2">
@@ -556,7 +556,7 @@ className={inputClass}
                   placeholder="75.00"
                   value={cost}
                   onChange={(e) => setCost(e.target.value)}
-  className={inputClass}
+                  className={inputClass}
                 />
               </div>
             </div>
@@ -569,7 +569,7 @@ className={inputClass}
                 placeholder="45000"
                 value={fuelMileage}
                 onChange={(e) => setFuelMileage(e.target.value)}
-className={inputClass}
+                className={inputClass}
               />
             </div>
             <div className="space-y-2">
@@ -578,7 +578,7 @@ className={inputClass}
                 placeholder="BP Garage, High Street"
                 value={fuelLocation}
                 onChange={(e) => setFuelLocation(e.target.value)}
-className={inputClass}
+                className={inputClass}
               />
             </div>
           </div>
@@ -591,11 +591,7 @@ className={inputClass}
               disabled={!fuelVehicleId || !fuelDate || createFuelLog.isPending}
               fullWidth
             >
-              {createFuelLog.isPending ? (
-                <Loader2 className="h-4 w-4 animate-spin" />
-              ) : (
-                'Log fuel'
-              )}
+              {createFuelLog.isPending ? <Loader2 className="h-4 w-4 animate-spin" /> : 'Log fuel'}
             </PrimaryButton>
           </div>
         </SheetContent>
@@ -611,9 +607,7 @@ className={inputClass}
               <SheetHeader className="p-5 border-b border-white/[0.06]">
                 <SheetTitle className="text-white text-[15px] font-semibold flex items-center gap-3">
                   <span>{selectedVehicle.registration}</span>
-                  <Pill tone={statusToTone(selectedVehicle.status)}>
-                    {selectedVehicle.status}
-                  </Pill>
+                  <Pill tone={statusToTone(selectedVehicle.status)}>{selectedVehicle.status}</Pill>
                 </SheetTitle>
               </SheetHeader>
               <div className="flex-1 overflow-y-auto overscroll-contain p-5 space-y-5">
