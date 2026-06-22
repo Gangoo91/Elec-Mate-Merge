@@ -32,6 +32,7 @@ import {
   linkCustomerToReport,
 } from '@/utils/customerHelper';
 import { supabase } from '@/integrations/supabase/client';
+import { useQsReviewStatus } from '@/hooks/useQsReview';
 
 interface EICRFormContextType {
   formData: any;
@@ -121,6 +122,12 @@ export const EICRFormProvider: React.FC<EICRFormProviderProps> = ({
         `/electrician/inspection-testing?section=eicr&reportId=${encodeURIComponent(newReportId)}`
       ),
   });
+
+  // Gate autosave when QS has approved this cert — the approval stamps a content
+  // hash (md5(data::text)); any subsequent autosave would change that hash and
+  // cause is_qs_issue_blocked to return true even though status IS 'approved'.
+  const { data: qsReviewForGate } = useQsReviewStatus(currentReportId || undefined);
+  const isQsApproved = qsReviewForGate?.status === 'approved';
 
   // Capture customer data from navigation state
   const customerIdFromNav = location.state?.customerId;
@@ -372,7 +379,9 @@ export const EICRFormProvider: React.FC<EICRFormProviderProps> = ({
     reportType: 'eicr',
     data: formData,
     // Locked certificates never autosave — they are immutable records.
-    enabled: !isLocked,
+    // QS-approved certificates also must not autosave: approval stamps a content
+    // hash and any subsequent write would invalidate it, silently blocking PDF generation.
+    enabled: !isLocked && !isQsApproved,
     customerId: customerIdFromNav,
     onReportCreated: handleReportCreated,
     // Gate autosave while the report is loading from cloud — prevents the blank
