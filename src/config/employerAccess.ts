@@ -29,11 +29,11 @@ type EmployerAccessProfile =
  * Passes on: employer tier, employer role, any admin, or allowlisted email.
  */
 export function isEmployerUser(profile: EmployerAccessProfile, email?: string | null): boolean {
-  if (
-    profile?.subscription_tier === 'employer' ||
-    profile?.role === 'employer' ||
-    !!profile?.admin_role
-  ) {
+  // Case-insensitive + prefix match so legacy 'Employer' and annual
+  // 'employer_yearly' both pass (the webhook normally writes lowercase).
+  const tier = (profile?.subscription_tier ?? '').toLowerCase();
+  const role = (profile?.role ?? '').toLowerCase();
+  if (tier.startsWith('employer') || role === 'employer' || !!profile?.admin_role) {
     return true;
   }
   return !!email && EMPLOYER_ALLOWED_EMAILS.includes(email.toLowerCase());

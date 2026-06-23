@@ -134,7 +134,7 @@ export const getActiveEmployees = async (): Promise<Employee[]> => {
     .from('employer_employees')
     .select('*')
     .eq('employer_id', user.id)
-    .eq('status', 'Active')
+    .eq('status', 'active')
     .order('name');
 
   if (error) {

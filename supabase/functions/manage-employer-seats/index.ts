@@ -64,7 +64,12 @@ Deno.serve(async (req) => {
       .select('stripe_customer_id, subscription_tier')
       .eq('id', user.id)
       .single();
-    if (!profile?.stripe_customer_id || profile.subscription_tier !== 'employer') {
+    // Case-insensitive + prefix so annual ('employer_yearly') and legacy
+    // 'Employer' tiers also sync seats.
+    if (
+      !profile?.stripe_customer_id ||
+      !(profile.subscription_tier ?? '').toLowerCase().startsWith('employer')
+    ) {
       return new Response(JSON.stringify({ success: true, status: 'no_employer_subscription' }), {
         headers: { ...corsHeaders, 'Content-Type': 'application/json' },
       });
