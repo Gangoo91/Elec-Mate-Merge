@@ -65,7 +65,7 @@ const CertLockBar: React.FC<CertLockBarProps> = ({
         <Button
           type="button"
           variant="ghost"
-          className="h-10 gap-1.5 flex-shrink-0 text-white/70 hover:text-white hover:bg-white/10 touch-manipulation"
+          className="h-11 flex-1 sm:flex-initial gap-1.5 bg-white/[0.04] text-white/70 hover:text-white hover:bg-white/10 touch-manipulation"
         >
           <History className="h-4 w-4" />
           History
@@ -77,7 +77,7 @@ const CertLockBar: React.FC<CertLockBarProps> = ({
   if (isLocked) {
     return (
       <div className="px-4 pt-3">
-        <div className="rounded-xl border border-emerald-500/30 bg-emerald-500/[0.07] p-3 sm:p-4">
+        <div className="rounded-xl border border-emerald-500/30 bg-emerald-500/[0.07] p-4">
           <div className="flex items-start gap-3">
             <div className="flex-shrink-0 h-9 w-9 rounded-lg bg-emerald-500/15 flex items-center justify-center">
               <Lock className="h-4 w-4 text-emerald-400" />
@@ -87,34 +87,34 @@ const CertLockBar: React.FC<CertLockBarProps> = ({
                 Issued &amp; locked{editVersion > 1 ? ` · Version ${editVersion}` : ''}
               </p>
               <p className="text-xs text-white/60 mt-0.5 leading-relaxed">
-                This certificate is read-only
-                {lockedAt ? ` — issued ${formatLockedDate(lockedAt)}` : ''}. To make changes, create
-                a new version.
+                This certificate is final and read-only
+                {lockedAt ? ` — issued ${formatLockedDate(lockedAt)}` : ''}. Tap Amend to make
+                changes in a new version.
               </p>
             </div>
-            <div className="flex items-center gap-1 flex-shrink-0">
-              {databaseId && (
-                <Button
-                  type="button"
-                  variant="ghost"
-                  onClick={() => setPdfOpen(true)}
-                  className="h-10 gap-1.5 text-white/70 hover:text-white hover:bg-white/10 touch-manipulation"
-                >
-                  <Download className="h-4 w-4" />
-                  PDF
-                </Button>
-              )}
-              {historySheet}
+          </div>
+          <div className="mt-3 flex flex-wrap gap-2">
+            {databaseId && (
               <Button
                 type="button"
-                variant="outline"
-                onClick={onAmend}
-                className="h-10 gap-1.5 border-emerald-500/30 text-emerald-300 hover:bg-emerald-500/10 touch-manipulation"
+                variant="ghost"
+                onClick={() => setPdfOpen(true)}
+                className="h-11 flex-1 sm:flex-initial gap-1.5 bg-white/[0.04] text-white/80 hover:text-white hover:bg-white/10 touch-manipulation"
               >
-                <FilePlus2 className="h-4 w-4" />
-                Amend
+                <Download className="h-4 w-4" />
+                PDF
               </Button>
-            </div>
+            )}
+            {historySheet}
+            <Button
+              type="button"
+              variant="outline"
+              onClick={onAmend}
+              className="h-11 flex-1 sm:flex-initial gap-1.5 border-emerald-500/30 text-emerald-300 hover:bg-emerald-500/10 touch-manipulation"
+            >
+              <FilePlus2 className="h-4 w-4" />
+              Amend
+            </Button>
           </div>
         </div>
         {pdfViewer}
@@ -125,29 +125,29 @@ const CertLockBar: React.FC<CertLockBarProps> = ({
   if (canIssue) {
     return (
       <div className="px-4 pt-3">
-        <div className="rounded-xl border border-elec-yellow/30 bg-gradient-to-br from-elec-yellow/[0.08] to-amber-500/[0.03] p-3 sm:p-4">
+        <div className="rounded-xl border border-white/[0.08] bg-white/[0.03] p-4">
           <div className="flex items-start gap-3">
-            <div className="flex-shrink-0 h-9 w-9 rounded-lg bg-elec-yellow/15 flex items-center justify-center">
+            <div className="flex-shrink-0 h-9 w-9 rounded-lg bg-elec-yellow/10 flex items-center justify-center">
               <ShieldCheck className="h-4 w-4 text-elec-yellow" />
             </div>
             <div className="flex-1 min-w-0">
               <p className="text-sm font-semibold text-white">Ready to issue?</p>
-              <p className="text-xs text-white/60 mt-0.5 leading-relaxed">
-                Lock this certificate to mark it as final and issued. It becomes read-only — any
-                later change creates a new version.
+              <p className="text-xs text-white/55 mt-1 leading-relaxed">
+                Lock the certificate to mark it final &amp; issued. It becomes read-only — any later
+                change creates a new version.
               </p>
             </div>
-            <div className="flex items-center gap-1 flex-shrink-0">
-              {historySheet}
-              <Button
-                type="button"
-                onClick={onLock}
-                className="h-10 gap-1.5 bg-elec-yellow/15 border border-elec-yellow/40 text-elec-yellow hover:bg-elec-yellow/20 font-semibold touch-manipulation"
-              >
-                <Lock className="h-4 w-4" />
-                Issue &amp; lock
-              </Button>
-            </div>
+          </div>
+          <div className="mt-3 flex flex-wrap gap-2">
+            {historySheet}
+            <Button
+              type="button"
+              onClick={onLock}
+              className="h-11 flex-1 sm:flex-initial gap-1.5 bg-elec-yellow text-black hover:bg-elec-yellow/90 font-semibold touch-manipulation"
+            >
+              <Lock className="h-4 w-4" />
+              Issue &amp; lock
+            </Button>
           </div>
         </div>
       </div>

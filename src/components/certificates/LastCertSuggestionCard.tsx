@@ -36,22 +36,23 @@ const LastCertSuggestionCard: React.FC<LastCertSuggestionCardProps> = ({
   const certTypeLabel = CERT_LABEL[suggestion.certType] || suggestion.certType;
 
   return (
-    <div className="rounded-lg border border-elec-yellow/30 bg-gradient-to-br from-elec-yellow/[0.06] to-amber-600/[0.03] p-3">
+    <div className="rounded-xl border border-white/[0.08] bg-white/[0.03] p-4">
       <div className="flex items-start gap-3">
-        <div className="mt-0.5 h-8 w-8 rounded-full bg-elec-yellow/15 border border-elec-yellow/30 flex items-center justify-center flex-shrink-0">
+        <div className="mt-0.5 h-9 w-9 rounded-lg bg-elec-yellow/10 flex items-center justify-center flex-shrink-0">
           <Clock className="h-4 w-4 text-elec-yellow" />
         </div>
         <div className="flex-1 min-w-0">
-          <p className="text-xs text-white font-medium">
-            Use details from your last {certTypeLabel} here?
+          <p className="text-sm font-semibold text-white">
+            Reuse details from your last {certTypeLabel}?
           </p>
-          <p className="text-[10px] text-white/60 mt-0.5">
-            {formatDate(suggestion.date)} — copies {fieldCount} field{fieldCount === 1 ? '' : 's'}{' '}
-            (supply, earthing, BS amendment). You can edit any of them after.
+          <p className="text-xs text-white/55 mt-1 leading-relaxed">
+            From {formatDate(suggestion.date)} — copies {fieldCount} field
+            {fieldCount === 1 ? '' : 's'} (supply, earthing, BS amendment). You can edit anything
+            afterwards.
           </p>
         </div>
       </div>
-      <div className="grid grid-cols-2 gap-2 mt-3">
+      <div className="mt-3 flex gap-2">
         <button
           type="button"
           onClick={() => {
@@ -59,13 +60,13 @@ const LastCertSuggestionCard: React.FC<LastCertSuggestionCardProps> = ({
             onApply();
           }}
           className={cn(
-            'h-10 rounded-lg text-xs font-semibold transition-all touch-manipulation active:scale-[0.98]',
-            'bg-elec-yellow/20 border border-elec-yellow/40 text-elec-yellow',
+            'h-11 flex-1 rounded-lg text-sm font-semibold transition-all touch-manipulation active:scale-[0.98]',
+            'bg-elec-yellow text-black hover:bg-elec-yellow/90',
             'flex items-center justify-center gap-1.5'
           )}
         >
-          <Check className="h-3.5 w-3.5" />
-          Copy
+          <Check className="h-4 w-4" />
+          Copy details
         </button>
         <button
           type="button"
@@ -74,12 +75,12 @@ const LastCertSuggestionCard: React.FC<LastCertSuggestionCardProps> = ({
             onDismiss();
           }}
           className={cn(
-            'h-10 rounded-lg text-xs font-medium transition-all touch-manipulation active:scale-[0.98]',
-            'bg-white/[0.05] border border-white/[0.08] text-white',
+            'h-11 px-4 rounded-lg text-sm font-medium transition-all touch-manipulation active:scale-[0.98]',
+            'bg-white/[0.05] border border-white/[0.1] text-white/80',
             'flex items-center justify-center gap-1.5'
           )}
         >
-          <X className="h-3.5 w-3.5" />
+          <X className="h-4 w-4" />
           No thanks
         </button>
       </div>

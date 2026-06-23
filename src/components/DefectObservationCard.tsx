@@ -264,14 +264,45 @@ const DefectObservationCard = ({
           </div>
         )}
 
-        {/* BS 7671 References (read-only, populated by AI) */}
+        {/* BS 7671 References (read-only, populated by AI). Rendered as a clean
+            list — reg number as a chip, the clause text as readable prose — so it
+            never reads as a wall of monospace text (ELE-1188). */}
         {defect.regulation && (
-          <div className="rounded-xl p-3 border border-white/10 bg-white/[0.03]">
-            <div className="flex items-center gap-1.5 mb-2">
+          <div className="rounded-xl p-3.5 border border-white/[0.08] bg-white/[0.03]">
+            <div className="flex items-center gap-1.5 mb-2.5">
               <BookOpen className="h-3.5 w-3.5 text-elec-yellow" />
-              <span className="text-xs font-semibold text-white">BS 7671 References</span>
+              <span className="text-xs font-semibold text-white">BS 7671 references</span>
             </div>
-            <p className="text-xs text-white font-mono leading-relaxed">{defect.regulation}</p>
+            <div className="space-y-2">
+              {defect.regulation
+                .split(';')
+                .map((ref) => ref.trim())
+                .filter(Boolean)
+                .map((ref, i) => {
+                  const idx = ref.indexOf(':');
+                  const num = idx > -1 ? ref.slice(0, idx).trim() : ref;
+                  const title = idx > -1 ? ref.slice(idx + 1).trim() : '';
+                  // Only treat the prefix as a reg-number chip when it looks like
+                  // one — otherwise (messy AI prose) render it all as readable text.
+                  const isRegNumber = idx > -1 && num.length <= 22;
+                  return (
+                    <div key={i} className="flex gap-2">
+                      {isRegNumber ? (
+                        <>
+                          <span className="shrink-0 h-fit font-mono text-[11px] text-elec-yellow bg-elec-yellow/10 border border-elec-yellow/20 rounded px-1.5 py-0.5">
+                            {num}
+                          </span>
+                          {title && (
+                            <span className="text-xs text-white/70 leading-relaxed">{title}</span>
+                          )}
+                        </>
+                      ) : (
+                        <span className="text-xs text-white/70 leading-relaxed">{ref}</span>
+                      )}
+                    </div>
+                  );
+                })}
+            </div>
           </div>
         )}
 
@@ -279,7 +310,7 @@ const DefectObservationCard = ({
             observation, recommendation and regulation references. Always shown
             (when codeable) so inspectors know it's there. */}
         {defect.defectCode !== 'N/A' && (
-          <div className="rounded-xl border border-elec-yellow/25 bg-gradient-to-br from-elec-yellow/[0.07] to-amber-500/[0.03] p-3">
+          <div className="rounded-xl border border-white/[0.08] bg-white/[0.03] p-3.5">
             <Button
               type="button"
               onClick={async () => {
@@ -292,17 +323,17 @@ const DefectObservationCard = ({
               }}
               disabled={isEnhancing || defect.description.trim().length < 5}
               variant="ghost"
-              className="h-12 w-full gap-2 bg-elec-yellow/10 border border-elec-yellow/40 text-elec-yellow font-bold
-                         hover:bg-elec-yellow/15 hover:text-elec-yellow touch-manipulation active:scale-[0.99]
-                         disabled:opacity-100 disabled:bg-white/[0.03] disabled:border-white/10 disabled:text-white/40"
+              className="h-12 w-full gap-2 bg-elec-yellow text-black font-semibold
+                         hover:bg-elec-yellow/90 hover:text-black touch-manipulation active:scale-[0.99]
+                         disabled:opacity-100 disabled:bg-white/[0.04] disabled:text-white/40"
             >
               <Sparkles className="h-4 w-4" />
-              {isEnhancing ? 'AI is writing…' : 'AI Assist — write this observation for me'}
+              {isEnhancing ? 'AI is writing…' : 'Write this observation with AI'}
             </Button>
-            <p className="text-[10px] text-white/45 mt-2 text-center leading-relaxed">
+            <p className="text-xs text-white/45 mt-2.5 text-center leading-relaxed">
               {defect.description.trim().length < 5
-                ? 'Jot a few words in Observation above (e.g. “gas bonding missing”) — AI writes the full BS 7671 wording, recommendation & reg refs.'
-                : 'AI will draft the full observation, recommendation and BS 7671 references — review and accept.'}
+                ? 'Jot a few words in Observation above (e.g. “gas bonding missing”) — AI writes the full BS 7671 wording, recommendation &amp; reg refs.'
+                : 'AI drafts the full observation, recommendation and BS 7671 references — review and accept.'}
             </p>
           </div>
         )}

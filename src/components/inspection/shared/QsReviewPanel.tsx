@@ -2,10 +2,11 @@ import React, { useState, useEffect } from 'react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
-import { ShieldCheck, Clock, Loader2, RotateCcw, PenLine } from 'lucide-react';
+import { ShieldCheck, Clock, Loader2, RotateCcw, PenLine, MessageSquare } from 'lucide-react';
 import { useToast } from '@/hooks/use-toast';
 import { useHaptic } from '@/hooks/useHaptic';
 import SignatureInput from '@/components/signature/SignatureInput';
+import { Sheet, SheetContent, SheetHeader, SheetTitle } from '@/components/ui/sheet';
 import { supabase } from '@/integrations/supabase/client';
 import {
   useQsTeamContext,
@@ -15,6 +16,7 @@ import {
   type QsReviewableType,
 } from '@/hooks/useQsReview';
 import { useApproveQsReview } from '@/hooks/useQsReviewQueue';
+import { QsReviewComments } from '@/components/employer/sections/QsReviewComments';
 
 interface QsReviewPanelProps {
   reportId: string | undefined;
@@ -38,6 +40,8 @@ const QsReviewPanel: React.FC<QsReviewPanelProps> = ({ reportId, reportType, onB
   const approveMutation = useApproveQsReview();
   const [note, setNote] = useState('');
   const [showNote, setShowNote] = useState(false);
+  const [myName, setMyName] = useState('');
+  const [commentsOpen, setCommentsOpen] = useState(false);
 
   // Self sign-off (one-tap) — for a QS who may countersign their OWN certs
   // (declared owner-QS or designated principal QS). am_i_principal_qs comes from
@@ -47,8 +51,9 @@ const QsReviewPanel: React.FC<QsReviewPanelProps> = ({ reportId, reportType, onB
   const [signoffSig, setSignoffSig] = useState<string | null>(null);
   const [signoffName, setSignoffName] = useState('');
 
+  // The signed-in user's name — used to attribute their replies on QS comments
+  // (ELE-1185) and to prefill the self-signoff name.
   useEffect(() => {
-    if (!canSelfSignoff) return;
     (async () => {
       const {
         data: { user },
@@ -59,9 +64,12 @@ const QsReviewPanel: React.FC<QsReviewPanelProps> = ({ reportId, reportType, onB
         .select('full_name')
         .eq('id', user.id)
         .maybeSingle();
-      if (data?.full_name) setSignoffName((prev) => prev || data.full_name);
+      if (data?.full_name) {
+        setMyName(data.full_name);
+        setSignoffName((prev) => prev || data.full_name);
+      }
     })();
-  }, [canSelfSignoff]);
+  }, []);
 
   if (!isTeamMember || !reportId) return null;
 
@@ -196,31 +204,57 @@ const QsReviewPanel: React.FC<QsReviewPanelProps> = ({ reportId, reportType, onB
               </p>
             )}
           </div>
-          <Button
-            onClick={handleSubmit}
-            disabled={submitMutation.isPending}
-            className="h-11 w-full sm:w-auto touch-manipulation bg-elec-yellow hover:bg-elec-yellow/90 text-black font-medium"
-          >
-            {submitMutation.isPending ? (
-              <Loader2 className="h-4 w-4 mr-2 animate-spin" />
-            ) : (
-              <ShieldCheck className="h-4 w-4 mr-2" />
-            )}
-            Resubmit for review
-          </Button>
+          <div className="flex flex-col sm:flex-row gap-3">
+            <Button
+              variant="outline"
+              onClick={() => {
+                haptic.light();
+                setCommentsOpen(true);
+              }}
+              className="h-11 w-full sm:w-auto touch-manipulation"
+            >
+              <MessageSquare className="h-4 w-4 mr-2" />
+              See comments
+            </Button>
+            <Button
+              onClick={handleSubmit}
+              disabled={submitMutation.isPending}
+              className="h-11 w-full sm:w-auto flex-1 touch-manipulation bg-elec-yellow hover:bg-elec-yellow/90 text-black font-medium"
+            >
+              {submitMutation.isPending ? (
+                <Loader2 className="h-4 w-4 mr-2 animate-spin" />
+              ) : (
+                <ShieldCheck className="h-4 w-4 mr-2" />
+              )}
+              Resubmit for review
+            </Button>
+          </div>
         </div>
       )}
 
       {status === 'approved' && (
-        <div className="flex items-start gap-2 rounded-lg border border-green-500/30 bg-green-500/10 px-3 py-2.5">
-          <ShieldCheck className="h-4 w-4 mt-0.5 shrink-0 text-green-400" />
-          <div className="text-sm text-green-300">
-            Approved and countersigned by {review!.reviewer_name}
-            {review!.reviewed_at
-              ? ` on ${new Date(review!.reviewed_at).toLocaleDateString('en-GB')}`
-              : ''}
-            . The QS signature will appear on the generated PDF.
+        <div className="space-y-3">
+          <div className="flex items-start gap-2 rounded-lg border border-green-500/30 bg-green-500/10 px-3 py-2.5">
+            <ShieldCheck className="h-4 w-4 mt-0.5 shrink-0 text-green-400" />
+            <div className="text-sm text-green-300">
+              Approved and countersigned by {review!.reviewer_name}
+              {review!.reviewed_at
+                ? ` on ${new Date(review!.reviewed_at).toLocaleDateString('en-GB')}`
+                : ''}
+              . The QS signature will appear on the generated PDF.
+            </div>
           </div>
+          <Button
+            variant="outline"
+            onClick={() => {
+              haptic.light();
+              setCommentsOpen(true);
+            }}
+            className="h-11 w-full sm:w-auto touch-manipulation"
+          >
+            <MessageSquare className="h-4 w-4 mr-2" />
+            See comments
+          </Button>
         </div>
       )}
 
@@ -330,6 +364,23 @@ const QsReviewPanel: React.FC<QsReviewPanelProps> = ({ reportId, reportType, onB
             </>
           )}
         </div>
+      )}
+
+      {/* QS itemised comments — read the reviewer's targeted notes and reply (ELE-1185) */}
+      {review?.id && (
+        <Sheet open={commentsOpen} onOpenChange={setCommentsOpen}>
+          <SheetContent
+            side="bottom"
+            className="h-[85vh] p-0 rounded-t-2xl overflow-hidden flex flex-col bg-background"
+          >
+            <SheetHeader className="px-4 pt-4 pb-3 border-b border-white/[0.08] text-left">
+              <SheetTitle className="text-base">Qualifying Supervisor feedback</SheetTitle>
+            </SheetHeader>
+            <div className="flex-1 overflow-y-auto px-4 py-4 pb-[max(1rem,env(safe-area-inset-bottom))]">
+              <QsReviewComments reviewId={review.id} authorName={myName || null} />
+            </div>
+          </SheetContent>
+        </Sheet>
       )}
     </div>
   );
