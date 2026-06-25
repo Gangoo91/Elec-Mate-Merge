@@ -13,25 +13,29 @@ interface R1R2CalculatorProps {
 }
 
 /**
- * R1+R2 Calculator — expected (R1 + R2) from conductor CSA, length and
- * temperature correction. Grounded in BS 7671 Table 9A conductor resistances
- * (mΩ/m at 20 °C); the 1.20 factor corrects 20 °C → 70 °C operating temperature
- * (GN3). See src/utils/r1r2Calculator.ts.
+ * R1+R2 Calculator — expected (R1 + R2) from conductor CSA, length and the test
+ * ambient temperature. Grounded in BS 7671 Table 9A conductor resistances
+ * (mΩ/m at 20 °C), corrected to the test ambient via GN3's 1 + 0.004×(T−20)
+ * factor (= 1.0 at 20 °C). R1+R2 continuity is RECORDED at ambient — the
+ * operating-temperature (×1.20) factor is for Zs, not this value.
+ * See src/utils/r1r2Calculator.ts.
  */
 const R1R2Calculator: React.FC<R1R2CalculatorProps> = ({ result, onUpdate, className }) => {
   const [cableLength, setCableLength] = useState<string>('');
-  const [temperatureCorrection, setTemperatureCorrection] = useState<string>('1.2');
+  const [ambientTemp, setAmbientTemp] = useState<string>('20');
   const [calculation, setCalculation] = useState<R1R2Calculation | null>(null);
 
   useEffect(() => {
     const length = parseFloat(cableLength);
     if (length > 0) {
-      const tempCorrection = parseFloat(temperatureCorrection) || 1.2;
-      setCalculation(analyseR1R2(result, length, tempCorrection));
+      // GN3 test-temperature correction: 1 + 0.004 × (ambient − 20); 1.0 at 20 °C.
+      const amb = parseFloat(ambientTemp);
+      const factor = isFinite(amb) ? 1 + 0.004 * (amb - 20) : 1;
+      setCalculation(analyseR1R2(result, length, factor));
     } else {
       setCalculation(null);
     }
-  }, [cableLength, temperatureCorrection, result]);
+  }, [cableLength, ambientTemp, result]);
 
   const expected = calculation?.expectedR1R2;
   const hasResult = !!calculation && !!expected;
@@ -74,15 +78,15 @@ const R1R2Calculator: React.FC<R1R2CalculatorProps> = ({ result, onUpdate, class
             />
           </div>
           <div className="space-y-1">
-            <label className="text-[11px] font-medium text-white/60">Temp factor</label>
+            <label className="text-[11px] font-medium text-white/60">Test ambient (°C)</label>
             <Input
               type="number"
               inputMode="decimal"
-              value={temperatureCorrection}
-              onChange={(e) => setTemperatureCorrection(e.target.value)}
-              step="0.05"
-              min="1"
-              max="2"
+              value={ambientTemp}
+              onChange={(e) => setAmbientTemp(e.target.value)}
+              step="1"
+              min="0"
+              max="40"
               className="h-10 text-base text-center touch-manipulation bg-white/[0.04] border-white/10 focus:border-elec-yellow focus:ring-elec-yellow/30"
             />
           </div>
@@ -152,7 +156,8 @@ const R1R2Calculator: React.FC<R1R2CalculatorProps> = ({ result, onUpdate, class
         )}
 
         <p className="text-[10px] text-white/35 leading-snug text-center">
-          BS 7671 Table 9A · ×1.20 corrects 20°C → 70°C operating temp (GN3)
+          BS 7671 Table 9A resistances at 20°C, corrected to test ambient (GN3). R1+R2
+          is recorded at ambient — not operating temperature.
         </p>
       </div>
     </div>

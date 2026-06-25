@@ -39,7 +39,10 @@ export const calculateExpectedR1R2 = (
   liveSize: string,
   cpcSize: string | null,
   lengthMeters: number,
-  temperatureCorrection: number = 1.2 // Default 20% increase for operating temperature
+  // Ambient test-temperature correction (GN3: 1 + 0.004×(ambient−20)); 1.0 at
+  // 20°C. R1+R2 continuity is recorded at AMBIENT — NOT the operating-temperature
+  // (~1.20) factor, which applies only to Zs, not the recorded R1+R2.
+  temperatureCorrection: number = 1.0
 ): number => {
   const rLive = resistanceForSize(liveSize);
   // CPC defaults to the line size if not separately specified.
@@ -59,7 +62,7 @@ export const calculateExpectedR1R2 = (
 export const analyseR1R2 = (
   result: TestResult,
   cableLength: number,
-  temperatureCorrection: number = 1.2
+  temperatureCorrection: number = 1.0
 ): R1R2Calculation => {
   const expectedR1R2 = calculateExpectedR1R2(
     result.liveSize,
