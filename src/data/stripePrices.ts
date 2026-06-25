@@ -36,7 +36,7 @@ export const stripePrices = {
     apprentice: 'price_1TKlKK2RKw5t5RAmGVR5EcF9',
     electrician: 'price_1TKlKL2RKw5t5RAmpD8FH7qp',
     business_ai: 'price_1TRGZo2RKw5t5RAmzY50EzaE',
-    employer: 'price_1SlyB82RKw5t5RAmN447YJUW',
+    employer: 'price_1Tm6qA2RKw5t5RAmitPj2yF9',
   },
 };
 

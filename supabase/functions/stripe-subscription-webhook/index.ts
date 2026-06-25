@@ -626,7 +626,8 @@ const PRICE_TO_TIER: Record<string, string> = {
   // Employer - £49.99/month, £499.99/year (Business AI + Team features)
   price_1SlyAT2RKw5t5RAmUmTRGimH: 'employer', // £29.99/month (legacy/inactive — kept for existing subs)
   price_1Tm6eF2RKw5t5RAm0nG7ujWw: 'employer', // £49.99/month (CURRENT employer base)
-  price_1SlyB82RKw5t5RAmN447YJUW: 'employer_yearly', // £299.99/year (current — will become £499.99)
+  price_1SlyB82RKw5t5RAmN447YJUW: 'employer_yearly', // £299.99/year (legacy — kept for existing subs)
+  price_1Tm6qA2RKw5t5RAmitPj2yF9: 'employer_yearly', // £499.99/year (CURRENT employer base annual)
 
   // Founders Offer - £3.99/month (gets Employer access - full access to all areas)
   price_1SPK8c2RKw5t5RAmRGJxXfjc: 'employer', // £3.99/month founders offer (employer access)
