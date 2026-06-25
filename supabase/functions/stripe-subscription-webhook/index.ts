@@ -410,7 +410,12 @@ async function sendPaymentFailedEmail(
 
   const resend = new Resend(resendApiKey);
 
-  const emailHtml = renderDunningEmail({ name, amount, payUrl: hostedInvoiceUrl, tone: 'failed' }).html;
+  const emailHtml = renderDunningEmail({
+    name,
+    amount,
+    payUrl: hostedInvoiceUrl,
+    tone: 'failed',
+  }).html;
 
   try {
     const { data, error } = await resend.emails.send({
@@ -619,7 +624,8 @@ const PRICE_TO_TIER: Record<string, string> = {
   price_1T6DUy2RKw5t5RAmo9HgAukW: 'business_ai_yearly', // £299.99/year (legacy — keep for existing subs)
 
   // Employer - £49.99/month, £499.99/year (Business AI + Team features)
-  price_1SlyAT2RKw5t5RAmUmTRGimH: 'employer', // £29.99/month (current — will become £49.99)
+  price_1SlyAT2RKw5t5RAmUmTRGimH: 'employer', // £29.99/month (legacy/inactive — kept for existing subs)
+  price_1Tm6eF2RKw5t5RAm0nG7ujWw: 'employer', // £49.99/month (CURRENT employer base)
   price_1SlyB82RKw5t5RAmN447YJUW: 'employer_yearly', // £299.99/year (current — will become £499.99)
 
   // Founders Offer - £3.99/month (gets Employer access - full access to all areas)
