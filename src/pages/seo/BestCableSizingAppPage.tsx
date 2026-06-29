@@ -259,7 +259,7 @@ export default function BestCableSizingAppPage() {
           icon: GraduationCap,
           title: '46+ Training Courses',
           description:
-            'Learn the theory behind cable sizing with 18th Edition courses, Appendix 4 tutorials, and correction factor guides. 2,000+ practice questions.',
+            'Learn the theory behind cable sizing with 18th Edition courses, Appendix 4 tutorials, and correction factor guides. 20,000+ practice questions.',
         },
         {
           icon: WifiOff,

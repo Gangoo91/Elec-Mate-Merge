@@ -1,0 +1,229 @@
+/**
+ * assemble-project-pack — server-side merge of a project handover pack.
+ *
+ * The client builds the branded cover + expenses summary (jsPDF) and sends the
+ * bytes here. This function gathers the project's linked document PDFs
+ * (certificates, quotes, invoices), fetches each server-side (no browser CORS),
+ * merges them after the cover with pdf-lib, uploads the result to the private
+ * `pack-documents` bucket, and returns a short-lived signed URL plus a list of
+ * what was included vs skipped.
+ *
+ * v2.1: quote/invoice PDFs live on PDFMonkey's S3 as *signed, expiring* URLs —
+ * when a stored URL no longer fetches, we regenerate it via generate-pdf-monkey
+ * (which accepts the raw DB row) and merge the fresh copy. Certificates are
+ * mostly on Supabase storage (persistent); the few expired PDFMonkey ones are
+ * skipped (cert regeneration is a separate generator). RAMS docs have no
+ * project link and site visits have no PDF, so both stay out.
+ */
+import { createClient } from 'https://esm.sh/@supabase/supabase-js@2.49.4';
+import { PDFDocument } from 'https://esm.sh/pdf-lib@1.17.1';
+
+const corsHeaders = {
+  'Access-Control-Allow-Origin': '*',
+  'Access-Control-Allow-Headers':
+    'authorization, x-client-info, apikey, content-type, x-supabase-timeout, x-request-id',
+};
+
+const json = (body: unknown, status = 200) =>
+  new Response(JSON.stringify(body), {
+    status,
+    headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+  });
+
+const base64ToBytes = (b64: string): Uint8Array => {
+  const clean = b64.includes(',') ? b64.slice(b64.indexOf(',') + 1) : b64;
+  const bin = atob(clean);
+  const out = new Uint8Array(bin.length);
+  for (let i = 0; i < bin.length; i++) out[i] = bin.charCodeAt(i);
+  return out;
+};
+
+type DocType = 'quote' | 'invoice' | 'report';
+interface DocRef {
+  label: string;
+  type: DocType;
+  id: string;
+  url: string | null;
+}
+
+Deno.serve(async (req) => {
+  if (req.method === 'OPTIONS') return new Response('ok', { headers: corsHeaders });
+
+  try {
+    const supabaseUrl = Deno.env.get('SUPABASE_URL')!;
+    const anonKey = Deno.env.get('SUPABASE_ANON_KEY')!;
+    const serviceKey = Deno.env.get('SUPABASE_SERVICE_ROLE_KEY')!;
+
+    // Caller identity (RLS-scoped client just for auth)
+    const authHeader = req.headers.get('Authorization') ?? '';
+    const caller = createClient(supabaseUrl, anonKey, {
+      global: { headers: { Authorization: authHeader } },
+    });
+    const {
+      data: { user },
+    } = await caller.auth.getUser();
+    if (!user) return json({ error: 'Not authenticated' }, 401);
+
+    const { projectId, coverBase64, fileName } = await req.json();
+    if (!projectId || !coverBase64) return json({ error: 'projectId and coverBase64 required' }, 400);
+
+    const svc = createClient(supabaseUrl, serviceKey);
+
+    // Ownership check — the project must belong to the caller.
+    const { data: project, error: projErr } = await svc
+      .from('spark_projects')
+      .select('id, user_id, title')
+      .eq('id', projectId)
+      .single();
+    if (projErr || !project || project.user_id !== user.id) {
+      return json({ error: 'Project not found' }, 404);
+    }
+
+    // Company profile — used to regenerate expired quote/invoice PDFs.
+    const { data: companyProfile } = await svc
+      .from('company_profiles')
+      .select('*')
+      .eq('user_id', user.id)
+      .maybeSingle();
+
+    // ── Gather linked document PDFs (handover order: certs → quotes → invoices) ──
+    const docs: DocRef[] = [];
+
+    const { data: certs } = await svc
+      .from('reports')
+      .select('id, report_type, pdf_url, created_at')
+      .eq('project_id', projectId)
+      .not('pdf_url', 'is', null)
+      .order('created_at', { ascending: true });
+    for (const c of certs ?? []) {
+      docs.push({
+        label: (c.report_type || 'Certificate').toUpperCase().replace(/-/g, ' '),
+        type: 'report',
+        id: c.id,
+        url: c.pdf_url,
+      });
+    }
+
+    const { data: quotes } = await svc
+      .from('quotes')
+      .select('id, quote_number, pdf_url, created_at')
+      .eq('project_id', projectId)
+      .order('created_at', { ascending: true });
+    for (const q of quotes ?? []) {
+      docs.push({
+        label: `Quote ${q.quote_number ? '#' + q.quote_number : ''}`.trim(),
+        type: 'quote',
+        id: q.id,
+        url: q.pdf_url,
+      });
+    }
+
+    const { data: invoices } = await svc
+      .from('invoices')
+      .select('id, invoice_number, pdf_url, created_at')
+      .eq('project_id', projectId)
+      .order('created_at', { ascending: true });
+    for (const inv of invoices ?? []) {
+      docs.push({
+        label: `Invoice ${inv.invoice_number ? '#' + inv.invoice_number : ''}`.trim(),
+        type: 'invoice',
+        id: inv.id,
+        url: inv.pdf_url,
+      });
+    }
+
+    // ── Helpers ──
+    const tryFetchPdf = async (u: string): Promise<Uint8Array | null> => {
+      try {
+        const res = await fetch(u);
+        if (!res.ok) return null;
+        return new Uint8Array(await res.arrayBuffer());
+      } catch {
+        return null;
+      }
+    };
+
+    // Regenerate a quote/invoice PDF via generate-pdf-monkey (accepts the DB row).
+    const regenerate = async (type: DocType, id: string): Promise<string | null> => {
+      if (type === 'report') return null; // certs use a different generator
+      const table = type === 'invoice' ? 'invoices' : 'quotes';
+      const { data: row } = await svc.from(table).select('*').eq('id', id).single();
+      if (!row) return null;
+      const body =
+        type === 'invoice'
+          ? { quote: row, companyProfile, invoice_mode: true }
+          : { quote: row, companyProfile };
+      try {
+        const r = await fetch(`${supabaseUrl}/functions/v1/generate-pdf-monkey`, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${serviceKey}` },
+          body: JSON.stringify(body),
+        });
+        const d = await r.json();
+        return d?.downloadUrl || null;
+      } catch {
+        return null;
+      }
+    };
+
+    // ── Merge: cover first, then each fetchable (or regenerated) doc ──
+    const merged = await PDFDocument.create();
+    const appendPdf = async (bytes: Uint8Array): Promise<boolean> => {
+      try {
+        const src = await PDFDocument.load(bytes, { ignoreEncryption: true });
+        const pages = await merged.copyPages(src, src.getPageIndices());
+        pages.forEach((p) => merged.addPage(p));
+        return true;
+      } catch {
+        return false;
+      }
+    };
+
+    const coverOk = await appendPdf(base64ToBytes(coverBase64));
+    if (!coverOk) return json({ error: 'Invalid cover PDF' }, 400);
+
+    const included: string[] = [];
+    const skipped: string[] = [];
+    const regenerated: string[] = [];
+    for (const doc of docs) {
+      let bytes: Uint8Array | null = doc.url ? await tryFetchPdf(doc.url) : null;
+      if (!bytes && doc.type !== 'report') {
+        const fresh = await regenerate(doc.type, doc.id);
+        if (fresh) {
+          bytes = await tryFetchPdf(fresh);
+          if (bytes) regenerated.push(doc.label);
+        }
+      }
+      if (bytes && (await appendPdf(bytes))) included.push(doc.label);
+      else skipped.push(doc.label);
+    }
+
+    const mergedBytes = await merged.save();
+
+    // ── Upload to the private pack-documents bucket → signed URL ──
+    const safeName = String(fileName || `Project Pack - ${project.title}.pdf`).replace(
+      /[/\\:*?"<>|]/g,
+      '-'
+    );
+    const path = `${user.id}/${projectId}/${Date.now()}-${safeName}`;
+    const { error: upErr } = await svc.storage
+      .from('pack-documents')
+      .upload(path, mergedBytes, { contentType: 'application/pdf', upsert: true });
+    if (upErr) return json({ error: `Upload failed: ${upErr.message}` }, 500);
+
+    const { data: signed, error: signErr } = await svc.storage
+      .from('pack-documents')
+      .createSignedUrl(path, 60 * 60 * 24); // 24h
+    if (signErr || !signed?.signedUrl) return json({ error: 'Could not sign pack URL' }, 500);
+
+    return json({
+      url: signed.signedUrl,
+      included,
+      skipped,
+      regenerated,
+      pageCount: merged.getPageCount(),
+    });
+  } catch (err) {
+    return json({ error: (err as Error)?.message || 'Unexpected error' }, 500);
+  }
+});

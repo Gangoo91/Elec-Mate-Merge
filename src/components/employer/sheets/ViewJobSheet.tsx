@@ -35,6 +35,7 @@ import { useUpdateJob, useDeleteJob, useArchiveJob, useSetJobAsTemplate } from '
 import { useJobAssignments, useRemoveWorkerFromJob } from '@/hooks/useJobAssignments';
 import { useLogJobActivity } from '@/hooks/useJobComments';
 import { Job, JobStatus } from '@/services/jobService';
+import { JobAttentionPanel } from '@/components/employer/sheets/JobAttentionPanel';
 import {
   MapPin,
   Calendar,
@@ -409,6 +410,8 @@ export function ViewJobSheet({ job, open, onOpenChange }: ViewJobSheetProps) {
                   />
                 </Field>
               </FormCard>
+
+              <JobAttentionPanel jobId={job.id} />
 
               <FormCard eyebrow="Status & value">
                 <FormGrid cols={2}>

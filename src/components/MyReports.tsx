@@ -372,6 +372,7 @@ const MyReports: React.FC<MyReportsProps> = ({ onBack, onNavigate, onEditReport 
     id: report.report_id,
     reportType: report.report_type,
     qsReviewStatus: qsReviewMap?.[report.report_id]?.status,
+    qsReviewerName: qsReviewMap?.[report.report_id]?.reviewer_name,
     clientName: report.client_name || undefined,
     installationAddress: report.installation_address || undefined,
     inspectionDate: report.data?.inspectionDate || report.data?.dateOfInspection || undefined,

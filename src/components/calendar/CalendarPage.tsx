@@ -34,6 +34,8 @@ import { useGoogleCalendarSync } from '@/hooks/useGoogleCalendarSync';
 import { toast } from '@/hooks/use-toast';
 import { useCalendarSettings } from '@/hooks/useCalendarSettings';
 import { useTasksForCalendar } from '@/hooks/useTasksForCalendar';
+import { useProjectsForCalendar } from '@/hooks/useProjectsForCalendar';
+import { useSiteVisitsForCalendar } from '@/hooks/useSiteVisitsForCalendar';
 import type {
   CalendarEvent,
   CalendarView,
@@ -123,7 +125,12 @@ const CalendarPageContent = () => {
 
   const { data: events = [], isLoading } = useCalendarEvents(dateFrom, dateTo);
   const { data: taskEvents = [] } = useTasksForCalendar(dateFrom, dateTo);
-  const allEvents = useMemo(() => [...events, ...taskEvents], [events, taskEvents]);
+  const { data: projectEvents = [] } = useProjectsForCalendar(dateFrom, dateTo);
+  const { data: siteVisitEvents = [] } = useSiteVisitsForCalendar(dateFrom, dateTo);
+  const allEvents = useMemo(
+    () => [...events, ...taskEvents, ...projectEvents, ...siteVisitEvents],
+    [events, taskEvents, projectEvents, siteVisitEvents]
+  );
   const createMutation = useCreateCalendarEvent();
   const updateMutation = useUpdateCalendarEvent();
   const deleteMutation = useDeleteCalendarEvent();
@@ -170,11 +177,25 @@ const CalendarPageContent = () => {
     setView('day');
   }, [selectedDate]);
 
-  // Event tap — task events navigate to tasks page
+  // Event tap — task events go to tasks, project events open the project.
   const handleEventTap = useCallback(
     (event: CalendarEvent) => {
       if (event.id.startsWith('task-')) {
         navigate('/electrician/tasks');
+        return;
+      }
+      if (event.id.startsWith('project-')) {
+        // event.job_id holds the project id (see useProjectsForCalendar).
+        if (event.job_id) {
+          navigate(`/electrician/projects/${event.job_id}`);
+        }
+        return;
+      }
+      if (event.id.startsWith('visit-')) {
+        // event.job_id holds the visit id (see useSiteVisitsForCalendar).
+        if (event.job_id) {
+          navigate(`/electrician/site-visit/${event.job_id}`);
+        }
         return;
       }
       setViewingEvent(event);
@@ -293,16 +314,34 @@ const CalendarPageContent = () => {
               </>
             )}
             {view === 'week' && (
-              <CalendarWeekView
-                currentDate={currentDate}
-                events={allEvents}
-                workingHoursStart={settings.workingHoursStart}
-                workingHoursEnd={settings.workingHoursEnd}
-                onEventTap={handleEventTap}
-                onTimeSlotTap={handleTimeSlotTap}
-                onSwipeLeft={goNext}
-                onSwipeRight={goPrevious}
-              />
+              <>
+                <CalendarWeekView
+                  currentDate={currentDate}
+                  events={allEvents}
+                  workingHoursStart={settings.workingHoursStart}
+                  workingHoursEnd={settings.workingHoursEnd}
+                  onEventTap={handleEventTap}
+                  onTimeSlotTap={handleTimeSlotTap}
+                  onSwipeLeft={goNext}
+                  onSwipeRight={goPrevious}
+                />
+                {/* Planner-first Today strip — keeps "what's on today" in view
+                    even when scanning the week grid. */}
+                <div className="mt-4">
+                  <CalendarAgendaStrip
+                    date={agendaDate}
+                    events={allEvents}
+                    onEventTap={handleEventTap}
+                    onAdd={() => {
+                      setNewEventDate(agendaDate);
+                      setNewEventHour(undefined);
+                      setEditingEvent(null);
+                      setEventSheetOpen(true);
+                    }}
+                    onOpenDayView={handleOpenSelectedAsDay}
+                  />
+                </div>
+              </>
             )}
             {view === 'day' && (
               <CalendarDayView

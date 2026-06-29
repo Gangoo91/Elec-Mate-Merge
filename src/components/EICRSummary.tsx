@@ -75,6 +75,7 @@ import { openOrDownloadPdf } from '@/utils/pdf-download';
 import { storageSetJSONSync } from '@/utils/storage';
 import { copyToClipboard } from '@/utils/clipboard';
 import QsReviewPanel from '@/components/inspection/shared/QsReviewPanel';
+import { useQsReviewStatus } from '@/hooks/useQsReview';
 
 interface EICRSummaryProps {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -100,6 +101,10 @@ const EICRSummary = ({ formData: propFormData, onUpdate: propOnUpdate }: EICRSum
   const queryClient = useQueryClient();
   const navigate = useNavigate();
   const isMobile = useIsMobile();
+
+  // Needed to give a precise error message when the QS gate blocks PDF generation.
+  // 'approved' + hash mismatch = edited after approval; 'pending' = not yet reviewed.
+  const { data: qsReviewStatus } = useQsReviewStatus(effectiveReportId);
   const haptic = useHaptic();
   const { recordPositiveAction, showReviewPrompt, handleRate, handleDismiss } = useAppReview();
   const {
@@ -233,9 +238,16 @@ const EICRSummary = ({ formData: propFormData, onUpdate: propOnUpdate }: EICRSum
     const { checkQsIssueGate, qsGateMessage } = await import('@/utils/qsGate');
     const gate = await checkQsIssueGate(effectiveReportId);
     if (gate.blocked) {
+      // Distinguish: already approved but cert was edited after approval (hash mismatch)
+      // vs. not yet submitted/approved at all.
+      const alreadyApproved = qsReviewStatus?.status === 'approved';
       toast({
-        title: 'QS approval required',
-        description: qsGateMessage(gate.companyName),
+        title: alreadyApproved
+          ? 'Certificate edited after QS approval'
+          : 'QS approval required',
+        description: alreadyApproved
+          ? `${gate.companyName || 'Your company'} requires QS approval and this certificate was modified after it was countersigned. Re-submit for QS review to get a fresh approval.`
+          : qsGateMessage(gate.companyName),
         variant: 'destructive',
       });
       return;
@@ -1443,13 +1455,21 @@ const EICRSummary = ({ formData: propFormData, onUpdate: propOnUpdate }: EICRSum
         <div className="space-y-3 px-4">
           <div className="h-[2px] w-full rounded-full bg-gradient-to-r from-elec-yellow/40 to-elec-yellow/10" />
 
+          {/*
+            A QS-approved cert is complete by definition — don't grey on an
+            in-editor completeness recompute that can transiently fail and leave
+            an approved cert un-generatable (ELE-1183). Tapping an approved cert
+            then either generates or surfaces the 'edited after approval' toast.
+          */}
           <Button
             className="w-full h-11 bg-elec-yellow text-black hover:bg-elec-yellow/90 font-semibold text-sm rounded-lg transition-all active:scale-[0.98] touch-manipulation"
             onClick={() => {
               haptic.light();
               handleGenerateCertificate();
             }}
-            disabled={!isFormComplete() || isGenerating}
+            disabled={
+              (!isFormComplete() && qsReviewStatus?.status !== 'approved') || isGenerating
+            }
           >
             {isGenerating ? 'Generating...' : 'Generate PDF'}
           </Button>
@@ -1458,7 +1478,7 @@ const EICRSummary = ({ formData: propFormData, onUpdate: propOnUpdate }: EICRSum
             <button
               className="h-11 rounded-lg bg-white/[0.08] border border-white/[0.12] text-xs font-semibold text-white touch-manipulation active:scale-[0.98] disabled:opacity-40"
               onClick={() => { haptic.light(); setShowEmailDialog(true); }}
-              disabled={!isFormComplete()}
+              disabled={!isFormComplete() && qsReviewStatus?.status !== 'approved'}
             >
               Email
             </button>

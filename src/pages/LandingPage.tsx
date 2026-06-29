@@ -12,6 +12,7 @@ import { trackLandingCtaClicked } from '@/lib/analytics-events';
 import { usePublicStats } from '@/hooks/usePublicStats';
 import { useUserCount } from '@/hooks/useUserCount';
 import { LeadMagnetSection } from '@/components/landing/LeadMagnetSection';
+import { WaitlistSection } from '@/components/landing/WaitlistSection';
 import { ExitIntentModal } from '@/components/landing/ExitIntentModal';
 import {
   Eyebrow,
@@ -73,7 +74,7 @@ const workflowSteps: {
   {
     eyebrow: 'TRAIN',
     title: 'L2/L3 · AM2 · EPA',
-    description: '46+ courses, 6,000+ questions, EPA simulator, digital portfolio.',
+    description: '46+ courses, 20,000+ questions, EPA simulator, digital portfolio.',
     replaces: 'Logic4Training',
   },
 ];
@@ -94,7 +95,7 @@ const getAudienceCards = (
     title: 'Pass AM2 first time.',
     body: 'The complete path from Level 2 to qualified — theory courses, the practical simulator, OJT hours, digital portfolio and an AI mentor that knows BS 7671. Built around the AM2.',
     features: [
-      '46+ courses · 700+ lessons · 6,000+ exam questions (L2 · L3 · AM2)',
+      '46+ courses · 700+ lessons · 20,000+ exam questions (L2 · L3 · AM2)',
       'AM2 Testing Simulator — Megger MFT dial + EIC schedule sign-off',
       'Digital portfolio · OJT hours · tutor sign-off · AC coverage',
       '"Ask Dave" AI mentor · 60+ on-job calculators · flashcards',
@@ -268,7 +269,7 @@ const featurePillars: {
     body: 'Courses, mock exams, the AM2 simulator, OJT hours and a digital portfolio — plus an AI mentor on tap. Every step from Level 2 to qualified.',
     bullets: [
       'AM2 Testing Simulator — real MFT dial, EIC schedule, scoring',
-      '46+ courses · 6,000+ quiz questions (L2 · L3 · AM2 & upskilling)',
+      '46+ courses · 20,000+ quiz questions (L2 · L3 · AM2 & upskilling)',
       'Digital portfolio + OJT hours with tutor sign-off',
       '"Ask Dave" AI mentor · 60+ calculators · flashcard streaks',
     ],
@@ -713,7 +714,7 @@ const LandingPage = () => {
                 {userCount} UK sparks
               </Pill>
               <Pill tone="yellow">{publicStats.certs} certs issued</Pill>
-              <Pill tone="yellow">£307k invoiced</Pill>
+              <Pill tone="yellow">{publicStats.quoted} quoted</Pill>
               <Pill tone="yellow">★★★★★ on the App Store</Pill>
             </div>
 
@@ -1197,6 +1198,9 @@ const LandingPage = () => {
           </div>
         </div>
       </section>
+
+      {/* ========== EMPLOYER & COLLEGE WAITLIST ========== */}
+      <WaitlistSection />
 
       {/* ========== FREE GUIDES (SEO LANDING PAGES) ========== */}
       <section className="[content-visibility:auto] [contain-intrinsic-size:auto_700px] px-5 py-14 sm:py-20 lg:px-8 lg:py-24">

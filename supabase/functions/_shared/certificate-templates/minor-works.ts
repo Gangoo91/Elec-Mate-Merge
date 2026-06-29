@@ -1220,6 +1220,32 @@ export function minorWorksTemplate(data: MinorWorksPayload): string {
         </div>
       </div>
 
+      ${data.qs_review && data.qs_review.name ? `<div class="signature-grid mt-6">
+        <div class="signature-box">
+          <div class="signature-box-header">Countersigned &mdash; Qualifying Supervisor</div>
+          <div class="signature-box-body">
+            <div class="sig-field">
+              <span class="sig-field-label">Name</span>
+              <span class="sig-field-value">${esc(data.qs_review.name)}</span>
+            </div>
+            <div class="sig-field">
+              <span class="sig-field-label">Signature</span>
+              <span class="sig-field-value signature">
+                ${data.qs_review.signature ? `<img src="${esc(data.qs_review.signature)}" style="max-height: 28px" />` : ''}
+              </span>
+            </div>
+            <div class="sig-field">
+              <span class="sig-field-label">Position</span>
+              <span class="sig-field-value">${esc(data.qs_review.position)}</span>
+            </div>
+            <div class="sig-field">
+              <span class="sig-field-label">Date</span>
+              <span class="sig-field-value">${esc(data.qs_review.date)}</span>
+            </div>
+          </div>
+        </div>
+      </div>` : ''}
+
       ${data.declaration.additional_notes ? `<div class="inline-form mt-6">
         <div class="inline-group" style="flex: 1">
           <span class="inline-label">Additional Notes:</span>

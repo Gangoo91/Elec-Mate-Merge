@@ -16,6 +16,7 @@ import {
 import { useEmployerDashboardStats } from '@/hooks/useEmployerDashboardStats';
 import { useEmployerOverview, type RadarItem } from '@/hooks/useEmployerOverview';
 import { useVacancyStats } from '@/hooks/useVacancies';
+import { useQsReviewQueue } from '@/hooks/useQsReviewQueue';
 import type { Section } from '@/pages/employer/EmployerDashboard';
 import type { Tone } from '@/components/employer/editorial';
 
@@ -27,21 +28,28 @@ interface OverviewSectionProps {
 import { FirstRunChecklist } from '@/components/employer/FirstRunChecklist';
 import { MateEntryCard } from '@/components/employer/EmployerMate';
 
-const gbp = (n: number) =>
-  `£${Math.round(n).toLocaleString('en-GB')}`;
+const gbp = (n: number) => `£${Math.round(n).toLocaleString('en-GB')}`;
 
 export function OverviewSection({ onNavigate, onOpenMate }: OverviewSectionProps) {
   const { stats, isLoading, refetch } = useEmployerDashboardStats();
   const { data: radar, refetch: refetchRadar } = useEmployerOverview();
   const { data: vacancyStats } = useVacancyStats();
+  // QS certificates awaiting this user's sign-off (empty unless they're a QS).
+  const { data: qsPending = [] } = useQsReviewQueue('pending');
 
-  const { activeEmployees, activeJobs, expiringCertifications: expiringCerts, pendingExpenses, safetyScore } =
-    stats;
+  const {
+    activeEmployees,
+    activeJobs,
+    expiringCertifications: expiringCerts,
+    pendingExpenses,
+    safetyScore,
+  } = stats;
 
   const newApplications = vacancyStats?.newApplications || 0;
   const cash = radar?.cash;
   const radarItems: RadarItem[] = radar?.items ?? [];
   const pendingTimesheets = radar?.counts.pending_timesheets ?? 0;
+  const pendingQsReviews = qsPending.length;
 
   const onOpenPeople = () => onNavigate('peoplehub');
   const onOpenJobs = () => onNavigate('jobshub');
@@ -66,6 +74,19 @@ export function OverviewSection({ onNavigate, onOpenMate }: OverviewSectionProps
     tone: Tone;
     count?: number;
   }[] = [
+    // QS sign-off leads — it gates issuing the certificate.
+    ...(pendingQsReviews > 0
+      ? [
+          {
+            key: 'qs-reviews',
+            title: `${pendingQsReviews} certificate${pendingQsReviews === 1 ? '' : 's'} awaiting QS sign-off`,
+            sub: 'Review, then countersign or return',
+            section: 'qsreviews' as Section,
+            tone: 'orange' as Tone,
+            count: pendingQsReviews,
+          },
+        ]
+      : []),
     ...radarItems.map((it, i) => ({
       key: `${it.kind}-${it.id}-${i}`,
       title: it.title,
@@ -199,6 +220,32 @@ export function OverviewSection({ onNavigate, onOpenMate }: OverviewSectionProps
         </div>
       )}
 
+      {attentionItems.length > 0 && (
+        <div className="space-y-4">
+          <div className="flex items-end justify-between gap-4">
+            <div>
+              <Eyebrow>Actions</Eyebrow>
+              <h2 className="mt-1.5 text-xl sm:text-2xl font-semibold text-white tracking-tight">
+                Action required
+              </h2>
+            </div>
+            <Pill tone="orange">{attentionItems.length}</Pill>
+          </div>
+          <div className="space-y-3">
+            {attentionItems.map((item) => (
+              <AlertRow
+                key={item.key}
+                tone={item.tone}
+                title={item.title}
+                subtitle={item.sub}
+                trailing={item.count ? <Pill tone={item.tone}>{item.count}</Pill> : undefined}
+                onClick={() => onNavigate(item.section)}
+              />
+            ))}
+          </div>
+        </div>
+      )}
+
       <div className="space-y-4">
         <SectionHeader eyebrow="Quick Actions" title="Do next" />
         <div className="grid grid-cols-2 sm:grid-cols-4 gap-px bg-white/[0.06] border border-white/[0.06] rounded-2xl overflow-hidden">
@@ -228,37 +275,6 @@ export function OverviewSection({ onNavigate, onOpenMate }: OverviewSectionProps
           />
         </div>
       </div>
-
-      {attentionItems.length > 0 && (
-        <div className="space-y-4">
-          <div className="flex items-end justify-between gap-4">
-            <div>
-              <Eyebrow>Needs Attention</Eyebrow>
-              <h2 className="mt-1.5 text-xl sm:text-2xl font-semibold text-white tracking-tight">
-                Action required
-              </h2>
-            </div>
-            <Pill tone="orange">{attentionItems.length}</Pill>
-          </div>
-          <div className="space-y-3">
-            {attentionItems.slice(0, 6).map((item) => (
-              <AlertRow
-                key={item.key}
-                tone={item.tone}
-                title={item.title}
-                subtitle={item.sub}
-                trailing={item.count ? <Pill tone={item.tone}>{item.count}</Pill> : undefined}
-                onClick={() => onNavigate(item.section)}
-              />
-            ))}
-            {attentionItems.length > 6 && (
-              <p className="text-[12px] text-white/50 text-center pt-1">
-                +{attentionItems.length - 6} more
-              </p>
-            )}
-          </div>
-        </div>
-      )}
 
       <div className="space-y-4">
         <SectionHeader eyebrow="Your Hubs" title="Jump into your firm" />

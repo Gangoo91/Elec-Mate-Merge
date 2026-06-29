@@ -6,6 +6,7 @@ import {
   searchPracticalWorkIntelligence,
   formatForAIContext,
 } from '../_shared/rag-practical-work.ts';
+import { searchFacets, formatFacetsForPrompt } from '../_shared/bs7671-facets-rag.ts';
 
 serve(async (req) => {
   if (req.method === 'OPTIONS') {
@@ -56,42 +57,38 @@ serve(async (req) => {
     }
 
     // Build RAG query from the observation description
-    const ragQuery = `${description} ${location || ''} EICR defect observation BS 7671 regulation code`;
+    const ragQuery = `${description} ${location || ''} EICR inspection defect BS 7671`;
 
-    // Parallel RAG searches: BS 7671 regulations + practical work intelligence
-    const [bs7671Results, practicalResults] = await Promise.all([
-      searchPracticalWorkIntelligence(supabase, {
-        query: ragQuery,
-        matchCount: 10,
-      }),
+    // Authoritative BS 7671 regulation grounding comes from bs7671_facets
+    // (A4:2026) — NEVER from practical_work_intelligence (labour/job data),
+    // which previously produced invented, job-brief "regulations". Remedial /
+    // labour guidance still comes from practical_work_intelligence (its purpose).
+    const [facets, remedialResults] = await Promise.all([
+      searchFacets(supabase, { query: ragQuery, matchCount: 6 }),
       searchPracticalWorkIntelligence(supabase, {
         query: `remedial action repair ${description}`,
         matchCount: 8,
       }),
     ]);
 
-    // Extract BS 7671 regulation references from results
+    // Regulation references sourced ONLY from authoritative facets, deduped by
+    // reg number. Facets carrying no reg number (general guidance) are skipped.
     const regulationRefs: Array<{ number: string; title: string; relevance: string }> = [];
     const seenRegs = new Set<string>();
-
-    for (const result of [...bs7671Results.results, ...practicalResults.results]) {
-      if (result.bs7671_regulations && result.bs7671_regulations.length > 0) {
-        for (const reg of result.bs7671_regulations) {
-          if (!seenRegs.has(reg)) {
-            seenRegs.add(reg);
-            regulationRefs.push({
-              number: reg,
-              title: result.primary_topic || '',
-              relevance: result.content?.substring(0, 100) || '',
-            });
-          }
-        }
-      }
+    for (const f of facets) {
+      const num = (f.regNumber || '').trim();
+      if (!num || seenRegs.has(num)) continue;
+      seenRegs.add(num);
+      regulationRefs.push({
+        number: num,
+        title: (f.regTitle || f.primaryTopic || '').trim(),
+        relevance: (f.content || '').replace(/\s+/g, ' ').trim().slice(0, 160),
+      });
     }
 
-    // Format RAG context for AI
-    const practicalContext = formatForAIContext(bs7671Results.results.slice(0, 5));
-    const remedialContext = formatForAIContext(practicalResults.results.slice(0, 5));
+    // Grounding blocks for the prompt
+    const regulationContext = formatFacetsForPrompt(facets);
+    const remedialContext = formatForAIContext(remedialResults.results.slice(0, 5));
 
     // Call LLM to enhance the observation
     const openaiApiKey = Deno.env.get('OPENAI_API_KEY');
@@ -99,7 +96,7 @@ serve(async (req) => {
       throw new Error('OPENAI_API_KEY not configured');
     }
 
-    const systemPrompt = `You are a UK-qualified electrical inspector enhancing EICR observations per BS 7671:2018+A2:2022.
+    const systemPrompt = `You are a UK-qualified electrical inspector enhancing EICR observations per BS 7671:2018+A4:2026.
 
 Given an observation description, suggest:
 1. The correct classification code (C1, C2, C3, or FI) with confidence
@@ -113,14 +110,13 @@ CLASSIFICATION GUIDE:
 - C3 (Improvement recommended): Does not comply but no immediate danger.
 - FI (Further investigation): Cannot fully assess without further investigation.
 
-CONTEXT FROM KNOWLEDGE BASE:
-${practicalContext}
+AUTHORITATIVE BS 7671 REGULATIONS (BS 7671:2018+A4:2026) — ground every regulation
+reference in these facets. Do NOT cite or invent any regulation number that is not
+listed here; if none are relevant, omit reg numbers rather than inventing one:
+${regulationContext}
 
-REMEDIAL GUIDANCE:
+REMEDIAL / PRACTICAL GUIDANCE:
 ${remedialContext}
-
-REGULATION REFERENCES FOUND:
-${regulationRefs.map((r) => `${r.number}: ${r.title}`).join('\n')}
 
 Respond ONLY with valid JSON matching this schema:
 {
@@ -131,7 +127,8 @@ Respond ONLY with valid JSON matching this schema:
   "recommendation": "Recommended remedial action"
 }
 
-Use UK English only. Be concise but technically accurate.`;
+Use UK English only. Be concise but technically accurate. Reference regulation
+numbers ONLY from the authoritative list above.`;
 
     const userPrompt = `Observation: "${description}"${location ? `\nLocation: ${location}` : ''}${currentCode ? `\nCurrent code: ${currentCode}` : ''}`;
 

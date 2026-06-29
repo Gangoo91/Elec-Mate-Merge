@@ -34,6 +34,7 @@ interface UseSiteVisitStorageReturn {
   listSiteVisits: () => Promise<EnrichedSiteVisit[]>;
   deleteSiteVisit: (id: string) => Promise<boolean>;
   updateStatus: (id: string, status: SiteVisitStatus) => Promise<boolean>;
+  updateScheduledAt: (id: string, scheduledAt: string | null) => Promise<boolean>;
   lockScopeBaseline: (visit: SiteVisit) => Promise<ScopeBaseline | null>;
   generatePreStartChecklistForVisit: (visit: SiteVisit) => Promise<PreStartChecklist | null>;
   sendToQuoteWizard: (visit: SiteVisit, analysis?: SurveyAnalysisResult | null) => string;
@@ -187,6 +188,7 @@ export function useSiteVisitStorage(): UseSiteVisitStorageReturn {
           quoteId: row.quote_id,
           photoProjectId: row.photo_project_id,
           projectId: row.project_id ?? undefined,
+          scheduledAt: row.scheduled_at ?? undefined,
           createdAt: row.created_at,
           updatedAt: row.updated_at,
           rooms,
@@ -274,6 +276,7 @@ export function useSiteVisitStorage(): UseSiteVisitStorageReturn {
         quoteId: row.quote_id,
         photoProjectId: row.photo_project_id,
         invoiceId: row.invoice_id,
+        scheduledAt: row.scheduled_at ?? undefined,
         createdAt: row.created_at,
         updatedAt: row.updated_at,
         rooms: [],
@@ -319,6 +322,27 @@ export function useSiteVisitStorage(): UseSiteVisitStorageReturn {
         return true;
       } catch (error: unknown) {
         console.error('[SiteVisitStorage] Status update failed:', error);
+        return false;
+      }
+    },
+    []
+  );
+
+  // Persist the booked date/time directly. The atomic save RPC doesn't carry
+  // scheduled_at, so the booking field writes it on its own lightweight update
+  // (mirrors updateStatus). The row must already exist — on a brand-new visit
+  // the cloud autosave creates it within a few seconds of the first edit.
+  const updateScheduledAt = useCallback(
+    async (id: string, scheduledAt: string | null): Promise<boolean> => {
+      try {
+        const { error } = await supabase
+          .from('site_visits')
+          .update({ scheduled_at: scheduledAt })
+          .eq('id', id);
+        if (error) throw error;
+        return true;
+      } catch (error: unknown) {
+        console.error('[SiteVisitStorage] Scheduled-at update failed:', error);
         return false;
       }
     },
@@ -776,6 +800,7 @@ export function useSiteVisitStorage(): UseSiteVisitStorageReturn {
     listSiteVisits,
     deleteSiteVisit,
     updateStatus,
+    updateScheduledAt,
     lockScopeBaseline,
     generatePreStartChecklistForVisit,
     sendToQuoteWizard,

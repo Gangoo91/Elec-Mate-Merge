@@ -544,7 +544,7 @@ export default function ApprenticeTrainingPage() {
         <div className="max-w-4xl mx-auto">
           <SEOAppBridge
             title="The Training App Built for Electrical Apprentices"
-            description="46+ courses covering Level 2, Level 3, and 18th Edition. 2,000+ practice questions, AM2 simulator, AI tutor, and flashcards with spaced repetition."
+            description="46+ courses covering Level 2, Level 3, and 18th Edition. 20,000+ practice questions, AM2 simulator, AI tutor, and flashcards with spaced repetition."
             icon={Award}
           />
           <p className="text-white mt-4 text-sm">

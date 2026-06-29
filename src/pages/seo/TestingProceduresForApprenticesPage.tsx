@@ -632,7 +632,7 @@ const sections = [
         </p>
         <SEOAppBridge
           title="Master Testing from Beginner to AM2-Ready"
-          description="Testing procedure courses, 2,000+ practice questions, flashcards with maximum Zs values, and AI tutor support."
+          description="Testing procedure courses, 20,000+ practice questions, flashcards with maximum Zs values, and AI tutor support."
           icon={Gauge}
         />
       </>

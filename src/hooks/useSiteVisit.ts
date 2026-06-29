@@ -37,7 +37,10 @@ export interface UseSiteVisitReturn {
   ) => void;
   updateProperty: (
     updates: Partial<
-      Pick<SiteVisit, 'propertyAddress' | 'propertyPostcode' | 'propertyType' | 'accessNotes'>
+      Pick<
+        SiteVisit,
+        'propertyAddress' | 'propertyPostcode' | 'propertyType' | 'accessNotes' | 'scheduledAt'
+      >
     >
   ) => void;
   updateAssumptions: (assumptions: string) => void;
@@ -173,7 +176,10 @@ export function useSiteVisit(initialVisit?: Partial<SiteVisit>): UseSiteVisitRet
   const updateProperty = useCallback(
     (
       updates: Partial<
-        Pick<SiteVisit, 'propertyAddress' | 'propertyPostcode' | 'propertyType' | 'accessNotes'>
+        Pick<
+          SiteVisit,
+          'propertyAddress' | 'propertyPostcode' | 'propertyType' | 'accessNotes' | 'scheduledAt'
+        >
       >
     ) => {
       setVisit((v) => ({ ...v, ...updates }));

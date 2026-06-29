@@ -14,9 +14,9 @@ import {
   Trash2,
   ChevronLeft,
   LayoutGrid,
+  Package,
 } from 'lucide-react';
 import { Sheet, SheetContent, SheetTitle } from '@/components/ui/sheet';
-import { cn } from '@/lib/utils';
 
 /**
  * Link types the detail page knows how to open via LinkEntitySheet.
@@ -57,6 +57,8 @@ export interface ProjectActionsSheetProps {
   onLink?: (type: ProjectLinkType) => void;
   onComplete?: () => void;
   onDelete?: () => void;
+  /** Export the project handover pack (detail mode only — needs the project data). */
+  onExportPack?: () => void;
 }
 
 const LINK_OPTIONS: { type: ProjectLinkType; label: string; icon: typeof FileText }[] = [
@@ -89,6 +91,7 @@ const ProjectActionsSheet = ({
   onLink,
   onComplete,
   onDelete,
+  onExportPack,
 }: ProjectActionsSheetProps) => {
   const navigate = useNavigate();
   const [linkPicker, setLinkPicker] = useState(false);
@@ -159,6 +162,11 @@ const ProjectActionsSheet = ({
   const handleDelete = () => {
     close();
     onDelete?.();
+  };
+
+  const handleExportPack = () => {
+    close();
+    onExportPack?.();
   };
 
   return (
@@ -305,8 +313,12 @@ const ProjectActionsSheet = ({
                     <GitBranch className="h-4 w-4 text-elec-yellow" />
                   </span>
                   <span>
-                    <span className="block text-[13px] font-semibold text-white">Change of scope</span>
-                    <span className="block text-[11px] text-white/55 mt-0.5">Raise a variation</span>
+                    <span className="block text-[13px] font-semibold text-white">
+                      Change of scope
+                    </span>
+                    <span className="block text-[11px] text-white/55 mt-0.5">
+                      Raise a variation
+                    </span>
                   </span>
                 </button>
               </div>
@@ -315,12 +327,7 @@ const ProjectActionsSheet = ({
               <p className="text-[10px] font-semibold uppercase tracking-[0.16em] text-white/45 mt-4 mb-2">
                 Manage
               </p>
-              <div
-                className={cn(
-                  'grid gap-2',
-                  isCompleted ? 'grid-cols-1' : 'grid-cols-2'
-                )}
-              >
+              <div className="grid grid-cols-2 gap-2">
                 <button
                   type="button"
                   onClick={() => setLinkPicker(true)}
@@ -329,6 +336,17 @@ const ProjectActionsSheet = ({
                   <Link2 className="h-4 w-4 text-elec-yellow flex-shrink-0" />
                   <span className="text-[13px] font-semibold text-white">Link existing</span>
                 </button>
+
+                {onExportPack && (
+                  <button
+                    type="button"
+                    onClick={handleExportPack}
+                    className="flex items-center gap-3 h-12 px-3.5 rounded-xl bg-white/[0.04] border border-white/[0.08] hover:bg-white/[0.06] active:scale-[0.98] touch-manipulation transition-all text-left select-none"
+                  >
+                    <Package className="h-4 w-4 text-elec-yellow flex-shrink-0" />
+                    <span className="text-[13px] font-semibold text-white">Export pack</span>
+                  </button>
+                )}
 
                 {!isCompleted && onComplete && (
                   <button

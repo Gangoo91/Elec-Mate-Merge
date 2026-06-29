@@ -30,13 +30,13 @@ export const stripePrices = {
     apprentice: 'price_1TKlA22RKw5t5RAmpvhojy0b',
     electrician: 'price_1TKlA12RKw5t5RAmdhZyhX1I',
     business_ai: 'price_1TRGZo2RKw5t5RAmRl2hc0ru',
-    employer: 'price_1SlyAT2RKw5t5RAmUmTRGimH',
+    employer: 'price_1Tm6eF2RKw5t5RAm0nG7ujWw',
   },
   yearly: {
     apprentice: 'price_1TKlKK2RKw5t5RAmGVR5EcF9',
     electrician: 'price_1TKlKL2RKw5t5RAmpD8FH7qp',
     business_ai: 'price_1TRGZo2RKw5t5RAmzY50EzaE',
-    employer: 'price_1SlyB82RKw5t5RAmN447YJUW',
+    employer: 'price_1Tm6qA2RKw5t5RAmitPj2yF9',
   },
 };
 

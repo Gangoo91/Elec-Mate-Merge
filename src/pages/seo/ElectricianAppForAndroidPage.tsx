@@ -261,7 +261,7 @@ export default function ElectricianAppForAndroidPage() {
           icon: GraduationCap,
           title: '46+ Training Courses',
           description:
-            'Turn your Android phone into a revision tool. Level 2/3, AM2, EPA, 18th Edition, and specialist courses. 2,000+ practice questions and flashcards.',
+            'Turn your Android phone into a revision tool. Level 2/3, AM2, EPA, 18th Edition, and specialist courses. 20,000+ practice questions and flashcards.',
         },
         {
           icon: Briefcase,

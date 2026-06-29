@@ -290,6 +290,7 @@
         "npm:@sentry/react@^10.43.0",
         "npm:@sentry/vite-plugin@^5.2.1",
         "npm:@size-limit/preset-app@12",
+        "npm:@sparticuz/chromium@149",
         "npm:@supabase/supabase-js@^2.99.1",
         "npm:@tailwindcss/typography@~0.5.19",
         "npm:@tanstack/react-query@^5.90.21",

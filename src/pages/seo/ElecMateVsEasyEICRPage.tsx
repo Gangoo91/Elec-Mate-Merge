@@ -305,7 +305,7 @@ export default function ElecMateVsEasyEICRPage() {
           icon: GraduationCap,
           title: '46+ Training Courses',
           description:
-            '18th Edition, Level 2/3, AM2, EPA simulator, EV charging, solar PV, fire alarm, and BMS courses. 2,000+ practice questions and flashcards.',
+            '18th Edition, Level 2/3, AM2, EPA simulator, EV charging, solar PV, fire alarm, and BMS courses. 20,000+ practice questions and flashcards.',
         },
       ]}
       uniqueFeaturesHeading="What Only Elec-Mate Offers"

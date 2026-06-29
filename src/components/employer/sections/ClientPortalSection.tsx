@@ -3,12 +3,7 @@ import { copyToClipboard } from '@/utils/clipboard';
 import { openExternalUrl } from '@/utils/open-external-url';
 import { Input } from '@/components/ui/input';
 import { Switch } from '@/components/ui/switch';
-import {
-  Sheet,
-  SheetContent,
-  SheetHeader,
-  SheetTitle,
-} from '@/components/ui/sheet';
+import { Sheet, SheetContent, SheetHeader, SheetTitle } from '@/components/ui/sheet';
 import { ScrollArea } from '@/components/ui/scroll-area';
 import {
   PageFrame,
@@ -46,6 +41,7 @@ import {
 } from '@/hooks/useClientPortal';
 import { useJobs } from '@/hooks/useJobs';
 import { useProgressLogs } from '@/hooks/useProgressLogs';
+import { ClientMessagesPanel } from '@/components/employer/sections/ClientMessagesPanel';
 import {
   ExternalLink,
   Copy,
@@ -65,12 +61,14 @@ import { useIsMobile } from '@/hooks/use-mobile';
 
 function getInitials(name?: string | null): string {
   if (!name) return 'CL';
-  return name
-    .split(' ')
-    .filter(Boolean)
-    .map((p) => p[0]?.toUpperCase() ?? '')
-    .slice(0, 2)
-    .join('') || 'CL';
+  return (
+    name
+      .split(' ')
+      .filter(Boolean)
+      .map((p) => p[0]?.toUpperCase() ?? '')
+      .slice(0, 2)
+      .join('') || 'CL'
+  );
 }
 
 export function ClientPortalSection() {
@@ -96,9 +94,7 @@ export function ClientPortalSection() {
   const deleteLink = useDeletePortalLink();
 
   const activeJobs = useMemo(
-    () =>
-      jobs?.filter((j) => j.status === 'Active' || j.status === 'Completed') ||
-      [],
+    () => jobs?.filter((j) => j.status === 'Active' || j.status === 'Completed') || [],
     [jobs]
   );
 
@@ -162,10 +158,7 @@ export function ClientPortalSection() {
     });
   };
 
-  const handleToggleSetting = async (
-    key: keyof PortalPermissions,
-    value: boolean
-  ) => {
+  const handleToggleSetting = async (key: keyof PortalPermissions, value: boolean) => {
     if (!portalLink) return;
     await updatePermissions.mutateAsync({
       id: portalLink.id,
@@ -253,8 +246,7 @@ export function ClientPortalSection() {
     );
   }
 
-  const activeClientsCount =
-    (portalLinks || []).filter((l) => l.is_active).length;
+  const activeClientsCount = (portalLinks || []).filter((l) => l.is_active).length;
   const portalViews = stats?.totalViews || 0;
   const unpaidJobs = activeJobs.filter(
     (j) => j.status === 'Active' || j.status === 'Completed'
@@ -457,11 +449,7 @@ export function ClientPortalSection() {
                   : 'Paused'
                 : 'No link';
               const statusTone: Tone =
-                status === 'Active'
-                  ? 'emerald'
-                  : status === 'Paused'
-                    ? 'amber'
-                    : 'red';
+                status === 'Active' ? 'emerald' : status === 'Paused' ? 'amber' : 'red';
               const clientName = job.client || link?.client_name || 'Client';
               const subtitle = `${job.title} · ${job.progress || 0}%`;
 
@@ -503,9 +491,7 @@ export function ClientPortalSection() {
             <SheetTitle className="text-white text-base sm:text-lg font-semibold tracking-tight">
               {selectedJob?.client || portalLink?.client_name || 'Client portal'}
             </SheetTitle>
-            <div className="mt-1 text-[12px] text-white">
-              {selectedJob?.title}
-            </div>
+            <div className="mt-1 text-[12px] text-white">{selectedJob?.title}</div>
           </SheetHeader>
           <ScrollArea className="flex-1 overscroll-contain">
             <div className="p-5 sm:p-6 space-y-6">
@@ -516,20 +502,13 @@ export function ClientPortalSection() {
                   <div className="flex items-center justify-between">
                     <Eyebrow>Portal link</Eyebrow>
                     <Pill tone={portalLink.is_active ? 'emerald' : 'amber'}>
-                      <Dot
-                        tone={portalLink.is_active ? 'emerald' : 'amber'}
-                        className="mr-1.5"
-                      />
+                      <Dot tone={portalLink.is_active ? 'emerald' : 'amber'} className="mr-1.5" />
                       {portalLink.is_active ? 'Active' : 'Paused'}
                     </Pill>
                   </div>
 
                   <div className="flex gap-2">
-                    <Input
-                      value={getPortalUrl()}
-                      readOnly
-                      className={inputClass}
-                    />
+                    <Input value={getPortalUrl()} readOnly className={inputClass} />
                     <IconButton onClick={handleCopyLink} aria-label="Copy link">
                       <Copy className="h-4 w-4" />
                     </IconButton>
@@ -586,9 +565,7 @@ export function ClientPortalSection() {
                         {
                           label: 'Last viewed',
                           value: portalLink.last_accessed_at
-                            ? new Date(
-                                portalLink.last_accessed_at
-                              ).toLocaleDateString('en-GB')
+                            ? new Date(portalLink.last_accessed_at).toLocaleDateString('en-GB')
                             : '—',
                         },
                       ]}
@@ -616,14 +593,9 @@ export function ClientPortalSection() {
                           title={label}
                           trailing={
                             <Switch
-                              checked={
-                                portalSettings[key as keyof PortalPermissions]
-                              }
+                              checked={portalSettings[key as keyof PortalPermissions]}
                               onCheckedChange={(checked) =>
-                                handleToggleSetting(
-                                  key as keyof PortalPermissions,
-                                  checked
-                                )
+                                handleToggleSetting(key as keyof PortalPermissions, checked)
                               }
                               disabled={updatePermissions.isPending}
                             />
@@ -674,14 +646,9 @@ export function ClientPortalSection() {
                             title={label}
                             trailing={
                               <Switch
-                                checked={
-                                  portalSettings[key as keyof PortalPermissions]
-                                }
+                                checked={portalSettings[key as keyof PortalPermissions]}
                                 onCheckedChange={(checked) =>
-                                  handleToggleSetting(
-                                    key as keyof PortalPermissions,
-                                    checked
-                                  )
+                                  handleToggleSetting(key as keyof PortalPermissions, checked)
                                 }
                                 disabled={updatePermissions.isPending}
                               />
@@ -711,10 +678,7 @@ export function ClientPortalSection() {
                   <Divider />
 
                   <div className="flex justify-end">
-                    <DestructiveButton
-                      onClick={handleDelete}
-                      disabled={deleteLink.isPending}
-                    >
+                    <DestructiveButton onClick={handleDelete} disabled={deleteLink.isPending}>
                       {deleteLink.isPending ? (
                         <Loader2 className="h-4 w-4 animate-spin mr-2" />
                       ) : (
@@ -723,19 +687,20 @@ export function ClientPortalSection() {
                       Delete portal link
                     </DestructiveButton>
                   </div>
+
+                  {portalSettings.allowMessages && portalLink && (
+                    <ClientMessagesPanel
+                      token={portalLink.access_token}
+                      jobId={portalLink.job_id}
+                    />
+                  )}
                 </>
               ) : (
                 <EmptyState
                   title="No portal link for this job"
                   description="Generate a unique link so this client can view progress, photos, certs and invoices."
-                  action={
-                    createPortalLink.isPending
-                      ? 'Creating…'
-                      : 'Create portal link'
-                  }
-                  onAction={
-                    createPortalLink.isPending ? undefined : handleCreateLink
-                  }
+                  action={createPortalLink.isPending ? 'Creating…' : 'Create portal link'}
+                  onAction={createPortalLink.isPending ? undefined : handleCreateLink}
                 />
               )}
             </div>

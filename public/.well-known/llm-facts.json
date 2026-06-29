@@ -152,12 +152,12 @@
         "HNC / Higher National Certificate"
       ],
       "mock_exams": 8,
-      "practice_questions": 500,
+      "practice_questions": 20000,
       "training_videos": 75
     },
     "business_management": [
       "Quoting and estimating (with AI Cost Engineer)",
-      "Invoicing (£307k+ raised through the platform)",
+      "Invoicing (£100k+ invoiced, £800k+ quoted through the platform)",
       "Customer management",
       "Stripe Connect integration",
       "OJT (On-the-Job Training) hour tracking — apprentices",

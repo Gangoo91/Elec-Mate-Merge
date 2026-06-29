@@ -4,7 +4,7 @@
  */
 
 import React, { useEffect, useState } from 'react';
-import { Clock, CheckCircle2, FileText, RotateCcw, Download } from 'lucide-react';
+import { Clock, CheckCircle2, FileText, RotateCcw, Download, Lock } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetTrigger } from '@/components/ui/sheet';
 import { getVersionHistory } from '@/utils/reportVersioning';
@@ -96,85 +96,88 @@ export const VersionHistorySheet: React.FC<VersionHistorySheetProps> = ({
                   : 'Save your report first to see version history'}
               </div>
             ) : (
-              <div className="space-y-1">
-                {versions.map((version, index) => (
-                  <div
-                    key={version.id}
-                    className={cn(
-                      'relative flex items-start gap-3 p-3 rounded-xl transition-colors',
-                      version.is_latest_version
-                        ? 'bg-elec-yellow/10 border border-elec-yellow/20'
-                        : 'bg-card/30'
-                    )}
-                  >
-                    {/* Timeline dot */}
-                    <div className="flex flex-col items-center flex-shrink-0 pt-0.5">
+              <div className="space-y-0">
+                {versions.map((version, index) => {
+                  const isCurrent = version.is_latest_version;
+                  const isLast = index === versions.length - 1;
+                  return (
+                    <div key={version.id} className="flex gap-3">
+                      {/* Timeline rail */}
+                      <div className="flex flex-col items-center flex-shrink-0">
+                        <div
+                          className={cn(
+                            'h-8 w-8 rounded-full flex items-center justify-center',
+                            isCurrent ? 'bg-elec-yellow text-black' : 'bg-white/[0.06] text-white/45'
+                          )}
+                        >
+                          {isCurrent ? (
+                            <CheckCircle2 className="h-4 w-4" />
+                          ) : (
+                            <FileText className="h-3.5 w-3.5" />
+                          )}
+                        </div>
+                        {!isLast && <div className="w-px flex-1 min-h-[14px] bg-white/[0.08] my-1" />}
+                      </div>
+
+                      {/* Version card */}
                       <div
                         className={cn(
-                          'h-7 w-7 rounded-full flex items-center justify-center',
-                          version.is_latest_version
-                            ? 'bg-elec-yellow text-black'
-                            : 'bg-white/10 text-white/50'
+                          'flex-1 min-w-0 rounded-xl border p-3.5 mb-2.5',
+                          isCurrent
+                            ? 'border-elec-yellow/25 bg-elec-yellow/[0.05]'
+                            : 'border-white/[0.07] bg-white/[0.02]'
                         )}
                       >
-                        {version.is_latest_version ? (
-                          <CheckCircle2 className="h-4 w-4" />
-                        ) : (
-                          <FileText className="h-3.5 w-3.5" />
-                        )}
-                      </div>
-                      {index < versions.length - 1 && (
-                        <div className="w-px h-4 bg-border/30 mt-1" />
-                      )}
-                    </div>
-
-                    <div className="flex-1 min-w-0">
-                      <div className="flex items-center gap-2">
-                        <p className="text-sm font-medium text-foreground">
-                          Version {version.version}
+                        <div className="flex items-center gap-2">
+                          <p className="text-sm font-semibold text-white">
+                            Version {version.version}
+                          </p>
+                          {isCurrent && (
+                            <span className="text-[10px] font-semibold uppercase tracking-[0.12em] text-elec-yellow bg-elec-yellow/15 px-1.5 py-0.5 rounded">
+                              Current
+                            </span>
+                          )}
+                          {version.locked_at && (
+                            <span className="inline-flex items-center gap-1 text-[10px] font-medium text-emerald-300/90">
+                              <Lock className="h-2.5 w-2.5" />
+                              Locked
+                            </span>
+                          )}
+                        </div>
+                        <p className="text-xs font-mono text-white/45 mt-1 truncate">
+                          {version.certificate_number}
                         </p>
-                        {version.is_latest_version && (
-                          <span className="text-[10px] font-semibold uppercase tracking-wider text-elec-yellow bg-elec-yellow/20 px-1.5 py-0.5 rounded">
-                            Current
-                          </span>
-                        )}
-                      </div>
-                      <p className="text-xs text-white mt-0.5">
-                        {version.certificate_number}
-                        {version.locked_at && (
-                          <span className="ml-2 text-emerald-400">· locked</span>
-                        )}
-                      </p>
-                      <p className="text-xs text-white">{formatDate(version.created_at)}</p>
-                    </div>
+                        <p className="text-xs text-white/45 mt-0.5">
+                          {formatDate(version.created_at)}
+                        </p>
 
-                    <div className="flex items-center gap-1 flex-shrink-0">
-                      <Button
-                        variant="ghost"
-                        size="sm"
-                        className="h-8 gap-1.5 text-xs text-elec-yellow hover:text-elec-yellow hover:bg-elec-yellow/10 touch-manipulation"
-                        onClick={() => setPdfReportId(version.report_id)}
-                      >
-                        <Download className="h-3 w-3" />
-                        PDF
-                      </Button>
-                      {!version.is_latest_version && onOpenVersion && (
-                        <Button
-                          variant="ghost"
-                          size="sm"
-                          className="h-8 gap-1.5 text-xs touch-manipulation"
-                          onClick={() => {
-                            onOpenVersion(version.report_id);
-                            setIsOpen(false);
-                          }}
-                        >
-                          <RotateCcw className="h-3 w-3" />
-                          Open
-                        </Button>
-                      )}
+                        <div className="mt-3 flex gap-2">
+                          <Button
+                            variant="ghost"
+                            onClick={() => setPdfReportId(version.report_id)}
+                            className="h-9 flex-1 sm:flex-initial gap-1.5 text-xs bg-white/[0.04] text-white/80 hover:text-white hover:bg-white/10 touch-manipulation"
+                          >
+                            <Download className="h-3.5 w-3.5" />
+                            PDF
+                          </Button>
+                          {!isCurrent && onOpenVersion && (
+                            <Button
+                              variant="ghost"
+                              onClick={() => {
+                                onOpenVersion(version.report_id);
+                                setIsOpen(false);
+                              }}
+                              className="h-9 flex-1 sm:flex-initial gap-1.5 text-xs bg-white/[0.04] text-white/80 hover:text-white hover:bg-white/10 touch-manipulation"
+                            >
+                              <RotateCcw className="h-3.5 w-3.5" />
+                              Open
+                            </Button>
+                          )}
+                        </div>
+                      </div>
                     </div>
-                  </div>
-                ))}
+                  );
+                })}
               </div>
             )}
           </div>

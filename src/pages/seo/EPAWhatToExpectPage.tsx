@@ -72,7 +72,7 @@ const faqs = [
   {
     question: 'Can I use Elec-Mate to prepare for all three EPA components?',
     answer:
-      'Yes. Elec-Mate covers all three EPA components. For the knowledge test, the platform provides 2,000+ practice questions spanning BS 7671, electrical science, installation design, health and safety, and inspection and testing — all the topics covered in the ST0215 knowledge requirements. Flashcards with spaced repetition help you memorise key facts and regulation references efficiently. For the practical assessment, the AM2 Simulator provides timed exercises covering safe isolation, consumer unit build, ring final circuits, lighting circuits, fault finding, and testing — all skills assessed in the EPA practical component. For the professional discussion, the EPA Simulator replicates the discussion format with AI-generated questions based on portfolio content, voice input for natural responses, and scoring against the real grade descriptors published in the EPA assessment plan. The platform also tracks your portfolio evidence against ST0215 criteria and monitors your 20% off-the-job training hours, ensuring you meet all gateway requirements.',
+      'Yes. Elec-Mate covers all three EPA components. For the knowledge test, the platform provides 20,000+ practice questions spanning BS 7671, electrical science, installation design, health and safety, and inspection and testing — all the topics covered in the ST0215 knowledge requirements. Flashcards with spaced repetition help you memorise key facts and regulation references efficiently. For the practical assessment, the AM2 Simulator provides timed exercises covering safe isolation, consumer unit build, ring final circuits, lighting circuits, fault finding, and testing — all skills assessed in the EPA practical component. For the professional discussion, the EPA Simulator replicates the discussion format with AI-generated questions based on portfolio content, voice input for natural responses, and scoring against the real grade descriptors published in the EPA assessment plan. The platform also tracks your portfolio evidence against ST0215 criteria and monitors your 20% off-the-job training hours, ensuring you meet all gateway requirements.',
   },
   {
     question: 'What is the difference between a Pass and a Distinction at EPA?',
@@ -532,7 +532,7 @@ const sections = [
           distinction-level responses.
         </p>
         <p>
-          <strong>Knowledge Test Preparation:</strong> 2,000+ practice questions covering every
+          <strong>Knowledge Test Preparation:</strong> 20,000+ practice questions covering every
           knowledge topic in the apprenticeship standard. Each question includes a detailed
           explanation of the correct answer with regulation references. Timed mock exams simulate
           the real test format and time pressure. Flashcards with spaced repetition help you retain

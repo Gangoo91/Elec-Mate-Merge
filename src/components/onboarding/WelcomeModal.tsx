@@ -35,7 +35,7 @@ const roleContent = {
     bgColor: 'bg-blue-500/20',
     borderColor: 'border-blue-500/30',
     features: [
-      { icon: BookOpen, text: '6,000+ Practice Questions', desc: 'Master your theory exams' },
+      { icon: BookOpen, text: '20,000+ Practice Questions', desc: 'Master your theory exams' },
       { icon: Calculator, text: '60+ Calculators', desc: 'Cable sizing, Zs, voltage drop & more' },
       { icon: FileCheck, text: 'AM2 Preparation', desc: 'Mock tests and practical guides' },
       { icon: Clock, text: 'OJT Tracking', desc: 'Log your on-the-job training hours' },

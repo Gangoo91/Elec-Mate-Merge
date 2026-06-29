@@ -538,13 +538,33 @@ function transformFormDataForTemplate(formData: MinorWorksFormData): MinorWorksP
   return result;
 }
 
+// Always output DD/MM/YYYY. The incoming value may already be DD/MM/YYYY (the
+// app pre-formats it) OR ISO YYYY-MM-DD. `new Date('01/03/2036')` parses as US
+// MM/DD → 3 January, swapping the date (ELE-1167). So handle the known string
+// shapes explicitly and never let the JS Date parser re-interpret a DD/MM value.
 function formatDate(dateStr: string | undefined): string {
   if (!dateStr) return '';
+  const s = String(dateStr).trim();
+  if (!s) return '';
+
+  // Already DD/MM/YYYY (or D/M/YYYY) — normalise padding, never re-parse.
+  const dmy = s.match(/^(\d{1,2})\/(\d{1,2})\/(\d{4})$/);
+  if (dmy) {
+    return `${dmy[1].padStart(2, '0')}/${dmy[2].padStart(2, '0')}/${dmy[3]}`;
+  }
+
+  // ISO YYYY-MM-DD (optionally with time) — reformat without timezone drift.
+  const iso = s.match(/^(\d{4})-(\d{2})-(\d{2})/);
+  if (iso) {
+    return `${iso[3]}/${iso[2]}/${iso[1]}`;
+  }
+
+  // Fallback: let Date try, output en-GB (DD/MM/YYYY).
   try {
-    const date = new Date(dateStr);
-    if (isNaN(date.getTime())) return dateStr;
+    const date = new Date(s);
+    if (isNaN(date.getTime())) return s;
     return date.toLocaleDateString('en-GB');
   } catch {
-    return dateStr;
+    return s;
   }
 }

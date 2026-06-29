@@ -229,7 +229,7 @@ export default function StudyCentreIndex() {
   useSEO({
     title: 'Study Centre | Electrical Training & CPD Courses',
     description:
-      'Comprehensive electrical training for apprentices and qualified electricians. Level 2 & 3 courses, 18th Edition BS 7671, inspection & testing, EV charging, solar PV, and 2,000+ practice questions.',
+      'Comprehensive electrical training for apprentices and qualified electricians. Level 2 & 3 courses, 18th Edition BS 7671, inspection & testing, EV charging, solar PV, and 20,000+ practice questions.',
     schema: {
       '@type': 'CollectionPage',
       name: 'Elec-Mate Study Centre',

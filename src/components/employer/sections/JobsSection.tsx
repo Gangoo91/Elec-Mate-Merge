@@ -6,6 +6,7 @@ import { AddJobDialog } from '@/components/employer/dialogs/AddJobDialog';
 import { ViewJobSheet } from '@/components/employer/sheets/ViewJobSheet';
 import { JobFilterSheet, JobFilters } from '@/components/employer/sheets/JobFilterSheet';
 import { useJobs } from '@/hooks/useJobs';
+import { useJobSignals } from '@/hooks/useJobSignals';
 import { Job, JobStatus } from '@/services/jobService';
 import { supabase } from '@/integrations/supabase/client';
 import { realtimeChannelName } from '@/lib/realtimeChannel';
@@ -104,6 +105,7 @@ export function JobsSection() {
   const [showFilterSheet, setShowFilterSheet] = useState(false);
   const [activeTab, setActiveTab] = useState<TabValue>('all');
   const { data: jobs = [], isLoading, refetch, isRefetching } = useJobs();
+  const { data: jobSignals } = useJobSignals();
 
   const handleRefresh = useCallback(async () => {
     await refetch();
@@ -123,6 +125,7 @@ export function JobsSection() {
 
   const assignmentsByJob = useMemo(() => {
     const map = new Map<string, AssignedWorker[]>();
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     allAssignments.forEach((a: any) => {
       if (a.employee) {
         const jobId = a.job_id;
@@ -149,13 +152,9 @@ export function JobsSection() {
           queryClient.invalidateQueries({ queryKey: ['all-job-assignments'] });
         }
       )
-      .on(
-        'postgres_changes',
-        { event: '*', schema: 'public', table: 'employer_jobs' },
-        () => {
-          queryClient.invalidateQueries({ queryKey: ['employer-jobs'] });
-        }
-      )
+      .on('postgres_changes', { event: '*', schema: 'public', table: 'employer_jobs' }, () => {
+        queryClient.invalidateQueries({ queryKey: ['employer-jobs'] });
+      })
       .subscribe();
 
     return () => {
@@ -190,8 +189,7 @@ export function JobsSection() {
         job.title.toLowerCase().includes(term) ||
         job.client.toLowerCase().includes(term) ||
         job.location.toLowerCase().includes(term);
-      const matchesStatus =
-        filters.statuses.length === 0 || filters.statuses.includes(job.status);
+      const matchesStatus = filters.statuses.length === 0 || filters.statuses.includes(job.status);
       const jobValue = job.value || 0;
       const matchesValue = jobValue >= filters.minValue && jobValue <= filters.maxValue;
       const matchesTab = tabMatchesJob(activeTab, job.status);
@@ -218,7 +216,11 @@ export function JobsSection() {
       { value: 'active', label: 'Active', count: counts.active },
       { value: 'pending', label: 'Pending', count: counts.pending },
       { value: 'on_hold', label: 'On hold', count: counts.onHold },
-      { value: 'completed', label: 'Completed', count: jobs.filter((j) => j.status === 'Completed').length },
+      {
+        value: 'completed',
+        label: 'Completed',
+        count: jobs.filter((j) => j.status === 'Completed').length,
+      },
     ],
     [jobs, counts]
   );
@@ -246,11 +248,7 @@ export function JobsSection() {
           </span>
         )}
       </IconButton>
-      <IconButton
-        onClick={() => refetch()}
-        disabled={isRefetching}
-        aria-label="Refresh jobs"
-      >
+      <IconButton onClick={() => refetch()} disabled={isRefetching} aria-label="Refresh jobs">
         <RefreshCw className={`h-4 w-4 ${isRefetching ? 'animate-spin' : ''}`} />
       </IconButton>
     </>
@@ -334,6 +332,7 @@ export function JobsSection() {
             <ListBody>
               {filteredJobs.map((job) => {
                 const workers = assignmentsByJob.get(job.id) || [];
+                const sig = jobSignals?.get(job.id);
                 const dates = [formatDate(job.start_date), formatDate(job.end_date)]
                   .filter(Boolean)
                   .join(' → ');
@@ -355,6 +354,13 @@ export function JobsSection() {
                     accent={statusToTone(job.status)}
                     trailing={
                       <>
+                        {sig && sig.incidents > 0 && (
+                          <Pill tone="red">
+                            {sig.incidents} incident{sig.incidents === 1 ? '' : 's'}
+                          </Pill>
+                        )}
+                        {sig && sig.overdueInvoices > 0 && <Pill tone="red">Invoice overdue</Pill>}
+                        {sig && sig.expiringCerts > 0 && <Pill tone="amber">Cert expiring</Pill>}
                         {typeof job.progress === 'number' && job.progress > 0 && (
                           <span className="text-[11px] tabular-nums text-white">
                             {job.progress}%

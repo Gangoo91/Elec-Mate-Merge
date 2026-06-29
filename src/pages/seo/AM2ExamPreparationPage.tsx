@@ -742,7 +742,7 @@ export default function AM2ExamPreparationPage() {
         <div className="max-w-4xl mx-auto">
           <SEOAppBridge
             title="AM2 Prep + Full Electrical Training Platform"
-            description="Elec-Mate includes a dedicated AM2 simulator, 2,000+ practice questions, AI study assistant, and 46+ courses covering Level 2, Level 3, and 18th Edition."
+            description="Elec-Mate includes a dedicated AM2 simulator, 20,000+ practice questions, AI study assistant, and 46+ courses covering Level 2, Level 3, and 18th Edition."
             icon={GraduationCap}
           />
           <p className="text-white mt-4 text-sm">

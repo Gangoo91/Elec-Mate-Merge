@@ -253,6 +253,7 @@ const ElecIdOverview = ({ onNavigate }: ElecIdOverviewProps) => {
     experienceCount: 0,
     skillsCount: 0,
     expiringItems: 0,
+    qsVerifiedCount: 0,
   });
   const [statsLoading, setStatsLoading] = useState(true);
 
@@ -284,18 +285,33 @@ const ElecIdOverview = ({ onNavigate }: ElecIdOverviewProps) => {
         if (t.expiry_date && isExpiringWithin(t.expiry_date, 90)) expiringCount++;
       });
 
+      // Count this user's QS-countersigned certs (approved reviews on their own
+      // work) to surface verified credibility on the Elec-ID. Distinct certs only.
+      let qsVerifiedCount = 0;
+      if (profile?.id) {
+        const { data: qsRows } = await supabase
+          .from('report_qs_reviews')
+          .select('report_uuid')
+          .eq('electrician_id', profile.id)
+          .eq('status', 'approved');
+        qsVerifiedCount = new Set(
+          (qsRows ?? []).map((r: { report_uuid: string }) => r.report_uuid)
+        ).size;
+      }
+
       setProfileStats({
         qualificationsCount: qualifications.length,
         experienceCount: workHistory.length,
         skillsCount: skills.length,
         expiringItems: expiringCount,
+        qsVerifiedCount,
       });
     } catch (err) {
       console.error('Error loading profile stats:', err);
     } finally {
       setStatsLoading(false);
     }
-  }, [elecIdProfile?.id, elecIdProfile?.ecs_expiry_date]);
+  }, [elecIdProfile?.id, elecIdProfile?.ecs_expiry_date, profile?.id]);
 
   useEffect(() => {
     loadProfileStats();
@@ -1026,6 +1042,18 @@ const ElecIdOverview = ({ onNavigate }: ElecIdOverviewProps) => {
                   }
                   onClick={() => handleStatClick('compliance')}
                 />
+                {profileStats.qsVerifiedCount > 0 && (
+                  <ListRow
+                    accent="emerald"
+                    title="QS-verified certificates"
+                    subtitle="Countersigned by a Qualifying Supervisor"
+                    trailing={
+                      <span className="text-xl font-semibold text-emerald-400 tabular-nums">
+                        {profileStats.qsVerifiedCount}
+                      </span>
+                    }
+                  />
+                )}
                 <ListRow
                   accent="yellow"
                   title="Profile views"

@@ -27,7 +27,10 @@ interface SiteVisitJobStepProps {
   ) => void;
   onUpdateProperty: (
     updates: Partial<
-      Pick<SiteVisit, 'propertyAddress' | 'propertyPostcode' | 'propertyType' | 'accessNotes'>
+      Pick<
+        SiteVisit,
+        'propertyAddress' | 'propertyPostcode' | 'propertyType' | 'accessNotes' | 'scheduledAt'
+      >
     >
   ) => void;
 }
@@ -41,6 +44,22 @@ const PROPERTY_TYPES: { value: PropertyType; label: string }[] = [
 const inputClass =
   'h-11 touch-manipulation rounded-xl border-white/[0.12] bg-[hsl(0_0%_9%)] text-base text-white placeholder:text-white/40 focus:border-elec-yellow/50 focus:ring-elec-yellow/20';
 
+/** ISO string → the local `YYYY-MM-DDTHH:mm` a datetime-local input expects. */
+const isoToLocalInput = (iso?: string): string => {
+  if (!iso) return '';
+  const d = new Date(iso);
+  if (Number.isNaN(d.getTime())) return '';
+  const pad = (n: number) => String(n).padStart(2, '0');
+  return `${d.getFullYear()}-${pad(d.getMonth() + 1)}-${pad(d.getDate())}T${pad(d.getHours())}:${pad(d.getMinutes())}`;
+};
+
+/** datetime-local value (local time) → ISO string for storage. */
+const localInputToIso = (value: string): string | undefined => {
+  if (!value) return undefined;
+  const d = new Date(value);
+  return Number.isNaN(d.getTime()) ? undefined : d.toISOString();
+};
+
 /**
  * Step 01 · Job — who it's for and where it is. Merges the old Client +
  * Property steps so a repeat job is two taps: pick the customer (their
@@ -52,7 +71,7 @@ export const SiteVisitJobStep = ({
   onUpdateProperty,
 }: SiteVisitJobStepProps) => {
   const navigate = useNavigate();
-  const { searchPreviousVisits } = useSiteVisitStorage();
+  const { searchPreviousVisits, updateScheduledAt } = useSiteVisitStorage();
   const [searchTerm, setSearchTerm] = useState('');
   const [showCreate, setShowCreate] = useState(false);
   const [selectedCustomer, setSelectedCustomer] = useState<Customer | null>(null);
@@ -441,6 +460,29 @@ export const SiteVisitJobStep = ({
             spellCheck
             enterKeyHint="done"
           />
+        </div>
+
+        {/* Optional booking — when this lands on the calendar. Persisted on its
+            own update (the atomic save doesn't carry it); a blank value clears
+            it. The row exists once the visit has cloud-synced its first edit. */}
+        <div className="space-y-1">
+          <label className="text-[11.5px] font-medium text-white/65">
+            Scheduled date &amp; time{' '}
+            <span className="font-normal text-white/40">(optional)</span>
+          </label>
+          <Input
+            type="datetime-local"
+            value={isoToLocalInput(visit.scheduledAt)}
+            onChange={(e) => {
+              const iso = localInputToIso(e.target.value);
+              onUpdateProperty({ scheduledAt: iso });
+              if (visit.id) void updateScheduledAt(visit.id, iso ?? null);
+            }}
+            className={cn(inputClass, 'block w-full')}
+          />
+          <p className="text-[11px] text-white/45">
+            Book this visit to show it on your calendar. Leave blank to skip.
+          </p>
         </div>
       </section>
     </div>

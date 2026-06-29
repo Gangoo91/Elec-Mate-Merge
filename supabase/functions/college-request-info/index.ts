@@ -1,23 +1,27 @@
 /**
- * College request-info — public form submit handler.
+ * Lead capture — public form submit handler (college + employer waitlists).
  *
- * Posts a college contact into Brevo list ID 9 (the "warm college leads"
- * list — separate from the cold scraped pool). Used as the landing-page
- * CTA from the college outreach email campaign so leads who fill the
- * form land on a list with explicit consent (form submission = soft
- * opt-in for ongoing comms).
+ * Posts a warm lead into the audience-specific Brevo list:
+ *   - college  → list 9 (warm college leads — separate from the cold pool)
+ *   - employer → list 8 (employer early-access waitlist)
+ * Form submission = explicit consent (soft opt-in for ongoing comms).
  *
  * Flow:
- *  1. Validates required fields (name, email, college).
- *  2. Upserts to Brevo list 9 (updateEnabled=true, no 400 on dupes).
+ *  1. Validates required fields (name, email, organisation).
+ *  2. Upserts to the audience's Brevo list (updateEnabled=true, no 400 on dupes).
  *  3. Notifies founder@elec-mate.com so the lead gets seen the same day.
  *  4. Returns { ok: true }.
  *
  * No auth — public form. Rate-limit at the edge proxy if abuse appears.
  *
+ * Backward compatible: callers that omit `audience` default to 'college' and
+ * may send the org as `college` (the original field) — existing ForCollegesPage
+ * keeps working unchanged.
+ *
  * ENV VARS:
  *  - BREVO_API_KEY (required)
- *  - BREVO_COLLEGE_LEADS_LIST_ID (defaults to 9 if unset)
+ *  - BREVO_COLLEGE_LEADS_LIST_ID  (defaults to 9 if unset)
+ *  - BREVO_EMPLOYER_LEADS_LIST_ID (defaults to 8 if unset)
  *  - FOUNDER_NOTIFY_EMAIL (defaults to founder@elec-mate.com)
  */
 
@@ -26,16 +30,44 @@ import { serve, corsHeaders } from '../_shared/deps.ts';
 const BREVO_CONTACTS_ENDPOINT = 'https://api.brevo.com/v3/contacts';
 const BREVO_TRANSACTIONAL_EMAIL_ENDPOINT = 'https://api.brevo.com/v3/smtp/email';
 
-const DEFAULT_LIST_ID = 9;
+const DEFAULT_COLLEGE_LIST_ID = 9;
+const DEFAULT_EMPLOYER_LIST_ID = 8;
 const DEFAULT_NOTIFY_EMAIL = 'founder@elec-mate.com';
+
+type Audience = 'college' | 'employer';
+
+const AUDIENCE_CONFIG: Record<
+  Audience,
+  { listEnv: string; defaultList: number; orgLabel: string; defaultSource: string }
+> = {
+  college: {
+    listEnv: 'BREVO_COLLEGE_LEADS_LIST_ID',
+    defaultList: DEFAULT_COLLEGE_LIST_ID,
+    orgLabel: 'College',
+    defaultSource: 'college_outreach_2026',
+  },
+  employer: {
+    listEnv: 'BREVO_EMPLOYER_LEADS_LIST_ID',
+    defaultList: DEFAULT_EMPLOYER_LIST_ID,
+    orgLabel: 'Company',
+    defaultSource: 'employer_waitlist_2026',
+  },
+};
 
 interface Payload {
   name: string;
   email: string;
-  college: string;
+  /** Which waitlist — defaults to 'college' when omitted (backward compat). */
+  audience?: Audience;
+  /** Generic org field. Falls back to `college` if not provided. */
+  organisation?: string;
+  /** Legacy/college org field — kept for the existing ForCollegesPage caller. */
+  college?: string;
   role?: string;
   phone?: string;
   message?: string;
+  /** Optional override for the Brevo SIGNUP_SOURCE attribute. */
+  signup_source?: string;
   /** Optional UTM block from the landing page */
   utm?: {
     source?: string;
@@ -94,22 +126,34 @@ async function addToBrevoList(
 async function notifyFounder(
   apiKey: string,
   toEmail: string,
-  payload: Payload
+  lead: {
+    audience: Audience;
+    name: string;
+    email: string;
+    organisation: string;
+    orgLabel: string;
+    listId: number;
+    role?: string;
+    phone?: string;
+    message?: string;
+    utm?: Payload['utm'];
+  }
 ): Promise<void> {
+  const audienceLabel = lead.audience === 'employer' ? 'employer' : 'college';
   const html = `
-    <h2>New college lead from the website</h2>
-    <p><strong>Name:</strong> ${escapeHtml(payload.name)}</p>
-    <p><strong>Email:</strong> <a href="mailto:${encodeURIComponent(payload.email)}">${escapeHtml(payload.email)}</a></p>
-    <p><strong>College:</strong> ${escapeHtml(payload.college)}</p>
-    ${payload.role ? `<p><strong>Role:</strong> ${escapeHtml(payload.role)}</p>` : ''}
-    ${payload.phone ? `<p><strong>Phone:</strong> ${escapeHtml(payload.phone)}</p>` : ''}
-    ${payload.message ? `<p><strong>Message:</strong></p><blockquote style="border-left:3px solid #ddd;padding-left:12px;margin-left:0;color:#444;">${escapeHtml(payload.message).replace(/\n/g, '<br>')}</blockquote>` : ''}
+    <h2>New ${audienceLabel} lead from the website</h2>
+    <p><strong>Name:</strong> ${escapeHtml(lead.name)}</p>
+    <p><strong>Email:</strong> <a href="mailto:${encodeURIComponent(lead.email)}">${escapeHtml(lead.email)}</a></p>
+    <p><strong>${escapeHtml(lead.orgLabel)}:</strong> ${escapeHtml(lead.organisation)}</p>
+    ${lead.role ? `<p><strong>Role:</strong> ${escapeHtml(lead.role)}</p>` : ''}
+    ${lead.phone ? `<p><strong>Phone:</strong> ${escapeHtml(lead.phone)}</p>` : ''}
+    ${lead.message ? `<p><strong>Message:</strong></p><blockquote style="border-left:3px solid #ddd;padding-left:12px;margin-left:0;color:#444;">${escapeHtml(lead.message).replace(/\n/g, '<br>')}</blockquote>` : ''}
     ${
-      payload.utm?.source || payload.utm?.medium || payload.utm?.campaign
-        ? `<p><small><strong>UTM:</strong> source=${escapeHtml(payload.utm?.source ?? '—')} · medium=${escapeHtml(payload.utm?.medium ?? '—')} · campaign=${escapeHtml(payload.utm?.campaign ?? '—')}</small></p>`
+      lead.utm?.source || lead.utm?.medium || lead.utm?.campaign
+        ? `<p><small><strong>UTM:</strong> source=${escapeHtml(lead.utm?.source ?? '—')} · medium=${escapeHtml(lead.utm?.medium ?? '—')} · campaign=${escapeHtml(lead.utm?.campaign ?? '—')}</small></p>`
         : ''
     }
-    <p><small>Brevo list 9 has been updated. Reply directly to this email to reach ${escapeHtml(payload.name)}.</small></p>
+    <p><small>Brevo list ${lead.listId} has been updated. Reply directly to this email to reach ${escapeHtml(lead.name)}.</small></p>
   `;
   try {
     await fetch(BREVO_TRANSACTIONAL_EMAIL_ENDPOINT, {
@@ -118,8 +162,8 @@ async function notifyFounder(
       body: JSON.stringify({
         sender: { name: 'Elec-Mate Lead Capture', email: 'founder@elec-mate.com' },
         to: [{ email: toEmail }],
-        replyTo: { email: payload.email, name: payload.name },
-        subject: `[Lead] ${payload.name} (${payload.college})`,
+        replyTo: { email: lead.email, name: lead.name },
+        subject: `[${lead.audience === 'employer' ? 'Employer' : 'College'} lead] ${lead.name} (${lead.organisation})`,
         htmlContent: html,
       }),
     });
@@ -157,8 +201,14 @@ serve(async (req) => {
       });
     }
 
-    const listIdRaw = Deno.env.get('BREVO_COLLEGE_LEADS_LIST_ID');
-    const listId = listIdRaw ? parseInt(listIdRaw, 10) : DEFAULT_LIST_ID;
+    const body = (await req.json()) as Payload;
+
+    // Resolve audience first — it selects the Brevo list and notification copy.
+    const audience: Audience = body.audience === 'employer' ? 'employer' : 'college';
+    const cfg = AUDIENCE_CONFIG[audience];
+
+    const listIdRaw = Deno.env.get(cfg.listEnv);
+    const listId = listIdRaw ? parseInt(listIdRaw, 10) : cfg.defaultList;
     if (!Number.isFinite(listId)) {
       return new Response(JSON.stringify({ error: 'List not configured' }), {
         status: 500,
@@ -166,10 +216,10 @@ serve(async (req) => {
       });
     }
 
-    const body = (await req.json()) as Payload;
     const name = (body.name ?? '').trim();
     const email = (body.email ?? '').trim().toLowerCase();
-    const college = (body.college ?? '').trim();
+    // Generic org field; falls back to the legacy `college` field.
+    const organisation = (body.organisation ?? body.college ?? '').trim();
 
     if (!name || name.length < 2) {
       return new Response(JSON.stringify({ error: 'Please tell us your name.' }), {
@@ -183,8 +233,12 @@ serve(async (req) => {
         headers: { ...corsHeaders, 'Content-Type': 'application/json' },
       });
     }
-    if (!college || college.length < 2) {
-      return new Response(JSON.stringify({ error: 'Which college / organisation are you with?' }), {
+    if (!organisation || organisation.length < 2) {
+      const msg =
+        audience === 'employer'
+          ? 'Which company are you with?'
+          : 'Which college / organisation are you with?';
+      return new Response(JSON.stringify({ error: msg }), {
         status: 400,
         headers: { ...corsHeaders, 'Content-Type': 'application/json' },
       });
@@ -196,15 +250,21 @@ serve(async (req) => {
     const phone = (body.phone ?? '').trim().slice(0, 32);
     const message = (body.message ?? '').trim().slice(0, 1500);
 
+    const signupSource = (body.signup_source ?? '').trim().slice(0, 80) || cfg.defaultSource;
+
     const { first, last } = splitName(name);
+    // Org is stored in the COLLEGE attribute for both audiences — it's the only
+    // org attribute known to exist in this Brevo account, and sending an
+    // undefined attribute would 400 the whole contact. Audience is segmented by
+    // list membership (8 vs 9) + SIGNUP_SOURCE, which is the source of truth.
     const attributes: Record<string, string | undefined> = {
       FIRSTNAME: first,
       LASTNAME: last,
-      COLLEGE: college.slice(0, 120),
+      COLLEGE: organisation.slice(0, 120),
       ROLE: role || undefined,
       PHONE: phone || undefined,
       MESSAGE: message || undefined,
-      SIGNUP_SOURCE: 'college_outreach_2026',
+      SIGNUP_SOURCE: signupSource,
       UTM_SOURCE: body.utm?.source,
       UTM_MEDIUM: body.utm?.medium,
       UTM_CAMPAIGN: body.utm?.campaign,
@@ -231,13 +291,16 @@ serve(async (req) => {
     // user. Don't block their response on it.
     const notifyTo = Deno.env.get('FOUNDER_NOTIFY_EMAIL') || DEFAULT_NOTIFY_EMAIL;
     void notifyFounder(apiKey, notifyTo, {
-      ...body,
+      audience,
       name,
       email,
-      college,
+      organisation,
+      orgLabel: cfg.orgLabel,
+      listId,
       role,
       phone,
       message,
+      utm: body.utm,
     });
 
     return new Response(JSON.stringify({ ok: true }), {

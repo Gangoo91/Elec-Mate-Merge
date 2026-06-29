@@ -1,4 +1,5 @@
 import 'jsr:@supabase/functions-js/edge-runtime.d.ts';
+import { createClient } from 'https://esm.sh/@supabase/supabase-js@2.49.4';
 import { captureException } from '../_shared/sentry.ts';
 import { validateEICRPayload } from '../_shared/eicr-payload-schema.ts';
 import { persistCertPdf } from '../_shared/persist-cert-pdf.ts';
@@ -104,7 +105,7 @@ Deno.serve(async (req: Request) => {
       throw new Error('PDFMONKEY_API_KEY environment variable is not set');
     }
 
-    const { formData } = await req.json();
+    const { formData, reportId } = await req.json();
 
     if (!formData) {
       throw new Error('No form data provided');
@@ -137,27 +138,69 @@ Deno.serve(async (req: Request) => {
     const completedDocument = await waitForPDFGeneration(document.id);
     console.log('[generate-eicr-pdf] PDF generated successfully');
 
-    // ELE-1082 — PDFMonkey S3 URLs expire in 1 HOUR. Persist to permanent
-    // Supabase storage server-side (reliable) and return THAT as pdfUrl so a
-    // 1-hour link can never reach the client email.
-    const permanentUrl = await persistCertPdf({
-      downloadUrl: completedDocument.download_url,
-      authHeader: req.headers.get('Authorization'),
+    // ELE-1082 / ELE-1190 — PDFMonkey S3 URLs expire in 1 HOUR, so we persist to
+    // permanent Supabase storage server-side. For heavy EICRs (UNSATISFACTORY,
+    // many observations/photos) the download+upload can run long; doing it
+    // synchronously before responding made it race the wall-clock and get
+    // silently dropped, leaving a 1-hour temp URL on the report. So:
+    //  - kick off persist once,
+    //  - in the BACKGROUND (waitUntil) finish it and write the permanent URL to
+    //    the report row, even after the response is sent,
+    //  - race a short window so LIGHT certs still return the permanent URL
+    //    immediately (no behaviour change for the common case).
+    const tempUrl = completedDocument.download_url;
+    const authHeader = req.headers.get('Authorization');
+
+    const persistPromise = persistCertPdf({
+      downloadUrl: tempUrl,
+      authHeader,
       certType: 'EICR',
       certNumber: formData?.certificateNumber,
     });
+
+    EdgeRuntime.waitUntil(
+      (async () => {
+        try {
+          const permanent = await persistPromise;
+          if (permanent && reportId) {
+            const SUPABASE_URL = Deno.env.get('SUPABASE_URL');
+            const SERVICE_KEY = Deno.env.get('SUPABASE_SERVICE_ROLE_KEY');
+            if (SUPABASE_URL && SERVICE_KEY) {
+              const admin = createClient(SUPABASE_URL, SERVICE_KEY);
+              await admin
+                .from('reports')
+                .update({ pdf_url: permanent, pdf_generated_at: new Date().toISOString() })
+                .eq('report_id', reportId);
+              console.log('[generate-eicr-pdf] report pdf_url updated to permanent (bg)');
+            }
+          } else if (!permanent) {
+            console.error('[generate-eicr-pdf] background persist returned null');
+          }
+        } catch (e) {
+          console.error('[generate-eicr-pdf] background persist/update failed:', (e as Error).message);
+        }
+      })()
+    );
+
+    // Let persist win if it's quick (light certs); otherwise return the fresh
+    // temp URL now and let the background task store the permanent one.
+    const permanentUrl = await Promise.race([
+      persistPromise.catch(() => null),
+      new Promise<string | null>((resolve) => setTimeout(() => resolve(null), 8000)),
+    ]);
+
     if (permanentUrl) {
       console.log('[generate-eicr-pdf] Persisted to permanent storage:', permanentUrl);
     } else {
-      console.error('[generate-eicr-pdf] Permanent persist FAILED — returning 1h temp URL as fallback');
+      console.log('[generate-eicr-pdf] Persist running in background — returning fresh temp URL for now');
     }
 
     return new Response(
       JSON.stringify({
         success: true,
         documentId: completedDocument.id,
-        pdfUrl: permanentUrl || completedDocument.download_url,
-        downloadUrl: completedDocument.download_url,
+        pdfUrl: permanentUrl || tempUrl,
+        downloadUrl: tempUrl,
         previewUrl: completedDocument.preview_url,
         permanent: !!permanentUrl,
       }),

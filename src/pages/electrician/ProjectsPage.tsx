@@ -45,6 +45,7 @@ import {
   type CreateProjectInput,
   type ProjectPriority,
 } from '@/hooks/useSparkProjects';
+import { useCompletedProjectsFinancials } from '@/hooks/useCompletedProjectsFinancials';
 import { supabase } from '@/integrations/supabase/client';
 import { cn } from '@/lib/utils';
 import { PANEL } from '@/components/electrician/shared/surfaces';
@@ -200,6 +201,28 @@ const ProjectsPage = () => {
       wonThisMonthValue,
     };
   }, [projects]);
+
+  // ─── Completed-project profit ─────────────────────────────────────
+  // When viewing completed work, pull batched financials (revenue / spend /
+  // profit) for exactly the projects on screen, through the shared
+  // computeProjectFinancials calc, so the strip + per-card chips agree with
+  // the project detail hero. Active view doesn't touch this.
+  const isCompletedView = view === 'completed';
+  const completedProjects = useMemo(
+    () => (isCompletedView ? projects.filter((p) => p.status === 'completed') : []),
+    [isCompletedView, projects]
+  );
+  const completedIds = useMemo(
+    () => completedProjects.map((p) => p.id),
+    [completedProjects]
+  );
+  const completedEstimatedValues = useMemo(() => {
+    const map: Record<string, number | undefined> = {};
+    for (const p of completedProjects) map[p.id] = p.estimatedValue;
+    return map;
+  }, [completedProjects]);
+  const { byProject: completedFinancials, totals: completedTotals } =
+    useCompletedProjectsFinancials(completedIds, completedEstimatedValues);
 
   // Customers for the create form
   const [customers, setCustomers] = useState<SimpleCustomer[]>([]);
@@ -435,6 +458,53 @@ const ProjectsPage = () => {
         </div>
       </div>
 
+      {/* Completed-work profit strip — only on the Completed view */}
+      {isCompletedView && completedTotals.count > 0 && (
+        <div className="px-4 lg:px-6 pt-3">
+          <div className={cn(PANEL, 'overflow-hidden')}>
+            <div className="grid grid-cols-4 divide-x divide-white/[0.06]">
+              <div className="px-2.5 py-3 sm:px-4">
+                <p className="text-[18px] sm:text-[20px] font-bold text-white tabular-nums leading-none tracking-tight">
+                  {completedTotals.count}
+                </p>
+                <p className="text-[10.5px] sm:text-[11px] text-white/65 mt-1.5 leading-tight">
+                  Completed
+                </p>
+              </div>
+              <div className="px-2.5 py-3 sm:px-4">
+                <p className="text-[18px] sm:text-[20px] font-bold text-white tabular-nums leading-none tracking-tight">
+                  {formatCurrency(completedTotals.revenue)}
+                </p>
+                <p className="text-[10.5px] sm:text-[11px] text-white/65 mt-1.5 leading-tight">
+                  Value delivered
+                </p>
+              </div>
+              <div className="px-2.5 py-3 sm:px-4">
+                <p className="text-[18px] sm:text-[20px] font-bold text-white/70 tabular-nums leading-none tracking-tight">
+                  {formatCurrency(completedTotals.spend)}
+                </p>
+                <p className="text-[10.5px] sm:text-[11px] text-white/65 mt-1.5 leading-tight">
+                  Spend
+                </p>
+              </div>
+              <div className="px-2.5 py-3 sm:px-4">
+                <p
+                  className={cn(
+                    'text-[18px] sm:text-[20px] font-bold tabular-nums leading-none tracking-tight',
+                    completedTotals.profit >= 0 ? 'text-emerald-400' : 'text-red-400'
+                  )}
+                >
+                  {formatCurrency(completedTotals.profit)}
+                </p>
+                <p className="text-[10.5px] sm:text-[11px] text-white/65 mt-1.5 leading-tight">
+                  Profit
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
+
       {/* Content */}
       <PullToRefresh onRefresh={refreshProjects}>
         <div className="px-4 lg:px-6 py-2">
@@ -488,6 +558,7 @@ const ProjectsPage = () => {
               <AnimatePresence mode="popLayout">
                 {projects.map((project) => {
                   const isCompleted = project.status === 'completed';
+                  const fin = isCompleted ? completedFinancials.get(project.id) : undefined;
                   return (
                     <motion.div
                       key={project.id}
@@ -564,6 +635,29 @@ const ProjectsPage = () => {
                                 Due {formatDate(project.dueDate)}
                               </span>
                             )}
+                          </div>
+                        )}
+
+                        {/* Profit chip — completed view only, from shared calc */}
+                        {fin && (
+                          <div className="mt-2.5 ml-5 flex items-center gap-1.5">
+                            <span
+                              className={cn(
+                                'inline-flex items-center gap-1 rounded-md px-2 py-1 text-[12px] font-semibold tabular-nums',
+                                fin.grossProfit >= 0
+                                  ? 'bg-emerald-500/12 text-emerald-400'
+                                  : 'bg-red-500/12 text-red-400'
+                              )}
+                            >
+                              {fin.grossProfit >= 0 ? '+' : '−'}
+                              {formatCurrency(Math.abs(fin.grossProfit))}
+                              {fin.marginPct !== null && (
+                                <span className="text-white/45 font-medium">
+                                  · {Math.round(fin.marginPct)}%
+                                </span>
+                              )}
+                            </span>
+                            <span className="text-[10.5px] text-white/40">profit</span>
                           </div>
                         )}
 

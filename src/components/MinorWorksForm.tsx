@@ -17,6 +17,7 @@ import {
 import MinorWorksPdfGenerator from '@/components/pdf/MinorWorksPdfGenerator';
 import { useEICAutoSave } from '@/hooks/useEICAutoSave';
 import { useCloudSync } from '@/hooks/useCloudSync';
+import { useQsReviewStatus } from '@/hooks/useQsReview';
 import { useCertLock } from '@/hooks/useCertLock';
 import CertLockBar from '@/components/inspection/CertLockBar';
 import { supabase } from '@/integrations/supabase/client';
@@ -74,6 +75,12 @@ const MinorWorksForm = ({
         `/electrician/inspection-testing?section=minor-works&reportId=${encodeURIComponent(newId)}`
       ),
   });
+
+  // QS approval auto-locks the cert; this also freezes autosave the moment a QS
+  // approves, closing the same-session window before the lock loads so React
+  // re-serialisation can't drift the approved content hash (ELE-1183).
+  const { data: qsReviewForGate } = useQsReviewStatus(currentReportId || undefined);
+  const isQsApproved = qsReviewForGate?.status === 'approved';
   const [authChecked, setAuthChecked] = useState(false);
   // True while initial cloud hydration is in-flight. Gates cloud autosave to prevent
   // the blank initial form state overwriting real data. See 2026-04-17 incident.
@@ -314,8 +321,8 @@ const MinorWorksForm = ({
     reportId: currentReportId,
     reportType: 'minor-works',
     data: formData,
-    // Locked certificates never autosave — they are immutable records.
-    enabled: !isLocked,
+    // Locked or QS-approved certificates never autosave — they are immutable records.
+    enabled: !isLocked && !isQsApproved,
     customerId: customerIdFromNav,
     onReportCreated: handleReportCreated,
     // Gate autosave until cloud load finishes — prevents blank-overwrite race.
@@ -337,7 +344,7 @@ const MinorWorksForm = ({
     onSave: async (data) => {
       await syncToCloud(false);
     },
-    enabled: !isLocked,
+    enabled: !isLocked && !isQsApproved,
   });
 
   // Issue & Lock — flush pending edits first, then lock.

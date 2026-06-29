@@ -407,7 +407,7 @@ export default function ApprenticeHub() {
   useSEO({
     title: 'Apprentice Hub | Level 2 & 3 Electrical Training',
     description:
-      'Complete electrical apprenticeship training platform. Level 2 and Level 3 courses, AM2 exam prep, 2,000+ practice questions, OJT tracking, and industry-recognised qualifications.',
+      'Complete electrical apprenticeship training platform. Level 2 and Level 3 courses, AM2 exam prep, 20,000+ practice questions, OJT tracking, and industry-recognised qualifications.',
     schema: {
       '@type': 'CollectionPage',
       name: 'Electrical Apprentice Training Hub',

@@ -520,27 +520,40 @@ const AIEnhanceObservationSheet: React.FC<AIEnhanceObservationSheetProps> = ({
                 )}
               </div>
               <div className="space-y-2">
-                {suggestions.regulationRefs.map((ref, i) => (
-                  <button
-                    key={i}
-                    type="button"
-                    className="w-full text-left flex items-start gap-3 rounded-lg p-3 bg-white/[0.04] border border-white/10 touch-manipulation active:bg-white/10 transition-colors"
-                    onClick={() =>
-                      handleCopy(
-                        `${ref.number}${ref.title ? ` — ${ref.title}` : ''}`,
-                        `Regulation ${ref.number}`
-                      )
-                    }
-                  >
-                    <span className="text-xs font-mono text-elec-yellow font-semibold flex-shrink-0 pt-0.5">
-                      {ref.number}
-                    </span>
-                    <span className="text-xs text-white leading-relaxed flex-1">
-                      {ref.title || ref.relevance}
-                    </span>
-                    <Copy className="h-3 w-3 text-white flex-shrink-0 mt-0.5" />
-                  </button>
-                ))}
+                {suggestions.regulationRefs.map((ref, i) => {
+                  const num = (ref.number || '').trim();
+                  const body = (ref.title || ref.relevance || '').trim();
+                  // Only render the prefix as a reg-number chip when it looks like
+                  // one — otherwise (messy AI prose) render it readably, never as a
+                  // monospace wall that overflows the row (ELE-1188).
+                  const isRegNumber = num.length > 0 && num.length <= 22;
+                  return (
+                    <button
+                      key={i}
+                      type="button"
+                      className="w-full text-left flex items-start gap-2.5 rounded-lg p-3 bg-white/[0.04] border border-white/10 touch-manipulation active:bg-white/10 transition-colors"
+                      onClick={() =>
+                        handleCopy(`${num}${body ? ` — ${body}` : ''}`, `Regulation ${num}`)
+                      }
+                    >
+                      {isRegNumber ? (
+                        <>
+                          <span className="shrink-0 h-fit font-mono text-[11px] font-semibold text-elec-yellow bg-elec-yellow/10 border border-elec-yellow/20 rounded px-1.5 py-0.5">
+                            {num}
+                          </span>
+                          <span className="text-xs text-white/80 leading-relaxed flex-1 min-w-0 break-words">
+                            {body}
+                          </span>
+                        </>
+                      ) : (
+                        <span className="text-xs text-white/80 leading-relaxed flex-1 min-w-0 break-words">
+                          {body ? `${num} — ${body}` : num}
+                        </span>
+                      )}
+                      <Copy className="h-3 w-3 text-white/50 flex-shrink-0 mt-0.5" />
+                    </button>
+                  );
+                })}
               </div>
               {!accepted.has('regulations') ? (
                 <div className="flex gap-2 mt-4">

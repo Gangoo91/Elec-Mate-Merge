@@ -70,6 +70,8 @@ export interface SiteVisit {
   invoiceId?: string;
   /** Business Hub project this visit belongs to (spark_projects.id) */
   projectId?: string;
+  /** When the visit is booked (ISO) — optional; surfaces on the calendar */
+  scheduledAt?: string;
   rooms: SiteVisitRoom[];
   prompts: SiteVisitPrompt[];
   photos: SiteVisitPhoto[];

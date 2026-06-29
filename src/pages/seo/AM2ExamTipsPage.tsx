@@ -79,7 +79,7 @@ const relatedPages = [
   {
     href: '/apprentice-training-training',
     title: 'Apprentice Training Hub',
-    description: 'Level 2 and Level 3 courses, flashcards, and 2,000+ practice questions.',
+    description: 'Level 2 and Level 3 courses, flashcards, and 20,000+ practice questions.',
     icon: GraduationCap,
     category: 'Training',
   },
@@ -535,7 +535,7 @@ const sections = [
           report significantly higher confidence and pass rates.
         </p>
         <p>
-          Beyond the AM2 Simulator, Elec-Mate also provides flashcards, 2,000+ practice questions,
+          Beyond the AM2 Simulator, Elec-Mate also provides flashcards, 20,000+ practice questions,
           BS 7671 run-through content, and an AI study assistant that answers regulation questions
           in plain English. It is the complete preparation toolkit for your AM2 and beyond.
         </p>
