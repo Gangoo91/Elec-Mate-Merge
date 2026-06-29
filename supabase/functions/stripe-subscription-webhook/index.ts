@@ -501,69 +501,71 @@ async function sendFounderSignupNotification(args: {
       : 0;
   const slotBar =
     args.isFounder && slotsClaimed !== null && args.founderSlotsCap !== null
-      ? `<table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" style="margin-top:28px;">
-  <tr><td style="padding:18px 20px;background:rgba(250,204,21,0.04);border:1px solid rgba(250,204,21,0.12);border-radius:14px;">
+      ? `<table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" style="margin-top:24px;">
+  <tr><td style="padding:18px 20px;background:#FFFAEC;border:1px solid #EFD489;border-radius:14px;">
     <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0">
       <tr>
-        <td style="font-size:11px;font-weight:700;letter-spacing:0.22em;color:#FACC15;text-transform:uppercase;">Founder programme</td>
-        <td align="right" style="font-size:13px;color:rgba(255,255,255,0.85);font-weight:700;">${slotsClaimed}<span style="color:rgba(255,255,255,0.35);font-weight:400;">/${args.founderSlotsCap}</span></td>
+        <td style="font-size:11px;font-weight:700;letter-spacing:0.18em;color:#B5840A;text-transform:uppercase;">Founder programme</td>
+        <td align="right" style="font-size:13px;color:#0C1B2A;font-weight:700;">${slotsClaimed}<span style="color:#8B95A3;font-weight:400;">/${args.founderSlotsCap}</span></td>
       </tr>
     </table>
-    <div style="height:6px;background:rgba(255,255,255,0.08);border-radius:999px;overflow:hidden;margin-top:10px;">
-      <div style="height:100%;width:${slotPct}%;background:linear-gradient(90deg,#FACC15,#F59E0B);border-radius:999px;"></div>
+    <div style="height:6px;background:#F0E6C8;border-radius:999px;overflow:hidden;margin-top:10px;">
+      <div style="height:100%;width:${slotPct}%;background:linear-gradient(90deg,#F3B70A,#E0A800);border-radius:999px;"></div>
     </div>
-    <div style="font-size:13px;color:rgba(255,255,255,0.65);margin-top:10px;line-height:1.5;">
-      ${args.founderSlotsLeft} spots left. ${args.customerName.split(/\s+/)[0]} locked in <span style="color:#FACC15;font-weight:600;">${cur}${amount}${period} forever</span>.
+    <div style="font-size:13px;color:#51606F;margin-top:10px;line-height:1.5;">
+      ${args.founderSlotsLeft} spots left. ${args.customerName.split(/\s+/)[0]} locked in <span style="color:#B5840A;font-weight:700;">${cur}${amount}${period} forever</span>.
     </div>
   </td></tr>
 </table>`
       : '';
 
   const phoneLine = args.customerPhone
-    ? `<tr><td style="padding:6px 0;color:rgba(255,255,255,0.5);">Phone</td><td style="padding:6px 0;color:#fff;font-family:ui-monospace,SFMono-Regular,Menlo,monospace;">${args.customerPhone}</td></tr>`
+    ? `<tr><td style="padding:7px 0;color:#8B95A3;">Phone</td><td style="padding:7px 0;color:#0C1B2A;font-family:ui-monospace,SFMono-Regular,Menlo,monospace;">${args.customerPhone}</td></tr>`
     : '';
 
   const emailHtml = `<!DOCTYPE html>
-<html lang="en"><head><meta charset="UTF-8"/><meta name="viewport" content="width=device-width,initial-scale=1"/></head>
-<body style="margin:0;padding:0;background:#0a0a0a;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;color:#e2e8f0;">
-<table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" style="background:#0a0a0a;">
-  <tr><td align="center" style="padding:32px 16px;">
+<html lang="en"><head><meta charset="UTF-8"/><meta name="viewport" content="width=device-width,initial-scale=1"/><meta name="color-scheme" content="light"/><meta name="supported-color-schemes" content="light"/></head>
+<body style="margin:0;padding:0;background:#F4F6F9;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif;-webkit-font-smoothing:antialiased;color:#0C1B2A;">
+<table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" style="background:#F4F6F9;">
+  <tr><td align="center" style="padding:40px 16px;">
     <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" style="max-width:560px;">
 
-      <tr><td style="padding:0 4px 22px 4px;">
-        <span style="font-size:14px;font-weight:700;letter-spacing:-0.01em;color:#fff;">Elec-<span style="color:#FACC15;">Mate</span></span>
-        <span style="float:right;font-size:11px;font-weight:700;letter-spacing:0.22em;color:rgba(255,255,255,0.4);text-transform:uppercase;">Founder alert</span>
+      <tr><td style="padding:0 6px 20px 6px;">
+        <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0"><tr>
+          <td align="left" valign="middle"><img src="https://jtwygbeceundfgnkirof.supabase.co/storage/v1/object/public/lead-magnets/onboarding/elec-mate-logo.png" alt="Elec-Mate" width="40" height="40" style="display:inline-block;vertical-align:middle;border-radius:10px;border:1px solid #E6E9EE;"/></td>
+          <td align="right" valign="middle" style="font-size:11px;font-weight:700;letter-spacing:0.2em;color:#B5840A;text-transform:uppercase;">Founder alert</td>
+        </tr></table>
       </td></tr>
 
-      <tr><td style="background:#111111;border:1px solid rgba(255,255,255,0.06);border-radius:24px;padding:34px 32px;">
-        <div style="font-size:11px;font-weight:700;letter-spacing:0.22em;color:#FACC15;text-transform:uppercase;">New signup ⚡</div>
-        <h1 style="margin:14px 0 6px 0;font-size:42px;line-height:1.05;font-weight:800;letter-spacing:-0.025em;color:#ffffff;">${args.customerName}</h1>
-        <p style="margin:0 0 8px 0;font-size:22px;line-height:1.3;font-weight:500;color:rgba(255,255,255,0.7);">just joined <span style="color:#FACC15;font-weight:700;">${args.tierName}</span>.</p>
-        <p style="margin:0;font-size:13px;line-height:1.5;color:rgba(255,255,255,0.55);">${statusLine}</p>
+      <tr><td style="background:#FFFFFF;border:1px solid #E6E9EE;border-radius:18px;padding:34px 32px;">
+        <div style="font-size:11px;font-weight:700;letter-spacing:0.18em;color:#B5840A;text-transform:uppercase;">New signup ⚡</div>
+        <h1 style="margin:12px 0 6px 0;font-size:38px;line-height:1.07;font-weight:800;letter-spacing:-0.02em;color:#0C1B2A;">${args.customerName}</h1>
+        <p style="margin:0 0 8px 0;font-size:20px;line-height:1.3;font-weight:500;color:#51606F;">just joined <span style="color:#B5840A;font-weight:700;">${args.tierName}</span>.</p>
+        <p style="margin:0;font-size:13px;line-height:1.5;color:#8B95A3;">${statusLine}</p>
         ${slotBar}
-        <div style="height:1px;background:rgba(255,255,255,0.06);margin:30px 0 24px 0;"></div>
-        <div style="font-size:11px;font-weight:700;letter-spacing:0.22em;color:rgba(255,255,255,0.5);text-transform:uppercase;margin-bottom:14px;">Details</div>
+        <div style="height:1px;background:#EAEDF1;margin:28px 0 22px 0;"></div>
+        <div style="font-size:11px;font-weight:700;letter-spacing:0.18em;color:#0C1B2A;text-transform:uppercase;margin-bottom:12px;">Details</div>
         <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" style="font-size:14px;line-height:1.5;">
-          <tr><td style="padding:6px 0;color:rgba(255,255,255,0.5);width:90px;">Email</td><td style="padding:6px 0;color:#fff;"><a href="mailto:${args.customerEmail}" style="color:#FACC15;text-decoration:none;">${args.customerEmail}</a></td></tr>
+          <tr><td style="padding:7px 0;color:#8B95A3;width:90px;">Email</td><td style="padding:7px 0;color:#0C1B2A;"><a href="mailto:${args.customerEmail}" style="color:#B5840A;text-decoration:none;font-weight:600;">${args.customerEmail}</a></td></tr>
           ${phoneLine}
-          <tr><td style="padding:6px 0;color:rgba(255,255,255,0.5);">Tier</td><td style="padding:6px 0;color:#fff;">${args.tierName}${args.isFounder ? ' · founder price locked in' : ''}</td></tr>
-          <tr><td style="padding:6px 0;color:rgba(255,255,255,0.5);">Amount</td><td style="padding:6px 0;color:#fff;font-weight:700;">${cur}${amount}${period}${args.isTrial ? ' <span style="color:rgba(255,255,255,0.45);font-weight:400;">(after 3-day trial)</span>' : ''}</td></tr>
-          <tr><td style="padding:6px 0;color:rgba(255,255,255,0.5);">User ID</td><td style="padding:6px 0;color:rgba(255,255,255,0.7);font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:12px;">${args.userId}</td></tr>
-          <tr><td style="padding:6px 0;color:rgba(255,255,255,0.5);">Sub ID</td><td style="padding:6px 0;color:rgba(255,255,255,0.7);font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:12px;">${args.subscriptionId}</td></tr>
+          <tr><td style="padding:7px 0;color:#8B95A3;">Tier</td><td style="padding:7px 0;color:#0C1B2A;">${args.tierName}${args.isFounder ? ' · founder price locked in' : ''}</td></tr>
+          <tr><td style="padding:7px 0;color:#8B95A3;">Amount</td><td style="padding:7px 0;color:#0C1B2A;font-weight:700;">${cur}${amount}${period}${args.isTrial ? ` <span style="color:#8B95A3;font-weight:400;">(after ${trialDaysForTier}-day trial)</span>` : ''}</td></tr>
+          <tr><td style="padding:7px 0;color:#8B95A3;">User ID</td><td style="padding:7px 0;color:#51606F;font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:12px;">${args.userId}</td></tr>
+          <tr><td style="padding:7px 0;color:#8B95A3;">Sub ID</td><td style="padding:7px 0;color:#51606F;font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:12px;">${args.subscriptionId}</td></tr>
         </table>
-        <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" style="margin-top:30px;">
+        <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" style="margin-top:28px;">
           <tr>
             <td style="padding-right:6px;width:50%;">
-              <a href="https://elec-mate.com/admin/mate/${args.userId}" style="display:block;text-align:center;padding:14px;border-radius:14px;background:#FACC15;color:#000;font-weight:700;font-size:14px;text-decoration:none;letter-spacing:-0.01em;">View in admin →</a>
+              <a href="https://elec-mate.com/admin/mate/${args.userId}" style="display:block;text-align:center;padding:14px;border-radius:12px;background:#F3B70A;color:#0C1B2A;font-weight:700;font-size:14px;text-decoration:none;letter-spacing:-0.01em;">View in admin →</a>
             </td>
             <td style="padding-left:6px;width:50%;">
-              <a href="mailto:${args.customerEmail}" style="display:block;text-align:center;padding:14px;border-radius:14px;background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.1);color:#fff;font-weight:600;font-size:14px;text-decoration:none;">Reply to ${firstName}</a>
+              <a href="mailto:${args.customerEmail}" style="display:block;text-align:center;padding:14px;border-radius:12px;background:#FFFFFF;border:1px solid #D8DEE6;color:#0C1B2A;font-weight:600;font-size:14px;text-decoration:none;">Reply to ${firstName}</a>
             </td>
           </tr>
         </table>
       </td></tr>
 
-      <tr><td style="padding:24px 4px 0 4px;font-size:11px;line-height:1.6;color:rgba(255,255,255,0.4);">
+      <tr><td style="padding:20px 8px 0 8px;font-size:11px;line-height:1.6;color:#8B95A3;">
         Sent ${new Date().toISOString()}. Founder signup notifications are on for this account.
       </td></tr>
 
