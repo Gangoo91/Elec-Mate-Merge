@@ -467,9 +467,10 @@ const MWTestingTab: React.FC<MWTestingTabProps> = ({ formData, onUpdate }) => {
 
         <div className="grid grid-cols-2 gap-3">
           {[
-            { field: 'insulationLiveNeutral', label: 'L-N (MΩ)' },
+            // A4:2026 MEIWC model form: single-phase L-N reading IS the "Live-Live" column (ELE-1228)
+            { field: 'insulationLiveNeutral', label: (formData.supplyPhases === '3' || formData.supplyPhases === 'Three') ? 'L-N (MΩ)' : 'L-L (MΩ)' },
             { field: 'insulationLiveEarth', label: 'L-E (MΩ)' },
-            // L-L only applicable to 3-phase
+            // Explicit L-L only applicable to 3-phase
             ...(formData.supplyPhases === '3' || formData.supplyPhases === 'Three'
               ? [{ field: 'insulationLiveLive', label: 'L-L (MΩ)' }]
               : []),

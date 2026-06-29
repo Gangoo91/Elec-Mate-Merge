@@ -19,7 +19,6 @@ interface EnhancedTestResultDesktopTableHeaderProps {
   onFillAllInsulationVoltage?: (value: string) => void;
   onFillAllInsulationLiveNeutral?: (value: string) => void;
   onFillAllInsulationLiveEarth?: (value: string) => void;
-  onFillAllInsulationNeutralEarth?: (value: string) => void;
   onFillAllPolarity?: (value: string) => void;
   onFillAllFunctional?: (value: string) => void;
   onFillAllWiringType?: (value: string) => void;
@@ -47,7 +46,6 @@ const EnhancedTestResultDesktopTableHeader: React.FC<EnhancedTestResultDesktopTa
   onFillAllInsulationVoltage,
   onFillAllInsulationLiveNeutral,
   onFillAllInsulationLiveEarth,
-  onFillAllInsulationNeutralEarth,
   onFillAllPolarity,
   onFillAllFunctional,
   onFillAllWiringType,
@@ -157,7 +155,7 @@ const EnhancedTestResultDesktopTableHeader: React.FC<EnhancedTestResultDesktopTa
 
         {/* ELE-871 — overflow-hidden + key on the button stops the duplicate-label
             visual artifact during the colSpan recalc when toggling collapse. */}
-        <TableHead colSpan={isGroupCollapsed('insulation') ? 1 : 4} className="sot-header-group-cell overflow-hidden">
+        <TableHead colSpan={isGroupCollapsed('insulation') ? 1 : 3} className="sot-header-group-cell overflow-hidden">
           <button
             key={isGroupCollapsed('insulation') ? 'insulation-collapsed' : 'insulation-expanded'}
             onClick={() => onToggleGroup('insulation')}
@@ -1003,45 +1001,6 @@ const EnhancedTestResultDesktopTableHeader: React.FC<EnhancedTestResultDesktopTa
                         >
                           LIM
                         </button>
-                      </div>
-                    </PopoverContent>
-                  </Popover>
-                )}
-              </div>
-            </TableHead>
-            {/* ELE-868 — Neutral-Earth column (was missing from UI; PDF already had it) */}
-            <TableHead
-              className="sot-header-cell w-28 min-w-[104px] max-w-[104px]"
-              data-group="insulation"
-            >
-              <div className="flex items-center justify-center gap-2">
-                <span>N-E</span>
-                {onFillAllInsulationNeutralEarth && (
-                  <Popover>
-                    <PopoverTrigger asChild>
-                      <button
-                        className="sot-fill-all-btn"
-                        title="Quick fill all Neutral-Earth readings"
-                      >
-                        <CheckCircle className="h-5 w-5 text-amber-400" />
-                      </button>
-                    </PopoverTrigger>
-                    <PopoverContent className="w-48 p-3 bg-background border-border" align="start">
-                      <div className="space-y-1">
-                        {[
-                          { v: '>200', label: '>200 MΩ' },
-                          { v: '>999', label: '>999 MΩ' },
-                          { v: 'N/A', label: 'N/A' },
-                          { v: 'LIM', label: 'LIM' },
-                        ].map((o) => (
-                          <button
-                            key={o.v}
-                            onClick={() => onFillAllInsulationNeutralEarth(o.v)}
-                            className="w-full text-left px-3 py-2 text-sm rounded-md hover:bg-muted hover:text-foreground transition-colors"
-                          >
-                            {o.label}
-                          </button>
-                        ))}
                       </div>
                     </PopoverContent>
                   </Popover>

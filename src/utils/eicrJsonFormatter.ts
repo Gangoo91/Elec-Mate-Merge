@@ -814,15 +814,16 @@ export const formatEICRJson = async (formData: any, reportId: string): Promise<E
       );
 
       // Get public URLs for the photos — RESIZED via Supabase image transform so
-      // PDFMonkey downloads ~150KB thumbnails, not multi-MB phone originals. Full-res
-      // originals made the EICR render take 45-57s (PDF generation timed out); 1400px
-      // is sharp enough for the certificate and keeps render time in seconds.
+      // PDFMonkey downloads small thumbnails, not multi-MB phone originals. Full-res
+      // originals made the EICR render take 45-57s (PDF generation timed out). ELE-1189:
+      // dropped from 1400px/q70 to 1200px/q65 (~45% smaller) so photo-heavy EICR PDFs
+      // stay under Brevo's email-attachment limit; still sharp enough for the cert.
       const photoUrls = observationPhotos.map((photo) => {
         const {
           data: { publicUrl },
         } = supabase.storage
           .from('inspection-photos')
-          .getPublicUrl(photo.file_path, { transform: { width: 1400, quality: 70 } });
+          .getPublicUrl(photo.file_path, { transform: { width: 1200, quality: 65 } });
         return publicUrl;
       });
 

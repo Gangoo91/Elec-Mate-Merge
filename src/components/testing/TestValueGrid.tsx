@@ -235,15 +235,6 @@ const TestValueGrid: React.FC<TestValueGridProps> = ({ circuit, onUpdate }) => {
             {circuit.insulationLiveNeutral || 'Tap'}
           </button>
         </div>
-        <div className="space-y-1">
-          <Label className="text-xs text-white">N-E (MΩ)</Label>
-          <button
-            onClick={() => handleTileClick('insulationNeutralEarth')}
-            className="w-full h-10 flex items-center justify-center rounded-lg bg-white/5 border border-white/10 text-sm text-white hover:bg-white/10 touch-manipulation"
-          >
-            {circuit.insulationNeutralEarth || 'Tap'}
-          </button>
-        </div>
       </div>
 
       {/* Quick value input modal for other fields */}

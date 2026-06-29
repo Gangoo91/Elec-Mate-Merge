@@ -251,18 +251,6 @@ const EnhancedTestResultDesktopTable: React.FC<EnhancedTestResultDesktopTablePro
     toast.success(`All Live-Earth fields filled with ${value} MΩ`);
   };
 
-  // N-E quick-fill was missing (N-E added later in ELE-868); add for parity.
-  const handleFillAllInsulationNeutralEarth = (value: string) => {
-    if (onBulkFieldUpdate) {
-      onBulkFieldUpdate('insulationNeutralEarth', value);
-    } else {
-      testResults.forEach((result) => {
-        onUpdate(result.id, 'insulationNeutralEarth', value);
-      });
-    }
-    toast.success(`All Neutral-Earth fields filled with ${value} MΩ`);
-  };
-
   const handleFillAllPolarity = (value: string) => {
     if (onBulkFieldUpdate) {
       onBulkFieldUpdate('polarity', value);
@@ -457,7 +445,6 @@ const EnhancedTestResultDesktopTable: React.FC<EnhancedTestResultDesktopTablePro
                     onFillAllInsulationVoltage={handleFillAllInsulationVoltage}
                     onFillAllInsulationLiveNeutral={handleFillAllInsulationLiveNeutral}
                     onFillAllInsulationLiveEarth={handleFillAllInsulationLiveEarth}
-                    onFillAllInsulationNeutralEarth={handleFillAllInsulationNeutralEarth}
                     onFillAllPolarity={handleFillAllPolarity}
                     onFillAllFunctional={handleFillAllFunctional}
                     onFillAllWiringType={handleFillAllWiringType}

@@ -343,7 +343,10 @@ function transformFormDataForTemplate(formData: any): MinorWorksPayload {
       ring_r2_cross: formData.ringR2Cross || 'N/A',
       ring_final: formData.ringFinalContinuity || 'N/A',
       insulation_voltage: formData.insulationTestVoltage || '500',
-      ir_live_live: formData.insulationLiveLive || 'N/A',
+      // A4:2026 MEIWC model form renders Live-Live & Live-Earth only (ELE-1228); the
+      // template ignores ir_live_neutral / ir_neutral_earth. Single-phase L-N reading IS
+      // the Live-Live column, so fall back to it when there's no explicit 3-phase L-L.
+      ir_live_live: formData.insulationLiveLive || formData.insulationLiveNeutral || 'N/A',
       ir_live_neutral: formData.insulationLiveNeutral || 'N/A',
       ir_live_earth: formData.insulationLiveEarth || 'N/A',
       ir_neutral_earth: formData.insulationNeutralEarth || 'N/A',

@@ -354,7 +354,20 @@ const handler = async (req: Request): Promise<Response> => {
             binary += String.fromCharCode.apply(null, Array.from(chunk));
           }
           pdfBase64 = btoa(binary);
-          pdfAttachmentSuccess = true;
+          // ELE-1189 — Brevo rejects oversized attachments with "500: Invalid
+          // Request", failing the whole send. EICR/cert PDFs with site photos can
+          // exceed Brevo's limit, so cap the attachment; when skipped the email
+          // still carries the secure download link (pdfUrl), so delivery never fails.
+          const MAX_BREVO_ATTACHMENT_BYTES = 7 * 1024 * 1024; // ~7 MB of base64
+          if (pdfBase64.length > MAX_BREVO_ATTACHMENT_BYTES) {
+            console.warn(
+              `PDF too large to attach (${pdfBase64.length} b64 bytes > ${MAX_BREVO_ATTACHMENT_BYTES}) — sending download link only`
+            );
+            pdfBase64 = null;
+            pdfAttachmentSuccess = false;
+          } else {
+            pdfAttachmentSuccess = true;
+          }
           console.log(`PDF downloaded: ${pdfArrayBuffer.byteLength} bytes`);
         }
       } catch (pdfDownloadError) {
@@ -480,10 +493,19 @@ const handler = async (req: Request): Promise<Response> => {
       console.log('PDF attached:', filename);
     }
 
-    const { data: emailData, error: emailError } = await resend.emails.send(emailOptions);
+    let { data: emailData, error: emailError } = await resend.emails.send(emailOptions);
+
+    // ELE-1189 — belt-and-braces: if the send failed while carrying an attachment,
+    // retry once without it so a problematic PDF never blocks delivery. The email
+    // keeps the secure download link, so the client can still get the certificate.
+    if (emailError && emailOptions.attachments?.length) {
+      console.warn(`Send failed with attachment, retrying link-only: ${emailError.message}`);
+      delete emailOptions.attachments;
+      ({ data: emailData, error: emailError } = await resend.emails.send(emailOptions));
+    }
 
     if (emailError) {
-      console.error('Resend API error:', emailError);
+      console.error('Email send error:', emailError);
       throw new Error(`Failed to send email: ${emailError.message || 'Unknown error'}`);
     }
 

@@ -113,7 +113,7 @@ async function formatObservationsWithPhotos(observations: any[], reportId: strin
         data: { publicUrl },
       } = supabase.storage
         .from('inspection-photos')
-        .getPublicUrl(photo.file_path, { transform: { width: 1400, quality: 70 } });
+        .getPublicUrl(photo.file_path, { transform: { width: 1200, quality: 65 } });
       return publicUrl;
     });
 
@@ -621,12 +621,17 @@ export async function formatEicJson(
         cp_scheme_na: formData.inspectedByCpSchemeNA ?? false,
         same_as_inspector: formData.eicSameAsInspectedBy ?? false,
       },
+      // ELE-1227 — "Report Authorised for Issue By" was blank on the PDF whenever
+      // it wasn't filled separately (no QS review, sole trader). Mirror the
+      // inspected_by fallback so the bottom signature block reads coherently from
+      // the inspector. Explicit authoriser entries win; the QS countersignature
+      // override below still takes final precedence.
       report_authorised_by: {
-        name: formData.reportAuthorisedByName || '',
-        date: formData.reportAuthorisedByDate || '',
-        signature: formData.reportAuthorisedBySignature || '',
-        for_on_behalf_of: formData.reportAuthorisedByForOnBehalfOf || '',
-        position: formData.reportAuthorisedByPosition || '',
+        name: formData.reportAuthorisedByName || formData.inspectorName || '',
+        date: formData.reportAuthorisedByDate || formData.inspectionDate || '',
+        signature: formData.reportAuthorisedBySignature || formData.inspectorSignature || '',
+        for_on_behalf_of: formData.reportAuthorisedByForOnBehalfOf || formData.inspectorCompany || '',
+        position: formData.reportAuthorisedByPosition || formData.inspectorQualifications || '',
         address: formData.reportAuthorisedByAddress || '',
         postcode: formData.reportAuthorisedByPostcode || '',
         phone: formData.reportAuthorisedByPhone || '',

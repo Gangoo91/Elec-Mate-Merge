@@ -152,7 +152,7 @@ export const CircuitList: React.FC<CircuitListProps> = ({
       ringContinuityLive: 'N/A', ringContinuityNeutral: 'N/A',
       ringR1: 'N/A', ringRn: 'N/A', ringR2: 'N/A',
       insulationTestVoltage: 'N/A', insulationLiveNeutral: 'N/A',
-      insulationLiveEarth: 'N/A', insulationResistance: 'N/A', insulationNeutralEarth: 'N/A',
+      insulationLiveEarth: 'N/A', insulationResistance: 'N/A',
       polarity: 'N/A', zs: 'N/A',
       rcdOneX: 'N/A', rcdFiveX: 'N/A', rcdHalfX: 'N/A',
       rcdRating: 'N/A', rcdType: 'N/A',
@@ -1099,19 +1099,6 @@ const TestsTabContent: React.FC<TabContentProps> = ({ getValue, onChange }) => (
             placeholder=">200"
           />
         </FormField>
-      </FormRow>
-      {/* ELE-868 — Neutral-Earth (was missing from UI; PDF already had it) */}
-      <FormRow>
-        <FormField label="Neutral-Earth (MΩ)">
-          <Input
-            value={getValue('insulationNeutralEarth') as string}
-            onChange={(e) => onChange('insulationNeutralEarth', e.target.value)}
-            className="h-11 text-sm"
-            inputMode="decimal"
-            placeholder=">200"
-          />
-        </FormField>
-        <div />
       </FormRow>
     </FormSection>
 
