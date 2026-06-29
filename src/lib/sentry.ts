@@ -175,6 +175,18 @@ export function initSentry() {
           event.tags = { ...event.tags, category: 'network' };
         }
 
+        // Downgrade Supabase realtime transport churn to 'warning' — the
+        // WebSocket drops and auto-reconnects, so these never break a feature
+        // for the user, but at full volume they dominate the dashboard and
+        // mask real bugs. Kept (not dropped) in case the realtime service
+        // genuinely goes down — query category:realtime to see the trend.
+        // Sentry: REACT-AR/AN (transport failure), AJ/AY (socket closed 1006),
+        // B5/AZ (heartbeat timeout).
+        if (/channel error: transport failure|socket closed: 1006|heartbeat timeout/i.test(message)) {
+          event.level = 'warning';
+          event.tags = { ...event.tags, category: 'realtime' };
+        }
+
         return event;
       },
 

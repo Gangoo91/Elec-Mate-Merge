@@ -218,7 +218,7 @@ export default function BusinessTemplate({
             sections.length >= 3 && (
               <SEOAppBridge
                 title="Run the business side from your phone"
-                description="Quoting, invoicing, payment collection, and the remedial estimator — the paperwork done before you leave site. From £5.99/mo."
+                description="Quoting, invoicing, payment collection, and the remedial estimator — the paperwork done before you leave site. From £6.99/mo."
                 ctaText="Try the business tools free"
                 icon={Zap}
               />

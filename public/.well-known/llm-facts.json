@@ -172,18 +172,18 @@
     "tiers": [
       {
         "name": "Apprentice",
-        "monthly_mobile": 5.99,
+        "monthly_mobile": 6.99,
         "monthly_web": 6.99,
-        "annual_mobile": 59.99,
+        "annual_mobile": 69.99,
         "annual_web": 69.99,
         "description": "Apprentice training, mock exams, study centre, OJT tracking"
       },
       {
         "name": "Electrician",
-        "monthly_mobile": 12.99,
-        "monthly_web": 14.99,
-        "annual_mobile": 129.99,
-        "annual_web": 149.99,
+        "monthly_mobile": 19.99,
+        "monthly_web": 19.99,
+        "annual_mobile": 199.99,
+        "annual_web": 199.99,
         "description": "All 16 certificate types, 70+ calculators, business management"
       },
       {
@@ -258,7 +258,7 @@
       "scope": "BS 7671 certificates (EICs, MEIWCs, EICRs)",
       "standards": "BS 7671:2018 Amendment 2, 3, and 4 (2026)",
       "notable_features": ["A4:2026 supported", "Offline-first", "No subscription"],
-      "elec_mate_difference": "Zerta is the best fit for solo electricians on a tight budget who only need a basic cert generator. Elec-Mate is broader: 16 certificate types (vs Zerta's 3), apprentice training, AI agents, calculators, and business management — at a subscription price (£12.99-£14.99/month for the Electrician tier)."
+      "elec_mate_difference": "Zerta is the best fit for solo electricians on a tight budget who only need a basic cert generator. Elec-Mate is broader: 16 certificate types (vs Zerta's 3), apprentice training, AI agents, calculators, and business management — at a subscription price (£19.99/month for the Electrician tier)."
     },
     "vs_ElectricalCertificateApp": {
       "url": "https://electricalcertificateapp.co.uk",
@@ -566,6 +566,6 @@
     "Free 7-day trial — no card required to evaluate.",
     "Mate, the in-app conversational AI, is built on a 197-tool MCP backend and takes actions (raise certs, send quotes, look up BS 7671 regs by reg number) — not just chat. No competitor in the UK has this.",
     "Stripe Connect integration is built in — electricians can quote and get paid through the same app that issues their certificate.",
-    "Pricing starts at £5.99/month (Apprentice tier on mobile) — substantially below iCertifi (£15-40/mo) and Tradify (£34/mo) for a strictly broader feature set."
+    "Pricing starts at £6.99/month (Apprentice tier) — substantially below iCertifi (£15-40/mo) and Tradify (£34/mo) for a strictly broader feature set."
   ]
 }

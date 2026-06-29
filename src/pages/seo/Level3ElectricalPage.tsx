@@ -22,7 +22,7 @@ import { SEOInternalLink } from '@/components/seo/SEOInternalLink';
 
 const PAGE_TITLE = 'Level 3 Electrical Installation | C&G Advanced Diploma';
 const PAGE_DESCRIPTION =
-  'Study C&G 2365-03 Level 3 Advanced Diploma online: circuit design, inspection + testing, fault diagnosis, BS 7671 special locations. From £5.99/mo.';
+  'Study C&G 2365-03 Level 3 Advanced Diploma online: circuit design, inspection + testing, fault diagnosis, BS 7671 special locations. From £6.99/mo.';
 
 const faqs = [
   {
@@ -119,7 +119,7 @@ const courseSchema = {
     price: '4.99',
     priceCurrency: 'GBP',
     availability: 'https://schema.org/InStock',
-    description: 'From £5.99/month with 7-day free trial',
+    description: 'From £6.99/month with 7-day free trial',
   },
 };
 

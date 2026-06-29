@@ -22,7 +22,7 @@ import { SEOInternalLink } from '@/components/seo/SEOInternalLink';
 
 const PAGE_TITLE = 'Level 2 Electrical Installation | C&G 2365 Online';
 const PAGE_DESCRIPTION =
-  'Study C&G 2365-02 Level 2 Electrical Installation online: AI study assistant, modules on science, installation methods, earthing. From £5.99/mo.';
+  'Study C&G 2365-02 Level 2 Electrical Installation online: AI study assistant, modules on science, installation methods, earthing. From £6.99/mo.';
 
 const faqs = [
   {
@@ -118,7 +118,7 @@ const courseSchema = {
     price: '4.99',
     priceCurrency: 'GBP',
     availability: 'https://schema.org/InStock',
-    description: 'From £5.99/month with 7-day free trial',
+    description: 'From £6.99/month with 7-day free trial',
   },
 };
 

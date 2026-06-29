@@ -126,7 +126,7 @@ Elec-Mate is a UK mobile-first electrical platform combining certification, appr
 UK electricians (domestic, commercial, industrial), electrical apprentices (City & Guilds 2365 Level 2 / Level 3, AM2, AM2E), electrical contractors and employers, and college tutors managing electrical students.
 
 **How much does Elec-Mate cost?**
-From £5.99/month (Apprentice tier on mobile) or £6.99/month on web. Electrician tier from £12.99/month. Mate (Business AI) tier from £34.99/month. Employer tier from £49.99/month. Annual plans available with discount. Free 7-day trial.
+From £6.99/month (Apprentice tier). Electrician tier from £19.99/month. Mate (Business AI) tier from £34.99/month. Employer tier from £49.99/month. Annual plans available with discount. Free 7-day trial.
 
 **Is Elec-Mate UK-compliant?**
 Yes — every certificate, calculator, and training resource is aligned to BS 7671:2018 Amendment 4 (2026), IET Guidance Note 3 (9th Edition), and the IET On-Site Guide. Supports notifiable work for Part P registration (NICEIC, NAPIT, ELECSA, Stroma).
@@ -339,14 +339,14 @@ All tools, certificates, training content and calculators on Elec-Mate are align
 ## Pricing (verified from Stripe — current as of 2026-05)
 
 Monthly (mobile / web):
-- Apprentice: £5.99 / £6.99
-- Electrician: £12.99 / £14.99
+- Apprentice: £6.99 / £6.99
+- Electrician: £19.99 / £19.99
 - Mate (Business AI): £39.99 / £34.99
 - Employer: £49.99
 
 Annual:
-- Apprentice: £59.99 / £69.99
-- Electrician: £129.99 / £149.99
+- Apprentice: £69.99 / £69.99
+- Electrician: £199.99 / £199.99
 - Mate: £399.99
 - Employer: £499.99
 

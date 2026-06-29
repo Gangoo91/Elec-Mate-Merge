@@ -204,7 +204,7 @@ export default function CourseTemplate({
             sections.length >= 3 && (
               <SEOAppBridge
                 title="Practise with unlimited mock exams"
-                description="AI-generated mocks, instant marking, and explanations on every question — targeted at your weakest topics. From £5.99/mo."
+                description="AI-generated mocks, instant marking, and explanations on every question — targeted at your weakest topics. From £6.99/mo."
                 ctaText="Start practising free"
                 icon={Zap}
               />

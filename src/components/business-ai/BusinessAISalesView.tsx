@@ -967,7 +967,7 @@ export function BusinessAISalesView() {
               },
               {
                 from: 'On Electrician',
-                fromPrice: '£14.99/mo',
+                fromPrice: '£19.99/mo',
                 arrow: 'becomes',
                 to: hasFounderSlots ? '£29.99/mo founder' : '£39.99/mo',
                 extra: hasFounderSlots
@@ -1285,7 +1285,7 @@ export function BusinessAISalesView() {
             className="mt-3 text-sm text-white/65 max-w-xl mx-auto leading-relaxed"
           >
             Mate <Y>replaces</Y> your Electrician sub — you don&apos;t pay both. If you&apos;re on
-            Electrician at £14.99, that&apos;s only{' '}
+            Electrician at £19.99, that&apos;s only{' '}
             <Y>{hasFounderSlots ? '£15' : '£25'} extra a month</Y> to add Mate.
           </motion.p>
           <motion.div variants={fadeUp} className="mt-9 sm:mt-10 flex flex-col items-center gap-4">

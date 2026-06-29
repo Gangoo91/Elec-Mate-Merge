@@ -27,6 +27,7 @@ export type IncidentStatus =
 export interface Incident {
   id: string;
   employer_id: string;
+  job_id?: string | null;
   incident_type: IncidentType;
   title: string;
   description: string;

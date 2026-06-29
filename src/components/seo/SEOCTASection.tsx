@@ -66,7 +66,7 @@ export function SEOCTASection({
 
             {/* Price anchor */}
             <p className="text-center text-sm text-white/50 mb-6">
-              From <span className="text-white font-semibold">£5.99/mo</span> after trial — less
+              From <span className="text-white font-semibold">£6.99/mo</span> after trial — less
               than a coffee a week
             </p>
 
@@ -85,7 +85,7 @@ export function SEOCTASection({
             {/* Trust signals */}
             <div className="flex flex-wrap items-center justify-center gap-4 sm:gap-6 text-sm text-white">
               <span className="flex items-center gap-1.5">
-                <Check className="w-4 h-4 text-green-400 shrink-0" />7 days free, then from £5.99/mo
+                <Check className="w-4 h-4 text-green-400 shrink-0" />7 days free, then from £6.99/mo
               </span>
               <span className="flex items-center gap-1.5">
                 <Check className="w-4 h-4 text-green-400 shrink-0" />

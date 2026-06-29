@@ -59,8 +59,8 @@ const ROLE_OPTIONS = [
       'Job tracking and study tools',
     ],
     pricing: {
-      web: { monthly: '£12.99', yearly: '£129.99' },
-      inApp: { monthly: '£14.99', yearly: '£149.99' },
+      web: { monthly: '£19.99', yearly: '£199.99' },
+      inApp: { monthly: '£19.99', yearly: '£199.99' },
     },
   },
   {
@@ -75,7 +75,7 @@ const ROLE_OPTIONS = [
       'Calculators and study resources',
     ],
     pricing: {
-      web: { monthly: '£5.99', yearly: '£59.99' },
+      web: { monthly: '£6.99', yearly: '£69.99' },
       inApp: { monthly: '£6.99', yearly: '£69.99' },
     },
   },
@@ -351,8 +351,8 @@ const SignUp = () => {
   };
 
   const ROLE_TO_PRICE: Record<string, { planId: string; priceId: string }> = {
-    electrician: { planId: 'electrician-monthly', priceId: 'price_1TKlA12RKw5t5RAmdhZyhX1I' },
-    apprentice: { planId: 'apprentice-monthly', priceId: 'price_1TKlA22RKw5t5RAmpvhojy0b' },
+    electrician: { planId: 'electrician-monthly', priceId: 'price_1TnbOh2RKw5t5RAmsf2KcHT6' },
+    apprentice: { planId: 'apprentice-monthly', priceId: 'price_1TnbOk2RKw5t5RAmiOCTkqS3' },
   };
 
   const handleFinalSubmit = async () => {
@@ -543,7 +543,7 @@ const SignUp = () => {
           );
           if (checkoutErr) throw new Error(checkoutErr.message);
           if (checkoutData?.url) {
-            const checkoutValue = rp.planId.startsWith('apprentice') ? 5.99 : 12.99;
+            const checkoutValue = rp.planId.startsWith('apprentice') ? 6.99 : 19.99;
             const eventId = trackInitiateCheckout({
               value: checkoutValue,
               currency: 'GBP',

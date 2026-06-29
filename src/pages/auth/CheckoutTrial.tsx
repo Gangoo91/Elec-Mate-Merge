@@ -30,12 +30,12 @@ import { fireServerCapi } from '@/lib/attribution';
 const ROLE_TO_PRICE: Record<string, { planId: string; priceId: string; label: string }> = {
   electrician: {
     planId: 'electrician-monthly',
-    priceId: 'price_1TKlA12RKw5t5RAmdhZyhX1I',
+    priceId: 'price_1TnbOh2RKw5t5RAmsf2KcHT6',
     label: 'Electrician',
   },
   apprentice: {
     planId: 'apprentice-monthly',
-    priceId: 'price_1TKlA22RKw5t5RAmpvhojy0b',
+    priceId: 'price_1TnbOk2RKw5t5RAmiOCTkqS3',
     label: 'Apprentice',
   },
 };
@@ -159,7 +159,7 @@ const CheckoutTrial = () => {
         if (offerCode) storageRemoveSync('elec-mate-offer-code');
         if (referralCode) storageRemoveSync('elec-mate-referral-code');
         // Fire InitiateCheckout on both Pixel and server CAPI before redirect
-        const checkoutValue = priceInfo.planId.startsWith('apprentice') ? 5.99 : 12.99;
+        const checkoutValue = priceInfo.planId.startsWith('apprentice') ? 6.99 : 19.99;
         const eventId = trackInitiateCheckout({
           value: checkoutValue,
           currency: 'GBP',

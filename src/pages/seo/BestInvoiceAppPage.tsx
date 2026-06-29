@@ -115,7 +115,7 @@ export default function BestInvoiceAppPage() {
               <p>
                 <strong>Elec-Mate</strong> — All-in-one platform for UK electricians with invoicing,
                 quoting, Stripe payments, Xero integration, plus 15 certificate types, 70+ BS 7671
-                calculators, 8 Elec-AI tools, and 46+ training courses. From £5.99/month.
+                calculators, 8 Elec-AI tools, and 46+ training courses. From £6.99/month.
               </p>
               <p>
                 <strong>QuickBooks</strong> — Market-leading cloud accounting software. Excellent
@@ -207,7 +207,7 @@ export default function BestInvoiceAppPage() {
             The practical approach for most electricians: use Elec-Mate as your daily tool for
             certificates, invoicing, and quoting on site, and let it sync to Xero for your
             accountant to handle the tax returns. One subscription, one app, everything connected.
-            From £5.99 per month with a 7-day free trial.
+            From £6.99 per month with a 7-day free trial.
           </p>
         </>
       }
@@ -274,7 +274,7 @@ export default function BestInvoiceAppPage() {
         {
           question: 'Is Elec-Mate cheaper than QuickBooks and Xero?',
           answer:
-            'Elec-Mate starts from £5.99 per month and includes everything: invoicing, quoting, 15 certificate types, 70+ calculators, AI tools, and 46+ training courses. QuickBooks starts from around £12/month and Xero from £15/month — and neither includes electrical certificates or calculators (competitor prices correct as of May 2026; check provider websites for current rates). If you currently pay for both an accounting app and a certificate app, switching to Elec-Mate for daily use (with Xero for accounting) typically reduces your total software costs.',
+            'Elec-Mate starts from £6.99 per month and includes everything: invoicing, quoting, 15 certificate types, 70+ calculators, AI tools, and 46+ training courses. QuickBooks starts from around £12/month and Xero from £15/month — and neither includes electrical certificates or calculators (competitor prices correct as of May 2026; check provider websites for current rates). If you currently pay for both an accounting app and a certificate app, switching to Elec-Mate for daily use (with Xero for accounting) typically reduces your total software costs.',
         },
         {
           question: 'Does Elec-Mate work offline?',
@@ -352,7 +352,7 @@ export default function BestInvoiceAppPage() {
         },
       ]}
       ctaHeading="Invoice from site, get paid instantly"
-      ctaSubheading="Try Elec-Mate free for 7 days. Invoicing, certificates, calculators, AI tools, and training — all from £5.99/month."
+      ctaSubheading="Try Elec-Mate free for 7 days. Invoicing, certificates, calculators, AI tools, and training — all from £6.99/month."
       comparePath="/compare/best-invoice-app-electricians"
     />
   );

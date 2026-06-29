@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useMemo } from 'react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import {
@@ -17,7 +17,7 @@ import {
 } from '@/components/ui/select';
 import { Textarea } from '@/components/ui/textarea';
 import { Label } from '@/components/ui/label';
-import { RefreshCw, MapPin, Calendar } from 'lucide-react';
+import { RefreshCw, MapPin, Calendar, Briefcase } from 'lucide-react';
 import {
   PageFrame,
   PageHero,
@@ -51,6 +51,7 @@ import {
   type SeverityLevel,
   type IncidentStatus,
 } from '@/hooks/useIncidents';
+import { useJobs } from '@/hooks/useJobs';
 import { format, differenceInDays, formatDistanceToNow } from 'date-fns';
 
 const INCIDENT_TYPES: { value: IncidentType; label: string }[] = [
@@ -129,6 +130,9 @@ function statusTone(status: IncidentStatus): Tone {
 export function IncidentsSection() {
   const { data: incidents = [], isLoading, error, refetch } = useIncidents();
   const { data: stats } = useIncidentStats();
+  const { data: jobs = [] } = useJobs();
+  // Reverse link: show which job an incident sits on (incidents carry job_id).
+  const jobTitleById = useMemo(() => new Map(jobs.map((j) => [j.id, j.title])), [jobs]);
   const createIncident = useCreateIncident();
   const updateStatus = useUpdateIncidentStatus();
 
@@ -528,6 +532,13 @@ className={inputClass}
                       title="Location"
                       subtitle={selectedIncident.location}
                     />
+                    {selectedIncident.job_id && jobTitleById.get(selectedIncident.job_id) && (
+                      <ListRow
+                        lead={<Briefcase className="h-4 w-4 text-white" />}
+                        title="On job"
+                        subtitle={jobTitleById.get(selectedIncident.job_id) ?? ''}
+                      />
+                    )}
                     <ListRow
                       lead={<Calendar className="h-4 w-4 text-white" />}
                       title="Date occurred"

@@ -90,7 +90,7 @@ export default function DigitalCertificatesAppPage() {
               </p>
               <p>
                 All 16 certificate types, all AI features, and unlimited certificate generation are
-                included in the standard Elec-Mate subscription from £5.99/month. There are no
+                included in the standard Elec-Mate subscription from £6.99/month. There are no
                 per-certificate charges. You can produce as many certificates as you need, for any
                 type of work, without worrying about credit limits or usage caps.
               </p>
@@ -466,7 +466,7 @@ export default function DigitalCertificatesAppPage() {
         {
           question: 'How much does Elec-Mate cost for certificates?',
           answer:
-            'Elec-Mate starts from £5.99 per month with unlimited certificate generation across all 16 certificate types. There are no per-certificate charges, no credit limits, and no usage caps. The subscription also includes 70+ BS 7671 calculators, 8 AI specialist agents plus 12 AI tools, 46+ training courses, and business management features. Every plan includes a 7-day free trial with full access.',
+            'Elec-Mate starts from £6.99 per month with unlimited certificate generation across all 16 certificate types. There are no per-certificate charges, no credit limits, and no usage caps. The subscription also includes 70+ BS 7671 calculators, 8 AI specialist agents plus 12 AI tools, 46+ training courses, and business management features. Every plan includes a 7-day free trial with full access.',
         },
       ]}
       relatedPages={[

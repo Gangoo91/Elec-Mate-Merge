@@ -14,6 +14,7 @@ import {
   Gauge,
   Palette,
   Sun,
+  ClipboardCheck,
 } from 'lucide-react';
 
 export default function LEDLightingGuidePage() {

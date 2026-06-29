@@ -18,6 +18,7 @@ import {
   BarChart3,
   Cable,
   Search,
+  ClipboardCheck,
 } from 'lucide-react';
 
 // -------------------------------------------------------------------

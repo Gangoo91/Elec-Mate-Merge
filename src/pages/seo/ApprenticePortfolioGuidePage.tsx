@@ -22,7 +22,7 @@ import {
 
 const PAGE_TITLE = 'Electrical Apprentice Portfolio Guide | Evidence Tracking';
 const PAGE_DESCRIPTION =
-  'Build your electrical apprentice portfolio: digital evidence tracking, photo documentation, criteria mapping, EPAO submission. From £5.99/mo.';
+  'Build your electrical apprentice portfolio: digital evidence tracking, photo documentation, criteria mapping, EPAO submission. From £6.99/mo.';
 
 const faqs = [
   {
@@ -113,7 +113,7 @@ const courseSchema = {
     price: '4.99',
     priceCurrency: 'GBP',
     availability: 'https://schema.org/InStock',
-    description: 'From £5.99/month with 7-day free trial',
+    description: 'From £6.99/month with 7-day free trial',
   },
 };
 

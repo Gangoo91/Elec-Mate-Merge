@@ -189,6 +189,11 @@ const pointsMatch = (
 export const DiagramCanvas = forwardRef<any, DiagramCanvasProps>(
   ({ activeTool, selectedSymbolId, objects, onObjectsChange, onSelectionChange, onRequestProperties, gridEnabled, snapEnabled, headerHeight = 48, toolbarHeight = 56, onWallTapped, onRotate, onToolChange, showMinimap = true }, ref) => {
     const canvasRef = useRef<HTMLCanvasElement>(null);
+    // Flex-driven wrapper around the fabric canvas. We size the canvas from
+    // this element's measured box rather than `window.innerHeight − constants`
+    // so the safe-area inset and the real toolbar height are always accounted
+    // for (the constants left a strip hidden under the toolbar on notched phones).
+    const wrapperRef = useRef<HTMLDivElement>(null);
     const fabricCanvasRef = useRef<FabricCanvas | null>(null);
     // Drawing state as refs — avoids stale closures in event handlers and prevents
     // handler re-registration mid-gesture (fixes ELE-711, ELE-713, ELE-714)
@@ -1049,8 +1054,20 @@ export const DiagramCanvas = forwardRef<any, DiagramCanvasProps>(
     useEffect(() => {
       if (!canvasRef.current) return;
 
-      const canvasWidth = window.innerWidth;
-      const canvasHeight = window.innerHeight - headerHeight - toolbarHeight;
+      // Measure the real drawing area from the flex wrapper; fall back to the
+      // window-minus-constants math only if the element isn't laid out yet.
+      const measureSize = () => {
+        const el = wrapperRef.current;
+        if (el && el.clientWidth > 0 && el.clientHeight > 0) {
+          return { width: el.clientWidth, height: el.clientHeight };
+        }
+        return {
+          width: window.innerWidth,
+          height: window.innerHeight - headerHeight - toolbarHeight,
+        };
+      };
+
+      const { width: canvasWidth, height: canvasHeight } = measureSize();
 
       const canvas = new FabricCanvas(canvasRef.current, {
         width: canvasWidth,
@@ -1181,18 +1198,26 @@ export const DiagramCanvas = forwardRef<any, DiagramCanvasProps>(
       canvas.on('mouse:move', handleTouchGesture);
       canvas.upperCanvasEl?.addEventListener('touchend', handleTouchEnd, { passive: true });
 
-      // Handle window resize — fill available space
+      // Fill the available space whenever it changes. A ResizeObserver on the
+      // flex wrapper catches everything window 'resize' misses — the iOS URL
+      // bar collapsing, safe-area changes, orientation, split-view — and keeps
+      // the fabric canvas exactly matched to its visible box.
       const handleResize = () => {
-        const newWidth = window.innerWidth;
-        const newHeight = window.innerHeight - headerHeight - toolbarHeight;
-        canvas.setDimensions({ width: newWidth, height: newHeight });
+        const { width, height } = measureSize();
+        canvas.setDimensions({ width, height });
         canvas.renderAll();
       };
 
+      const resizeObserver =
+        typeof ResizeObserver !== 'undefined' && wrapperRef.current
+          ? new ResizeObserver(() => handleResize())
+          : null;
+      resizeObserver?.observe(wrapperRef.current!);
       window.addEventListener('resize', handleResize);
 
       return () => {
         window.removeEventListener('resize', handleResize);
+        resizeObserver?.disconnect();
         canvas.off('mouse:move', handleTouchGesture);
         canvas.upperCanvasEl?.removeEventListener('touchend', handleTouchEnd);
         canvas.dispose();
@@ -2984,7 +3009,7 @@ export const DiagramCanvas = forwardRef<any, DiagramCanvasProps>(
     const scaleBarWidth = Math.round(SCALE * zoomLevel);
 
     return (
-      <div className="w-full h-full overflow-hidden relative">
+      <div ref={wrapperRef} className="w-full h-full overflow-hidden relative">
         <canvas ref={canvasRef} />
 
         {/* Scale Bar Overlay — bottom-left */}

@@ -97,11 +97,13 @@ export function EmployerMate({
   open: controlledOpen,
   onOpenChange,
   showLauncher = true,
+  initialQuery,
 }: {
   pageContext?: string;
   open?: boolean;
   onOpenChange?: (o: boolean) => void;
   showLauncher?: boolean;
+  initialQuery?: string;
 }) {
   const [internalOpen, setInternalOpen] = useState(false);
   const open = controlledOpen ?? internalOpen;
@@ -121,6 +123,11 @@ export function EmployerMate({
   useEffect(() => {
     scrollRef.current?.scrollTo({ top: scrollRef.current.scrollHeight, behavior: 'smooth' });
   }, [messages, sending]);
+
+  // Pre-fill a question handed in from the ⌘K palette when the sheet opens.
+  useEffect(() => {
+    if (open && initialQuery) setInput(initialQuery);
+  }, [open, initialQuery]);
 
   const send = async (text?: string) => {
     const q = (text ?? input).trim();

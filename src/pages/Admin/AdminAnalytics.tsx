@@ -123,8 +123,8 @@ export default function AdminAnalytics() {
         .eq('is_trial', false);
 
       const tierPricing: Record<string, number> = {
-        apprentice: 5.99,
-        electrician: 12.99,
+        apprentice: 6.99,
+        electrician: 19.99,
         employer: 29.99,
       };
 

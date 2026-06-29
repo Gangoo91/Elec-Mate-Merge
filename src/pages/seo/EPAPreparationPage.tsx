@@ -22,7 +22,7 @@ import {
 
 const PAGE_TITLE = 'Electrical EPA Prep | End Point Assessment Simulator';
 const PAGE_DESCRIPTION =
-  'EPA prep with AI-graded simulators: knowledge tests, practical assessments, professional discussions. ST0215 standard. From £5.99/mo.';
+  'EPA prep with AI-graded simulators: knowledge tests, practical assessments, professional discussions. ST0215 standard. From £6.99/mo.';
 
 const faqs = [
   {
@@ -115,7 +115,7 @@ const courseSchema = {
     price: '4.99',
     priceCurrency: 'GBP',
     availability: 'https://schema.org/InStock',
-    description: 'From £5.99/month with 7-day free trial',
+    description: 'From £6.99/month with 7-day free trial',
   },
 };
 

@@ -17,6 +17,7 @@ import {
   peerSupporterService,
 } from '@/services/peerSupportService';
 import { getUserPresence, UserPresence } from '@/services/presenceService';
+import { realtimeChannelName } from '@/lib/realtimeChannel';
 
 // Query Keys
 const PEER_CONVERSATIONS_KEY = ['peer-conversations'];
@@ -72,7 +73,7 @@ export function usePeerConversations() {
     if (!user?.id) return;
 
     const channel = supabase
-      .channel('peer-messages-global')
+      .channel(realtimeChannelName('peer-messages-global'))
       .on(
         'postgres_changes',
         {

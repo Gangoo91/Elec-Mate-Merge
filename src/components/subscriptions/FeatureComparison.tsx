@@ -7,8 +7,8 @@ type Tier = 'apprentice' | 'electrician' | 'mate' | 'employer' | 'college';
 
 const TIERS: { key: Tier; name: string; price: string; earlyAccess?: boolean; popular?: boolean }[] =
   [
-    { key: 'apprentice', name: 'Apprentice', price: '£5.99/mo' },
-    { key: 'electrician', name: 'Electrician', price: '£12.99/mo', popular: true },
+    { key: 'apprentice', name: 'Apprentice', price: '£6.99/mo' },
+    { key: 'electrician', name: 'Electrician', price: '£19.99/mo', popular: true },
     { key: 'mate', name: 'Mate', price: '£29.99/mo', earlyAccess: true },
     { key: 'employer', name: 'Employer', price: '£49.99/mo', earlyAccess: true },
     { key: 'college', name: 'College', price: 'On request', earlyAccess: true },

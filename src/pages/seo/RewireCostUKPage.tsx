@@ -16,6 +16,7 @@ import {
   Wrench,
   Building2,
   Cable,
+  Scale,
 } from 'lucide-react';
 
 const breadcrumbs = [

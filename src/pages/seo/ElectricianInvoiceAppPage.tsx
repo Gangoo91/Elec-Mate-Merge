@@ -111,7 +111,7 @@ const softwareAppSchema = {
     '@type': 'Offer',
     price: '0',
     priceCurrency: 'GBP',
-    description: '7-day free trial, then from £12.99/month',
+    description: '7-day free trial, then from £19.99/month',
   },
   aggregateRating: {
     '@type': 'AggregateRating',
@@ -178,7 +178,7 @@ export default function ElectricianInvoiceAppPage() {
           </p>
           <p className="text-base text-white/80 max-w-2xl mx-auto mb-8 leading-relaxed">
             Elec-Mate&apos;s electrician invoice app is part of the complete platform for UK
-            electricians — from £12.99/month with a 7-day free trial. Available on web, iOS, and
+            electricians — from £19.99/month with a 7-day free trial. Available on web, iOS, and
             Android, it combines digital invoicing with Stripe card payments, Xero and QuickBooks
             sync, automatic payment reminders, and full EIC and EICR certification in one place.
           </p>

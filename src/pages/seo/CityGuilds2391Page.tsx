@@ -22,7 +22,7 @@ import {
 
 const PAGE_TITLE = '2391 Course Online — 2391-52 Lessons, Mock Exams & Revision';
 const PAGE_DESCRIPTION =
-  'Study C&G 2391-52 Inspection & Testing online: AI quiz prep, GN3 testing sequence walkthroughs, mock exams, practical guidance. From £5.99/mo.';
+  'Study C&G 2391-52 Inspection & Testing online: AI quiz prep, GN3 testing sequence walkthroughs, mock exams, practical guidance. From £6.99/mo.';
 
 const faqs = [
   {
@@ -115,7 +115,7 @@ const courseSchema = {
     price: '4.99',
     priceCurrency: 'GBP',
     availability: 'https://schema.org/InStock',
-    description: 'From £5.99/month with 7-day free trial',
+    description: 'From £6.99/month with 7-day free trial',
   },
 };
 

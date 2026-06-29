@@ -480,10 +480,10 @@ const extraSchemas = [
     },
     offers: {
       '@type': 'Offer',
-      price: '5.99',
+      price: '6.99',
       priceCurrency: 'GBP',
       availability: 'https://schema.org/InStock',
-      description: '7-day free trial, then from £5.99/month',
+      description: '7-day free trial, then from £6.99/month',
     },
   },
 ];

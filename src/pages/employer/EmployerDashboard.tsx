@@ -1,5 +1,10 @@
-import { useState, useCallback, useEffect, useRef, lazy, Suspense } from 'react';
+import { useState, useCallback, useEffect, useMemo, useRef, lazy, Suspense } from 'react';
 import { EmployerMate } from '@/components/employer/EmployerMate';
+import {
+  EmployerCommandPalette,
+  CommandTrigger,
+  type CommandSection,
+} from '@/components/employer/EmployerCommandPalette';
 import { useSearchParams, useNavigate } from 'react-router-dom';
 import { AnimatePresence, motion } from 'framer-motion';
 import { useQueryClient } from '@tanstack/react-query';
@@ -468,6 +473,35 @@ const EmployerDashboard = () => {
   const previousSectionRef = useRef<Section | null>(null);
   const [navigationDirection, setNavigationDirection] = useState<'forward' | 'backward'>('forward');
   const [mateOpen, setMateOpen] = useState(false);
+  const [mateQuery, setMateQuery] = useState<string | undefined>(undefined);
+  const [cmdOpen, setCmdOpen] = useState(false);
+  const [recentKeys, setRecentKeys] = useState<string[]>(() => {
+    try {
+      return JSON.parse(localStorage.getItem('employer_recent_sections') || '[]');
+    } catch {
+      return [];
+    }
+  });
+
+  // Every navigable section, for the ⌘K command palette (excludes the hub root).
+  const commandSections: CommandSection[] = useMemo(
+    () =>
+      (Object.entries(sectionMetadata) as [Section, SectionMeta][])
+        .filter(([key]) => key !== 'overview')
+        .map(([key, m]) => ({ key, eyebrow: m.eyebrow, title: m.title })),
+    []
+  );
+
+  const recentSections: CommandSection[] = useMemo(
+    () =>
+      recentKeys
+        .map((k) => {
+          const m = sectionMetadata[k as Section];
+          return m ? { key: k, eyebrow: m.eyebrow, title: m.title } : null;
+        })
+        .filter((s): s is CommandSection => s !== null),
+    [recentKeys]
+  );
 
   useEffect(() => {
     if (previousSectionRef.current && previousSectionRef.current !== activeSection) {
@@ -476,6 +510,32 @@ const EmployerDashboard = () => {
       setNavigationDirection(currDepth >= prevDepth ? 'forward' : 'backward');
     }
     previousSectionRef.current = activeSection;
+  }, [activeSection]);
+
+  // ⌘K / Ctrl-K opens the command palette from anywhere in the hub.
+  useEffect(() => {
+    const onKey = (e: KeyboardEvent) => {
+      if ((e.metaKey || e.ctrlKey) && e.key.toLowerCase() === 'k') {
+        e.preventDefault();
+        setCmdOpen((o) => !o);
+      }
+    };
+    window.addEventListener('keydown', onKey);
+    return () => window.removeEventListener('keydown', onKey);
+  }, []);
+
+  // Track recently-visited leaf sections for the palette's "Recent" group.
+  useEffect(() => {
+    if (getSectionDepth(activeSection) !== 2) return;
+    setRecentKeys((prev) => {
+      const next = [activeSection, ...prev.filter((k) => k !== activeSection)].slice(0, 5);
+      try {
+        localStorage.setItem('employer_recent_sections', JSON.stringify(next));
+      } catch {
+        /* ignore */
+      }
+      return next;
+    });
   }, [activeSection]);
 
   const handleNavigate = useCallback((section: Section | string) => {
@@ -671,7 +731,16 @@ const EmployerDashboard = () => {
   const renderSection = () => {
     switch (activeSection) {
       case 'overview':
-        return <OverviewSection onNavigate={handleNavigate} onOpenMate={() => setMateOpen(true)} />;
+        return (
+          <OverviewSection
+            onNavigate={handleNavigate}
+            onOpenMate={() => {
+              setMateQuery(undefined);
+              setMateOpen(true);
+            }}
+            onOpenCommand={() => setCmdOpen(true)}
+          />
+        );
       case 'peoplehub':
         return <PeopleHub onNavigate={handleNavigate} />;
       case 'financehub':
@@ -767,7 +836,16 @@ const EmployerDashboard = () => {
       case 'aiquote':
         return <AIQuoteSection onNavigate={handleNavigate} />;
       default:
-        return <OverviewSection onNavigate={handleNavigate} onOpenMate={() => setMateOpen(true)} />;
+        return (
+          <OverviewSection
+            onNavigate={handleNavigate}
+            onOpenMate={() => {
+              setMateQuery(undefined);
+              setMateOpen(true);
+            }}
+            onOpenCommand={() => setCmdOpen(true)}
+          />
+        );
     }
   };
 
@@ -788,6 +866,7 @@ const EmployerDashboard = () => {
                   {currentMeta.title}
                 </div>
               </div>
+              <CommandTrigger onOpen={() => setCmdOpen(true)} />
               {hasRefresh && (
                 <IconButton aria-label="Refresh" onClick={handleRefresh}>
                   <RefreshCw className="h-4 w-4" />
@@ -821,9 +900,24 @@ const EmployerDashboard = () => {
         </main>
       </div>
 
+      <EmployerCommandPalette
+        open={cmdOpen}
+        onOpenChange={setCmdOpen}
+        sections={commandSections}
+        recents={recentSections}
+        onNavigate={(k) => handleNavigate(k)}
+        onAskMate={(q) => {
+          setMateQuery(q || undefined);
+          setMateOpen(true);
+        }}
+      />
       <EmployerMate
         open={mateOpen}
-        onOpenChange={setMateOpen}
+        onOpenChange={(o) => {
+          setMateOpen(o);
+          if (!o) setMateQuery(undefined);
+        }}
+        initialQuery={mateQuery}
         pageContext={currentMeta?.title}
         showLauncher={!isOverview}
       />

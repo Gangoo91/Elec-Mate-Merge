@@ -14,6 +14,7 @@ interface FloorPlanRow {
   total_items: number;
   pdf_url: string | null;
   project_id: string | null;
+  report_id: string | null;
   created_at: string;
   updated_at: string;
 }
@@ -38,6 +39,9 @@ export function useFloorPlanCloud() {
      *  plan immediately appears linked in ProjectDetailPage without a
      *  second link call. Pass `null` to explicitly detach. */
     projectId?: string | null;
+    /** When set, attaches the plan to a specific certificate/report (EICR/EIC
+     *  etc.) via floor_plans.report_id. Pass `null` to explicitly detach. */
+    reportId?: string | null;
   }) => {
     if (!user?.id) return null;
 
@@ -58,9 +62,13 @@ export function useFloorPlanCloud() {
       total_items: totalItems,
       updated_at: new Date().toISOString(),
     };
-    const row = plan.projectId !== undefined
-      ? { ...baseRow, project_id: plan.projectId }
-      : baseRow;
+    // Only include link columns when explicitly provided so an unrelated save
+    // never clears an existing project/report link.
+    const row = {
+      ...baseRow,
+      ...(plan.projectId !== undefined ? { project_id: plan.projectId } : {}),
+      ...(plan.reportId !== undefined ? { report_id: plan.reportId } : {}),
+    };
 
     if (plan.id) {
       // Update existing

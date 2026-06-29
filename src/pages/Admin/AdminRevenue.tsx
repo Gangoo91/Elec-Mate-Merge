@@ -79,8 +79,8 @@ const tierTone: Record<string, Tone> = {
 
 const tierPrice: Record<string, string> = {
   founder: '£3.99',
-  apprentice: '£5.99',
-  electrician: '£12.99',
+  apprentice: '£6.99',
+  electrician: '£19.99',
   business_ai: '£29.99 / £39.99',
   employer: '£49.99',
 };
@@ -409,7 +409,7 @@ export default function AdminRevenue() {
               {(() => {
                 const tierDefs: Array<{ key: string; name: string; price: string; tone: Tone }> = [
                   { key: 'apprentice', name: 'Apprentice', price: '£6.99/mo', tone: 'cyan' },
-                  { key: 'electrician', name: 'Electrician', price: '£14.99/mo', tone: 'blue' },
+                  { key: 'electrician', name: 'Electrician', price: '£19.99/mo', tone: 'blue' },
                   { key: 'business_ai', name: 'Mate', price: '£39.99/mo', tone: 'yellow' },
                   { key: 'employer', name: 'Employer', price: '£49.99/mo', tone: 'purple' },
                 ];

@@ -605,16 +605,20 @@ async function sendFounderSignupNotification(args: {
 // Map Stripe price IDs to subscription tiers
 // CURRENT ACTIVE PRICES (as of Jan 2026)
 const PRICE_TO_TIER: Record<string, string> = {
-  // Apprentice - £5.99/month (new), £49.99/year
-  price_1TKlA22RKw5t5RAmpvhojy0b: 'apprentice', // £5.99/month (current — Apr 2026)
+  // Apprentice - £6.99/month (current, new customers), £69.99/year
+  price_1TnbOk2RKw5t5RAmiOCTkqS3: 'apprentice', // £6.99/month (current — Jun 2026, new customers)
+  price_1TnbOl2RKw5t5RAmmNsVstDW: 'apprentice_yearly', // £69.99/year (current — Jun 2026, new customers)
+  price_1TKlA22RKw5t5RAmpvhojy0b: 'apprentice', // £5.99/month (prior — keep for existing subs)
   price_1SmUef2RKw5t5RAmRIMTWTqU: 'apprentice', // £4.99/month (legacy — keep for existing subs)
-  price_1TKlKK2RKw5t5RAmGVR5EcF9: 'apprentice_yearly', // £59.99/year (current — Apr 2026)
+  price_1TKlKK2RKw5t5RAmGVR5EcF9: 'apprentice_yearly', // £59.99/year (prior — keep for existing subs)
   price_1SmUfK2RKw5t5RAml6bj1I77: 'apprentice_yearly', // £49.99/year (legacy — keep for existing subs)
 
-  // Electrician Pro - £12.99/month (new), £129.99/year (new)
-  price_1TKlA12RKw5t5RAmdhZyhX1I: 'electrician', // £12.99/month (current — Apr 2026)
+  // Electrician Pro - £19.99/month (current, new customers), £199.99/year
+  price_1TnbOh2RKw5t5RAmsf2KcHT6: 'electrician', // £19.99/month (current — Jun 2026, new customers)
+  price_1TnbOj2RKw5t5RAmEIXS6oyV: 'electrician_yearly', // £199.99/year (current — Jun 2026, new customers)
+  price_1TKlA12RKw5t5RAmdhZyhX1I: 'electrician', // £12.99/month (prior — keep for existing subs)
   price_1SqJVr2RKw5t5RAmaiTGelLN: 'electrician', // £9.99/month (legacy — keep for existing subs)
-  price_1TKlKL2RKw5t5RAmpD8FH7qp: 'electrician_yearly', // £129.99/year (current — Apr 2026)
+  price_1TKlKL2RKw5t5RAmpD8FH7qp: 'electrician_yearly', // £129.99/year (prior — keep for existing subs)
   price_1SqJVs2RKw5t5RAmVeD2QVsb: 'electrician_yearly', // £99.99/year (legacy — keep for existing subs)
 
   // Business AI - £39.99/month, £399.99/year (current — Apr 2026)

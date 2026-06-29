@@ -112,7 +112,7 @@ const courseSchema = {
     '@type': 'Offer',
     price: '4.99',
     priceCurrency: 'GBP',
-    description: 'From £5.99/month — access all 46+ training courses',
+    description: 'From £6.99/month — access all 46+ training courses',
   },
   courseMode: 'online',
   educationalLevel: 'Professional',

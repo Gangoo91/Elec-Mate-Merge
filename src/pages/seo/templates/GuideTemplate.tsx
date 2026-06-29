@@ -107,7 +107,7 @@ function getMidCta(badge: string) {
     return {
       title: 'Price the job in minutes, not evenings',
       description:
-        'Professional quotes with the remedial estimator, then invoice from your phone the moment the work is done. From £5.99/mo.',
+        'Professional quotes with the remedial estimator, then invoice from your phone the moment the work is done. From £6.99/mo.',
       ctaText: 'Try the quoting tools free',
     };
   }
@@ -120,7 +120,7 @@ function getMidCta(badge: string) {
     return {
       title: 'Record test results hands-free on site',
       description:
-        'AI board scanner, voice test entry, and automatic BS 7671 validation — finish the certificate before you leave the property. From £5.99/mo.',
+        'AI board scanner, voice test entry, and automatic BS 7671 validation — finish the certificate before you leave the property. From £6.99/mo.',
       ctaText: 'Try the certificate tools free',
     };
   }
@@ -134,7 +134,7 @@ function getMidCta(badge: string) {
     return {
       title: 'Practise with unlimited mock exams',
       description:
-        'AI-generated mocks, instant marking, and explanations on every question — targeted at your weakest topics. From £5.99/mo.',
+        'AI-generated mocks, instant marking, and explanations on every question — targeted at your weakest topics. From £6.99/mo.',
       ctaText: 'Start practising free',
     };
   }
@@ -142,14 +142,14 @@ function getMidCta(badge: string) {
     return {
       title: 'Generate RAMS in minutes',
       description:
-        'Site-specific risk assessments and method statements, written to CDM 2015 expectations and ready to send. From £5.99/mo.',
+        'Site-specific risk assessments and method statements, written to CDM 2015 expectations and ready to send. From £6.99/mo.',
       ctaText: 'Try the safety tools free',
     };
   }
   return {
     title: 'Try Elec-Mate free for 7 days',
     description:
-      '16 certificate types, 70+ calculators, RAMS, quoting, invoicing, AI agents, and 46+ training courses — from £5.99/mo.',
+      '16 certificate types, 70+ calculators, RAMS, quoting, invoicing, AI agents, and 46+ training courses — from £6.99/mo.',
     ctaText: 'Start free trial',
   };
 }

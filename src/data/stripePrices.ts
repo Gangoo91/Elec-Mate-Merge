@@ -27,14 +27,14 @@ export interface PlanDetails {
 // Stripe price IDs
 export const stripePrices = {
   monthly: {
-    apprentice: 'price_1TKlA22RKw5t5RAmpvhojy0b',
-    electrician: 'price_1TKlA12RKw5t5RAmdhZyhX1I',
+    apprentice: 'price_1TnbOk2RKw5t5RAmiOCTkqS3',
+    electrician: 'price_1TnbOh2RKw5t5RAmsf2KcHT6',
     business_ai: 'price_1TRGZo2RKw5t5RAmRl2hc0ru',
     employer: 'price_1Tm6eF2RKw5t5RAm0nG7ujWw',
   },
   yearly: {
-    apprentice: 'price_1TKlKK2RKw5t5RAmGVR5EcF9',
-    electrician: 'price_1TKlKL2RKw5t5RAmpD8FH7qp',
+    apprentice: 'price_1TnbOl2RKw5t5RAmmNsVstDW',
+    electrician: 'price_1TnbOj2RKw5t5RAmEIXS6oyV',
     business_ai: 'price_1TRGZo2RKw5t5RAmzY50EzaE',
     employer: 'price_1Tm6qA2RKw5t5RAmitPj2yF9',
   },
@@ -403,7 +403,7 @@ export const nativePriceData = {
     {
       id: 'electrician-monthly',
       name: 'Electrician',
-      price: '£14.99',
+      price: '£19.99',
       period: '/month',
       description: 'Certs, AI agents, CRM and the full business toolkit',
       featureGroups: ELECTRICIAN_GROUPS,
@@ -447,7 +447,7 @@ export const nativePriceData = {
     {
       id: 'electrician-yearly',
       name: 'Electrician',
-      price: '£149.99',
+      price: '£199.99',
       period: '/year',
       description: 'Certs, AI agents, CRM and the full business toolkit',
       featureGroups: ELECTRICIAN_GROUPS,
@@ -455,7 +455,7 @@ export const nativePriceData = {
       notIncluded: [],
       popular: true,
       color: '',
-      savings: 'Save £29.89 vs monthly',
+      savings: 'Save £39.89 vs monthly',
       priceId: '',
     },
     // Mate is intentionally monthly-only on native — no yearly IAP. Keeps the
@@ -470,7 +470,7 @@ export const stripePriceData = {
     {
       id: 'apprentice-monthly',
       name: 'Apprentice',
-      price: '£5.99',
+      price: '£6.99',
       period: '/month',
       description: 'Study, test and track your apprenticeship',
       featureGroups: APPRENTICE_GROUPS,
@@ -483,7 +483,7 @@ export const stripePriceData = {
     {
       id: 'electrician-monthly',
       name: 'Electrician',
-      price: '£12.99',
+      price: '£19.99',
       period: '/month',
       description: 'Certs, AI agents, CRM and the full business toolkit',
       featureGroups: ELECTRICIAN_GROUPS,
@@ -546,7 +546,7 @@ export const stripePriceData = {
     {
       id: 'apprentice-yearly',
       name: 'Apprentice',
-      price: '£59.99',
+      price: '£69.99',
       period: '/year',
       description: 'Study, test and track your apprenticeship',
       featureGroups: APPRENTICE_GROUPS,
@@ -554,13 +554,13 @@ export const stripePriceData = {
       notIncluded: [],
       popular: false,
       color: '',
-      savings: 'Save £11.89 vs monthly',
+      savings: 'Save £13.89 vs monthly',
       priceId: stripePrices.yearly.apprentice,
     },
     {
       id: 'electrician-yearly',
       name: 'Electrician',
-      price: '£129.99',
+      price: '£199.99',
       period: '/year',
       description: 'Certs, AI agents, CRM and the full business toolkit',
       featureGroups: ELECTRICIAN_GROUPS,
@@ -568,7 +568,7 @@ export const stripePriceData = {
       notIncluded: [],
       popular: true,
       color: '',
-      savings: 'Save £25.89 vs monthly',
+      savings: 'Save £39.89 vs monthly',
       priceId: stripePrices.yearly.electrician,
       inheritsFrom: 'Apprentice',
     },

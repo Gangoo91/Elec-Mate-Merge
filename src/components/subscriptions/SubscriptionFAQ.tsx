@@ -39,7 +39,7 @@ const SubscriptionFAQ = () => {
     },
     {
       q: 'How does annual billing save me money?',
-      a: 'Annual subscriptions save up to 17% compared to monthly. Apprentice £59.99/yr (vs £71.88 monthly) · Electrician £129.99/yr (vs £155.88 monthly) · Mate £299.99/yr (vs £359.88 monthly) · Employer £499.99/yr (vs £599.88 monthly).',
+      a: 'Annual subscriptions save up to 17% compared to monthly. Apprentice £69.99/yr (vs £83.88 monthly) · Electrician £199.99/yr (vs £239.88 monthly) · Mate £299.99/yr (vs £359.88 monthly) · Employer £499.99/yr (vs £599.88 monthly).',
     },
     {
       q: 'What payment methods do you accept?',

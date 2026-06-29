@@ -295,6 +295,24 @@ export const useQuoteBuilder = (onQuoteGenerated?: () => void, initialQuote?: Qu
         });
         return;
       }
+      // Belt-and-braces: the quote is given a uuid at creation (line ~20), so
+      // id should always be present. But generate-pdf-monkey hard-rejects a
+      // quote with no id (400 "Quote data is required"), which then throws into
+      // Sentry — seen from stale PWA builds. Guard so the user gets a clear
+      // recoverable message instead of a crash. Sentry: JAVASCRIPT-REACT-A0.
+      if (!finalQuote.id) {
+        toast({
+          title: 'Could not generate quote',
+          description: 'Please refresh the page and try again.',
+          variant: 'destructive',
+        });
+        logger.error('Quote generation aborted: missing quote id', undefined, {
+          requestId,
+          quoteNumber: finalQuote.quoteNumber,
+          itemCount: finalQuote.items.length,
+        });
+        return;
+      }
 
       logger.info('Quote generation started', {
         requestId,

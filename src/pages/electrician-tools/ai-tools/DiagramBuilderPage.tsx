@@ -26,6 +26,7 @@ import {
   Download,
   Copy,
   Crosshair,
+  Image as ImageIcon,
 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { useSearchParams, useNavigate } from 'react-router-dom';
@@ -309,6 +310,10 @@ const DiagramBuilderPage = () => {
   const canvasRef = useRef<any>(null);
   const [searchParams] = useSearchParams();
   const projectId = searchParams.get('projectId') || null;
+  // When opened from a certificate/report (?reportId=…) the plan is attached to
+  // that report via floor_plans.report_id, mirroring the project link. Both can
+  // be present (a report that belongs to a project).
+  const reportId = searchParams.get('reportId') || null;
   const initialFloorPlanId = searchParams.get('floorPlanId') || null;
   const [linkedFloorPlanId, setLinkedFloorPlanId] = useState<string | null>(initialFloorPlanId);
   const [projectName, setProjectName] = useState<string | null>(null);
@@ -321,12 +326,16 @@ const DiagramBuilderPage = () => {
   const [projectLocation, setProjectLocation] = useState<string | null>(null);
   const [projectClientName, setProjectClientName] = useState<string | null>(null);
   const [electricianName, setElectricianName] = useState<string | null>(null);
+  // Short label for the "Linked to report" pill + cloud plan name (e.g. the
+  // installation address or certificate number of the attached report).
+  const [reportLabel, setReportLabel] = useState<string | null>(null);
   // Refs that mirror the latest committed state for use inside async chains
   // where capturing React state via closure would be stale. Critical for the
   // cloud-save chain below: the second Save Room tap must see the first
   // save's resulting row id, even before React has re-rendered.
   const linkedFloorPlanIdRef = useRef<string | null>(initialFloorPlanId);
   const projectNameRef = useRef<string | null>(null);
+  const reportNameRef = useRef<string | null>(null);
   const cloudPlanNameSetRef = useRef<boolean>(false);
   // Serialises every cloud upsert/delete so rapid taps can't race into
   // duplicate `floor_plans` rows. Each handler appends to the chain rather
@@ -517,6 +526,37 @@ const DiagramBuilderPage = () => {
     };
   }, [projectId]);
 
+  // When opened from a certificate/report (?reportId=…), fetch its address +
+  // client + inspector so we can show a "Linked to report" pill, name the cloud
+  // plan after it, and prefill the export sheet. Mirrors the project fetch and
+  // is fully guarded so a query error can never blank the page.
+  useEffect(() => {
+    if (!reportId) return;
+    let cancelled = false;
+    (async () => {
+      try {
+        const { data: report, error } = await supabase
+          .from('reports')
+          .select('installation_address, client_name, inspector_name, certificate_number')
+          .eq('id', reportId)
+          .maybeSingle();
+        if (cancelled || error || !report) return;
+        const label = report.installation_address || report.certificate_number || 'Report';
+        setReportLabel(label);
+        reportNameRef.current = label;
+        // Prefill export fields only if a project hasn't already supplied them.
+        if (report.installation_address) setProjectLocation((prev) => prev ?? report.installation_address);
+        if (report.client_name) setProjectClientName((prev) => prev ?? report.client_name);
+        if (report.inspector_name) setElectricianName((prev) => prev ?? report.inspector_name);
+      } catch {
+        // Non-fatal — the planner still works without the linked-report pill.
+      }
+    })();
+    return () => {
+      cancelled = true;
+    };
+  }, [reportId]);
+
   // Apply a cloud plan locally — clears existing rooms and hydrates the
   // strip from the cloud payload. Pulled out of the deep-link effect so
   // the AlertDialog confirm can also call it after the user okays a
@@ -601,6 +641,7 @@ const DiagramBuilderPage = () => {
           name: `${projectName} — Floor Plan`,
           rooms,
           projectId,
+          reportId: reportId ?? undefined,
         })
       )
       .catch(() => {
@@ -702,6 +743,46 @@ const DiagramBuilderPage = () => {
         title: 'No saved project',
         description: 'No saved diagram found',
         variant: 'default',
+      });
+    }
+  };
+
+  // Save the current room as a high-res PNG. Renders the live canvas when
+  // there's work on it, otherwise falls back to the active/first saved room's
+  // pre-rendered image. PDF (via ExportReviewSheet) is the full multi-room
+  // document; this is the quick "give me an image of this room" path.
+  const handleSaveImage = async () => {
+    const fabricCanvas = canvasRef.current?.getFabricCanvas?.();
+    let dataUrl = '';
+    if (canvasObjects.length > 0 && fabricCanvas) {
+      fabricCanvas.renderAll?.();
+      const bounds = getObjectBounds(canvasObjects);
+      dataUrl = renderCenteredRoomImage(fabricCanvas, bounds, ROOM_EXPORT_SIZE, ROOM_IMAGE_PADDING, 1);
+    } else {
+      const room = rooms.find((r) => r.id === activeRoomId) ?? rooms[0];
+      dataUrl = room?.fullImage || room?.thumbnail || '';
+    }
+    if (!dataUrl) {
+      toast({ title: 'Nothing to export', description: 'Draw a room or place symbols first' });
+      return;
+    }
+    haptic.light();
+    try {
+      const { saveOrShareImage } = await import('@/utils/image-export');
+      const base = (projectName || activeRoom?.name || 'room-plan')
+        .replace(/[^\w\s-]/g, '')
+        .trim()
+        .replace(/\s+/g, '-')
+        .toLowerCase() || 'room-plan';
+      await saveOrShareImage(dataUrl, `${base}-${Date.now()}.png`);
+      haptic.success();
+      toast({ title: 'Image saved', variant: 'success' });
+    } catch (err) {
+      haptic.error();
+      toast({
+        title: 'Image export failed',
+        description: err instanceof Error ? err.message : 'Could not save image',
+        variant: 'destructive',
       });
     }
   };
@@ -810,6 +891,20 @@ const DiagramBuilderPage = () => {
     }
   };
 
+  // Name for the cloud `floor_plans` row — prefers the project, then the
+  // attached report, then a generic fallback. Reads refs so it's correct
+  // inside the async save chain even before React re-renders.
+  const cloudPlanName = () =>
+    projectNameRef.current
+      ? `${projectNameRef.current} — Floor Plan`
+      : reportNameRef.current
+        ? `${reportNameRef.current} — Floor Plan`
+        : 'Floor Plan';
+
+  // True whenever the planner is linked to a project and/or a report — both
+  // mirror Save Room into the cloud `floor_plans` table.
+  const isCloudLinked = !!(projectId || reportId);
+
   const handleSaveRoom = (name: string) => {
     // Prefer the thumbnail captured when the user tapped "Save Room" (canvas
     // was clean then). Fall back to re-rendering now only if it's missing.
@@ -863,16 +958,15 @@ const DiagramBuilderPage = () => {
     // two parallel INSERTs and create duplicate rows. Refs (not React
     // state) are read inside the chain so the second link sees the first
     // save's row id, even before React has re-rendered.
-    if (projectId) {
+    if (isCloudLinked) {
       cloudSaveChainRef.current = cloudSaveChainRef.current
         .then(() =>
           saveToCloud({
             id: linkedFloorPlanIdRef.current ?? undefined,
-            name: projectNameRef.current
-              ? `${projectNameRef.current} — Floor Plan`
-              : 'Floor Plan',
+            name: cloudPlanName(),
             rooms: nextRooms,
-            projectId,
+            projectId: projectId ?? undefined,
+            reportId: reportId ?? undefined,
           })
         )
         .then((row) => {
@@ -926,17 +1020,16 @@ const DiagramBuilderPage = () => {
       setActiveRoomId(null);
       setCanvasObjects([]);
     }
-    if (projectId && linkedFloorPlanIdRef.current) {
+    if (isCloudLinked && linkedFloorPlanIdRef.current) {
       const nextRooms = rooms.filter((r) => r.id !== roomId);
       cloudSaveChainRef.current = cloudSaveChainRef.current
         .then(() =>
           saveToCloud({
             id: linkedFloorPlanIdRef.current!,
-            name: projectNameRef.current
-              ? `${projectNameRef.current} — Floor Plan`
-              : 'Floor Plan',
+            name: cloudPlanName(),
             rooms: nextRooms,
-            projectId,
+            projectId: projectId ?? undefined,
+            reportId: reportId ?? undefined,
           })
         )
         .catch(() => {
@@ -1092,6 +1185,15 @@ const DiagramBuilderPage = () => {
               <span className="truncate">{projectName ?? 'Project'}</span>
             </span>
           )}
+          {reportId && !projectId && (
+            <span
+              className="flex items-center gap-1.5 text-[11px] text-elec-yellow px-2 py-1 rounded-md bg-elec-yellow/10 border border-elec-yellow/20 max-w-[140px] sm:max-w-[200px]"
+              title={reportLabel ? `Linked to report — ${reportLabel}` : 'Linked to report'}
+            >
+              <FileText className="h-3 w-3 shrink-0" />
+              <span className="truncate">{reportLabel ?? 'Report'}</span>
+            </span>
+          )}
           {(() => {
             if (canvasObjects.length === 0 && !lastSavedAt) return null;
             const diffSec = lastSavedAt
@@ -1119,7 +1221,7 @@ const DiagramBuilderPage = () => {
           })()}
         </div>
 
-        <div className="flex items-center gap-1.5">
+        <div className="flex items-center gap-1.5 shrink-0">
           {/* My Plans — primary discoverable entry to multi-room plan library */}
           <Button
             onClick={() => { haptic.light(); setMyPlansOpen(true); }}
@@ -1160,14 +1262,17 @@ const DiagramBuilderPage = () => {
               setSaveSheetOpen(true);
             }}
             aria-label="Save Room"
-            className="h-9 px-3 bg-elec-yellow text-black hover:bg-elec-yellow/90 text-xs font-bold touch-manipulation rounded-lg"
+            className="h-9 px-3 bg-elec-yellow text-black hover:bg-elec-yellow/90 text-xs font-bold touch-manipulation rounded-lg shrink-0"
           >
             <Save className="h-3.5 w-3.5 mr-1" />
-            Save Room
+            <span className="sm:hidden">Save</span>
+            <span className="hidden sm:inline">Save Room</span>
           </Button>
 
-          {/* Export — always visible on tablet+. Guides the user to save
-              first if they haven't. Mobile sees this in the overflow menu. */}
+          {/* Export — visible on EVERY size (icon-only on mobile). Previously
+              this was tablet-only and mobile users had to dig into the ⋮ menu
+              to find it, which read as "there's no way to export". Guides the
+              user to save first if they haven't. */}
           <Button
             onClick={() => {
               if (rooms.length === 0 && canvasObjects.length === 0) {
@@ -1178,14 +1283,15 @@ const DiagramBuilderPage = () => {
                 toast({ title: 'Save this room first', description: 'Tap Save Room before exporting' });
                 return;
               }
+              haptic.light();
               setExportReviewOpen(true);
             }}
             aria-label="Export PDF"
             variant="ghost"
-            className="hidden sm:flex h-9 px-3 text-white hover:bg-white/10 text-xs font-medium touch-manipulation rounded-lg border border-white/10"
+            className="flex h-9 px-2 sm:px-3 text-white hover:bg-white/10 text-xs font-medium touch-manipulation rounded-lg border border-white/10"
           >
-            <Download className="h-3.5 w-3.5 mr-1" />
-            Export PDF
+            <Download className="h-3.5 w-3.5 sm:mr-1" />
+            <span className="hidden sm:inline">Export</span>
           </Button>
 
           {/* Overflow menu — rotate, delete, and other options */}
@@ -1200,25 +1306,16 @@ const DiagramBuilderPage = () => {
               </Button>
             </DropdownMenuTrigger>
             <DropdownMenuContent align="end" className="bg-elec-card border-white/10 min-w-[180px]">
-              {/* Export PDF — mobile only (tablet+ shows the visible button) */}
+              {/* Save as image — quick PNG of the current room (PDF lives as a
+                  visible button in the header now). */}
               <DropdownMenuItem
-                onClick={() => {
-                  if (rooms.length === 0 && canvasObjects.length === 0) {
-                    toast({ title: 'Nothing to export', description: 'Draw a room or place symbols first' });
-                    return;
-                  }
-                  if (canvasObjects.length > 0 && !rooms.find(r => r.id === activeRoomId)) {
-                    toast({ title: 'Save this room first', description: 'Tap Save Room before exporting' });
-                    return;
-                  }
-                  setExportReviewOpen(true);
-                }}
-                className="sm:hidden text-white hover:bg-white/10 touch-manipulation"
+                onClick={handleSaveImage}
+                className="text-white hover:bg-white/10 touch-manipulation"
               >
-                <Download className="h-4 w-4 mr-2" />
-                Export PDF
+                <ImageIcon className="h-4 w-4 mr-2" />
+                Save as Image (PNG)
               </DropdownMenuItem>
-              <DropdownMenuSeparator className="sm:hidden bg-white/10" />
+              <DropdownMenuSeparator className="bg-white/10" />
               <DropdownMenuItem
                 onClick={() => { canvasRef.current?.handleRotate?.(); haptic.light(); }}
                 className="text-white hover:bg-white/10 touch-manipulation"
@@ -1413,36 +1510,45 @@ const DiagramBuilderPage = () => {
         )}
       </div>
 
-      {/* Bottom toolbar — docked like native app tab bar.
-          Subtle group dividers (sm+) help separate drawing / placement / edit /
-          AI / history without visual clutter on mobile. */}
-      <div className="shrink-0 bg-[#111] border-t border-white/10 px-2 py-1.5 safe-area-pb">
-        <div className="flex items-center justify-around">
+      {/* Bottom toolbar — native tab-bar feel. Horizontally scrollable so
+          every tool keeps a full 44px+ tap target on a 360px phone instead of
+          being crushed into a fixed row. The active tool expands to show its
+          label (iOS segmented-control style); the rest stay icon-only on
+          mobile and gain labels on tablet+. Group dividers (Select / Draw /
+          Place / Edit / AI / History) are visible on every size. */}
+      <div className="shrink-0 bg-[#111] border-t border-white/10 safe-area-pb">
+        <div className="flex items-center justify-start gap-1 overflow-x-auto scrollbar-hide px-2 py-1.5 sm:justify-center">
           {toolButtons.map((tool, idx) => {
             const Icon = tool.icon;
             const active = isToolActive(tool.id);
-            const isAction = tool.id === 'undo' || tool.id === 'redo';
             const prev = toolButtons[idx - 1];
             const showDivider = prev && prev.group !== tool.group;
             return (
               <Fragment key={tool.id}>
                 {showDivider && (
-                  <span aria-hidden className="hidden sm:block self-center h-6 w-px bg-white/10" />
+                  <span aria-hidden className="self-center h-7 w-px shrink-0 bg-white/10 mx-0.5" />
                 )}
                 <button
                   onClick={() => handleToolTap(tool.id)}
                   aria-label={tool.label}
+                  aria-pressed={active}
                   className={cn(
-                    'flex flex-col items-center justify-center transition-all touch-manipulation active:scale-90',
+                    'flex h-12 min-w-[48px] shrink-0 items-center justify-center rounded-xl px-2.5 touch-manipulation transition-colors duration-200 active:scale-90',
                     active
-                      ? 'text-elec-yellow'
-                      : isAction
-                        ? 'text-white'
-                        : 'text-white'
+                      ? 'bg-elec-yellow text-black'
+                      : 'text-white/90 hover:bg-white/5 active:bg-white/10'
                   )}
                 >
-                  <Icon className="h-5 w-5" />
-                  <span className={cn('text-[9px] mt-0.5 leading-none hidden min-[375px]:block', active ? 'font-bold' : 'font-medium')}>
+                  <Icon className="h-5 w-5 shrink-0" />
+                  {/* Label only on the active tool (ticket spec) — keeps the
+                      row compact (~580px) so it fits centred on tablet/desktop
+                      and only needs to scroll on phones. */}
+                  <span
+                    className={cn(
+                      'overflow-hidden whitespace-nowrap text-[12px] font-semibold leading-none transition-all duration-200',
+                      active ? 'ml-1.5 max-w-[80px] opacity-100' : 'ml-0 max-w-0 opacity-0'
+                    )}
+                  >
                     {tool.label}
                   </span>
                 </button>
@@ -1455,7 +1561,7 @@ const DiagramBuilderPage = () => {
       {selectedObject && !wallEditState && (
         <div
           className="absolute left-1/2 z-40 -translate-x-1/2 rounded-2xl border border-white/10 bg-black/75 backdrop-blur-xl px-2 py-2 shadow-2xl max-w-[calc(100vw-16px)] overflow-x-auto"
-          style={{ bottom: `${floatingUiBottom}px` }}
+          style={{ bottom: `calc(${floatingUiBottom}px + env(safe-area-inset-bottom, 0px))` }}
         >
           <div className="flex items-center gap-1.5 min-w-max">
             <button

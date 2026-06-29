@@ -255,7 +255,7 @@ export default function ToolTemplate({
             sections.length >= 3 && (
               <SEOAppBridge
                 title="Try Elec-Mate free for 7 days"
-                description="16 certificate types, 70+ calculators, RAMS, quoting, invoicing, AI agents, and 46+ training courses — from £5.99/mo."
+                description="16 certificate types, 70+ calculators, RAMS, quoting, invoicing, AI agents, and 46+ training courses — from £6.99/mo."
                 ctaText="Start free trial"
                 icon={Zap}
               />

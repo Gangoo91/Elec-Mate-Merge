@@ -107,7 +107,7 @@ const softwareAppSchema = {
     '@type': 'Offer',
     price: '0',
     priceCurrency: 'GBP',
-    description: '7-day free trial, then from £12.99/month',
+    description: '7-day free trial, then from £19.99/month',
   },
 };
 

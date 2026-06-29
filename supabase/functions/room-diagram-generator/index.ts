@@ -176,17 +176,22 @@ CRITICAL: Return ONLY the JSON object, no markdown, no explanations, no code blo
           cleanedContent = cleanedContent.replace(/```\n?/g, '').trim();
         }
 
-        return JSON.parse(cleanedContent);
+        const parsed = JSON.parse(cleanedContent);
+
+        // Validate structure INSIDE the retry — a parseable-but-incomplete
+        // response (missing room/walls/symbols) is a transient AI miss, so
+        // throwing here lets withRetry try again instead of hard-failing the
+        // request. Sentry: JAVASCRIPT-REACT-15 (285 occurrences).
+        if (!parsed.room || !parsed.walls || !parsed.symbols) {
+          throw new Error('Invalid room data structure returned by AI');
+        }
+
+        return parsed;
       },
       { maxAttempts: 3, backoff: [1000, 2000, 4000] }
     );
 
     console.log('✅ Room parsed:', JSON.stringify(result, null, 2));
-
-    // Validate structure
-    if (!result.room || !result.walls || !result.symbols) {
-      throw new Error('Invalid room data structure returned by AI');
-    }
 
     return new Response(
       JSON.stringify({

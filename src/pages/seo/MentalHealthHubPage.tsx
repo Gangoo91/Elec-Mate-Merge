@@ -15,6 +15,7 @@ import {
   Headphones,
   MessageCircle,
   Activity,
+  CheckCircle2,
 } from 'lucide-react';
 
 // -------------------------------------------------------------------

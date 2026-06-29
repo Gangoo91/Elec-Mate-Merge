@@ -133,10 +133,10 @@ const courseSchema = {
   courseMode: 'online',
   offers: {
     '@type': 'Offer',
-    price: '5.99',
+    price: '6.99',
     priceCurrency: 'GBP',
     availability: 'https://schema.org/InStock',
-    description: 'From £5.99/month with 7-day free trial',
+    description: 'From £6.99/month with 7-day free trial',
   },
 };
 

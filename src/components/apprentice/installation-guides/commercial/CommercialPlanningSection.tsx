@@ -21,6 +21,7 @@ import {
   Wind,
   Server,
   Zap,
+  Lightbulb,
 } from 'lucide-react';
 
 const CommercialPlanningSection = () => {

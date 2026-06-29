@@ -17,7 +17,7 @@ import ComboboxCell from '@/components/table-cells/ComboboxCell';
 import InspectionPhotoUpload from '@/components/inspection/InspectionPhotoUpload';
 import { useInspectionPhotos } from '@/hooks/useInspectionPhotos';
 import SignatureInput from '@/components/signature/SignatureInput';
-import { Section, Field, inputCn, textareaCn, CheckboxCard } from './SolarPVSection';
+import { Section, Field, inputCn, inputSmCn, textareaCn, CheckboxCard } from './SolarPVSection';
 
 interface Props {
   formData: SolarPVFormData;

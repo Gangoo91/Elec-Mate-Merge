@@ -107,9 +107,9 @@ const softwareAppSchema = {
   url: 'https://www.elec-mate.com/compare/elec-mate-vs-icertifi',
   offers: {
     '@type': 'Offer',
-    price: '5.99',
+    price: '6.99',
     priceCurrency: 'GBP',
-    description: 'Monthly subscription from £5.99. 7-day free trial.',
+    description: 'Monthly subscription from £6.99. 7-day free trial.',
   },
   aggregateRating: {
     '@type': 'AggregateRating',
@@ -173,7 +173,7 @@ export default function ElecMateVsICertifiPage() {
             <p className="text-white text-sm leading-relaxed">
               <strong className="text-yellow-400">Verdict:</strong> Elec-Mate includes 70+ BS 7671
               calculators, 16 certificate types, and AI tools that iCertifi does not offer, starting
-              from £5.99 per month. iCertifi suits electricians who only need standard certificates
+              from £6.99 per month. iCertifi suits electricians who only need standard certificates
               and prefer a focused, established tool.
             </p>
             <p className="text-white/60 text-xs mt-2">
@@ -258,7 +258,7 @@ export default function ElecMateVsICertifiPage() {
               Elec-Mate is a newer platform than iCertifi but was designed with the advantage of
               building on the lessons learned from existing tools in the market. It works on iOS,
               Android, and desktop via a Progressive Web App, with full offline support and
-              automatic syncing. Pricing starts from £5.99 per month with unlimited usage across all
+              automatic syncing. Pricing starts from £6.99 per month with unlimited usage across all
               features and a 7-day free trial.
             </p>
           </div>
@@ -522,7 +522,7 @@ export default function ElecMateVsICertifiPage() {
                 structures can change.
               </p>
               <p>
-                Elec-Mate uses a flat monthly subscription starting from £5.99 per month. All
+                Elec-Mate uses a flat monthly subscription starting from £6.99 per month. All
                 features are included at every tier — all 16 certificate types, all 70+ calculators,
                 all 8 Elec-AI tools, all training courses, and all business management features.
                 There are no per-certificate charges and no feature gating. Every plan includes a

@@ -47,7 +47,7 @@ export default function ElectricianAppForAndroidPage() {
           Best <span className="text-yellow-400">Electrician App</span> for Android 2026
         </>
       }
-      heroSubtitle="Elec-Mate is the best electrician app for Android in 2026, offering 26 certificate types, 75 BS 7671 calculators, AI tools, and offline support from £12.99/month. Here is how the top electrician apps compare on Android — from certificate generation and offline reliability to AI tools and touch performance. Find the app that works best on your Samsung, Google Pixel, or other Android device."
+      heroSubtitle="Elec-Mate is the best electrician app for Android in 2026, offering 26 certificate types, 75 BS 7671 calculators, AI tools, and offline support from £19.99/month. Here is how the top electrician apps compare on Android — from certificate generation and offline reliability to AI tools and touch performance. Find the app that works best on your Samsung, Google Pixel, or other Android device."
       readingTime={10}
       comparisonColumns={['Feature', 'Elec-Mate', 'iCertifi', 'CertsApp', 'Easy EICR']}
       comparisonRows={[
@@ -76,7 +76,7 @@ export default function ElectricianAppForAndroidPage() {
         'Elec-Mate is the only Android electrician app with AI Board Scanner, Voice Test Entry, and Defect Code AI — features that transform the certification workflow on site.',
         'iCertifi and CertsApp are certificate-focused apps. Easy EICR concentrates on EICRs. Only Elec-Mate covers certificates plus calculators, AI, training, and business management in a single subscription.',
         'Elec-Mate is designed for qualified electricians working to BS 7671:2018+A4:2026. Certificate content is reviewed against current IET Wiring Regulations and GN3 guidance by experienced electrical professionals.',
-        'CertsApp uses a credit-based pricing model where you pay per certificate. Elec-Mate charges a flat rate from £12.99/month with unlimited certificates — better value for electricians producing regular volumes of certificates.',
+        'CertsApp uses a credit-based pricing model where you pay per certificate. Elec-Mate charges a flat rate from £19.99/month with unlimited certificates — better value for electricians producing regular volumes of certificates.',
       ]}
       sections={[
         {
@@ -114,7 +114,7 @@ export default function ElectricianAppForAndroidPage() {
               <p>
                 <strong>Elec-Mate</strong> — All-in-one platform with 26 certificate types, 75 BS
                 7671 calculators, AI tools, 46+ training courses, and business management. Runs as
-                an optimised PWA on Android with native-like performance. From £12.99/month.
+                an optimised PWA on Android with native-like performance. From £19.99/month.
               </p>
               <p>
                 <strong>iCertifi</strong> — Certificate generation app supporting multiple
@@ -306,7 +306,7 @@ export default function ElectricianAppForAndroidPage() {
         {
           question: 'Does CertsApp charge per certificate on Android?',
           answer:
-            'Yes. CertsApp uses a credit-based pricing model where you purchase credits and each certificate costs a certain number of credits. This model becomes expensive if you produce certificates regularly. Elec-Mate charges a flat rate from £12.99/month with unlimited certificates — no per-certificate charges regardless of volume.',
+            'Yes. CertsApp uses a credit-based pricing model where you purchase credits and each certificate costs a certain number of credits. This model becomes expensive if you produce certificates regularly. Elec-Mate charges a flat rate from £19.99/month with unlimited certificates — no per-certificate charges regardless of volume.',
         },
         {
           question: 'Can I use the AI Board Scanner on an Android phone?',

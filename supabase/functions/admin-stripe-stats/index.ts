@@ -13,12 +13,16 @@ const PRICE_TIER_MAP: Record<string, { tier: string; amount: number }> = {
   // Founder pricing (£3.99/mo) - MAIN PRICE USED BY ALL REAL USERS
   price_1SPK8c2RKw5t5RAmRGJxXfjc: { tier: 'founder', amount: 3.99 },
   price_1RL1wd2RKw5t5RAms8S0sLAt: { tier: 'founder', amount: 3.99 },
-  // Apprentice pricing - current (£5.99/mo) + legacy (£4.99/mo)
+  // Apprentice pricing - current £6.99/mo (Jun 2026, new customers) + prior £5.99 + legacy £4.99
+  price_1TnbOk2RKw5t5RAmiOCTkqS3: { tier: 'apprentice', amount: 6.99 },
+  price_1TnbOl2RKw5t5RAmmNsVstDW: { tier: 'apprentice', amount: 69.99 / 12 },
   price_1TKlA22RKw5t5RAmpvhojy0b: { tier: 'apprentice', amount: 5.99 },
   price_1SmUef2RKw5t5RAmRIMTWTqU: { tier: 'apprentice', amount: 4.99 },
   price_1TKlKK2RKw5t5RAmGVR5EcF9: { tier: 'apprentice', amount: 59.99 / 12 },
   price_1SmUfK2RKw5t5RAml6bj1I77: { tier: 'apprentice', amount: 49.99 / 12 },
-  // Electrician pricing - current (£12.99/mo) + legacy (£9.99/mo)
+  // Electrician pricing - current £19.99/mo (Jun 2026, new customers) + prior £12.99 + legacy £9.99
+  price_1TnbOh2RKw5t5RAmsf2KcHT6: { tier: 'electrician', amount: 19.99 },
+  price_1TnbOj2RKw5t5RAmEIXS6oyV: { tier: 'electrician', amount: 199.99 / 12 },
   price_1TKlA12RKw5t5RAmdhZyhX1I: { tier: 'electrician', amount: 12.99 },
   price_1SqJVr2RKw5t5RAmaiTGelLN: { tier: 'electrician', amount: 9.99 },
   price_1TKlKL2RKw5t5RAmpD8FH7qp: { tier: 'electrician', amount: 129.99 / 12 },

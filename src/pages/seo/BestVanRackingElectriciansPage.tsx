@@ -15,6 +15,7 @@ import {
   GraduationCap,
   Package,
   Zap,
+  AlertTriangle,
 } from 'lucide-react';
 
 // -------------------------------------------------------------------

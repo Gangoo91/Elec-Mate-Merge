@@ -118,7 +118,7 @@ export default function BestAIToolElectriciansPage() {
                 </SEOInternalLink>{' '}
                 and{' '}
                 <SEOInternalLink href="/tools/ai-cost-engineer">AI Cost Engineer</SEOInternalLink>.{' '}
-                From £5.99/month.
+                From £6.99/month.
               </p>
               <p>
                 <strong>ChatGPT (OpenAI)</strong> — The world's most popular general-purpose AI
@@ -218,7 +218,7 @@ export default function BestAIToolElectriciansPage() {
           </p>
           <p>
             The practical approach: use ChatGPT or Gemini for general tasks, and use Elec-Mate AI
-            for anything related to your electrical work. At £5.99 per month, Elec-Mate costs less
+            for anything related to your electrical work. At £6.99 per month, Elec-Mate costs less
             than either ChatGPT Plus or Gemini Advanced — and includes everything else an
             electrician needs: certificates, calculators, training, and business tools. If costing
             and quoting is your priority, see our{' '}
@@ -292,7 +292,7 @@ export default function BestAIToolElectriciansPage() {
         {
           question: 'Is Elec-Mate AI cheaper than ChatGPT Plus?',
           answer:
-            'Yes. Elec-Mate starts from £5.99 per month and includes all 8 AI agents, 12 AI tools, plus certificates, calculators, and training. ChatGPT Plus costs around £16/month and Gemini Advanced around £19/month. Elec-Mate is more affordable and includes far more trade-specific value.',
+            'Yes. Elec-Mate starts from £6.99 per month and includes all 8 AI agents, 12 AI tools, plus certificates, calculators, and training. ChatGPT Plus costs around £16/month and Gemini Advanced around £19/month. Elec-Mate is more affordable and includes far more trade-specific value.',
         },
         {
           question: 'Can Elec-Mate AI generate RAMS?',
@@ -355,7 +355,7 @@ export default function BestAIToolElectriciansPage() {
         },
       ]}
       ctaHeading="AI built for electricians, not everyone"
-      ctaSubheading="Try Elec-Mate free for 7 days. 8 specialist AI agents, certificates, calculators, and training — all from £5.99/month."
+      ctaSubheading="Try Elec-Mate free for 7 days. 8 specialist AI agents, certificates, calculators, and training — all from £6.99/month."
       comparePath="/compare/best-ai-tool-electricians"
     />
   );

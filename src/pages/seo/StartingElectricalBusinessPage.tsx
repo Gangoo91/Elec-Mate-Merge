@@ -397,7 +397,7 @@ export default function StartingElectricalBusinessPage() {
 
               <SEOAppBridge
                 title="Elec-Mate — One Subscription Replaces 5+ Apps"
-                description="Certificates, AI agents, quoting, invoicing, expense tracking, customer management, calculators, and more — all in one platform from £12.99/month."
+                description="Certificates, AI agents, quoting, invoicing, expense tracking, customer management, calculators, and more — all in one platform from £19.99/month."
                 icon={Zap}
               />
             </>

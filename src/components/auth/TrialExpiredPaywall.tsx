@@ -20,15 +20,15 @@ type PriceInfo = {
 const ROLE_TO_PRICE: Record<string, PriceInfo> = {
   electrician: {
     planId: 'electrician-monthly',
-    priceId: 'price_1TKlA12RKw5t5RAmdhZyhX1I',
+    priceId: 'price_1TnbOh2RKw5t5RAmsf2KcHT6',
     label: 'Electrician',
-    price: '£12.99',
+    price: '£19.99',
   },
   apprentice: {
     planId: 'apprentice-monthly',
-    priceId: 'price_1TKlA22RKw5t5RAmpvhojy0b',
+    priceId: 'price_1TnbOk2RKw5t5RAmiOCTkqS3',
     label: 'Apprentice',
-    price: '£5.99',
+    price: '£6.99',
   },
 };
 
@@ -96,7 +96,7 @@ const TrialExpiredPaywall = () => {
       }
       if (!data?.url) throw new Error('No checkout URL returned');
 
-      const checkoutValue = priceInfo.planId.startsWith('apprentice') ? 5.99 : 12.99;
+      const checkoutValue = priceInfo.planId.startsWith('apprentice') ? 6.99 : 19.99;
       const eventId = trackInitiateCheckout({
         value: checkoutValue,
         currency: 'GBP',

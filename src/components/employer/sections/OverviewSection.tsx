@@ -12,30 +12,42 @@ import {
   Eyebrow,
   IconButton,
   LoadingBlocks,
+  ListCard,
+  ListBody,
+  ListRow,
 } from '@/components/employer/editorial';
 import { useEmployerDashboardStats } from '@/hooks/useEmployerDashboardStats';
 import { useEmployerOverview, type RadarItem } from '@/hooks/useEmployerOverview';
 import { useVacancyStats } from '@/hooks/useVacancies';
 import { useQsReviewQueue } from '@/hooks/useQsReviewQueue';
+import { useJobSignals } from '@/hooks/useJobSignals';
+import { useJobs } from '@/hooks/useJobs';
+import { useWorkerLocations } from '@/hooks/useWorkerLocations';
 import type { Section } from '@/pages/employer/EmployerDashboard';
 import type { Tone } from '@/components/employer/editorial';
 
 interface OverviewSectionProps {
   onNavigate: (section: Section) => void;
   onOpenMate?: () => void;
+  onOpenCommand?: () => void;
 }
 
 import { FirstRunChecklist } from '@/components/employer/FirstRunChecklist';
 import { MateEntryCard } from '@/components/employer/EmployerMate';
+import { CommandTrigger } from '@/components/employer/EmployerCommandPalette';
 
 const gbp = (n: number) => `£${Math.round(n).toLocaleString('en-GB')}`;
 
-export function OverviewSection({ onNavigate, onOpenMate }: OverviewSectionProps) {
+export function OverviewSection({ onNavigate, onOpenMate, onOpenCommand }: OverviewSectionProps) {
   const { stats, isLoading, refetch } = useEmployerDashboardStats();
   const { data: radar, refetch: refetchRadar } = useEmployerOverview();
   const { data: vacancyStats } = useVacancyStats();
   // QS certificates awaiting this user's sign-off (empty unless they're a QS).
   const { data: qsPending = [] } = useQsReviewQueue('pending');
+  // Jobs carrying a cross-section signal (incident / overdue invoice / cert).
+  const { data: jobSignals } = useJobSignals();
+  const { data: jobs = [] } = useJobs();
+  const { data: workerLocations = [] } = useWorkerLocations();
 
   const {
     activeEmployees,
@@ -50,6 +62,17 @@ export function OverviewSection({ onNavigate, onOpenMate }: OverviewSectionProps
   const radarItems: RadarItem[] = radar?.items ?? [];
   const pendingTimesheets = radar?.counts.pending_timesheets ?? 0;
   const pendingQsReviews = qsPending.length;
+  const jobsNeedingAttention = jobSignals?.size ?? 0;
+
+  // Today: jobs in progress now + workers currently on site.
+  const todayIso = new Date().toISOString().slice(0, 10);
+  const todaysJobs = jobs.filter(
+    (j) =>
+      j.status === 'Active' &&
+      (!j.start_date || j.start_date <= todayIso) &&
+      (!j.end_date || j.end_date >= todayIso)
+  );
+  const onSiteCount = workerLocations.filter((w) => w.status === 'On Site').length;
 
   const onOpenPeople = () => onNavigate('peoplehub');
   const onOpenJobs = () => onNavigate('jobshub');
@@ -84,6 +107,19 @@ export function OverviewSection({ onNavigate, onOpenMate }: OverviewSectionProps
             section: 'qsreviews' as Section,
             tone: 'orange' as Tone,
             count: pendingQsReviews,
+          },
+        ]
+      : []),
+    // Jobs carrying an open incident / overdue invoice / expiring-cert worker.
+    ...(jobsNeedingAttention > 0
+      ? [
+          {
+            key: 'jobs-attention',
+            title: `${jobsNeedingAttention} job${jobsNeedingAttention === 1 ? '' : 's'} need attention`,
+            sub: 'Open incidents, overdue invoices or expiring certs',
+            section: 'jobs' as Section,
+            tone: 'orange' as Tone,
+            count: jobsNeedingAttention,
           },
         ]
       : []),
@@ -154,9 +190,12 @@ export function OverviewSection({ onNavigate, onOpenMate }: OverviewSectionProps
         description="Your firm at a glance — team, jobs, alerts, safety."
         tone="yellow"
         actions={
-          <IconButton onClick={refreshAll} aria-label="Refresh">
-            <RefreshCw className="h-4 w-4" />
-          </IconButton>
+          <div className="flex items-center gap-2">
+            {onOpenCommand && <CommandTrigger onOpen={onOpenCommand} />}
+            <IconButton onClick={refreshAll} aria-label="Refresh">
+              <RefreshCw className="h-4 w-4" />
+            </IconButton>
+          </div>
         }
       />
 
@@ -190,6 +229,33 @@ export function OverviewSection({ onNavigate, onOpenMate }: OverviewSectionProps
           },
         ]}
       />
+
+      {todaysJobs.length > 0 && (
+        <div className="space-y-4">
+          <SectionHeader
+            eyebrow="Today"
+            title="On the go"
+            meta={onSiteCount > 0 ? <Pill tone="emerald">{onSiteCount} on site</Pill> : undefined}
+          />
+          <ListCard>
+            <ListBody>
+              {todaysJobs.slice(0, 4).map((job) => (
+                <ListRow
+                  key={job.id}
+                  title={job.title}
+                  subtitle={[job.client, job.location].filter(Boolean).join(' · ')}
+                  trailing={
+                    typeof job.progress === 'number' && job.progress > 0 ? (
+                      <span className="text-[11px] tabular-nums text-white/70">{job.progress}%</span>
+                    ) : undefined
+                  }
+                  onClick={onOpenJobs}
+                />
+              ))}
+            </ListBody>
+          </ListCard>
+        </div>
+      )}
 
       {cash && (
         <div className="space-y-4">

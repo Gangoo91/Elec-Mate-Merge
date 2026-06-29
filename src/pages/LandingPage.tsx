@@ -364,8 +364,8 @@ const faqs = [
 const getPricingPlans = (isNative: boolean) => [
   {
     name: 'Apprentice',
-    price: isNative ? '£6.99' : '£5.99',
-    yearly: isNative ? '£69.99' : '£59.99',
+    price: isNative ? '£6.99' : '£6.99',
+    yearly: isNative ? '£69.99' : '£69.99',
     yearlySaving: isNative ? '£13.89' : '£11.89',
     description: 'Everything to ace your training.',
     features: [
@@ -379,8 +379,8 @@ const getPricingPlans = (isNative: boolean) => [
   },
   {
     name: 'Electrician',
-    price: isNative ? '£14.99' : '£12.99',
-    yearly: isNative ? '£149.99' : '£129.99',
+    price: isNative ? '£19.99' : '£19.99',
+    yearly: isNative ? '£199.99' : '£199.99',
     yearlySaving: isNative ? '£29.89' : '£25.89',
     description: 'Your complete site companion.',
     features: [
@@ -429,8 +429,8 @@ const LandingPage = () => {
   };
   const isNative = Capacitor.isNativePlatform();
   const pricingPlans = useMemo(() => getPricingPlans(isNative), [isNative]);
-  const apprenticePrice = isNative ? '£6.99' : '£5.99';
-  const electricianPrice = isNative ? '£14.99' : '£12.99';
+  const apprenticePrice = isNative ? '£6.99' : '£6.99';
+  const electricianPrice = isNative ? '£19.99' : '£19.99';
   const audienceCards = useMemo(
     () => getAudienceCards(apprenticePrice, electricianPrice),
     [apprenticePrice, electricianPrice]
@@ -498,8 +498,8 @@ const LandingPage = () => {
               'The complete platform for UK electricians - training, AI tools, certificates, and business management.',
             offers: {
               '@type': 'AggregateOffer',
-              lowPrice: '5.99',
-              highPrice: '12.99',
+              lowPrice: '6.99',
+              highPrice: '19.99',
               priceCurrency: 'GBP',
               offerCount: '2',
             },
