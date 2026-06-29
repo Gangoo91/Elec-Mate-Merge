@@ -66,10 +66,13 @@ const CheckoutTrial = () => {
     availablePackages,
     isPurchasing,
     purchasePackage,
+    restorePurchases,
     loadOfferings,
     getPackageForPlan,
     error: revenueCatError,
   } = useRevenueCat(user?.id);
+
+  const [isRestoring, setIsRestoring] = useState(false);
 
   // Merge the hook's error (purchase cancelled, SDK failure) with the local
   // error (Stripe flow, package loading) so the UI shows whichever is active.
@@ -248,6 +251,36 @@ const CheckoutTrial = () => {
     purchasePackage,
     user?.id,
   ]);
+
+  // Restore an existing store subscription that the app isn't recognising —
+  // e.g. a Google Play / Apple purchase made before sign-in that landed on an
+  // anonymous RevenueCat user. Returning subscribers hit the paywall otherwise
+  // (ELE-1231 / ELE-1230). Required by Apple for all subscription apps.
+  const handleRestore = useCallback(async () => {
+    if (isRestoring || isPurchasing) return;
+    setError(null);
+    setIsRestoring(true);
+    const ok = await restorePurchases();
+    setIsRestoring(false);
+    if (ok) {
+      if (user?.id) {
+        try {
+          await supabase
+            .from('profiles')
+            .update({ subscribed: true, updated_at: new Date().toISOString() })
+            .eq('id', user.id);
+          sessionStorage.removeItem(`elecmate_sub_cache_${user.id}`);
+        } catch (updateError) {
+          console.warn('Profile update after restore failed:', updateError);
+        }
+      }
+      navigate('/dashboard');
+    } else {
+      setError(
+        'We could not find an active subscription to restore on this account. If you have just paid, wait a minute and try again, or contact info@elec-mate.com.'
+      );
+    }
+  }, [isRestoring, isPurchasing, restorePurchases, navigate, user?.id]);
 
   // Auth / subscription guards only. The redirect to Stripe no longer fires
   // on mount — users now have to click the CTA to continue, so they see the
@@ -492,6 +525,23 @@ const CheckoutTrial = () => {
                 <p className="mt-3 text-center text-[12px] text-white">
                   Loading payment options...
                 </p>
+              )}
+
+              {isNative && (
+                <button
+                  onClick={handleRestore}
+                  disabled={isRestoring || isPurchasing}
+                  className="mt-4 flex h-11 w-full touch-manipulation items-center justify-center gap-2 rounded-xl text-[13px] font-semibold text-white/90 transition-colors hover:text-yellow-400 disabled:opacity-50"
+                >
+                  {isRestoring ? (
+                    <>
+                      <Loader2 className="h-4 w-4 animate-spin" />
+                      Restoring...
+                    </>
+                  ) : (
+                    'Already subscribed? Restore purchase'
+                  )}
+                </button>
               )}
 
               <div className="mt-6 border-t border-white/[0.08] pt-5">

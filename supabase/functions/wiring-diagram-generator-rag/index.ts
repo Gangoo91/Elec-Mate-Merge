@@ -131,7 +131,7 @@ serve(async (req) => {
         () =>
           withTimeout(
             fetch(
-              `https://generativelanguage.googleapis.com/v1beta/models/gemini-3-flash-preview:generateContent?key=${geminiApiKey}`,
+              `https://generativelanguage.googleapis.com/v1beta/models/gemini-3.5-flash:generateContent?key=${geminiApiKey}`,
               {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
@@ -315,7 +315,7 @@ ${regulations.map((reg) => `- [${reg.regulation_number}] ${reg.similarity ? `(re
       () =>
         withTimeout(
           fetch(
-            `https://generativelanguage.googleapis.com/v1beta/models/gemini-3-flash-preview:generateContent?key=${geminiApiKey}`,
+            `https://generativelanguage.googleapis.com/v1beta/models/gemini-3.5-flash:generateContent?key=${geminiApiKey}`,
             {
               method: 'POST',
               headers: {

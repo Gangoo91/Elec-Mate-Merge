@@ -132,7 +132,7 @@ CRITICAL: Return ONLY the JSON object, no markdown, no explanations, no code blo
           };
 
           const visionRes = await fetch(
-            `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key=${geminiKey}`,
+            `https://generativelanguage.googleapis.com/v1beta/models/gemini-3.5-flash:generateContent?key=${geminiKey}`,
             { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(visionBody) }
           );
 
@@ -156,7 +156,7 @@ CRITICAL: Return ONLY the JSON object, no markdown, no explanations, no code blo
                 },
                 { role: 'user', content: prompt },
               ],
-              model: 'gemini-2.5-flash',
+              model: 'gemini-3.5-flash',
               temperature: 0.3,
               max_tokens: 8000,
               response_format: { type: 'json_object' },

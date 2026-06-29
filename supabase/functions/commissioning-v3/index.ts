@@ -1968,7 +1968,7 @@ Determine the appropriate classification (C1/C2/C3/FI/NONE) for EACH defect and 
         // Call Gemini Flash 2.5 for photo analysis (better at vision than GPT-4o-mini)
         logger.info('🔮 Calling Gemini Flash 2.5 for photo analysis...');
         const geminiResponse = await fetch(
-          'https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent',
+          'https://generativelanguage.googleapis.com/v1beta/models/gemini-3.5-flash:generateContent',
           {
             method: 'POST',
             headers: {

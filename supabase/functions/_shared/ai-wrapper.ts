@@ -125,7 +125,7 @@ async function callAnthropicDirect(
  */
 export async function callAI(apiKey: string, options: AICallOptions): Promise<AICallResult> {
   const {
-    model = 'google/gemini-2.5-flash', // Default: fast + free Gemini
+    model = 'google/gemini-3.5-flash', // Default: fast + free Gemini
     temperature,
     maxTokens = 2000,
     responseFormat = 'text',

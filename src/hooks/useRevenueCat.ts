@@ -28,6 +28,26 @@ const TIER_ALIASES: Record<string, string> = {
   'business-ai': 'mate',
 };
 
+// Detect the store signalling "you already own this" — Play Billing
+// ITEM_ALREADY_OWNED / StoreKit, surfaced by RevenueCat as
+// PRODUCT_ALREADY_PURCHASED_ERROR ("6") or RECEIPT_ALREADY_IN_USE_ERROR ("7").
+// Happens when a subscription exists on the store account but isn't attached to
+// the current RevenueCat user (e.g. bought anonymously before sign-in). ELE-1231.
+function isAlreadyOwnedError(err: unknown): boolean {
+  if (!err || typeof err !== 'object') return false;
+  const e = err as Record<string, unknown>;
+  const code = String(e.code ?? '');
+  const readable = String(e.readableErrorCode ?? '').toLowerCase();
+  const text = `${String(e.message ?? '')} ${String(e.underlyingErrorMessage ?? '')}`.toLowerCase();
+  return (
+    code === '6' ||
+    code === '7' ||
+    readable.includes('alreadypurchased') ||
+    readable.includes('alreadyinuse') ||
+    (/already/.test(text) && /(own|subscrib|purchas)/.test(text))
+  );
+}
+
 interface RevenueCatState {
   isInitialised: boolean;
   isProEntitled: boolean;
@@ -141,6 +161,33 @@ export function useRevenueCat(userId?: string) {
     []
   );
 
+  // Pull any existing store purchase into the current RevenueCat user and
+  // re-resolve entitlement. Recovers a subscription the app didn't recognise:
+  // anonymous-before-login purchase, Android Play sync lag, or "already owned".
+  // ELE-1231.
+  const recoverEntitlement = useCallback(async (): Promise<{
+    isEntitled: boolean;
+    tier: RevenueCatTier;
+  }> => {
+    try {
+      await Purchases.syncPurchases();
+    } catch (e) {
+      console.warn('[RevenueCat] syncPurchases during recovery failed:', e);
+    }
+    try {
+      const { customerInfo } = await Purchases.restorePurchases();
+      return resolveActiveTier(customerInfo.entitlements.active);
+    } catch (e) {
+      console.warn('[RevenueCat] restorePurchases during recovery failed:', e);
+      try {
+        const { customerInfo } = await Purchases.getCustomerInfo();
+        return resolveActiveTier(customerInfo.entitlements.active);
+      } catch {
+        return { isEntitled: false, tier: null };
+      }
+    }
+  }, [resolveActiveTier]);
+
   // Check which entitlements the user has
   const checkEntitlements = useCallback(async (): Promise<boolean> => {
     if (!isNative) return false;
@@ -236,13 +283,25 @@ export function useRevenueCat(userId?: string) {
           console.warn('[RevenueCat] syncPurchases after purchase failed:', syncErr);
         }
 
-        const { isEntitled, tier } = resolveActiveTier(customerInfo.entitlements.active);
+        let { isEntitled, tier } = resolveActiveTier(customerInfo.entitlements.active);
+
+        // Android: the entitlement can lag a completed purchase while Google
+        // Play syncs to RevenueCat. Recover via sync+restore before declaring
+        // failure so the user isn't bounced back to the paywall. ELE-1231.
+        if (!isEntitled) {
+          const recovered = await recoverEntitlement();
+          isEntitled = recovered.isEntitled;
+          tier = recovered.tier;
+        }
 
         setState((prev) => ({
           ...prev,
           isProEntitled: isEntitled,
           activeTier: tier,
           isPurchasing: false,
+          error: isEntitled
+            ? null
+            : 'Your payment went through but is taking a moment to activate. Reopen the app shortly, or tap Restore purchase.',
         }));
 
         if (isEntitled) {
@@ -275,6 +334,37 @@ export function useRevenueCat(userId?: string) {
           return false;
         }
 
+        // Already-owned: the store account holds the subscription but it isn't
+        // attached to this RevenueCat user (commonly an anonymous purchase made
+        // before sign-in). Attach it via restore instead of failing. ELE-1231.
+        if (isAlreadyOwnedError(err)) {
+          const recovered = await recoverEntitlement();
+          if (recovered.isEntitled) {
+            haptic.success();
+            trackSubscribe({
+              value: priceNum,
+              currency: pkg.product?.currencyCode || 'GBP',
+              contentName: recovered.tier || pkg.identifier,
+              subscriptionId: pkg.product?.identifier || pkg.identifier,
+            });
+            setState((prev) => ({
+              ...prev,
+              isProEntitled: true,
+              activeTier: recovered.tier,
+              isPurchasing: false,
+              error: null,
+            }));
+            return true;
+          }
+          setState((prev) => ({
+            ...prev,
+            isPurchasing: false,
+            error:
+              'You already have an active subscription on this account, but we could not activate it automatically. Tap Restore purchase below, or email info@elec-mate.com.',
+          }));
+          return false;
+        }
+
         console.error('RevenueCat purchase error:', err);
         haptic.error(); // error buzz on purchase failure
         setState((prev) => ({
@@ -285,7 +375,7 @@ export function useRevenueCat(userId?: string) {
         return false;
       }
     },
-    [isNative, resolveActiveTier]
+    [isNative, resolveActiveTier, recoverEntitlement]
   );
 
   // Restore purchases (required by Apple for all subscription apps)

@@ -187,7 +187,7 @@ Include cable sizing, protection requirements, and testing procedures.`,
     // Call Gemini 3 Flash Vision API
     const systemPrompt = systemPrompts[mode] || systemPrompts.fault_diagnosis;
     const visionResponse = await fetch(
-      `https://generativelanguage.googleapis.com/v1beta/models/gemini-3-flash-preview:generateContent?key=${geminiApiKey}`,
+      `https://generativelanguage.googleapis.com/v1beta/models/gemini-3.5-flash:generateContent?key=${geminiApiKey}`,
       {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },

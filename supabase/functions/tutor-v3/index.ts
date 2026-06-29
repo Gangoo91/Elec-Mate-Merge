@@ -424,7 +424,7 @@ Provide comprehensive educational guidance following the tool schema structure. 
     console.log('🤖 Calling AI with tutor tool schema...');
 
     const aiResponse = await fetch(
-      `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key=${geminiApiKey}`,
+      `https://generativelanguage.googleapis.com/v1beta/models/gemini-3.5-flash:generateContent?key=${geminiApiKey}`,
       {
         method: 'POST',
         headers: {

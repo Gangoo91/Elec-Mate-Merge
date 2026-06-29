@@ -75,7 +75,7 @@ Respond with valid JSON:
               },
               { role: 'user', content: prompt },
             ],
-            model: 'gemini-2.5-flash',
+            model: 'gemini-3.5-flash',
             temperature: 0.3,
             max_tokens: 2000,
             response_format: { type: 'json_object' },

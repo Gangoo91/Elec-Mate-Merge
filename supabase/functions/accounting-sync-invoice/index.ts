@@ -391,7 +391,11 @@ Deno.serve(async (req: Request) => {
               typeof details.error === 'string' ? JSON.parse(details.error) : details.error;
             const faultError = qbError?.Fault?.Error?.[0];
             if (faultError) {
-              detailMsg = `${provider} Error: ${faultError.Message || faultError.Detail || errorMsg}`;
+              // QuickBooks puts the generic "A business validation error has
+              // occurred" in Message and the actual reason in Detail — surface
+              // both so the user (and we) can see what actually failed. ELE-1235.
+              const parts = [faultError.Message, faultError.Detail].filter(Boolean);
+              detailMsg = `${provider} Error: ${parts.join(' — ') || errorMsg}`;
             }
           } catch {
             detailMsg = `${provider} Error: ${details.error}`;
@@ -880,6 +884,12 @@ async function syncToQuickBooks(
   const markupFactor =
     invoice.subtotal > 0 ? (invoice.subtotal + totalMarkup) / invoice.subtotal : 1;
 
+  // Resolve the sales tax code once. UK QuickBooks requires a TaxCodeRef on every
+  // sales line; without it QuickBooks drops the VAT and can reject the invoice
+  // with a business validation error. ELE-1235.
+  const vatTaxCodeId = await getQBSalesTaxCode(accessToken, realmId, invoice.vatAmount > 0);
+  console.log('VAT tax code:', vatTaxCodeId, '(vatAmount:', invoice.vatAmount, ')');
+
   // Format line items for QuickBooks - distribute overhead/profit into each line item
   // MUST include ItemRef or amounts are ignored!
   const lineItems: any[] = invoice.items.map((item, index) => {
@@ -897,34 +907,75 @@ async function syncToQuickBooks(
         },
         Qty: item.quantity,
         UnitPrice: adjustedUnitPrice,
+        ...(vatTaxCodeId ? { TaxCodeRef: { value: vatTaxCodeId } } : {}),
       },
     };
   });
 
-  // Create the invoice
-  const qbInvoice = {
+  // Create the invoice. QuickBooks rejects a duplicate DocNumber with a business
+  // validation error (code 6140) when the company uses custom transaction
+  // numbers — e.g. the number was already used by a prior sync or a manual QBO
+  // invoice. Retry once letting QuickBooks auto-assign its own number so the
+  // sync still succeeds rather than hard-failing. ELE-1235.
+  const buildInvoicePayload = (includeDocNumber: boolean) => ({
     CustomerRef: { value: customerId },
-    DocNumber: invoice.invoiceNumber,
+    // Net lines + QuickBooks adds VAT on top (UK). Only set when we resolved a
+    // tax code, so US Automated-Sales-Tax companies are untouched. ELE-1235.
+    ...(vatTaxCodeId ? { GlobalTaxCalculation: 'TaxExcluded' } : {}),
+    ...(includeDocNumber && invoice.invoiceNumber
+      ? { DocNumber: invoice.invoiceNumber }
+      : {}),
     TxnDate: invoice.date?.split('T')[0],
     DueDate: invoice.dueDate?.split('T')[0],
     Line: lineItems,
     CustomerMemo: invoice.notes ? { value: invoice.notes } : undefined,
-  };
-
-  const response = await fetch(`${QUICKBOOKS_BASE_URL}/v3/company/${realmId}/invoice`, {
-    method: 'POST',
-    headers: {
-      Authorization: `Bearer ${accessToken}`,
-      'Content-Type': 'application/json',
-      Accept: 'application/json',
-    },
-    body: JSON.stringify(qbInvoice),
   });
 
+  const postInvoice = (payload: unknown) =>
+    fetch(`${QUICKBOOKS_BASE_URL}/v3/company/${realmId}/invoice`, {
+      method: 'POST',
+      headers: {
+        Authorization: `Bearer ${accessToken}`,
+        'Content-Type': 'application/json',
+        Accept: 'application/json',
+      },
+      body: JSON.stringify(payload),
+    });
+
+  let response = await postInvoice(buildInvoicePayload(true));
+
   if (!response.ok) {
-    const errorText = await response.text();
-    console.error('QuickBooks invoice creation failed:', errorText);
-    throw new ExternalAPIError('QuickBooks', { status: response.status, error: errorText });
+    const firstErrorText = await response.text();
+    console.error('QuickBooks invoice creation failed:', response.status, firstErrorText);
+
+    let isDuplicateDocNumber = false;
+    try {
+      const fault = JSON.parse(firstErrorText)?.Fault?.Error?.[0];
+      const code = fault?.code ? String(fault.code) : '';
+      const text = `${fault?.Message || ''} ${fault?.Detail || ''}`.toLowerCase();
+      isDuplicateDocNumber =
+        code === '6140' || (text.includes('duplicate') && text.includes('document number'));
+    } catch {
+      // Fault text wasn't JSON — fall through and surface it as-is.
+    }
+
+    if (isDuplicateDocNumber && invoice.invoiceNumber) {
+      console.log(
+        `Duplicate DocNumber "${invoice.invoiceNumber}" — retrying with QuickBooks auto-numbering`
+      );
+      const retryResponse = await postInvoice(buildInvoicePayload(false));
+      if (!retryResponse.ok) {
+        const retryErrorText = await retryResponse.text();
+        console.error('QuickBooks invoice retry failed:', retryResponse.status, retryErrorText);
+        throw new ExternalAPIError('QuickBooks', {
+          status: retryResponse.status,
+          error: retryErrorText,
+        });
+      }
+      response = retryResponse;
+    } else {
+      throw new ExternalAPIError('QuickBooks', { status: response.status, error: firstErrorText });
+    }
   }
 
   const result = await response.json();
@@ -1095,6 +1146,62 @@ async function getOrCreateQBServiceItem(
   const createResult = await createResponse.json();
   console.log('Created service item:', createResult.Item?.Id, createResult.Item?.Name);
   return { id: String(createResult.Item.Id), name: createResult.Item.Name };
+}
+
+/**
+ * Find the QuickBooks sales tax code to apply to invoice lines. UK QuickBooks
+ * companies require a TaxCodeRef on every sales line (and GlobalTaxCalculation
+ * on the invoice) — omitting it triggers a "business validation error" AND drops
+ * the VAT entirely, so the synced total no longer matches the Elec-Mate invoice.
+ * Returns the standard 20% VAT code for vatable invoices, or the No-VAT/Exempt
+ * code for zero-rated ones. Returns null when no suitable code is found (e.g. US
+ * Automated Sales Tax companies) so the caller falls back to sending no tax and
+ * behaviour is unchanged for them. ELE-1235.
+ */
+async function getQBSalesTaxCode(
+  accessToken: string,
+  realmId: string,
+  vatable: boolean
+): Promise<string | null> {
+  try {
+    const query = `SELECT * FROM TaxCode MAXRESULTS 100`;
+    const url = `${QUICKBOOKS_BASE_URL}/v3/company/${realmId}/query?query=${encodeURIComponent(query)}`;
+    const res = await fetch(url, {
+      headers: { Authorization: `Bearer ${accessToken}`, Accept: 'application/json' },
+    });
+    if (!res.ok) {
+      console.warn('TaxCode query failed:', res.status, await res.text());
+      return null;
+    }
+    const data = await res.json();
+    const codes: any[] = (data.QueryResponse?.TaxCode || []).filter(
+      (c: any) => c.Active !== false
+    );
+    if (codes.length === 0) return null;
+
+    const name = (c: any) => String(c.Name || '');
+    const byName = (re: RegExp) => codes.find((c: any) => re.test(name(c)));
+
+    if (vatable) {
+      // Standard-rated 20% sales VAT — exclude EC acquisition / purchase / reverse
+      // charge variants which also contain "20".
+      const std =
+        codes.find(
+          (c: any) =>
+            /20(\.0)?\s*%?\s*s\b/i.test(name(c)) &&
+            !/ec|acq|purchase|reverse/i.test(name(c))
+        ) || byName(/standard.*20|20(\.0)?\s*%/i);
+      return std ? String(std.Id) : null;
+    }
+
+    // Zero-rated / exempt / no-VAT
+    const noVat =
+      byName(/no\s*vat/i) || byName(/exempt/i) || byName(/zero/i) || byName(/0(\.0)?\s*%/i);
+    return noVat ? String(noVat.Id) : null;
+  } catch (e) {
+    console.warn('getQBSalesTaxCode error:', e);
+    return null;
+  }
 }
 
 /**

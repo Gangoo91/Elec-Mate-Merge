@@ -128,7 +128,7 @@ serve(async (req) => {
     // ─── PASS 1: VISION — extract draft + keywords ───────────────────
     const visionResp = await logger.time('Gemini vision pass', async () => {
       const response = await fetch(
-        `https://generativelanguage.googleapis.com/v1beta/models/gemini-3-flash-preview:generateContent?key=${geminiKey}`,
+        `https://generativelanguage.googleapis.com/v1beta/models/gemini-3.5-flash:generateContent?key=${geminiKey}`,
         {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
@@ -266,7 +266,7 @@ Refine and return JSON only.`;
 
       const synthesisResp = await logger.time('Gemini synthesis pass', async () => {
         const response = await fetch(
-          `https://generativelanguage.googleapis.com/v1beta/models/gemini-3-flash-preview:generateContent?key=${geminiKey}`,
+          `https://generativelanguage.googleapis.com/v1beta/models/gemini-3.5-flash:generateContent?key=${geminiKey}`,
           {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },

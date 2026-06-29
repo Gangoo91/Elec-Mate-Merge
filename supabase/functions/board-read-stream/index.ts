@@ -714,7 +714,7 @@ async function analyzeWithGemini(
   // arrives. This makes the UI feel like a schedule of tests filling itself
   // in live.
   const response = await fetchWithTimeout(
-    `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:streamGenerateContent?alt=sse&key=${geminiApiKey}`,
+    `https://generativelanguage.googleapis.com/v1beta/models/gemini-3.5-flash:streamGenerateContent?alt=sse&key=${geminiApiKey}`,
     {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
@@ -744,7 +744,7 @@ async function analyzeWithGemini(
       message: 'Retrying with stable endpoint…',
     });
     const fallback = await fetchWithTimeout(
-      `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key=${geminiApiKey}`,
+      `https://generativelanguage.googleapis.com/v1beta/models/gemini-3.5-flash:generateContent?key=${geminiApiKey}`,
       {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
@@ -773,12 +773,12 @@ async function analyzeWithGemini(
     if (Array.isArray(parsed.circuits)) {
       sendEvent({
         type: 'circuits_batch',
-        circuits: parsed.circuits.map((c: any) => ({ ...c, source_model: 'gemini-2.5-flash' })),
+        circuits: parsed.circuits.map((c: any) => ({ ...c, source_model: 'gemini-3.5-flash' })),
       });
     }
     return {
       board: parsed.board || {},
-      circuits: (parsed.circuits || []).map((c: any) => ({ ...c, source_model: 'gemini-2.5-flash' })),
+      circuits: (parsed.circuits || []).map((c: any) => ({ ...c, source_model: 'gemini-3.5-flash' })),
     };
   }
 
@@ -832,7 +832,7 @@ async function analyzeWithGemini(
           }
           sendEvent({
             type: 'circuits_batch',
-            circuits: newCircuits.map((c) => ({ ...c, source_model: 'gemini-2.5-flash' })),
+            circuits: newCircuits.map((c) => ({ ...c, source_model: 'gemini-3.5-flash' })),
           });
         }
       } catch {
@@ -879,7 +879,7 @@ async function analyzeWithGemini(
         circuits.push(c);
         sendEvent({
           type: 'circuits_batch',
-          circuits: [{ ...c, source_model: 'gemini-2.5-flash' }],
+          circuits: [{ ...c, source_model: 'gemini-3.5-flash' }],
         });
       }
     }
@@ -1080,7 +1080,7 @@ async function analyzeWithGemini(
 
   return {
     board: result.board || {},
-    circuits: circuits.map((c: any) => ({ ...c, source_model: 'gemini-2.5-flash' })),
+    circuits: circuits.map((c: any) => ({ ...c, source_model: 'gemini-3.5-flash' })),
   };
 }
 
@@ -1129,7 +1129,7 @@ serve(async (req) => {
         type: 'complete',
         metadata: {
           analysisTime: Date.now() - startTime,
-          model: 'gemini-2.5-flash',
+          model: 'gemini-3.5-flash',
           imageCount: images.length,
           circuitCount: result.circuits.length,
           boardSize: result.board.estimated_total_ways || result.circuits.length,

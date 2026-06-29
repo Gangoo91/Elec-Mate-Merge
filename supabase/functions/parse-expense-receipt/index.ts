@@ -28,9 +28,9 @@ interface ParseExpenseResponse {
 }
 
 // Gemini vision models, in preference order. Google retires dated snapshots
-// (e.g. gemini-2.0-flash started returning 404), so we pin a current model and
+// (e.g. gemini-3.5-flash started returning 404), so we pin a current model and
 // fall back to the maintained "-latest" alias if it ever goes missing.
-const GEMINI_MODELS = ['gemini-2.5-flash', 'gemini-flash-latest'];
+const GEMINI_MODELS = ['gemini-3.5-flash', 'gemini-3.5-flash'];
 
 // Expense categories for sole traders
 const EXPENSE_CATEGORIES = [

@@ -259,7 +259,7 @@ IMPORTANT GUIDELINES:
 Return ONLY the JSON object, no other text.`;
 
   const response = await fetch(
-    `https://generativelanguage.googleapis.com/v1beta/models/gemini-3-flash-preview:generateContent?key=${geminiApiKey}`,
+    `https://generativelanguage.googleapis.com/v1beta/models/gemini-3.5-flash:generateContent?key=${geminiApiKey}`,
     {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
@@ -359,7 +359,7 @@ async function saveAnalysisToDatabase(
     circuits: analysis.circuits,
 
     // Analysis metadata
-    ai_model_used: 'gemini-3-flash-preview',
+    ai_model_used: 'gemini-3.5-flash',
     analysis_confidence: analysis.analysis_confidence,
     analysis_timestamp: new Date().toISOString(),
     human_verified: false,

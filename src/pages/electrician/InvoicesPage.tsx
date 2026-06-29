@@ -28,6 +28,16 @@ import {
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu';
 import CertificateGenerationDialog from '@/components/inspection/CertificateGenerationDialog';
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+} from '@/components/ui/alert-dialog';
 import { createQuickTaskBatch } from '@/utils/createQuickTask';
 
 type TemporaryPdfLinkResponse = {
@@ -62,6 +72,7 @@ const InvoicesPage = () => {
   const [sortBy, setSortBy] = useState<'newest' | 'oldest' | 'value-high' | 'due-soonest'>('newest');
   const [quickFilter, setQuickFilter] = useState<'part-paid' | null>(null);
   const [dateRange, setDateRange] = useState<'all' | '30d' | '90d'>('all');
+  const [editGuardInvoice, setEditGuardInvoice] = useState<Quote | null>(null);
 
   // Pull to refresh handler
   const handleRefresh = useCallback(async () => {
@@ -216,6 +227,35 @@ const InvoicesPage = () => {
     } finally {
       setDownloadingPdfId(null);
     }
+  };
+
+  const providerLabel = (p?: string) =>
+    p === 'quickbooks'
+      ? 'QuickBooks'
+      : p
+        ? p.charAt(0).toUpperCase() + p.slice(1)
+        : 'your accounting software';
+
+  // Guard editing an invoice that has a payment recorded or is already synced
+  // to an accounting provider. Editing the total after a payment can't be
+  // reflected in the accounts (the correct path is a credit note/discount), and
+  // edits don't re-sync — so we explain that before letting them proceed. ELE-1218.
+  const handleEditInvoice = (invoice: Quote) => {
+    const hasPayment =
+      invoice.invoice_status === 'paid' || (invoice.total_paid || 0) > 0.005;
+    const isSynced = !!invoice.external_invoice_id;
+    if (hasPayment || isSynced) {
+      setEditGuardInvoice(invoice);
+      return;
+    }
+    navigate(`/electrician/invoice-quote-builder/${invoice.id}`);
+  };
+
+  const proceedToGuardedEdit = () => {
+    if (editGuardInvoice) {
+      navigate(`/electrician/invoice-quote-builder/${editGuardInvoice.id}`);
+    }
+    setEditGuardInvoice(null);
   };
 
   const handleMarkAsPaid = async (invoice: Quote) => {
@@ -871,7 +911,7 @@ const InvoicesPage = () => {
                       onTap={() => handleInvoiceAction(invoice)}
                       onMarkPaid={() => handleMarkAsPaid(invoice)}
                       onDownloadPDF={() => handleDownloadPDF(invoice)}
-                      onEdit={() => navigate(`/electrician/invoice-quote-builder/${invoice.id}`)}
+                      onEdit={() => handleEditInvoice(invoice)}
                       onDelete={() => handleDeleteInvoice(invoice.id)}
                       isMarkingPaid={markingPaidId === invoice.id}
                       isDownloading={downloadingPdfId === invoice.id}
@@ -884,6 +924,38 @@ const InvoicesPage = () => {
           )}
         </section>
       </main>
+
+      <AlertDialog
+        open={!!editGuardInvoice}
+        onOpenChange={(open) => !open && setEditGuardInvoice(null)}
+      >
+        <AlertDialogContent>
+          <AlertDialogHeader>
+            <AlertDialogTitle>
+              {editGuardInvoice?.invoice_status === 'paid' ||
+              (editGuardInvoice?.total_paid || 0) > 0.005
+                ? 'This invoice has a payment recorded'
+                : `This invoice is already in ${providerLabel(editGuardInvoice?.external_invoice_provider)}`}
+            </AlertDialogTitle>
+            <AlertDialogDescription>
+              {editGuardInvoice?.invoice_status === 'paid' ||
+              (editGuardInvoice?.total_paid || 0) > 0.005
+                ? `Once a payment has been recorded, changing the invoice total can't be reflected in your accounts. The correct way to adjust it is to add a credit/discount line or raise a credit note${
+                    editGuardInvoice?.external_invoice_provider
+                      ? ` in ${providerLabel(editGuardInvoice.external_invoice_provider)}`
+                      : ''
+                  }. You can still open it to fix a typo, but the amount paid won't change.`
+                : `Edits made here won't sync back to ${providerLabel(
+                    editGuardInvoice?.external_invoice_provider
+                  )} automatically, so it will keep the original. Update it there, or raise a credit note for any change.`}
+            </AlertDialogDescription>
+          </AlertDialogHeader>
+          <AlertDialogFooter>
+            <AlertDialogCancel>Cancel</AlertDialogCancel>
+            <AlertDialogAction onClick={proceedToGuardedEdit}>Edit anyway</AlertDialogAction>
+          </AlertDialogFooter>
+        </AlertDialogContent>
+      </AlertDialog>
 
       <CertificateGenerationDialog
         open={showGenerationDialog}
